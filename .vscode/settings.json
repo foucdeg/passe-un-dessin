@@ -30,5 +30,17 @@
       "source.organizeImports": true
     },
     "editor.tabSize": 4
-  }
+  },
+  "python.pythonPath": "/Users/fouc/Library/Caches/pypoetry/virtualenvs/passe-un-dessin-na9dEY0v-py3.8/bin/python",
+  "sqltools.connections": [
+    {
+      "database": "postgres",
+      "dialect": "PostgreSQL",
+      "name": "p1d",
+      "password": "postgres",
+      "port": 5432,
+      "server": "localhost",
+      "username": "postgres"
+    }
+  ]
 }

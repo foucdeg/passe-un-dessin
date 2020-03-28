@@ -66,3 +66,15 @@ class User(AbstractUser):
         if not self.username:
             self.username = self.email
         super().save(*args, **kwargs)
+
+
+class Room(BaseModel):
+    admin = models.ForeignKey(
+        "Player", on_delete=models.CASCADE, related_name="room_as_admin"
+    )
+    pass
+
+
+class Player(BaseModel):
+    name = models.CharField(max_length=30)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="players")
