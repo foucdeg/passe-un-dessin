@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views import View
 
 from core.models import Player, Room
-from core.serializers.player import PlayerSerializer, RoomSerializer
+from core.serializers import PlayerSerializer, RoomSerializer
 
 
 class PlayerView(View):
@@ -18,12 +18,14 @@ class PlayerView(View):
 
         try:
             player_id = request.session["player_id"]
-            player = Player.objects.get(player_id)
+            player = Player.objects.get(uuid=player_id)
+            player.name = name
+            player.save()
 
         except (KeyError, Player.DoesNotExist):
             player = Player.objects.create(name=name)
 
-        player.save()
+        request.session["player_id"] = player.uuid.__str__()
 
         return JsonResponse(PlayerSerializer(player).data)
 
@@ -32,12 +34,15 @@ class RoomCreationView(View):
     def post(self, request):
 
         try:
+            print(request.session["player_id"])
             player_id = request.session["player_id"]
-            player = Player.objects.get(player_id)
+            player = Player.objects.get(uuid=player_id)
         except (KeyError, Player.DoesNotExist):
             return HttpResponseBadRequest("No player ID in session, or invalid")
 
         room = Room.objects.create(admin=player)
+        player.room = room
+        player.save()
 
         return JsonResponse(RoomSerializer(room).data)
 
@@ -46,12 +51,17 @@ def join_room(request, room_id):
     if request.method == "PUT":
         try:
             player_id = request.session["player_id"]
-            player = Player.objects.get(player_id)
+            player = Player.objects.get(uuid=player_id)
         except (KeyError, Player.DoesNotExist):
             return HttpResponseBadRequest("No player ID in session, or invalid")
 
-        room = Room.objects.get_or_404(room_id)
-        player.room = room
-        player.save()
+        try:
+            room = Room.objects.get(uuid=room_id)
+            player.room = room
+            player.save()
+        except Room.DoesNotExist:
+            return HttpResponseBadRequest("Room does not exist")
 
         return HttpResponse(status=200)
+
+    return HttpResponseBadRequest("PUT expected")

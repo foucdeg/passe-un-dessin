@@ -77,4 +77,6 @@ class Room(BaseModel):
 
 class Player(BaseModel):
     name = models.CharField(max_length=30)
-    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="players")
+    room = models.ForeignKey(
+        Room, on_delete=models.CASCADE, related_name="players", null=True
+    )
