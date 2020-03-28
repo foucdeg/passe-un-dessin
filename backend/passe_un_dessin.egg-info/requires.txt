@@ -1,0 +1,17 @@
+argon2-cffi<20.0.0,>=19.2.0
+asgiref<4.0.0,>=3.2.5
+boto3<2.0.0,>=1.12.26
+dj-database-url<0.6.0,>=0.5.0
+django-axes<6.0.0,>=5.3.1
+django-memoize<3.0.0,>=2.2.1
+django-storages<2.0.0,>=1.9.1
+django<4.0.0,>=3.0.4
+djangorestframework<4.0.0,>=3.11.0
+djangorestframework_simplejwt<5.0.0,>=4.4.0
+djoser<3.0.0,>=2.0.3
+psycopg2-binary<3.0.0,>=2.8.4
+pytz<2020.0,>=2019.3
+requests<3.0.0,>=2.23.0
+sentry-sdk<0.15.0,>=0.14.3
+sqlparse<0.4.0,>=0.3.1
+watchtower<0.8.0,>=0.7.3

@@ -1,0 +1,26 @@
+{
+  "decisions": {
+    "1179|cypress>extract-zip>mkdirp>minimist": {
+      "decision": "ignore",
+      "madeAt": 1584986462976
+    },
+    "1179|cypress>minimist": {
+      "decision": "ignore",
+      "madeAt": 1584986462976
+    },
+    "1179|plop>node-plop>@types/handlebars>handlebars>optimist>minimist": {
+      "decision": "ignore",
+      "madeAt": 1584986462976
+    },
+    "1179|plop>node-plop>handlebars>optimist>minimist": {
+      "decision": "ignore",
+      "madeAt": 1584986462976
+    },
+    "1179|stylelint>postcss-sass>gonzales-pe>minimist": {
+      "decision": "ignore",
+      "madeAt": 1584986462976
+    }
+  },
+  "rules": {},
+  "version": 1
+}

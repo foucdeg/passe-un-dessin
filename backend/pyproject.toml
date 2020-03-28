@@ -1,0 +1,42 @@
+[tool.poetry]
+name = "passe_un_dessin"
+version = "0.0.1"
+description = "A new Theodo project"
+authors = ["Theodo <contact@theodo.co.uk>"]
+
+[tool.poetry.dependencies]
+python = "3.8.2"
+argon2-cffi = "^19.2.0"
+asgiref = "^3.2.5"
+boto3 = "^1.12.26"
+dj-database-url = "^0.5.0"
+django = "^3.0.4"
+django-axes = "^5.3.1"
+django-memoize = "^2.2.1"
+django-storages = "^1.9.1"
+djangorestframework = "^3.11.0"
+djangorestframework_simplejwt = "^4.4.0"
+djoser = "^2.0.3"
+psycopg2-binary = "^2.8.4"
+pytz = "^2019.3"
+requests = "^2.23.0"
+sentry-sdk = "^0.14.3"
+sqlparse = "^0.3.1"
+watchtower = "^0.7.3"
+
+[tool.poetry.dev-dependencies]
+ptvsd = "^4.3.2"
+flake8 = "^3.7.9"
+factory-boy = "^2.12.0"
+coverage = "^5.0.4"
+django-debug-toolbar = "^2.2"
+django-extensions = "^2.2.8"
+isort = "^4.3.21"
+black = "^19.10b0"
+
+[tool.black]
+exclude = 'migrations'
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
