@@ -31,7 +31,7 @@
     },
     "editor.tabSize": 4
   },
-  "python.pythonPath": "/Users/fouc/Library/Caches/pypoetry/virtualenvs/passe-un-dessin-na9dEY0v-py3.8/bin/python",
+  "python.pythonPath": "/Users/fouc/Library/Caches/pypoetry/virtualenvs/passe-un-dessin-na9dEY0v-py3.8/bin/python3",
   "sqltools.connections": [
     {
       "database": "postgres",

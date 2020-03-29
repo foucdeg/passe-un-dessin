@@ -1,10 +1,17 @@
 from django.urls import path
 
-from core.views import room_management
+from core.views import game, room_management
 
 urlpatterns = [
     path("room", room_management.RoomCreationView.as_view(), name="room_creation"),
     path("player", room_management.PlayerView.as_view(), name="player"),
     path("room/<str:room_id>/join", room_management.join_room, name="join_room"),
     path("room/<str:room_id>/start", room_management.start_game, name="start_game"),
+    path("game/<str:uuid>", game.GameRetrieveAPIView.as_view(), name="get_game"),
+    path("pad/<str:uuid>", game.PadRetrieveAPIView.as_view(), name="get_pad"),
+    path(
+        "pad-step/<str:uuid>",
+        game.PadStepRetrieveAPIView.as_view(),
+        name="get_pad_step",
+    ),
 ]
