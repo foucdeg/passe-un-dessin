@@ -4,7 +4,8 @@ from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views import View
 
 from core.models import Player, Room
-from core.serializers import PlayerSerializer, RoomSerializer
+from core.serializers import GameSerializer, PlayerSerializer, RoomSerializer
+from core.service.game_service import initialize_game
 
 
 class PlayerView(View):
@@ -65,3 +66,18 @@ def join_room(request, room_id):
         return HttpResponse(status=200)
 
     return HttpResponseBadRequest("PUT expected")
+
+
+def start_game(request, room_id):
+    if request.method != "PUT":
+        return HttpResponseBadRequest("PUT expected")
+
+    try:
+        room = Room.objects.get(uuid=room_id)
+        game = initialize_game(room)
+        room.current_game = game
+        room.save()
+
+        return JsonResponse(GameSerializer(game).data)
+    except Room.DoesNotExist:
+        return HttpResponseBadRequest("Room does not exist")

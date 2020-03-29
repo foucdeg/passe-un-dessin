@@ -1,8 +1,20 @@
 import uuid
+from enum import Enum
 
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+
+class GamePhase(Enum):
+    INIT = "INIT"
+    ROUNDS = "ROUNDS"
+    DEBRIEF = "DEBRIEF"
+
+
+class StepType(Enum):
+    WORD_TO_DRAWING = "WORD_TO_DRAWING"
+    DRAWING_TO_WORD = "DRAWING_TO_WORD"
 
 
 class BaseModel(models.Model):
@@ -72,11 +84,60 @@ class Room(BaseModel):
     admin = models.ForeignKey(
         "Player", on_delete=models.CASCADE, related_name="room_as_admin"
     )
-    pass
+    current_game = models.ForeignKey(
+        "Game",
+        on_delete=models.SET_NULL,
+        related_name="room_as_current_game",
+        null=True,
+        blank=True,
+    )
+
+
+class Game(BaseModel):
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="games")
+    phase = models.CharField(
+        max_length=10,
+        choices=[(phase.value, phase.value) for phase in GamePhase],
+        default="INIT",
+    )
+    current_round = models.IntegerField(null=True)
+
+    def rounds(self):
+        def sort_fn(step: PadStep):
+            return step.round_number
+
+        all_pad_steps = [
+            pad_step for pad in self.pads.all() for pad_step in pad.steps.all()
+        ]
+        all_pad_steps.sort(key=sort_fn)
+
+        return all_pad_steps
 
 
 class Player(BaseModel):
     name = models.CharField(max_length=30)
     room = models.ForeignKey(
-        Room, on_delete=models.CASCADE, related_name="players", null=True
+        Room, on_delete=models.SET_NULL, related_name="players", null=True, blank=True
     )
+    game = models.ForeignKey(
+        Game, on_delete=models.SET_NULL, related_name="players", null=True, blank=True
+    )
+
+
+class Pad(BaseModel):
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="pads")
+    initial_player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    order = models.IntegerField()
+
+
+class PadStep(BaseModel):
+    pad = models.ForeignKey(Pad, on_delete=models.CASCADE, related_name="steps")
+    step_type = models.CharField(
+        max_length=50,
+        choices=[(step_type.value, step_type.value) for step_type in StepType],
+    )
+    round_number = models.IntegerField()
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+
+    sentence = models.CharField(max_length=100, blank=True, null=True)
+    drawing = models.CharField(max_length=10000, blank=True, null=True)
