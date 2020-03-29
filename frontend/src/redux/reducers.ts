@@ -4,12 +4,20 @@
  */
 
 import { combineReducers } from 'redux';
+import { connectRouter } from 'connected-react-router';
 
-import { reducer as avatar } from './Avatar';
-import { reducer as login } from './Login';
+import { reducer as room } from './Room';
+import { reducer as game } from './Game';
+import { reducer as player } from './Player';
 import { RootState } from './types';
+import { History } from 'history';
 
-export default combineReducers<RootState>({
-  login,
-  avatar,
-});
+const createRootReducer = (history: History) =>
+  combineReducers<RootState>({
+    room,
+    game,
+    player,
+    router: connectRouter(history),
+  });
+
+export default createRootReducer;

@@ -4,8 +4,6 @@
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
 
-  "flow.pathToFlow": "${workspaceFolder}/frontend/node_modules/.bin/flow",
-
   "python.formatting.provider": "black",
   "python.linting.enabled": true,
   "python.linting.flake8Enabled": true,
@@ -13,8 +11,7 @@
   "python.autoComplete.extraPaths": ["./backend"],
 
   "[javascript]": {
-    "editor.tabSize": 2,
-    "javascript.validate.enable": false
+    "editor.tabSize": 2
   },
   "eslint.validate": [
     "javascript",
@@ -42,5 +39,6 @@
       "server": "localhost",
       "username": "postgres"
     }
-  ]
+  ],
+  "eslint.workingDirectories": ["./frontend"]
 }

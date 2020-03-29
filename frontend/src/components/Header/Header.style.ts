@@ -13,7 +13,7 @@ export const HeaderContainer = styled.header`
 
 HeaderContainer.displayName = 'HeaderContainer';
 
-export const Logo = styled.img`
+export const Logo = styled.h1`
   height: ${getSpacing(9)};
 `;
 

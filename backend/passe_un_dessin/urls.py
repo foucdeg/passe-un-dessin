@@ -24,7 +24,6 @@ admin.site.site_header = "Passe Un Dessin Administration"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("auth/", include("core.auth_urls")),
     path("api/", include("core.urls")),
     path("auth/", include("djoser.urls")),
     path("auth/", include("djoser.urls.jwt")),

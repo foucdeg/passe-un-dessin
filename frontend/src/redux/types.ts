@@ -1,7 +1,11 @@
-import { AvatarState } from './Avatar';
-import { LoginState } from './Login';
+import { RoomState } from './Room';
+import { GameState } from './Game';
+import { PlayerState } from './Player';
+import { RouterState } from 'connected-react-router';
 
 export type RootState = Readonly<{
-  avatar: AvatarState;
-  login: LoginState;
+  room: RoomState;
+  game: GameState;
+  player: PlayerState;
+  router: RouterState;
 }>;

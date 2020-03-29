@@ -14,9 +14,11 @@ class PlayerSerializer(BaseSerializer):
 
 
 class RoomSerializer(BaseSerializer):
+    players = PlayerSerializer(many=True)
+
     class Meta:
         model = Room
-        fields = ("uuid",)
+        fields = ("uuid", "players")
 
 
 class PadStepSerializer(BaseSerializer):

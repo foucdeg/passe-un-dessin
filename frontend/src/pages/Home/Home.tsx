@@ -1,38 +1,23 @@
 import * as React from 'react';
-import {
-  HomeContainer,
-  Logo,
-  Title,
-  HowTo,
-  Code,
-  DescriptionLine,
-  DescriptionList,
-} from './Home.style';
-import logo from 'assets/logo.png';
+import { HomeContainer } from './Home.style';
+import { RootState } from 'redux/types';
+import { useSelector } from 'react-redux';
+import { useCreateRoom } from 'redux/Room/hooks';
 
-const Home: React.FunctionComponent = () => (
-  <HomeContainer>
-    <Logo alt="forgelogo" src={logo} />
-    <Title>Welcome to Forge, you’ve just launched your project</Title>
-    <HowTo>
-      <DescriptionList>
-        <DescriptionLine>
-          To create a page or a component, run <Code>yarn generate</Code>.
-        </DescriptionLine>
-        <DescriptionLine>
-          The style is centralized in the <Code>src/stylesheet.ts</Code>. From there, you can manage
-          colors, font properties, spacing unit...
-        </DescriptionLine>
-        <DescriptionLine>
-          Redesign the <Code>src/components/AppCrashFallback</Code> that will display when there is
-          a javascript error.
-        </DescriptionLine>
-        <DescriptionLine>
-          Read more about the tools and built-in features in the <Code>README.md</Code>.
-        </DescriptionLine>
-      </DescriptionList>
-    </HowTo>
-  </HomeContainer>
-);
+const Home: React.FunctionComponent = () => {
+  const [, doCreateRoom] = useCreateRoom();
+  const player = useSelector((state: RootState) => state.player.player);
+  if (!player) return null;
+
+  return (
+    <HomeContainer>
+      <p>Bienvenue, {player.name} !</p>
+      <p>
+        Tu peux <strong>créer une room</strong> ou en rejoindre une par le lien qu'on t'a donné.
+      </p>
+      <button onClick={doCreateRoom}>Créer une room</button>
+    </HomeContainer>
+  );
+};
 
 export default Home;

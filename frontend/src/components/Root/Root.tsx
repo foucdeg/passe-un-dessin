@@ -19,6 +19,7 @@ import '@formatjs/intl-relativetimeformat/dist/locale-data/fr';
 /* End of language polyfills */
 
 import { PageContent, RootContainer } from './Root.style';
+import UserNameGate from 'components/UserNameGate';
 
 const locales = {
   fr: flattenMessages(frMessages),
@@ -33,7 +34,9 @@ const Root: React.FunctionComponent<Props> = ({ children }) => (
   <IntlProvider locale="fr" messages={locales.fr}>
     <RootContainer>
       <Header />
-      <PageContent>{children}</PageContent>
+      <UserNameGate>
+        <PageContent>{children}</PageContent>
+      </UserNameGate>
     </RootContainer>
   </IntlProvider>
 );

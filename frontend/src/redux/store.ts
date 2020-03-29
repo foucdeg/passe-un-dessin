@@ -1,36 +1,29 @@
-import { persistStore, persistReducer, PERSIST } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import rootReducer from './reducers';
+import createRootReducer from './reducers';
+import { createBrowserHistory } from 'history';
+import { routerMiddleware } from 'connected-react-router';
+
+export const history = createBrowserHistory();
 
 export default function buildStore(preloadedState = {}) {
-  const persistConfig = {
-    key: 'root',
-    whitelist: ['login'],
-    storage,
-  };
-  const persistedReducer = persistReducer(persistConfig, rootReducer);
-
   const store = configureStore({
     devTools: process.env.NODE_ENV !== 'production',
-    middleware: getDefaultMiddleware({
-      serializableCheck: {
-        // see https://github.com/rt2zz/redux-persist/issues/988#issuecomment-529575333 to ignore actions for serializable check
-        ignoredActions: [PERSIST],
-      },
-    }),
-    reducer: persistedReducer,
+    middleware: [
+      ...getDefaultMiddleware({
+        serializableCheck: {},
+      }),
+      routerMiddleware(history),
+    ],
+    reducer: createRootReducer(history),
     preloadedState,
   });
-
-  const persistor = persistStore(store);
 
   /* istanbul ignore next */
   if (process.env.NODE_ENV !== 'production' && module.hot) {
     module.hot.accept('./reducers', () => {
-      import('./reducers').then(() => store.replaceReducer(persistedReducer));
+      import('./reducers').then(() => store.replaceReducer(createRootReducer(history)));
     });
   }
 
-  return { store, persistor };
+  return { store };
 }
