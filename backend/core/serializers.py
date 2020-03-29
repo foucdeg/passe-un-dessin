@@ -44,3 +44,8 @@ class GameSerializer(BaseSerializer):
     class Meta:
         model = Game
         fields = ("uuid", "players", "phase", "current_round", "pads", "rounds")
+
+
+class PlayerConnectedMessageSerializer(serializers.Serializer):
+    message_type = serializers.CharField()
+    player = PlayerSerializer()

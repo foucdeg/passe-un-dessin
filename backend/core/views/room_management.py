@@ -1,11 +1,21 @@
 import json
+import logging
 
+from django.db import transaction
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views import View
+from django_eventstream import send_event
 
+from core.messages import PlayerConnectedMessage
 from core.models import Player, Room
-from core.serializers import GameSerializer, PlayerSerializer, RoomSerializer
+from core.serializers import (
+    PlayerConnectedMessageSerializer,
+    PlayerSerializer,
+    RoomSerializer,
+)
 from core.service.game_service import initialize_game
+
+logger = logging.getLogger(__name__)
 
 
 class PlayerView(View):
@@ -57,9 +67,20 @@ def join_room(request, room_id):
             return HttpResponseBadRequest("No player ID in session, or invalid")
 
         try:
-            room = Room.objects.get(uuid=room_id)
-            player.room = room
-            player.save()
+            with transaction.atomic():
+                room = Room.objects.get(uuid=room_id)
+                player.room = room
+                player.save()
+                message = PlayerConnectedMessage(player)
+                logger.debug(
+                    "Sending message for player %s joining room %s"
+                    % (player.name, room.uuid.hex[:8])
+                )
+                send_event(
+                    "room-%s" % room.uuid.hex,
+                    "message",
+                    PlayerConnectedMessageSerializer(message).data,
+                )
         except Room.DoesNotExist:
             return HttpResponseBadRequest("Room does not exist")
 

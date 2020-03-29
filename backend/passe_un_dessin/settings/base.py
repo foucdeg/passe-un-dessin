@@ -8,7 +8,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
-import datetime
 import os
 
 import dj_database_url
@@ -28,16 +27,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "memoize",
     "rest_framework",
-    "djoser",
-    "axes",
+    "channels",
+    "django_eventstream",
     # Our apps
-    "front",
     "core",
 ]
 
 AUTHENTICATION_BACKENDS = [
-    # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
-    "axes.backends.AxesBackend",
     # Django ModelBackend is the default authentication backend.
     "django.contrib.auth.backends.ModelBackend",
 ]
@@ -50,8 +46,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # AxesMiddleware should be the last middleware in the MIDDLEWARE list.
-    "axes.middleware.AxesMiddleware",
 ]
 
 ROOT_URLCONF = "passe_un_dessin.urls"
@@ -75,6 +69,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "passe_un_dessin.wsgi.application"
+ASGI_APPLICATION = "passe_un_dessin.routing.application"
+
+EVENTSTREAM_STORAGE_CLASS = "django_eventstream.storage.DjangoModelStorage"
 
 
 # Database
@@ -108,21 +105,6 @@ REST_FRAMEWORK = {
     )
 }
 
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(minutes=10),
-    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(minutes=525600),
-}
-
-REFRESH_TOKEN = "refreshToken"
-
-# Axes settings
-# https://django-axes.readthedocs.io/en/latest/4_configuration.html
-# Note: command to unlock all acounts: `python ./manage.py axes_reset`
-AXES_FAILURE_LIMIT = 7
-AXES_COOLOFF_TIME = 1  # Hours
-AXES_ONLY_ADMIN_SITE = True
-AXES_LOCK_OUT_BY_COMBINATION_USER_AND_IP = True
-AXES_RESET_ON_SUCCESS = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
