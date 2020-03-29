@@ -78,6 +78,6 @@ def start_game(request, room_id):
         room.current_game = game
         room.save()
 
-        return JsonResponse(GameSerializer(game).data)
+        return JsonResponse({"game_id": game.uuid.hex})
     except Room.DoesNotExist:
         return HttpResponseBadRequest("Room does not exist")
