@@ -12,7 +12,7 @@ MIDDLEWARE = MIDDLEWARE + ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 # Uploaded files storage
 MEDIA_ROOT = "/uploads/"
 MEDIA_URL_PATH = "uploads/"
-MEDIA_URL = "http://localhost:8000/" + MEDIA_URL_PATH
+MEDIA_URL = "http://localhost:3000/" + MEDIA_URL_PATH
 
 # Caching
 CACHES = {
@@ -27,6 +27,7 @@ DEBUG_TOOLBAR_CONFIG = {
 }
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EVENTSTREAM_ALLOW_ORIGIN = "http://localhost:3000"
 
 LOGGING = {
     "version": 1,

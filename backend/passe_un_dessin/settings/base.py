@@ -105,7 +105,7 @@ REST_FRAMEWORK = {
     )
 }
 
-
+USE_X_FORWARDED_HOST = True
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 

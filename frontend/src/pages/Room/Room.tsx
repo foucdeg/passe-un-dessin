@@ -24,7 +24,9 @@ const Room: React.FunctionComponent = () => {
 
   useEffect(() => {
     if (room) {
-      const eventSource: EventSource = new EventSource(`/events/?channel=room-${room.uuid}`);
+      const eventSource: EventSource = new EventSource(
+        `${process.env.REACT_APP_EVENTS_HOST}/events/?channel=room-${room.uuid}`,
+      );
       eventSource.onmessage = (event: MessageEvent) => console.log(event);
 
       return () => {
