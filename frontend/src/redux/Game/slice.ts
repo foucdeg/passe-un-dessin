@@ -1,19 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Game } from './types';
 
-export type GameState = Readonly<Game | null>;
+export type GameState = Readonly<{
+  game: Game | null;
+}>;
 
-const initialState: GameState = null as GameState;
+const initialState: GameState = { game: null } as GameState;
 
-const roomSlice = createSlice({
+const gameSlice = createSlice({
   name: 'Game',
   initialState,
   reducers: {
-    updateGame: (state: GameState, action: PayloadAction<Game | null>) => {
-      state = action.payload;
+    updateGame: (state, action: PayloadAction<Game | null>) => {
+      state.game = action.payload;
     },
   },
 });
 
-export const { updateGame } = roomSlice.actions;
-export default roomSlice.reducer;
+export const { updateGame } = gameSlice.actions;
+export default gameSlice.reducer;

@@ -15,10 +15,11 @@ class PlayerSerializer(BaseSerializer):
 
 class RoomSerializer(BaseSerializer):
     players = PlayerSerializer(many=True)
+    admin = PlayerSerializer()
 
     class Meta:
         model = Room
-        fields = ("uuid", "players")
+        fields = ("uuid", "players", "admin")
 
 
 class PadStepSerializer(BaseSerializer):
@@ -31,7 +32,11 @@ class PadStepSerializer(BaseSerializer):
 
 class PadSerializer(BaseSerializer):
     initial_player = PlayerSerializer()
-    steps = PadStepSerializer(many=True)
+    steps = serializers.SerializerMethodField()
+
+    def get_steps(self, instance):
+        steps = instance.steps.all().order_by("round_number")
+        return PadStepSerializer(steps, many=True).data
 
     class Meta:
         model = Pad
@@ -40,8 +45,12 @@ class PadSerializer(BaseSerializer):
 
 class GameSerializer(BaseSerializer):
     players = PlayerSerializer(many=True)
-    pads = PadSerializer(many=True)
+    pads = serializers.SerializerMethodField()
     rounds = PadStepSerializer(many=True)
+
+    def get_pads(self, instance):
+        pads = instance.pads.all().order_by("order")
+        return PadSerializer(pads, many=True).data
 
     class Meta:
         model = Game

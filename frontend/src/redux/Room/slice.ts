@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Room } from './types';
+import { Player } from 'redux/Player/types';
 
 export type RoomState = Readonly<{
   room: Room | null;
@@ -14,8 +15,11 @@ const roomSlice = createSlice({
     updateRoom: (state, action: PayloadAction<Room | null>) => {
       state.room = action.payload;
     },
+    addPlayerToRoom: (state, action: PayloadAction<Player>) => {
+      state.room?.players.push(action.payload);
+    },
   },
 });
 
-export const { updateRoom } = roomSlice.actions;
+export const { updateRoom, addPlayerToRoom } = roomSlice.actions;
 export default roomSlice.reducer;

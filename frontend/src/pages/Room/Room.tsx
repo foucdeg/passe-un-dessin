@@ -1,16 +1,26 @@
 import React, { useEffect } from 'react';
 import { RoomContainer } from './Room.style';
 import { RootState } from 'redux/types';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useFetchRoom, useJoinRoom } from 'redux/Room/hooks';
 import { useParams } from 'react-router';
+import { addPlayerToRoom } from 'redux/Room';
+import { MIN_PLAYERS, MAX_PLAYERS } from 'redux/Game/constants';
+import { useStartGame } from 'redux/Game/hooks';
+import {
+  useServerSentEvent,
+  SERVER_EVENT_TYPES,
+  NewPlayerEventDataType,
+} from 'services/networking/server-events';
 
 const Room: React.FunctionComponent = () => {
   const { roomId } = useParams();
   const [, doFetchRoom] = useFetchRoom();
   const [, doJoinRoom] = useJoinRoom();
+  const [, doStartGame] = useStartGame();
   const room = useSelector((state: RootState) => state.room.room);
   const player = useSelector((state: RootState) => state.player.player);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     doFetchRoom(roomId);
@@ -22,20 +32,21 @@ const Room: React.FunctionComponent = () => {
     }
   }, [room, player, doJoinRoom]);
 
-  useEffect(() => {
-    if (room) {
-      const eventSource: EventSource = new EventSource(
-        `${process.env.REACT_APP_EVENTS_HOST}/events/?channel=room-${room.uuid}`,
-      );
-      eventSource.onmessage = (event: MessageEvent) => console.log(event);
-
-      return () => {
-        eventSource.close();
-      };
-    }
-  }, [room]);
+  useServerSentEvent<NewPlayerEventDataType>(
+    `room-${room?.uuid}`,
+    SERVER_EVENT_TYPES.PLAYER_CONNECTED,
+    data => {
+      dispatch(addPlayerToRoom(data.player));
+    },
+  );
 
   if (!room) return null;
+  if (!player) return null;
+
+  const goodNumberOfPlayers =
+    room.players.length >= MIN_PLAYERS && room.players.length <= MAX_PLAYERS;
+
+  const isPlayerAdmin = player.uuid === room.admin.uuid;
 
   return (
     <RoomContainer>
@@ -46,6 +57,9 @@ const Room: React.FunctionComponent = () => {
           <li key={player.uuid}>{player.name}</li>
         ))}
       </ul>
+      {goodNumberOfPlayers && isPlayerAdmin && (
+        <button onClick={() => doStartGame(room.uuid)}>Start Game</button>
+      )}
     </RoomContainer>
   );
 };
