@@ -1,0 +1,14 @@
+FROM python:3.8-alpine
+
+RUN apk add gcc musl-dev postgresql-dev postgresql-client gettext libressl-dev libffi-dev make
+RUN pip install uwsgi uvicorn
+COPY ./passe_un_dessin.egg-info/requires.txt /app/requires.txt
+RUN pip install -r /app/requires.txt
+
+COPY . /app
+WORKDIR /app
+
+ENV DJANGO_SETTINGS_MODULE=passe_un_dessin.settings.prod
+
+RUN chmod +x /app/docker/entrypoint.sh
+ENTRYPOINT /app/docker/entrypoint.sh

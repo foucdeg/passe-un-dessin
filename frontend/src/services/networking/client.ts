@@ -1,13 +1,12 @@
 import request from 'superagent';
 
-const backendBaseUrl = process.env.REACT_APP_API_BASE_URL || '/api';
+const backendBaseUrl = (process.env.REACT_APP_BACKEND_HOST || '') + '/api';
 
 type Method = 'get' | 'post' | 'put' | 'patch' | 'delete';
 
 class Client {
   baseUrl: string;
   agent: request.SuperAgentStatic & request.Request;
-  tokenKey = 'token';
 
   constructor(baseUrl: string) {
     this.baseUrl = baseUrl;
@@ -15,7 +14,7 @@ class Client {
     this.agent.accept('application/json');
   }
 
-  async request(method: Method, endpoint: string, data: object | null = null, checkToken = true) {
+  async request(method: Method, endpoint: string, data: object | null = null) {
     const url = /^https?:\/\//.test(endpoint) ? endpoint : `${this.baseUrl}${endpoint}`;
     let promise = this.agent[method](url);
 

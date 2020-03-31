@@ -57,6 +57,13 @@ class GameSerializer(BaseSerializer):
         fields = ("uuid", "players", "phase", "current_round", "pads", "rounds")
 
 
-class PlayerConnectedMessageSerializer(serializers.Serializer):
+class MessageSerializer(serializers.Serializer):
     message_type = serializers.CharField()
+
+
+class PlayerConnectedMessageSerializer(MessageSerializer):
     player = PlayerSerializer()
+
+
+class GameStartsMessageSerializer(MessageSerializer):
+    game = GameSerializer()

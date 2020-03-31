@@ -11,7 +11,9 @@ import {
   useServerSentEvent,
   SERVER_EVENT_TYPES,
   NewPlayerEventDataType,
+  GameStartsEventDataType,
 } from 'services/networking/server-events';
+import { push } from 'connected-react-router';
 
 const Room: React.FunctionComponent = () => {
   const { roomId } = useParams();
@@ -37,6 +39,14 @@ const Room: React.FunctionComponent = () => {
     SERVER_EVENT_TYPES.PLAYER_CONNECTED,
     data => {
       dispatch(addPlayerToRoom(data.player));
+    },
+  );
+
+  useServerSentEvent<GameStartsEventDataType>(
+    `room-${room?.uuid}`,
+    SERVER_EVENT_TYPES.GAME_STARTS,
+    data => {
+      dispatch(push(`/game/${data.game.uuid}`));
     },
   );
 

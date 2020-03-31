@@ -7,13 +7,9 @@ from django.views import View
 from django_eventstream import send_event
 from rest_framework.generics import RetrieveAPIView
 
-from core.messages import PlayerConnectedMessage
+from core.messages import GameStartsMessage, PlayerConnectedMessage
 from core.models import Player, Room
-from core.serializers import (
-    PlayerConnectedMessageSerializer,
-    PlayerSerializer,
-    RoomSerializer,
-)
+from core.serializers import PlayerSerializer, RoomSerializer
 from core.service.game_service import initialize_game
 
 logger = logging.getLogger(__name__)
@@ -83,7 +79,6 @@ def join_room(request, room_id):
         with transaction.atomic():
             player.room = room
             player.save()
-            message = PlayerConnectedMessage(player)
             logger.debug(
                 "Sending message for player %s joining room %s"
                 % (player.name, room.uuid.hex[:8])
@@ -91,7 +86,7 @@ def join_room(request, room_id):
             send_event(
                 "room-%s" % room.uuid.hex,
                 "message",
-                PlayerConnectedMessageSerializer(message).data,
+                PlayerConnectedMessage(player).serialize(),
             )
     except Room.DoesNotExist:
         return HttpResponseBadRequest("Room does not exist")
@@ -108,6 +103,10 @@ def start_game(request, room_id):
         game = initialize_game(room)
         room.current_game = game
         room.save()
+
+        send_event(
+            "room-%s" % room.uuid.hex, "message", GameStartsMessage(game).serialize(),
+        )
 
         return JsonResponse({"game_id": game.uuid.hex})
     except Room.DoesNotExist:
