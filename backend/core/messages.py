@@ -25,3 +25,18 @@ class GameStartsMessage:
         from core.serializers import GameStartsMessageSerializer
 
         return GameStartsMessageSerializer(self).data
+
+
+class RoundStartsMessage:
+    message_type = "ROUND_STARTS"
+    game = None
+    round_number = None
+
+    def __init__(self, game: Game, round_number: int):
+        self.game = game
+        self.round_number = round_number
+
+    def serialize(self):
+        from core.serializers import RoundStartsMessageSerializer
+
+        return RoundStartsMessageSerializer(self).data

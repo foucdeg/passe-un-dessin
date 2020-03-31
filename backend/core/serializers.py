@@ -40,7 +40,7 @@ class PadSerializer(BaseSerializer):
 
     class Meta:
         model = Pad
-        fields = ("uuid", "initial_player", "steps", "order")
+        fields = ("uuid", "initial_player", "steps", "order", "sentence")
 
 
 class GameSerializer(BaseSerializer):
@@ -57,6 +57,12 @@ class GameSerializer(BaseSerializer):
         fields = ("uuid", "players", "phase", "current_round", "pads", "rounds")
 
 
+class GameIdSerializer(BaseSerializer):
+    class Meta:
+        model = Game
+        fields = ("uuid",)
+
+
 class MessageSerializer(serializers.Serializer):
     message_type = serializers.CharField()
 
@@ -66,4 +72,9 @@ class PlayerConnectedMessageSerializer(MessageSerializer):
 
 
 class GameStartsMessageSerializer(MessageSerializer):
-    game = GameSerializer()
+    game = GameIdSerializer()
+
+
+class RoundStartsMessageSerializer(MessageSerializer):
+    game = GameIdSerializer()
+    round_number = serializers.IntegerField()

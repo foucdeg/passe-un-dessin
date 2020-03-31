@@ -4,6 +4,7 @@ import { RootState } from 'redux/types';
 import { useSelector } from 'react-redux';
 import Modal from 'components/Modal';
 import { useFetchMe, useCreatePlayer } from 'redux/Player/hooks';
+import TextInput from 'components/TextInput';
 
 interface Props {
   children: React.ReactNode;
@@ -32,7 +33,11 @@ const UserNameGate: React.FC<Props> = ({ children }) => {
               doCreatePlayer(playerName);
             }}
           >
-            <input type="text" value={playerName} onChange={e => setPlayerName(e.target.value)} />
+            <TextInput
+              type="text"
+              value={playerName}
+              onChange={e => setPlayerName(e.target.value)}
+            />
           </form>
         </Modal>
       )}

@@ -3,7 +3,7 @@ import { RoomContainer } from './Room.style';
 import { RootState } from 'redux/types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFetchRoom, useJoinRoom } from 'redux/Room/hooks';
-import { useParams } from 'react-router';
+import { useParams, useHistory } from 'react-router';
 import { addPlayerToRoom } from 'redux/Room';
 import { MIN_PLAYERS, MAX_PLAYERS } from 'redux/Game/constants';
 import { useStartGame } from 'redux/Game/hooks';
@@ -13,7 +13,6 @@ import {
   NewPlayerEventDataType,
   GameStartsEventDataType,
 } from 'services/networking/server-events';
-import { push } from 'connected-react-router';
 
 const Room: React.FunctionComponent = () => {
   const { roomId } = useParams();
@@ -23,6 +22,7 @@ const Room: React.FunctionComponent = () => {
   const room = useSelector((state: RootState) => state.room.room);
   const player = useSelector((state: RootState) => state.player.player);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     doFetchRoom(roomId);
@@ -46,7 +46,7 @@ const Room: React.FunctionComponent = () => {
     `room-${room?.uuid}`,
     SERVER_EVENT_TYPES.GAME_STARTS,
     data => {
-      dispatch(push(`/game/${data.game.uuid}`));
+      history.push(`/game/${data.game.uuid}`);
     },
   );
 

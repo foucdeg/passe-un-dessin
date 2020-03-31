@@ -1,11 +1,13 @@
 import styled from 'styled-components';
-import { borderRadius, colorUsage, getSpacing } from 'stylesheet';
+import { borderRadius, colorUsage, getSpacing, fontSize, fontFamily } from 'stylesheet';
 
 export const RootContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
   padding: 0 ${getSpacing(26)};
+  font-size: ${fontSize.large};
+  font-family: ${fontFamily.main};
 `;
 RootContainer.displayName = 'RootContainer';
 

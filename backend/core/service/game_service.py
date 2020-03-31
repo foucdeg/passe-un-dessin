@@ -64,3 +64,7 @@ def initialize_pad(game: Game, index: int, players: List[Player]):
             round_number=round_number,
             step_type=step_type.value,
         )
+
+
+def all_pads_initialized(game: Game):
+    return all([pad.sentence is not None for pad in game.pads.all()])

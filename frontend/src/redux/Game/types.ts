@@ -26,6 +26,7 @@ export interface Pad {
   initial_player: Player;
   steps: PadStep[];
   order: number;
+  sentence: string;
 }
 
 export interface Game {

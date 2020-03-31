@@ -10,9 +10,14 @@ export interface GameStartsEventDataType {
   game: Game;
 }
 
+export interface RoundStartsEventType {
+  round_number: number;
+}
+
 export enum SERVER_EVENT_TYPES {
   PLAYER_CONNECTED = 'PLAYER_CONNECTED',
   GAME_STARTS = 'GAME_STARTS',
+  ROUND_STARTS = 'ROUND_STARTS',
 }
 
 export function useServerSentEvent<EventDataType>(

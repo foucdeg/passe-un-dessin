@@ -128,6 +128,7 @@ class Pad(BaseModel):
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="pads")
     initial_player = models.ForeignKey(Player, on_delete=models.CASCADE)
     order = models.IntegerField()
+    sentence = models.CharField(max_length=100, blank=True, null=True)
 
 
 class PadStep(BaseModel):
