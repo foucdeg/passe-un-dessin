@@ -22,12 +22,13 @@ CACHES = {
     }
 }
 
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "[::1]", "192.168.1.72"]
 DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TOOLBAR_CALLBACK": lambda request: request.META["SERVER_NAME"] != "testserver"
 }
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-EVENTSTREAM_ALLOW_ORIGIN = "http://localhost:3000"
+EVENTSTREAM_ALLOW_ORIGIN = "*"
 
 LOGGING = {
     "version": 1,

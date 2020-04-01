@@ -10,7 +10,6 @@ def get_me(request):
 
     try:
         player_id = request.session["player_id"]
-        print(player_id)
         player = Player.objects.get(uuid=player_id)
 
         return JsonResponse(PlayerSerializer(player).data)

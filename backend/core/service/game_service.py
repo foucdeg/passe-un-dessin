@@ -2,7 +2,10 @@ import logging
 from random import shuffle
 from typing import List
 
-from core.models import Game, Pad, PadStep, Player, Room, StepType
+from django_eventstream import send_event
+
+from core.messages import RoundStartsMessage
+from core.models import Game, GamePhase, Pad, PadStep, Player, Room, StepType
 
 logger = logging.getLogger(__name__)
 
@@ -68,3 +71,18 @@ def initialize_pad(game: Game, index: int, players: List[Player]):
 
 def all_pads_initialized(game: Game):
     return all([pad.sentence is not None for pad in game.pads.all()])
+
+
+def switch_to_rounds(game: Game):
+    game.phase = GamePhase.ROUNDS.value
+    game.current_round = 0
+    game.save()
+    for pad in game.pads.all():
+        step = pad.steps.get(round_number=game.current_round)
+        print(pad.sentence)
+        step.sentence = pad.sentence
+        step.save()
+
+    send_event(
+        "game-%s" % game.uuid.hex, "message", RoundStartsMessage(game, 0).serialize(),
+    )

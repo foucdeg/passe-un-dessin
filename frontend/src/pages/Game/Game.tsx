@@ -26,8 +26,10 @@ const Game: React.FunctionComponent = () => {
       return;
     }
     const redirectToPath = getRedirectPath(game, player);
-    push(redirectToPath);
-  }, [game, player, push]);
+    if (redirectToPath !== path) {
+      push(redirectToPath);
+    }
+  }, [game, path, player, push]);
 
   if (!game) return null;
 

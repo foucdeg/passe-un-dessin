@@ -1,26 +1,63 @@
-import React from 'react';
+import React, { useRef, useCallback, useEffect, useState } from 'react';
 import { PadStep } from 'redux/Game/types';
-import { useSelector } from 'react-redux';
-import { RootState } from 'redux/types';
-import { getPreviousNextSteps } from 'services/game.service';
-import { Link } from 'react-router-dom';
+import CanvasDraw from 'react-canvas-draw';
+import lzString from 'lz-string';
+import BrushPicker from 'components/BrushPicker';
+import { DrawingColor } from 'components/BrushPicker/BrushPicker';
 
 interface Props {
   padStep: PadStep;
+  saveStep: (values: { sentence?: string; drawing?: string }) => void;
 }
 
-const WordToDrawingStep: React.FC<Props> = ({ padStep }) => {
-  const game = useSelector((state: RootState) => state.game.game);
-  if (!game) return null;
+const thickness = 4;
+const eraserThickness = 20;
 
-  const [previousStep, nextStep] = getPreviousNextSteps(game, padStep);
+const WordToDrawingStep: React.FC<Props> = ({ padStep, saveStep }) => {
+  const [color, setColor] = useState<DrawingColor>(DrawingColor.BLACK);
+
+  const drawingPadRef = useRef<CanvasDraw>(null);
+  const saveDrawing = useCallback(
+    (drawing: string) => {
+      saveStep({ drawing });
+    },
+    [saveStep],
+  );
+
+  useEffect(() => {
+    if (!drawingPadRef.current) return;
+    const drawingPad = drawingPadRef.current;
+
+    const interval = setInterval(() => {
+      const saveData = drawingPad.getSaveData();
+      const compressed = lzString.compressToBase64(saveData);
+      saveDrawing(compressed);
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [saveDrawing, drawingPadRef]);
+
+  // Disabled: glitches
+  // useEffect(() => {
+  //   if (!padStep.drawing) return;
+  //   if (!drawingPadRef.current) return;
+
+  //   console.log('about to load', padStep.drawing);
+  //   drawingPadRef.current.loadSaveData(lzString.decompressFromBase64(padStep.drawing), true);
+  // }, [padStep, drawingPadRef]);
 
   return (
     <>
-      <p>This is a WordToDrawing step. {padStep.round_number}</p>
-      {previousStep && <Link to={`/game/${game.uuid}/step/${previousStep.uuid}`}>Précédente</Link>}
-      {nextStep && <Link to={`/game/${game.uuid}/step/${nextStep.uuid}`}>Suivante</Link>}
-      {!nextStep && <Link to={`/game/${game.uuid}/recap`}>Récap</Link>}
+      <p>Phrase à dessiner : {padStep.sentence}</p>
+      <CanvasDraw
+        ref={drawingPadRef}
+        hideGrid
+        brushColor={color}
+        brushRadius={color === DrawingColor.WHITE ? eraserThickness : thickness}
+      />
+      <BrushPicker color={color} setColor={setColor} />
     </>
   );
 };

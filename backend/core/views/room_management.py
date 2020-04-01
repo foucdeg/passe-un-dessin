@@ -42,7 +42,6 @@ class RoomCreationView(View):
     def post(self, request):
 
         try:
-            print(request.session["player_id"])
             player_id = request.session["player_id"]
             player = Player.objects.get(uuid=player_id)
         except (KeyError, Player.DoesNotExist):

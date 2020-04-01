@@ -141,4 +141,4 @@ class PadStep(BaseModel):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
 
     sentence = models.CharField(max_length=100, blank=True, null=True)
-    drawing = models.CharField(max_length=10000, blank=True, null=True)
+    drawing = models.TextField(null=True, blank=True)

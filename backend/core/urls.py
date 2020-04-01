@@ -21,4 +21,5 @@ urlpatterns = [
         game.PadStepRetrieveAPIView.as_view(),
         name="get_pad_step",
     ),
+    path("pad-step/<str:uuid>/save", game.save_step, name="save_dtep"),
 ]
