@@ -1,43 +1,17 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { RootState } from 'redux/types';
-import { useSelector, useDispatch } from 'react-redux';
-import { useParams, useHistory } from 'react-router';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 import TextInput from 'components/TextInput';
-import {
-  useServerSentEvent,
-  SERVER_EVENT_TYPES,
-  RoundStartsEventType,
-} from 'services/networking/server-events';
 import { useSavePad } from 'redux/Game/hooks';
-import { startRounds } from 'redux/Game';
 
 const PadInit: React.FunctionComponent = () => {
   const { padId } = useParams();
   const game = useSelector((state: RootState) => state.game.game);
   const [sentence, setSentence] = useState<string>('');
-  const history = useHistory();
   const [, doSavePad] = useSavePad();
-  const dispatch = useDispatch();
 
   const pad = game?.pads.find(pad => pad.uuid === padId);
-
-  const eventCallback = useCallback(
-    ({ round_number: roundNumber }: RoundStartsEventType) => {
-      if (!game || !pad) return;
-
-      dispatch(startRounds({}));
-
-      const stepForRound = pad.steps[roundNumber];
-      history.push(`/game/${game.uuid}/step/${stepForRound.uuid}`);
-    },
-    [dispatch, game, history, pad],
-  );
-
-  useServerSentEvent<RoundStartsEventType>(
-    `game-${game?.uuid}`,
-    SERVER_EVENT_TYPES.ROUND_STARTS,
-    eventCallback,
-  );
 
   if (!game) return null;
   if (!pad) return null;

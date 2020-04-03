@@ -7,7 +7,8 @@ from rest_framework.generics import RetrieveAPIView
 
 from core.models import Game, Pad, PadStep
 from core.serializers import GameSerializer, PadSerializer, PadStepSerializer
-from core.service.game_service import all_pads_initialized, switch_to_rounds
+from core.service.game_service import (all_pads_initialized, round_finished,
+                                       start_next_round, switch_to_rounds)
 
 
 class GameRetrieveAPIView(RetrieveAPIView):
@@ -69,13 +70,20 @@ def save_step(request, uuid):
     try:
         sentence = json_body["sentence"]
         step.sentence = sentence
-        step.save()
     except KeyError:
         try:
             drawing = json_body["drawing"]
             step.drawing = drawing
-            step.save()
         except KeyError:
             return HttpResponseBadRequest("Provide either sentence or drawing!")
+
+    with transaction.atomic():
+        game = step.pad.game
+        game_id = game.uuid
+        round_number = step.round_number
+        round_steps = PadStep.objects.select_for_update().filter(pad__game__uuid=game_id, round_number=round_number)
+        step.save()
+        if round_finished(round_steps, round_number):
+            start_next_round(game, round_number + 1)
 
     return JsonResponse(PadStepSerializer(step).data)

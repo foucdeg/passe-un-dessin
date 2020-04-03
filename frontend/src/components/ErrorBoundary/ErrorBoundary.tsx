@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/browser';
 import React, { ReactNode } from 'react';
 
 import { IFallbackProps } from 'components/AppCrashFallback/AppCrashFallback';
@@ -20,14 +19,6 @@ class ErrorBoundary extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false, eventId: '' };
-  }
-
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    Sentry.withScope(scope => {
-      scope.setExtras(errorInfo);
-      const eventId = Sentry.captureException(error);
-      this.setState({ eventId });
-    });
   }
 
   render() {

@@ -16,15 +16,22 @@ export const useFetchStep = () => {
 export const useSaveStepDrawing = () => {
   /* eslint-disable-next-line @typescript-eslint/ban-ts-ignore */
   // @ts-ignore
-  return useAsyncFn(async (stepId: string, drawing: string) => {
-    await client.put(`/pad-step/${stepId}/save`, { drawing });
+  return useAsyncFn(async (step: PadStep, drawing: string) => {
+    await client.put(`/pad-step/${step.uuid}/save`, { drawing });
   });
 };
 
 export const useSaveStepSentence = () => {
+  const dispatch = useDispatch();
   /* eslint-disable-next-line @typescript-eslint/ban-ts-ignore */
   // @ts-ignore
-  return useAsyncFn(async (stepId: string, sentence: string) => {
-    await client.put(`/pad-step/${stepId}/save`, { sentence });
+  return useAsyncFn(async (step: PadStep, sentence: string) => {
+    await client.put(`/pad-step/${step.uuid}/save`, { sentence });
+    dispatch(
+      updateStep({
+        ...step,
+        sentence,
+      }),
+    );
   });
 };

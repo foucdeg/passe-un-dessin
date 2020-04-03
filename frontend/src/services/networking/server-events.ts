@@ -20,20 +20,21 @@ export enum SERVER_EVENT_TYPES {
   ROUND_STARTS = 'ROUND_STARTS',
 }
 
-export function useServerSentEvent<EventDataType>(
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+export function useServerSentEvent<EventDataType = any>(
   channel: string,
-  messageType: string,
   callback: (msg: EventDataType) => void,
+  messageType?: string,
 ) {
   useEffect(() => {
     const eventSource: EventSource = new EventSource(
       `${process.env.REACT_APP_EVENTS_HOST}/events/?channel=${channel}`,
     );
     eventSource.onmessage = (event: MessageEvent) => {
-      const { message_type: receivedMessageType, ...data } = JSON.parse(event.data);
-      if (receivedMessageType !== messageType) return;
+      const parsedEvent = JSON.parse(event.data);
+      if (messageType && parsedEvent.messageType !== messageType) return;
 
-      callback(data as EventDataType);
+      callback(parsedEvent as EventDataType);
     };
 
     return () => {

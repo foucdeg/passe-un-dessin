@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/browser';
+/* eslint-disable @typescript-eslint/no-var-requires */
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -7,27 +7,14 @@ import App from './App';
 import configureStore, { history } from './redux/store';
 import { register } from './serviceWorker';
 
-declare global {
-  interface Window {
-    config: {
-      sentry: {
-        dsn: string;
-        release: string;
-        environment: string;
-      };
-    };
-  }
-}
+const { store } = configureStore();
 
-if (window.config && window.config.sentry && window.config.sentry.dsn) {
-  Sentry.init({
-    dsn: window.config.sentry.dsn,
-    release: window.config.sentry.release,
-    environment: window.config.sentry.environment,
+if (process.env.NODE_ENV === 'development') {
+  const whyDidYouRender = require('@welldone-software/why-did-you-render');
+  whyDidYouRender(React, {
+    trackAllPureComponents: true,
   });
 }
-
-const { store } = configureStore();
 
 const rootEl = document.getElementById('root');
 

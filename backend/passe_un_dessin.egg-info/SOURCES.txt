@@ -1,5 +1,7 @@
 setup.py
 passe_un_dessin/__init__.py
+passe_un_dessin/asgi.py
+passe_un_dessin/routing.py
 passe_un_dessin/urls.py
 passe_un_dessin/views.py
 passe_un_dessin/wsgi.py

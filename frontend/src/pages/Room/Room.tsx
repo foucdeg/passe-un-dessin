@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { RoomContainer } from './Room.style';
 import { RootState } from 'redux/types';
 import { useSelector, useDispatch } from 'react-redux';
@@ -7,12 +7,7 @@ import { useParams, useHistory } from 'react-router';
 import { addPlayerToRoom } from 'redux/Room';
 import { MIN_PLAYERS, MAX_PLAYERS } from 'redux/Game/constants';
 import { useStartGame } from 'redux/Game/hooks';
-import {
-  useServerSentEvent,
-  SERVER_EVENT_TYPES,
-  NewPlayerEventDataType,
-  GameStartsEventDataType,
-} from 'services/networking/server-events';
+import { useServerSentEvent, SERVER_EVENT_TYPES } from 'services/networking/server-events';
 
 const Room: React.FunctionComponent = () => {
   const { roomId } = useParams();
@@ -34,21 +29,20 @@ const Room: React.FunctionComponent = () => {
     }
   }, [room, player, doJoinRoom]);
 
-  useServerSentEvent<NewPlayerEventDataType>(
-    `room-${room?.uuid}`,
-    SERVER_EVENT_TYPES.PLAYER_CONNECTED,
-    data => {
-      dispatch(addPlayerToRoom(data.player));
+  const onRoomEvent = useCallback(
+    ({ message_type: messageType, player, game }) => {
+      switch (messageType) {
+        case SERVER_EVENT_TYPES.PLAYER_CONNECTED:
+          return dispatch(addPlayerToRoom(player));
+
+        case SERVER_EVENT_TYPES.GAME_STARTS:
+          return history.push(`/game/${game.uuid}`);
+      }
     },
+    [dispatch, history],
   );
 
-  useServerSentEvent<GameStartsEventDataType>(
-    `room-${room?.uuid}`,
-    SERVER_EVENT_TYPES.GAME_STARTS,
-    data => {
-      history.push(`/game/${data.game.uuid}`);
-    },
-  );
+  useServerSentEvent(`room-${room?.uuid}`, onRoomEvent);
 
   if (!room) return null;
   if (!player) return null;

@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "channels",
     "django_eventstream",
+    "background_task",
     # Our apps
     "core",
 ]

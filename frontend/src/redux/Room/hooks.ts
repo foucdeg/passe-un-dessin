@@ -2,6 +2,7 @@ import { useAsyncFn } from 'react-use';
 import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
 import { updateRoom } from './slice';
+import { history } from 'redux/store';
 
 export const useFetchRoom = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ export const useFetchRoom = () => {
 export const useCreateRoom = () => {
   return useAsyncFn(async () => {
     const room = await client.post('/room', {});
-    window.location.href = `/room/${room.uuid}`;
+    history.push(`/room/${room.uuid}`);
   });
 };
 

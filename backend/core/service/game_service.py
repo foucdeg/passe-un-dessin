@@ -73,16 +73,45 @@ def all_pads_initialized(game: Game):
     return all([pad.sentence is not None for pad in game.pads.all()])
 
 
+def round_finished(steps: List[PadStep], round_number: int):
+    def step_finished(step: PadStep):
+        if round_number % 2 == 0:
+            return step.drawing is not None
+        else:
+            return step.sentence is not None
+
+    print([step.drawing for step in steps])
+    return all([step_finished(step) for step in steps])
+
+
 def switch_to_rounds(game: Game):
     game.phase = GamePhase.ROUNDS.value
     game.current_round = 0
     game.save()
     for pad in game.pads.all():
         step = pad.steps.get(round_number=game.current_round)
-        print(pad.sentence)
         step.sentence = pad.sentence
         step.save()
 
     send_event(
         "game-%s" % game.uuid.hex, "message", RoundStartsMessage(game, 0).serialize(),
+    )
+
+
+def start_next_round(game: Game, new_round: int):
+    game.current_round = new_round
+    game.save()
+    for pad in game.pads.all():
+        previous_step = pad.steps.get(round_number=new_round - 1)
+        step = pad.steps.get(round_number=new_round)
+        if new_round % 2 == 0:
+            step.sentence = previous_step.sentence
+        else:
+            step.drawing = previous_step.drawing
+        step.save()
+
+    send_event(
+        "game-%s" % game.uuid.hex,
+        "message",
+        RoundStartsMessage(game, round_number=new_round).serialize(),
     )

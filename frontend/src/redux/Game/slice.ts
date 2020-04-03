@@ -21,14 +21,14 @@ const gameSlice = createSlice({
 
       state.game.pads[matchingPadIndex] = action.payload;
     },
-    startRounds: (state, action: PayloadAction<{}>) => {
+    startRound: (state, action: PayloadAction<{ roundNumber?: number }>) => {
       if (!state.game) return;
 
       state.game.phase = GamePhase.ROUNDS;
-      state.game.current_round = 0;
+      state.game.current_round = action.payload.roundNumber || 0;
     },
   },
 });
 
-export const { updateGame, updatePad, startRounds } = gameSlice.actions;
+export const { updateGame, updatePad, startRound } = gameSlice.actions;
 export default gameSlice.reducer;

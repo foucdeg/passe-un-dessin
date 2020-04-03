@@ -1,7 +1,6 @@
-import * as Sentry from '@sentry/browser';
 import React from 'react';
 
-import { Button, Container, HelperList, PageContent, Title } from './AppCrashFallback.style';
+import { Container, HelperList, PageContent, Title } from './AppCrashFallback.style';
 
 /**
  * Error page inspiration https://medium.com/design-ideas-thoughts/designing-error-pages-8d82e16e3472
@@ -10,8 +9,6 @@ import { Button, Container, HelperList, PageContent, Title } from './AppCrashFal
 export interface IFallbackProps {
   eventId: string;
 }
-
-const reportDialog = (eventId: string) => () => Sentry.showReportDialog({ eventId });
 
 const AppCrashFallback: React.FunctionComponent<IFallbackProps> = ({ eventId }) => {
   return (
@@ -28,9 +25,6 @@ const AppCrashFallback: React.FunctionComponent<IFallbackProps> = ({ eventId }) 
           <HelperList>
             <li>Refresh the page (sometimes it helps).</li>
             <li>Try again in 30 minutes.</li>
-            <li>
-              <Button onClick={reportDialog(eventId)}>Tell us what happened</Button>
-            </li>
           </HelperList>
         </PageContent>
       </Container>

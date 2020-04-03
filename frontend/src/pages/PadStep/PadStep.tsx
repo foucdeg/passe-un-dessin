@@ -24,10 +24,10 @@ const PadStep: React.FunctionComponent = () => {
       if (!step) return;
 
       if (values.sentence) {
-        doSaveStepSentence(step.uuid, values.sentence);
+        doSaveStepSentence(step, values.sentence);
       }
       if (values.drawing) {
-        doSaveStepDrawing(step.uuid, values.drawing);
+        doSaveStepDrawing(step, values.drawing);
       }
     },
     [doSaveStepDrawing, doSaveStepSentence, step],

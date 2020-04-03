@@ -3,6 +3,7 @@ import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
 import { updateGame, updatePad } from './slice';
 import { Pad } from './types';
+import { history } from 'redux/store';
 
 export const useFetchGame = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ export const useStartGame = () => {
   // @ts-ignore
   return useAsyncFn(async (roomId: string) => {
     const { game_id: gameId } = await client.put(`/room/${roomId}/start`, {});
-    window.location.href = `/game/${gameId}`;
+    history.push(`/game/${gameId}`);
   });
 };
 
