@@ -1,10 +1,10 @@
 import logging
-from random import shuffle
+from random import sample
 from typing import List
 
 from django_eventstream import send_event
 
-from core.messages import RoundStartsMessage
+from core.messages import DebriefStartsMessage, RoundStartsMessage
 from core.models import Game, GamePhase, Pad, PadStep, Player, Room, StepType
 
 logger = logging.getLogger(__name__)
@@ -18,19 +18,30 @@ def get_round_count(game: Game):
     return player_count if even_players else player_count - 1
 
 
-def initialize_game(room: Room):
+def order_players(players: List[Player], requested_players_order: List[str]):
+    if requested_players_order is None:
+        return sample(players, len(players))
+
+    def sort_fn(player: Player):
+        return requested_players_order.index(player.uuid.hex)
+
+    return sorted(players, key=sort_fn)
+
+
+def initialize_game(room: Room, requested_players_order: List[str]):
     logger.debug("Initializing game for room %s" % room.uuid)
 
     game = Game.objects.create(room=room)
 
     players = list(room.players.all())
-    shuffle(players)  # TODO more player ordering strategies
-    for player in players:
+    ordered_players = order_players(players, requested_players_order)
+
+    for player in ordered_players:
         player.game = game
         player.save()
 
-    for index in range(len(players)):
-        initialize_pad(game, index, players)
+    for index in range(len(ordered_players)):
+        initialize_pad(game, index, ordered_players)
 
     return game
 
@@ -69,24 +80,10 @@ def initialize_pad(game: Game, index: int, players: List[Player]):
         )
 
 
-def all_pads_initialized(game: Game):
-    return all([pad.sentence is not None for pad in game.pads.all()])
-
-
-def round_finished(steps: List[PadStep], round_number: int):
-    def step_finished(step: PadStep):
-        if round_number % 2 == 0:
-            return step.drawing is not None
-        else:
-            return step.sentence is not None
-
-    print([step.drawing for step in steps])
-    return all([step_finished(step) for step in steps])
-
-
 def switch_to_rounds(game: Game):
     game.phase = GamePhase.ROUNDS.value
     game.current_round = 0
+    game.pads_done = 0
     game.save()
     for pad in game.pads.all():
         step = pad.steps.get(round_number=game.current_round)
@@ -99,7 +96,11 @@ def switch_to_rounds(game: Game):
 
 
 def start_next_round(game: Game, new_round: int):
+    round_count = get_round_count(game)
+    if new_round >= round_count:
+        return end_rounds(game)
     game.current_round = new_round
+    game.pads_done = 0
     game.save()
     for pad in game.pads.all():
         previous_step = pad.steps.get(round_number=new_round - 1)
@@ -114,4 +115,14 @@ def start_next_round(game: Game, new_round: int):
         "game-%s" % game.uuid.hex,
         "message",
         RoundStartsMessage(game, round_number=new_round).serialize(),
+    )
+
+
+def end_rounds(game: Game):
+    game.phase = GamePhase.DEBRIEF.value
+    game.current_round = None
+    game.pads_done = 0
+    game.save()
+    send_event(
+        "game-%s" % game.uuid.hex, "message", DebriefStartsMessage(game).serialize(),
     )

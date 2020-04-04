@@ -2,7 +2,7 @@ import { useAsyncFn } from 'react-use';
 import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
 import { updateRoom } from './slice';
-import { history } from 'redux/store';
+import history from 'services/history';
 
 export const useFetchRoom = () => {
   const dispatch = useDispatch();

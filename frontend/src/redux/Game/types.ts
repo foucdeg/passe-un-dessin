@@ -35,5 +35,5 @@ export interface Game {
   pads: Pad[];
   rounds: PadStep[];
   phase: GamePhase;
-  current_round: number;
+  current_round: number | null;
 }

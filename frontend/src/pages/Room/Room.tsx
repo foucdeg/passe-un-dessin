@@ -1,33 +1,25 @@
-import React, { useEffect, useCallback } from 'react';
-import { RoomContainer } from './Room.style';
+import React, { useEffect, lazy, useCallback } from 'react';
 import { RootState } from 'redux/types';
 import { useSelector, useDispatch } from 'react-redux';
-import { useFetchRoom, useJoinRoom } from 'redux/Room/hooks';
-import { useParams, useHistory } from 'react-router';
+import { useFetchRoom } from 'redux/Room/hooks';
+import { useParams, Switch, Route, useRouteMatch, useHistory } from 'react-router';
+import { SERVER_EVENT_TYPES, useServerSentEvent } from 'services/networking/server-events';
 import { addPlayerToRoom } from 'redux/Room';
-import { MIN_PLAYERS, MAX_PLAYERS } from 'redux/Game/constants';
-import { useStartGame } from 'redux/Game/hooks';
-import { useServerSentEvent, SERVER_EVENT_TYPES } from 'services/networking/server-events';
+
+const Game = lazy(() => import('../../pages/Game'));
+const RoomLobby = lazy(() => import('../../pages/RoomLobby'));
 
 const Room: React.FunctionComponent = () => {
   const { roomId } = useParams();
   const [, doFetchRoom] = useFetchRoom();
-  const [, doJoinRoom] = useJoinRoom();
-  const [, doStartGame] = useStartGame();
   const room = useSelector((state: RootState) => state.room.room);
-  const player = useSelector((state: RootState) => state.player.player);
+  const { path } = useRouteMatch();
   const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
     doFetchRoom(roomId);
   }, [doFetchRoom, roomId]);
-
-  useEffect(() => {
-    if (room && player && !room.players.some(roomPlayer => roomPlayer.uuid === player.uuid)) {
-      doJoinRoom(room.uuid);
-    }
-  }, [room, player, doJoinRoom]);
 
   const onRoomEvent = useCallback(
     ({ message_type: messageType, player, game }) => {
@@ -36,35 +28,21 @@ const Room: React.FunctionComponent = () => {
           return dispatch(addPlayerToRoom(player));
 
         case SERVER_EVENT_TYPES.GAME_STARTS:
-          return history.push(`/game/${game.uuid}`);
+          return history.push(`/room/${room?.uuid}/game/${game.uuid}`);
       }
     },
-    [dispatch, history],
+    [dispatch, history, room],
   );
 
   useServerSentEvent(`room-${room?.uuid}`, onRoomEvent);
 
   if (!room) return null;
-  if (!player) return null;
-
-  const goodNumberOfPlayers =
-    room.players.length >= MIN_PLAYERS && room.players.length <= MAX_PLAYERS;
-
-  const isPlayerAdmin = player.uuid === room.admin.uuid;
 
   return (
-    <RoomContainer>
-      <p>Bienvenue sur la room {room.uuid} !</p>
-      <p>Joueurs :</p>
-      <ul>
-        {room.players.map(player => (
-          <li key={player.uuid}>{player.name}</li>
-        ))}
-      </ul>
-      {goodNumberOfPlayers && isPlayerAdmin && (
-        <button onClick={() => doStartGame(room.uuid)}>Start Game</button>
-      )}
-    </RoomContainer>
+    <Switch>
+      <Route path={`${path}/game/:gameId`} component={Game} />
+      <Route path={`${path}`} exact component={RoomLobby} />
+    </Switch>
   );
 };
 

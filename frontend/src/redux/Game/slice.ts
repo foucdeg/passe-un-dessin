@@ -27,8 +27,14 @@ const gameSlice = createSlice({
       state.game.phase = GamePhase.ROUNDS;
       state.game.current_round = action.payload.roundNumber || 0;
     },
+    startDebrief: (state, action: PayloadAction<{}>) => {
+      if (!state.game) return;
+
+      state.game.phase = GamePhase.DEBRIEF;
+      state.game.current_round = null;
+    },
   },
 });
 
-export const { updateGame, updatePad, startRound } = gameSlice.actions;
+export const { updateGame, updatePad, startRound, startDebrief } = gameSlice.actions;
 export default gameSlice.reducer;

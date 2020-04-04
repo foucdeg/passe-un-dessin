@@ -78,3 +78,7 @@ class GameStartsMessageSerializer(MessageSerializer):
 class RoundStartsMessageSerializer(MessageSerializer):
     game = GameIdSerializer()
     round_number = serializers.IntegerField()
+
+
+class DebriefStartsMessageSerializer(MessageSerializer):
+    game = GameIdSerializer()

@@ -8,12 +8,13 @@ import PadInit from '../PadInit';
 import PadStep from '../PadStep';
 import GameRecap from '../GameRecap';
 import { getRedirectPath } from 'services/game.service';
-import { useServerSentEvent } from 'services/networking/server-events';
-import { startRound } from 'redux/Game';
+import { useServerSentEvent, SERVER_EVENT_TYPES } from 'services/networking/server-events';
+import { startRound, startDebrief } from 'redux/Game';
 
 const Game: React.FunctionComponent = () => {
   const { gameId } = useParams();
   const [, doFetchGame] = useFetchGame();
+  const room = useSelector((state: RootState) => state.room.room);
   const game = useSelector((state: RootState) => state.game.game);
   const player = useSelector((state: RootState) => state.player.player);
   const { push } = useHistory();
@@ -26,33 +27,40 @@ const Game: React.FunctionComponent = () => {
   }, [doFetchGame, gameId]);
 
   useEffect(() => {
-    if (!game || !player) {
+    if (!room || !game || !player) {
       return;
     }
-    if (location.pathname !== `/game/${game.uuid}`) {
+    if (location.pathname !== `/room/${room.uuid}/game/${game.uuid}`) {
       return;
     }
-    console.log('hi');
-    push(getRedirectPath(game, player));
-  }, [game, player, push, location.pathname]);
+    push(getRedirectPath(room, game, player));
+  }, [game, player, push, location.pathname, room]);
 
   const eventCallback = useCallback(
     ({ message_type: messageType, round_number: roundNumber }) => {
-      if (!game || !player) return;
+      if (!room || !game || !player) return;
 
-      dispatch(startRound({ roundNumber }));
+      switch (messageType) {
+        case SERVER_EVENT_TYPES.ROUND_STARTS:
+          dispatch(startRound({ roundNumber }));
 
-      const targetStep = game.rounds.find(
-        step => step.player.uuid === player.uuid && step.round_number === roundNumber,
-      );
-      if (!targetStep) {
-        console.error(`No step found for player ${player.uuid} and round ${roundNumber}`);
-        return;
+          const targetStep = game.rounds.find(
+            step => step.player.uuid === player.uuid && step.round_number === roundNumber,
+          );
+          if (!targetStep) {
+            console.error(`No step found for player ${player.uuid} and round ${roundNumber}`);
+            return;
+          }
+
+          return push(`/room/${room.uuid}/game/${game.uuid}/step/${targetStep.uuid}`);
+        case SERVER_EVENT_TYPES.DEBRIEF_STARTS:
+          doFetchGame(gameId);
+          dispatch(startDebrief({}));
+
+          return push(`/room/${room.uuid}/game/${game.uuid}/recap`);
       }
-
-      push(`/game/${game.uuid}/step/${targetStep.uuid}`);
     },
-    [dispatch, game, player, push],
+    [dispatch, doFetchGame, game, gameId, player, push, room],
   );
 
   useServerSentEvent(`game-${game?.uuid}`, eventCallback);
@@ -61,7 +69,6 @@ const Game: React.FunctionComponent = () => {
 
   return (
     <GameContainer>
-      <p>Bienvenue sur la game {game.uuid} !</p>
       <Switch>
         <Route path={`${path}/pad/:padId/init`} component={PadInit} />
         <Route path={`${path}/step/:stepId`} component={PadStep} />

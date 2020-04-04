@@ -101,6 +101,7 @@ class Game(BaseModel):
         default="INIT",
     )
     current_round = models.IntegerField(null=True)
+    pads_done = models.IntegerField(default=0)
 
     def rounds(self):
         def sort_fn(step: PadStep):

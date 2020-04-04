@@ -1,8 +1,5 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import { createBrowserHistory } from 'history';
 import reducer from './reducers';
-
-export const history = createBrowserHistory();
 
 export default function buildStore(preloadedState = {}) {
   const store = configureStore({

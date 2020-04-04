@@ -97,9 +97,12 @@ def start_game(request, room_id):
     if request.method != "PUT":
         return HttpResponseBadRequest("PUT expected")
 
+    json_body = json.loads(request.body)
+    players_order = json_body.get("playersOrder", None)
+
     try:
         room = Room.objects.get(uuid=room_id)
-        game = initialize_game(room)
+        game = initialize_game(room, players_order)
         room.current_game = game
         room.save()
 

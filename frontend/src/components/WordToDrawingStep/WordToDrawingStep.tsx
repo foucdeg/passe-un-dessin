@@ -44,6 +44,7 @@ const WordToDrawingStep: React.FC<Props> = ({ padStep, saveStep }) => {
   return (
     <>
       <p>Phrase à dessiner : {padStep.sentence}</p>
+      <p>Tu as {ROUND_DURATION} secondes !</p>
       <CanvasDraw
         ref={drawingPadRef}
         hideGrid

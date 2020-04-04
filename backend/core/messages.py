@@ -40,3 +40,16 @@ class RoundStartsMessage:
         from core.serializers import RoundStartsMessageSerializer
 
         return RoundStartsMessageSerializer(self).data
+
+
+class DebriefStartsMessage:
+    message_type = "DEBRIEF_STARTS"
+    game = None
+
+    def __init__(self, game: Game):
+        self.game = game
+
+    def serialize(self):
+        from core.serializers import DebriefStartsMessageSerializer
+
+        return DebriefStartsMessageSerializer(self).data
