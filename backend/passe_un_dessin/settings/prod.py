@@ -22,6 +22,7 @@ INSTALLED_APPS = INSTALLED_APPS + ["storages"]
 SECURE_REDIRECT_EXEMPT = [r"/?health"]
 
 DEFAULT_FROM_EMAIL = "contact@passe-un-dessin.fouc.net"
+EVENTSTREAM_ALLOW_ORIGIN = "passe-un-dessin.fouc.net"
 
 # Logging
 LOGGING = {
