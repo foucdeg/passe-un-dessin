@@ -38,7 +38,6 @@ const PadStep: React.FunctionComponent = () => {
 
   return (
     <>
-      <p>Bienvenue sur la step {step.uuid} !</p>
       {step.step_type === StepType.DRAWING_TO_WORD ? (
         <DrawingToWordStep padStep={step} saveStep={saveStep} />
       ) : (

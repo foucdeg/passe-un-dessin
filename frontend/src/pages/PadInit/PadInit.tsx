@@ -18,7 +18,6 @@ const PadInit: React.FunctionComponent = () => {
 
   return (
     <>
-      <p>Bienvenue sur le pad {pad.uuid} !</p>
       <p>Etape d'initialisation. Choisis un mot ou une phrase : </p>
       {pad.sentence ? (
         <p>{pad.sentence}</p>
