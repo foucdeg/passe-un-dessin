@@ -10,7 +10,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = [
     # Change me!
-    "localhost"
+    "passe-un-dessin.fouc.net"
 ]
 
 if "ALLOWED_HOST" in os.environ:
@@ -21,7 +21,7 @@ INSTALLED_APPS = INSTALLED_APPS + ["storages"]
 # Secure connection
 SECURE_REDIRECT_EXEMPT = [r"/?health"]
 
-DEFAULT_FROM_EMAIL = "contact@passe-un-dessin.com"
+DEFAULT_FROM_EMAIL = "contact@passe-un-dessin.fouc.net"
 
 # Logging
 LOGGING = {

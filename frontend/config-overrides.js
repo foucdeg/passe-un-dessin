@@ -17,8 +17,8 @@ module.exports = {
     const ManifestPlugin = require('webpack-manifest-plugin');
     config.plugins.push(
       new ManifestPlugin({
-        fileName: "static-manifest.json", // manifest.json was already taken (PWA)
-        publicPath: "",
+        fileName: 'static-manifest.json', // manifest.json was already taken (PWA)
+        publicPath: '',
         generate: (seed, files) =>
           files.reduce(
             (manifest, { name, path, isInitial }) => ({
@@ -28,19 +28,15 @@ module.exports = {
             seed,
           ),
       }),
-    )
+    );
 
     switch (env) {
-      case "development":
-        config.output.publicPath = "http://localhost:3000/"
-        break
-      case "production":
-        config.output.publicPath = "/static/front/"
-        break
+      case 'development':
+        config.output.publicPath = 'http://localhost:3000/';
+        break;
       default:
-        break
+        break;
     }
-
 
     return config;
   },
