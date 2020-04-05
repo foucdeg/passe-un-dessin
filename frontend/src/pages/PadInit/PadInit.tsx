@@ -8,6 +8,7 @@ import { useSavePad } from 'redux/Game/hooks';
 const PadInit: React.FunctionComponent = () => {
   const { padId } = useParams();
   const game = useSelector((state: RootState) => state.game.game);
+  const player = useSelector((state: RootState) => state.player.player);
   const [sentence, setSentence] = useState<string>('');
   const [, doSavePad] = useSavePad();
 
@@ -15,10 +16,14 @@ const PadInit: React.FunctionComponent = () => {
 
   if (!game) return null;
   if (!pad) return null;
+  if (!player) return null;
+
+  const nextPlayer = pad.steps[0].player;
+  const isNextPlayerMe = nextPlayer.uuid === player.uuid;
 
   return (
     <>
-      <p>Etape d'initialisation. Choisis un mot ou une phrase : </p>
+      <p>Commence par choisir un mot ou une phrase : </p>
       {pad.sentence ? (
         <p>{pad.sentence}</p>
       ) : (
@@ -28,8 +33,20 @@ const PadInit: React.FunctionComponent = () => {
             doSavePad(pad, sentence);
           }}
         >
-          <TextInput type="text" value={sentence} onChange={e => setSentence(e.target.value)} />
+          <TextInput
+            autoFocus
+            type="text"
+            value={sentence}
+            onChange={e => setSentence(e.target.value)}
+          />
         </form>
+      )}
+      {isNextPlayerMe ? (
+        <p>Attention, c'est toi qui devras dessiner ça !</p>
+      ) : (
+        <p>
+          Espérons que <strong>{nextPlayer.name}</strong> dessine bien ...
+        </p>
       )}
     </>
   );

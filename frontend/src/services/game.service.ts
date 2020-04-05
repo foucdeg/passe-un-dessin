@@ -3,25 +3,7 @@ import { Player } from 'redux/Player/types';
 import { Room } from 'redux/Room/types';
 
 type PreviousNextSteps = [PadStep | null, PadStep | null];
-
-export const getPreviousNextSteps = (game: Game, step: PadStep): PreviousNextSteps => {
-  return game.pads.reduce(
-    (accumulator, pad) => {
-      if (accumulator[0]) {
-        return accumulator;
-      }
-      const stepIndex = pad.steps.findIndex(padStep => padStep.uuid === step.uuid);
-      if (stepIndex === -1) {
-        return accumulator;
-      }
-      return [
-        stepIndex > 0 ? pad.steps[stepIndex - 1] : null,
-        stepIndex + 1 < pad.steps.length ? pad.steps[stepIndex + 1] : null,
-      ];
-    },
-    [null, null] as PreviousNextSteps,
-  );
-};
+type PreviousNextPlayers = [Player | null, Player | null];
 
 export const getRedirectPath = (room: Room, game: Game, player: Player) => {
   switch (game.phase) {
@@ -44,4 +26,23 @@ export const getRedirectPath = (room: Room, game: Game, player: Player) => {
     case GamePhase.DEBRIEF:
       return `/room/${room.uuid}/game/${game.uuid}/recap`;
   }
+};
+
+export const getPreviousNextPlayers = (game: Game, step: PadStep): PreviousNextPlayers => {
+  return game.pads.reduce(
+    (accumulator, pad) => {
+      if (accumulator[0]) {
+        return accumulator;
+      }
+      const stepIndex = pad.steps.findIndex(padStep => padStep.uuid === step.uuid);
+      if (stepIndex === -1) {
+        return accumulator;
+      }
+      return [
+        stepIndex > 0 ? pad.steps[stepIndex - 1].player : pad.initial_player,
+        stepIndex + 1 < pad.steps.length ? pad.steps[stepIndex + 1].player : null,
+      ];
+    },
+    [null, null] as PreviousNextPlayers,
+  );
 };

@@ -12,7 +12,13 @@ const DrawingRecap: React.FC<Props> = ({ drawing, playerName }) => (
   <StyledDrawingRecap>
     <span>{playerName}</span>
     :&nbsp;
-    <CanvasDraw disabled hideGrid saveData={lzString.decompressFromBase64(drawing)} />
+    <CanvasDraw
+      disabled
+      canvasWidth={800}
+      canvasHeight={600}
+      hideGrid
+      saveData={lzString.decompressFromBase64(drawing)}
+    />
   </StyledDrawingRecap>
 );
 

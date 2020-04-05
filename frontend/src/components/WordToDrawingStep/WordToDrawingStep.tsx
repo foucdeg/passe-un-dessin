@@ -4,18 +4,22 @@ import CanvasDraw from 'react-canvas-draw';
 import lzString from 'lz-string';
 import BrushPicker from 'components/BrushPicker';
 import { DrawingColor } from 'components/BrushPicker/BrushPicker';
+import { Player } from 'redux/Player/types';
+import TimerBar from 'components/TimerBar';
 
 const ROUND_DURATION = 60; // seconds
 
 interface Props {
   padStep: PadStep;
+  previousPlayer: Player | null;
+  nextPlayer: Player | null;
   saveStep: (values: { sentence?: string; drawing?: string }) => void;
 }
 
-const thickness = 4;
-const eraserThickness = 20;
+const thickness = 2;
+const eraserThickness = 10;
 
-const WordToDrawingStep: React.FC<Props> = ({ padStep, saveStep }) => {
+const WordToDrawingStep: React.FC<Props> = ({ padStep, previousPlayer, nextPlayer, saveStep }) => {
   const [color, setColor] = useState<DrawingColor>(DrawingColor.BLACK);
 
   const drawingPadRef = useRef<CanvasDraw>(null);
@@ -41,17 +45,26 @@ const WordToDrawingStep: React.FC<Props> = ({ padStep, saveStep }) => {
     };
   }, [saveDrawing, drawingPadRef]);
 
+  if (!previousPlayer) return null;
+
   return (
     <>
-      <p>Phrase à dessiner : {padStep.sentence}</p>
+      <TimerBar duration={60} />
+      <p>
+        Phrase à dessiner : <strong>{padStep.sentence}</strong> (sortie du cerveau malade de{' '}
+        {previousPlayer.name})
+      </p>
       <p>Tu as {ROUND_DURATION} secondes !</p>
       <CanvasDraw
         ref={drawingPadRef}
-        hideGrid
         brushColor={color}
+        lazyRadius={0}
+        canvasWidth={800}
+        canvasHeight={600}
         brushRadius={color === DrawingColor.WHITE ? eraserThickness : thickness}
       />
       <BrushPicker color={color} setColor={setColor} />
+      {nextPlayer && <p>Ça tombe bien, il paraît que {nextPlayer.name} aime l'art moderne.</p>}
     </>
   );
 };

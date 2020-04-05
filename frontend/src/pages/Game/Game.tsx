@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { GameContainer } from './Game.style';
+import { GameContainer, InnerGameContainer } from './Game.style';
 import { RootState } from 'redux/types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useHistory, Switch, Route, useRouteMatch, useLocation } from 'react-router';
@@ -69,11 +69,13 @@ const Game: React.FunctionComponent = () => {
 
   return (
     <GameContainer>
-      <Switch>
-        <Route path={`${path}/pad/:padId/init`} component={PadInit} />
-        <Route path={`${path}/step/:stepId`} component={PadStep} />
-        <Route path={`${path}/recap`} component={GameRecap} />
-      </Switch>
+      <InnerGameContainer>
+        <Switch>
+          <Route path={`${path}/pad/:padId/init`} component={PadInit} />
+          <Route path={`${path}/step/:stepId`} component={PadStep} />
+          <Route path={`${path}/recap`} component={GameRecap} />
+        </Switch>
+      </InnerGameContainer>
     </GameContainer>
   );
 };

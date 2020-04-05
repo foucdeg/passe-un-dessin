@@ -38,6 +38,7 @@ const UserNameGate: React.FC<Props> = ({ children }) => {
             <StyledField
               id="username"
               type="text"
+              autoFocus
               value={playerName}
               placeholder={'XXGamerDu62'}
               onChange={e => setPlayerName(e.target.value)}
