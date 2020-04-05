@@ -4,7 +4,9 @@ import { RootState } from 'redux/types';
 import { useSelector } from 'react-redux';
 import Modal from 'components/Modal';
 import { useFetchMe, useCreatePlayer } from 'redux/Player/hooks';
-import TextInput from 'components/TextInput';
+import { UsernameForm, StyledField, StyledButton } from './UserNameGate.style';
+import ModalTitle from 'atoms/ModalTitle';
+import FieldLabel from 'atoms/FieldLabel';
 
 interface Props {
   children: React.ReactNode;
@@ -23,23 +25,25 @@ const UserNameGate: React.FC<Props> = ({ children }) => {
   return (
     <>
       {children}
-      {!player && (
+      {player === false && (
         <Modal isOpen>
-          <h2>Coucou toi !</h2>
-          <p>C'est quoi ton petit nom ?</p>
-          <form
+          <ModalTitle>Comment tu t'appelles ?</ModalTitle>
+          <UsernameForm
             onSubmit={e => {
               e.preventDefault();
               doCreatePlayer(playerName);
             }}
           >
-            <TextInput
+            <FieldLabel htmlFor="username">Choisis un nom</FieldLabel>
+            <StyledField
+              id="username"
               type="text"
               value={playerName}
+              placeholder={'XXGamerDu62'}
               onChange={e => setPlayerName(e.target.value)}
             />
-            <input type="submit" value="Valider " />
-          </form>
+            <StyledButton type="submit">Valider</StyledButton>
+          </UsernameForm>
         </Modal>
       )}
     </>

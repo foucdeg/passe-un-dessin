@@ -15,7 +15,7 @@ import {
 import { RootState } from 'redux/types';
 import { useSelector } from 'react-redux';
 import { useCreateRoom } from 'redux/Room/hooks';
-import { useHistory } from 'react-router';
+import { useHistory, useRouteMatch } from 'react-router';
 import Button from 'components/Button';
 import SecondaryButton from 'components/SecondaryButton';
 
@@ -24,8 +24,9 @@ const Home: React.FunctionComponent = () => {
   const player = useSelector((state: RootState) => state.player.player);
   const history = useHistory();
   const [secondStep, setSecondStep] = useState<boolean>(false);
+  const { path } = useRouteMatch();
 
-  if (!player) return null;
+  if (!['/', '/room/:roomId'].includes(path)) return null;
 
   return (
     <>
@@ -46,10 +47,10 @@ const Home: React.FunctionComponent = () => {
         )}
         {secondStep && (
           <>
-            <HelpParagraph>Te revoilà, {player.name} !</HelpParagraph>
+            {player && <HelpParagraph>Te revoilà, {player.name} !</HelpParagraph>}
             <ButtonRow>
-              <SecondaryButton>Rejoindre une room</SecondaryButton>
-              <Button onClick={() => doCreateRoom(history)}>Créer une room</Button>
+              <SecondaryButton>Rejoindre une partie</SecondaryButton>
+              <Button onClick={() => doCreateRoom(history)}>Lancer une partie</Button>
             </ButtonRow>
             <HelpLink onClick={() => setSecondStep(false)}>Retourner aux règles du jeu</HelpLink>
           </>

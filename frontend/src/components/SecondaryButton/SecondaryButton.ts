@@ -1,23 +1,11 @@
-import styled, { css } from 'styled-components';
-import { colorPalette, fontSize } from 'stylesheet';
+import styled from 'styled-components';
+import { colorPalette } from 'stylesheet';
+import Button from 'components/Button';
 
-const SecondaryButton = styled.button`
-  height: 56px;
-  padding: 18px 32px;
-  background: white;
-  font-size: ${fontSize.medium};
-  cursor: ${props => (props.disabled ? 'default' : 'pointer')};
-  ${props =>
-    props.disabled &&
-    css`
-      pointer-events: none;
-    `}
-
+const SecondaryButton = styled(Button)`
   border: 2px solid ${colorPalette.orange};
-  border-radius: 28px;
   color: ${colorPalette.orange};
-  background-color: ${colorPalette.white};
-  outline: none;
+  background: ${colorPalette.white};
 `;
 
 export default SecondaryButton;

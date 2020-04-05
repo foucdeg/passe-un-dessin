@@ -12,7 +12,7 @@ const MEASUREMENT_UNIT = 'px';
 export const colorPalette = {
   black: '#44374E',
   purple: '#9B37A9',
-  greyDark: '#222',
+  textGrey: 'rgba(68, 55, 78, 0.4)',
   amberLight: '#FFD54F',
   amber: '#FFC107',
   orange: '#F68D4F',
@@ -30,6 +30,7 @@ export const fontFamily = {
 export const fontSize = {
   XXLarge: '60px',
   titles: '32px',
+  smallTitles: '24px',
   medium: '16px',
   small: '14px',
   XSmall: '12px',

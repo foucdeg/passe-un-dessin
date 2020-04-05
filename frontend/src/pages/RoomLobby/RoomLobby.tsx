@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react';
-import { RoomContainer } from './RoomLobby.style';
 import { RootState } from 'redux/types';
 import { useSelector } from 'react-redux';
 import { useJoinRoom } from 'redux/Room/hooks';
 import { MIN_PLAYERS, MAX_PLAYERS } from 'redux/Game/constants';
 import { useStartGame } from 'redux/Game/hooks';
 import { useHistory } from 'react-router';
+import Modal from 'components/Modal';
+import ModalTitle from 'atoms/ModalTitle';
+import FieldLabel from 'atoms/FieldLabel';
+import { Info, PlayerChips, PlayerChip, StyledField, ButtonRow, HelpText } from './RoomLobby.style';
+import Button from 'components/Button';
 
 const Room: React.FunctionComponent = () => {
   const [, doJoinRoom] = useJoinRoom();
@@ -29,18 +33,37 @@ const Room: React.FunctionComponent = () => {
   const isPlayerAdmin = player.uuid === room.admin.uuid;
 
   return (
-    <RoomContainer>
-      <p>Bienvenue sur la room {room.uuid} !</p>
-      <p>Joueurs :</p>
-      <ul>
+    <Modal isOpen>
+      <ModalTitle>Lancer une partie</ModalTitle>
+      <FieldLabel>
+        Inviter des participants{' '}
+        <Info>
+          ({MIN_PLAYERS} à {MAX_PLAYERS} joueurs)
+        </Info>
+      </FieldLabel>
+      <StyledField readOnly value={document.location.href} />
+      <FieldLabel>Participants ayant rejoint la partie :</FieldLabel>
+      <PlayerChips>
         {room.players.map(player => (
-          <li key={player.uuid}>{player.name}</li>
+          <PlayerChip key={player.uuid}>{player.name}</PlayerChip>
         ))}
-      </ul>
-      {goodNumberOfPlayers && isPlayerAdmin && (
-        <button onClick={() => doStartGame(room.uuid, history)}>Start Game</button>
-      )}
-    </RoomContainer>
+      </PlayerChips>
+
+      <ButtonRow>
+        {!goodNumberOfPlayers && (
+          <HelpText>Il manque encore {MIN_PLAYERS - room.players.length} joueurs !</HelpText>
+        )}
+        {goodNumberOfPlayers &&
+          (isPlayerAdmin ? (
+            <>
+              <HelpText>Tout le monde est là ?</HelpText>
+              <Button onClick={() => doStartGame(room.uuid, history)}>Jouer</Button>
+            </>
+          ) : (
+            <HelpText>C'est à {room.admin.name} de lancer la partie !</HelpText>
+          ))}
+      </ButtonRow>
+    </Modal>
   );
 };
 

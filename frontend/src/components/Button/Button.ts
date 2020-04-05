@@ -1,9 +1,12 @@
 import styled, { css } from 'styled-components';
-import { colorPalette, fontSize } from 'stylesheet';
+import { colorPalette, fontSize, fontFamily } from 'stylesheet';
 
 const Button = styled.button`
   height: 56px;
-  padding: 18px 32px;
+  padding: 16px 32px;
+  font-family: ${fontFamily.main};
+  font-weight: bold;
+  letter-spacing: 0.05em;
   background: linear-gradient(90deg, #ff9314 0%, #ff0080 100%);
   font-size: ${fontSize.medium};
   cursor: ${props => (props.disabled ? 'default' : 'pointer')};

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { fontFamily } from 'stylesheet';
+import { fontFamily, colorPalette } from 'stylesheet';
 
 export const RootContainer = styled.div`
   display: flex;
@@ -7,5 +7,6 @@ export const RootContainer = styled.div`
   height: 100vh;
   margin: 0 auto;
   font-family: ${fontFamily.main};
+  color: ${colorPalette.black};
 `;
 RootContainer.displayName = 'RootContainer';

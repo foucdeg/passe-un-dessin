@@ -11,7 +11,7 @@ export const useFetchMe = () => {
       dispatch(updatePlayer(player));
     } catch (e) {
       if (e.status === 401) {
-        return dispatch(updatePlayer(null));
+        return dispatch(updatePlayer(false));
       }
       throw e;
     }
