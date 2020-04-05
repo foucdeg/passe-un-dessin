@@ -36,7 +36,7 @@ const Room: React.FunctionComponent = () => {
     <Modal isOpen>
       <ModalTitle>Lancer une partie</ModalTitle>
       <FieldLabel>
-        Inviter des participants{' '}
+        Envoyez ce lien aux participants{' '}
         <Info>
           ({MIN_PLAYERS} à {MAX_PLAYERS} joueurs)
         </Info>
