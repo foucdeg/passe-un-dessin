@@ -15,7 +15,7 @@ import {
 import { RootState } from 'redux/types';
 import { useSelector } from 'react-redux';
 import { useCreateRoom } from 'redux/Room/hooks';
-import { useHistory, useRouteMatch } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import Button from 'components/Button';
 import SecondaryButton from 'components/SecondaryButton';
 
@@ -24,9 +24,9 @@ const Home: React.FunctionComponent = () => {
   const player = useSelector((state: RootState) => state.player.player);
   const history = useHistory();
   const [secondStep, setSecondStep] = useState<boolean>(false);
-  const { path } = useRouteMatch();
+  const location = useLocation();
 
-  if (!['/', '/room/:roomId'].includes(path)) return null;
+  if (!location.pathname.match(/\/(room\/[^/]+)?$/)) return null;
 
   return (
     <>
