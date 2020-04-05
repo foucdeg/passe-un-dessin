@@ -39,7 +39,7 @@ const Home: React.FunctionComponent = () => {
               Dans ce jeu, tes amis et toi allez dessiner des mots et expressions et essayer de
               deviner ce que le précédent a dessiné. Chaque mot initial, choisi par un joueur, va
               faire le tour du groupe, transformé au fur et à mesure qu'il a été dessiné puis
-              deviné.
+              deviné. A la fin, on relit les carnets de dessin pour voir qui dessine le moins mal !
             </HelpParagraph>
             <StartButton onClick={() => setSecondStep(true)}>Commencer</StartButton>
           </>

@@ -13,9 +13,9 @@ const SecondaryButton = styled.button`
       pointer-events: none;
     `}
 
-  border: 2px solid #ff9314;
+  border: 2px solid ${colorPalette.orange};
   border-radius: 28px;
-  color: #ff9314;
+  color: ${colorPalette.orange};
   background-color: ${colorPalette.white};
   outline: none;
 `;
