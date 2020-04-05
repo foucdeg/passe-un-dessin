@@ -1,7 +1,7 @@
 FROM python:3.8-alpine
 
 RUN apk add gcc musl-dev postgresql-dev postgresql-client gettext libressl-dev libffi-dev make
-RUN pip install uwsgi uvicorn
+RUN pip install daphne
 COPY ./passe_un_dessin.egg-info/requires.txt /app/requires.txt
 RUN pip install -r /app/requires.txt
 

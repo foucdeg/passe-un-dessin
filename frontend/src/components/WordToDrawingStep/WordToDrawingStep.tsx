@@ -5,7 +5,7 @@ import lzString from 'lz-string';
 import BrushPicker from 'components/BrushPicker';
 import { DrawingColor } from 'components/BrushPicker/BrushPicker';
 
-const ROUND_DURATION = 10; // seconds
+const ROUND_DURATION = 60; // seconds
 
 interface Props {
   padStep: PadStep;

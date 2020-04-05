@@ -9,8 +9,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    # Change me!
-    "passe-un-dessin.fouc.net"
+    "passe-un-dessin.fouc.net",
 ]
 
 if "ALLOWED_HOST" in os.environ:
