@@ -1,10 +1,10 @@
 import styled, { css } from 'styled-components';
 import { colorPalette, fontSize } from 'stylesheet';
 
-const Button = styled.button`
+const SecondaryButton = styled.button`
   height: 56px;
   padding: 18px 32px;
-  background: linear-gradient(90deg, #ff9314 0%, #ff0080 100%);
+  background: white;
   font-size: ${fontSize.medium};
   cursor: ${props => (props.disabled ? 'default' : 'pointer')};
   ${props =>
@@ -13,11 +13,11 @@ const Button = styled.button`
       pointer-events: none;
     `}
 
-  border: none;
+  border: 2px solid #ff9314;
   border-radius: 28px;
-  color: ${colorPalette.white};
-  background-color: ${props => (props.disabled ? colorPalette.black : colorPalette.red)};
+  color: #ff9314;
+  background-color: ${colorPalette.white};
   outline: none;
 `;
 
-export default Button;
+export default SecondaryButton;

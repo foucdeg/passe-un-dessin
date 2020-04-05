@@ -2,7 +2,7 @@ import { useAsyncFn } from 'react-use';
 import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
 import { updateRoom } from './slice';
-import history from 'services/history';
+import { History } from 'history';
 
 export const useFetchRoom = () => {
   const dispatch = useDispatch();
@@ -15,7 +15,9 @@ export const useFetchRoom = () => {
 };
 
 export const useCreateRoom = () => {
-  return useAsyncFn(async () => {
+  /* eslint-disable-next-line @typescript-eslint/ban-ts-ignore */
+  // @ts-ignore
+  return useAsyncFn(async (history: History<History.PoorMansUnknown>) => {
     const room = await client.post('/room', {});
     history.push(`/room/${room.uuid}`);
   });

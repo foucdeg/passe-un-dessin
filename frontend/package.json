@@ -27,7 +27,7 @@
     "styled-components": "4.4.1",
     "superagent": "5.1.2"
   },
-  "proxy": "http://localhost:3000",
+  "proxy": "http://localhost:8000",
   "scripts": {
     "audit-dependencies": "check-audit --yarn",
     "start": "REACT_APP_ENV=local react-app-rewired start --host 0.0.0.0",

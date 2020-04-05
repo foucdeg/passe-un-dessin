@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 
 import App from './App';
 import configureStore from './redux/store';
-import history from './services/history';
 import { register } from './serviceWorker';
 
 const { store } = configureStore();
@@ -20,7 +19,7 @@ if (process.env.NODE_ENV === 'development') {
 const rootEl = document.getElementById('root');
 
 if (rootEl) {
-  ReactDOM.render(<App store={store} history={history} />, rootEl);
+  ReactDOM.render(<App store={store} />, rootEl);
   register();
 }
 

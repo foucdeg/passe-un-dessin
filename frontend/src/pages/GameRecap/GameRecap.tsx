@@ -6,12 +6,14 @@ import { GameRecapContainer } from './GameRecap.style';
 import { Pad } from 'redux/Game/types';
 import Modal from 'components/Modal';
 import { useStartGame } from 'redux/Game/hooks';
+import { useHistory } from 'react-router';
 
 const GameRecap: React.FunctionComponent = () => {
   const game = useSelector((state: RootState) => state.game.game);
   const player = useSelector((state: RootState) => state.player.player);
   const room = useSelector((state: RootState) => state.room.room);
   const isPlayerAdmin = player && room && player.uuid === room.admin.uuid;
+  const history = useHistory();
 
   const [displayedPad, setDisplayedPad] = useState<Pad | null>(null);
   const [newGameModalIsOpen, setNewGameModalIsOpen] = useState<boolean>(false);
@@ -42,16 +44,17 @@ const GameRecap: React.FunctionComponent = () => {
   const startSameGame = () => {
     doStartGame(
       room.uuid,
+      history,
       room.players.map(player => player.uuid),
     );
   };
 
   const startReverseGame = () => {
-    doStartGame(room.uuid, room.players.map(player => player.uuid).reverse());
+    doStartGame(room.uuid, history, room.players.map(player => player.uuid).reverse());
   };
 
   const startRandomGame = () => {
-    doStartGame(room.uuid);
+    doStartGame(room.uuid, history);
   };
 
   return (

@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
 import { IntlProvider } from 'react-intl';
 
-import Header from 'components/Header';
 import { flattenMessages } from 'services/i18n/intl';
 import enMessages from 'translations/en.json';
 import frMessages from 'translations/fr.json';
@@ -18,8 +17,9 @@ import '@formatjs/intl-relativetimeformat/dist/locale-data/en';
 import '@formatjs/intl-relativetimeformat/dist/locale-data/fr';
 /* End of language polyfills */
 
-import { PageContent, RootContainer } from './Root.style';
+import { RootContainer } from './Root.style';
 import UserNameGate from 'components/UserNameGate';
+import AudioControl from 'components/AudioControl';
 
 const locales = {
   fr: flattenMessages(frMessages),
@@ -33,10 +33,8 @@ interface Props {
 const Root: React.FunctionComponent<Props> = ({ children }) => (
   <IntlProvider locale="fr" messages={locales.fr}>
     <RootContainer>
-      <Header />
-      <UserNameGate>
-        <PageContent>{children}</PageContent>
-      </UserNameGate>
+      <AudioControl />
+      <UserNameGate>{children}</UserNameGate>
     </RootContainer>
   </IntlProvider>
 );

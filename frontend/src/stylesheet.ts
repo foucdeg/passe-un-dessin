@@ -9,53 +9,27 @@ const MEASUREMENT_UNIT = 'px';
  * Do not use directly the colorPalette in your components
  * Create an entry in the colorUsage below instead
  */
-const colorPalette = {
-  greyLight: '#e0e0e0',
+export const colorPalette = {
+  black: '#44374E',
+  purple: '#9B37A9',
   greyDark: '#222',
   amberLight: '#FFD54F',
   amber: '#FFC107',
-  amberDark: '#FF8F00',
+  orange: '#F68D4F',
   blueLight: '#F4F9FB',
   white: '#FFFFFF',
   red: '#FF7373',
   blackTransparent: 'rgba(0, 0, 0, 0.24)',
 };
 
-/**
- * Use this dictionnary in your components
- * Define a new key each time you use a colour if it's for a different use
- * Ex: fill, border-color, background-color, color ...
- */
-export const colorUsage = {
-  headerBackground: colorPalette.greyDark,
-  primaryTextColor: colorPalette.greyDark,
-  primaryLight: colorPalette.amberLight,
-  primary: colorPalette.amber,
-  primaryDark: colorPalette.amberDark,
-  contentBackground: colorPalette.blueLight,
-  linkColor: colorPalette.greyDark,
-  linkColorHover: colorPalette.amberDark,
-  linkColorDisabled: colorPalette.greyLight,
-  codeColor: colorPalette.amberDark,
-  primaryButtonColor: colorPalette.white,
-  primaryButtonBackground: colorPalette.amberDark,
-  primaryButtonBackgroundHover: colorPalette.amber,
-  primaryButtonBackgroundDisabled: colorPalette.greyLight,
-  loaderColorDefault: colorPalette.amberDark,
-  error: colorPalette.red,
-  inputBackground: colorPalette.white,
-  inputBorderColor: colorPalette.blackTransparent,
-  inputPlaceholderColor: colorPalette.blackTransparent,
-};
-
 export const fontFamily = {
-  main: `'Lato', 'Helvetica', 'Arial', sans-serif`,
-  code: 'Monospace',
+  titles: `'Raleway', 'Helvetica', 'Arial', sans-serif`,
+  main: `'Roboto Condensed', 'Helvetica', 'Arial', sans-serif`,
 };
 
 export const fontSize = {
   XXLarge: '60px',
-  large: '24px',
+  titles: '32px',
   medium: '16px',
   small: '14px',
   XSmall: '12px',

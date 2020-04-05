@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { colorUsage } from 'stylesheet';
+import { colorPalette } from 'stylesheet';
 
 const loaderAnimation = keyframes`
   0%, 20%, 80%, 100% {
@@ -30,7 +30,7 @@ export const LoaderContainer = styled.div`
     position: absolute;
     width: 5px;
     height: 5px;
-    background: ${colorUsage.loaderColorDefault};
+    background: ${colorPalette.red};
     border-radius: 50%;
     animation: ${loaderAnimation} 1.2s linear infinite;
   }

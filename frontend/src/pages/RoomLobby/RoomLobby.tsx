@@ -5,12 +5,14 @@ import { useSelector } from 'react-redux';
 import { useJoinRoom } from 'redux/Room/hooks';
 import { MIN_PLAYERS, MAX_PLAYERS } from 'redux/Game/constants';
 import { useStartGame } from 'redux/Game/hooks';
+import { useHistory } from 'react-router';
 
 const Room: React.FunctionComponent = () => {
   const [, doJoinRoom] = useJoinRoom();
   const [, doStartGame] = useStartGame();
   const room = useSelector((state: RootState) => state.room.room);
   const player = useSelector((state: RootState) => state.player.player);
+  const history = useHistory();
 
   useEffect(() => {
     if (room && player && !room.players.some(roomPlayer => roomPlayer.uuid === player.uuid)) {
@@ -36,7 +38,7 @@ const Room: React.FunctionComponent = () => {
         ))}
       </ul>
       {goodNumberOfPlayers && isPlayerAdmin && (
-        <button onClick={() => doStartGame(room.uuid)}>Start Game</button>
+        <button onClick={() => doStartGame(room.uuid, history)}>Start Game</button>
       )}
     </RoomContainer>
   );

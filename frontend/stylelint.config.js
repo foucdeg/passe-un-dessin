@@ -26,8 +26,6 @@ module.exports = {
     'scale-unlimited/declaration-strict-value': [
       [
         'font-size',
-        'line-height',
-        'z-index',
         'color',
         'background-color',
         'border-color',

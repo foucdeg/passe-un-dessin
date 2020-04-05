@@ -3,7 +3,7 @@ import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
 import { updateGame, updatePad } from './slice';
 import { Pad } from './types';
-import history from 'services/history';
+import { History } from 'history';
 
 export const useFetchGame = () => {
   const dispatch = useDispatch();
@@ -16,14 +16,20 @@ export const useFetchGame = () => {
 };
 
 export const useStartGame = () => {
-  /* eslint-disable-next-line @typescript-eslint/ban-ts-ignore */
-  // @ts-ignore
-  return useAsyncFn(async (roomId: string, playersOrder?: string[]) => {
-    const { game_id: gameId } = await client.put(`/room/${roomId}/start`, {
-      playersOrder,
-    });
-    history.push(`/room/${roomId}/game/${gameId}`);
-  });
+  return useAsyncFn(
+    /* eslint-disable-next-line @typescript-eslint/ban-ts-ignore */
+    // @ts-ignore
+    async (
+      roomId: string,
+      history: History<History.PoorMansUnknown>,
+      playersOrder?: string[] | null,
+    ) => {
+      const { game_id: gameId } = await client.put(`/room/${roomId}/start`, {
+        playersOrder,
+      });
+      history.push(`/room/${roomId}/game/${gameId}`);
+    },
+  );
 };
 
 export const useSavePad = () => {

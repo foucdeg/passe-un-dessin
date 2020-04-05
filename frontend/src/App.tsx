@@ -7,22 +7,20 @@ import AppCrashFallback from './components/AppCrashFallback';
 import ErrorBoundary from './components/ErrorBoundary';
 import Root from './components/Root';
 import Routes from './routes';
-import { History } from 'history';
-import { Router } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 interface Props {
   store: Store;
-  history: History<History.PoorMansUnknown>;
 }
 
-const App: React.FunctionComponent<Props> = ({ store, history }) => (
+const App: React.FunctionComponent<Props> = ({ store }) => (
   <ErrorBoundary FallbackComponent={AppCrashFallback}>
     <Provider store={store}>
-      <Router history={history}>
+      <BrowserRouter>
         <Root>
           <Routes />
         </Root>
-      </Router>
+      </BrowserRouter>
     </Provider>
   </ErrorBoundary>
 );

@@ -26,6 +26,7 @@ const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep }) => {
           }}
         >
           <TextInput type="text" value={sentence} onChange={e => setSentence(e.target.value)} />
+          <input type="submit" value="Valider" />
         </form>
       )}
     </>

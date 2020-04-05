@@ -38,6 +38,7 @@ const UserNameGate: React.FC<Props> = ({ children }) => {
               value={playerName}
               onChange={e => setPlayerName(e.target.value)}
             />
+            <input type="submit" value="Valider " />
           </form>
         </Modal>
       )}
