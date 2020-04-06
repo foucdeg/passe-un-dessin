@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 import Modal from 'components/Modal';
 import { useFetchMe, useCreatePlayer } from 'redux/Player/hooks';
 import { UsernameForm, StyledField, StyledButton } from './UserNameGate.style';
-import ModalTitle from 'atoms/ModalTitle';
 import FieldLabel from 'atoms/FieldLabel';
+import Header2 from 'atoms/Header2';
 
 interface Props {
   children: React.ReactNode;
@@ -27,7 +27,7 @@ const UserNameGate: React.FC<Props> = ({ children }) => {
       {children}
       {player === false && (
         <Modal isOpen>
-          <ModalTitle>Comment tu t'appelles ?</ModalTitle>
+          <Header2>Comment tu t'appelles ?</Header2>
           <UsernameForm
             onSubmit={e => {
               e.preventDefault();

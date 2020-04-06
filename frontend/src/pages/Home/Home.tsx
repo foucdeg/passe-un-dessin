@@ -10,7 +10,6 @@ import {
   ButtonRow,
   Credits,
   RightSideTitle,
-  HelpLink,
 } from './Home.style';
 import { RootState } from 'redux/types';
 import { useSelector } from 'react-redux';
@@ -49,16 +48,17 @@ const Home: React.FunctionComponent = () => {
           <>
             {player && <HelpParagraph>Te revoilà, {player.name} !</HelpParagraph>}
             <ButtonRow>
-              <SecondaryButton>Rejoindre une partie</SecondaryButton>
+              <SecondaryButton onClick={() => setSecondStep(false)}>
+                Retourner aux règles
+              </SecondaryButton>
               <Button onClick={() => doCreateRoom(history)}>Lancer une partie</Button>
             </ButtonRow>
-            <HelpLink onClick={() => setSecondStep(false)}>Retourner aux règles du jeu</HelpLink>
           </>
         )}
       </LeftSide>
       <RightSide>
         <RightSideTitle>Passe un Dessin</RightSideTitle>
-        <Credits>github: foucdeg/passe-un-dessin</Credits>
+        <Credits>Michèle Ruaud \ Foucauld Degeorges</Credits>
       </RightSide>
     </>
   );

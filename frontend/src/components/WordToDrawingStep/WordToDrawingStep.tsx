@@ -6,6 +6,14 @@ import BrushPicker from 'components/BrushPicker';
 import { DrawingColor } from 'components/BrushPicker/BrushPicker';
 import { Player } from 'redux/Player/types';
 import TimerBar from 'components/TimerBar';
+import {
+  LeftSide,
+  RightSide,
+  CanvasWrapper,
+  StyledHeader,
+  Spacer,
+  Sentence,
+} from './WordToDrawingStep.style';
 
 const ROUND_DURATION = 60; // seconds
 
@@ -49,22 +57,29 @@ const WordToDrawingStep: React.FC<Props> = ({ padStep, previousPlayer, nextPlaye
 
   return (
     <>
-      <TimerBar duration={60} />
-      <p>
-        Phrase à dessiner : <strong>{padStep.sentence}</strong> (sortie du cerveau malade de{' '}
-        {previousPlayer.name})
-      </p>
-      <p>Tu as {ROUND_DURATION} secondes !</p>
-      <CanvasDraw
-        ref={drawingPadRef}
-        brushColor={color}
-        lazyRadius={0}
-        canvasWidth={800}
-        canvasHeight={600}
-        brushRadius={color === DrawingColor.WHITE ? eraserThickness : thickness}
-      />
-      <BrushPicker color={color} setColor={setColor} />
-      {nextPlayer && <p>Ça tombe bien, il paraît que {nextPlayer.name} aime l'art moderne.</p>}
+      <LeftSide>
+        <CanvasWrapper>
+          <CanvasDraw
+            ref={drawingPadRef}
+            brushColor={color}
+            hideGrid={true}
+            lazyRadius={0}
+            canvasWidth={538}
+            canvasHeight={538}
+            brushRadius={color === DrawingColor.WHITE ? eraserThickness : thickness}
+          />
+          <BrushPicker color={color} setColor={setColor} />
+        </CanvasWrapper>
+      </LeftSide>
+      <RightSide>
+        <StyledHeader>Phrase à dessiner :</StyledHeader>
+        <Sentence>{padStep.sentence}</Sentence>
+        <em>(sortie du cerveau malade de {previousPlayer.name})</em>
+        <Spacer />
+        <p>Tu as {ROUND_DURATION} secondes !</p>
+        <TimerBar duration={60} />
+        {nextPlayer && <p>Ça tombe bien, il paraît que {nextPlayer.name} aime l'art moderne.</p>}
+      </RightSide>
     </>
   );
 };

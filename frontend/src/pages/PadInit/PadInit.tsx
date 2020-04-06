@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import TextInput from 'components/TextInput';
 import { useSavePad } from 'redux/Game/hooks';
+import Header2 from 'atoms/Header2';
+import { PadInitContainer } from './PadInit.style';
 
 const PadInit: React.FunctionComponent = () => {
   const { padId } = useParams();
@@ -22,8 +24,8 @@ const PadInit: React.FunctionComponent = () => {
   const isNextPlayerMe = nextPlayer.uuid === player.uuid;
 
   return (
-    <>
-      <p>Commence par choisir un mot ou une phrase : </p>
+    <PadInitContainer>
+      <Header2>Choisis un mot ou une phrase :</Header2>
       {pad.sentence ? (
         <p>{pad.sentence}</p>
       ) : (
@@ -36,6 +38,7 @@ const PadInit: React.FunctionComponent = () => {
           <TextInput
             autoFocus
             type="text"
+            placeholder="Une girafe ?"
             value={sentence}
             onChange={e => setSentence(e.target.value)}
           />
@@ -48,7 +51,7 @@ const PadInit: React.FunctionComponent = () => {
           Espérons que <strong>{nextPlayer.name}</strong> dessine bien ...
         </p>
       )}
-    </>
+    </PadInitContainer>
   );
 };
 

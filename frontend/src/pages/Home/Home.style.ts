@@ -10,7 +10,7 @@ export const LeftSide = styled.div`
   width: 50%;
   flex-direction: column;
   align-items: center;
-  padding: 60px;
+  padding: 48px;
 `;
 LeftSide.displayName = 'LeftSide';
 
@@ -91,11 +91,12 @@ export const Credits = styled.p`
   font-size: ${fontSize.medium};
   color: ${colorPalette.white};
   font-variant: small-caps;
+  text-transform: uppercase;
   transform: rotate(-90deg);
   transform-origin: bottom left;
   position: absolute;
   bottom: 24px;
-  right: -150px;
+  right: -250px;
 `;
 Credits.displayName = 'Credits';
 
@@ -106,11 +107,3 @@ export const ButtonRow = styled.div`
   margin-bottom: 64px;
 `;
 ButtonRow.displayName = 'ButtonRow';
-
-export const HelpLink = styled.a`
-  color: ${colorPalette.orange};
-  text-transform: uppercase;
-  font-variant: small-caps;
-  cursor: pointer;
-`;
-HelpLink.displayName = 'HelpLink';

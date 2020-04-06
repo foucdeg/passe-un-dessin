@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { colorPalette } from 'stylesheet';
 import TextInput from 'components/TextInput';
+import Header2 from 'atoms/Header2';
 
 const PLAYER_COLORS = ['#60DAFF', '#9337AE', '#62FAD3', '#8A80F1'];
 
@@ -52,3 +53,8 @@ export const HelpText = styled.span`
 `;
 
 HelpText.displayName = 'HelpText';
+
+export const StyledHeader = styled(Header2)`
+  text-align: center;
+  margin-bottom: 18px;
+`;

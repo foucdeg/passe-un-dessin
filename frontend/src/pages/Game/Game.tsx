@@ -10,6 +10,7 @@ import GameRecap from '../GameRecap';
 import { getRedirectPath } from 'services/game.service';
 import { useServerSentEvent, SERVER_EVENT_TYPES } from 'services/networking/server-events';
 import { startRound, startDebrief } from 'redux/Game';
+import { Credits } from '../Home/Home.style';
 
 const Game: React.FunctionComponent = () => {
   const { gameId } = useParams();
@@ -76,6 +77,7 @@ const Game: React.FunctionComponent = () => {
           <Route path={`${path}/recap`} component={GameRecap} />
         </Switch>
       </InnerGameContainer>
+      <Credits>Michèle Ruaud \ Foucauld Degeorges</Credits>
     </GameContainer>
   );
 };

@@ -7,6 +7,7 @@ export const OuterTimerBar = styled.div`
   padding: 4px 8px;
   width: 100%;
   background: ${colorPalette.blueLight};
+  justify-self: flex-end;
 `;
 
 OuterTimerBar.displayName = 'OuterTimerBar';

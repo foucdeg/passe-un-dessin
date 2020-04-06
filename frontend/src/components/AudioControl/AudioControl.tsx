@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { AudioControlButton } from './AudioControl.style';
 import soundOn from 'assets/sound-on.svg';
+import soundOff from 'assets/sound-off.svg';
 
 const AudioControl: React.FC = () => {
   const audioElt = useRef<HTMLAudioElement>(null);
@@ -38,7 +39,7 @@ const AudioControl: React.FC = () => {
         </AudioControlButton>
       ) : (
         <AudioControlButton onClick={play}>
-          <img src={soundOn} alt="Sound is off; click to turn on" />
+          <img src={soundOff} alt="Sound is off; click to turn on" />
         </AudioControlButton>
       )}
     </>

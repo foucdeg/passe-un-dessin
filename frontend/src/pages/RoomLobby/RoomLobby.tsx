@@ -6,9 +6,16 @@ import { MIN_PLAYERS, MAX_PLAYERS } from 'redux/Game/constants';
 import { useStartGame } from 'redux/Game/hooks';
 import { useHistory } from 'react-router';
 import Modal from 'components/Modal';
-import ModalTitle from 'atoms/ModalTitle';
 import FieldLabel from 'atoms/FieldLabel';
-import { Info, PlayerChips, PlayerChip, StyledField, ButtonRow, HelpText } from './RoomLobby.style';
+import {
+  Info,
+  PlayerChips,
+  PlayerChip,
+  StyledField,
+  ButtonRow,
+  HelpText,
+  StyledHeader,
+} from './RoomLobby.style';
 import Button from 'components/Button';
 
 const Room: React.FunctionComponent = () => {
@@ -34,7 +41,7 @@ const Room: React.FunctionComponent = () => {
 
   return (
     <Modal isOpen>
-      <ModalTitle>Lancer une partie</ModalTitle>
+      <StyledHeader>Lancer une partie</StyledHeader>
       <FieldLabel>
         Envoyez ce lien aux participants{' '}
         <Info>

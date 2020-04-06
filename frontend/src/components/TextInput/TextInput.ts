@@ -6,6 +6,10 @@ const TextInput = styled.input`
   border-radius: 16px;
   padding: 16px 24px;
   font-size: ${fontSize.medium};
+
+  &[readonly] {
+    color: ${colorPalette.textGrey};
+  }
 `;
 
 export default TextInput;

@@ -7,7 +7,7 @@ interface Props {
 const TimerBar: React.FC<Props> = ({ duration }) => {
   const [started, setStarted] = useState<boolean>(false);
   useEffect(() => {
-    setStarted(true);
+    setTimeout(() => setStarted(true), 0);
   }, []);
 
   return (

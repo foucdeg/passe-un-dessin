@@ -4,6 +4,14 @@ import CanvasDraw from 'react-canvas-draw';
 import TextInput from 'components/TextInput';
 import lzString from 'lz-string';
 import { Player } from 'redux/Player/types';
+import {
+  LeftSide,
+  CanvasWrapper,
+  RightSide,
+  StyledHeader,
+  Spacer,
+} from 'components/WordToDrawingStep/WordToDrawingStep.style';
+import { StyledForm, StyledButton } from './DrawingToWordStep.style';
 
 interface Props {
   padStep: PadStep;
@@ -19,39 +27,48 @@ const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, previousPlayer,
 
   return (
     <>
-      <CanvasDraw
-        disabled
-        hideGrid
-        canvasWidth={800}
-        canvasHeight={600}
-        saveData={lzString.decompressFromBase64(padStep.drawing)}
-      />
-      <p>Ce message de {previousPlayer.name} doit pourtant avoir un sens. Mais lequel ?</p>
-      {padStep.sentence ? (
-        <>
-          <p>{padStep.sentence}</p>
-          {nextPlayer && (
-            <p>
-              En espérant que {nextPlayer.name} sache mieux dessiner que {previousPlayer.name} ...
-            </p>
-          )}
-        </>
-      ) : (
-        <form
-          onSubmit={e => {
-            e.preventDefault();
-            saveStep({ sentence });
-          }}
-        >
-          <TextInput
-            type="text"
-            autoFocus
-            value={sentence}
-            onChange={e => setSentence(e.target.value)}
+      <LeftSide>
+        <CanvasWrapper>
+          <CanvasDraw
+            disabled
+            hideGrid
+            hideInterface
+            canvasWidth={538}
+            canvasHeight={538}
+            saveData={lzString.decompressFromBase64(padStep.drawing)}
           />
-          <input type="submit" value="Valider" />
-        </form>
-      )}
+        </CanvasWrapper>
+      </LeftSide>
+      <RightSide>
+        <StyledHeader>Devine ce dessin :</StyledHeader>
+        <em>(sorti du cerveau malade de {previousPlayer.name})</em>
+        {padStep.sentence ? (
+          <p>{padStep.sentence}</p>
+        ) : (
+          <StyledForm
+            onSubmit={e => {
+              e.preventDefault();
+              saveStep({ sentence });
+            }}
+          >
+            <TextInput
+              type="text"
+              autoFocus
+              placeholder="Un mouton ?"
+              value={sentence}
+              onChange={e => setSentence(e.target.value)}
+            />
+            <StyledButton type="submit">Valider</StyledButton>
+          </StyledForm>
+        )}
+
+        <Spacer />
+        {nextPlayer && sentence && (
+          <p>
+            En espérant que {nextPlayer.name} sache mieux dessiner que {previousPlayer.name} ...
+          </p>
+        )}
+      </RightSide>
     </>
   );
 };
