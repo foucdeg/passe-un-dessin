@@ -10,7 +10,7 @@ class BaseSerializer(serializers.ModelSerializer):
 class PlayerSerializer(BaseSerializer):
     class Meta:
         model = Player
-        fields = ("uuid", "name")
+        fields = ("uuid", "name", "color")
 
 
 class RoomSerializer(BaseSerializer):
@@ -68,6 +68,10 @@ class MessageSerializer(serializers.Serializer):
 
 
 class PlayerConnectedMessageSerializer(MessageSerializer):
+    player = PlayerSerializer()
+
+
+class PlayerFinishedMessageSerializer(MessageSerializer):
     player = PlayerSerializer()
 
 

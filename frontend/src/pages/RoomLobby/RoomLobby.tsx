@@ -7,16 +7,10 @@ import { useStartGame } from 'redux/Game/hooks';
 import { useHistory } from 'react-router';
 import Modal from 'components/Modal';
 import FieldLabel from 'atoms/FieldLabel';
-import {
-  Info,
-  PlayerChips,
-  PlayerChip,
-  StyledField,
-  ButtonRow,
-  HelpText,
-  StyledHeader,
-} from './RoomLobby.style';
+import { Info, StyledField, ButtonRow, HelpText, StyledHeader } from './RoomLobby.style';
 import Button from 'components/Button';
+import PlayerChips from 'atoms/PlayerChipList';
+import PlayerChip from 'atoms/PlayerChip';
 
 const Room: React.FunctionComponent = () => {
   const [, doJoinRoom] = useJoinRoom();
@@ -52,7 +46,9 @@ const Room: React.FunctionComponent = () => {
       <FieldLabel>Participants ayant rejoint la partie :</FieldLabel>
       <PlayerChips>
         {room.players.map(player => (
-          <PlayerChip key={player.uuid}>{player.name}</PlayerChip>
+          <PlayerChip key={player.uuid} color={player.color}>
+            {player.name}
+          </PlayerChip>
         ))}
       </PlayerChips>
 

@@ -12,6 +12,10 @@ import {
   Spacer,
 } from 'components/WordToDrawingStep/WordToDrawingStep.style';
 import { StyledForm, StyledButton } from './DrawingToWordStep.style';
+import { useSelector } from 'react-redux';
+import { RootState } from 'redux/types';
+import PlayerChips from 'atoms/PlayerChipList';
+import PlayerChip from 'atoms/PlayerChip';
 
 interface Props {
   padStep: PadStep;
@@ -22,6 +26,7 @@ interface Props {
 
 const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, previousPlayer, nextPlayer }) => {
   const [sentence, setSentence] = useState<string>('');
+  const remainingPlayers = useSelector((state: RootState) => state.game.remainingPlayers);
 
   if (!previousPlayer) return null;
 
@@ -68,6 +73,14 @@ const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, previousPlayer,
             En espérant que {nextPlayer.name} sache mieux dessiner que {previousPlayer.name} ...
           </p>
         )}
+        <p>On attend encore:</p>
+        <PlayerChips>
+          {remainingPlayers.map(player => (
+            <PlayerChip key={player.uuid} color={player.color}>
+              {player.name}
+            </PlayerChip>
+          ))}
+        </PlayerChips>
       </RightSide>
     </>
   );

@@ -1,9 +1,26 @@
+import random
 import uuid
 from enum import Enum
 
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
+from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
+
+
+def random_color():
+    COLORS = [
+        "#9337AE",
+        "#60DAFF",
+        "#62FAD3",
+        "#8A80F1",
+        "#FF9314",
+        "#FF5257",
+        "#FDC737",
+        "#FF0080",
+    ]
+
+    return random.choice(COLORS)
 
 
 class GamePhase(Enum):
@@ -123,6 +140,7 @@ class Player(BaseModel):
     game = models.ForeignKey(
         Game, on_delete=models.SET_NULL, related_name="players", null=True, blank=True
     )
+    color = models.CharField(max_length=10)
 
 
 class Pad(BaseModel):
@@ -143,3 +161,10 @@ class PadStep(BaseModel):
 
     sentence = models.CharField(max_length=100, blank=True, null=True)
     drawing = models.TextField(null=True, blank=True)
+
+
+@receiver(models.signals.pre_save, sender=Player)
+def pick_color(sender, **kwargs):
+    instance = kwargs["instance"]
+    if instance.color is None or instance.color == "":
+        instance.color = random_color()

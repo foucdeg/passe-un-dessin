@@ -3,8 +3,10 @@ import logging
 
 from django.db import transaction
 from django.http import HttpResponseBadRequest, JsonResponse
+from django_eventstream import send_event
 from rest_framework.generics import RetrieveAPIView
 
+from core.messages import PlayerFinishedMessage
 from core.models import Game, Pad, PadStep
 from core.serializers import GameSerializer, PadSerializer, PadStepSerializer
 from core.service.game_service import start_next_round, switch_to_rounds
@@ -55,6 +57,12 @@ def save_pad(request, uuid):
 
     game = pad.game
 
+    send_event(
+        "game-%s" % game.uuid.hex,
+        "message",
+        PlayerFinishedMessage(pad.initial_player).serialize(),
+    )
+
     with transaction.atomic():
         game = Game.objects.select_for_update().get(uuid=game.uuid)
         game.pads_done = game.pads_done + 1
@@ -93,6 +101,13 @@ def save_step(request, uuid):
     step.save()
 
     game = step.pad.game
+
+    send_event(
+        "game-%s" % game.uuid.hex,
+        "message",
+        PlayerFinishedMessage(step.player).serialize(),
+    )
+
     with transaction.atomic():
         game = Game.objects.select_for_update().get(uuid=game.uuid)
         game.pads_done = game.pads_done + 1

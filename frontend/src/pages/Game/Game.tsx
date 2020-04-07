@@ -9,7 +9,7 @@ import PadStep from '../PadStep';
 import GameRecap from '../GameRecap';
 import { getRedirectPath } from 'services/game.service';
 import { useServerSentEvent, SERVER_EVENT_TYPES } from 'services/networking/server-events';
-import { startRound, startDebrief } from 'redux/Game';
+import { startRound, startDebrief, markPlayerFinished } from 'redux/Game';
 import { Credits } from '../Home/Home.style';
 
 const Game: React.FunctionComponent = () => {
@@ -38,10 +38,13 @@ const Game: React.FunctionComponent = () => {
   }, [game, player, push, location.pathname, room]);
 
   const eventCallback = useCallback(
-    ({ message_type: messageType, round_number: roundNumber }) => {
+    ({ message_type: messageType, round_number: roundNumber, player: messagePlayer }) => {
       if (!room || !game || !player) return;
 
       switch (messageType) {
+        case SERVER_EVENT_TYPES.PLAYER_FINISHED:
+          return dispatch(markPlayerFinished(messagePlayer));
+
         case SERVER_EVENT_TYPES.ROUND_STARTS:
           dispatch(startRound({ roundNumber }));
 

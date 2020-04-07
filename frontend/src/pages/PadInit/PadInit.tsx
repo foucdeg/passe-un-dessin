@@ -6,11 +6,15 @@ import TextInput from 'components/TextInput';
 import { useSavePad } from 'redux/Game/hooks';
 import Header2 from 'atoms/Header2';
 import { PadInitContainer } from './PadInit.style';
+import PlayerChips from 'atoms/PlayerChipList';
+import PlayerChip from 'atoms/PlayerChip';
 
 const PadInit: React.FunctionComponent = () => {
   const { padId } = useParams();
   const game = useSelector((state: RootState) => state.game.game);
   const player = useSelector((state: RootState) => state.player.player);
+  const remainingPlayers = useSelector((state: RootState) => state.game.remainingPlayers);
+
   const [sentence, setSentence] = useState<string>('');
   const [, doSavePad] = useSavePad();
 
@@ -51,6 +55,14 @@ const PadInit: React.FunctionComponent = () => {
           Espérons que <strong>{nextPlayer.name}</strong> dessine bien ...
         </p>
       )}
+      <p>On attend encore:</p>
+      <PlayerChips>
+        {remainingPlayers.map(player => (
+          <PlayerChip key={player.uuid} color={player.color}>
+            {player.name}
+          </PlayerChip>
+        ))}
+      </PlayerChips>
     </PadInitContainer>
   );
 };
