@@ -65,7 +65,7 @@ const GameRecap: React.FunctionComponent = () => {
         {isPlayerAdmin && (
           <>
             <button onClick={() => setNewGameModalIsOpen(true)}>Nouvelle partie ?</button>
-            <Modal isOpen={newGameModalIsOpen}>
+            <Modal isOpen={newGameModalIsOpen} onClose={() => setNewGameModalIsOpen(false)}>
               <h2>On prend les mêmes et on recommence ?</h2>
               <ul>
                 <button onClick={startSameGame}>Tel quel</button>

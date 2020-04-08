@@ -20,6 +20,7 @@ export const colorPalette = {
   white: '#FFFFFF',
   red: '#FF7373',
   blackTransparent: 'rgba(0, 0, 0, 0.24)',
+  whiteTransparent: 'rgba(255, 255, 255, 0.8)',
 };
 
 export const fontFamily = {

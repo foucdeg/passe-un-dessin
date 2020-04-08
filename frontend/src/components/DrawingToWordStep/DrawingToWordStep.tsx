@@ -5,16 +5,17 @@ import TextInput from 'components/TextInput';
 import lzString from 'lz-string';
 import { Player } from 'redux/Player/types';
 import {
+  LeftAndRightSide,
   LeftSide,
   CanvasWrapper,
+  Gutter,
   RightSide,
   StyledHeader,
   Spacer,
 } from 'components/WordToDrawingStep/WordToDrawingStep.style';
-import { StyledForm, StyledButton } from './DrawingToWordStep.style';
+import { StyledForm, StyledButton, StyledPlayerChips } from './DrawingToWordStep.style';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/types';
-import PlayerChips from 'atoms/PlayerChipList';
 import PlayerChip from 'atoms/PlayerChip';
 
 interface Props {
@@ -31,7 +32,7 @@ const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, previousPlayer,
   if (!previousPlayer) return null;
 
   return (
-    <>
+    <LeftAndRightSide>
       <LeftSide>
         <CanvasWrapper>
           <CanvasDraw
@@ -44,6 +45,7 @@ const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, previousPlayer,
           />
         </CanvasWrapper>
       </LeftSide>
+      <Gutter />
       <RightSide>
         <StyledHeader>Devine ce dessin :</StyledHeader>
         <em>(sorti du cerveau malade de {previousPlayer.name})</em>
@@ -73,16 +75,16 @@ const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, previousPlayer,
             En espérant que {nextPlayer.name} sache mieux dessiner que {previousPlayer.name} ...
           </p>
         )}
-        <p>On attend encore:</p>
-        <PlayerChips>
+        <em>On attend ceux-là pour continuer :</em>
+        <StyledPlayerChips>
           {remainingPlayers.map(player => (
             <PlayerChip key={player.uuid} color={player.color}>
               {player.name}
             </PlayerChip>
           ))}
-        </PlayerChips>
+        </StyledPlayerChips>
       </RightSide>
-    </>
+    </LeftAndRightSide>
   );
 };
 

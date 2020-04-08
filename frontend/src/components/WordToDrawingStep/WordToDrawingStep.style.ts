@@ -2,6 +2,13 @@ import styled from 'styled-components';
 import { colorPalette } from 'stylesheet';
 import Header2 from 'atoms/Header2';
 
+export const LeftAndRightSide = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+`;
+LeftAndRightSide.displayName = 'LeftAndRightSide';
+
 export const LeftSide = styled.div`
   width: 538px;
   height: 100%;
@@ -17,7 +24,12 @@ export const RightSide = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
-  padding: 0 16px;
+`;
+RightSide.displayName = 'RightSide';
+
+export const Gutter = styled.div`
+  width: 16px;
+  height: 100%;
 `;
 RightSide.displayName = 'RightSide';
 

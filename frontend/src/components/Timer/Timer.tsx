@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { OuterTimerBar, InnerTimerBar } from './TimerBar.style';
+import { OuterTimerBar, InnerTimerBar } from './Timer.style';
 
 interface Props {
   duration: number;
 }
-const TimerBar: React.FC<Props> = ({ duration }) => {
+const Timer: React.FC<Props> = ({ duration }) => {
   const [started, setStarted] = useState<boolean>(false);
   useEffect(() => {
     setTimeout(() => setStarted(true), 0);
@@ -17,4 +17,4 @@ const TimerBar: React.FC<Props> = ({ duration }) => {
   );
 };
 
-export default TimerBar;
+export default Timer;

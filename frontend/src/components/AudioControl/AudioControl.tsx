@@ -23,13 +23,31 @@ const AudioControl: React.FC = () => {
     };
   }, [audioElt]);
 
-  const play = () => audioElt.current?.play();
+  const play = () => {
+    audioElt.current?.play();
+    localStorage.removeItem('noSound');
+  };
 
-  const pause = () => audioElt?.current?.pause();
+  const pause = () => {
+    audioElt.current?.pause();
+    localStorage.setItem('noSound', 'true');
+  };
+
+  useEffect(() => {
+    if (audioElt.current && !localStorage.getItem('noSound')) {
+      audioElt.current
+        .play()
+        .then(() => setPlaying(true))
+        .catch(err => {
+          console.log(err);
+          setPlaying(false);
+        });
+    }
+  }, [audioElt]);
 
   return (
     <>
-      <audio autoPlay loop ref={audioElt}>
+      <audio loop ref={audioElt}>
         <source src="/JeffSpeed68-Ultra-Lights.mp3" />
         Your browser does not support the audio element.
       </audio>

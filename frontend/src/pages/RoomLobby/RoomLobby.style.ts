@@ -34,3 +34,9 @@ export const StyledHeader = styled(Header2)`
   text-align: center;
   margin-bottom: 18px;
 `;
+
+export const CopyLinkAdornment = styled.img`
+  cursor: pointer;
+`;
+
+CopyLinkAdornment.displayName = CopyLinkAdornment;

@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { DrawingColor } from './BrushPicker';
+import { DrawingColor } from './BrushColorPicker';
 
 export const BrushPickerContainer = styled.div`
   display: flex;
@@ -15,17 +15,15 @@ export const ColorBlock = styled.div<{ color: DrawingColor; selected: boolean }>
   width: 24px;
   height: 24px;
   border-radius: 4px;
+  cursor: pointer;
   ${props =>
     props.selected &&
     css`
       border: 2px solid black;
     `}
   margin-bottom: 16px;
-`;
 
-export const Eraser = styled.div<{ selected: boolean }>`
-  border: ${props => (props.selected ? '2px' : '1px')} solid black;
-  width: 24px;
-  height: 24px;
-  border-radius: 4px;
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;

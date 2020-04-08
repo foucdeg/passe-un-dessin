@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Button from 'components/Button';
+import PlayerChips from 'atoms/PlayerChips';
 
 export const StyledForm = styled.form`
   margin-top: 24px;
@@ -15,3 +16,8 @@ export const StyledButton = styled(Button)`
 `;
 
 StyledButton.displayName = 'StyledButton';
+
+export const StyledPlayerChips = styled(PlayerChips)`
+  margin-top: 8px;
+  justify-content: center;
+`;

@@ -6,8 +6,8 @@ import TextInput from 'components/TextInput';
 import { useSavePad } from 'redux/Game/hooks';
 import Header2 from 'atoms/Header2';
 import { PadInitContainer } from './PadInit.style';
-import PlayerChips from 'atoms/PlayerChipList';
 import PlayerChip from 'atoms/PlayerChip';
+import { StyledPlayerChips } from 'components/DrawingToWordStep/DrawingToWordStep.style';
 
 const PadInit: React.FunctionComponent = () => {
   const { padId } = useParams();
@@ -55,14 +55,14 @@ const PadInit: React.FunctionComponent = () => {
           Espérons que <strong>{nextPlayer.name}</strong> dessine bien ...
         </p>
       )}
-      <p>On attend encore:</p>
-      <PlayerChips>
+      <em>On attend ceux-là pour continuer :</em>
+      <StyledPlayerChips>
         {remainingPlayers.map(player => (
           <PlayerChip key={player.uuid} color={player.color}>
             {player.name}
           </PlayerChip>
         ))}
-      </PlayerChips>
+      </StyledPlayerChips>
     </PadInitContainer>
   );
 };

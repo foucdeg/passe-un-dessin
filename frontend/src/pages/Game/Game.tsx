@@ -1,5 +1,10 @@
 import React, { useEffect, useCallback } from 'react';
-import { GameContainer, InnerGameContainer } from './Game.style';
+import {
+  GameContainer,
+  InnerGameContainer,
+  PreviousNextPlayers,
+  StyledPlayerChip,
+} from './Game.style';
 import { RootState } from 'redux/types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useHistory, Switch, Route, useRouteMatch, useLocation } from 'react-router';
@@ -7,10 +12,11 @@ import { useFetchGame } from 'redux/Game/hooks';
 import PadInit from '../PadInit';
 import PadStep from '../PadStep';
 import GameRecap from '../GameRecap';
-import { getRedirectPath } from 'services/game.service';
+import { getRedirectPath, getPreviousNextPlayers } from 'services/game.service';
 import { useServerSentEvent, SERVER_EVENT_TYPES } from 'services/networking/server-events';
 import { startRound, startDebrief, markPlayerFinished } from 'redux/Game';
 import { Credits } from '../Home/Home.style';
+import { colorPalette } from 'stylesheet';
 
 const Game: React.FunctionComponent = () => {
   const { gameId } = useParams();
@@ -69,11 +75,21 @@ const Game: React.FunctionComponent = () => {
 
   useServerSentEvent(`game-${game?.uuid}`, eventCallback);
 
-  if (!game) return null;
+  if (!game || !player) return null;
+
+  const [previousPlayer, nextPlayer] = getPreviousNextPlayers(game, player);
 
   return (
     <GameContainer>
       <InnerGameContainer>
+        <PreviousNextPlayers>
+          <StyledPlayerChip color={colorPalette.whiteTransparent}>
+            {previousPlayer.name} est avant toi
+          </StyledPlayerChip>
+          <StyledPlayerChip color={colorPalette.whiteTransparent}>
+            {nextPlayer.name} est après toi
+          </StyledPlayerChip>
+        </PreviousNextPlayers>
         <Switch>
           <Route path={`${path}/pad/:padId/init`} component={PadInit} />
           <Route path={`${path}/step/:stepId`} component={PadStep} />

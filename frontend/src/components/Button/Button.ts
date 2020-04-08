@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { colorPalette, fontSize, fontFamily } from 'stylesheet';
 
 const Button = styled.button`
-  height: 56px;
+  height: 51px;
   padding: 16px 32px;
   font-family: ${fontFamily.main};
   font-weight: bold;

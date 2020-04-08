@@ -6,7 +6,7 @@ import { StepType } from 'redux/Game/types';
 import DrawingToWordStep from 'components/DrawingToWordStep';
 import WordToDrawingStep from 'components/WordToDrawingStep';
 import { useFetchStep, useSaveStepDrawing, useSaveStepSentence } from 'redux/Step/hooks';
-import { getPreviousNextPlayers } from 'services/game.service';
+import { getPreviousNextPlayersForStep } from 'services/game.service';
 
 const PadStep: React.FunctionComponent = () => {
   const game = useSelector((state: RootState) => state.game.game);
@@ -37,7 +37,7 @@ const PadStep: React.FunctionComponent = () => {
   if (!game) return null;
   if (!step) return null;
 
-  const [previousPlayer, nextPlayer] = getPreviousNextPlayers(game, step);
+  const [previousPlayer, nextPlayer] = getPreviousNextPlayersForStep(game, step);
 
   return step.step_type === StepType.DRAWING_TO_WORD ? (
     <DrawingToWordStep

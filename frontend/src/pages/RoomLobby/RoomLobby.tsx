@@ -1,16 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RootState } from 'redux/types';
 import { useSelector } from 'react-redux';
+import copy from 'copy-to-clipboard';
+
 import { useJoinRoom } from 'redux/Room/hooks';
 import { MIN_PLAYERS, MAX_PLAYERS } from 'redux/Game/constants';
 import { useStartGame } from 'redux/Game/hooks';
 import { useHistory } from 'react-router';
 import Modal from 'components/Modal';
 import FieldLabel from 'atoms/FieldLabel';
-import { Info, StyledField, ButtonRow, HelpText, StyledHeader } from './RoomLobby.style';
+import {
+  Info,
+  StyledField,
+  ButtonRow,
+  HelpText,
+  StyledHeader,
+  CopyLinkAdornment,
+} from './RoomLobby.style';
 import Button from 'components/Button';
-import PlayerChips from 'atoms/PlayerChipList';
+import PlayerChips from 'atoms/PlayerChips';
 import PlayerChip from 'atoms/PlayerChip';
+
+import linkIcon from 'assets/link.svg';
 
 const Room: React.FunctionComponent = () => {
   const [, doJoinRoom] = useJoinRoom();
@@ -18,6 +29,7 @@ const Room: React.FunctionComponent = () => {
   const room = useSelector((state: RootState) => state.room.room);
   const player = useSelector((state: RootState) => state.player.player);
   const history = useHistory();
+  const [inputText, setInputText] = useState<string>(document.location.href);
 
   useEffect(() => {
     if (room && player && !room.players.some(roomPlayer => roomPlayer.uuid === player.uuid)) {
@@ -33,6 +45,14 @@ const Room: React.FunctionComponent = () => {
 
   const isPlayerAdmin = player.uuid === room.admin.uuid;
 
+  const onCopy = () => {
+    copy(document.location.href);
+    setInputText('Texte copié !');
+    setTimeout(() => {
+      setInputText(document.location.href);
+    }, 5000);
+  };
+
   return (
     <Modal isOpen>
       <StyledHeader>Lancer une partie</StyledHeader>
@@ -42,7 +62,11 @@ const Room: React.FunctionComponent = () => {
           ({MIN_PLAYERS} à {MAX_PLAYERS} joueurs)
         </Info>
       </FieldLabel>
-      <StyledField readOnly value={document.location.href} />
+      <StyledField
+        readOnly
+        value={inputText}
+        adornment={<CopyLinkAdornment src={linkIcon} onClick={onCopy} alt="Click to copy" />}
+      />
       <FieldLabel>Participants ayant rejoint la partie :</FieldLabel>
       <PlayerChips>
         {room.players.map(player => (
