@@ -44,9 +44,31 @@ class PadSerializer(BaseSerializer):
 
 
 class GameSerializer(BaseSerializer):
-    players = PlayerSerializer(many=True)
+    players = serializers.SerializerMethodField()
     pads = serializers.SerializerMethodField()
     rounds = PadStepSerializer(many=True)
+
+    def get_players(self, instance):
+        def uniquify(seq):
+            seen = set()
+            seen_add = seen.add
+            return [x for x in seq if not (x in seen or seen_add(x))]
+
+        players = instance.players.all()
+
+        pad = instance.pads.first()
+
+        ordered_player_uuids = [pad.initial_player.uuid.hex] + [
+            step.player.uuid.hex for step in pad.steps.all().order_by("round_number")
+        ]
+        unique_ordered_player_uuids = uniquify(ordered_player_uuids)
+
+        def sort_fn(player: Player):
+            return unique_ordered_player_uuids.index(player.uuid.hex)
+
+        sorted_players = sorted(players, key=sort_fn)
+
+        return PlayerSerializer(sorted_players, many=True).data
 
     def get_pads(self, instance):
         pads = instance.pads.all().order_by("order")
