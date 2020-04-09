@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import rightSideBackground from 'assets/right-side-background.svg';
+import rightSideBackground from 'assets/full-background.svg';
 import { fontSize, fontFamily, colorPalette } from 'stylesheet';
 import Button from 'components/Button';
 

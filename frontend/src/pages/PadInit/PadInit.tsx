@@ -2,12 +2,21 @@ import React, { useState } from 'react';
 import { RootState } from 'redux/types';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import TextInput from 'components/TextInput';
+
 import { useSavePad } from 'redux/Game/hooks';
-import Header2 from 'atoms/Header2';
-import { PadInitContainer } from './PadInit.style';
+import {
+  StyledHeader,
+  PadInitContainer,
+  StyledTextInput,
+  StyledForm,
+  Spacer,
+  InputArrow,
+} from './PadInit.style';
 import PlayerChip from 'atoms/PlayerChip';
 import { StyledPlayerChips } from 'components/DrawingToWordStep/DrawingToWordStep.style';
+
+import arrowRight from 'assets/arrow-right.svg';
+import StaticInput from 'atoms/StaticInput';
 
 const PadInit: React.FunctionComponent = () => {
   const { padId } = useParams();
@@ -29,32 +38,38 @@ const PadInit: React.FunctionComponent = () => {
 
   return (
     <PadInitContainer>
-      <Header2>Choisis un mot ou une phrase :</Header2>
+      <StyledHeader>Choisis un mot ou une phrase :</StyledHeader>
       {pad.sentence ? (
-        <p>{pad.sentence}</p>
+        <StaticInput>{pad.sentence}</StaticInput>
       ) : (
-        <form
+        <StyledForm
           onSubmit={e => {
             e.preventDefault();
             doSavePad(pad, sentence);
           }}
         >
-          <TextInput
+          <StyledTextInput
             autoFocus
             type="text"
             placeholder="Une girafe ?"
             value={sentence}
             onChange={e => setSentence(e.target.value)}
+            adornment={
+              <InputArrow src={arrowRight} alt="Valider" onClick={() => doSavePad(pad, sentence)} />
+            }
           />
-        </form>
+        </StyledForm>
       )}
       {isNextPlayerMe ? (
-        <p>Attention, c'est toi qui devras dessiner ça !</p>
+        <p>
+          Attention, c'est <strong>toi</strong> qui devras dessiner ça !
+        </p>
       ) : (
         <p>
           Espérons que <strong>{nextPlayer.name}</strong> dessine bien ...
         </p>
       )}
+      <Spacer />
       <em>On attend ceux-là pour continuer :</em>
       <StyledPlayerChips>
         {remainingPlayers.map(player => (
