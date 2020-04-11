@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 
 import App from './App';
 import configureStore from './redux/store';
-import { register } from './serviceWorker';
 
 const { store } = configureStore();
 
@@ -20,7 +19,6 @@ const rootEl = document.getElementById('root');
 
 if (rootEl) {
   ReactDOM.render(<App store={store} />, rootEl);
-  register();
 }
 
 if (module.hot) {
