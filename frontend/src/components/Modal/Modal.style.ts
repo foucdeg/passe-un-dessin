@@ -7,7 +7,7 @@ interface ModalContainerProps {
 
 export const ModalContainer = styled.div<ModalContainerProps>`
   position: fixed;
-  z-index: 1;
+  z-index: 15;
   left: 0;
   top: 0;
   width: 100vw;
@@ -19,6 +19,7 @@ export const ModalContainer = styled.div<ModalContainerProps>`
 
 export const ModalContent = styled.div`
   background-color: ${colorPalette.white};
+  z-index: 16;
   margin: auto;
   margin-top: 180px;
   width: 512px;

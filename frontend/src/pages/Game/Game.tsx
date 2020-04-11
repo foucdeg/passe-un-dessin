@@ -17,6 +17,7 @@ import { useServerSentEvent, SERVER_EVENT_TYPES } from 'services/networking/serv
 import { startRound, startDebrief, markPlayerFinished } from 'redux/Game';
 import { Credits } from '../Home/Home.style';
 import { colorPalette } from 'stylesheet';
+import { GamePhase } from 'redux/Game/types';
 
 const Game: React.FunctionComponent = () => {
   const { gameId } = useParams();
@@ -75,21 +76,47 @@ const Game: React.FunctionComponent = () => {
 
   useServerSentEvent(`game-${game?.uuid}`, eventCallback);
 
+  useEffect(() => {
+    if (!game) return;
+
+    const listener = (event: BeforeUnloadEvent) => {
+      switch (game.phase) {
+        case GamePhase.INIT:
+        case GamePhase.ROUNDS:
+          event.returnValue =
+            'Si vous quittez la partie, les autres joueurs ne pourront pas la terminer.\n' +
+            'Mieux vaut quitter la partie à la fin. \n' +
+            'Êtes-vous sûr(e) de vouloir la quitter maintenant ?';
+          break;
+        case GamePhase.DEBRIEF:
+          alert('clean leave');
+      }
+    };
+
+    window.addEventListener('beforeunload', listener);
+
+    return () => {
+      window.removeEventListener('beforeunload', listener);
+    };
+  }, [game]);
+
   if (!game || !player) return null;
 
   const [previousPlayer, nextPlayer] = getPreviousNextPlayers(game, player);
 
   return (
     <GameContainer>
-      <InnerGameContainer>
-        <PreviousNextPlayers>
-          <StyledPlayerChip color={colorPalette.whiteTransparent}>
-            {previousPlayer.name} est avant toi
-          </StyledPlayerChip>
-          <StyledPlayerChip color={colorPalette.whiteTransparent}>
-            {nextPlayer.name} est après toi
-          </StyledPlayerChip>
-        </PreviousNextPlayers>
+      <InnerGameContainer hasTabs={game.phase === GamePhase.DEBRIEF}>
+        {game.phase !== GamePhase.DEBRIEF && (
+          <PreviousNextPlayers>
+            <StyledPlayerChip color={colorPalette.whiteTransparent}>
+              {previousPlayer.name} est avant toi
+            </StyledPlayerChip>
+            <StyledPlayerChip color={colorPalette.whiteTransparent}>
+              {nextPlayer.name} est après toi
+            </StyledPlayerChip>
+          </PreviousNextPlayers>
+        )}
         <Switch>
           <Route path={`${path}/pad/:padId/init`} component={PadInit} />
           <Route path={`${path}/step/:stepId`} component={PadStep} />

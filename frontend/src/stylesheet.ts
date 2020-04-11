@@ -13,6 +13,7 @@ export const colorPalette = {
   black: '#44374E',
   purple: '#9B37A9',
   textGrey: 'rgba(68, 55, 78, 0.4)',
+  backgroundGrey: '#f1f1f1',
   amberLight: '#FFD54F',
   amber: '#FFC107',
   orange: '#F68D4F',

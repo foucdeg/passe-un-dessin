@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import fullBackground from 'assets/full-background.svg';
 import { colorPalette } from 'stylesheet';
 import PlayerChip from 'atoms/PlayerChip';
@@ -15,7 +15,7 @@ export const GameContainer = styled.div`
 `;
 GameContainer.displayName = 'GameContainer';
 
-export const InnerGameContainer = styled.div`
+export const InnerGameContainer = styled.div<{ hasTabs?: boolean }>`
   width: 100%;
   min-height: 570px;
   margin: auto;
@@ -25,6 +25,11 @@ export const InnerGameContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  ${props =>
+    props.hasTabs &&
+    css`
+      border-radius: 0 16px 16px 16px;
+    `}
 `;
 InnerGameContainer.displayName = 'InnerGameContainer';
 

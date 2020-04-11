@@ -1,17 +1,17 @@
 import React from 'react';
-import { StyledSentenceRecap } from './SentenceRecap.style';
+import { StyledSentenceRecap, SentenceHeader, Sentence } from './SentenceRecap.style';
 
 interface Props {
   sentence: string;
   playerName: string;
+  color: string;
   isInitial?: boolean;
 }
 
-const SentenceRecap: React.FC<Props> = ({ sentence, playerName, isInitial }) => (
+const SentenceRecap: React.FC<Props> = ({ sentence, playerName, isInitial, color }) => (
   <StyledSentenceRecap>
-    <span>{isInitial ? 'Mot initial' : playerName}</span>
-    :&nbsp;
-    <span>{sentence} </span>
+    <SentenceHeader>{isInitial ? 'Mot initial' : playerName}</SentenceHeader>
+    <Sentence color={color}>{sentence}</Sentence>
   </StyledSentenceRecap>
 );
 

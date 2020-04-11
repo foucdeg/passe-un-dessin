@@ -1,25 +1,38 @@
 import React from 'react';
 import { Pad, StepType } from 'redux/Game/types';
-import { PadRecapColumn } from './PadRecap.style';
+import { PadRecapRow, ArrowSpacer } from './PadRecap.style';
 import SentenceRecap from 'components/SentenceRecap';
 import DrawingRecap from 'components/DrawingRecap';
+
+import fatArrow from 'assets/fat-arrow.svg';
 
 interface Props {
   pad: Pad;
 }
 
 const PadRecap: React.FC<Props> = ({ pad }) => (
-  <PadRecapColumn>
-    <h3>Carnet de {pad.initial_player.name}</h3>
-    <SentenceRecap sentence={pad.sentence} playerName={pad.initial_player.name} isInitial />
-    {pad.steps.map(step =>
-      step.step_type === StepType.WORD_TO_DRAWING ? (
-        <DrawingRecap key={step.uuid} drawing={step.drawing} playerName={step.player.name} />
-      ) : (
-        <SentenceRecap key={step.uuid} sentence={step.sentence} playerName={step.player.name} />
-      ),
-    )}
-  </PadRecapColumn>
+  <PadRecapRow>
+    <SentenceRecap
+      sentence={pad.sentence}
+      playerName={pad.initial_player.name}
+      color={pad.initial_player.color}
+      isInitial
+    />
+    {pad.steps.map(step => (
+      <React.Fragment key={step.uuid}>
+        <ArrowSpacer src={fatArrow} />
+        {step.step_type === StepType.WORD_TO_DRAWING ? (
+          <DrawingRecap drawing={step.drawing} playerName={step.player.name} />
+        ) : (
+          <SentenceRecap
+            sentence={step.sentence}
+            playerName={step.player.name}
+            color={step.player.color}
+          />
+        )}
+      </React.Fragment>
+    ))}
+  </PadRecapRow>
 );
 
 export default PadRecap;

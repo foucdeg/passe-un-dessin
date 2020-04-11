@@ -11,7 +11,7 @@ interface Props {
 const Modal: React.FC<Props> = ({ isOpen, onClose, children }) => {
   return (
     <ModalContainer isOpen={isOpen} onClick={onClose}>
-      <ModalContent>{children}</ModalContent>
+      <ModalContent onClick={e => e.stopPropagation()}>{children}</ModalContent>
     </ModalContainer>
   );
 };

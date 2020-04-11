@@ -1,8 +1,16 @@
 import styled from 'styled-components';
 
-export const PadRecapColumn = styled.div`
+export const PadRecapRow = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
 `;
 
-PadRecapColumn.displayName = 'PadRecapColumn';
+PadRecapRow.displayName = 'PadRecapRow';
+
+export const ArrowSpacer = styled.img`
+  height: 240px;
+  margin-top: 20px;
+  width: 28px;
+`;
+
+ArrowSpacer.displayName = 'ArrowSpacer';

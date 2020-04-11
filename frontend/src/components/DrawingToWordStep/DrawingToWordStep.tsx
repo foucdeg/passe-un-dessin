@@ -13,10 +13,11 @@ import {
   StyledHeader,
   Spacer,
 } from 'components/WordToDrawingStep/WordToDrawingStep.style';
-import { StyledForm, StyledButton, StyledPlayerChips } from './DrawingToWordStep.style';
+import { StyledForm, StyledButton, StyledPlayerChips, Subtext } from './DrawingToWordStep.style';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/types';
 import PlayerChip from 'atoms/PlayerChip';
+import StaticInput from 'atoms/StaticInput';
 
 interface Props {
   padStep: PadStep;
@@ -48,9 +49,9 @@ const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, previousPlayer,
       <Gutter />
       <RightSide>
         <StyledHeader>Devine ce dessin :</StyledHeader>
-        <em>(sorti du cerveau malade de {previousPlayer.name})</em>
+        <Subtext>(sorti du cerveau malade de {previousPlayer.name})</Subtext>
         {padStep.sentence ? (
-          <p>{padStep.sentence}</p>
+          <StaticInput>{padStep.sentence}</StaticInput>
         ) : (
           <StyledForm
             onSubmit={e => {

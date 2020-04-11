@@ -54,7 +54,7 @@ const Room: React.FunctionComponent = () => {
   };
 
   return (
-    <Modal isOpen>
+    <Modal isOpen onClose={() => history.push('/')}>
       <StyledHeader>Lancer une partie</StyledHeader>
       <FieldLabel>
         Envoyez ce lien aux participants{' '}

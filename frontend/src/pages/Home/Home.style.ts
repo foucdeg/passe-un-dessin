@@ -29,7 +29,7 @@ export const Subtitle = styled.h3`
   color: ${colorPalette.orange};
   text-transform: uppercase;
   font-variant: small-caps;
-  margin-bottom: 68px;
+  margin-bottom: 42px;
 `;
 
 Subtitle.displayName = 'Subtitle';
@@ -57,6 +57,7 @@ HelpParagraph.displayName = 'HelpParagraph';
 
 export const StartButton = styled(Button)`
   align-self: flex-end;
+  margin-bottom: 24px;
 `;
 
 StartButton.displayName = 'HelpPaStartButtonragraph';
@@ -100,10 +101,9 @@ export const Credits = styled.p`
 `;
 Credits.displayName = 'Credits';
 
-export const ButtonRow = styled.div`
-  width: 100%;
+export const PlayerLine = styled.div`
+  margin-bottom: 32px;
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 64px;
+  align-items: baseline;
 `;
-ButtonRow.displayName = 'ButtonRow';
+PlayerLine.displayName = 'PlayerLine';

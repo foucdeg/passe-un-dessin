@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   LeftSide,
   RightSide,
@@ -7,22 +7,20 @@ import {
   Header,
   HelpParagraph,
   StartButton,
-  ButtonRow,
   Credits,
   RightSideTitle,
+  PlayerLine,
 } from './Home.style';
 import { RootState } from 'redux/types';
 import { useSelector } from 'react-redux';
 import { useCreateRoom } from 'redux/Room/hooks';
 import { useHistory, useLocation } from 'react-router';
-import Button from 'components/Button';
-import SecondaryButton from 'components/SecondaryButton';
+import PlayerChip from 'atoms/PlayerChip';
 
 const Home: React.FunctionComponent = () => {
   const [, doCreateRoom] = useCreateRoom();
   const player = useSelector((state: RootState) => state.player.player);
   const history = useHistory();
-  const [secondStep, setSecondStep] = useState<boolean>(false);
   const location = useLocation();
 
   if (!location.pathname.match(/\/(room\/[^/]+)?$/)) return null;
@@ -32,29 +30,22 @@ const Home: React.FunctionComponent = () => {
       <LeftSide>
         <LeftSideTitle>Passe un dessin</LeftSideTitle>
         <Subtitle>Tu ne sais pas dessiner ? On va rire.</Subtitle>
-        {!secondStep && (
-          <>
-            <Header>Comment jouer ?</Header>
-            <HelpParagraph>
-              Dans ce jeu, tes amis et toi allez dessiner des mots et expressions et essayer de
-              deviner ce que le précédent a dessiné. Chaque mot initial, choisi par un joueur, va
-              faire le tour du groupe, transformé au fur et à mesure qu'il a été dessiné puis
-              deviné. A la fin, on relit les carnets de dessin pour voir qui dessine le moins mal !
-            </HelpParagraph>
-            <StartButton onClick={() => setSecondStep(true)}>Commencer</StartButton>
-          </>
+        {player && (
+          <PlayerLine>
+            Bienvenue,&nbsp;<PlayerChip color={player.color}>{player.name}</PlayerChip> !
+          </PlayerLine>
         )}
-        {secondStep && (
-          <>
-            {player && <HelpParagraph>Te revoilà, {player.name} !</HelpParagraph>}
-            <ButtonRow>
-              <SecondaryButton onClick={() => setSecondStep(false)}>
-                Retourner aux règles
-              </SecondaryButton>
-              <Button onClick={() => doCreateRoom(history)}>Lancer une partie</Button>
-            </ButtonRow>
-          </>
-        )}
+        <Header>Comment jouer ?</Header>
+        <HelpParagraph>
+          Dans ce jeu, tes amis et toi allez dessiner des mots et expressions et essayer de deviner
+          ce que le précédent a dessiné. Chaque mot initial, choisi par un joueur, va faire le tour
+          du groupe, transformé au fur et à mesure qu'il a été dessiné puis deviné. A la fin, on
+          relit les carnets de dessin pour voir qui dessine le moins mal !
+        </HelpParagraph>
+        <StartButton onClick={() => doCreateRoom(history)}>Lancer une partie</StartButton>
+        <HelpParagraph>
+          Pour rejoindre une partie existante, l'organisateur doit t'envoyer le lien.
+        </HelpParagraph>
       </LeftSide>
       <RightSide>
         <RightSideTitle>Passe un Dessin</RightSideTitle>
