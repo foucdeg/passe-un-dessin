@@ -30,3 +30,11 @@ export const useJoinRoom = () => {
     await client.put(`/room/${roomId}/join`, {});
   });
 };
+
+export const useLeaveRoom = () => {
+  /* eslint-disable-next-line @typescript-eslint/ban-ts-ignore */
+  // @ts-ignore
+  return useAsyncFn(async (room: Room) => {
+    await client.put(`/room/${room.uuid}/leave`, {});
+  });
+};

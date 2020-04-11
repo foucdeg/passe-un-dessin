@@ -59,15 +59,23 @@ export const PadTab = styled.div<{ isActive: boolean }>`
 
 PadTab.displayName = 'PadTab';
 
-export const RestartButton = styled(SecondaryButton)`
+export const TopRightButtons = styled.div`
   position: absolute;
   right: 0;
   top: -40px;
-  height: 32px;
-  padding: 0 16px;
 `;
 
-RestartButton.displayName = 'RestartButton';
+TopRightButtons.displayName = 'TopRightButtons';
+
+export const TopRightButton = styled(SecondaryButton)`
+  height: 32px;
+  padding: 0 16px;
+  &:not(:last-child) {
+    margin-right: 8px;
+  }
+`;
+
+TopRightButton.displayName = 'TopRightButton';
 
 export const ButtonRow = styled.div`
   display: flex;

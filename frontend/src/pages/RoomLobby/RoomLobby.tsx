@@ -3,7 +3,7 @@ import { RootState } from 'redux/types';
 import { useSelector } from 'react-redux';
 import copy from 'copy-to-clipboard';
 
-import { useJoinRoom } from 'redux/Room/hooks';
+import { useJoinRoom, useLeaveRoom } from 'redux/Room/hooks';
 import { MIN_PLAYERS, MAX_PLAYERS } from 'redux/Game/constants';
 import { useStartGame } from 'redux/Game/hooks';
 import { useHistory } from 'react-router';
@@ -25,6 +25,7 @@ import linkIcon from 'assets/link.svg';
 
 const Room: React.FunctionComponent = () => {
   const [, doJoinRoom] = useJoinRoom();
+  const [, doLeaveRoom] = useLeaveRoom();
   const [, doStartGame] = useStartGame();
   const room = useSelector((state: RootState) => state.room.room);
   const player = useSelector((state: RootState) => state.player.player);
@@ -53,8 +54,13 @@ const Room: React.FunctionComponent = () => {
     }, 5000);
   };
 
+  const onLeave = () => {
+    doLeaveRoom(room);
+    history.push('/');
+  };
+
   return (
-    <Modal isOpen onClose={() => history.push('/')}>
+    <Modal isOpen onClose={onLeave}>
       <StyledHeader>Lancer une partie</StyledHeader>
       <FieldLabel>
         Envoyez ce lien aux participants{' '}

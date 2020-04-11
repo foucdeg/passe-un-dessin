@@ -9,15 +9,17 @@ import { RootState } from 'redux/types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useHistory, Switch, Route, useRouteMatch, useLocation } from 'react-router';
 import { useFetchGame } from 'redux/Game/hooks';
-import PadInit from '../PadInit';
-import PadStep from '../PadStep';
-import GameRecap from '../GameRecap';
+
 import { getRedirectPath, getPreviousNextPlayers } from 'services/game.service';
 import { useServerSentEvent, SERVER_EVENT_TYPES } from 'services/networking/server-events';
 import { startRound, startDebrief, markPlayerFinished } from 'redux/Game';
 import { Credits } from '../Home/Home.style';
 import { colorPalette } from 'stylesheet';
 import { GamePhase } from 'redux/Game/types';
+
+const PadInit = React.lazy(() => import('../PadInit'));
+const PadStep = React.lazy(() => import('../PadStep'));
+const GameRecap = React.lazy(() => import('../GameRecap'));
 
 const Game: React.FunctionComponent = () => {
   const { gameId } = useParams();
@@ -80,16 +82,9 @@ const Game: React.FunctionComponent = () => {
     if (!game) return;
 
     const listener = (event: BeforeUnloadEvent) => {
-      switch (game.phase) {
-        case GamePhase.INIT:
-        case GamePhase.ROUNDS:
-          event.returnValue =
-            'Si vous quittez la partie, les autres joueurs ne pourront pas la terminer.\n' +
-            'Mieux vaut quitter la partie à la fin. \n' +
-            'Êtes-vous sûr(e) de vouloir la quitter maintenant ?';
-          break;
-        case GamePhase.DEBRIEF:
-          alert('clean leave');
+      if ([GamePhase.INIT, GamePhase.ROUNDS].includes(game.phase)) {
+        console.log('warning about leaving room');
+        event.returnValue = 'prevent'; // Chrome doesn't display this message anyway
       }
     };
 

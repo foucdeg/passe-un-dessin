@@ -97,6 +97,14 @@ class PlayerFinishedMessageSerializer(MessageSerializer):
     player = PlayerSerializer()
 
 
+class PlayerLeftMessageSerializer(MessageSerializer):
+    player = PlayerSerializer()
+
+
+class NewAdminMessageSerializer(MessageSerializer):
+    player = PlayerSerializer()
+
+
 class GameStartsMessageSerializer(MessageSerializer):
     game = GameIdSerializer()
 

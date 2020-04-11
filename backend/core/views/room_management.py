@@ -7,7 +7,12 @@ from django.views import View
 from django_eventstream import send_event
 from rest_framework.generics import RetrieveAPIView
 
-from core.messages import GameStartsMessage, PlayerConnectedMessage
+from core.messages import (
+    GameStartsMessage,
+    NewAdminMessage,
+    PlayerConnectedMessage,
+    PlayerLeftMessage,
+)
 from core.models import Player, Room
 from core.serializers import PlayerSerializer, RoomSerializer
 from core.service.game_service import initialize_game
@@ -87,6 +92,56 @@ def join_room(request, room_id):
                 "message",
                 PlayerConnectedMessage(player).serialize(),
             )
+    except Room.DoesNotExist:
+        return HttpResponseBadRequest("Room does not exist")
+
+    return HttpResponse(status=200)
+
+
+def leave_room(request, room_id):
+    if request.method != "PUT":
+        return HttpResponseBadRequest("PUT expected")
+
+    try:
+        player_id = request.session["player_id"]
+        player = Player.objects.get(uuid=player_id)
+    except (KeyError, Player.DoesNotExist):
+        return HttpResponseBadRequest("No player ID in session, or invalid")
+
+    try:
+        room = Room.objects.get(uuid=room_id)
+        if room != player.room:
+            return HttpResponseBadRequest("Player was not in this room")
+
+        with transaction.atomic():
+            player.room = None
+            player.save()
+            logger.debug(
+                "Sending message for player %s leaving room %s"
+                % (player.name, room.uuid.hex[:8])
+            )
+            send_event(
+                "room-%s" % room.uuid.hex,
+                "message",
+                PlayerLeftMessage(player).serialize(),
+            )
+            if room.admin == player:
+                new_admin = room.players.all().first()
+
+                if new_admin is not None:
+                    room.admin = new_admin
+                    room.save()
+
+                    logger.debug(
+                        "Player %s left room %s, choosing new admin %s"
+                        % (player.name, room.uuid.hex[:8], new_admin.name)
+                    )
+                    send_event(
+                        "room-%s" % room.uuid.hex,
+                        "message",
+                        NewAdminMessage(new_admin).serialize(),
+                    )
+
     except Room.DoesNotExist:
         return HttpResponseBadRequest("Room does not exist")
 

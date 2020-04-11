@@ -14,6 +14,32 @@ class PlayerConnectedMessage:
         return PlayerConnectedMessageSerializer(self).data
 
 
+class PlayerLeftMessage:
+    message_type = "PLAYER_LEFT"
+    player = None
+
+    def __init__(self, player: Player):
+        self.player = player
+
+    def serialize(self):
+        from core.serializers import PlayerLeftMessageSerializer
+
+        return PlayerLeftMessageSerializer(self).data
+
+
+class NewAdminMessage:
+    message_type = "NEW_ADMIN"
+    player = None
+
+    def __init__(self, player: Player):
+        self.player = player
+
+    def serialize(self):
+        from core.serializers import NewAdminMessageSerializer
+
+        return NewAdminMessageSerializer(self).data
+
+
 class PlayerFinishedMessage:
     message_type = "PLAYER_FINISHED"
     player = None

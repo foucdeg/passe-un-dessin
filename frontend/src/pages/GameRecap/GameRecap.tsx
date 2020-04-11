@@ -8,9 +8,10 @@ import {
   InnerDoneModal,
   PadTabsRow,
   PadTab,
-  RestartButton,
+  TopRightButton,
   ButtonRow,
   StyledHeader,
+  TopRightButtons,
 } from './GameRecap.style';
 import { Pad } from 'redux/Game/types';
 import Modal from 'components/Modal';
@@ -19,12 +20,17 @@ import { useHistory } from 'react-router';
 import Button from 'components/Button';
 import SecondaryButton from 'components/SecondaryButton';
 import { HelpParagraph } from '../Home/Home.style';
+import { useLeaveRoom } from 'redux/Room/hooks';
 
 const GameRecap: React.FunctionComponent = () => {
   const game = useSelector((state: RootState) => state.game.game);
-  const player = useSelector((state: RootState) => state.player.player);
   const room = useSelector((state: RootState) => state.room.room);
-  const isPlayerAdmin = player && room && player.uuid === room.admin.uuid;
+  const isPlayerAdmin = useSelector(
+    (state: RootState) =>
+      state.player.player &&
+      state.room.room &&
+      state.player.player.uuid === state.room.room.admin.uuid,
+  );
   const history = useHistory();
 
   const [displayedPad, setDisplayedPad] = useState<Pad | null>(null);
@@ -32,6 +38,7 @@ const GameRecap: React.FunctionComponent = () => {
   const [doneModalIsOpen, setDoneModalIsOpen] = useState<boolean>(true);
 
   const [, doStartGame] = useStartGame();
+  const [, doLeaveRoom] = useLeaveRoom();
 
   useEffect(() => {
     if (!game) return;
@@ -39,6 +46,11 @@ const GameRecap: React.FunctionComponent = () => {
   }, [setDisplayedPad, game]);
 
   if (!room || !game) return null;
+
+  const leaveGame = () => {
+    doLeaveRoom(room);
+    history.push('/');
+  };
 
   const startSameGame = () => {
     doStartGame(
@@ -83,11 +95,16 @@ const GameRecap: React.FunctionComponent = () => {
           <Button onClick={() => setDoneModalIsOpen(false)}>Voir les résultats</Button>
         </InnerDoneModal>
       </Modal>
+      <TopRightButtons>
+        <TopRightButton onClick={leaveGame}>Quitter l'équipe</TopRightButton>
+        {isPlayerAdmin && (
+          <TopRightButton onClick={() => setNewGameModalIsOpen(true)}>
+            Nouvelle partie ?
+          </TopRightButton>
+        )}
+      </TopRightButtons>
       {isPlayerAdmin && (
         <>
-          <RestartButton onClick={() => setNewGameModalIsOpen(true)}>
-            Nouvelle partie ?
-          </RestartButton>
           <Modal isOpen={newGameModalIsOpen} onClose={() => setNewGameModalIsOpen(false)}>
             <StyledHeader>On prend les mêmes et on recommence ?</StyledHeader>
             <ButtonRow>
