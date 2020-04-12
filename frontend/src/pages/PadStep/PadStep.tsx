@@ -1,23 +1,26 @@
 import React, { useEffect, useCallback } from 'react';
-import { RootState } from 'redux/types';
-import { useSelector } from 'react-redux';
+import { useSelector } from 'redux/useSelector';
 import { useParams } from 'react-router';
 import { StepType } from 'redux/Game/types';
 import DrawingToWordStep from 'components/DrawingToWordStep';
 import WordToDrawingStep from 'components/WordToDrawingStep';
 import { useFetchStep, useSaveStepDrawing, useSaveStepSentence } from 'redux/Step/hooks';
 import { getPreviousNextPlayersForStep } from 'services/game.service';
+import { selectGame } from 'redux/Game/selectors';
+import { selectStep } from 'redux/Step/selectors';
 
 const PadStep: React.FunctionComponent = () => {
-  const game = useSelector((state: RootState) => state.game.game);
-  const step = useSelector((state: RootState) => state.step.step);
-  const [, doFetchStep] = useFetchStep();
-  const [, doSaveStepDrawing] = useSaveStepDrawing();
-  const [, doSaveStepSentence] = useSaveStepSentence();
+  const game = useSelector(selectGame);
+  const step = useSelector(selectStep);
+  const doFetchStep = useFetchStep();
+  const doSaveStepDrawing = useSaveStepDrawing();
+  const doSaveStepSentence = useSaveStepSentence();
   const { stepId } = useParams();
 
   useEffect(() => {
-    doFetchStep(stepId);
+    if (stepId) {
+      doFetchStep(stepId);
+    }
   }, [doFetchStep, stepId]);
 
   const saveStep = useCallback(

@@ -39,7 +39,7 @@ const AudioControl: React.FC = () => {
         .play()
         .then(() => setPlaying(true))
         .catch(err => {
-          console.log(err);
+          console.error(err);
           setPlaying(false);
         });
     }

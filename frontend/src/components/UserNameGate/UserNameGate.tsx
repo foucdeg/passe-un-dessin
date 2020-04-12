@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
 
-import { RootState } from 'redux/types';
-import { useSelector } from 'react-redux';
+import { useSelector } from 'redux/useSelector';
 import Modal from 'components/Modal';
 import { useFetchMe, useCreatePlayer } from 'redux/Player/hooks';
 import { UsernameForm, StyledField, StyledButton } from './UserNameGate.style';
 import FieldLabel from 'atoms/FieldLabel';
 import Header2 from 'atoms/Header2';
+import { selectPlayer } from 'redux/Player/selectors';
 
 interface Props {
   children: React.ReactNode;
 }
 
 const UserNameGate: React.FC<Props> = ({ children }) => {
-  const player = useSelector((state: RootState) => state.player.player);
+  const player = useSelector(selectPlayer);
   const [playerName, setPlayerName] = useState<string>('');
-  const [, doFetchMe] = useFetchMe();
-  const [, doCreatePlayer] = useCreatePlayer();
+  const doFetchMe = useFetchMe();
+  const doCreatePlayer = useCreatePlayer();
 
   useEffect(() => {
     doFetchMe();
@@ -31,7 +31,9 @@ const UserNameGate: React.FC<Props> = ({ children }) => {
           <UsernameForm
             onSubmit={e => {
               e.preventDefault();
-              doCreatePlayer(playerName);
+              if (playerName !== '') {
+                doCreatePlayer(playerName);
+              }
             }}
           >
             <FieldLabel htmlFor="username">Choisis un nom</FieldLabel>

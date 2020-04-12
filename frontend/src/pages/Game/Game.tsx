@@ -5,8 +5,9 @@ import {
   PreviousNextPlayers,
   StyledPlayerChip,
 } from './Game.style';
-import { RootState } from 'redux/types';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'redux/useSelector';
+
 import { useParams, useHistory, Switch, Route, useRouteMatch, useLocation } from 'react-router';
 import { useFetchGame } from 'redux/Game/hooks';
 
@@ -16,6 +17,9 @@ import { startRound, startDebrief, markPlayerFinished } from 'redux/Game';
 import { Credits } from '../Home/Home.style';
 import { colorPalette } from 'stylesheet';
 import { GamePhase } from 'redux/Game/types';
+import { selectRoom } from 'redux/Room/selectors';
+import { selectGame } from 'redux/Game/selectors';
+import { selectPlayer } from 'redux/Player/selectors';
 
 const PadInit = React.lazy(() => import('../PadInit'));
 const PadStep = React.lazy(() => import('../PadStep'));
@@ -23,16 +27,20 @@ const GameRecap = React.lazy(() => import('../GameRecap'));
 
 const Game: React.FunctionComponent = () => {
   const { gameId } = useParams();
-  const [, doFetchGame] = useFetchGame();
-  const room = useSelector((state: RootState) => state.room.room);
-  const game = useSelector((state: RootState) => state.game.game);
-  const player = useSelector((state: RootState) => state.player.player);
+  const doFetchGame = useFetchGame();
+  const room = useSelector(selectRoom);
+  const game = useSelector(selectGame);
+  const player = useSelector(selectPlayer);
   const { push } = useHistory();
   const location = useLocation();
   const { path } = useRouteMatch();
   const dispatch = useDispatch();
 
+  const channelName = game ? `game-${game.uuid}` : null;
+
   useEffect(() => {
+    if (!gameId) return;
+
     doFetchGame(gameId);
   }, [doFetchGame, gameId]);
 
@@ -48,7 +56,7 @@ const Game: React.FunctionComponent = () => {
 
   const eventCallback = useCallback(
     ({ message_type: messageType, round_number: roundNumber, player: messagePlayer }) => {
-      if (!room || !game || !player) return;
+      if (!room || !game || !player || !gameId) return;
 
       switch (messageType) {
         case SERVER_EVENT_TYPES.PLAYER_FINISHED:
@@ -67,23 +75,21 @@ const Game: React.FunctionComponent = () => {
 
           return push(`/room/${room.uuid}/game/${game.uuid}/step/${targetStep.uuid}`);
         case SERVER_EVENT_TYPES.DEBRIEF_STARTS:
-          doFetchGame(gameId);
           dispatch(startDebrief({}));
 
           return push(`/room/${room.uuid}/game/${game.uuid}/recap`);
       }
     },
-    [dispatch, doFetchGame, game, gameId, player, push, room],
+    [dispatch, game, gameId, player, push, room],
   );
 
-  useServerSentEvent(`game-${game?.uuid}`, eventCallback);
+  useServerSentEvent(channelName, eventCallback);
 
   useEffect(() => {
     if (!game) return;
 
     const listener = (event: BeforeUnloadEvent) => {
       if ([GamePhase.INIT, GamePhase.ROUNDS].includes(game.phase)) {
-        console.log('warning about leaving room');
         event.returnValue = 'prevent'; // Chrome doesn't display this message anyway
       }
     };

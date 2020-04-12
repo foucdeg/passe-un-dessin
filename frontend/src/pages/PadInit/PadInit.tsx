@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { RootState } from 'redux/types';
-import { useSelector } from 'react-redux';
+import { useSelector } from 'redux/useSelector';
 import { useParams } from 'react-router';
 
 import { useSavePad } from 'redux/Game/hooks';
@@ -17,15 +16,17 @@ import { StyledPlayerChips } from 'components/DrawingToWordStep/DrawingToWordSte
 
 import arrowRight from 'assets/arrow-right.svg';
 import StaticInput from 'atoms/StaticInput';
+import { selectGame, selectRemainingPlayers } from 'redux/Game/selectors';
+import { selectPlayer } from 'redux/Player/selectors';
 
 const PadInit: React.FunctionComponent = () => {
   const { padId } = useParams();
-  const game = useSelector((state: RootState) => state.game.game);
-  const player = useSelector((state: RootState) => state.player.player);
-  const remainingPlayers = useSelector((state: RootState) => state.game.remainingPlayers);
+  const game = useSelector(selectGame);
+  const player = useSelector(selectPlayer);
+  const remainingPlayers = useSelector(selectRemainingPlayers);
 
   const [sentence, setSentence] = useState<string>('');
-  const [, doSavePad] = useSavePad();
+  const doSavePad = useSavePad();
 
   const pad = game?.pads.find(pad => pad.uuid === padId);
 
@@ -45,7 +46,9 @@ const PadInit: React.FunctionComponent = () => {
         <StyledForm
           onSubmit={e => {
             e.preventDefault();
-            doSavePad(pad, sentence);
+            if (sentence !== '') {
+              doSavePad(pad, sentence);
+            }
           }}
         >
           <StyledTextInput

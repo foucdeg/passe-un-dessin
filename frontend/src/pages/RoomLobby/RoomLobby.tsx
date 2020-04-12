@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { RootState } from 'redux/types';
-import { useSelector } from 'react-redux';
+import { useSelector } from 'redux/useSelector';
 import copy from 'copy-to-clipboard';
 
 import { useJoinRoom, useLeaveRoom } from 'redux/Room/hooks';
@@ -22,13 +21,15 @@ import PlayerChips from 'atoms/PlayerChips';
 import PlayerChip from 'atoms/PlayerChip';
 
 import linkIcon from 'assets/link.svg';
+import { selectPlayer } from 'redux/Player/selectors';
+import { selectRoom } from 'redux/Room/selectors';
 
 const Room: React.FunctionComponent = () => {
-  const [, doJoinRoom] = useJoinRoom();
-  const [, doLeaveRoom] = useLeaveRoom();
-  const [, doStartGame] = useStartGame();
-  const room = useSelector((state: RootState) => state.room.room);
-  const player = useSelector((state: RootState) => state.player.player);
+  const doJoinRoom = useJoinRoom();
+  const doLeaveRoom = useLeaveRoom();
+  const doStartGame = useStartGame();
+  const room = useSelector(selectRoom);
+  const player = useSelector(selectPlayer);
   const history = useHistory();
   const [inputText, setInputText] = useState<string>(document.location.href);
 

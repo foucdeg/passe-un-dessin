@@ -10,6 +10,7 @@ export enum DrawingColor {
   BROWN = '#9C5127',
   RED = '#EB3323',
   PINK = '#EA3FF7',
+  GREY = '#BDBDBD',
   BLACK = '#000000',
 }
 

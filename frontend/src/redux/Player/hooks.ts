@@ -1,11 +1,12 @@
-import { useAsyncFn } from 'react-use';
 import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
 import { updatePlayer } from './slice';
+import { useCallback } from 'react';
 
 export const useFetchMe = () => {
   const dispatch = useDispatch();
-  return useAsyncFn(async () => {
+
+  return useCallback(async () => {
     try {
       const player = await client.get(`/player/me`);
       dispatch(updatePlayer(player));
@@ -15,15 +16,17 @@ export const useFetchMe = () => {
       }
       throw e;
     }
-  });
+  }, [dispatch]);
 };
 
 export const useCreatePlayer = () => {
   const dispatch = useDispatch();
-  /* eslint-disable-next-line @typescript-eslint/ban-ts-ignore */
-  // @ts-ignore
-  return useAsyncFn(async (name: string) => {
-    const player = await client.post(`/player`, { name });
-    dispatch(updatePlayer(player));
-  });
+
+  return useCallback(
+    async (name: string) => {
+      const player = await client.post(`/player`, { name });
+      dispatch(updatePlayer(player));
+    },
+    [dispatch],
+  );
 };

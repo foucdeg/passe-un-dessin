@@ -11,16 +11,15 @@ import {
   RightSideTitle,
   PlayerLine,
 } from './Home.style';
-import { RootState } from 'redux/types';
-import { useSelector } from 'react-redux';
 import { useCreateRoom } from 'redux/Room/hooks';
-import { useHistory, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 import PlayerChip from 'atoms/PlayerChip';
+import { selectPlayer } from 'redux/Player/selectors';
+import { useSelector } from 'redux/useSelector';
 
 const Home: React.FunctionComponent = () => {
-  const [, doCreateRoom] = useCreateRoom();
-  const player = useSelector((state: RootState) => state.player.player);
-  const history = useHistory();
+  const doCreateRoom = useCreateRoom();
+  const player = useSelector(selectPlayer);
   const location = useLocation();
 
   if (!location.pathname.match(/\/(room\/[^/]+)?$/)) return null;
@@ -42,7 +41,7 @@ const Home: React.FunctionComponent = () => {
           du groupe, transformé au fur et à mesure qu'il a été dessiné puis deviné. A la fin, on
           relit les carnets de dessin pour voir qui dessine le moins mal !
         </HelpParagraph>
-        <StartButton onClick={() => doCreateRoom(history)}>Lancer une partie</StartButton>
+        <StartButton onClick={doCreateRoom}>Lancer une partie</StartButton>
         <HelpParagraph>
           Pour rejoindre une partie existante, l'organisateur doit t'envoyer le lien.
         </HelpParagraph>

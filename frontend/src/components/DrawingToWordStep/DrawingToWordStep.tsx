@@ -14,10 +14,10 @@ import {
   Spacer,
 } from 'components/WordToDrawingStep/WordToDrawingStep.style';
 import { StyledForm, StyledButton, StyledPlayerChips, Subtext } from './DrawingToWordStep.style';
-import { useSelector } from 'react-redux';
-import { RootState } from 'redux/types';
+import { useSelector } from 'redux/useSelector';
 import PlayerChip from 'atoms/PlayerChip';
 import StaticInput from 'atoms/StaticInput';
+import { selectRemainingPlayers } from 'redux/Game/selectors';
 
 interface Props {
   padStep: PadStep;
@@ -28,7 +28,7 @@ interface Props {
 
 const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, previousPlayer, nextPlayer }) => {
   const [sentence, setSentence] = useState<string>('');
-  const remainingPlayers = useSelector((state: RootState) => state.game.remainingPlayers);
+  const remainingPlayers = useSelector(selectRemainingPlayers);
 
   if (!previousPlayer) return null;
 
@@ -56,7 +56,9 @@ const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, previousPlayer,
           <StyledForm
             onSubmit={e => {
               e.preventDefault();
-              saveStep({ sentence });
+              if (sentence !== '') {
+                saveStep({ sentence });
+              }
             }}
           >
             <TextInput

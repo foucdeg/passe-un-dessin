@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { RootState } from 'redux/types';
-import { useSelector } from 'react-redux';
+import { useSelector } from 'redux/useSelector';
 import PadRecap from 'components/PadRecap';
 import {
   OuterRecapContainer,
@@ -21,10 +21,12 @@ import Button from 'components/Button';
 import SecondaryButton from 'components/SecondaryButton';
 import { HelpParagraph } from '../Home/Home.style';
 import { useLeaveRoom } from 'redux/Room/hooks';
+import { selectRoom } from 'redux/Room/selectors';
+import { selectGame } from 'redux/Game/selectors';
 
 const GameRecap: React.FunctionComponent = () => {
-  const game = useSelector((state: RootState) => state.game.game);
-  const room = useSelector((state: RootState) => state.room.room);
+  const room = useSelector(selectRoom);
+  const game = useSelector(selectGame);
   const isPlayerAdmin = useSelector(
     (state: RootState) =>
       state.player.player &&
@@ -37,8 +39,8 @@ const GameRecap: React.FunctionComponent = () => {
   const [newGameModalIsOpen, setNewGameModalIsOpen] = useState<boolean>(false);
   const [doneModalIsOpen, setDoneModalIsOpen] = useState<boolean>(true);
 
-  const [, doStartGame] = useStartGame();
-  const [, doLeaveRoom] = useLeaveRoom();
+  const doStartGame = useStartGame();
+  const doLeaveRoom = useLeaveRoom();
 
   useEffect(() => {
     if (!game) return;

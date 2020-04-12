@@ -26,10 +26,12 @@ export enum SERVER_EVENT_TYPES {
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 export function useServerSentEvent<EventDataType = any>(
-  channel: string,
+  channel: string | null,
   callback: (msg: EventDataType) => void,
 ) {
   useEffect(() => {
+    if (!channel) return;
+
     const eventSource: EventSource = new EventSource(
       `${process.env.REACT_APP_EVENTS_HOST}/events/?channel=${channel}`,
     );

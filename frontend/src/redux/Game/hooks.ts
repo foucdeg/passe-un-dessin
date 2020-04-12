@@ -1,24 +1,24 @@
-import { useAsyncFn } from 'react-use';
 import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
 import { updateGame, updatePad } from './slice';
 import { Pad } from './types';
 import { History } from 'history';
+import { useCallback } from 'react';
 
 export const useFetchGame = () => {
   const dispatch = useDispatch();
-  /* eslint-disable-next-line @typescript-eslint/ban-ts-ignore */
-  // @ts-ignore
-  return useAsyncFn(async (gameId: string) => {
-    const game = await client.get(`/game/${gameId}`);
-    dispatch(updateGame(game));
-  });
+
+  return useCallback(
+    async (gameId: string) => {
+      const game = await client.get(`/game/${gameId}`);
+      dispatch(updateGame(game));
+    },
+    [dispatch],
+  );
 };
 
 export const useStartGame = () => {
-  return useAsyncFn(
-    /* eslint-disable-next-line @typescript-eslint/ban-ts-ignore */
-    // @ts-ignore
+  return useCallback(
     async (
       roomId: string,
       history: History<History.PoorMansUnknown>,
@@ -29,15 +29,18 @@ export const useStartGame = () => {
       });
       history.push(`/room/${roomId}/game/${gameId}`);
     },
+    [],
   );
 };
 
 export const useSavePad = () => {
   const dispatch = useDispatch();
-  /* eslint-disable-next-line @typescript-eslint/ban-ts-ignore */
-  // @ts-ignore
-  return useAsyncFn(async (pad: Pad, sentence: string) => {
-    const updatedPad = await client.put(`/pad/${pad.uuid}/save`, { sentence });
-    dispatch(updatePad(updatedPad));
-  });
+
+  return useCallback(
+    async (pad: Pad, sentence: string) => {
+      const updatedPad = await client.put(`/pad/${pad.uuid}/save`, { sentence });
+      dispatch(updatePad(updatedPad));
+    },
+    [dispatch],
+  );
 };
