@@ -33,20 +33,26 @@ export const InnerGameContainer = styled.div<{ hasTabs?: boolean }>`
 `;
 InnerGameContainer.displayName = 'InnerGameContainer';
 
-export const PreviousNextPlayers = styled.div`
+export const PlayerOrder = styled.div`
   width: 100%;
   display: flex;
   position: absolute;
   top: -45px;
   left: 0;
-  justify-content: space-between;
 `;
-InnerGameContainer.displayName = 'InnerGameContainer';
+PlayerOrder.displayName = 'PlayerOrder';
 
 export const StyledPlayerChip = styled(PlayerChip)`
   color: ${colorPalette.black};
   font-weight: bold;
   margin: 0;
+  margin-right: 4px;
 `;
 
 StyledPlayerChip.displayName = 'StyledPlayerChip';
+
+export const ArrowSpacer = styled.img`
+  margin-right: 4px;
+`;
+
+ArrowSpacer.displayName = 'ArrowSpacer';

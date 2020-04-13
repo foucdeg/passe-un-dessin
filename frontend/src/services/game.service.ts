@@ -58,3 +58,12 @@ export const getPreviousNextPlayers = (game: Game, player: Player): PreviousNext
     game.players[(playerIndex + 1) % game.players.length],
   ];
 };
+
+export const getReorderedPlayers = (game: Game, player: Player): Player[] => {
+  const copiedPlayers = [...game.players];
+
+  const playerIndex = copiedPlayers.findIndex(gamePlayer => gamePlayer.uuid === player.uuid);
+  const playersBefore = copiedPlayers.splice(0, playerIndex);
+  copiedPlayers.shift();
+  return [...copiedPlayers, ...playersBefore];
+};

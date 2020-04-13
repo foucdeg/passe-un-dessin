@@ -2,8 +2,9 @@ import React, { useEffect, useCallback } from 'react';
 import {
   GameContainer,
   InnerGameContainer,
-  PreviousNextPlayers,
+  PlayerOrder,
   StyledPlayerChip,
+  ArrowSpacer,
 } from './Game.style';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'redux/useSelector';
@@ -11,7 +12,7 @@ import { useSelector } from 'redux/useSelector';
 import { useParams, useHistory, Switch, Route, useRouteMatch, useLocation } from 'react-router';
 import { useFetchGame } from 'redux/Game/hooks';
 
-import { getRedirectPath, getPreviousNextPlayers } from 'services/game.service';
+import { getRedirectPath, getReorderedPlayers } from 'services/game.service';
 import { useServerSentEvent, SERVER_EVENT_TYPES } from 'services/networking/server-events';
 import { startRound, markPlayerFinished } from 'redux/Game';
 import { Credits } from '../Home/Home.style';
@@ -20,6 +21,8 @@ import { GamePhase } from 'redux/Game/types';
 import { selectRoom } from 'redux/Room/selectors';
 import { selectGame } from 'redux/Game/selectors';
 import { selectPlayer } from 'redux/Player/selectors';
+
+import fatArrow from 'assets/fat-arrow.svg';
 
 const PadInit = React.lazy(() => import('../PadInit'));
 const PadStep = React.lazy(() => import('../PadStep'));
@@ -103,20 +106,25 @@ const Game: React.FunctionComponent = () => {
 
   if (!game || !player) return null;
 
-  const [previousPlayer, nextPlayer] = getPreviousNextPlayers(game, player);
+  const reorderedPlayers = getReorderedPlayers(game, player);
 
   return (
     <GameContainer>
       <InnerGameContainer hasTabs={game.phase === GamePhase.DEBRIEF}>
         {game.phase !== GamePhase.DEBRIEF && (
-          <PreviousNextPlayers>
-            <StyledPlayerChip color={colorPalette.whiteTransparent}>
-              {previousPlayer.name} est avant toi
-            </StyledPlayerChip>
-            <StyledPlayerChip color={colorPalette.whiteTransparent}>
-              {nextPlayer.name} est après toi
-            </StyledPlayerChip>
-          </PreviousNextPlayers>
+          <PlayerOrder>
+            <StyledPlayerChip color={colorPalette.whiteTransparent}>toi</StyledPlayerChip>
+            <ArrowSpacer src={fatArrow} />
+            {reorderedPlayers.map(orderedPlayer => (
+              <React.Fragment key={orderedPlayer.uuid}>
+                <StyledPlayerChip color={colorPalette.whiteTransparent} key={orderedPlayer.uuid}>
+                  {orderedPlayer.name}
+                </StyledPlayerChip>
+                <ArrowSpacer src={fatArrow} />
+              </React.Fragment>
+            ))}
+            <StyledPlayerChip color={colorPalette.whiteTransparent}>toi</StyledPlayerChip>
+          </PlayerOrder>
         )}
         <Switch>
           <Route path={`${path}/pad/:padId/init`} component={PadInit} />
