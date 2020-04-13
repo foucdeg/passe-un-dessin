@@ -145,3 +145,9 @@ strong {
 em {
   font-style: italic;
 }
+
+hr {
+  border: 1px solid #9b37a9;
+  width: 100%;
+  margin-bottom: 16px;
+}

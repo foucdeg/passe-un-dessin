@@ -10,6 +10,8 @@ export const PlayerChip = styled.div<{ color: string }>`
   margin-right: 8px;
   margin-bottom: 8px;
   line-height: 19px;
+  display: flex;
+  align-items: flex-end;
 `;
 
 PlayerChip.displayName = 'PlayerChip';

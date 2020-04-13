@@ -6,7 +6,7 @@ export const AudioControlButton = styled.span`
   position: absolute;
   right: 32px;
   top: 32px;
-  z-index: 2;
+  z-index: 16;
   cursor: pointer;
 `;
 

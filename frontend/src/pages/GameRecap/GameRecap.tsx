@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { RootState } from 'redux/types';
 import { useSelector } from 'redux/useSelector';
 import PadRecap from 'components/PadRecap';
 import {
@@ -9,37 +8,29 @@ import {
   PadTabsRow,
   PadTab,
   TopRightButton,
-  ButtonRow,
   StyledHeader,
   TopRightButtons,
 } from './GameRecap.style';
 import { Pad } from 'redux/Game/types';
 import Modal from 'components/Modal';
-import { useStartGame } from 'redux/Game/hooks';
 import { useHistory } from 'react-router';
 import Button from 'components/Button';
-import SecondaryButton from 'components/SecondaryButton';
 import { HelpParagraph } from '../Home/Home.style';
 import { useLeaveRoom } from 'redux/Room/hooks';
-import { selectRoom } from 'redux/Room/selectors';
+import { selectRoom, selectPlayerIsAdmin } from 'redux/Room/selectors';
 import { selectGame } from 'redux/Game/selectors';
+import NewGameModal from 'components/NewGameModal';
 
 const GameRecap: React.FunctionComponent = () => {
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
-  const isPlayerAdmin = useSelector(
-    (state: RootState) =>
-      state.player.player &&
-      state.room.room &&
-      state.player.player.uuid === state.room.room.admin.uuid,
-  );
+  const isPlayerAdmin = useSelector(selectPlayerIsAdmin);
   const history = useHistory();
 
   const [displayedPad, setDisplayedPad] = useState<Pad | null>(null);
   const [newGameModalIsOpen, setNewGameModalIsOpen] = useState<boolean>(false);
   const [doneModalIsOpen, setDoneModalIsOpen] = useState<boolean>(true);
 
-  const doStartGame = useStartGame();
   const doLeaveRoom = useLeaveRoom();
 
   useEffect(() => {
@@ -52,22 +43,6 @@ const GameRecap: React.FunctionComponent = () => {
   const leaveGame = () => {
     doLeaveRoom(room);
     history.push('/');
-  };
-
-  const startSameGame = () => {
-    doStartGame(
-      room.uuid,
-      history,
-      room.players.map(player => player.uuid),
-    );
-  };
-
-  const startReverseGame = () => {
-    doStartGame(room.uuid, history, room.players.map(player => player.uuid).reverse());
-  };
-
-  const startRandomGame = () => {
-    doStartGame(room.uuid, history);
   };
 
   return (
@@ -105,20 +80,7 @@ const GameRecap: React.FunctionComponent = () => {
           </TopRightButton>
         )}
       </TopRightButtons>
-      {isPlayerAdmin && (
-        <>
-          <Modal isOpen={newGameModalIsOpen} onClose={() => setNewGameModalIsOpen(false)}>
-            <StyledHeader>On prend les mêmes et on recommence ?</StyledHeader>
-            <ButtonRow>
-              <SecondaryButton onClick={startRandomGame}>Ordre aléatoire</SecondaryButton>
-              <SecondaryButton onClick={startSameGame}>Même ordre</SecondaryButton>
-            </ButtonRow>
-            <ButtonRow>
-              <Button onClick={startReverseGame}>Ordre inverse</Button>
-            </ButtonRow>
-          </Modal>
-        </>
-      )}
+      <NewGameModal isOpen={newGameModalIsOpen} onClose={() => setNewGameModalIsOpen(false)} />
     </>
   );
 };

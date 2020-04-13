@@ -91,7 +91,7 @@ const Room: React.FunctionComponent = () => {
           (isPlayerAdmin ? (
             <>
               <HelpText>Tout le monde est là ?</HelpText>
-              <Button onClick={() => doStartGame(room.uuid, history)}>Jouer</Button>
+              <Button onClick={() => doStartGame(room.uuid)}>Jouer</Button>
             </>
           ) : (
             <HelpText>C'est à {room.admin.name} de lancer la partie !</HelpText>

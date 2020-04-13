@@ -90,10 +90,14 @@ def save_step(request, uuid):
 
     try:
         sentence = json_body["sentence"]
+        if sentence == '':
+            return HttpResponseBadRequest("Sentence should not be empty")
         step.sentence = sentence
     except KeyError:
         try:
             drawing = json_body["drawing"]
+            if drawing == '':
+                return HttpResponseBadRequest("Drawing should not be empty")
             step.drawing = drawing
         except KeyError:
             return HttpResponseBadRequest("Provide either sentence or drawing!")

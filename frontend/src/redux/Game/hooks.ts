@@ -2,8 +2,8 @@ import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
 import { updateGame, updatePad } from './slice';
 import { Pad } from './types';
-import { History } from 'history';
 import { useCallback } from 'react';
+import { useHistory } from 'react-router';
 
 export const useFetchGame = () => {
   const dispatch = useDispatch();
@@ -18,18 +18,16 @@ export const useFetchGame = () => {
 };
 
 export const useStartGame = () => {
+  const history = useHistory();
+
   return useCallback(
-    async (
-      roomId: string,
-      history: History<History.PoorMansUnknown>,
-      playersOrder?: string[] | null,
-    ) => {
+    async (roomId: string, playersOrder?: string[] | null) => {
       const { game_id: gameId } = await client.put(`/room/${roomId}/start`, {
         playersOrder,
       });
       history.push(`/room/${roomId}/game/${gameId}`);
     },
-    [],
+    [history],
   );
 };
 

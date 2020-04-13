@@ -8,13 +8,6 @@ import configureStore from './redux/store';
 
 const { store } = configureStore();
 
-if (process.env.NODE_ENV === 'development') {
-  const whyDidYouRender = require('@welldone-software/why-did-you-render');
-  whyDidYouRender(React, {
-    trackAllPureComponents: true,
-  });
-}
-
 const rootEl = document.getElementById('root');
 
 if (rootEl) {
@@ -23,7 +16,7 @@ if (rootEl) {
 
 if (module.hot) {
   module.hot.accept('./App', () => {
-    const NextApp = require('./App').default; // eslint-disable-line
+    const NextApp = require('./App').default;
     if (rootEl) {
       ReactDOM.render(<NextApp store={store} />, rootEl);
     }

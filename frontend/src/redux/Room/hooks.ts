@@ -4,6 +4,7 @@ import { updateRoom } from './slice';
 import { useHistory } from 'react-router';
 import { Room } from './types';
 import { useCallback } from 'react';
+import { Player } from 'redux/Player/types';
 
 export const useFetchRoom = () => {
   const dispatch = useDispatch();
@@ -35,5 +36,11 @@ export const useJoinRoom = () => {
 export const useLeaveRoom = () => {
   return useCallback(async (room: Room) => {
     await client.put(`/room/${room.uuid}/leave`, {});
+  }, []);
+};
+
+export const useRemovePlayer = () => {
+  return useCallback(async (room: Room, player: Player) => {
+    await client.put(`/room/${room.uuid}/kick`, { playerId: player.uuid });
   }, []);
 };

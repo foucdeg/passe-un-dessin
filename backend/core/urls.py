@@ -8,6 +8,7 @@ urlpatterns = [
     path("player/me", auth.get_me, name="me"),
     path("room/<str:room_id>/join", room_management.join_room, name="join_room"),
     path("room/<str:room_id>/leave", room_management.leave_room, name="leave_room"),
+    path("room/<str:room_id>/kick", room_management.kick_player, name="kick_player"),
     path("room/<str:room_id>/start", room_management.start_game, name="start_game"),
     path(
         "room/<str:uuid>",

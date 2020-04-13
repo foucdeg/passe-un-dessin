@@ -13,7 +13,7 @@ import { useFetchGame } from 'redux/Game/hooks';
 
 import { getRedirectPath, getPreviousNextPlayers } from 'services/game.service';
 import { useServerSentEvent, SERVER_EVENT_TYPES } from 'services/networking/server-events';
-import { startRound, startDebrief, markPlayerFinished } from 'redux/Game';
+import { startRound, markPlayerFinished } from 'redux/Game';
 import { Credits } from '../Home/Home.style';
 import { colorPalette } from 'stylesheet';
 import { GamePhase } from 'redux/Game/types';
@@ -75,12 +75,12 @@ const Game: React.FunctionComponent = () => {
 
           return push(`/room/${room.uuid}/game/${game.uuid}/step/${targetStep.uuid}`);
         case SERVER_EVENT_TYPES.DEBRIEF_STARTS:
-          dispatch(startDebrief({}));
+          doFetchGame(game.uuid);
 
           return push(`/room/${room.uuid}/game/${game.uuid}/recap`);
       }
     },
-    [dispatch, game, gameId, player, push, room],
+    [dispatch, doFetchGame, game, gameId, player, push, room],
   );
 
   useServerSentEvent(channelName, eventCallback);
