@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { AudioControlButton } from './AudioControl.style';
 import soundOn from 'assets/sound-on.svg';
 import soundOff from 'assets/sound-off.svg';
+import IconAndTooltip from 'components/IconAndTooltip';
 
 const AudioControl: React.FC = () => {
   const audioElt = useRef<HTMLAudioElement>(null);
@@ -51,15 +52,17 @@ const AudioControl: React.FC = () => {
         <source src="/JeffSpeed68-Ultra-Lights.mp3" />
         Your browser does not support the audio element.
       </audio>
-      {playing ? (
-        <AudioControlButton onClick={pause}>
-          <img src={soundOn} alt="Sound is on; click to turn off" />
-        </AudioControlButton>
-      ) : (
-        <AudioControlButton onClick={play}>
-          <img src={soundOff} alt="Sound is off; click to turn on" />
-        </AudioControlButton>
-      )}
+      <IconAndTooltip tooltipText={playing ? 'Couper le son' : 'Lancer le son'}>
+        {playing ? (
+          <AudioControlButton onClick={pause}>
+            <img src={soundOn} alt="Sound is on; click to turn off" />
+          </AudioControlButton>
+        ) : (
+          <AudioControlButton onClick={play}>
+            <img src={soundOff} alt="Sound is off; click to turn on" />
+          </AudioControlButton>
+        )}
+      </IconAndTooltip>
     </>
   );
 };

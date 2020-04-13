@@ -40,6 +40,11 @@ const WordToDrawingStep: React.FC<Props> = ({ padStep, previousPlayer, saveStep 
   const [color, setColor] = useState<DrawingColor>(DrawingColor.BLACK);
   const [brushType, setBrushType] = useState<BrushType>(BrushType.THIN);
 
+  const setBrushColor = (newColor: DrawingColor) => {
+    setColor(newColor);
+    setBrushType(BrushType.THIN);
+  };
+
   const [brushColor, brushThickness] = getBrushAttributes(color, brushType);
 
   const drawingPadRef = useRef<CanvasDraw>(null);
@@ -81,7 +86,7 @@ const WordToDrawingStep: React.FC<Props> = ({ padStep, previousPlayer, saveStep 
             brushRadius={brushThickness}
           />
           <BrushTypePicker brushType={brushType} setBrushType={setBrushType} />
-          <BrushColorPicker color={color} setColor={setColor} />
+          <BrushColorPicker color={color} setColor={setBrushColor} />
         </CanvasWrapper>
       </LeftSide>
       <Gutter />

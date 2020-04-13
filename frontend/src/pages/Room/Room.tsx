@@ -10,14 +10,10 @@ import { Player } from 'redux/Player/types';
 
 import { SERVER_EVENT_TYPES, useServerSentEvent } from 'services/networking/server-events';
 import Modal from 'components/Modal';
-import Button from 'components/Button';
 import { selectGame } from 'redux/Game/selectors';
 import { GamePhase } from 'redux/Game/types';
 import Header2 from 'atoms/Header2';
-import AdminModal from 'components/AdminModal';
 
-import cogIcon from 'assets/cog.svg';
-import { AdminModalButton } from './Room.style';
 import { selectPlayer } from 'redux/Player/selectors';
 
 const Game = lazy(() => import('../../pages/Game'));
@@ -28,7 +24,6 @@ const Room: React.FunctionComponent = () => {
   const doFetchRoom = useFetchRoom();
   const doLeaveRoom = useLeaveRoom();
   const [playerWhoLeft, setPlayerWhoLeft] = useState<Player | null>(null);
-  const [isAdminModalOpen, setAdminModalOpen] = useState<boolean>(false);
 
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
@@ -90,9 +85,6 @@ const Room: React.FunctionComponent = () => {
 
   return (
     <>
-      {isPlayerAdmin && (
-        <AdminModalButton src={cogIcon} alt="Settings" onClick={() => setAdminModalOpen(true)} />
-      )}
       <Switch>
         <Route path={`${path}/game/:gameId`} component={Game} />
         <Route path={`${path}`} exact component={RoomLobby} />
@@ -100,16 +92,15 @@ const Room: React.FunctionComponent = () => {
       {playerWhoLeft && game && game?.phase !== GamePhase.DEBRIEF && (
         <Modal isOpen>
           <Header2>On a perdu quelqu'un !</Header2>
-          <p>{playerWhoLeft?.name} semble avoir quitté la partie :/</p>
+          <p>{playerWhoLeft?.name} semble avoir quitté la partie en plein milieu :/</p>
           <p>On est obligés d'en recommencer une.</p>
           {isPlayerAdmin ? (
-            <Button onClick={() => setAdminModalOpen(true)}>Ouvrir les réglages</Button>
+            <p>Ouvre les réglages en haut à droite.</p>
           ) : (
             <p>C'est {room.admin.name} qui décide.</p>
           )}
         </Modal>
       )}
-      <AdminModal isOpen={isAdminModalOpen} onClose={() => setAdminModalOpen(false)} />
     </>
   );
 };
