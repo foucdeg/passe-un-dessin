@@ -37,14 +37,14 @@
   },
   "drawingToWord": {
     "drawingToGuess": "Devine ce dessin :",
-    "previousPlayer": "(sortie du cerveau malade de {name})",
+    "previousPlayer": "(Un indéniable talent chez {name})",
     "placeholder": "Un mouton ?",
     "submit": "Valider"
   },
   "finishedModal": {
     "title": "C'est fini !",
-    "description": "Vous pouvez désormais voir l'ensemble des carnets pour comprendre tous les dessins que vous avez eus à deviner.",
-    "navigate": "Naviguez d'un carnet à l'autre avec les onglets en haut.",
+    "description": "Tu peux désormais voir l'ensemble des carnets pour comprendre tous les dessins que tu as eus à deviner.",
+    "navigate": "Navigue d'un carnet à l'autre avec les onglets en haut.",
     "seeResults": "Voir les résultats"
   },
   "recap": {

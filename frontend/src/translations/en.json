@@ -25,7 +25,7 @@
   },
   "padInit": {
     "chooseSentence": "Pick a word or sentence:",
-    "placeholder": "A giraffe ?",
+    "placeholder": "A giraffe?",
     "youDraw": "Choose wisely, <strong>you</strong>'ll have to draw this!",
     "waitingFor": "Waiting for these guys to finish:",
     "nextPlayer": "Let's just hope {name} can draw..."
@@ -37,7 +37,7 @@
   },
   "drawingToWord": {
     "drawingToGuess": "Guess this sketch:",
-    "previousPlayer": "(Who knew {name} had that kind of talent.)",
+    "previousPlayer": "(Who knew {name} had such talent.)",
     "placeholder": "A sheep?",
     "submit": "Submit"
   },
