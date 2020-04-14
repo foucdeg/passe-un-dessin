@@ -6,8 +6,8 @@ import Header2 from 'atoms/Header2';
 export const PadInitContainer = styled.div`
   display: flex;
   flex-direction: column;
-  text-align: center;
-  align-self: center;
+  align-items: center;
+  flex-grow: 1;
   height: 100%;
 `;
 

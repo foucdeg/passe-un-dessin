@@ -17,13 +17,10 @@ GameContainer.displayName = 'GameContainer';
 
 export const InnerGameContainer = styled.div<{ hasTabs?: boolean }>`
   width: 100%;
-  min-height: 570px;
-  margin: auto;
+  height: 570px;
   background: ${colorPalette.white};
   border-radius: 16px;
   padding: 16px;
-  display: flex;
-  flex-direction: column;
   position: relative;
   ${props =>
     props.hasTabs &&

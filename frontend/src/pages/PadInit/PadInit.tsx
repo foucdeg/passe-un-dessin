@@ -40,17 +40,17 @@ const PadInit: React.FunctionComponent = () => {
   return (
     <PadInitContainer>
       <StyledHeader>Choisis un mot ou une phrase :</StyledHeader>
-      {pad.sentence ? (
-        <StaticInput>{pad.sentence}</StaticInput>
-      ) : (
-        <StyledForm
-          onSubmit={e => {
-            e.preventDefault();
-            if (sentence !== '') {
-              doSavePad(pad, sentence);
-            }
-          }}
-        >
+      <StyledForm
+        onSubmit={e => {
+          e.preventDefault();
+          if (sentence !== '') {
+            doSavePad(pad, sentence);
+          }
+        }}
+      >
+        {pad.sentence ? (
+          <StaticInput>{pad.sentence}</StaticInput>
+        ) : (
           <StyledTextInput
             autoFocus
             type="text"
@@ -61,8 +61,8 @@ const PadInit: React.FunctionComponent = () => {
               <InputArrow src={arrowRight} alt="Valider" onClick={() => doSavePad(pad, sentence)} />
             }
           />
-        </StyledForm>
-      )}
+        )}
+      </StyledForm>
       {isNextPlayerMe ? (
         <p>
           Attention, c'est <strong>toi</strong> qui devras dessiner ça !
