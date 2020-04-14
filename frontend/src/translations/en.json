@@ -1,30 +1,74 @@
 {
-  "header": {
-    "login": "Login",
-    "logout": "Log Out"
-  },
   "home": {
-    "use-a-link": "Or use a link",
-    "get-started": "To get started, edit",
-    "save-to-reload": "and save to reload.",
-    "create-route": "To create a route, edit routes.js and link it to a page",
-    "generate-component": "To create a page or a simple component, run: ",
-    "generate-module": "To add business logic, add a file in ./redux with your reducers/actions/hooks/selectors/constants/...",
-    "click-me": "Click me",
-    "readme": "Look at the README.md to discover the awesome npm commands we added"
+    "title": "Draw Around",
+    "tagline": "Can't draw ? Great.",
+    "welcome": "Welcome",
+    "how-to-play": "How to play",
+    "rules": "In this game, you and your friends will sketch words or expressions and try to guess what each other's sketch meant. Each first word or sentence, picked by a player, will go around the circle, transformed all along as it's sketched then guessed again. At the end, we read the drawing pads to find out who's the best drawer!",
+    "start-room": "Create a game",
+    "join-existing-room": "To join an existing game, the organizer needs to send you a link."
   },
-  "page": {
-    "back": "Back",
-    "api-to-translate-example": "This message is translated using directly react-intl API",
-    "fetch-github-avatar": "Show github avatar",
-    "add-github-username": "Enter a github username"
+  "roomLobby": {
+    "sendLink": "Send this link to other players",
+    "playerNumber": "({min} to {max} players)",
+    "players": "Players who joined:",
+    "needMore": "We still need {count} {count, plural, one {player} many {players}}",
+    "isEveryoneThere": "Is everyone there?",
+    "play": "Play",
+    "adminWillStart": "{name} will start the game when ready!"
   },
-  "login": {
-    "title": "Launch your Theodo project in seconds",
-    "login-button": "Connexion",
-    "email": "Email",
-    "email-placeholder": "ex: comes@theodo.fr",
-    "password": "Password",
-    "password-placeholder": "xxxxxxxxxxx"
+  "menu": {
+    "startMusic": "Resume music",
+    "stopMusic": "Stop music",
+    "adminMenu": "Admin window",
+    "refresh": "Resynchronize"
+  },
+  "padInit": {
+    "chooseSentence": "Pick a word or sentence:",
+    "placeholder": "A giraffe ?",
+    "youDraw": "Choose wisely, <strong>you</strong>'ll have to draw this!",
+    "waitingFor": "Waiting for these guys to finish:",
+    "nextPlayer": "Let's just hope {name} can draw..."
+  },
+  "wordToDrawing": {
+    "sentenceToDraw": "Sentence to draw:",
+    "previousPlayer": "({name}'s idea. Typical.)",
+    "duration": "You have {duration} seconds !"
+  },
+  "drawingToWord": {
+    "drawingToGuess": "Guess this sketch:",
+    "previousPlayer": "(Who knew {name} had that kind of talent.)",
+    "placeholder": "A sheep?",
+    "submit": "Submit"
+  },
+  "finishedModal": {
+    "title": "It's over!",
+    "description": "You can now see all of the pads, and finally understand the drawings you had to guess.",
+    "navigate": "Navigate between drawing pads using the tabs above.",
+    "seeResults": "See results"
+  },
+  "recap": {
+    "leaveTeam": "Leave team",
+    "newGame": "New game?"
+  },
+  "newGameModal": {
+    "title": "Start a new game",
+    "randomOrder": "Random order",
+    "sameOrder": "Same order",
+    "reverseOrder": "Reverse order"
+  },
+  "adminModal": {
+    "removePlayer": "Remove a player",
+    "removePlayerInstruction": "Click the cross next to the player you want to remove:",
+    "title": "Start a new game",
+    "randomOrder": "Random order",
+    "sameOrder": "Same order",
+    "reverseOrder": "Reverse order"
+  },
+  "userNameModal": {
+    "title": "What's your name?",
+    "pickName": "Pick a nickname",
+    "placeholder": "M4sterSk3tcher_69",
+    "submit": "Submit"
   }
 }

@@ -26,12 +26,14 @@ const locales = {
   en: flattenMessages(enMessages),
 };
 
+const userLocale = navigator.language.includes('fr') ? 'fr' : 'en';
+
 interface Props {
   children: ReactNode;
 }
 
 const Root: React.FunctionComponent<Props> = ({ children }) => (
-  <IntlProvider locale="fr" messages={locales.fr}>
+  <IntlProvider locale={userLocale} messages={locales[userLocale]}>
     <RootContainer>
       <UserNameGate>{children}</UserNameGate>
       <SideButtons />

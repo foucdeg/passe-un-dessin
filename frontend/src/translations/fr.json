@@ -1,30 +1,74 @@
 {
-  "header": {
-    "login": "Connexion",
-    "logout": "Déconnexion"
-  },
   "home": {
-    "use-a-link": "Ou utilise un lien",
-    "get-started": "Pour commencer, modifie",
-    "save-to-reload": "et sauvegarde pour recharger.",
-    "create-route": "Pour créer une route, modifie routes.js et associe une page",
-    "generate-component": "Pour créer une page ou un simple composant, lance: ",
-    "generate-module": "Pour ajouter de la logique métier, créer un dossier dans redux avec tes reducers/actions/hooks/selectors/constants/...",
-    "click-me": "Click sur moi",
-    "readme": "Lis le README.md pour découvrir les super commandes npm que nous avons ajouté"
+    "title": "Passe un Dessin",
+    "tagline": "Tu ne sais pas dessiner ? On va rire.",
+    "welcome": "Bienvenue",
+    "how-to-play": "Comment jouer ?",
+    "rules": "Dans ce jeu, tes amis et toi allez dessiner des mots et expressions et essayer de deviner ce que le précédent a dessiné. Chaque mot initial, choisi par un joueur, va faire le tour du groupe, transformé au fur et à mesure qu'il a été dessiné puis deviné. A la fin, on relit les carnets de dessin pour voir qui dessine le moins mal !",
+    "start-room": "Lancer une partie",
+    "join-existing-room": "Pour rejoindre une partie existante, l'organisateur doit t'envoyer le lien."
   },
-  "page": {
-    "back": "Retour",
-    "api-to-translate-example": "Ce message est traduit en utilisant directement l'API react-intl",
-    "fetch-github-avatar": "Affiche l'avatar github",
-    "add-github-username": "Entrer un username github"
+  "roomLobby": {
+    "sendLink": "Envoyez ce lien aux participants",
+    "playerNumber": "({min} à {max} joueurs)",
+    "players": "Participants ayant rejoint la partie :",
+    "needMore": "Il manque encore {count} {count, plural, one {joueur} many {joueurs}}",
+    "isEveryoneThere": "Tout le monde est là ?",
+    "play": "Jouer",
+    "adminWillStart": "C'est à {name} de lancer la partie !"
   },
-  "login": {
-    "title": "Démarrer un projet Theodo en quelques secondes",
-    "login-button": "Connexion",
-    "email": "E-mail",
-    "email-placeholder": "ex: comes@theodo.fr",
-    "password": "Mot de passe",
-    "password-placeholder": "xxxxxxxxxxx"
+  "menu": {
+    "startMusic": "Lancer le son",
+    "stopMusic": "Couper le son",
+    "adminMenu": "Actions d'administration",
+    "refresh": "Resynchroniser"
+  },
+  "padInit": {
+    "chooseSentence": "Choisis un mot ou une phrase :",
+    "placeholder": "Une girafe ?",
+    "youDraw": "Attention, c'est <strong>toi</strong> qui devras dessiner ça !",
+    "waitingFor": "On attend ceux-là pour continuer :",
+    "nextPlayer": "Espérons que {name} dessine bien ..."
+  },
+  "wordToDrawing": {
+    "sentenceToDraw": "Phrase à dessiner :",
+    "previousPlayer": "(sortie du cerveau malade de {name})",
+    "duration": "Tu as {duration} secondes !"
+  },
+  "drawingToWord": {
+    "drawingToGuess": "Devine ce dessin :",
+    "previousPlayer": "(sortie du cerveau malade de {name})",
+    "placeholder": "Un mouton ?",
+    "submit": "Valider"
+  },
+  "finishedModal": {
+    "title": "C'est fini !",
+    "description": "Vous pouvez désormais voir l'ensemble des carnets pour comprendre tous les dessins que vous avez eus à deviner.",
+    "navigate": "Naviguez d'un carnet à l'autre avec les onglets en haut.",
+    "seeResults": "Voir les résultats"
+  },
+  "recap": {
+    "leaveTeam": "Quitter l'équipe",
+    "newGame": "Nouvelle partie ?"
+  },
+  "newGameModal": {
+    "title": "Relancer une partie",
+    "randomOrder": "Ordre aléatoire",
+    "sameOrder": "Même ordre",
+    "reverseOrder": "Ordre inverse"
+  },
+  "adminModal": {
+    "removePlayer": "Supprimer un joueur",
+    "removePlayerInstruction": "Clique sur la croix du joueur à supprimer de la partie :",
+    "title": "Relancer une partie",
+    "randomOrder": "Ordre aléatoire",
+    "sameOrder": "Même ordre",
+    "reverseOrder": "Ordre inverse"
+  },
+  "userNameModal": {
+    "title": "Comment tu t'appelles ?",
+    "pickName": "Choisis un nom",
+    "placeholder": "XXBogossDu62",
+    "submit": "Valider"
   }
 }
