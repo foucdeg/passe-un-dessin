@@ -117,6 +117,7 @@ class Game(BaseModel):
         choices=[(phase.value, phase.value) for phase in GamePhase],
         default="INIT",
     )
+    round_duration = models.IntegerField(default=60)
     current_round = models.IntegerField(null=True)
     pads_done = models.IntegerField(default=0)
 

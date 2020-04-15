@@ -4,7 +4,7 @@ import copy from 'copy-to-clipboard';
 
 import { useJoinRoom, useLeaveRoom } from 'redux/Room/hooks';
 import { MIN_PLAYERS, MAX_PLAYERS } from 'redux/Game/constants';
-import { useStartGame } from 'redux/Game/hooks';
+import { useStartGame, useRoundDuration } from 'redux/Game/hooks';
 import { useHistory } from 'react-router';
 import Modal from 'components/Modal';
 import FieldLabel from 'atoms/FieldLabel';
@@ -24,6 +24,7 @@ import linkIcon from 'assets/link.svg';
 import { selectPlayer } from 'redux/Player/selectors';
 import { selectRoom } from 'redux/Room/selectors';
 import { FormattedMessage, useIntl } from 'react-intl';
+import RoundDurationPicker from 'components/RoundDurationPicker';
 
 const Room: React.FunctionComponent = () => {
   const doJoinRoom = useJoinRoom();
@@ -33,6 +34,8 @@ const Room: React.FunctionComponent = () => {
   const player = useSelector(selectPlayer);
   const history = useHistory();
   const [inputText, setInputText] = useState<string>(document.location.href);
+  const [roundDuration, setRoundDuration] = useRoundDuration();
+
   const intl = useIntl();
 
   useEffect(() => {
@@ -82,6 +85,9 @@ const Room: React.FunctionComponent = () => {
         value={inputText}
         adornment={<CopyLinkAdornment src={linkIcon} onClick={onCopy} alt="Click to copy" />}
       />
+      {isPlayerAdmin && (
+        <RoundDurationPicker duration={roundDuration} onDurationChange={setRoundDuration} />
+      )}
       <FieldLabel>
         <FormattedMessage id="roomLobby.players" />
       </FieldLabel>
@@ -108,7 +114,7 @@ const Room: React.FunctionComponent = () => {
               <HelpText>
                 <FormattedMessage id="roomLobby.isEveryoneThere" />
               </HelpText>
-              <Button onClick={() => doStartGame(room.uuid)}>
+              <Button onClick={() => doStartGame(room.uuid, roundDuration)}>
                 <FormattedMessage id="roomLobby.play" />
               </Button>
             </>

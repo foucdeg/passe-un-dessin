@@ -28,10 +28,12 @@ def order_players(players: List[Player], requested_players_order: List[str]):
     return sorted(players, key=sort_fn)
 
 
-def initialize_game(room: Room, requested_players_order: List[str]):
+def initialize_game(
+    room: Room, requested_players_order: List[str], round_duration: int
+):
     logger.debug("Initializing game for room %s" % room.uuid)
 
-    game = Game.objects.create(room=room)
+    game = Game.objects.create(room=room, round_duration=round_duration)
 
     players = list(room.players.all())
     ordered_players = order_players(players, requested_players_order)

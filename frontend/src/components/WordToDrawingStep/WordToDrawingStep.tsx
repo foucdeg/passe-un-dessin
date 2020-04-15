@@ -19,8 +19,8 @@ import {
 } from './WordToDrawingStep.style';
 import { BrushType } from 'components/BrushTypePicker/BrushTypePicker';
 import { FormattedMessage } from 'react-intl';
-
-const ROUND_DURATION = 60; // seconds
+import { selectGame } from 'redux/Game/selectors';
+import { useSelector } from 'redux/useSelector';
 
 interface Props {
   padStep: PadStep;
@@ -40,6 +40,7 @@ const getBrushAttributes = (color: DrawingColor, brushType: BrushType): [Drawing
 const WordToDrawingStep: React.FC<Props> = ({ padStep, previousPlayer, saveStep }) => {
   const [color, setColor] = useState<DrawingColor>(DrawingColor.BLACK);
   const [brushType, setBrushType] = useState<BrushType>(BrushType.THIN);
+  const game = useSelector(selectGame);
 
   const setBrushColor = (newColor: DrawingColor) => {
     setColor(newColor);
@@ -58,19 +59,22 @@ const WordToDrawingStep: React.FC<Props> = ({ padStep, previousPlayer, saveStep 
 
   useEffect(() => {
     if (!drawingPadRef.current) return;
+    if (!game) return;
+
     const drawingPad = drawingPadRef.current;
 
     const timeout = setTimeout(() => {
       const saveData = drawingPad.getSaveData();
       const compressed = lzString.compressToBase64(saveData);
       saveDrawing(compressed);
-    }, ROUND_DURATION * 1000);
+    }, game.round_duration * 1000);
 
     return () => {
       clearTimeout(timeout);
     };
-  }, [saveDrawing, drawingPadRef]);
+  }, [saveDrawing, drawingPadRef, game]);
 
+  if (!game) return null;
   if (!previousPlayer) return null;
 
   return (
@@ -104,9 +108,12 @@ const WordToDrawingStep: React.FC<Props> = ({ padStep, previousPlayer, saveStep 
         </em>
         <Spacer />
         <p>
-          <FormattedMessage id="wordToDrawing.duration" values={{ duration: ROUND_DURATION }} />
+          <FormattedMessage
+            id="wordToDrawing.duration"
+            values={{ duration: game.round_duration }}
+          />
         </p>
-        <Timer duration={ROUND_DURATION} />
+        <Timer duration={game.round_duration} />
       </RightSide>
     </LeftAndRightSide>
   );

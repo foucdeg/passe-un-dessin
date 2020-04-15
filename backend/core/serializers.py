@@ -76,7 +76,15 @@ class GameSerializer(BaseSerializer):
 
     class Meta:
         model = Game
-        fields = ("uuid", "players", "phase", "current_round", "pads", "rounds")
+        fields = (
+            "uuid",
+            "players",
+            "round_duration",
+            "phase",
+            "current_round",
+            "pads",
+            "rounds",
+        )
 
 
 class GameIdSerializer(BaseSerializer):

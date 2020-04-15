@@ -175,10 +175,11 @@ def start_game(request, room_id):
 
     json_body = json.loads(request.body)
     players_order = json_body.get("playersOrder", None)
+    round_duration = json_body.get("roundDuration", None)
 
     try:
         room = Room.objects.get(uuid=room_id)
-        game = initialize_game(room, players_order)
+        game = initialize_game(room, players_order, round_duration)
         room.current_game = game
         room.save()
 

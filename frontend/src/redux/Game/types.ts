@@ -36,4 +36,5 @@ export interface Game {
   rounds: PadStep[];
   phase: GamePhase;
   current_round: number | null;
+  round_duration: number;
 }

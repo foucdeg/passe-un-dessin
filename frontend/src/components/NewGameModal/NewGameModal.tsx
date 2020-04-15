@@ -2,11 +2,13 @@ import React from 'react';
 import { useSelector } from 'redux/useSelector';
 import { selectRoom } from 'redux/Room/selectors';
 import Modal from 'components/Modal';
-import { useStartGame } from 'redux/Game/hooks';
+import { useStartGame, useRoundDuration } from 'redux/Game/hooks';
 import SecondaryButton from 'components/SecondaryButton';
 import { StyledHeader, ButtonRow } from './NewGameModal.style';
 import Button from 'components/Button';
 import { FormattedMessage } from 'react-intl';
+import { selectGame } from 'redux/Game/selectors';
+import RoundDurationPicker from 'components/RoundDurationPicker';
 
 interface Props {
   isOpen: boolean;
@@ -15,6 +17,8 @@ interface Props {
 
 const NewGameModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const room = useSelector(selectRoom);
+  const game = useSelector(selectGame);
+  const [roundDuration, setRoundDuration] = useRoundDuration(game?.round_duration);
 
   const doStartGame = useStartGame();
 
@@ -23,18 +27,19 @@ const NewGameModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const startSameGame = () => {
     doStartGame(
       room.uuid,
+      roundDuration,
       room.players.map(player => player.uuid),
     );
     onClose();
   };
 
   const startReverseGame = () => {
-    doStartGame(room.uuid, room.players.map(player => player.uuid).reverse());
+    doStartGame(room.uuid, roundDuration, room.players.map(player => player.uuid).reverse());
     onClose();
   };
 
   const startRandomGame = () => {
-    doStartGame(room.uuid);
+    doStartGame(room.uuid, roundDuration);
     onClose();
   };
 
@@ -43,6 +48,7 @@ const NewGameModal: React.FC<Props> = ({ isOpen, onClose }) => {
       <StyledHeader>
         <FormattedMessage id="newGameModal.title" />
       </StyledHeader>
+      <RoundDurationPicker duration={roundDuration} onDurationChange={setRoundDuration} />
       <ButtonRow>
         <SecondaryButton onClick={startRandomGame}>
           <FormattedMessage id="newGameModal.randomOrder" />

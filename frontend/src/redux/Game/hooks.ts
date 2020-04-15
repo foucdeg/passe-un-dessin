@@ -2,13 +2,14 @@ import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
 import { updateGame, updatePad } from './slice';
 import { Pad } from './types';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useHistory } from 'react-router';
 import { useSelector } from 'redux/useSelector';
 import { selectGame } from './selectors';
 import { selectPlayer } from 'redux/Player/selectors';
 import { selectRoom } from 'redux/Room/selectors';
 import { getRedirectPath } from 'services/game.service';
+import { DEFAULT_ROUND_DURATION } from './constants';
 
 export const useFetchGame = () => {
   const dispatch = useDispatch();
@@ -43,10 +44,14 @@ export const useStartGame = () => {
   const history = useHistory();
 
   return useCallback(
-    async (roomId: string, playersOrder?: string[] | null) => {
+    async (roomId: string, roundDuration?: number, playersOrder?: string[] | null) => {
       const { game_id: gameId } = await client.put(`/room/${roomId}/start`, {
+        roundDuration,
         playersOrder,
       });
+      if (roundDuration) {
+        localStorage.setItem('preferredRoundDuration', roundDuration.toString());
+      }
       history.push(`/room/${roomId}/game/${gameId}`);
     },
     [history],
@@ -63,4 +68,13 @@ export const useSavePad = () => {
     },
     [dispatch],
   );
+};
+
+export const useRoundDuration = (initialValue?: number | null) => {
+  const preferredRoundDurationStr = localStorage.getItem('preferredRoundDuration');
+  const preferredRoundDuration = preferredRoundDurationStr
+    ? parseInt(preferredRoundDurationStr)
+    : null;
+
+  return useState<number>(initialValue || preferredRoundDuration || DEFAULT_ROUND_DURATION);
 };
