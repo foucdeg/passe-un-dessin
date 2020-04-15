@@ -23,6 +23,7 @@ import PlayerChip from 'atoms/PlayerChip';
 import linkIcon from 'assets/link.svg';
 import { selectPlayer } from 'redux/Player/selectors';
 import { selectRoom } from 'redux/Room/selectors';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 const Room: React.FunctionComponent = () => {
   const doJoinRoom = useJoinRoom();
@@ -32,6 +33,7 @@ const Room: React.FunctionComponent = () => {
   const player = useSelector(selectPlayer);
   const history = useHistory();
   const [inputText, setInputText] = useState<string>(document.location.href);
+  const intl = useIntl();
 
   useEffect(() => {
     if (room && player && !room.players.some(roomPlayer => roomPlayer.uuid === player.uuid)) {
@@ -49,7 +51,7 @@ const Room: React.FunctionComponent = () => {
 
   const onCopy = () => {
     copy(document.location.href);
-    setInputText('Texte copié !');
+    setInputText(intl.formatMessage({ id: 'roomLobby.copiedLink' }));
     setTimeout(() => {
       setInputText(document.location.href);
     }, 5000);
@@ -62,19 +64,27 @@ const Room: React.FunctionComponent = () => {
 
   return (
     <Modal isOpen onClose={onLeave}>
-      <StyledHeader>Lancer une partie</StyledHeader>
+      <StyledHeader>
+        <FormattedMessage id="roomLobby.startRoom" />
+      </StyledHeader>
       <FieldLabel>
-        Envoyez ce lien aux participants{' '}
-        <Info>
-          ({MIN_PLAYERS} à {MAX_PLAYERS} joueurs)
-        </Info>
+        <FormattedMessage
+          id="roomLobby.sendLink"
+          values={{
+            min: MIN_PLAYERS,
+            max: MAX_PLAYERS,
+            info: (...chunks: string[]) => <Info>{chunks}</Info>,
+          }}
+        />
       </FieldLabel>
       <StyledField
         readOnly
         value={inputText}
         adornment={<CopyLinkAdornment src={linkIcon} onClick={onCopy} alt="Click to copy" />}
       />
-      <FieldLabel>Participants ayant rejoint la partie :</FieldLabel>
+      <FieldLabel>
+        <FormattedMessage id="roomLobby.players" />
+      </FieldLabel>
       <PlayerChips>
         {room.players.map(player => (
           <PlayerChip key={player.uuid} color={player.color}>
@@ -85,16 +95,27 @@ const Room: React.FunctionComponent = () => {
 
       <ButtonRow>
         {!goodNumberOfPlayers && (
-          <HelpText>Il manque encore {MIN_PLAYERS - room.players.length} joueurs !</HelpText>
+          <HelpText>
+            <FormattedMessage
+              id="roomLobby.needMore"
+              values={{ count: MIN_PLAYERS - room.players.length }}
+            />
+          </HelpText>
         )}
         {goodNumberOfPlayers &&
           (isPlayerAdmin ? (
             <>
-              <HelpText>Tout le monde est là ?</HelpText>
-              <Button onClick={() => doStartGame(room.uuid)}>Jouer</Button>
+              <HelpText>
+                <FormattedMessage id="roomLobby.isEveryoneThere" />
+              </HelpText>
+              <Button onClick={() => doStartGame(room.uuid)}>
+                <FormattedMessage id="roomLobby.play" />
+              </Button>
             </>
           ) : (
-            <HelpText>C'est à {room.admin.name} de lancer la partie !</HelpText>
+            <HelpText>
+              <FormattedMessage id="roomLobby.adminWillStart" values={{ name: room.admin.name }} />
+            </HelpText>
           ))}
       </ButtonRow>
     </Modal>

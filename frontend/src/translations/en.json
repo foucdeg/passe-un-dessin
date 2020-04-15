@@ -3,14 +3,15 @@
     "title": "Draw Around",
     "tagline": "Can't draw ? Great.",
     "welcome": "Welcome",
-    "how-to-play": "How to play",
+    "howToPlay": "How to play",
     "rules": "In this game, you and your friends will sketch words or expressions and try to guess what each other's sketch meant. Each first word or sentence, picked by a player, will go around the circle, transformed all along as it's sketched then guessed again. At the end, we read the drawing pads to find out who's the best drawer!",
-    "start-room": "Create a game",
-    "join-existing-room": "To join an existing game, the organizer needs to send you a link."
+    "startRoom": "Create a game",
+    "joinExistingRoom": "To join an existing game, the organizer needs to send you a link."
   },
   "roomLobby": {
-    "sendLink": "Send this link to other players",
-    "playerNumber": "({min} to {max} players)",
+    "startRoom": "Create a game",
+    "sendLink": "Send this link to other players <info>({min} to {max} players)</info>",
+    "copiedLink": "Copied link!",
     "players": "Players who joined:",
     "needMore": "We still need {count} {count, plural, one {player} many {players}}",
     "isEveryoneThere": "Is everyone there?",
@@ -28,7 +29,7 @@
     "placeholder": "A giraffe?",
     "youDraw": "Choose wisely, <strong>you</strong>'ll have to draw this!",
     "waitingFor": "Waiting for these guys to finish:",
-    "nextPlayer": "Let's just hope {name} can draw..."
+    "nextPlayer": "Let's just hope <strong>{name}</strong> can draw..."
   },
   "wordToDrawing": {
     "sentenceToDraw": "Sentence to draw:",
@@ -38,8 +39,10 @@
   "drawingToWord": {
     "drawingToGuess": "Guess this sketch:",
     "previousPlayer": "(Who knew {name} had such talent.)",
+    "nextPlayer": "Let's just hope {next} can draw better than {previous} ...",
     "placeholder": "A sheep?",
-    "submit": "Submit"
+    "submit": "Submit",
+    "waitingFor": "Waiting for these guys to finish:"
   },
   "finishedModal": {
     "title": "It's over!",
@@ -49,7 +52,8 @@
   },
   "recap": {
     "leaveTeam": "Leave team",
-    "newGame": "New game?"
+    "newGame": "New game?",
+    "initialWord": "Mot initial"
   },
   "newGameModal": {
     "title": "Start a new game",
@@ -70,5 +74,12 @@
     "pickName": "Pick a nickname",
     "placeholder": "M4sterSk3tcher_69",
     "submit": "Submit"
+  },
+  "lostPlayerModal": {
+    "title": "We lost someone!",
+    "whoLeft": "{name} seems to have left mid-game :/",
+    "startOver": "We'll have to start over.",
+    "goToSettings": "Open the admin settings (top right).",
+    "adminRestarts": "{name} is in charge."
   }
 }

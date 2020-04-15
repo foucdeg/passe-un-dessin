@@ -15,6 +15,7 @@ import { GamePhase } from 'redux/Game/types';
 import Header2 from 'atoms/Header2';
 
 import { selectPlayer } from 'redux/Player/selectors';
+import { FormattedMessage } from 'react-intl';
 
 const Game = lazy(() => import('../../pages/Game'));
 const RoomLobby = lazy(() => import('../../pages/RoomLobby'));
@@ -91,13 +92,26 @@ const Room: React.FunctionComponent = () => {
       </Switch>
       {playerWhoLeft && game && game?.phase !== GamePhase.DEBRIEF && (
         <Modal isOpen>
-          <Header2>On a perdu quelqu'un !</Header2>
-          <p>{playerWhoLeft?.name} semble avoir quitté la partie en plein milieu :/</p>
-          <p>On est obligés d'en recommencer une.</p>
+          <Header2>
+            <FormattedMessage id="lostPlayerModal.title" />
+          </Header2>
+          <p>
+            <FormattedMessage id="lostPlayerModal.whoLeft" values={{ name: playerWhoLeft.name }} />
+          </p>
+          <p>
+            <FormattedMessage id="lostPlayerModal.startOver" />
+          </p>
           {isPlayerAdmin ? (
-            <p>Ouvre les réglages en haut à droite.</p>
+            <p>
+              <FormattedMessage id="lostPlayerModal.goToSettings" />
+            </p>
           ) : (
-            <p>C'est {room.admin.name} qui décide.</p>
+            <p>
+              <FormattedMessage
+                id="lostPlayerModal.adminRestarts"
+                values={{ name: room.admin.name }}
+              />
+            </p>
           )}
         </Modal>
       )}

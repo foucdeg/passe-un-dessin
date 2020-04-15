@@ -11,6 +11,7 @@ import { useStartGame } from 'redux/Game/hooks';
 import SecondaryButton from 'components/SecondaryButton';
 import { StyledHeader, ButtonRow, StyledPlayerChips, StyledCrossIcon } from './AdminModal.style';
 import Button from 'components/Button';
+import { FormattedMessage } from 'react-intl';
 
 interface Props {
   isOpen: boolean;
@@ -51,8 +52,12 @@ const AdminModal: React.FC<Props> = ({ isOpen, onClose }) => {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <StyledHeader>Supprimer un joueur</StyledHeader>
-      <p>Clique sur la croix du joueur à supprimer de la partie :</p>
+      <StyledHeader>
+        <FormattedMessage id="adminModal.removePlayer" />
+      </StyledHeader>
+      <p>
+        <FormattedMessage id="adminModal.removePlayerInstruction" />
+      </p>
 
       <StyledPlayerChips>
         {room?.players.map(player => (
@@ -65,13 +70,21 @@ const AdminModal: React.FC<Props> = ({ isOpen, onClose }) => {
 
       <hr />
 
-      <StyledHeader>Relancer une partie</StyledHeader>
+      <StyledHeader>
+        <FormattedMessage id="adminModal.title" />
+      </StyledHeader>
       <ButtonRow>
-        <SecondaryButton onClick={startRandomGame}>Ordre aléatoire</SecondaryButton>
-        <SecondaryButton onClick={startSameGame}>Même ordre</SecondaryButton>
+        <SecondaryButton onClick={startRandomGame}>
+          <FormattedMessage id="adminModal.randomOrder" />
+        </SecondaryButton>
+        <SecondaryButton onClick={startSameGame}>
+          <FormattedMessage id="adminModal.sameOrder" />
+        </SecondaryButton>
       </ButtonRow>
       <ButtonRow>
-        <Button onClick={startReverseGame}>Ordre inverse</Button>
+        <Button onClick={startReverseGame}>
+          <FormattedMessage id="adminModal.reverseOrder" />
+        </Button>
       </ButtonRow>
     </Modal>
   );

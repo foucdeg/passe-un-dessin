@@ -18,6 +18,7 @@ import {
   Sentence,
 } from './WordToDrawingStep.style';
 import { BrushType } from 'components/BrushTypePicker/BrushTypePicker';
+import { FormattedMessage } from 'react-intl';
 
 const ROUND_DURATION = 60; // seconds
 
@@ -91,12 +92,21 @@ const WordToDrawingStep: React.FC<Props> = ({ padStep, previousPlayer, saveStep 
       </LeftSide>
       <Gutter />
       <RightSide>
-        <StyledHeader>Phrase à dessiner :</StyledHeader>
+        <StyledHeader>
+          <FormattedMessage id="wordToDrawing.sentenceToDraw" />
+        </StyledHeader>
         <Sentence>{padStep.sentence}</Sentence>
-        <em>(sortie du cerveau malade de {previousPlayer.name})</em>
+        <em>
+          <FormattedMessage
+            id="wordToDrawing.previousPlayer"
+            values={{ name: previousPlayer.name }}
+          />
+        </em>
         <Spacer />
-        <p>Tu as {ROUND_DURATION} secondes !</p>
-        <Timer duration={60} />
+        <p>
+          <FormattedMessage id="wordToDrawing.duration" values={{ duration: ROUND_DURATION }} />
+        </p>
+        <Timer duration={ROUND_DURATION} />
       </RightSide>
     </LeftAndRightSide>
   );

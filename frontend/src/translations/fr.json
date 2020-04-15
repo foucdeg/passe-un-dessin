@@ -3,14 +3,15 @@
     "title": "Passe un Dessin",
     "tagline": "Tu ne sais pas dessiner ? On va rire.",
     "welcome": "Bienvenue",
-    "how-to-play": "Comment jouer ?",
+    "howToPlay": "Comment jouer ?",
     "rules": "Dans ce jeu, tes amis et toi allez dessiner des mots et expressions et essayer de deviner ce que le précédent a dessiné. Chaque mot initial, choisi par un joueur, va faire le tour du groupe, transformé au fur et à mesure qu'il a été dessiné puis deviné. A la fin, on relit les carnets de dessin pour voir qui dessine le moins mal !",
-    "start-room": "Lancer une partie",
-    "join-existing-room": "Pour rejoindre une partie existante, l'organisateur doit t'envoyer le lien."
+    "startRoom": "Lancer une partie",
+    "joinExistingRoom": "Pour rejoindre une partie existante, l'organisateur doit t'envoyer le lien."
   },
   "roomLobby": {
-    "sendLink": "Envoyez ce lien aux participants",
-    "playerNumber": "({min} à {max} joueurs)",
+    "startRoom": "Lancer une partie",
+    "sendLink": "Envoyez ce lien aux participants <info>({min} à {max} joueurs)</info>",
+    "copiedLink": "Lien copié !",
     "players": "Participants ayant rejoint la partie :",
     "needMore": "Il manque encore {count} {count, plural, one {joueur} many {joueurs}}",
     "isEveryoneThere": "Tout le monde est là ?",
@@ -28,7 +29,7 @@
     "placeholder": "Une girafe ?",
     "youDraw": "Attention, c'est <strong>toi</strong> qui devras dessiner ça !",
     "waitingFor": "On attend ceux-là pour continuer :",
-    "nextPlayer": "Espérons que {name} dessine bien ..."
+    "nextPlayer": "Espérons que <strong>{name}</strong> dessine bien ..."
   },
   "wordToDrawing": {
     "sentenceToDraw": "Phrase à dessiner :",
@@ -38,8 +39,10 @@
   "drawingToWord": {
     "drawingToGuess": "Devine ce dessin :",
     "previousPlayer": "(Un indéniable talent chez {name})",
+    "nextPlayer": "En espérant que {next} sache mieux dessiner que {previous} ...",
     "placeholder": "Un mouton ?",
-    "submit": "Valider"
+    "submit": "Valider",
+    "waitingFor": "On attend ceux-là pour continuer :"
   },
   "finishedModal": {
     "title": "C'est fini !",
@@ -49,7 +52,8 @@
   },
   "recap": {
     "leaveTeam": "Quitter l'équipe",
-    "newGame": "Nouvelle partie ?"
+    "newGame": "Nouvelle partie ?",
+    "initialWord": "Mot initial"
   },
   "newGameModal": {
     "title": "Relancer une partie",
@@ -70,5 +74,12 @@
     "pickName": "Choisis un nom",
     "placeholder": "XXBogossDu62",
     "submit": "Valider"
+  },
+  "lostPlayerModal": {
+    "title": "On a perdu quelqu'un !",
+    "whoLeft": "{name} semble avoir quitté la partie en plein milieu :/",
+    "startOver": "On est obligés d'en recommencer une.",
+    "goToSettings": "Ouvre les réglages en haut à droite.",
+    "adminRestarts": "C'est {name} qui gère."
   }
 }

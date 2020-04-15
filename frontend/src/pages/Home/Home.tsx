@@ -16,6 +16,7 @@ import { useLocation } from 'react-router';
 import PlayerChip from 'atoms/PlayerChip';
 import { selectPlayer } from 'redux/Player/selectors';
 import { useSelector } from 'redux/useSelector';
+import { FormattedMessage } from 'react-intl';
 
 const Home: React.FunctionComponent = () => {
   const doCreateRoom = useCreateRoom();
@@ -27,27 +28,35 @@ const Home: React.FunctionComponent = () => {
   return (
     <>
       <LeftSide>
-        <LeftSideTitle>Passe un dessin</LeftSideTitle>
-        <Subtitle>Tu ne sais pas dessiner ? On va rire.</Subtitle>
+        <LeftSideTitle>
+          <FormattedMessage id="home.title" />
+        </LeftSideTitle>
+        <Subtitle>
+          <FormattedMessage id="home.tagline" />
+        </Subtitle>
         {player && (
           <PlayerLine>
-            Bienvenue,&nbsp;<PlayerChip color={player.color}>{player.name}</PlayerChip> !
+            <FormattedMessage id="home.welcome" />
+            ,&nbsp;<PlayerChip color={player.color}>{player.name}</PlayerChip> !
           </PlayerLine>
         )}
-        <Header>Comment jouer ?</Header>
+        <Header>
+          <FormattedMessage id="home.howToPlay" />
+        </Header>
         <HelpParagraph>
-          Dans ce jeu, tes amis et toi allez dessiner des mots et expressions et essayer de deviner
-          ce que le précédent a dessiné. Chaque mot initial, choisi par un joueur, va faire le tour
-          du groupe, transformé au fur et à mesure qu'il a été dessiné puis deviné. A la fin, on
-          relit les carnets de dessin pour voir qui dessine le moins mal !
+          <FormattedMessage id="home.rules" />
         </HelpParagraph>
-        <StartButton onClick={doCreateRoom}>Lancer une partie</StartButton>
+        <StartButton onClick={doCreateRoom}>
+          <FormattedMessage id="home.startRoom" />
+        </StartButton>
         <HelpParagraph>
-          Pour rejoindre une partie existante, l'organisateur doit t'envoyer le lien.
+          <FormattedMessage id="home.joinExistingRoom" />
         </HelpParagraph>
       </LeftSide>
       <RightSide>
-        <RightSideTitle>Passe un Dessin</RightSideTitle>
+        <RightSideTitle>
+          <FormattedMessage id="home.title" />
+        </RightSideTitle>
         <Credits>Michèle Ruaud \ Foucauld Degeorges</Credits>
       </RightSide>
     </>

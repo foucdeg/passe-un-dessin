@@ -18,12 +18,14 @@ import arrowRight from 'assets/arrow-right.svg';
 import StaticInput from 'atoms/StaticInput';
 import { selectGame, selectRemainingPlayers } from 'redux/Game/selectors';
 import { selectPlayer } from 'redux/Player/selectors';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 const PadInit: React.FunctionComponent = () => {
   const { padId } = useParams();
   const game = useSelector(selectGame);
   const player = useSelector(selectPlayer);
   const remainingPlayers = useSelector(selectRemainingPlayers);
+  const intl = useIntl();
 
   const [sentence, setSentence] = useState<string>('');
   const doSavePad = useSavePad();
@@ -39,7 +41,9 @@ const PadInit: React.FunctionComponent = () => {
 
   return (
     <PadInitContainer>
-      <StyledHeader>Choisis un mot ou une phrase :</StyledHeader>
+      <StyledHeader>
+        <FormattedMessage id="padInit.chooseSentence" />
+      </StyledHeader>
       <StyledForm
         onSubmit={e => {
           e.preventDefault();
@@ -54,7 +58,7 @@ const PadInit: React.FunctionComponent = () => {
           <StyledTextInput
             autoFocus
             type="text"
-            placeholder="Une girafe ?"
+            placeholder={intl.formatMessage({ id: 'padInit.placeholder' })}
             value={sentence}
             onChange={e => setSentence(e.target.value)}
             adornment={
@@ -65,15 +69,26 @@ const PadInit: React.FunctionComponent = () => {
       </StyledForm>
       {isNextPlayerMe ? (
         <p>
-          Attention, c'est <strong>toi</strong> qui devras dessiner ça !
+          <FormattedMessage
+            id="padInit.youDraw"
+            values={{ strong: (...chunks: string[]) => <strong>{chunks}</strong> }}
+          />
         </p>
       ) : (
         <p>
-          Espérons que <strong>{nextPlayer.name}</strong> dessine bien ...
+          <FormattedMessage
+            id="padInit.nextPlayer"
+            values={{
+              strong: (...chunks: string[]) => <strong>{chunks}</strong>,
+              name: nextPlayer.name,
+            }}
+          />
         </p>
       )}
       <Spacer />
-      <em>On attend ceux-là pour continuer :</em>
+      <em>
+        <FormattedMessage id="padInit.waitingFor" />
+      </em>
       <StyledPlayerChips>
         {remainingPlayers.map(player => (
           <PlayerChip key={player.uuid} color={player.color}>

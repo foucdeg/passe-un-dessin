@@ -9,12 +9,14 @@ import refreshIcon from 'assets/refresh.svg';
 import AdminModal from 'components/AdminModal';
 import { useRefreshGame } from 'redux/Game/hooks';
 import IconAndTooltip from 'components/IconAndTooltip';
+import { useIntl } from 'react-intl';
 
 const SideButtons: React.FC<{}> = () => {
   const isPlayerAdmin = useSelector(selectPlayerIsAdmin);
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
   const [isAdminModalOpen, setAdminModalOpen] = useState<boolean>(false);
+  const intl = useIntl();
 
   const doRefreshGame = useRefreshGame();
 
@@ -22,12 +24,12 @@ const SideButtons: React.FC<{}> = () => {
     <SideButtonsContainer>
       <AudioControl />
       {room && isPlayerAdmin && (
-        <IconAndTooltip tooltipText="Actions d'administration">
+        <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.adminMenu' })}>
           <AdminModalButton src={cogIcon} alt="Settings" onClick={() => setAdminModalOpen(true)} />
         </IconAndTooltip>
       )}
       {game && (
-        <IconAndTooltip tooltipText="Resynchroniser">
+        <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.refresh' })}>
           <RefreshButton src={refreshIcon} alt="refresh" onClick={doRefreshGame} />
         </IconAndTooltip>
       )}

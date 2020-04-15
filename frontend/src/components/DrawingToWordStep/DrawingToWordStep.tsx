@@ -18,6 +18,7 @@ import { useSelector } from 'redux/useSelector';
 import PlayerChip from 'atoms/PlayerChip';
 import StaticInput from 'atoms/StaticInput';
 import { selectRemainingPlayers } from 'redux/Game/selectors';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 interface Props {
   padStep: PadStep;
@@ -29,6 +30,7 @@ interface Props {
 const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, previousPlayer, nextPlayer }) => {
   const [sentence, setSentence] = useState<string>('');
   const remainingPlayers = useSelector(selectRemainingPlayers);
+  const intl = useIntl();
 
   if (!previousPlayer) return null;
 
@@ -48,8 +50,15 @@ const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, previousPlayer,
       </LeftSide>
       <Gutter />
       <RightSide>
-        <StyledHeader>Devine ce dessin :</StyledHeader>
-        <Subtext>(sorti du cerveau malade de {previousPlayer.name})</Subtext>
+        <StyledHeader>
+          <FormattedMessage id="drawingToWord.drawingToGuess" />
+        </StyledHeader>
+        <Subtext>
+          <FormattedMessage
+            id="drawingToWord.previousPlayer"
+            values={{ name: previousPlayer.name }}
+          />
+        </Subtext>
         {padStep.sentence ? (
           <StaticInput>{padStep.sentence}</StaticInput>
         ) : (
@@ -64,21 +73,28 @@ const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, previousPlayer,
             <TextInput
               type="text"
               autoFocus
-              placeholder="Un mouton ?"
+              placeholder={intl.formatMessage({ id: 'drawingToWord.placeholder' })}
               value={sentence}
               onChange={e => setSentence(e.target.value)}
             />
-            <StyledButton type="submit">Valider</StyledButton>
+            <StyledButton type="submit">
+              <FormattedMessage id="drawingToWord.submit" />
+            </StyledButton>
           </StyledForm>
         )}
 
         <Spacer />
         {nextPlayer && sentence && (
           <p>
-            En espérant que {nextPlayer.name} sache mieux dessiner que {previousPlayer.name} ...
+            <FormattedMessage
+              id="drawingToWord.nextPlayer"
+              values={{ previous: previousPlayer.name, next: nextPlayer.name }}
+            />
           </p>
         )}
-        <em>On attend ceux-là pour continuer :</em>
+        <em>
+          <FormattedMessage id="drawingToWord.waitingFor" />
+        </em>
         <StyledPlayerChips>
           {remainingPlayers.map(player => (
             <PlayerChip key={player.uuid} color={player.color}>

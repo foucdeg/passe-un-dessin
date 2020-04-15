@@ -7,14 +7,16 @@ import { UsernameForm, StyledField, StyledButton } from './UserNameGate.style';
 import FieldLabel from 'atoms/FieldLabel';
 import Header2 from 'atoms/Header2';
 import { selectPlayer } from 'redux/Player/selectors';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 interface Props {
   children: React.ReactNode;
 }
 
 const UserNameGate: React.FC<Props> = ({ children }) => {
-  const player = useSelector(selectPlayer);
   const [playerName, setPlayerName] = useState<string>('');
+  const intl = useIntl();
+  const player = useSelector(selectPlayer);
   const doFetchMe = useFetchMe();
   const doCreatePlayer = useCreatePlayer();
 
@@ -27,7 +29,9 @@ const UserNameGate: React.FC<Props> = ({ children }) => {
       {children}
       {player === false && (
         <Modal isOpen>
-          <Header2>Comment tu t'appelles ?</Header2>
+          <Header2>
+            <FormattedMessage id="userNameModal.title" />
+          </Header2>
           <UsernameForm
             onSubmit={e => {
               e.preventDefault();
@@ -36,16 +40,20 @@ const UserNameGate: React.FC<Props> = ({ children }) => {
               }
             }}
           >
-            <FieldLabel htmlFor="username">Choisis un nom</FieldLabel>
+            <FieldLabel htmlFor="username">
+              <FormattedMessage id="userNameModal.pickName" />
+            </FieldLabel>
             <StyledField
               id="username"
               type="text"
               autoFocus
               value={playerName}
-              placeholder={'XXGamerDu62'}
+              placeholder={intl.formatMessage({ id: 'userNameModal.placeholder' })}
               onChange={e => setPlayerName(e.target.value)}
             />
-            <StyledButton type="submit">Valider</StyledButton>
+            <StyledButton type="submit">
+              <FormattedMessage id="userNameModal.submit" />
+            </StyledButton>
           </UsernameForm>
         </Modal>
       )}

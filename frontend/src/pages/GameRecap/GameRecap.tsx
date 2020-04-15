@@ -20,6 +20,7 @@ import { useLeaveRoom } from 'redux/Room/hooks';
 import { selectRoom, selectPlayerIsAdmin } from 'redux/Room/selectors';
 import { selectGame } from 'redux/Game/selectors';
 import NewGameModal from 'components/NewGameModal';
+import { FormattedMessage } from 'react-intl';
 
 const GameRecap: React.FunctionComponent = () => {
   const room = useSelector(selectRoom);
@@ -63,20 +64,27 @@ const GameRecap: React.FunctionComponent = () => {
       </OuterRecapContainer>
       <Modal isOpen={doneModalIsOpen} onClose={() => setDoneModalIsOpen(false)}>
         <InnerDoneModal>
-          <StyledHeader>C'est fini !</StyledHeader>
+          <StyledHeader>
+            <FormattedMessage id="finishedModal.title" />
+          </StyledHeader>
           <HelpParagraph>
-            Vous pouvez désormais voir l'ensemble des carnets pour comprendre tous les dessins que
-            vous avez eus à deviner.
+            <FormattedMessage id="finishedModal.description" />
           </HelpParagraph>
-          <HelpParagraph>Naviguez d'un carnet à l'autre avec les onglets en haut.</HelpParagraph>
-          <Button onClick={() => setDoneModalIsOpen(false)}>Voir les résultats</Button>
+          <HelpParagraph>
+            <FormattedMessage id="finishedModal.navigate" />
+          </HelpParagraph>
+          <Button onClick={() => setDoneModalIsOpen(false)}>
+            <FormattedMessage id="finishedModal.seeResults" />
+          </Button>
         </InnerDoneModal>
       </Modal>
       <TopRightButtons>
-        <TopRightButton onClick={leaveGame}>Quitter l'équipe</TopRightButton>
+        <TopRightButton onClick={leaveGame}>
+          <FormattedMessage id="recap.leaveTeam" />
+        </TopRightButton>
         {isPlayerAdmin && (
           <TopRightButton onClick={() => setNewGameModalIsOpen(true)}>
-            Nouvelle partie ?
+            <FormattedMessage id="recap.newGame" />
           </TopRightButton>
         )}
       </TopRightButtons>
