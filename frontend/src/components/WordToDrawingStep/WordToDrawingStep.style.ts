@@ -50,12 +50,6 @@ export const StyledHeader = styled(Header2)`
 
 StyledHeader.displayName = 'StyledHeader';
 
-export const Spacer = styled.div`
-  flex-grow: 1;
-`;
-
-Spacer.displayName = 'Spacer';
-
 export const Sentence = styled.strong`
   margin-bottom: 8px;
 `;

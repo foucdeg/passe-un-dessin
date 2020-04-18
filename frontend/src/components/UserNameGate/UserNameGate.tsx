@@ -3,9 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'redux/useSelector';
 import Modal from 'components/Modal';
 import { useFetchMe, useCreatePlayer } from 'redux/Player/hooks';
-import { UsernameForm, StyledField, StyledButton } from './UserNameGate.style';
+import { UsernameForm, StyledField, StyledButton, StyledHeader } from './UserNameGate.style';
 import FieldLabel from 'atoms/FieldLabel';
-import Header2 from 'atoms/Header2';
 import { selectPlayer } from 'redux/Player/selectors';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -29,9 +28,9 @@ const UserNameGate: React.FC<Props> = ({ children }) => {
       {children}
       {player === false && (
         <Modal isOpen>
-          <Header2>
+          <StyledHeader>
             <FormattedMessage id="userNameModal.title" />
-          </Header2>
+          </StyledHeader>
           <UsernameForm
             onSubmit={e => {
               e.preventDefault();

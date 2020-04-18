@@ -25,10 +25,6 @@ export const StyledHeader = styled(Header2)`
   margin-bottom: 8px;
 `;
 
-export const Spacer = styled.div`
-  flex-grow: 1;
-`;
-
 export const InputArrow = styled.img.attrs({ src: arrowRight })`
   cursor: pointer;
 `;

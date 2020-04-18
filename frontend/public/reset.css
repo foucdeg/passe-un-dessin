@@ -151,3 +151,8 @@ hr {
   width: 100%;
   margin-bottom: 16px;
 }
+
+p {
+  letter-spacing: 0.05em;
+  line-height: 19px;
+}

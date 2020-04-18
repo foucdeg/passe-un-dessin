@@ -4,9 +4,14 @@
     "tagline": "Can't draw ? Awesome.",
     "welcome": "Welcome",
     "howToPlay": "How to play",
-    "rules": "In this game, you and your friends will sketch words or expressions and try to guess what each other's sketch meant. Each first word or sentence, picked by a player, will go around the circle, transformed all along as it's sketched then guessed again. At the end, we read the drawing pads to find out who's the best drawer!",
     "startRoom": "Create a game",
-    "joinExistingRoom": "To join an existing game, the organizer needs to send you a link."
+    "joinExistingRoom": "To join an existing game, the organizer needs to send you a link.",
+    "rules": {
+      "0": "You should be at least 4 people to play.",
+      "1": "Pick a word or sentence that the next person will have to sketch. The game starts when everybody has picked a word.",
+      "2": "Draw the word or sentence, or thy to guess what the previous person drew.",
+      "3": "When everybody has drawn all of the words, we look at the drawing pads! <strong>Watch what the word or sentences</strong> your friends initially chose became thanks to their drawing skills."
+    }
   },
   "roomLobby": {
     "title": "Lobby",
@@ -82,5 +87,13 @@
     "startOver": "We'll have to start over.",
     "goToSettings": "Open the admin settings (top right).",
     "adminRestarts": "{name} is in charge."
+  },
+  "mobileGate": {
+    "bigFingers": "Big fingers, small screen",
+    "laptopOrTablet": "Draw Around is more practical on a computer or tablet.",
+    "sendEmail": "Send link by email",
+    "emailExample": "myemail@aol.fr",
+    "emailSubject": "My link to Draw Around",
+    "emailBody": "Link : {link}\n\nSee you soon!"
   }
 }

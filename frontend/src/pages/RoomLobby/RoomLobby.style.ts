@@ -34,6 +34,7 @@ export const HelpText = styled.span`
 HelpText.displayName = 'HelpText';
 
 export const StyledHeader = styled(Header2)`
+  color: ${colorPalette.purple};
   text-align: center;
   margin-bottom: 18px;
 `;

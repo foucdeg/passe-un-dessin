@@ -4,9 +4,14 @@
     "tagline": "Tu ne sais pas dessiner ? On va rire.",
     "welcome": "Bienvenue",
     "howToPlay": "Comment jouer ?",
-    "rules": "Dans ce jeu, tes amis et toi allez dessiner des mots et expressions et essayer de deviner ce que le précédent a dessiné. Chaque mot initial, choisi par un joueur, va faire le tour du groupe, transformé au fur et à mesure qu'il a été dessiné puis deviné. A la fin, on relit les carnets de dessin pour voir qui dessine le moins mal !",
     "startRoom": "Lancer une partie",
-    "joinExistingRoom": "Pour rejoindre une partie existante, l'organisateur doit t'envoyer le lien."
+    "joinExistingRoom": "Pour rejoindre une partie, l'organisateur doit t'envoyer le lien.",
+    "rules": {
+      "0": "Pour jouer, vous devez être à partir de 4 joueurs.",
+      "1": "Choisis un mot que la personne après toi devra dessiner. La partie commence quand tout le monde a choisi un mot.",
+      "2": "Dessine le mot proposé ou devine ce que la personne a dessiné.",
+      "3": "Quand tout le monde a pu dessiner chacun des mots, on passe aux carnets de résultats ! <strong>Regarde ce que sont devenus les mots choisis</strong> initialement par tes amis avec les talents de certains pour le dessin."
+    }
   },
   "roomLobby": {
     "title": "Salle d'attente",
@@ -82,5 +87,13 @@
     "startOver": "On est obligés d'en recommencer une.",
     "goToSettings": "Ouvre les réglages en haut à droite.",
     "adminRestarts": "C'est {name} qui gère."
+  },
+  "mobileGate": {
+    "bigFingers": "Gros doigts, petit écran",
+    "laptopOrTablet": "Passe un Dessin se joue mieux sur ordinateur ou tablette.",
+    "sendEmail": "Envoyer le lien par mail",
+    "emailExample": "monadresse@wanadoo.fr",
+    "emailSubject": "Mon lien vers Passe un Dessin",
+    "emailBody": "Lien : {link}\n\nÀ tout de suite !"
   }
 }

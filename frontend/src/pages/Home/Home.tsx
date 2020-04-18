@@ -5,22 +5,24 @@ import {
   LeftSideTitle,
   Subtitle,
   Header,
-  HelpParagraph,
   StartButton,
   Credits,
   RightSideTitle,
-  PlayerLine,
+  RuleNumberBackground,
+  RuleNumber,
+  RuleParagraph,
+  Rule,
+  RuleSection,
 } from './Home.style';
 import { useCreateRoom } from 'redux/Room/hooks';
 import { useLocation } from 'react-router';
-import PlayerChip from 'atoms/PlayerChip';
-import { selectPlayer } from 'redux/Player/selectors';
-import { useSelector } from 'redux/useSelector';
 import { FormattedMessage } from 'react-intl';
+
+import ruleBackgrounds from 'assets/rule-backgrounds';
+import { Spacer } from 'atoms/Spacer';
 
 const Home: React.FunctionComponent = () => {
   const doCreateRoom = useCreateRoom();
-  const player = useSelector(selectPlayer);
   const location = useLocation();
 
   if (!location.pathname.match(/\/(room\/[^/]+)?$/)) return null;
@@ -34,24 +36,32 @@ const Home: React.FunctionComponent = () => {
         <Subtitle>
           <FormattedMessage id="home.tagline" />
         </Subtitle>
-        {player && (
-          <PlayerLine>
-            <FormattedMessage id="home.welcome" />
-            ,&nbsp;<PlayerChip color={player.color}>{player.name}</PlayerChip> !
-          </PlayerLine>
-        )}
         <Header>
           <FormattedMessage id="home.howToPlay" />
         </Header>
-        <HelpParagraph>
-          <FormattedMessage id="home.rules" />
-        </HelpParagraph>
+        <RuleSection>
+          {ruleBackgrounds.map((ruleBackground, index) => (
+            <Rule key={ruleBackground}>
+              <RuleNumberBackground background={ruleBackground}>
+                <RuleNumber>{index + 1}</RuleNumber>
+              </RuleNumberBackground>
+
+              <RuleParagraph>
+                <FormattedMessage
+                  id={`home.rules.${index}`}
+                  values={{ strong: (...chunks: string[]) => <strong>{chunks}</strong> }}
+                />
+              </RuleParagraph>
+            </Rule>
+          ))}
+        </RuleSection>
+        <Spacer />
         <StartButton onClick={doCreateRoom}>
           <FormattedMessage id="home.startRoom" />
         </StartButton>
-        <HelpParagraph>
+        <p>
           <FormattedMessage id="home.joinExistingRoom" />
-        </HelpParagraph>
+        </p>
       </LeftSide>
       <RightSide>
         <RightSideTitle>

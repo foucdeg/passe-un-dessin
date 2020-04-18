@@ -15,7 +15,6 @@ import { Pad } from 'redux/Game/types';
 import Modal from 'components/Modal';
 import { useHistory } from 'react-router';
 import Button from 'components/Button';
-import { HelpParagraph } from '../Home/Home.style';
 import { useLeaveRoom } from 'redux/Room/hooks';
 import { selectRoom, selectPlayerIsAdmin } from 'redux/Room/selectors';
 import { selectGame } from 'redux/Game/selectors';
@@ -67,12 +66,12 @@ const GameRecap: React.FunctionComponent = () => {
           <StyledHeader>
             <FormattedMessage id="finishedModal.title" />
           </StyledHeader>
-          <HelpParagraph>
+          <p>
             <FormattedMessage id="finishedModal.description" />
-          </HelpParagraph>
-          <HelpParagraph>
+          </p>
+          <p>
             <FormattedMessage id="finishedModal.navigate" />
-          </HelpParagraph>
+          </p>
           <Button onClick={() => setDoneModalIsOpen(false)}>
             <FormattedMessage id="finishedModal.seeResults" />
           </Button>

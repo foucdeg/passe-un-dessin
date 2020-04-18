@@ -8,7 +8,6 @@ import {
   PadInitContainer,
   StyledTextInput,
   StyledForm,
-  Spacer,
   InputArrow,
 } from './PadInit.style';
 import PlayerChip from 'atoms/PlayerChip';
@@ -18,6 +17,7 @@ import StaticInput from 'atoms/StaticInput';
 import { selectGame, selectRemainingPlayers } from 'redux/Game/selectors';
 import { selectPlayer } from 'redux/Player/selectors';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { Spacer } from 'atoms/Spacer';
 
 const PadInit: React.FunctionComponent = () => {
   const { padId } = useParams();

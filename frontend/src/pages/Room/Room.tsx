@@ -9,13 +9,11 @@ import { useFetchRoom, useLeaveRoom } from 'redux/Room/hooks';
 import { Player } from 'redux/Player/types';
 
 import { SERVER_EVENT_TYPES, useServerSentEvent } from 'services/networking/server-events';
-import Modal from 'components/Modal';
 import { selectGame } from 'redux/Game/selectors';
 import { GamePhase } from 'redux/Game/types';
-import Header2 from 'atoms/Header2';
 
 import { selectPlayer } from 'redux/Player/selectors';
-import { FormattedMessage } from 'react-intl';
+import LostPlayerModal from 'components/LostPlayerModal';
 
 const Game = lazy(() => import('../../pages/Game'));
 const RoomLobby = lazy(() => import('../../pages/RoomLobby'));
@@ -96,30 +94,8 @@ const Room: React.FunctionComponent = () => {
         <Route path={`${path}/game/:gameId`} component={Game} />
         <Route path={`${path}`} exact component={RoomLobby} />
       </Switch>
-      {shouldShowPlayerLeftModal && (
-        <Modal isOpen>
-          <Header2>
-            <FormattedMessage id="lostPlayerModal.title" />
-          </Header2>
-          <p>
-            <FormattedMessage id="lostPlayerModal.whoLeft" values={{ name: playerWhoLeft?.name }} />
-          </p>
-          <p>
-            <FormattedMessage id="lostPlayerModal.startOver" />
-          </p>
-          {isPlayerAdmin ? (
-            <p>
-              <FormattedMessage id="lostPlayerModal.goToSettings" />
-            </p>
-          ) : (
-            <p>
-              <FormattedMessage
-                id="lostPlayerModal.adminRestarts"
-                values={{ name: room.admin.name }}
-              />
-            </p>
-          )}
-        </Modal>
+      {shouldShowPlayerLeftModal && playerWhoLeft && (
+        <LostPlayerModal isAdmin={isPlayerAdmin} playerName={playerWhoLeft?.name} />
       )}
     </>
   );

@@ -24,7 +24,7 @@ export const StyledTextInput = styled.input<{ hasAdornment: boolean }>`
 export const AdornmentLocation = styled.div`
   position: absolute;
   right: 16px;
-  top: 16px;
+  top: 14px;
 `;
 
 export const InputAndAdornment = styled.div`

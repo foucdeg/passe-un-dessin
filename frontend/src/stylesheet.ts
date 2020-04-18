@@ -32,7 +32,9 @@ export const fontFamily = {
 export const fontSize = {
   XXLarge: '60px',
   titles: '32px',
-  smallTitles: '24px',
+  header2: '24px',
+  header3: '26px',
+  header4: '15px',
   medium: '16px',
   small: '14px',
   XSmall: '12px',
