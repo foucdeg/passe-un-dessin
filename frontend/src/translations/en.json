@@ -9,10 +9,11 @@
     "joinExistingRoom": "To join an existing game, the organizer needs to send you a link."
   },
   "roomLobby": {
-    "startRoom": "Create a game",
+    "title": "Lobby",
     "sendLink": "Send this link to other players <info>({min} to {max} players)</info>",
     "copiedLink": "Copied link!",
     "players": "Players who joined:",
+    "inGame": "A game is underway. Next one should start in a few!",
     "needMore": "We still need {count} {count, plural, one {player} many {players}}",
     "isEveryoneThere": "Is everyone there?",
     "play": "Play",

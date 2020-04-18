@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Header2 from 'atoms/Header2';
 import PlayerChips from 'atoms/PlayerChips';
+import crossIcon from 'assets/cross.svg';
 
 export const ButtonRow = styled.div`
   display: flex;
@@ -23,7 +24,7 @@ export const StyledPlayerChips = styled(PlayerChips)`
 
 StyledPlayerChips.displayName = 'StyledPlayerChips';
 
-export const StyledCrossIcon = styled.img`
+export const StyledCrossIcon = styled.img.attrs({ src: crossIcon })`
   margin-left: 8px;
   cursor: pointer;
   position: relative;

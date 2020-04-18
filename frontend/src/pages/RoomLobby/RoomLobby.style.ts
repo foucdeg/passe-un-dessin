@@ -3,6 +3,9 @@ import { colorPalette } from 'stylesheet';
 import TextInput from 'components/TextInput';
 import Header2 from 'atoms/Header2';
 
+import crossIcon from 'assets/big-cross.svg';
+import linkIcon from 'assets/link.svg';
+
 export const Info = styled.span`
   color: ${colorPalette.textGrey};
 `;
@@ -35,8 +38,17 @@ export const StyledHeader = styled(Header2)`
   margin-bottom: 18px;
 `;
 
-export const CopyLinkAdornment = styled.img`
+export const CopyLinkAdornment = styled.img.attrs({ src: linkIcon })`
   cursor: pointer;
 `;
 
-CopyLinkAdornment.displayName = CopyLinkAdornment;
+CopyLinkAdornment.displayName = 'CopyLinkAdornment';
+
+export const CloseButton = styled.img.attrs({ src: crossIcon })`
+  cursor: pointer;
+  position: absolute;
+  right: 24px;
+  top: 24px;
+`;
+
+CloseButton.displayName = 'CloseButton';

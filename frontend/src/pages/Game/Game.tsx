@@ -22,8 +22,6 @@ import { selectRoom } from 'redux/Room/selectors';
 import { selectGame } from 'redux/Game/selectors';
 import { selectPlayer } from 'redux/Player/selectors';
 
-import fatArrow from 'assets/fat-arrow.svg';
-
 const PadInit = React.lazy(() => import('../PadInit'));
 const PadStep = React.lazy(() => import('../PadStep'));
 const GameRecap = React.lazy(() => import('../GameRecap'));
@@ -114,13 +112,13 @@ const Game: React.FunctionComponent = () => {
         {game.phase !== GamePhase.DEBRIEF && (
           <PlayerOrder>
             <StyledPlayerChip color={colorPalette.whiteTransparent}>toi</StyledPlayerChip>
-            <ArrowSpacer src={fatArrow} />
+            <ArrowSpacer />
             {reorderedPlayers.map(orderedPlayer => (
               <React.Fragment key={orderedPlayer.uuid}>
                 <StyledPlayerChip color={colorPalette.whiteTransparent} key={orderedPlayer.uuid}>
                   {orderedPlayer.name}
                 </StyledPlayerChip>
-                <ArrowSpacer src={fatArrow} />
+                <ArrowSpacer />
               </React.Fragment>
             ))}
             <StyledPlayerChip color={colorPalette.whiteTransparent}>toi</StyledPlayerChip>

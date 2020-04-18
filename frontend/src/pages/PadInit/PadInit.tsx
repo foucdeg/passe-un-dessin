@@ -14,7 +14,6 @@ import {
 import PlayerChip from 'atoms/PlayerChip';
 import { StyledPlayerChips } from 'components/DrawingToWordStep/DrawingToWordStep.style';
 
-import arrowRight from 'assets/arrow-right.svg';
 import StaticInput from 'atoms/StaticInput';
 import { selectGame, selectRemainingPlayers } from 'redux/Game/selectors';
 import { selectPlayer } from 'redux/Player/selectors';
@@ -61,9 +60,7 @@ const PadInit: React.FunctionComponent = () => {
             placeholder={intl.formatMessage({ id: 'padInit.placeholder' })}
             value={sentence}
             onChange={e => setSentence(e.target.value)}
-            adornment={
-              <InputArrow src={arrowRight} alt="Valider" onClick={() => doSavePad(pad, sentence)} />
-            }
+            adornment={<InputArrow alt="Valider" onClick={() => doSavePad(pad, sentence)} />}
           />
         )}
       </StyledForm>

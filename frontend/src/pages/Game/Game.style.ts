@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 import fullBackground from 'assets/full-background.svg';
 import { colorPalette } from 'stylesheet';
 import PlayerChip from 'atoms/PlayerChip';
+import fatArrow from 'assets/fat-arrow.svg';
 
 export const GameContainer = styled.div`
   width: 100%;
@@ -48,7 +49,7 @@ export const StyledPlayerChip = styled(PlayerChip)`
 
 StyledPlayerChip.displayName = 'StyledPlayerChip';
 
-export const ArrowSpacer = styled.img`
+export const ArrowSpacer = styled.img.attrs({ src: fatArrow })`
   margin-right: 4px;
 `;
 

@@ -4,8 +4,6 @@ import { selectPlayerIsAdmin, selectRoom } from 'redux/Room/selectors';
 import { selectGame } from 'redux/Game/selectors';
 import AudioControl from 'components/AudioControl';
 import { SideButtonsContainer, AdminModalButton, RefreshButton } from './SideButtons.style';
-import cogIcon from 'assets/cog.svg';
-import refreshIcon from 'assets/refresh.svg';
 import AdminModal from 'components/AdminModal';
 import { useRefreshGame } from 'redux/Game/hooks';
 import IconAndTooltip from 'components/IconAndTooltip';
@@ -25,12 +23,12 @@ const SideButtons: React.FC<{}> = () => {
       <AudioControl />
       {room && isPlayerAdmin && (
         <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.adminMenu' })}>
-          <AdminModalButton src={cogIcon} alt="Settings" onClick={() => setAdminModalOpen(true)} />
+          <AdminModalButton alt="Settings" onClick={() => setAdminModalOpen(true)} />
         </IconAndTooltip>
       )}
       {game && (
         <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.refresh' })}>
-          <RefreshButton src={refreshIcon} alt="refresh" onClick={doRefreshGame} />
+          <RefreshButton alt="refresh" onClick={doRefreshGame} />
         </IconAndTooltip>
       )}
       <AdminModal isOpen={isAdminModalOpen} onClose={() => setAdminModalOpen(false)} />

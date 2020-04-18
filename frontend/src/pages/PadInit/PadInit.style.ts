@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import TextInput from 'components/TextInput';
 import { colorPalette } from 'stylesheet';
 import Header2 from 'atoms/Header2';
+import arrowRight from 'assets/arrow-right.svg';
 
 export const PadInitContainer = styled.div`
   display: flex;
@@ -28,6 +29,6 @@ export const Spacer = styled.div`
   flex-grow: 1;
 `;
 
-export const InputArrow = styled.img`
+export const InputArrow = styled.img.attrs({ src: arrowRight })`
   cursor: pointer;
 `;

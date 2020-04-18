@@ -84,19 +84,25 @@ const Room: React.FunctionComponent = () => {
 
   if (!room) return null;
 
+  const shouldShowPlayerLeftModal =
+    playerWhoLeft &&
+    game &&
+    game?.phase !== GamePhase.DEBRIEF &&
+    game.players.map(gamePlayer => gamePlayer.uuid).includes(playerWhoLeft.uuid);
+
   return (
     <>
       <Switch>
         <Route path={`${path}/game/:gameId`} component={Game} />
         <Route path={`${path}`} exact component={RoomLobby} />
       </Switch>
-      {playerWhoLeft && game && game?.phase !== GamePhase.DEBRIEF && (
+      {shouldShowPlayerLeftModal && (
         <Modal isOpen>
           <Header2>
             <FormattedMessage id="lostPlayerModal.title" />
           </Header2>
           <p>
-            <FormattedMessage id="lostPlayerModal.whoLeft" values={{ name: playerWhoLeft.name }} />
+            <FormattedMessage id="lostPlayerModal.whoLeft" values={{ name: playerWhoLeft?.name }} />
           </p>
           <p>
             <FormattedMessage id="lostPlayerModal.startOver" />

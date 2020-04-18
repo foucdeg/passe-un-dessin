@@ -44,7 +44,9 @@ const WordToDrawingStep: React.FC<Props> = ({ padStep, previousPlayer, saveStep 
 
   const setBrushColor = (newColor: DrawingColor) => {
     setColor(newColor);
-    setBrushType(BrushType.THIN);
+    if ([BrushType.THIN_ERASER, BrushType.THICK_ERASER].includes(brushType)) {
+      setBrushType(BrushType.THIN);
+    }
   };
 
   const [brushColor, brushThickness] = getBrushAttributes(color, brushType);

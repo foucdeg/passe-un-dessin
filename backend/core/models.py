@@ -109,6 +109,9 @@ class Room(BaseModel):
         blank=True,
     )
 
+    def is_in_game(self):
+        return self.current_game is not None
+
 
 class Game(BaseModel):
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="games")

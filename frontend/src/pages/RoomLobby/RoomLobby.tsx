@@ -15,12 +15,12 @@ import {
   HelpText,
   StyledHeader,
   CopyLinkAdornment,
+  CloseButton,
 } from './RoomLobby.style';
 import Button from 'components/Button';
 import PlayerChips from 'atoms/PlayerChips';
 import PlayerChip from 'atoms/PlayerChip';
 
-import linkIcon from 'assets/link.svg';
 import { selectPlayer } from 'redux/Player/selectors';
 import { selectRoom } from 'redux/Room/selectors';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -66,9 +66,10 @@ const Room: React.FunctionComponent = () => {
   };
 
   return (
-    <Modal isOpen onClose={onLeave}>
+    <Modal isOpen>
+      <CloseButton onClick={onLeave} />
       <StyledHeader>
-        <FormattedMessage id="roomLobby.startRoom" />
+        <FormattedMessage id="roomLobby.title" />
       </StyledHeader>
       <FieldLabel>
         <FormattedMessage
@@ -83,7 +84,7 @@ const Room: React.FunctionComponent = () => {
       <StyledField
         readOnly
         value={inputText}
-        adornment={<CopyLinkAdornment src={linkIcon} onClick={onCopy} alt="Click to copy" />}
+        adornment={<CopyLinkAdornment onClick={onCopy} alt="Click to copy" />}
       />
       {isPlayerAdmin && (
         <RoundDurationPicker duration={roundDuration} onDurationChange={setRoundDuration} />
@@ -100,7 +101,12 @@ const Room: React.FunctionComponent = () => {
       </PlayerChips>
 
       <ButtonRow>
-        {!goodNumberOfPlayers && (
+        {room.is_in_game && (
+          <HelpText>
+            <FormattedMessage id="roomLobby.inGame" />
+          </HelpText>
+        )}
+        {!room.is_in_game && !goodNumberOfPlayers && (
           <HelpText>
             <FormattedMessage
               id="roomLobby.needMore"
@@ -108,7 +114,8 @@ const Room: React.FunctionComponent = () => {
             />
           </HelpText>
         )}
-        {goodNumberOfPlayers &&
+        {!room.is_in_game &&
+          goodNumberOfPlayers &&
           (isPlayerAdmin ? (
             <>
               <HelpText>

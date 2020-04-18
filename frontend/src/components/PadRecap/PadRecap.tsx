@@ -4,8 +4,6 @@ import { PadRecapRow, ArrowSpacer } from './PadRecap.style';
 import SentenceRecap from 'components/SentenceRecap';
 import DrawingRecap from 'components/DrawingRecap';
 
-import fatArrow from 'assets/fat-arrow.svg';
-
 interface Props {
   pad: Pad;
 }
@@ -20,7 +18,7 @@ const PadRecap: React.FC<Props> = ({ pad }) => (
     />
     {pad.steps.map(step => (
       <React.Fragment key={step.uuid}>
-        <ArrowSpacer src={fatArrow} />
+        <ArrowSpacer />
         {step.step_type === StepType.WORD_TO_DRAWING ? (
           <DrawingRecap drawing={step.drawing} playerName={step.player.name} />
         ) : (

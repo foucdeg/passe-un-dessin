@@ -3,7 +3,6 @@ import { useSelector } from 'redux/useSelector';
 import { selectRoom } from 'redux/Room/selectors';
 import PlayerChip from 'atoms/PlayerChip';
 
-import crossIcon from 'assets/cross.svg';
 import { Player } from 'redux/Player/types';
 import Modal from 'components/Modal';
 import { useRemovePlayer } from 'redux/Room/hooks';
@@ -73,8 +72,7 @@ const AdminModal: React.FC<Props> = ({ isOpen, onClose }) => {
       <StyledPlayerChips>
         {room?.players.map(player => (
           <PlayerChip key={player.uuid} color={player.color}>
-            {player.name}{' '}
-            <StyledCrossIcon src={crossIcon} alt="Remove" onClick={() => onPlayerClick(player)} />
+            {player.name} <StyledCrossIcon alt="Remove" onClick={() => onPlayerClick(player)} />
           </PlayerChip>
         ))}
       </StyledPlayerChips>
