@@ -7,7 +7,6 @@ const StaticInput = styled.div`
   border-radius: 16px;
   padding: 14px 24px;
   width: 100%;
-  margin-bottom: 8px;
   text-align: left;
 `;
 

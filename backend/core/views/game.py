@@ -52,6 +52,12 @@ def save_pad(request, uuid):
     except Pad.DoesNotExist:
         return HttpResponseBadRequest("Pad with uuid %s does not exist" % uuid)
 
+    if sentence is None or sentence == "":
+        return HttpResponseBadRequest("Invalid empty sentence")
+
+    if pad.sentence is not None:
+        return HttpResponseBadRequest("Pad with uuid %s already saved" % uuid)
+
     pad.sentence = sentence
     pad.save()
 
@@ -90,14 +96,26 @@ def save_step(request, uuid):
 
     try:
         sentence = json_body["sentence"]
-        if sentence == '':
+        if sentence is None or sentence == "":
             return HttpResponseBadRequest("Sentence should not be empty")
+
+        if step.sentence is not None:
+            return HttpResponseBadRequest(
+                "Step with uuid %s already has a sentence" % uuid
+            )
+
         step.sentence = sentence
     except KeyError:
         try:
             drawing = json_body["drawing"]
-            if drawing == '':
+            if drawing is None or drawing == "":
                 return HttpResponseBadRequest("Drawing should not be empty")
+
+            if step.drawing is not None:
+                return HttpResponseBadRequest(
+                    "Step with uuid %s already has a drawing" % uuid
+                )
+
             step.drawing = drawing
         except KeyError:
             return HttpResponseBadRequest("Provide either sentence or drawing!")

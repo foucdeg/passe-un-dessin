@@ -45,14 +45,19 @@ export const useStartGame = () => {
 
   return useCallback(
     async (roomId: string, roundDuration?: number, playersOrder?: string[] | null) => {
-      const { game_id: gameId } = await client.put(`/room/${roomId}/start`, {
-        roundDuration,
-        playersOrder,
-      });
-      if (roundDuration) {
-        localStorage.setItem('preferredRoundDuration', roundDuration.toString());
+      try {
+        const { game_id: gameId } = await client.put(`/room/${roomId}/start`, {
+          roundDuration,
+          playersOrder,
+        });
+        if (roundDuration) {
+          localStorage.setItem('preferredRoundDuration', roundDuration.toString());
+        }
+        history.push(`/room/${roomId}/game/${gameId}`);
+      } catch (e) {
+        alert('Error - see console');
+        console.error(e);
       }
-      history.push(`/room/${roomId}/game/${gameId}`);
     },
     [history],
   );
@@ -63,8 +68,13 @@ export const useSavePad = () => {
 
   return useCallback(
     async (pad: Pad, sentence: string) => {
-      const updatedPad = await client.put(`/pad/${pad.uuid}/save`, { sentence });
-      dispatch(updatePad(updatedPad));
+      try {
+        const updatedPad = await client.put(`/pad/${pad.uuid}/save`, { sentence });
+        dispatch(updatePad(updatedPad));
+      } catch (e) {
+        alert('Error - see console');
+        console.error(e);
+      }
     },
     [dispatch],
   );

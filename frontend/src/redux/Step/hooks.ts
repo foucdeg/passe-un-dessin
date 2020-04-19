@@ -17,9 +17,25 @@ export const useFetchStep = () => {
 };
 
 export const useSaveStepDrawing = () => {
-  return useCallback(async (step: PadStep, drawing: string) => {
-    await client.put(`/pad-step/${step.uuid}/save`, { drawing });
-  }, []);
+  const dispatch = useDispatch();
+
+  return useCallback(
+    async (step: PadStep, drawing: string) => {
+      try {
+        await client.put(`/pad-step/${step.uuid}/save`, { drawing });
+        dispatch(
+          updateStep({
+            ...step,
+            drawing,
+          }),
+        );
+      } catch (e) {
+        alert('Error - see console');
+        console.error(e);
+      }
+    },
+    [dispatch],
+  );
 };
 
 export const useSaveStepSentence = () => {
@@ -27,13 +43,18 @@ export const useSaveStepSentence = () => {
 
   return useCallback(
     async (step: PadStep, sentence: string) => {
-      await client.put(`/pad-step/${step.uuid}/save`, { sentence });
-      dispatch(
-        updateStep({
-          ...step,
-          sentence,
-        }),
-      );
+      try {
+        await client.put(`/pad-step/${step.uuid}/save`, { sentence });
+        dispatch(
+          updateStep({
+            ...step,
+            sentence,
+          }),
+        );
+      } catch (e) {
+        alert('Error - see console');
+        console.error(e);
+      }
     },
     [dispatch],
   );
