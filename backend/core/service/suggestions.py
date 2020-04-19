@@ -5,14 +5,14 @@ from django.core.files import File
 
 class SuggestionEngine:
     class __SuggestionEngine:
-        words = []
+        words = {"en": [], "fr": []}
 
-        def load(self, file_to_load: File):
+        def load(self, language: str, file_to_load: File):
             for suggestion in file_to_load:
-                self.words.append(suggestion.strip())
+                self.words[language].append(suggestion.strip())
 
-        def get_random(self, count: int):
-            return random.choices(self.words, k=count)
+        def get_random(self, language: str, count: int):
+            return random.choices(self.words[language], k=count)
 
     instance = None
 

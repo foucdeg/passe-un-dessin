@@ -10,6 +10,7 @@ import { selectPlayer } from 'redux/Player/selectors';
 import { selectRoom } from 'redux/Room/selectors';
 import { getRedirectPath } from 'services/game.service';
 import { DEFAULT_ROUND_DURATION } from './constants';
+import { useIntl } from 'react-intl';
 
 export const useFetchGame = () => {
   const dispatch = useDispatch();
@@ -25,11 +26,12 @@ export const useFetchGame = () => {
 
 export const useGetSuggestions = () => {
   const dispatch = useDispatch();
+  const intl = useIntl();
 
   return useCallback(async () => {
-    const { suggestions } = await client.get(`/suggestions`);
+    const { suggestions } = await client.get(`/suggestions?language=${intl.locale}`);
     dispatch(setSuggestions(suggestions));
-  }, [dispatch]);
+  }, [dispatch, intl.locale]);
 };
 
 export const useRefreshGame = () => {

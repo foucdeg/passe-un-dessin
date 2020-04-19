@@ -45,6 +45,7 @@ export const CanvasWrapper = styled.div`
 CanvasWrapper.displayName = 'CanvasWrapper';
 
 export const StyledHeader = styled(Header2)`
+  color: ${colorPalette.purple};
   margin-bottom: 8px;
 `;
 
