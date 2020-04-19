@@ -21,6 +21,7 @@ import { FormattedMessage } from 'react-intl';
 import { selectGame } from 'redux/Game/selectors';
 import { useSelector } from 'redux/useSelector';
 import { Spacer } from 'atoms/Spacer';
+import CanvasActions from 'components/CanvasActions';
 
 interface Props {
   padStep: PadStep;
@@ -76,6 +77,14 @@ const WordToDrawingStep: React.FC<Props> = ({ padStep, previousPlayer, saveStep 
     };
   }, [saveDrawing, drawingPadRef, game]);
 
+  const handleUndo = () => {
+    drawingPadRef.current?.undo();
+  };
+
+  const handleClear = () => {
+    drawingPadRef.current?.clear();
+  };
+
   if (!game) return null;
   if (!previousPlayer) return null;
 
@@ -92,6 +101,7 @@ const WordToDrawingStep: React.FC<Props> = ({ padStep, previousPlayer, saveStep 
             canvasHeight={538}
             brushRadius={brushThickness}
           />
+          <CanvasActions onClear={handleClear} onUndo={handleUndo} />
           <BrushTypePicker brushType={brushType} setBrushType={setBrushType} />
           <BrushColorPicker color={color} setColor={setBrushColor} />
         </CanvasWrapper>
