@@ -31,7 +31,7 @@ export const useGetSuggestions = () => {
 
   return useCallback(async () => {
     const [, { suggestions }] = (await Promise.all([
-      wait(2000),
+      wait(1000),
       client.get(`/suggestions?language=${intl.locale}`),
     ])) as [void, { suggestions: string[] }];
     dispatch(setSuggestions(suggestions));

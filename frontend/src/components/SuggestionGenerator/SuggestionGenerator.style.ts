@@ -30,11 +30,11 @@ export const Dice = styled.img.attrs({ src: diceImage })`
   cursor: pointer;
 
   &.toggled-a {
-    animation: roll-one 2s 1;
+    animation: roll-one 1s 1;
   }
 
   &.toggled-b {
-    animation: roll-two 2s 1;
+    animation: roll-two 1s 1;
   }
 
   @keyframes roll-one {
