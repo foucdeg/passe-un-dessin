@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from rest_framework.generics import UpdateAPIView
 
 from core.models import Player
 from core.serializers import PlayerSerializer
@@ -16,3 +17,9 @@ def get_me(request):
 
     except (KeyError, Player.DoesNotExist):
         return HttpResponse(status=401)
+
+
+class PlayerEditAPIView(UpdateAPIView):
+    lookup_field = "uuid"
+    queryset = Player.objects.all()
+    serializer_class = PlayerSerializer

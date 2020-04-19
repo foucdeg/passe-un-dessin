@@ -12,20 +12,30 @@ export const PadInitContainer = styled.div`
   height: 100%;
 `;
 
+PadInitContainer.displayName = 'PadInitContainer';
+
 export const StyledForm = styled.form`
   width: 400px;
   margin-bottom: 8px;
 `;
 
+StyledForm.displayName = 'StyledForm';
+
 export const StyledTextInput = styled(TextInput)`
   border-color: ${colorPalette.orange};
 `;
+
+StyledTextInput.displayName = 'StyledTextInput';
 
 export const StyledHeader = styled(Header2)`
   color: ${colorPalette.purple};
   margin-bottom: 8px;
 `;
 
+StyledHeader.displayName = 'StyledHeader';
+
 export const InputArrow = styled.img.attrs({ src: arrowRight })`
   cursor: pointer;
 `;
+
+InputArrow.displayName = 'InputArrow';

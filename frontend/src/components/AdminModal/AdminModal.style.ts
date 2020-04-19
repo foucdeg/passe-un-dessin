@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Header2 from 'atoms/Header2';
 import PlayerChips from 'atoms/PlayerChips';
 import crossIcon from 'assets/cross.svg';
+import { colorPalette } from 'stylesheet';
 
 export const ButtonRow = styled.div`
   display: flex;
@@ -13,6 +14,7 @@ export const ButtonRow = styled.div`
 ButtonRow.displayName = 'ButtonRow';
 
 export const StyledHeader = styled(Header2)`
+  color: ${colorPalette.purple};
   margin-bottom: 16px;
 `;
 

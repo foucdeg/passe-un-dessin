@@ -5,6 +5,8 @@ import { BrushPickerContainer, ColorBlock } from './BrushColorPicker.style';
 export enum DrawingColor {
   GREEN = '#44962A',
   BLUE = '#0023F5',
+  SKYBLUE = '#4acfff',
+  BEIGE = '#FFE2B0',
   YELLOW = '#FFCF25',
   ORANGE = '#F29D39',
   BROWN = '#9C5127',

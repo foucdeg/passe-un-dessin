@@ -20,7 +20,7 @@ import { BrushType } from 'components/BrushTypePicker/BrushTypePicker';
 import { FormattedMessage } from 'react-intl';
 import { selectGame } from 'redux/Game/selectors';
 import { useSelector } from 'redux/useSelector';
-import { Spacer } from 'atoms/Spacer';
+import Spacer from 'atoms/Spacer';
 import CanvasActions from 'components/CanvasActions';
 
 interface Props {

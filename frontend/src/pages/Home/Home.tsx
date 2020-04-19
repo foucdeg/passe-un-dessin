@@ -19,7 +19,7 @@ import { useLocation } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 
 import ruleBackgrounds from 'assets/rule-backgrounds';
-import { Spacer } from 'atoms/Spacer';
+import Spacer from 'atoms/Spacer';
 
 const Home: React.FunctionComponent = () => {
   const doCreateRoom = useCreateRoom();

@@ -28,6 +28,7 @@
   "menu": {
     "startMusic": "Resume music",
     "stopMusic": "Stop music",
+    "playerMenu": "Player",
     "adminMenu": "Admin window",
     "refresh": "Resynchronize"
   },
@@ -97,5 +98,10 @@
     "emailExample": "myemail@aol.fr",
     "emailSubject": "My link to Draw Around",
     "emailBody": "Link : {link}\n\nSee you soon!"
+  },
+  "playerModal": {
+    "title": "Player",
+    "username": "Player Name",
+    "submit": "Submit"
   }
 }

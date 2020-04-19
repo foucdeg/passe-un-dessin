@@ -10,7 +10,7 @@ import {
 import { FormattedMessage, useIntl } from 'react-intl';
 import FieldLabel from 'atoms/FieldLabel';
 import TextInput from 'components/TextInput';
-import { Spacer } from 'atoms/Spacer';
+import Spacer from 'atoms/Spacer';
 
 interface Props {
   children: React.ReactNode;

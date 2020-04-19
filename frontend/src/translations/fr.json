@@ -28,6 +28,7 @@
   "menu": {
     "startMusic": "Lancer le son",
     "stopMusic": "Couper le son",
+    "playerMenu": "Joueur",
     "adminMenu": "Actions d'administration",
     "refresh": "Resynchroniser"
   },
@@ -97,5 +98,10 @@
     "emailExample": "monadresse@wanadoo.fr",
     "emailSubject": "Mon lien vers Passe un Dessin",
     "emailBody": "Lien : {link}\n\nÀ tout de suite !"
+  },
+  "playerModal": {
+    "title": "Joueur",
+    "username": "Nom du joueur",
+    "submit": "Valider"
   }
 }

@@ -18,7 +18,7 @@ import PlayerChip from 'atoms/PlayerChip';
 import StaticInput from 'atoms/StaticInput';
 import { selectRemainingPlayers } from 'redux/Game/selectors';
 import { useIntl, FormattedMessage } from 'react-intl';
-import { Spacer } from 'atoms/Spacer';
+import Spacer from 'atoms/Spacer';
 
 interface Props {
   padStep: PadStep;

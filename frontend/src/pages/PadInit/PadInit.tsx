@@ -17,7 +17,7 @@ import StaticInput from 'atoms/StaticInput';
 import { selectGame, selectRemainingPlayers } from 'redux/Game/selectors';
 import { selectPlayer } from 'redux/Player/selectors';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Spacer } from 'atoms/Spacer';
+import Spacer from 'atoms/Spacer';
 import SuggestionGenerator from 'components/SuggestionGenerator';
 
 const PadInit: React.FunctionComponent = () => {
