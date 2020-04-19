@@ -7,10 +7,11 @@
     "startRoom": "Lancer une partie",
     "joinExistingRoom": "Pour rejoindre une partie, l'organisateur doit t'envoyer le lien.",
     "rules": {
-      "0": "Pour jouer, vous devez être à partir de 4 joueurs.",
-      "1": "Choisis un mot que la personne après toi devra dessiner. La partie commence quand tout le monde a choisi un mot.",
-      "2": "Dessine le mot proposé ou devine ce que la personne a dessiné.",
-      "3": "Quand tout le monde a pu dessiner chacun des mots, on passe aux carnets de résultats ! <strong>Regarde ce que sont devenus les mots choisis</strong> initialement par tes amis avec les talents de certains pour le dessin."
+      "0": "Assure-toi d'avoir une <strong>connexion Internet stable</strong> et <strong>suffisament de batterie</strong> sur ton appareil.",
+      "1": "Pour jouer, vous devez être à partir de 4 joueurs.",
+      "2": "Choisis un mot que la personne après toi devra dessiner. La partie commence quand tout le monde a choisi un mot.",
+      "3": "Dessine le mot proposé ou devine ce que la personne a dessiné.",
+      "4": "Quand tout le monde a pu dessiner chacun des mots, on passe aux carnets de résultats ! <strong>Regarde ce que sont devenus les mots choisis</strong> initialement par tes amis avec les talents de certains pour le dessin."
     }
   },
   "roomLobby": {
