@@ -1,6 +1,6 @@
 import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
-import { updateGame, updatePad } from './slice';
+import { updateGame, updatePad, setSuggestions } from './slice';
 import { Pad } from './types';
 import { useCallback, useState } from 'react';
 import { useHistory } from 'react-router';
@@ -21,6 +21,15 @@ export const useFetchGame = () => {
     },
     [dispatch],
   );
+};
+
+export const useGetSuggestions = () => {
+  const dispatch = useDispatch();
+
+  return useCallback(async () => {
+    const { suggestions } = await client.get(`/suggestions`);
+    dispatch(setSuggestions(suggestions));
+  }, [dispatch]);
 };
 
 export const useRefreshGame = () => {

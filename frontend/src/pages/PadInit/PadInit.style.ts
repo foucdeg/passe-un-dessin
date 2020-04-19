@@ -3,6 +3,7 @@ import TextInput from 'components/TextInput';
 import { colorPalette } from 'stylesheet';
 import Header2 from 'atoms/Header2';
 import arrowRight from 'assets/arrow-right.svg';
+import PlayerChip from 'atoms/PlayerChip';
 
 export const PadInitContainer = styled.div`
   display: flex;
@@ -26,5 +27,9 @@ export const StyledHeader = styled(Header2)`
 `;
 
 export const InputArrow = styled.img.attrs({ src: arrowRight })`
+  cursor: pointer;
+`;
+
+export const SuggestionChip = styled(PlayerChip)`
   cursor: pointer;
 `;

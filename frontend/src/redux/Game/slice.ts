@@ -5,9 +5,10 @@ import { Player } from 'redux/Player/types';
 export type GameState = Readonly<{
   game: Game | null;
   remainingPlayers: Player[];
+  suggestions: string[];
 }>;
 
-const initialState: GameState = { game: null, remainingPlayers: [] } as GameState;
+const initialState: GameState = { game: null, remainingPlayers: [], suggestions: [] } as GameState;
 
 const gameSlice = createSlice({
   name: 'Game',
@@ -42,6 +43,9 @@ const gameSlice = createSlice({
         remPlayer => remPlayer.uuid !== action.payload.uuid,
       );
     },
+    setSuggestions: (state, action: PayloadAction<string[]>) => {
+      state.suggestions = action.payload;
+    },
   },
 });
 
@@ -51,5 +55,6 @@ export const {
   startRound,
   startDebrief,
   markPlayerFinished,
+  setSuggestions,
 } = gameSlice.actions;
 export default gameSlice.reducer;
