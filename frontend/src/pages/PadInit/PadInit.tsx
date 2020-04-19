@@ -2,28 +2,27 @@ import React, { useState } from 'react';
 import { useSelector } from 'redux/useSelector';
 import { useParams } from 'react-router';
 
-import { useSavePad, useGetSuggestions } from 'redux/Game/hooks';
+import { useSavePad } from 'redux/Game/hooks';
 import {
   StyledHeader,
   PadInitContainer,
   StyledTextInput,
   StyledForm,
   InputArrow,
-  SuggestionChip,
 } from './PadInit.style';
 import PlayerChip from 'atoms/PlayerChip';
 import { StyledPlayerChips } from 'components/DrawingToWordStep/DrawingToWordStep.style';
 
 import StaticInput from 'atoms/StaticInput';
-import { selectGame, selectRemainingPlayers, selectSuggestions } from 'redux/Game/selectors';
+import { selectGame, selectRemainingPlayers } from 'redux/Game/selectors';
 import { selectPlayer } from 'redux/Player/selectors';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Spacer } from 'atoms/Spacer';
+import SuggestionGenerator from 'components/SuggestionGenerator';
 
 const PadInit: React.FunctionComponent = () => {
   const { padId } = useParams();
   const game = useSelector(selectGame);
-  const suggestions = useSelector(selectSuggestions);
 
   const player = useSelector(selectPlayer);
   const remainingPlayers = useSelector(selectRemainingPlayers);
@@ -31,7 +30,6 @@ const PadInit: React.FunctionComponent = () => {
 
   const [sentence, setSentence] = useState<string>('');
   const doSavePad = useSavePad();
-  const doGetSuggestions = useGetSuggestions();
 
   const pad = game?.pads.find(pad => pad.uuid === padId);
 
@@ -86,12 +84,7 @@ const PadInit: React.FunctionComponent = () => {
           />
         </p>
       )}
-      <button onClick={doGetSuggestions}>Pas inspiré ?</button>
-      {suggestions.map(suggestion => (
-        <SuggestionChip key={suggestion} onClick={() => setSentence(suggestion)}>
-          {suggestion}
-        </SuggestionChip>
-      ))}
+      <SuggestionGenerator onSuggestionClick={setSentence} />
       <Spacer />
       <em>
         <FormattedMessage id="padInit.waitingFor" />

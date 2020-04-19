@@ -35,7 +35,8 @@
     "placeholder": "A giraffe?",
     "youDraw": "Choose wisely, <strong>you</strong>'ll have to draw this!",
     "waitingFor": "Waiting for these guys to finish:",
-    "nextPlayer": "Let's just hope <strong>{name}</strong> can draw..."
+    "nextPlayer": "Let's just hope <strong>{name}</strong> can draw...",
+    "getSuggestions": "Lacking imagination? Roll the dice!"
   },
   "wordToDrawing": {
     "sentenceToDraw": "Sentence to draw:",

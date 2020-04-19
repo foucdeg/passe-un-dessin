@@ -12,6 +12,10 @@ export const PlayerChip = styled.div<{ color?: string }>`
   line-height: 19px;
   display: flex;
   align-items: flex-end;
+
+  &:last-child {
+    margin-right: 0;
+  }
 `;
 
 PlayerChip.displayName = 'PlayerChip';
