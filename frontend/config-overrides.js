@@ -30,14 +30,6 @@ module.exports = {
       }),
     );
 
-    switch (env) {
-      case 'development':
-        config.output.publicPath = 'http://localhost:3000/';
-        break;
-      default:
-        break;
-    }
-
     return config;
   },
   devServer: function(configFunction) {
