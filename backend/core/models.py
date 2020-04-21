@@ -167,6 +167,11 @@ class PadStep(BaseModel):
     drawing = models.TextField(null=True, blank=True)
 
 
+class Vote(BaseModel):
+    pad_step = models.ForeignKey(PadStep, on_delete=models.CASCADE, related_name="votes")
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+
+
 @receiver(models.signals.pre_save, sender=Player)
 def pick_color(sender, **kwargs):
     instance = kwargs["instance"]
