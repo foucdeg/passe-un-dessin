@@ -3,7 +3,6 @@ import { useSelector } from 'redux/useSelector';
 import { selectGame } from 'redux/Game/selectors';
 import { selectPlayer } from 'redux/Player/selectors';
 import { getReorderedPlayers } from 'services/game.service';
-import { FormattedMessage } from 'react-intl';
 import { PlayerOrderContainer, StyledPlayerChip, ArrowSpacer, Variant } from './PlayerOrder.style';
 import { GamePhase } from 'redux/Game/types';
 
@@ -29,13 +28,12 @@ const PlayerOrder: React.FC<{}> = () => {
 
   return (
     <PlayerOrderContainer>
-      <StyledPlayerChip variant={getChipVariant(null)}>
-        <FormattedMessage id="game.padOwner" values={{ name: padOwner.name }} />
-      </StyledPlayerChip>
+      <StyledPlayerChip variant={getChipVariant(null)}>🗒&nbsp;{padOwner.name}</StyledPlayerChip>
       {orderedPlayers.map((orderedPlayer, index) => (
         <React.Fragment key={orderedPlayer.uuid}>
           <ArrowSpacer />
           <StyledPlayerChip variant={getChipVariant(index)} key={orderedPlayer.uuid}>
+            {index % 2 === 0 ? '🎨' : '🖋'}&nbsp;
             {orderedPlayer.name}
           </StyledPlayerChip>
         </React.Fragment>
