@@ -19,6 +19,7 @@ export interface PadStep {
 
   sentence: string;
   drawing: string;
+  votes: Vote[];
 }
 
 export interface Pad {
@@ -37,4 +38,8 @@ export interface Game {
   phase: GamePhase;
   current_round: number | null;
   round_duration: number;
+}
+
+export interface Vote {
+  player: Player;
 }
