@@ -1,6 +1,6 @@
 import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
-import { updateGame, updatePad, setSuggestions } from './slice';
+import { updateGame, updatePad, setSuggestions, updatePadStep } from './slice';
 import { Pad } from './types';
 import { useCallback, useState } from 'react';
 import { useHistory } from 'react-router';
@@ -113,4 +113,38 @@ export const useRoundDuration = (initialValue?: number | null) => {
     : null;
 
   return useState<number>(initialValue || preferredRoundDuration || DEFAULT_ROUND_DURATION);
+};
+
+export const useSaveVote = () => {
+  const dispatch = useDispatch();
+
+  return useCallback(
+    async (padStepId: string) => {
+      try {
+        const updatedStep = await client.post(`/step/${padStepId}/vote`);
+        dispatch(updatePadStep(updatedStep));
+      } catch (e) {
+        alert('Error - see console');
+        console.error(e);
+      }
+    },
+    [dispatch],
+  );
+};
+
+export const useDeleteVote = () => {
+  const dispatch = useDispatch();
+
+  return useCallback(
+    async (padStepId: string) => {
+      try {
+        const updatedStep = await client.delete(`/step/${padStepId}/unvote`);
+        dispatch(updatePadStep(updatedStep));
+      } catch (e) {
+        alert('Error - see console');
+        console.error(e);
+      }
+    },
+    [dispatch],
+  );
 };

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Game, Pad, GamePhase } from './types';
+import { Game, Pad, GamePhase, PadStep } from './types';
 import { Player } from 'redux/Player/types';
 
 export type GameState = Readonly<{
@@ -41,6 +41,20 @@ const gameSlice = createSlice({
 
       state.game.pads[matchingPadIndex] = action.payload;
     },
+    updatePadStep: (state, action: PayloadAction<PadStep>) => {
+      if (!state.game) return;
+
+      const matchingPadIndex = state.game?.pads.findIndex(pad =>
+        pad.steps.find(step => step.uuid === action.payload.uuid),
+      );
+      if (matchingPadIndex === undefined) return;
+
+      const matchingPadStepIndex = state.game?.pads[matchingPadIndex].steps.findIndex(
+        step => step.uuid === action.payload.uuid,
+      );
+
+      state.game.pads[matchingPadIndex].steps[matchingPadStepIndex] = action.payload;
+    },
     startRound: (state, action: PayloadAction<{ roundNumber?: number }>) => {
       if (!state.game) return;
 
@@ -74,5 +88,6 @@ export const {
   markPlayerFinished,
   setSuggestions,
   setPlayerViewingPad,
+  updatePadStep,
 } = gameSlice.actions;
 export default gameSlice.reducer;
