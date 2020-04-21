@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { colorPalette } from 'stylesheet';
 
-export const PlayerChip = styled.div<{ color?: string }>`
+const PlayerChip = styled.div<{ color?: string }>`
   color: ${colorPalette.white};
   height: 36px;
   padding: 8px 16px;

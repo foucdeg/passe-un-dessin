@@ -32,6 +32,9 @@
     "adminMenu": "Actions d'administration",
     "refresh": "Resynchroniser"
   },
+  "game": {
+    "padOwner": "Carnet de {name}"
+  },
   "padInit": {
     "chooseSentence": "Choisis un mot ou une phrase :",
     "placeholder": "Une girafe ?",

@@ -1,26 +1,20 @@
 import React, { useEffect, useCallback } from 'react';
-import {
-  GameContainer,
-  InnerGameContainer,
-  PlayerOrder,
-  StyledPlayerChip,
-  ArrowSpacer,
-} from './Game.style';
+import { GameContainer, InnerGameContainer } from './Game.style';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'redux/useSelector';
 
 import { useParams, useHistory, Switch, Route, useRouteMatch, useLocation } from 'react-router';
 import { useFetchGame } from 'redux/Game/hooks';
 
-import { getRedirectPath, getReorderedPlayers } from 'services/game.service';
+import { getRedirectPath } from 'services/game.service';
 import { useServerSentEvent, SERVER_EVENT_TYPES } from 'services/networking/server-events';
 import { startRound, markPlayerFinished } from 'redux/Game';
 import { Credits } from '../Home/Home.style';
-import { colorPalette } from 'stylesheet';
 import { GamePhase } from 'redux/Game/types';
 import { selectRoom } from 'redux/Room/selectors';
 import { selectGame } from 'redux/Game/selectors';
 import { selectPlayer } from 'redux/Player/selectors';
+import PlayerOrder from 'components/PlayerOrder';
 
 const PadInit = React.lazy(() => import('../PadInit'));
 const PadStep = React.lazy(() => import('../PadStep'));
@@ -104,26 +98,10 @@ const Game: React.FunctionComponent = () => {
 
   if (!game || !player) return null;
 
-  const reorderedPlayers = getReorderedPlayers(game, player);
-
   return (
     <GameContainer>
       <InnerGameContainer hasTabs={game.phase === GamePhase.DEBRIEF}>
-        {game.phase !== GamePhase.DEBRIEF && (
-          <PlayerOrder>
-            <StyledPlayerChip color={colorPalette.whiteTransparent}>toi</StyledPlayerChip>
-            <ArrowSpacer />
-            {reorderedPlayers.map(orderedPlayer => (
-              <React.Fragment key={orderedPlayer.uuid}>
-                <StyledPlayerChip color={colorPalette.whiteTransparent} key={orderedPlayer.uuid}>
-                  {orderedPlayer.name}
-                </StyledPlayerChip>
-                <ArrowSpacer />
-              </React.Fragment>
-            ))}
-            <StyledPlayerChip color={colorPalette.whiteTransparent}>toi</StyledPlayerChip>
-          </PlayerOrder>
-        )}
+        {game.phase !== GamePhase.DEBRIEF && <PlayerOrder />}
         <Switch>
           <Route path={`${path}/pad/:padId/init`} component={PadInit} />
           <Route path={`${path}/step/:stepId`} component={PadStep} />

@@ -60,10 +60,18 @@ export const getPreviousNextPlayers = (game: Game, player: Player): PreviousNext
 };
 
 export const getReorderedPlayers = (game: Game, player: Player): Player[] => {
-  const copiedPlayers = [...game.players];
+  const currentPlayerPad = game.pads.find(pad =>
+    game.phase === GamePhase.INIT
+      ? pad.initial_player.uuid === player.uuid
+      : pad.steps.some(
+          step => step.round_number === game.current_round && step.player.uuid === player.uuid,
+        ),
+  );
+  if (!currentPlayerPad) {
+    throw new Error(
+      `Step for player ${player.uuid} and round ${game.current_round} not found in game ${game.uuid}`,
+    );
+  }
 
-  const playerIndex = copiedPlayers.findIndex(gamePlayer => gamePlayer.uuid === player.uuid);
-  const playersBefore = copiedPlayers.splice(0, playerIndex);
-  copiedPlayers.shift();
-  return [...copiedPlayers, ...playersBefore];
+  return [currentPlayerPad.initial_player, ...currentPlayerPad.steps.map(step => step.player)];
 };
