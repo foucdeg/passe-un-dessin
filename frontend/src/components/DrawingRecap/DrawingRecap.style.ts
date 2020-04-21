@@ -20,3 +20,14 @@ export const SentenceHeader = styled.div`
 `;
 
 SentenceHeader.displayName = 'SentenceHeader';
+
+export const LikeEmoji = styled.span`
+  opacity: ${({ liked }: { liked: boolean }) => (liked ? 1 : 0.5)};
+  cursor: pointer;
+
+  :hover {
+    opacity: 1;
+  }
+`;
+
+LikeEmoji.displayName = 'LikeEmoji';
