@@ -39,7 +39,8 @@ export const CanvasWrapper = styled.div`
 
   /* canvas border */
   & > :first-child {
-    border: 2px solid ${colorPalette.textGrey};
+    border: 2px solid
+      ${({ liked }: { liked?: boolean }) => (liked ? colorPalette.red : colorPalette.textGrey)};
     border-radius: 16px;
   }
 `;
