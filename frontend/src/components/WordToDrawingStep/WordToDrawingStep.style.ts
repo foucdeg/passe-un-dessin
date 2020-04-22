@@ -34,13 +34,12 @@ export const Gutter = styled.div`
 `;
 RightSide.displayName = 'RightSide';
 
-export const CanvasWrapper = styled.div`
+export const CanvasWrapper = styled.div<{ liked?: boolean }>`
   position: relative;
 
   /* canvas border */
   & > :first-child {
-    border: 2px solid
-      ${({ liked }: { liked?: boolean }) => (liked ? colorPalette.red : colorPalette.textGrey)};
+    border: 2px solid ${({ liked }) => (liked ? colorPalette.red : colorPalette.textGrey)};
     border-radius: 16px;
   }
 `;

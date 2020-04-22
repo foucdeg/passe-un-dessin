@@ -21,8 +21,8 @@ export const SentenceHeader = styled.div`
 
 SentenceHeader.displayName = 'SentenceHeader';
 
-export const LikeEmoji = styled.span`
-  opacity: ${({ liked }: { liked: boolean }) => (liked ? 1 : 0.5)};
+export const LikeEmoji = styled.span<{ liked: boolean }>`
+  opacity: ${({ liked }) => (liked ? 1 : 0.5)};
   cursor: pointer;
 
   :hover {
