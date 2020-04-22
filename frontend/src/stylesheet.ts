@@ -17,6 +17,7 @@ export const colorPalette = {
   amberLight: '#FFD54F',
   amber: '#FFC107',
   orange: '#F68D4F',
+  blue: '#38cdff',
   blueLight: '#F4F9FB',
   white: '#FFFFFF',
   red: '#FF7373',
