@@ -2,12 +2,12 @@ import json
 import logging
 
 from django.db import transaction
-from django.http import HttpResponseBadRequest, JsonResponse
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django_eventstream import send_event
 from rest_framework.generics import RetrieveAPIView
 
-from core.messages import PlayerFinishedMessage
-from core.models import Game, Pad, PadStep
+from core.messages import PlayerFinishedMessage, PlayerViewingPadMessage
+from core.models import Game, Pad, PadStep, Player
 from core.serializers import GameSerializer, PadSerializer, PadStepSerializer
 from core.service.game_service import start_next_round, switch_to_rounds
 
@@ -140,3 +140,27 @@ def save_step(request, uuid):
 
     data = PadStepSerializer(step).data
     return JsonResponse(data)
+
+
+def review_pad(request, uuid):
+    if request.method != "PUT":
+        return HttpResponseBadRequest("PUT expected")
+
+    try:
+        player_id = request.session["player_id"]
+        player = Player.objects.get(uuid=player_id)
+    except (KeyError, Player.DoesNotExist):
+        return HttpResponseBadRequest("No player ID in session, or invalid")
+
+    try:
+        pad = Pad.objects.get(uuid=uuid)
+        game = pad.game
+    except Pad.DoesNotExist:
+        return HttpResponseBadRequest("Pad with uuid %s does not exist" % uuid)
+
+    send_event(
+        "game-%s" % game.uuid.hex,
+        "message",
+        PlayerViewingPadMessage(pad, player).serialize(),
+    )
+    return HttpResponse(status=201)

@@ -20,6 +20,7 @@ urlpatterns = [
     path("game/<str:uuid>", game.GameRetrieveAPIView.as_view(), name="get_game"),
     path("pad/<str:uuid>", game.PadRetrieveAPIView.as_view(), name="get_pad"),
     path("pad/<str:uuid>/save", game.save_pad, name="save_pad"),
+    path("pad/<str:uuid>/review", game.review_pad, name="review_pad"),
     path(
         "pad-step/<str:uuid>",
         game.PadStepRetrieveAPIView.as_view(),
