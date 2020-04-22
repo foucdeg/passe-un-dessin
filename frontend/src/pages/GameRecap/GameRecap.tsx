@@ -6,7 +6,6 @@ import {
   GameRecapContainer,
   InnerDoneModal,
   PadTabsRow,
-  PadTab,
   TopRightButton,
   StyledHeader,
   TopRightButtons,
