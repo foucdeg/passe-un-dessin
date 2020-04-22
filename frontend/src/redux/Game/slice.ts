@@ -44,12 +44,12 @@ const gameSlice = createSlice({
     updatePadStep: (state, action: PayloadAction<PadStep>) => {
       if (!state.game) return;
 
-      const matchingPadIndex = state.game?.pads.findIndex(pad =>
+      const matchingPadIndex = state.game.pads.findIndex(pad =>
         pad.steps.find(step => step.uuid === action.payload.uuid),
       );
       if (matchingPadIndex === undefined) return;
 
-      const matchingPadStepIndex = state.game?.pads[matchingPadIndex].steps.findIndex(
+      const matchingPadStepIndex = state.game.pads[matchingPadIndex].steps.findIndex(
         step => step.uuid === action.payload.uuid,
       );
 
