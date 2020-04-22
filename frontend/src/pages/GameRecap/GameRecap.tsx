@@ -20,6 +20,8 @@ import { selectRoom, selectPlayerIsAdmin } from 'redux/Room/selectors';
 import { selectGame } from 'redux/Game/selectors';
 import NewGameModal from 'components/NewGameModal';
 import { FormattedMessage } from 'react-intl';
+import { useReviewPad } from 'redux/Game/hooks';
+import PadTab from 'components/PadTab';
 
 const GameRecap: React.FunctionComponent = () => {
   const room = useSelector(selectRoom);
@@ -32,6 +34,7 @@ const GameRecap: React.FunctionComponent = () => {
   const [doneModalIsOpen, setDoneModalIsOpen] = useState<boolean>(true);
 
   const doLeaveRoom = useLeaveRoom();
+  const doReviewPad = useReviewPad();
 
   useEffect(() => {
     if (!game) return;
@@ -45,6 +48,11 @@ const GameRecap: React.FunctionComponent = () => {
     history.push('/');
   };
 
+  const selectPad = (pad: Pad) => {
+    doReviewPad(pad);
+    setDisplayedPad(pad);
+  };
+
   return (
     <>
       <OuterRecapContainer>
@@ -53,10 +61,9 @@ const GameRecap: React.FunctionComponent = () => {
             <PadTab
               key={pad.uuid}
               isActive={displayedPad === pad}
-              onClick={() => setDisplayedPad(pad)}
-            >
-              {pad.initial_player.name}
-            </PadTab>
+              onClick={() => selectPad(pad)}
+              pad={pad}
+            />
           ))}
         </PadTabsRow>
         <GameRecapContainer>{displayedPad && <PadRecap pad={displayedPad} />}</GameRecapContainer>

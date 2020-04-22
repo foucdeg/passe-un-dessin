@@ -95,6 +95,17 @@ export const useSavePad = () => {
   );
 };
 
+export const useReviewPad = () => {
+  return useCallback(async (pad: Pad) => {
+    try {
+      await client.put(`/pad/${pad.uuid}/review`, {});
+    } catch (e) {
+      alert('Error - see console');
+      console.error(e);
+    }
+  }, []);
+};
+
 export const useRoundDuration = (initialValue?: number | null) => {
   const preferredRoundDurationStr = localStorage.getItem('preferredRoundDuration');
   const preferredRoundDuration = preferredRoundDurationStr
