@@ -33,7 +33,7 @@ const PlayerOrder: React.FC<{}> = () => {
         <React.Fragment key={orderedPlayer.uuid}>
           <ArrowSpacer />
           <StyledPlayerChip variant={getChipVariant(index)} key={orderedPlayer.uuid}>
-            {index % 2 === 0 ? '🎨' : '🖋'}&nbsp;
+            {index % 2 === 0 ? '🎨' : '🤔'}&nbsp;
             {orderedPlayer.name}
           </StyledPlayerChip>
         </React.Fragment>
