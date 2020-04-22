@@ -37,9 +37,7 @@ export const ViewersContainer = styled.div`
 
 ViewersContainer.displayName = ViewersContainer;
 
-export const ViewerEye = styled(EyeIcon).attrs(props => ({ title: props.title }))<{
-  color: string;
-}>`
+export const ViewerEye = styled(EyeIcon)<{ color: string }>`
   margin-right: 4px;
   &:last-child {
     margin-right: 0;
