@@ -127,7 +127,7 @@ export const useDeleteVote = () => {
   return useCallback(
     async (padStepId: string) => {
       try {
-        const updatedStep = await client.delete(`/step/${padStepId}/unvote`);
+        const updatedStep = await client.delete(`/step/${padStepId}/vote`);
         dispatch(updatePadStep(updatedStep));
       } catch (e) {
         alert('Error - see console');

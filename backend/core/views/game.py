@@ -141,57 +141,34 @@ def save_step(request, uuid):
     data = PadStepSerializer(step).data
     return JsonResponse(data)
 
-def save_vote(request, pad_step_id):
-    if request.method != "POST":
-        return HttpResponseBadRequest("POST expected")
-
+def toggle_vote(request, pad_step_id):
     player_id = request.session["player_id"]
     player = Player.objects.get(uuid=player_id)
-
-
-    if not pad_step_id:
-        return HttpResponseBadRequest("pad_step_id has to be sent")
 
     try:
         pad_step = PadStep.objects.get(uuid=pad_step_id)
     except PadStep.DoesNotExist:
         return HttpResponseBadRequest("Pad step with uuid %s does not exist" % pad_step_id)
 
-    try:
-        vote = Vote.objects.get(player=player, pad_step=pad_step)
-        return HttpResponseBadRequest("You already voted for pad_step %s" % pad_step_id)
-    except Vote.DoesNotExist:
-        pass
+    if request.method == "POST":
+        try:
+            vote = Vote.objects.get(player=player, pad_step=pad_step)
+            return HttpResponseBadRequest("You already voted for pad_step %s" % pad_step_id)
+        except Vote.DoesNotExist:
+            Vote.objects.create(player=player, pad_step=pad_step)
 
-    new_vote = Vote.objects.create(player=player, pad_step=pad_step)
+    elif request.method == "DELETE":
+        try:
+            vote = Vote.objects.get(player=player, pad_step=pad_step)
+            vote.delete()
+        except Vote.DoesNotExist:
+            return HttpResponseBadRequest("You didn't vote for pad_step %s" % pad_step_id)
+
+    else:
+        return HttpResponseBadRequest("POST or DELETE method expected")
+
+
+
     pad_step = PadStep.objects.get(uuid=pad_step_id)
-
-    data = PadStepSerializer(pad_step).data
-    return JsonResponse(data)
-
-
-def delete_vote(request, pad_step_id):
-    if request.method != "DELETE":
-        return HttpResponseBadRequest("POST expected")
-
-    player_id = request.session["player_id"]
-    player = Player.objects.get(uuid=player_id)
-
-    if not pad_step_id:
-        return HttpResponseBadRequest("pad_step_id has to be sent")
-
-    try:
-        pad_step = PadStep.objects.get(uuid=pad_step_id)
-    except PadStep.DoesNotExist:
-        return HttpResponseBadRequest("Pad step with uuid %s does not exist" % pad_step_id)
-
-    try:
-        vote = Vote.objects.get(player=player, pad_step=pad_step)
-    except Vote.DoesNotExist:
-        return HttpResponseBadRequest("You didn't vote for pad_step %s" % pad_step_id)
-
-    vote.delete()
-    pad_step = PadStep.objects.get(uuid=pad_step_id)
-
     data = PadStepSerializer(pad_step).data
     return JsonResponse(data)
