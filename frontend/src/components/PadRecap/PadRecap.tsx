@@ -20,7 +20,7 @@ const PadRecap: React.FC<Props> = ({ pad }) => (
       <React.Fragment key={step.uuid}>
         <ArrowSpacer />
         {step.step_type === StepType.WORD_TO_DRAWING ? (
-          <DrawingRecap step={step} />
+          <DrawingRecap step={step} enableVote />
         ) : (
           <SentenceRecap
             sentence={step.sentence}
