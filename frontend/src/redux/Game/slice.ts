@@ -69,6 +69,9 @@ const gameSlice = createSlice({
     setWinners: (state, action: PayloadAction<PadStep[]>) => {
       state.winners = action.payload;
     },
+    resetWinners: state => {
+      state.winners = null;
+    },
   },
 });
 
@@ -81,5 +84,6 @@ export const {
   setSuggestions,
   setWinners,
   updatePadStep,
+  resetWinners,
 } = gameSlice.actions;
 export default gameSlice.reducer;
