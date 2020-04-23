@@ -6,9 +6,15 @@ export type GameState = Readonly<{
   game: Game | null;
   remainingPlayers: Player[];
   suggestions: string[];
+  recapViews: { [padUuid: string]: Player[] };
 }>;
 
-const initialState: GameState = { game: null, remainingPlayers: [], suggestions: [] } as GameState;
+const initialState: GameState = {
+  game: null,
+  remainingPlayers: [],
+  suggestions: [],
+  recapViews: {},
+} as GameState;
 
 const gameSlice = createSlice({
   name: 'Game',
@@ -16,7 +22,17 @@ const gameSlice = createSlice({
   reducers: {
     updateGame: (state, action: PayloadAction<Game | null>) => {
       state.game = action.payload;
-      state.remainingPlayers = state.game?.players || [];
+      if (!state.game) return;
+
+      state.remainingPlayers = state.game.players || [];
+      state.recapViews =
+        state.game.pads.reduce(
+          (acc, pad) => ({ ...acc, [pad.uuid]: [] }),
+          {} as { [padUuid: string]: Player[] },
+        ) || {};
+
+      const firstPadUUID = state.game.pads[0].uuid;
+      state.recapViews[firstPadUUID] = [...state.game.players];
     },
     updatePad: (state, action: PayloadAction<Pad>) => {
       if (!state.game) return;
@@ -32,12 +48,6 @@ const gameSlice = createSlice({
       state.game.current_round = action.payload.roundNumber || 0;
       state.remainingPlayers = state.game.players;
     },
-    startDebrief: (state, action: PayloadAction<{}>) => {
-      if (!state.game) return;
-
-      state.game.phase = GamePhase.DEBRIEF;
-      state.game.current_round = null;
-    },
     markPlayerFinished: (state, action: PayloadAction<Player>) => {
       state.remainingPlayers = state.remainingPlayers.filter(
         remPlayer => remPlayer.uuid !== action.payload.uuid,
@@ -46,6 +56,14 @@ const gameSlice = createSlice({
     setSuggestions: (state, action: PayloadAction<string[]>) => {
       state.suggestions = action.payload;
     },
+    setPlayerViewingPad: (state, action: PayloadAction<{ player: Player; pad: Pad }>) => {
+      for (const padId in state.recapViews) {
+        state.recapViews[padId] = state.recapViews[padId].filter(
+          viewer => viewer.uuid !== action.payload.player.uuid,
+        );
+      }
+      state.recapViews[action.payload.pad.uuid].push(action.payload.player);
+    },
   },
 });
 
@@ -53,8 +71,8 @@ export const {
   updateGame,
   updatePad,
   startRound,
-  startDebrief,
   markPlayerFinished,
   setSuggestions,
+  setPlayerViewingPad,
 } = gameSlice.actions;
 export default gameSlice.reducer;

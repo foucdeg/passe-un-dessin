@@ -8,7 +8,7 @@ import { useFetchGame } from 'redux/Game/hooks';
 
 import { getRedirectPath } from 'services/game.service';
 import { useServerSentEvent, SERVER_EVENT_TYPES } from 'services/networking/server-events';
-import { startRound, markPlayerFinished } from 'redux/Game';
+import { startRound, markPlayerFinished, setPlayerViewingPad } from 'redux/Game';
 import { Credits } from '../Home/Home.style';
 import { GamePhase } from 'redux/Game/types';
 import { selectRoom } from 'redux/Room/selectors';
@@ -50,7 +50,12 @@ const Game: React.FunctionComponent = () => {
   }, [game, player, push, location.pathname, room]);
 
   const eventCallback = useCallback(
-    ({ message_type: messageType, round_number: roundNumber, player: messagePlayer }) => {
+    ({
+      message_type: messageType,
+      round_number: roundNumber,
+      player: messagePlayer,
+      pad: messagePad,
+    }) => {
       if (!room || !game || !player || !gameId) return;
 
       switch (messageType) {
@@ -73,6 +78,8 @@ const Game: React.FunctionComponent = () => {
           doFetchGame(game.uuid);
 
           return push(`/room/${room.uuid}/game/${game.uuid}/recap`);
+        case SERVER_EVENT_TYPES.PLAYER_VIEWING_PAD:
+          return dispatch(setPlayerViewingPad({ player: messagePlayer, pad: messagePad }));
       }
     },
     [dispatch, doFetchGame, game, gameId, player, push, room],

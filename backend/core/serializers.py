@@ -30,6 +30,12 @@ class PadStepSerializer(BaseSerializer):
         fields = ("uuid", "step_type", "round_number", "player", "sentence", "drawing")
 
 
+class PadIdSerializer(BaseSerializer):
+    class Meta:
+        model = Pad
+        fields = ("uuid",)
+
+
 class PadSerializer(BaseSerializer):
     initial_player = PlayerSerializer()
     steps = serializers.SerializerMethodField()
@@ -124,3 +130,8 @@ class RoundStartsMessageSerializer(MessageSerializer):
 
 class DebriefStartsMessageSerializer(MessageSerializer):
     game = GameIdSerializer()
+
+
+class PlayerViewingPadMessageSerializer(MessageSerializer):
+    pad = PadIdSerializer()
+    player = PlayerSerializer()

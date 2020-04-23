@@ -1,5 +1,4 @@
-import styled, { css } from 'styled-components';
-import { colorPalette } from 'stylesheet';
+import styled from 'styled-components';
 import SecondaryButton from 'components/SecondaryButton';
 import Header2 from 'atoms/Header2';
 
@@ -37,27 +36,6 @@ export const PadTabsRow = styled.div`
 `;
 
 PadTabsRow.displayName = 'PadTabsRow';
-
-export const PadTab = styled.div<{ isActive: boolean }>`
-  height: 40px;
-  padding: 12px 24px;
-  font-weight: bold;
-  line-height: 19px;
-  background: ${colorPalette.backgroundGrey};
-  border-radius: 8px 8px 0 0;
-  cursor: pointer;
-  box-shadow: inset 7px 0 8px -7px rgba(0, 0, 0, 0.15);
-  ${props =>
-    props.isActive &&
-    css`
-      cursor: default;
-      background: ${colorPalette.white};
-      color: ${colorPalette.purple};
-      box-shadow: none;
-    `}
-`;
-
-PadTab.displayName = 'PadTab';
 
 export const TopRightButtons = styled.div`
   position: absolute;

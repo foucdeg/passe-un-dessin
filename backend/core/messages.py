@@ -1,4 +1,4 @@
-from core.models import Game, Player
+from core.models import Game, Pad, Player
 
 
 class PlayerConnectedMessage:
@@ -92,3 +92,18 @@ class DebriefStartsMessage:
         from core.serializers import DebriefStartsMessageSerializer
 
         return DebriefStartsMessageSerializer(self).data
+
+
+class PlayerViewingPadMessage:
+    message_type = "PLAYER_VIEWING_PAD"
+    pad = None
+    player = None
+
+    def __init__(self, pad: Pad, player: Player):
+        self.pad = pad
+        self.player = player
+
+    def serialize(self):
+        from core.serializers import PlayerViewingPadMessageSerializer
+
+        return PlayerViewingPadMessageSerializer(self).data
