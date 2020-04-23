@@ -1,6 +1,5 @@
-from rest_framework import serializers
-
 from core.models import Game, Pad, PadStep, Player, Room, Vote
+from rest_framework import serializers
 
 
 class BaseSerializer(serializers.ModelSerializer):
@@ -40,7 +39,15 @@ class PadStepSerializer(BaseSerializer):
 
     class Meta:
         model = PadStep
-        fields = ("uuid", "step_type", "round_number", "player", "sentence", "drawing", "votes")
+        fields = (
+            "uuid",
+            "step_type",
+            "round_number",
+            "player",
+            "sentence",
+            "drawing",
+            "votes",
+        )
 
 
 class PadSerializer(BaseSerializer):

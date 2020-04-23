@@ -1,15 +1,15 @@
 import json
 import logging
 
+from core.messages import PlayerFinishedMessage
+from core.models import Game, Pad, PadStep, Player, Vote
+from core.serializers import GameSerializer, PadSerializer, PadStepSerializer
+from core.service.game_service import end_debrief, start_next_round, switch_to_rounds
 from django.db import transaction
-from django.http import HttpResponseBadRequest, JsonResponse
+from django.db.models import Count
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django_eventstream import send_event
 from rest_framework.generics import RetrieveAPIView
-
-from core.messages import PlayerFinishedMessage
-from core.models import Game, Pad, PadStep, Vote, Player
-from core.serializers import GameSerializer, PadSerializer, PadStepSerializer
-from core.service.game_service import start_next_round, switch_to_rounds
 
 logger = logging.getLogger(__name__)
 
@@ -141,19 +141,27 @@ def save_step(request, uuid):
     data = PadStepSerializer(step).data
     return JsonResponse(data)
 
+
 def toggle_vote(request, pad_step_id):
-    player_id = request.session["player_id"]
-    player = Player.objects.get(uuid=player_id)
+    try:
+        player_id = request.session["player_id"]
+        player = Player.objects.get(uuid=player_id)
+    except (KeyError, Player.DoesNotExist):
+        return HttpResponseBadRequest("No player ID in session, or invalid")
 
     try:
         pad_step = PadStep.objects.get(uuid=pad_step_id)
     except PadStep.DoesNotExist:
-        return HttpResponseBadRequest("Pad step with uuid %s does not exist" % pad_step_id)
+        return HttpResponseBadRequest(
+            "Pad step with uuid %s does not exist" % pad_step_id
+        )
 
     if request.method == "POST":
         try:
             vote = Vote.objects.get(player=player, pad_step=pad_step)
-            return HttpResponseBadRequest("You already voted for pad_step %s" % pad_step_id)
+            return HttpResponseBadRequest(
+                "You already voted for pad_step %s" % pad_step_id
+            )
         except Vote.DoesNotExist:
             Vote.objects.create(player=player, pad_step=pad_step)
 
