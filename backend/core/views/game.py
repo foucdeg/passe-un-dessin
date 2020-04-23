@@ -6,6 +6,7 @@ from core.models import Game, Pad, PadStep, Player, Vote
 from core.serializers import GameSerializer, PadSerializer, PadStepSerializer
 from core.service.game_service import end_debrief, start_next_round, switch_to_rounds
 from django.db import transaction
+from django.db.models import Count
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django_eventstream import send_event
 from rest_framework.generics import RetrieveAPIView
@@ -217,3 +218,19 @@ def go_to_vote_results(request, game_id):
     end_debrief(game)
 
     return HttpResponse(status=200)
+
+
+def get_vote_results(request, game_id):
+    if request.method != "GET":
+        return HttpResponseBadRequest("GET expected")
+
+    pad_steps = (
+        PadStep.objects.filter(pad__game_id=game_id)
+        .annotate(count=Count("votes"))
+        .filter(count__gt=0)
+        .order_by("-count")[:3]
+    )
+
+    data = PadStepSerializer(pad_steps, many=True).data
+
+    return JsonResponse({"winners": data})

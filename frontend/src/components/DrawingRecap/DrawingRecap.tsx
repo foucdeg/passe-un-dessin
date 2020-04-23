@@ -11,9 +11,10 @@ import { useSelector } from 'redux/useSelector';
 
 interface Props {
   step: PadStep;
+  enableVote?: boolean;
 }
 
-const DrawingRecap: React.FC<Props> = ({ step }) => {
+const DrawingRecap: React.FC<Props> = ({ step, enableVote }) => {
   const player = useSelector(selectPlayer);
   const liked = !!(player && step.votes.find(vote => vote.player.uuid === player.uuid));
 
@@ -32,11 +33,13 @@ const DrawingRecap: React.FC<Props> = ({ step }) => {
     <StyledDrawingRecap>
       <SentenceHeader>
         {step.player.name}{' '}
-        <LikeEmoji onClick={onLike} liked={liked}>
-          &#128525;
-        </LikeEmoji>
+        {enableVote && (
+          <LikeEmoji onClick={onLike} liked={liked}>
+            &#128525;
+          </LikeEmoji>
+        )}
       </SentenceHeader>
-      <CanvasWrapper liked={liked}>
+      <CanvasWrapper liked={enableVote && liked}>
         <CanvasDraw
           disabled
           canvasWidth={236}

@@ -43,7 +43,6 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
         get_latest_by = "created_at"
-        ordering = ("-created_at",)
 
     def __str__(self):
         return f"{self.__class__.__name__.lower()}:{str(self.uuid)[:6]}"
