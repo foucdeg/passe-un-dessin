@@ -169,7 +169,9 @@ class PadStep(BaseModel):
 
 
 class Vote(BaseModel):
-    pad_step = models.ForeignKey(PadStep, on_delete=models.CASCADE, related_name="votes")
+    pad_step = models.ForeignKey(
+        PadStep, on_delete=models.CASCADE, related_name="votes",
+    )
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
 
 
