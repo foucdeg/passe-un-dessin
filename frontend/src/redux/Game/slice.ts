@@ -6,9 +6,15 @@ export type GameState = Readonly<{
   game: Game | null;
   remainingPlayers: Player[];
   suggestions: string[];
+  winners: PadStep[] | null;
 }>;
 
-const initialState: GameState = { game: null, remainingPlayers: [], suggestions: [] } as GameState;
+const initialState: GameState = {
+  game: null,
+  remainingPlayers: [],
+  suggestions: [],
+  winners: null,
+} as GameState;
 
 const gameSlice = createSlice({
   name: 'Game',
@@ -60,6 +66,9 @@ const gameSlice = createSlice({
     setSuggestions: (state, action: PayloadAction<string[]>) => {
       state.suggestions = action.payload;
     },
+    setWinners: (state, action: PayloadAction<PadStep[]>) => {
+      state.winners = action.payload;
+    },
   },
 });
 
@@ -70,6 +79,7 @@ export const {
   startDebrief,
   markPlayerFinished,
   setSuggestions,
+  setWinners,
   updatePadStep,
 } = gameSlice.actions;
 export default gameSlice.reducer;

@@ -1,6 +1,6 @@
 import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
-import { updateGame, updatePad, setSuggestions, updatePadStep } from './slice';
+import { updateGame, updatePad, setSuggestions, updatePadStep, setWinners } from './slice';
 import { Pad } from './types';
 import { useCallback, useState } from 'react';
 import { useHistory } from 'react-router';
@@ -92,6 +92,23 @@ export const useGoToVoteResults = () => {
       }
     },
     [history],
+  );
+};
+
+export const useGetVoteResults = () => {
+  const dispatch = useDispatch();
+
+  return useCallback(
+    async (gameId: string) => {
+      try {
+        const response = await client.get(`/game/${gameId}/vote-results`);
+        dispatch(setWinners(response['winners']));
+      } catch (e) {
+        alert('Error - see console');
+        console.error(e);
+      }
+    },
+    [dispatch],
   );
 };
 

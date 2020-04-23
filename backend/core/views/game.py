@@ -194,3 +194,19 @@ def go_to_vote_results(request, game_id):
     end_debrief(game)
 
     return HttpResponse(status=200)
+
+
+def get_vote_results(request, game_id):
+    if request.method != "GET":
+        return HttpResponseBadRequest("GET expected")
+
+    pad_steps = (
+        PadStep.objects.filter(pad__game_id=game_id)
+        .annotate(count=Count("votes"))
+        .filter(count__gt=0)
+        .order_by("-count")[:3]
+    )
+
+    data = PadStepSerializer(pad_steps, many=True).data
+
+    return JsonResponse({"winners": data})
