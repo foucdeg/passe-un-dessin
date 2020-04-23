@@ -27,5 +27,10 @@ urlpatterns = [
         name="get_pad_step",
     ),
     path("pad-step/<str:uuid>/save", game.save_step, name="save_step"),
+    path(
+        "game/<str:game_id>/go-to-vote-results",
+        game.go_to_vote_results,
+        name="go_to_vote_results",
+    ),
     path("step/<str:pad_step_id>/vote", game.toggle_vote, name="toggle_vote"),
 ]

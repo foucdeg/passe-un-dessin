@@ -27,6 +27,7 @@ class GamePhase(Enum):
     INIT = "INIT"
     ROUNDS = "ROUNDS"
     DEBRIEF = "DEBRIEF"
+    VOTE_RESULTS = "VOTE_RESULTS"
 
 
 class StepType(Enum):
@@ -116,7 +117,7 @@ class Room(BaseModel):
 class Game(BaseModel):
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="games")
     phase = models.CharField(
-        max_length=10,
+        max_length=12,
         choices=[(phase.value, phase.value) for phase in GamePhase],
         default="INIT",
     )
