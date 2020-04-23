@@ -137,3 +137,7 @@ class RoundStartsMessageSerializer(MessageSerializer):
 
 class DebriefStartsMessageSerializer(MessageSerializer):
     game = GameIdSerializer()
+
+
+class VoteResultsStartsMessageSerializer(MessageSerializer):
+    game = GameIdSerializer()

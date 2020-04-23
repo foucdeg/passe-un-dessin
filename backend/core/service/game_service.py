@@ -2,10 +2,13 @@ import logging
 from random import sample
 from typing import List
 
-from django_eventstream import send_event
-
-from core.messages import DebriefStartsMessage, RoundStartsMessage
+from core.messages import (
+    DebriefStartsMessage,
+    RoundStartsMessage,
+    VoteResultsStartsMessage,
+)
 from core.models import Game, GamePhase, Pad, PadStep, Player, Room, StepType
+from django_eventstream import send_event
 
 logger = logging.getLogger(__name__)
 
@@ -117,6 +120,16 @@ def start_next_round(game: Game, new_round: int):
         "game-%s" % game.uuid.hex,
         "message",
         RoundStartsMessage(game, round_number=new_round).serialize(),
+    )
+
+
+def end_debrief(game: Game):
+    game.phase = GamePhase.VOTE_RESULTS.value
+    game.save()
+    send_event(
+        "game-%s" % game.uuid.hex,
+        "message",
+        VoteResultsStartsMessage(game).serialize(),
     )
 
 
