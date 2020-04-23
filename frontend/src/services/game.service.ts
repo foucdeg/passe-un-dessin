@@ -25,6 +25,8 @@ export const getRedirectPath = (room: Room, game: Game, player: Player) => {
       return `/room/${room.uuid}/game/${game.uuid}/step/${playerStep.uuid}`;
     case GamePhase.DEBRIEF:
       return `/room/${room.uuid}/game/${game.uuid}/recap`;
+    case GamePhase.VOTE_RESULTS:
+      return `/room/${room.uuid}/game/${game.uuid}/vote-results`;
   }
 };
 
