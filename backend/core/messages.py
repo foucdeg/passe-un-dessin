@@ -109,3 +109,16 @@ class PlayerViewingPadMessage:
         from core.serializers import PlayerViewingPadMessageSerializer
 
         return PlayerViewingPadMessageSerializer(self).data
+
+
+class VoteResultsStartsMessage:
+    message_type = "VOTE_RESULTS_STARTS"
+    game = None
+
+    def __init__(self, game: Game):
+        self.game = game
+
+    def serialize(self):
+        from core.serializers import VoteResultsStartsMessageSerializer
+
+        return VoteResultsStartsMessageSerializer(self).data

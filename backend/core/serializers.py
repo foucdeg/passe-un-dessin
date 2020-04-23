@@ -149,3 +149,7 @@ class DebriefStartsMessageSerializer(MessageSerializer):
 class PlayerViewingPadMessageSerializer(MessageSerializer):
     pad = PadIdSerializer()
     player = PlayerSerializer()
+
+
+class VoteResultsStartsMessageSerializer(MessageSerializer):
+    game = GameIdSerializer()
