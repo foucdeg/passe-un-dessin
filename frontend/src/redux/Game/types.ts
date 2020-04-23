@@ -4,6 +4,7 @@ export enum GamePhase {
   INIT = 'INIT',
   ROUNDS = 'ROUNDS',
   DEBRIEF = 'DEBRIEF',
+  VOTE_RESULTS = 'VOTE_RESULTS',
 }
 
 export enum StepType {

@@ -62,9 +62,12 @@
     "seeResults": "See results"
   },
   "recap": {
+    "initialWord": "Initial word",
+    "goToVoteResults": "See vote results"
+  },
+  "voteResults": {
     "leaveTeam": "Leave team",
-    "newGame": "New game?",
-    "initialWord": "Mot initial"
+    "newGame": "New game?"
   },
   "newGameModal": {
     "title": "Start a new game",
