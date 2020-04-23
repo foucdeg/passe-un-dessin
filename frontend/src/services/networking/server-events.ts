@@ -22,6 +22,7 @@ export enum SERVER_EVENT_TYPES {
   GAME_STARTS = 'GAME_STARTS',
   ROUND_STARTS = 'ROUND_STARTS',
   DEBRIEF_STARTS = 'DEBRIEF_STARTS',
+  VOTE_RESULTS_STARTS = 'VOTE_RESULTS_STARTS',
 }
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */

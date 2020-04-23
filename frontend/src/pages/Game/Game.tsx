@@ -25,6 +25,7 @@ import { selectPlayer } from 'redux/Player/selectors';
 const PadInit = React.lazy(() => import('../PadInit'));
 const PadStep = React.lazy(() => import('../PadStep'));
 const GameRecap = React.lazy(() => import('../GameRecap'));
+const VoteResults = React.lazy(() => import('../VoteResults'));
 
 const Game: React.FunctionComponent = () => {
   const { gameId } = useParams();
@@ -79,6 +80,10 @@ const Game: React.FunctionComponent = () => {
           doFetchGame(game.uuid);
 
           return push(`/room/${room.uuid}/game/${game.uuid}/recap`);
+        case SERVER_EVENT_TYPES.VOTE_RESULTS_STARTS:
+          doFetchGame(game.uuid);
+
+          return push(`/room/${room.uuid}/game/${game.uuid}/vote-results`);
       }
     },
     [dispatch, doFetchGame, game, gameId, player, push, room],
@@ -128,6 +133,7 @@ const Game: React.FunctionComponent = () => {
           <Route path={`${path}/pad/:padId/init`} component={PadInit} />
           <Route path={`${path}/step/:stepId`} component={PadStep} />
           <Route path={`${path}/recap`} component={GameRecap} />
+          <Route path={`${path}/vote-results`} component={VoteResults} />
         </Switch>
       </InnerGameContainer>
       <Credits>Michèle Ruaud \ Foucauld Degeorges</Credits>

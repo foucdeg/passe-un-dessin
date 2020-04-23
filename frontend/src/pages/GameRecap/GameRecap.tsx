@@ -13,25 +13,21 @@ import {
 } from './GameRecap.style';
 import { Pad } from 'redux/Game/types';
 import Modal from 'components/Modal';
-import { useHistory } from 'react-router';
 import Button from 'components/Button';
-import { useLeaveRoom } from 'redux/Room/hooks';
+import { useGoToVoteResults } from 'redux/Game/hooks';
 import { selectRoom, selectPlayerIsAdmin } from 'redux/Room/selectors';
 import { selectGame } from 'redux/Game/selectors';
-import NewGameModal from 'components/NewGameModal';
 import { FormattedMessage } from 'react-intl';
 
 const GameRecap: React.FunctionComponent = () => {
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
   const isPlayerAdmin = useSelector(selectPlayerIsAdmin);
-  const history = useHistory();
 
   const [displayedPad, setDisplayedPad] = useState<Pad | null>(null);
-  const [newGameModalIsOpen, setNewGameModalIsOpen] = useState<boolean>(false);
   const [doneModalIsOpen, setDoneModalIsOpen] = useState<boolean>(true);
 
-  const doLeaveRoom = useLeaveRoom();
+  const doGoToVoteResults = useGoToVoteResults();
 
   useEffect(() => {
     if (!game) return;
@@ -40,9 +36,8 @@ const GameRecap: React.FunctionComponent = () => {
 
   if (!room || !game) return null;
 
-  const leaveGame = () => {
-    doLeaveRoom(room);
-    history.push('/');
+  const goToVoteResults = () => {
+    doGoToVoteResults(room.uuid, game.uuid);
   };
 
   return (
@@ -77,17 +72,13 @@ const GameRecap: React.FunctionComponent = () => {
           </Button>
         </InnerDoneModal>
       </Modal>
-      <TopRightButtons>
-        <TopRightButton onClick={leaveGame}>
-          <FormattedMessage id="recap.leaveTeam" />
-        </TopRightButton>
-        {isPlayerAdmin && (
-          <TopRightButton onClick={() => setNewGameModalIsOpen(true)}>
-            <FormattedMessage id="recap.newGame" />
+      {isPlayerAdmin && (
+        <TopRightButtons>
+          <TopRightButton onClick={goToVoteResults}>
+            <FormattedMessage id="recap.goToVoteResults" />
           </TopRightButton>
-        )}
-      </TopRightButtons>
-      <NewGameModal isOpen={newGameModalIsOpen} onClose={() => setNewGameModalIsOpen(false)} />
+        </TopRightButtons>
+      )}
     </>
   );
 };

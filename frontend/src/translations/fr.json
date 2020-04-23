@@ -60,9 +60,12 @@
     "seeResults": "Voir les résultats"
   },
   "recap": {
+    "initialWord": "Mot initial",
+    "goToVoteResults": "Voir les résultats des votes"
+  },
+  "voteResults": {
     "leaveTeam": "Quitter l'équipe",
-    "newGame": "Nouvelle partie ?",
-    "initialWord": "Mot initial"
+    "newGame": "Nouvelle partie ?"
   },
   "newGameModal": {
     "title": "Relancer une partie",
