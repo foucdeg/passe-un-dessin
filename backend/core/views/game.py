@@ -4,7 +4,7 @@ import logging
 from core.messages import PlayerFinishedMessage, PlayerViewingPadMessage
 from core.models import Game, Pad, PadStep, Player, Vote
 from core.serializers import GameSerializer, PadSerializer, PadStepSerializer
-from core.service.game_service import start_next_round, switch_to_rounds
+from core.service.game_service import end_debrief, start_next_round, switch_to_rounds
 from django.db import transaction
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django_eventstream import send_event
@@ -166,8 +166,11 @@ def review_pad(request, uuid):
 
 
 def toggle_vote(request, pad_step_id):
-    player_id = request.session["player_id"]
-    player = Player.objects.get(uuid=player_id)
+    try:
+        player_id = request.session["player_id"]
+        player = Player.objects.get(uuid=player_id)
+    except (KeyError, Player.DoesNotExist):
+        return HttpResponseBadRequest("No player ID in session, or invalid")
 
     try:
         pad_step = PadStep.objects.get(uuid=pad_step_id)
