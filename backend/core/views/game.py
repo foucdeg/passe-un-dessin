@@ -200,3 +200,17 @@ def toggle_vote(request, pad_step_id):
     pad_step = PadStep.objects.get(uuid=pad_step_id)
     data = PadStepSerializer(pad_step).data
     return JsonResponse(data)
+
+
+def go_to_vote_results(request, game_id):
+    if request.method != "PUT":
+        return HttpResponseBadRequest("PUT expected")
+
+    try:
+        game = Game.objects.get(uuid=game_id)
+    except Game.DoesNotExist:
+        return HttpResponseBadRequest("Game with uuid %s does not exist" % game_id)
+
+    end_debrief(game)
+
+    return HttpResponse(status=200)
