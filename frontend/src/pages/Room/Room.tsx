@@ -11,6 +11,7 @@ import { Player } from 'redux/Player/types';
 import { SERVER_EVENT_TYPES, useServerSentEvent } from 'services/networking/server-events';
 import { selectGame } from 'redux/Game/selectors';
 import { GamePhase } from 'redux/Game/types';
+import { resetWinners } from 'redux/Game/slice';
 
 import { selectPlayer } from 'redux/Player/selectors';
 import LostPlayerModal from 'components/LostPlayerModal';
@@ -54,6 +55,8 @@ const Room: React.FunctionComponent = () => {
           return dispatch(nameNewAdmin(messagePlayer));
 
         case SERVER_EVENT_TYPES.GAME_STARTS:
+          dispatch(resetWinners());
+
           return history.push(`/room/${room?.uuid}/game/${game.uuid}`);
       }
     },
