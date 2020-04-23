@@ -37,16 +37,17 @@ const GameRecap: React.FunctionComponent = () => {
 
   return (
     <>
-      {winners && winners.length ? (
-        winners.map((winner, index) => (
-          <>
-            <div>{index + 1}</div>
-            <DrawingRecap step={winner} />
-          </>
-        ))
-      ) : (
-        <div>No votes</div>
-      )}
+      {winners &&
+        (winners.length ? (
+          winners.map((winner, index) => (
+            <div key={winner.uuid}>
+              <div>{index + 1}</div>
+              <DrawingRecap step={winner} />
+            </div>
+          ))
+        ) : (
+          <div>No votes</div>
+        ))}
       <TopRightButtons>
         <TopRightButton onClick={leaveGame}>
           <FormattedMessage id="voteResults.leaveTeam" />
