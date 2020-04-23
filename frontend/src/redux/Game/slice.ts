@@ -26,7 +26,7 @@ const gameSlice = createSlice({
 
       state.remainingPlayers = state.game.players || [];
       state.recapViews =
-        state.game?.pads.reduce(
+        state.game.pads.reduce(
           (acc, pad) => ({ ...acc, [pad.uuid]: [] }),
           {} as { [padUuid: string]: Player[] },
         ) || {};
