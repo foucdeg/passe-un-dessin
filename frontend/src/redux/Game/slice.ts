@@ -7,6 +7,7 @@ export type GameState = Readonly<{
   remainingPlayers: Player[];
   suggestions: string[];
   recapViews: { [padUuid: string]: Player[] };
+  winners: PadStep[] | null;
 }>;
 
 const initialState: GameState = {
@@ -14,6 +15,7 @@ const initialState: GameState = {
   remainingPlayers: [],
   suggestions: [],
   recapViews: {},
+  winners: null,
 } as GameState;
 
 const gameSlice = createSlice({
@@ -78,6 +80,9 @@ const gameSlice = createSlice({
       }
       state.recapViews[action.payload.pad.uuid].push(action.payload.player);
     },
+    setWinners: (state, action: PayloadAction<PadStep[]>) => {
+      state.winners = action.payload;
+    },
   },
 });
 
@@ -88,6 +93,7 @@ export const {
   markPlayerFinished,
   setSuggestions,
   setPlayerViewingPad,
+  setWinners,
   updatePadStep,
 } = gameSlice.actions;
 export default gameSlice.reducer;
