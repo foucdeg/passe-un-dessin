@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'redux/useSelector';
-import { TopRightButton, TopRightButtons } from './VoteResults.style';
 import { useHistory } from 'react-router';
 import { useLeaveRoom } from 'redux/Room/hooks';
 import { useGetVoteResults } from 'redux/Game/hooks';
@@ -9,8 +8,10 @@ import { selectGame, selectWinners } from 'redux/Game/selectors';
 import NewGameModal from 'components/NewGameModal';
 import DrawingRecap from 'components/DrawingRecap';
 import { FormattedMessage } from 'react-intl';
+import TopRightButtons from 'atoms/TopRightButtons';
+import TopRightButton from 'atoms/TopRightButton';
 
-const GameRecap: React.FunctionComponent = () => {
+const VoteResults: React.FunctionComponent = () => {
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
   const isPlayerAdmin = useSelector(selectPlayerIsAdmin);
@@ -63,4 +64,4 @@ const GameRecap: React.FunctionComponent = () => {
   );
 };
 
-export default GameRecap;
+export default VoteResults;
