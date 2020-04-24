@@ -11,7 +11,7 @@ import { useSelector } from 'redux/useSelector';
 
 interface Props {
   step: PadStep;
-  enableVote?: boolean;
+  enableVote?: boolean | null;
 }
 
 const DrawingRecap: React.FC<Props> = ({ step, enableVote }) => {
