@@ -8,9 +8,7 @@ import {
   InnerDoneModal,
   PadTabsRow,
   PadTab,
-  TopRightButton,
   StyledHeader,
-  TopRightButtons,
 } from './GameRecap.style';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
@@ -20,6 +18,8 @@ import { selectGame } from 'redux/Game/selectors';
 import { selectRecapDisplayedTabId } from 'redux/GameRecap/selectors';
 import { setDisplayedPadId } from 'redux/GameRecap/slice';
 import { FormattedMessage } from 'react-intl';
+import TopRightButtons from 'atoms/TopRightButtons';
+import TopRightButton from 'atoms/TopRightButton';
 
 const GameRecap: React.FunctionComponent = () => {
   const dispatch = useDispatch();
