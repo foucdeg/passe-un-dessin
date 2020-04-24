@@ -156,6 +156,9 @@ def toggle_vote(request, pad_step_id):
             "Pad step with uuid %s does not exist" % pad_step_id
         )
 
+    if pad_step.player.uuid == player_id:
+        return HttpResponseBadRequest("You cannot vote for your own drawing")
+
     if request.method == "POST":
         try:
             vote = Vote.objects.get(player=player, pad_step=pad_step)
