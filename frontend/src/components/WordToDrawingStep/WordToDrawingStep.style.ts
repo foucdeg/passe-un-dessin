@@ -33,7 +33,7 @@ export const Gutter = styled.div`
 `;
 RightSide.displayName = 'RightSide';
 
-export const CanvasWrapper = styled.div<{ liked?: boolean }>`
+export const CanvasWrapper = styled.div<{ liked?: boolean | null }>`
   position: relative;
 
   /* canvas border */
