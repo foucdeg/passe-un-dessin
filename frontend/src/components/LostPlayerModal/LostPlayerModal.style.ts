@@ -8,3 +8,9 @@ export const StyledHeader = styled(Header2)`
 `;
 
 StyledHeader.displayName = 'StyledHeader';
+
+export const StyledParagraph = styled.p`
+  margin-bottom: 16px;
+`;
+
+StyledParagraph.displayName = 'StyledParagraph';

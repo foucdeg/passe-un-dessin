@@ -4,7 +4,7 @@ import { useParams, Switch, Route, useRouteMatch, useHistory } from 'react-route
 
 import { useSelector } from 'redux/useSelector';
 import { addPlayerToRoom, removePlayerFromRoom, nameNewAdmin } from 'redux/Room';
-import { selectRoom, selectPlayerIsAdmin } from 'redux/Room/selectors';
+import { selectRoom } from 'redux/Room/selectors';
 import { useFetchRoom, useLeaveRoom } from 'redux/Room/hooks';
 import { Player } from 'redux/Player/types';
 
@@ -23,11 +23,11 @@ const Room: React.FunctionComponent = () => {
   const doFetchRoom = useFetchRoom();
   const doLeaveRoom = useLeaveRoom();
   const [playerWhoLeft, setPlayerWhoLeft] = useState<Player | null>(null);
+  const [adminChanged, setAdminChanged] = useState<boolean>(false);
 
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
   const player = useSelector(selectPlayer);
-  const isPlayerAdmin = useSelector(selectPlayerIsAdmin);
 
   const { path } = useRouteMatch();
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ const Room: React.FunctionComponent = () => {
   }, [doFetchRoom, roomId]);
 
   const onRoomEvent = useCallback(
-    ({ message_type: messageType, player: messagePlayer, game }) => {
+    ({ message_type: messageType, player: messagePlayer, game, needs_new_admin: adminChanged }) => {
       switch (messageType) {
         case SERVER_EVENT_TYPES.PLAYER_CONNECTED:
           return dispatch(addPlayerToRoom(messagePlayer));
@@ -49,6 +49,7 @@ const Room: React.FunctionComponent = () => {
             return history.push('/');
           }
           setPlayerWhoLeft(messagePlayer);
+          setAdminChanged(adminChanged);
           return dispatch(removePlayerFromRoom(messagePlayer));
         case SERVER_EVENT_TYPES.NEW_ADMIN:
           return dispatch(nameNewAdmin(messagePlayer));
@@ -78,7 +79,10 @@ const Room: React.FunctionComponent = () => {
     };
   }, [roomLeaveListener]);
 
-  useEffect(() => setPlayerWhoLeft(null), [game]);
+  useEffect(() => {
+    setPlayerWhoLeft(null);
+    setAdminChanged(false);
+  }, [game]);
 
   if (!room) return null;
 
@@ -95,7 +99,7 @@ const Room: React.FunctionComponent = () => {
         <Route path={`${path}`} exact component={RoomLobby} />
       </Switch>
       {shouldShowPlayerLeftModal && playerWhoLeft && (
-        <LostPlayerModal isAdmin={isPlayerAdmin} playerName={playerWhoLeft?.name} />
+        <LostPlayerModal adminChanged={adminChanged} playerWhoLeft={playerWhoLeft} />
       )}
     </>
   );

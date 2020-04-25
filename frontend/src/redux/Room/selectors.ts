@@ -8,3 +8,5 @@ export const selectPlayerIsAdmin = (state: RootState) =>
     state.room.room &&
     state.player.player.uuid === state.room.room.admin.uuid
   );
+
+export const selectAdmin = (state: RootState) => state.room.room?.admin;
