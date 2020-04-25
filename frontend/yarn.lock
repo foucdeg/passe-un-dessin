@@ -10819,10 +10819,9 @@ react-app-rewired@2.1.5:
   dependencies:
     semver "^5.6.0"
 
-react-canvas-draw@^1.1.0:
+"react-canvas-draw@https://github.com/embiem/react-canvas-draw#develop":
   version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-canvas-draw/-/react-canvas-draw-1.1.0.tgz#5615a2e7d8d3625bf7085e38b736b9adf8695a6e"
-  integrity sha512-Cr7sM+ImQX+3acu+kervOq00t0tHNv5ZohcQwXLWZFwxMROvhGcRojAurtkzTfUPs5dvha3Z5DVgNi6BIc92Pw==
+  resolved "https://github.com/embiem/react-canvas-draw#1d7652d2dd2f3fcf71078b2711205a3a5f7018d0"
   dependencies:
     catenary-curve "^1.0.1"
     lazy-brush "^1.0.1"
