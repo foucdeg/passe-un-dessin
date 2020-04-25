@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 
+import IconAndTooltip from 'components/IconAndTooltip';
+import { fontSize } from 'stylesheet';
+
 export const StyledDrawingRecap = styled.div`
   display: flex;
   flex-direction: column;
@@ -23,6 +26,7 @@ SentenceHeader.displayName = 'SentenceHeader';
 
 export const LikeEmoji = styled.span<{ liked: boolean }>`
   opacity: ${({ liked }) => (liked ? 1 : 0.5)};
+  font-size: ${fontSize.medium};
   cursor: pointer;
 
   :hover {
@@ -31,3 +35,8 @@ export const LikeEmoji = styled.span<{ liked: boolean }>`
 `;
 
 LikeEmoji.displayName = 'LikeEmoji';
+
+export const StyledIconAndTooltip = styled(IconAndTooltip)`
+  text-transform: none;
+  font-size: ${fontSize.small};
+`;

@@ -4,7 +4,12 @@ import logging
 from core.messages import PlayerFinishedMessage, PlayerViewingPadMessage
 from core.models import Game, Pad, PadStep, Player, Vote
 from core.serializers import GameSerializer, PadSerializer, PadStepSerializer
-from core.service.game_service import end_debrief, start_next_round, switch_to_rounds
+from core.service.game_service import (
+    end_debrief,
+    get_available_vote_count,
+    start_next_round,
+    switch_to_rounds,
+)
 from django.db import transaction
 from django.db.models import Count
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
@@ -190,6 +195,19 @@ def toggle_vote(request, pad_step_id):
                 "You already voted for pad_step %s" % pad_step_id
             )
         except Vote.DoesNotExist:
+            game = pad_step.pad.game
+
+            existing_player_vote_count = Vote.objects.filter(
+                player_id=player_id, pad_step__pad__game_id=game.uuid
+            ).count()
+            available_vote_count = get_available_vote_count(game)
+
+            if existing_player_vote_count > available_vote_count:
+                return HttpResponseBadRequest(
+                    "You already reached the maximal number of vote for this game : %s"
+                    % available_vote_count
+                )
+
             Vote.objects.create(player=player, pad_step=pad_step)
 
     elif request.method == "DELETE":
