@@ -24,6 +24,7 @@ export enum SERVER_EVENT_TYPES {
   DEBRIEF_STARTS = 'DEBRIEF_STARTS',
   PLAYER_VIEWING_PAD = 'PLAYER_VIEWING_PAD',
   VOTE_RESULTS_STARTS = 'VOTE_RESULTS_STARTS',
+  ALL_VOTE_COUNT = 'ALL_VOTE_COUNT',
 }
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */

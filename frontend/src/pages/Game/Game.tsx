@@ -8,7 +8,7 @@ import { useFetchGame } from 'redux/Game/hooks';
 
 import { getRedirectPath } from 'services/game.service';
 import { useServerSentEvent, SERVER_EVENT_TYPES } from 'services/networking/server-events';
-import { startRound, markPlayerFinished, setPlayerViewingPad } from 'redux/Game';
+import { startRound, markPlayerFinished, setPlayerViewingPad, setAllVoteCount } from 'redux/Game';
 import { Credits } from '../Home/Home.style';
 import { GamePhase } from 'redux/Game/types';
 import { selectRoom } from 'redux/Room/selectors';
@@ -60,6 +60,7 @@ const Game: React.FunctionComponent = () => {
       round_number: roundNumber,
       player: messagePlayer,
       pad: messagePad,
+      all_vote_count: allVoteCount,
     }) => {
       if (!room || !game || !player || !gameId) return;
 
@@ -90,6 +91,9 @@ const Game: React.FunctionComponent = () => {
           doFetchGame(game.uuid);
 
           return push(`/room/${room.uuid}/game/${game.uuid}/vote-results`);
+
+        case SERVER_EVENT_TYPES.ALL_VOTE_COUNT:
+          return dispatch(setAllVoteCount({ allVoteCount }));
       }
     },
     [dispatch, doFetchGame, game, gameId, player, push, room],
