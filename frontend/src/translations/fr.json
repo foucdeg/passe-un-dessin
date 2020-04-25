@@ -62,7 +62,8 @@
   },
   "recap": {
     "initialWord": "Mot initial",
-    "goToVoteResults": "Voir les résultats des votes"
+    "goToVoteResults": "Voir les résultats des votes",
+    "availableVotes": "Il vous reste {availableVoteCount} vote(s) disponible(s)"
   },
   "voteResults": {
     "leaveTeam": "Quitter l'équipe",

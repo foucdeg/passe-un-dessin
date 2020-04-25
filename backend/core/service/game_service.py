@@ -31,6 +31,13 @@ def order_players(players: List[Player], requested_players_order: List[str]):
     return sorted(players, key=sort_fn)
 
 
+def get_available_vote_count(game: Game):
+    player_count = game.players.count()
+    if player_count <= 3:
+        return 1
+    return 3
+
+
 def initialize_game(
     room: Room, requested_players_order: List[str], round_duration: int
 ):
