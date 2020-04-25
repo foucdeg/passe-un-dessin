@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { GameContainer, InnerGameContainer } from './Game.style';
+import { GameContainer, InnerGameContainer, HomeLink, HomeButton } from './Game.style';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'redux/useSelector';
 
@@ -15,6 +15,8 @@ import { selectRoom } from 'redux/Room/selectors';
 import { selectGame } from 'redux/Game/selectors';
 import { selectPlayer } from 'redux/Player/selectors';
 import PlayerOrder from 'components/PlayerOrder';
+import { useIntl } from 'react-intl';
+import { useLeaveRoom } from 'redux/Room/hooks';
 
 const PadInit = React.lazy(() => import('../PadInit'));
 const PadStep = React.lazy(() => import('../PadStep'));
@@ -30,6 +32,8 @@ const Game: React.FunctionComponent = () => {
   const location = useLocation();
   const { path } = useRouteMatch();
   const dispatch = useDispatch();
+  const intl = useIntl();
+  const doLeaveRoom = useLeaveRoom();
 
   const channelName = game ? `game-${game.uuid}` : null;
 
@@ -103,10 +107,24 @@ const Game: React.FunctionComponent = () => {
     };
   }, [game]);
 
-  if (!game || !player) return null;
+  if (!room || !game || !player) return null;
+
+  const checkLeaveRoom = (event: React.MouseEvent) => {
+    const isOkayToLeave = [GamePhase.DEBRIEF].includes(game.phase);
+
+    if (isOkayToLeave || window.confirm(intl.formatMessage({ id: 'menu.confirmLeave' }))) {
+      doLeaveRoom(room);
+    } else {
+      event.preventDefault();
+      return false;
+    }
+  };
 
   return (
     <GameContainer>
+      <HomeLink to="/" onClick={checkLeaveRoom}>
+        <HomeButton />
+      </HomeLink>
       <InnerGameContainer hasTabs={game.phase === GamePhase.DEBRIEF}>
         {game.phase !== GamePhase.DEBRIEF && <PlayerOrder />}
         <Switch>

@@ -30,7 +30,8 @@
     "stopMusic": "Couper le son",
     "playerMenu": "Joueur",
     "adminMenu": "Actions d'administration",
-    "refresh": "Resynchroniser"
+    "refresh": "Resynchroniser",
+    "confirmLeave": "Une partie est en cours, es-tu sûr•e de vouloir partir ?"
   },
   "padInit": {
     "chooseSentence": "Choisis un mot ou une phrase :",

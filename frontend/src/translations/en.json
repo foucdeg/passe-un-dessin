@@ -30,7 +30,8 @@
     "stopMusic": "Stop music",
     "playerMenu": "Player",
     "adminMenu": "Admin window",
-    "refresh": "Resynchronize"
+    "refresh": "Resynchronize",
+    "confirmLeave": "Leaving mid-game forces everyone to restart the game. Are you sure?"
   },
   "padInit": {
     "chooseSentence": "Pick a word or sentence:",
