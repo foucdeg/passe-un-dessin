@@ -113,6 +113,7 @@ class PlayerFinishedMessageSerializer(MessageSerializer):
 
 class PlayerLeftMessageSerializer(MessageSerializer):
     player = PlayerSerializer()
+    needs_new_admin = serializers.BooleanField()
 
 
 class NewAdminMessageSerializer(MessageSerializer):

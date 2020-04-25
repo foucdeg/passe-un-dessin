@@ -10,7 +10,7 @@ export const SideButtonsContainer = styled.div`
   position: absolute;
   right: 32px;
   top: 32px;
-  z-index: 20;
+  z-index: 120;
 `;
 
 export const PlayerModalButton = styled.img.attrs({ src: playerIcon })`

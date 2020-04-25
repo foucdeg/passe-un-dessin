@@ -142,14 +142,18 @@ def remove_player_from_room(room_id: str, player_id: str):
     with transaction.atomic():
         player.room = None
         player.save()
+
+        needs_new_admin = room.admin == player
         logger.debug(
             "Sending message for player %s leaving room %s"
             % (player.name, room.uuid.hex[:8])
         )
         send_event(
-            "room-%s" % room.uuid.hex, "message", PlayerLeftMessage(player).serialize(),
+            "room-%s" % room.uuid.hex,
+            "message",
+            PlayerLeftMessage(player, needs_new_admin).serialize(),
         )
-        if room.admin == player:
+        if needs_new_admin:
             new_admin = room.players.all().first()
 
             if new_admin is not None:

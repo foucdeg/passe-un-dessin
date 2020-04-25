@@ -87,10 +87,13 @@
   },
   "lostPlayerModal": {
     "title": "On a perdu quelqu'un !",
-    "whoLeft": "{name} semble avoir quitté la partie en plein milieu :/",
-    "startOver": "On est obligés d'en recommencer une.",
+    "whoLeft": "{name} semble avoir quitté la partie 😢 On est obligés d'en recommencer une.",
+    "newAdminMe": "👑 Tu es l'admin maintenant !",
+    "newAdminGoToSettings": "Le menu d'admin (roue dentée ☸️ en haut à droite) te permet de relancer une partie.",
+    "newAdminNotMe": "{name} est l'admin maintenant !",
+    "newAdminRestarts": "C'est {name} qui peut désormais relancer une partie.",
     "goToSettings": "Ouvre les réglages en haut à droite.",
-    "adminRestarts": "C'est {name} qui gère."
+    "adminRestarts": "C'est {name} qui peut relancer une partie."
   },
   "mobileGate": {
     "bigFingers": "Gros doigts, petit écran",

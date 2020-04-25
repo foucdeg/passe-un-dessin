@@ -17,9 +17,11 @@ class PlayerConnectedMessage:
 class PlayerLeftMessage:
     message_type = "PLAYER_LEFT"
     player = None
+    needs_new_admin = False
 
-    def __init__(self, player: Player):
+    def __init__(self, player: Player, needs_new_admin: bool):
         self.player = player
+        self.needs_new_admin = needs_new_admin
 
     def serialize(self):
         from core.serializers import PlayerLeftMessageSerializer

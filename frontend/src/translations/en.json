@@ -87,10 +87,13 @@
   },
   "lostPlayerModal": {
     "title": "We lost someone!",
-    "whoLeft": "{name} seems to have left mid-game :/",
-    "startOver": "We'll have to start over.",
+    "whoLeft": "{name} seems to have left mid-game 😢 We'll have to start over.",
+    "newAdminMe": "👑 You're the admin now!",
+    "newAdminGoToSettings": "The admin menu (cog ☸️ top right) lets you start a new game.",
+    "newAdminNotMe": "{name} is the admin now!",
+    "newAdminRestarts": "{name} can start a new game.",
     "goToSettings": "Open the admin settings (top right).",
-    "adminRestarts": "{name} is in charge."
+    "adminRestarts": "{name} can start a new game."
   },
   "mobileGate": {
     "bigFingers": "Big fingers, small screen",
