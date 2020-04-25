@@ -61,6 +61,11 @@ export const getPreviousNextPlayers = (game: Game, player: Player): PreviousNext
   ];
 };
 
+export const getAvailableVoteCount = (game: Game): number => {
+  if (game.players.length <= 3) return 1;
+  return 3;
+};
+
 export const getReorderedPlayers = (game: Game, player: Player): Player[] => {
   const currentPlayerPad = game.pads.find(pad =>
     game.phase === GamePhase.INIT

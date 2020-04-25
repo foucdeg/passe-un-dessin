@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { colorPalette } from 'stylesheet';
 
-export const IconContainer = styled.div`
+export const IconContainer = styled.span`
   position: relative;
 `;
 
