@@ -7,6 +7,7 @@ from core.serializers import GameSerializer, PadSerializer, PadStepSerializer
 from core.service.game_service import (
     end_debrief,
     get_available_vote_count,
+    send_all_vote_count,
     start_next_round,
     switch_to_rounds,
 )
@@ -185,6 +186,8 @@ def toggle_vote(request, pad_step_id):
             "Pad step with uuid %s does not exist" % pad_step_id
         )
 
+    game = pad_step.pad.game
+
     if pad_step.player.uuid == player_id:
         return HttpResponseBadRequest("You cannot vote for your own drawing")
 
@@ -195,7 +198,6 @@ def toggle_vote(request, pad_step_id):
                 "You already voted for pad_step %s" % pad_step_id
             )
         except Vote.DoesNotExist:
-            game = pad_step.pad.game
 
             existing_player_vote_count = Vote.objects.filter(
                 player_id=player_id, pad_step__pad__game_id=game.uuid
@@ -221,6 +223,8 @@ def toggle_vote(request, pad_step_id):
 
     else:
         return HttpResponseBadRequest("POST or DELETE method expected")
+
+    send_all_vote_count(game)
 
     pad_step = PadStep.objects.get(uuid=pad_step_id)
     data = PadStepSerializer(pad_step).data

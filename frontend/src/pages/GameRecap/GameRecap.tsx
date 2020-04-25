@@ -13,17 +13,19 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 import { useGoToVoteResults } from 'redux/Game/hooks';
 import { selectRoom, selectPlayerIsAdmin } from 'redux/Room/selectors';
-import { selectGame } from 'redux/Game/selectors';
+import { selectGame, selectAllVoteCount } from 'redux/Game/selectors';
 import { FormattedMessage } from 'react-intl';
 import { useReviewPad } from 'redux/Game/hooks';
 import PadTab from 'components/PadTab';
 import TopRightButtons from 'atoms/TopRightButtons';
 import TopRightButton from 'atoms/TopRightButton';
+import { getAvailableVoteCount } from 'services/game.service';
 
 const GameRecap: React.FunctionComponent = () => {
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
   const isPlayerAdmin = useSelector(selectPlayerIsAdmin);
+  const allVoteCount = useSelector(selectAllVoteCount);
 
   const [displayedPadId, setDisplayedPadId] = useState<string | null>(null);
   const [doneModalIsOpen, setDoneModalIsOpen] = useState<boolean>(true);
@@ -39,6 +41,8 @@ const GameRecap: React.FunctionComponent = () => {
   }, [game, displayedPad]);
 
   if (!room || !game) return null;
+
+  const maxVoteCount = game.players.length * getAvailableVoteCount(game);
 
   const goToVoteResults = () => {
     doGoToVoteResults(room.uuid, game.uuid);
@@ -83,7 +87,7 @@ const GameRecap: React.FunctionComponent = () => {
       {isPlayerAdmin && (
         <TopRightButtons>
           <TopRightButton onClick={goToVoteResults}>
-            <FormattedMessage id="recap.goToVoteResults" />
+            <FormattedMessage id="recap.goToVoteResults" values={{ allVoteCount, maxVoteCount }} />
           </TopRightButton>
         </TopRightButtons>
       )}

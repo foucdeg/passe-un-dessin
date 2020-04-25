@@ -63,7 +63,7 @@
   },
   "recap": {
     "initialWord": "Mot initial",
-    "goToVoteResults": "Voir les résultats des votes",
+    "goToVoteResults": "Voir les résultats des votes {allVoteCount}/{maxVoteCount}",
     "availableVotes": "Il vous reste {availableVoteCount} vote(s) disponible(s)"
   },
   "voteResults": {
