@@ -81,18 +81,10 @@ export const useStartGame = () => {
 export const useSavePad = () => {
   const dispatch = useDispatch();
 
-  return useCallback(
-    async (pad: Pad, sentence: string) => {
-      try {
-        const updatedPad = await client.put(`/pad/${pad.uuid}/save`, { sentence });
-        dispatch(updatePad(updatedPad));
-      } catch (e) {
-        alert('Error - see console');
-        console.error(e);
-      }
-    },
-    [dispatch],
-  );
+  return useTypedAsyncFn<{ pad: Pad; sentence: string }>(async ({ pad, sentence }) => {
+    const updatedPad = await client.put(`/pad/${pad.uuid}/save`, { sentence });
+    dispatch(updatePad(updatedPad));
+  });
 };
 
 export const useReviewPad = () => {

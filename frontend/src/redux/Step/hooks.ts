@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { updateStep } from './slice';
 import { useCallback } from 'react';
 import { PadStep } from 'redux/Game/types';
+import { useTypedAsyncFn } from 'services/utils';
 
 export const useFetchStep = () => {
   const dispatch = useDispatch();
@@ -19,43 +20,27 @@ export const useFetchStep = () => {
 export const useSaveStepDrawing = () => {
   const dispatch = useDispatch();
 
-  return useCallback(
-    async (step: PadStep, drawing: string) => {
-      try {
-        await client.put(`/pad-step/${step.uuid}/save`, { drawing });
-        dispatch(
-          updateStep({
-            ...step,
-            drawing,
-          }),
-        );
-      } catch (e) {
-        alert('Error - see console');
-        console.error(e);
-      }
-    },
-    [dispatch],
-  );
+  return useTypedAsyncFn<{ step: PadStep; drawing: string }>(async ({ step, drawing }) => {
+    await client.put(`/pad-step/${step.uuid}/save`, { drawing });
+    dispatch(
+      updateStep({
+        ...step,
+        drawing,
+      }),
+    );
+  });
 };
 
 export const useSaveStepSentence = () => {
   const dispatch = useDispatch();
 
-  return useCallback(
-    async (step: PadStep, sentence: string) => {
-      try {
-        await client.put(`/pad-step/${step.uuid}/save`, { sentence });
-        dispatch(
-          updateStep({
-            ...step,
-            sentence,
-          }),
-        );
-      } catch (e) {
-        alert('Error - see console');
-        console.error(e);
-      }
-    },
-    [dispatch],
-  );
+  return useTypedAsyncFn<{ step: PadStep; sentence: string }>(async ({ step, sentence }) => {
+    await client.put(`/pad-step/${step.uuid}/save`, { sentence });
+    dispatch(
+      updateStep({
+        ...step,
+        sentence,
+      }),
+    );
+  });
 };
