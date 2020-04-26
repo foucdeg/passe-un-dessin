@@ -15,6 +15,9 @@ import {
   CanvasWrapper,
   StyledHeader,
   Sentence,
+  PadStepDone,
+  StyledTimerIcon,
+  WhiteHeader,
 } from './WordToDrawingStep.style';
 import { BrushType } from 'components/BrushTypePicker/BrushTypePicker';
 import { FormattedMessage } from 'react-intl';
@@ -28,6 +31,7 @@ interface Props {
   previousPlayer: Player | null;
   nextPlayer: Player | null;
   saveStep: (values: { sentence?: string; drawing?: string }) => void;
+  loading: boolean;
 }
 
 const getBrushAttributes = (color: DrawingColor, brushType: BrushType): [DrawingColor, number] => {
@@ -38,7 +42,7 @@ const getBrushAttributes = (color: DrawingColor, brushType: BrushType): [Drawing
   return [color, brushType === BrushType.THICK ? 6 : 2];
 };
 
-const WordToDrawingStep: React.FC<Props> = ({ padStep, previousPlayer, saveStep }) => {
+const WordToDrawingStep: React.FC<Props> = ({ padStep, previousPlayer, saveStep, loading }) => {
   const [color, setColor] = useState<DrawingColor>(DrawingColor.BLACK);
   const [brushType, setBrushType] = useState<BrushType>(BrushType.THIN);
   const game = useSelector(selectGame);
@@ -88,22 +92,37 @@ const WordToDrawingStep: React.FC<Props> = ({ padStep, previousPlayer, saveStep 
   if (!game) return null;
   if (!previousPlayer) return null;
 
+  const finished = loading || !!padStep.drawing;
+
   return (
     <LeftAndRightSide>
       <LeftSide>
         <CanvasWrapper>
           <CanvasDraw
+            disabled={finished}
+            hideInterface={finished}
             ref={drawingPadRef}
             brushColor={brushColor}
-            hideGrid={true}
+            hideGrid
             lazyRadius={0}
             canvasWidth={538}
             canvasHeight={538}
             brushRadius={brushThickness}
           />
-          <CanvasActions onClear={handleClear} onUndo={handleUndo} />
-          <BrushTypePicker brushType={brushType} setBrushType={setBrushType} />
-          <BrushColorPicker color={color} setColor={setBrushColor} />
+          {finished ? (
+            <PadStepDone>
+              <StyledTimerIcon />
+              <WhiteHeader>
+                <FormattedMessage id="wordToDrawing.timesUp" />
+              </WhiteHeader>
+            </PadStepDone>
+          ) : (
+            <>
+              <CanvasActions onClear={handleClear} onUndo={handleUndo} />
+              <BrushTypePicker brushType={brushType} setBrushType={setBrushType} />
+              <BrushColorPicker color={color} setColor={setBrushColor} />
+            </>
+          )}
         </CanvasWrapper>
       </LeftSide>
       <Gutter />

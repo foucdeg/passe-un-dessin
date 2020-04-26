@@ -44,7 +44,8 @@
   "wordToDrawing": {
     "sentenceToDraw": "Sentence to draw:",
     "previousPlayer": "({name}'s idea. Typical.)",
-    "duration": "You have {duration} seconds !"
+    "duration": "You have {duration} seconds !",
+    "timesUp": "Time's up, drop that pencil!"
   },
   "drawingToWord": {
     "drawingToGuess": "Guess this sketch:",
