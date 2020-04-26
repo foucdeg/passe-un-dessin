@@ -63,8 +63,8 @@
   },
   "recap": {
     "initialWord": "Mot initial",
-    "goToVoteResults": "{allVoteCount}/{maxVoteCount} vote(s) exprimé(s). Voir les résultats",
-    "availableVotes": "{availableVoteCount} vote(s) restant(s)"
+    "goToVoteResults": "{allVoteCount}/{maxVoteCount} vote{ allVoteCount, plural, one {} other {s}} exprimé{ allVoteCount, plural, one {} other {s}}. Voir les résultats",
+    "availableVotes": "{availableVoteCount} vote{ availableVoteCount, plural, one {} other {s}} restant{ availableVoteCount, plural, one {} other {s}}"
   },
   "voteResults": {
     "leaveTeam": "Quitter l'équipe",
