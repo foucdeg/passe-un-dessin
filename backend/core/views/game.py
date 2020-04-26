@@ -188,6 +188,9 @@ def toggle_vote(request, pad_step_id):
 
     game = pad_step.pad.game
 
+    if player_id not in [str(player.uuid) for player in game.players.all()]:
+        return HttpResponseBadRequest("You cannot vote for this game")
+
     if pad_step.player.uuid == player_id:
         return HttpResponseBadRequest("You cannot vote for your own drawing")
 
@@ -204,7 +207,7 @@ def toggle_vote(request, pad_step_id):
             ).count()
             available_vote_count = get_available_vote_count(game)
 
-            if existing_player_vote_count > available_vote_count:
+            if existing_player_vote_count >= available_vote_count:
                 return HttpResponseBadRequest(
                     "You already reached the maximal number of vote for this game : %s"
                     % available_vote_count
