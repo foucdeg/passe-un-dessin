@@ -7,7 +7,7 @@ export const BrushPickerContainer = styled.div`
   position: absolute;
   bottom: 16px;
   right: 16px;
-  z-index: 100;
+  z-index: 25;
 `;
 
 export const ColorBlock = styled.div<{ color: DrawingColor; selected: boolean }>`

@@ -9,7 +9,7 @@ export const CanvasActionsContainer = styled.div`
   position: absolute;
   top: 16px;
   right: 16px;
-  z-index: 100;
+  z-index: 25;
 `;
 
 CanvasActionsContainer.displayName = 'CanvasActionsContainer';

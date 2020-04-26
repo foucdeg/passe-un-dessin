@@ -6,7 +6,7 @@ export const BrushPickerContainer = styled.div`
   position: absolute;
   bottom: 16px;
   right: 60px;
-  z-index: 100;
+  z-index: 25;
 `;
 
 export const BrushBlock = styled.img<{ selected: boolean }>`
