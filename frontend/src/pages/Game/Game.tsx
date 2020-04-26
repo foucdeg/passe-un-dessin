@@ -9,7 +9,6 @@ import { useFetchGame } from 'redux/Game/hooks';
 import { getRedirectPath } from 'services/game.service';
 import { useServerSentEvent, SERVER_EVENT_TYPES } from 'services/networking/server-events';
 import { startRound, markPlayerFinished, setPlayerViewingPad } from 'redux/Game';
-import { Credits } from '../Home/Home.style';
 import { GamePhase } from 'redux/Game/types';
 import { selectRoom } from 'redux/Room/selectors';
 import { selectGame } from 'redux/Game/selectors';
@@ -144,7 +143,6 @@ const Game: React.FunctionComponent = () => {
           <Route path={`${path}/recap`} component={GameRecap} />
         </Switch>
       </InnerGameContainer>
-      <Credits>Michèle Ruaud \ Foucauld Degeorges</Credits>
     </GameContainer>
   );
 };

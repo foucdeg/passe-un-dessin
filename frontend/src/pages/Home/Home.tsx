@@ -13,6 +13,7 @@ import {
   RuleParagraph,
   Rule,
   RuleSection,
+  Attribution,
 } from './Home.style';
 import { useCreateRoom } from 'redux/Room/hooks';
 import { useLocation } from 'react-router';
@@ -55,19 +56,20 @@ const Home: React.FunctionComponent = () => {
             </Rule>
           ))}
         </RuleSection>
-        <Spacer />
         <StartButton onClick={doCreateRoom}>
           <FormattedMessage id="home.startRoom" />
         </StartButton>
-        <p>
-          <FormattedMessage id="home.joinExistingRoom" />
-        </p>
+        <Spacer />
+        <Attribution>
+          <FormattedMessage id="home.buyGame" />
+        </Attribution>
       </LeftSide>
       <RightSide>
         <RightSideTitle>
           <FormattedMessage id="home.title" />
         </RightSideTitle>
-        <Credits>Michèle Ruaud \ Foucauld Degeorges</Credits>
+        <Credits>Foucauld Degeorges • Michèle Ruaud</Credits>
+        <Credits>Quentin Somerville • Léo Anesi</Credits>
       </RightSide>
     </>
   );

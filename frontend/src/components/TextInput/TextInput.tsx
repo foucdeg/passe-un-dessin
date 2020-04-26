@@ -8,7 +8,7 @@ type Props = React.InputHTMLAttributes<HTMLInputElement> & {
 
 const TextInput: React.FC<Props> = ({ adornment, className, ...inputProps }) => (
   <InputAndAdornment className={className}>
-    <StyledTextInput {...inputProps} hasAdornment={!!adornment} />
+    <StyledTextInput {...inputProps} />
     {adornment && <AdornmentLocation>{adornment}</AdornmentLocation>}
   </InputAndAdornment>
 );
