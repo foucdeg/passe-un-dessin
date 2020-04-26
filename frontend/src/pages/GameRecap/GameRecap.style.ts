@@ -5,7 +5,7 @@ import { colorPalette, fontSize, fontFamily } from 'stylesheet';
 export const OuterRecapContainer = styled.div`
   display: flex;
   flex-direction: column;
-  max-height: 100%;
+  max-height: 530px;
   overflow-y: scroll;
   width: 100%;
 `;
