@@ -4,7 +4,13 @@ import logging
 from core.messages import PlayerFinishedMessage, PlayerViewingPadMessage
 from core.models import Game, Pad, PadStep, Player, Vote
 from core.serializers import GameSerializer, PadSerializer, PadStepSerializer
-from core.service.game_service import end_debrief, start_next_round, switch_to_rounds
+from core.service.game_service import (
+    end_debrief,
+    get_available_vote_count,
+    send_all_vote_count,
+    start_next_round,
+    switch_to_rounds,
+)
 from django.db import transaction
 from django.db.models import Count
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
@@ -180,6 +186,11 @@ def toggle_vote(request, pad_step_id):
             "Pad step with uuid %s does not exist" % pad_step_id
         )
 
+    game = pad_step.pad.game
+
+    if player_id not in [str(player.uuid) for player in game.players.all()]:
+        return HttpResponseBadRequest("You cannot vote for this game")
+
     if pad_step.player.uuid == player_id:
         return HttpResponseBadRequest("You cannot vote for your own drawing")
 
@@ -190,6 +201,18 @@ def toggle_vote(request, pad_step_id):
                 "You already voted for pad_step %s" % pad_step_id
             )
         except Vote.DoesNotExist:
+
+            existing_player_vote_count = Vote.objects.filter(
+                player_id=player_id, pad_step__pad__game_id=game.uuid
+            ).count()
+            available_vote_count = get_available_vote_count(game)
+
+            if existing_player_vote_count >= available_vote_count:
+                return HttpResponseBadRequest(
+                    "You already reached the maximal number of vote for this game : %s"
+                    % available_vote_count
+                )
+
             Vote.objects.create(player=player, pad_step=pad_step)
 
     elif request.method == "DELETE":
@@ -203,6 +226,8 @@ def toggle_vote(request, pad_step_id):
 
     else:
         return HttpResponseBadRequest("POST or DELETE method expected")
+
+    send_all_vote_count(game)
 
     pad_step = PadStep.objects.get(uuid=pad_step_id)
     data = PadStepSerializer(pad_step).data

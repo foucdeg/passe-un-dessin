@@ -11,7 +11,8 @@
       "1": "Pour jouer, vous devez être à partir de 4 joueurs.",
       "2": "Choisis un mot que la personne après toi devra dessiner. La partie commence quand tout le monde a choisi un mot.",
       "3": "Dessine le mot proposé ou devine ce que la personne a dessiné.",
-      "4": "Quand tout le monde a pu dessiner chacun des mots, on passe aux carnets de résultats ! <strong>Regarde ce que sont devenus les mots choisis</strong> initialement par tes amis avec les talents de certains pour le dessin."
+      "4": "Quand tout le monde a pu dessiner chacun des mots, on passe aux carnets de résultats ! <strong>Regarde ce que sont devenus les mots choisis</strong> initialement par tes amis avec les talents de certains pour le dessin.",
+      "5": "Tu peux voter pour tes dessins préférés et voir le podium des meilleurs dessins de ta partie."
     }
   },
   "roomLobby": {
@@ -62,7 +63,8 @@
   },
   "recap": {
     "initialWord": "Mot initial",
-    "goToVoteResults": "Voir les résultats des votes"
+    "goToVoteResults": "{allVoteCount}/{maxVoteCount} vote{ allVoteCount, plural, one {} other {s}} exprimé{ allVoteCount, plural, one {} other {s}}. Voir les résultats",
+    "availableVotes": "{availableVoteCount} vote{ availableVoteCount, plural, one {} other {s}} restant{ availableVoteCount, plural, one {} other {s}}"
   },
   "voteResults": {
     "leaveTeam": "Quitter l'équipe",

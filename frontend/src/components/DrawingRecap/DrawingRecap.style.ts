@@ -8,26 +8,54 @@ export const StyledDrawingRecap = styled.div`
   height: 260px;
   justify-content: space-between;
   margin-bottom: 8px;
+  letter-spacing: 0.1em;
+  line-height: 19px;
+  font-weight: bold;
+  position: relative;
 `;
 
 StyledDrawingRecap.displayName = 'StyledSentenceRecap';
 
 export const SentenceHeader = styled.div`
-  letter-spacing: 0.1em;
-  line-height: 19px;
   text-transform: uppercase;
-  font-weight: bold;
 `;
 
 SentenceHeader.displayName = 'SentenceHeader';
 
-export const LikeEmoji = styled.span<{ liked: boolean }>`
-  opacity: ${({ liked }) => (liked ? 1 : 0.5)};
+export const ToggleLike = styled.div`
+  background-color: rgb(155, 81, 224, 0.4);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  opacity: 0;
+  z-index: 25;
+  border-radius: 16px;
+  top: 0;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   :hover {
-    opacity: 1;
+    opacity: unset;
   }
 `;
 
-LikeEmoji.displayName = 'LikeEmoji';
+ToggleLike.displayName = 'ToggleLike';
+
+export const ToggleLikeThumb = styled.img<{ liked: boolean }>`
+  width: 60px;
+  ${({ liked }) => liked && `transform: rotate(180deg);`}
+`;
+
+ToggleLikeThumb.displayName = 'ToggleLikeThumb';
+
+export const AlreadyLikedThumb = styled.img`
+  width: 40px;
+  z-index: 20;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+`;
+
+AlreadyLikedThumb.displayName = 'AlreadyLikedThumb';

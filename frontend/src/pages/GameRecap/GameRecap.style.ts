@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import Header2 from 'atoms/Header2';
+import { colorPalette, fontSize, fontFamily } from 'stylesheet';
 
 export const OuterRecapContainer = styled.div`
   display: flex;
   flex-direction: column;
-  max-height: 100%;
+  max-height: 490px;
   overflow-y: scroll;
   width: 100%;
 `;
@@ -41,3 +42,14 @@ export const StyledHeader = styled(Header2)`
 `;
 
 StyledHeader.displayName = 'StyledHeader';
+
+export const VoteReminder = styled.div`
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  color: ${colorPalette.purple};
+  font-size: ${fontSize.header2};
+  font-family: ${fontFamily.titles};
+  text-transform: uppercase;
+`;
