@@ -53,7 +53,7 @@
     "nextPlayer": "En espérant que {next} sache mieux dessiner que {previous} ...",
     "placeholder": "Un mouton ?",
     "submit": "Valider",
-    "waitingFor": "On attend ceux-là pour continuer :"
+    "waitingFor": "Toujours les mêmes qu'on attend :"
   },
   "finishedModal": {
     "title": "C'est fini !",
