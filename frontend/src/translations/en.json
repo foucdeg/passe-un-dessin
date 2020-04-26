@@ -5,12 +5,12 @@
     "welcome": "Welcome",
     "howToPlay": "How to play",
     "startRoom": "Create a game",
-    "joinExistingRoom": "To join an existing game, the organizer needs to send you a link.",
+    "buyGame": "If you enjoy Draw Around, once you're out of lockdown, consider trying Telestrations, the board game that this game is inspired from!",
     "rules": {
       "0": "Make sure you have a <strong>stable Internet connection</strong> and <strong>enough battery left</strong> on your device.",
-      "1": "You should be at least 4 people to play.",
+      "1": "You should be at least 4 people to play. One of you is named <strong>Game Master</strong> and creates the game. The Game Master sends the link to the game to the other players.",
       "2": "Pick a word or sentence that the next person will have to sketch. The game starts when everybody has picked a word.",
-      "3": "Draw the word or sentence, or thy to guess what the previous person drew.",
+      "3": "Draw the word or sentence, or try to guess what the previous person drew.",
       "4": "When everybody has drawn all of the words, we look at the drawing pads! <strong>Watch what the word or sentences</strong> your friends initially chose became thanks to their drawing skills."
     }
   },
@@ -89,9 +89,9 @@
   "lostPlayerModal": {
     "title": "We lost someone!",
     "whoLeft": "{name} seems to have left mid-game 😢 We'll have to start over.",
-    "newAdminMe": "👑 You're the admin now!",
+    "newAdminMe": "👑 You're the Game Master now!",
     "newAdminGoToSettings": "The admin menu (cog ☸️ top right) lets you start a new game.",
-    "newAdminNotMe": "{name} is the admin now!",
+    "newAdminNotMe": "{name} is the Game Master now!",
     "newAdminRestarts": "{name} can start a new game.",
     "goToSettings": "Open the admin settings (top right).",
     "adminRestarts": "{name} can start a new game."

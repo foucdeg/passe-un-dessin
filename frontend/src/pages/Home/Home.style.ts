@@ -44,11 +44,16 @@ export const Header = styled(Header3)`
 Header.displayName = 'Header';
 
 export const StartButton = styled(Button)`
-  align-self: flex-end;
-  margin-bottom: 24px;
+  margin-top: 32px;
 `;
 
 StartButton.displayName = 'StartButton';
+
+export const Attribution = styled.p`
+  text-align: center;
+`;
+
+Attribution.displayName = 'Attribution';
 
 export const RightSide = styled.div`
   display: flex;
@@ -59,7 +64,7 @@ export const RightSide = styled.div`
   background: url(${rightSideBackground});
   background-size: cover;
   position: relative;
-  padding: 24px;
+  padding: 48px;
 `;
 RightSide.displayName = 'RightSide';
 
@@ -77,15 +82,9 @@ export const RightSideTitle = styled.h1`
 RightSideTitle.displayName = 'RightSideTitle';
 
 export const Credits = styled.p`
-  font-size: ${fontSize.medium};
   color: ${colorPalette.white};
   font-variant: small-caps;
   text-transform: uppercase;
-  transform: rotate(-90deg);
-  transform-origin: bottom left;
-  position: absolute;
-  bottom: 24px;
-  right: -278px;
 `;
 Credits.displayName = 'Credits';
 

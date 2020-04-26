@@ -1,7 +1,7 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { fontSize, colorPalette, fontFamily } from 'stylesheet';
 
-export const StyledTextInput = styled.input<{ hasAdornment: boolean }>`
+export const StyledTextInput = styled.input`
   background: none;
   padding: 0 24px;
   line-height: 19px;
@@ -12,12 +12,6 @@ export const StyledTextInput = styled.input<{ hasAdornment: boolean }>`
   &[readonly] {
     color: ${colorPalette.textGrey};
   }
-
-  ${props =>
-    props.hasAdornment &&
-    css`
-      padding-right: 52px;
-    `}
 `;
 
 export const AdornmentLocation = styled.div`

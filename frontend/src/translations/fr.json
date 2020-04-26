@@ -5,18 +5,18 @@
     "welcome": "Bienvenue",
     "howToPlay": "Comment jouer ?",
     "startRoom": "Lancer une partie",
-    "joinExistingRoom": "Pour rejoindre une partie, l'organisateur doit t'envoyer le lien.",
+    "buyGame": "Si tu as apprécié Passe un Dessin pendant le confinement, jette un œil à Esquissé, le jeu de société dont s'inspire ce jeu !",
     "rules": {
       "0": "Assure-toi d'avoir une <strong>connexion Internet stable</strong> et <strong>suffisament de batterie</strong> sur ton appareil.",
-      "1": "Pour jouer, vous devez être à partir de 4 joueurs.",
+      "1": "Pour jouer, vous devez être à partir de 4 joueurs. L'un ou l'une d'entre vous se proclame <strong>Maître du Jeu</strong> et crée la partie. Le Maître du Jeu envoie le lien de la partie aux autres joueurs.",
       "2": "Choisis un mot que la personne après toi devra dessiner. La partie commence quand tout le monde a choisi un mot.",
-      "3": "Dessine le mot proposé ou devine ce que la personne a dessiné.",
+      "3": "Dessine le mot proposé ou devine ce que la personne avant toi a dessiné.",
       "4": "Quand tout le monde a pu dessiner chacun des mots, on passe aux carnets de résultats ! <strong>Regarde ce que sont devenus les mots choisis</strong> initialement par tes amis avec les talents de certains pour le dessin."
     }
   },
   "roomLobby": {
     "title": "Salle d'attente",
-    "sendLink": "Envoyez ce lien aux participants <info>({min} à {max} joueurs)</info>",
+    "sendLink": "Envoie ce lien aux autres participants <info>({min} à {max} joueurs)</info>",
     "copiedLink": "Lien copié !",
     "players": "Participants ayant rejoint la partie :",
     "inGame": "Une partie est en cours. Reste ici pour être dans la suivante !",
@@ -89,9 +89,9 @@
   "lostPlayerModal": {
     "title": "On a perdu quelqu'un !",
     "whoLeft": "{name} semble avoir quitté la partie 😢 On est obligés d'en recommencer une.",
-    "newAdminMe": "👑 Tu es l'admin maintenant !",
+    "newAdminMe": "👑 Tu es Maître du Jeu maintenant !",
     "newAdminGoToSettings": "Le menu d'admin (roue dentée ☸️ en haut à droite) te permet de relancer une partie.",
-    "newAdminNotMe": "{name} est l'admin maintenant !",
+    "newAdminNotMe": "{name} est Maître du Jeu maintenant !",
     "newAdminRestarts": "C'est {name} qui peut désormais relancer une partie.",
     "goToSettings": "Ouvre les réglages en haut à droite.",
     "adminRestarts": "C'est {name} qui peut relancer une partie."
