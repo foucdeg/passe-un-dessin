@@ -5,7 +5,7 @@ import { colorPalette, fontSize, fontFamily } from 'stylesheet';
 export const OuterRecapContainer = styled.div`
   display: flex;
   flex-direction: column;
-  max-height: 530px;
+  max-height: 490px;
   overflow-y: scroll;
   width: 100%;
 `;
@@ -45,7 +45,7 @@ StyledHeader.displayName = 'StyledHeader';
 
 export const VoteReminder = styled.div`
   position: absolute;
-  bottom: 40px;
+  bottom: 20px;
   width: 100%;
   text-align: center;
   color: ${colorPalette.purple};

@@ -19,7 +19,7 @@ GameContainer.displayName = 'GameContainer';
 
 export const InnerGameContainer = styled.div<{ hasTabs?: boolean }>`
   width: 100%;
-  height: 670px;
+  height: 570px;
   background: ${colorPalette.white};
   border-radius: 16px;
   padding: 16px;
