@@ -136,7 +136,7 @@ const Game: React.FunctionComponent = () => {
         <HomeButton />
       </HomeLink>
       <InnerGameContainer hasTabs={game.phase === GamePhase.DEBRIEF}>
-        {game.phase !== GamePhase.DEBRIEF && <PlayerOrder />}
+        {[GamePhase.INIT, GamePhase.ROUNDS].includes(game.phase) && <PlayerOrder />}
         <Switch>
           <Route path={`${path}/pad/:padId/init`} component={PadInit} />
           <Route path={`${path}/step/:stepId`} component={PadStep} />
