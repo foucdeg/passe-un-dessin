@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import playerIcon from 'assets/person.svg';
 import cogIcon from 'assets/cog.svg';
@@ -27,8 +27,18 @@ export const AdminModalButton = styled.img.attrs({ src: cogIcon })`
 
 AdminModalButton.displayName = 'AdminModalButton';
 
-export const RefreshButton = styled.img.attrs({ src: refreshIcon })`
+export const RefreshButton = styled.img.attrs({ src: refreshIcon })<{ isLoading: boolean }>`
   cursor: pointer;
+  ${props =>
+    props.isLoading &&
+    css`
+      @keyframes spin {
+        100% {
+          transform: rotate(-360deg);
+        }
+      }
+      animation: spin 1s linear infinite;
+    `}
 `;
 
 RefreshButton.displayName = 'RefreshButton';

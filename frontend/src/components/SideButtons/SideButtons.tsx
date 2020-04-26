@@ -27,7 +27,7 @@ const SideButtons: React.FC<{}> = () => {
 
   const intl = useIntl();
 
-  const doRefreshGame = useRefreshGame();
+  const [{ loading }, doRefreshGame] = useRefreshGame();
 
   return (
     <SideButtonsContainer>
@@ -44,7 +44,7 @@ const SideButtons: React.FC<{}> = () => {
       )}
       {game && (
         <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.refresh' })}>
-          <RefreshButton alt="refresh" onClick={doRefreshGame} />
+          <RefreshButton alt="refresh" onClick={doRefreshGame} isLoading={loading} />
         </IconAndTooltip>
       )}
       <AdminModal isOpen={isAdminModalOpen} onClose={() => setAdminModalOpen(false)} />

@@ -17,6 +17,7 @@ import { selectPlayer } from 'redux/Player/selectors';
 import PlayerOrder from 'components/PlayerOrder';
 import { useIntl } from 'react-intl';
 import { useLeaveRoom } from 'redux/Room/hooks';
+import Loader from 'components/Loader';
 
 const PadInit = React.lazy(() => import('../PadInit'));
 const PadStep = React.lazy(() => import('../PadStep'));
@@ -24,7 +25,7 @@ const GameRecap = React.lazy(() => import('../GameRecap'));
 
 const Game: React.FunctionComponent = () => {
   const { gameId } = useParams();
-  const doFetchGame = useFetchGame();
+  const [{ loading }, doFetchGame] = useFetchGame();
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
   const player = useSelector(selectPlayer);
@@ -40,7 +41,7 @@ const Game: React.FunctionComponent = () => {
   useEffect(() => {
     if (!gameId) return;
 
-    doFetchGame(gameId);
+    doFetchGame({ gameId });
   }, [doFetchGame, gameId]);
 
   useEffect(() => {
@@ -79,7 +80,7 @@ const Game: React.FunctionComponent = () => {
 
           return push(`/room/${room.uuid}/game/${game.uuid}/step/${targetStep.uuid}`);
         case SERVER_EVENT_TYPES.DEBRIEF_STARTS:
-          doFetchGame(game.uuid);
+          doFetchGame({ gameId: game.uuid });
 
           return push(`/room/${room.uuid}/game/${game.uuid}/recap`);
         case SERVER_EVENT_TYPES.PLAYER_VIEWING_PAD:
@@ -106,6 +107,16 @@ const Game: React.FunctionComponent = () => {
       window.removeEventListener('beforeunload', listener);
     };
   }, [game]);
+
+  if (loading) {
+    return (
+      <GameContainer>
+        <InnerGameContainer hasTabs={false}>
+          <Loader />
+        </InnerGameContainer>
+      </GameContainer>
+    );
+  }
 
   if (!room || !game || !player) return null;
 
