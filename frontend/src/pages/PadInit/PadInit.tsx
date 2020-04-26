@@ -13,12 +13,13 @@ import {
 import PlayerChip from 'atoms/PlayerChip';
 import { StyledPlayerChips } from 'components/DrawingToWordStep/DrawingToWordStep.style';
 
-import StaticInput from 'atoms/StaticInput';
 import { selectGame, selectRemainingPlayers } from 'redux/Game/selectors';
 import { selectPlayer } from 'redux/Player/selectors';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Spacer from 'atoms/Spacer';
 import SuggestionGenerator from 'components/SuggestionGenerator';
+import StaticInput from 'components/StaticInput';
+import InputLoader from 'components/InputLoader';
 
 const PadInit: React.FunctionComponent = () => {
   const { padId } = useParams();
@@ -29,7 +30,7 @@ const PadInit: React.FunctionComponent = () => {
   const intl = useIntl();
 
   const [sentence, setSentence] = useState<string>('');
-  const doSavePad = useSavePad();
+  const [{ loading }, doSavePad] = useSavePad();
 
   const pad = game?.pads.find(pad => pad.uuid === padId);
 
@@ -40,19 +41,19 @@ const PadInit: React.FunctionComponent = () => {
   const nextPlayer = pad.steps[0].player;
   const isNextPlayerMe = nextPlayer.uuid === player.uuid;
 
+  const onSubmit = (event: React.MouseEvent | React.FormEvent) => {
+    event.preventDefault();
+    if (sentence !== '' && !loading) {
+      doSavePad({ pad, sentence });
+    }
+  };
+
   return (
     <PadInitContainer>
       <StyledHeader>
         <FormattedMessage id="padInit.chooseSentence" />
       </StyledHeader>
-      <StyledForm
-        onSubmit={e => {
-          e.preventDefault();
-          if (sentence !== '') {
-            doSavePad(pad, sentence);
-          }
-        }}
-      >
+      <StyledForm onSubmit={onSubmit}>
         {pad.sentence ? (
           <StaticInput>{pad.sentence}</StaticInput>
         ) : (
@@ -62,7 +63,7 @@ const PadInit: React.FunctionComponent = () => {
             placeholder={intl.formatMessage({ id: 'padInit.placeholder' })}
             value={sentence}
             onChange={e => setSentence(e.target.value)}
-            adornment={<InputArrow alt="Valider" onClick={() => doSavePad(pad, sentence)} />}
+            adornment={loading ? <InputLoader /> : <InputArrow alt="Valider" onClick={onSubmit} />}
           />
         )}
       </StyledForm>

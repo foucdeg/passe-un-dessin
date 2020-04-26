@@ -21,6 +21,7 @@ export const colorPalette = {
   blueLight: '#F4F9FB',
   white: '#FFFFFF',
   red: '#FF7373',
+  redTransparent: 'rgba(255, 115, 115, 0.6)',
   blackTransparent: 'rgba(0, 0, 0, 0.24)',
   whiteTransparent: 'rgba(255, 255, 255, 0.8)',
 };

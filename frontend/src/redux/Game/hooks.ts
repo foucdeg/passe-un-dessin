@@ -11,18 +11,15 @@ import { selectRoom } from 'redux/Room/selectors';
 import { getRedirectPath } from 'services/game.service';
 import { DEFAULT_ROUND_DURATION } from './constants';
 import { useIntl } from 'react-intl';
-import { wait } from 'services/utils';
+import { wait, useTypedAsyncFn } from 'services/utils';
 
 export const useFetchGame = () => {
   const dispatch = useDispatch();
 
-  return useCallback(
-    async (gameId: string) => {
-      const game = await client.get(`/game/${gameId}`);
-      dispatch(updateGame(game));
-    },
-    [dispatch],
-  );
+  return useTypedAsyncFn<{ gameId: string }>(async ({ gameId }) => {
+    const game = await client.get(`/game/${gameId}`);
+    dispatch(updateGame(game));
+  });
 };
 
 export const useGetSuggestions = () => {
@@ -44,15 +41,15 @@ export const useRefreshGame = () => {
   const player = useSelector(selectPlayer);
   const { push } = useHistory();
 
-  const doFetchGame = useFetchGame();
+  const [, doFetchGame] = useFetchGame();
 
-  return useCallback(async () => {
+  return useTypedAsyncFn<{}>(async () => {
     if (!game || !room || !player) return;
 
-    await doFetchGame(game.uuid);
+    await doFetchGame({ gameId: game.uuid });
     const path = getRedirectPath(room, game, player);
     push(path);
-  }, [game, room, player, doFetchGame, push]);
+  });
 };
 
 export const useStartGame = () => {
@@ -81,18 +78,10 @@ export const useStartGame = () => {
 export const useSavePad = () => {
   const dispatch = useDispatch();
 
-  return useCallback(
-    async (pad: Pad, sentence: string) => {
-      try {
-        const updatedPad = await client.put(`/pad/${pad.uuid}/save`, { sentence });
-        dispatch(updatePad(updatedPad));
-      } catch (e) {
-        alert('Error - see console');
-        console.error(e);
-      }
-    },
-    [dispatch],
-  );
+  return useTypedAsyncFn<{ pad: Pad; sentence: string }>(async ({ pad, sentence }) => {
+    const updatedPad = await client.put(`/pad/${pad.uuid}/save`, { sentence });
+    dispatch(updatePad(updatedPad));
+  });
 };
 
 export const useReviewPad = () => {

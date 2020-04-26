@@ -44,7 +44,8 @@
   "wordToDrawing": {
     "sentenceToDraw": "Phrase à dessiner :",
     "previousPlayer": "(sortie du cerveau malade de {name})",
-    "duration": "Tu as {duration} secondes !"
+    "duration": "Tu as {duration} secondes !",
+    "timesUp": "On lève les stylos !"
   },
   "drawingToWord": {
     "drawingToGuess": "Devine ce dessin :",
@@ -52,7 +53,7 @@
     "nextPlayer": "En espérant que {next} sache mieux dessiner que {previous} ...",
     "placeholder": "Un mouton ?",
     "submit": "Valider",
-    "waitingFor": "On attend ceux-là pour continuer :"
+    "waitingFor": "Toujours les mêmes qu'on attend :"
   },
   "finishedModal": {
     "title": "C'est fini !",

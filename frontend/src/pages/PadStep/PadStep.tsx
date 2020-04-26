@@ -13,8 +13,8 @@ const PadStep: React.FunctionComponent = () => {
   const game = useSelector(selectGame);
   const step = useSelector(selectStep);
   const doFetchStep = useFetchStep();
-  const doSaveStepDrawing = useSaveStepDrawing();
-  const doSaveStepSentence = useSaveStepSentence();
+  const [{ loading: isSaveStepDrawingLoading }, doSaveStepDrawing] = useSaveStepDrawing();
+  const [{ loading: isSaveStepSentenceLoading }, doSaveStepSentence] = useSaveStepSentence();
   const { stepId } = useParams();
 
   useEffect(() => {
@@ -27,14 +27,20 @@ const PadStep: React.FunctionComponent = () => {
     (values: { sentence?: string; drawing?: string }) => {
       if (!step) return;
 
-      if (values.sentence) {
-        doSaveStepSentence(step, values.sentence);
+      if (values.sentence && !isSaveStepSentenceLoading) {
+        doSaveStepSentence({ step, sentence: values.sentence });
       }
-      if (values.drawing) {
-        doSaveStepDrawing(step, values.drawing);
+      if (values.drawing && !isSaveStepDrawingLoading) {
+        doSaveStepDrawing({ step, drawing: values.drawing });
       }
     },
-    [doSaveStepDrawing, doSaveStepSentence, step],
+    [
+      doSaveStepDrawing,
+      doSaveStepSentence,
+      isSaveStepDrawingLoading,
+      isSaveStepSentenceLoading,
+      step,
+    ],
   );
 
   if (!game) return null;
@@ -45,6 +51,7 @@ const PadStep: React.FunctionComponent = () => {
   return step.step_type === StepType.DRAWING_TO_WORD ? (
     <DrawingToWordStep
       padStep={step}
+      loading={isSaveStepSentenceLoading}
       saveStep={saveStep}
       previousPlayer={previousPlayer}
       nextPlayer={nextPlayer}
@@ -52,6 +59,7 @@ const PadStep: React.FunctionComponent = () => {
   ) : (
     <WordToDrawingStep
       padStep={step}
+      loading={isSaveStepDrawingLoading}
       saveStep={saveStep}
       previousPlayer={previousPlayer}
       nextPlayer={nextPlayer}

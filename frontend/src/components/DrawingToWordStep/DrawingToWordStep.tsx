@@ -15,22 +15,38 @@ import {
 import { StyledForm, StyledButton, StyledPlayerChips, Subtext } from './DrawingToWordStep.style';
 import { useSelector } from 'redux/useSelector';
 import PlayerChip from 'atoms/PlayerChip';
-import StaticInput from 'atoms/StaticInput';
 import { selectRemainingPlayers } from 'redux/Game/selectors';
 import { useIntl, FormattedMessage } from 'react-intl';
 import Spacer from 'atoms/Spacer';
+import StaticInput from 'components/StaticInput';
+import InputLoader from 'components/InputLoader';
+import { InputArrow } from 'components/PlayerModal/PlayerModal.style';
 
 interface Props {
   padStep: PadStep;
   previousPlayer: Player | null;
   nextPlayer: Player | null;
   saveStep: (values: { sentence?: string; drawing?: string }) => void;
+  loading: boolean;
 }
 
-const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, previousPlayer, nextPlayer }) => {
+const DrawingToWordStep: React.FC<Props> = ({
+  padStep,
+  saveStep,
+  previousPlayer,
+  nextPlayer,
+  loading,
+}) => {
   const [sentence, setSentence] = useState<string>('');
   const remainingPlayers = useSelector(selectRemainingPlayers);
   const intl = useIntl();
+
+  const onSubmit = (event: React.MouseEvent | React.FormEvent) => {
+    event.preventDefault();
+    if (sentence !== '') {
+      saveStep({ sentence });
+    }
+  };
 
   if (!previousPlayer) return null;
 
@@ -62,20 +78,16 @@ const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, previousPlayer,
         {padStep.sentence ? (
           <StaticInput>{padStep.sentence}</StaticInput>
         ) : (
-          <StyledForm
-            onSubmit={e => {
-              e.preventDefault();
-              if (sentence !== '') {
-                saveStep({ sentence });
-              }
-            }}
-          >
+          <StyledForm onSubmit={onSubmit}>
             <TextInput
               type="text"
               autoFocus
               placeholder={intl.formatMessage({ id: 'drawingToWord.placeholder' })}
               value={sentence}
               onChange={e => setSentence(e.target.value)}
+              adornment={
+                loading ? <InputLoader /> : <InputArrow alt="Valider" onClick={onSubmit} />
+              }
             />
             <StyledButton type="submit">
               <FormattedMessage id="drawingToWord.submit" />

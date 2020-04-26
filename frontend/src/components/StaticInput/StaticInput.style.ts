@@ -1,18 +1,12 @@
 import styled, { css } from 'styled-components';
-import { fontSize, colorPalette, fontFamily } from 'stylesheet';
+import { colorPalette } from 'stylesheet';
 
-export const StyledTextInput = styled.input<{ hasAdornment: boolean }>`
+export const StyledStaticInput = styled.div<{ hasAdornment: boolean }>`
   background: none;
   padding: 0 24px;
   line-height: 19px;
-  font-family: ${fontFamily.main};
-  font-size: ${fontSize.medium};
   width: 100%;
-
-  &[readonly] {
-    color: ${colorPalette.textGrey};
-  }
-
+  text-align: left;
   ${props =>
     props.hasAdornment &&
     css`
@@ -20,9 +14,10 @@ export const StyledTextInput = styled.input<{ hasAdornment: boolean }>`
     `}
 `;
 
+StyledStaticInput.displayName = 'StyledStaticInput';
+
 export const AdornmentLocation = styled.div`
   margin-right: 16px;
-  height: 24px;
 `;
 
 export const InputAndAdornment = styled.div`
