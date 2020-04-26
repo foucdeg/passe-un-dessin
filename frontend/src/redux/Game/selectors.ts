@@ -22,11 +22,11 @@ export const selectAvailableVoteCount = (state: RootState) => {
   return (
     getAvailableVoteCount(state.game.game) -
     state.game.game.pads.reduce(
-      (availableVoteCount, pad) =>
-        availableVoteCount +
+      (usedVoteCount, pad) =>
+        usedVoteCount +
         pad.steps.reduce(
-          (availableVoteCount, step) =>
-            availableVoteCount + step.votes.filter(vote => vote.player.uuid === playerId).length,
+          (usedVoteCount, step) =>
+            usedVoteCount + step.votes.filter(vote => vote.player.uuid === playerId).length,
           0,
         ),
       0,
