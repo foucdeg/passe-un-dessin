@@ -11,7 +11,8 @@
       "1": "You should be at least 4 people to play. One of you is named <strong>Game Master</strong> and creates the game. The Game Master sends the link to the game to the other players.",
       "2": "Pick a word or sentence that the next person will have to sketch. The game starts when everybody has picked a word.",
       "3": "Draw the word or sentence, or try to guess what the previous person drew.",
-      "4": "When everybody has drawn all of the words, we look at the drawing pads! <strong>Watch what the word or sentences</strong> your friends initially chose became thanks to their drawing skills."
+      "4": "When everybody has drawn all of the words, we look at the drawing pads! <strong>Watch what the word or sentences</strong> your friends initially chose became thanks to their drawing skills.",
+      "5": "You can vote for your favorites drawings and see the podium of the bests drawings of your game"
     }
   },
   "roomLobby": {
