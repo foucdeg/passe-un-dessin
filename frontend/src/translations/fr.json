@@ -116,6 +116,7 @@
     "submit": "Valider"
   },
   "rankingModal": {
-    "title": "Scores"
+    "title": "Scores",
+    "noRanking": "Il n'y a pas encore de classement."
   }
 }
