@@ -8,6 +8,7 @@ import {
   PlayerModalButton,
   AdminModalButton,
   RefreshButton,
+  RankingModalButton,
 } from './SideButtons.style';
 import AdminModal from 'components/AdminModal';
 import { useRefreshGame } from 'redux/Game/hooks';
@@ -15,6 +16,7 @@ import IconAndTooltip from 'components/IconAndTooltip';
 import { useIntl } from 'react-intl';
 import { selectPlayer } from 'redux/Player/selectors';
 import PlayerModal from 'components/PlayerModal';
+import RankingModal from 'components/RankingModal';
 
 const SideButtons: React.FC<{}> = () => {
   const isPlayerAdmin = useSelector(selectPlayerIsAdmin);
@@ -24,6 +26,7 @@ const SideButtons: React.FC<{}> = () => {
 
   const [isAdminModalOpen, setAdminModalOpen] = useState<boolean>(false);
   const [isPlayerModalOpen, setPlayerModalOpen] = useState<boolean>(false);
+  const [isRankingModalOpen, setRankingModalOpen] = useState<boolean>(false);
 
   const intl = useIntl();
 
@@ -42,6 +45,11 @@ const SideButtons: React.FC<{}> = () => {
           <AdminModalButton alt="Settings" onClick={() => setAdminModalOpen(true)} />
         </IconAndTooltip>
       )}
+      {room && (
+        <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.ranking' })}>
+          <RankingModalButton alt="Ranking" onClick={() => setRankingModalOpen(true)} />
+        </IconAndTooltip>
+      )}
       {game && (
         <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.refresh' })}>
           <RefreshButton alt="refresh" onClick={doRefreshGame} />
@@ -49,6 +57,7 @@ const SideButtons: React.FC<{}> = () => {
       )}
       <AdminModal isOpen={isAdminModalOpen} onClose={() => setAdminModalOpen(false)} />
       <PlayerModal isOpen={isPlayerModalOpen} onClose={() => setPlayerModalOpen(false)} />
+      <RankingModal isOpen={isRankingModalOpen} onClose={() => setRankingModalOpen(false)} />
     </SideButtonsContainer>
   );
 };

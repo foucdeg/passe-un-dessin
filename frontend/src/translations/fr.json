@@ -32,6 +32,7 @@
     "playerMenu": "Joueur",
     "adminMenu": "Actions d'administration",
     "refresh": "Resynchroniser",
+    "ranking": "Classement",
     "confirmLeave": "Une partie est en cours, es-tu sûr•e de vouloir partir ?"
   },
   "padInit": {
@@ -109,5 +110,8 @@
     "title": "Joueur",
     "username": "Nom du joueur",
     "submit": "Valider"
+  },
+  "rankingModal": {
+    "title": "Scores"
   }
 }
