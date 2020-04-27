@@ -2,7 +2,7 @@ import json
 import logging
 
 from core.messages import PlayerFinishedMessage, PlayerViewingPadMessage
-from core.models import Game, Pad, PadStep, Player, Vote
+from core.models import Game, GamePhase, Pad, PadStep, Player, Vote
 from core.serializers import GameSerializer, PadSerializer, PadStepSerializer
 from core.service.game_service import (
     end_debrief,
@@ -188,7 +188,10 @@ def toggle_vote(request, pad_step_id):
 
     game = pad_step.pad.game
 
-    if player_id not in [str(player.uuid) for player in game.players.all()]:
+    if (
+        player_id not in [str(player.uuid) for player in game.players.all()]
+        and game.phase != GamePhase.DEBRIEF.value
+    ):
         return HttpResponseBadRequest("You cannot vote for this game")
 
     if pad_step.player.uuid == player_id:
