@@ -6,3 +6,8 @@ export interface Room {
   uuid: string;
   is_in_game: boolean;
 }
+
+export interface Ranking {
+  player: Player;
+  vote_count: number;
+}

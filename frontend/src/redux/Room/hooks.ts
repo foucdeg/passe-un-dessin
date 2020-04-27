@@ -1,6 +1,6 @@
 import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
-import { updateRoom } from './slice';
+import { updateRoom, updateRanking } from './slice';
 import { useHistory } from 'react-router';
 import { Room } from './types';
 import { useCallback } from 'react';
@@ -13,6 +13,18 @@ export const useFetchRoom = () => {
     async (roomId: string) => {
       const room = await client.get(`/room/${roomId}`);
       dispatch(updateRoom(room));
+    },
+    [dispatch],
+  );
+};
+
+export const useGetRanking = () => {
+  const dispatch = useDispatch();
+
+  return useCallback(
+    async (roomId: string) => {
+      const response = await client.get(`/room/${roomId}/ranking`);
+      dispatch(updateRanking(response['ranking']));
     },
     [dispatch],
   );
