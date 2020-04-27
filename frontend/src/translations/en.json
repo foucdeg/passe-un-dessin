@@ -116,6 +116,7 @@
     "submit": "Submit"
   },
   "rankingModal": {
-    "title": "Score"
+    "title": "Score",
+    "noRanking": "Please finish the first game to see a ranking"
   }
 }

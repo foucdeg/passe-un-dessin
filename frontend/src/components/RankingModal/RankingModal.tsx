@@ -29,13 +29,17 @@ const RankingModal: React.FC<Props> = ({ isOpen, onClose }) => {
       <StyledHeader>
         <FormattedMessage id="rankingModal.title" />
       </StyledHeader>
-      {ranking.map((rank, index) => (
-        <PlayerScore key={rank.player.uuid} style={{ backgroundColor: rank.player.color }}>
-          {index === 0 && rank.vote_count > 0 && <Trophy />}
-          {rank.player.name}
-          <VoteCount>{rank.vote_count}</VoteCount>
-        </PlayerScore>
-      ))}
+      {ranking.length > 0 ? (
+        ranking.map((rank, index) => (
+          <PlayerScore key={rank.player.uuid} style={{ backgroundColor: rank.player.color }}>
+            {index === 0 && rank.vote_count > 0 && <Trophy />}
+            {rank.player.name}
+            <VoteCount>{rank.vote_count}</VoteCount>
+          </PlayerScore>
+        ))
+      ) : (
+        <FormattedMessage id="rankingModal.noRanking" />
+      )}
     </StyledModal>
   );
 };
