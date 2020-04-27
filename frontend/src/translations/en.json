@@ -32,6 +32,7 @@
     "playerMenu": "Player",
     "adminMenu": "Admin window",
     "refresh": "Resynchronize",
+    "ranking": "Ranking",
     "confirmLeave": "Leaving mid-game forces everyone to restart the game. Are you sure?"
   },
   "padInit": {
@@ -113,5 +114,8 @@
     "title": "Player",
     "username": "Player Name",
     "submit": "Submit"
+  },
+  "rankingModal": {
+    "title": "Score"
   }
 }
