@@ -13,7 +13,7 @@ from core.messages import (
     PlayerConnectedMessage,
     PlayerLeftMessage,
 )
-from core.models import Player, Room
+from core.models import Game, GamePhase, Player, Room
 from core.serializers import PlayerSerializer, RoomSerializer
 from core.service.game_service import initialize_game
 
@@ -183,6 +183,13 @@ def start_game(request, room_id):
 
     try:
         room = Room.objects.get(uuid=room_id)
+
+        for game in Game.objects.filter(room_id=room_id).exclude(
+            phase=GamePhase.VOTE_RESULTS.value
+        ):
+            game.phase = GamePhase.VOTE_RESULTS.value
+            game.save()
+
         game = initialize_game(room, players_order, round_duration)
         room.current_game = game
         room.save()
