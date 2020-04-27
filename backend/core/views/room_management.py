@@ -1,12 +1,6 @@
 import json
 import logging
 
-from django.db import transaction
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
-from django.views import View
-from django_eventstream import send_event
-from rest_framework.generics import RetrieveAPIView
-
 from core.messages import (
     GameStartsMessage,
     NewAdminMessage,
@@ -16,6 +10,12 @@ from core.messages import (
 from core.models import Game, GamePhase, Player, Room
 from core.serializers import PlayerSerializer, RoomSerializer
 from core.service.game_service import initialize_game
+from django.db import transaction
+from django.db.models import Count
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.views import View
+from django_eventstream import send_event
+from rest_framework.generics import RetrieveAPIView
 
 logger = logging.getLogger(__name__)
 
@@ -197,3 +197,32 @@ def start_game(request, room_id):
         return JsonResponse({"game_id": game.uuid.hex})
     except Room.DoesNotExist:
         return HttpResponseBadRequest("Room does not exist")
+
+
+def get_ranking(request, room_id):
+    if request.method != "GET":
+        return HttpResponseBadRequest("PUT expected")
+
+    try:
+        Room.objects.get(uuid=room_id)
+    except Room.DoesNotExist:
+        return HttpResponseBadRequest("Room does not exist")
+
+    ranking = (
+        Player.objects.values("uuid", "name", "color")
+        .filter(steps__pad__game__room_id=room_id)
+        .annotate(count=Count("steps__votes"))
+        .order_by("-count")
+    )
+
+    ranking_json = [
+        {
+            "player": PlayerSerializer(
+                Player(uuid=rank["uuid"], color=rank["color"], name=rank["name"])
+            ).data,
+            "vote_count": rank["count"],
+        }
+        for rank in ranking
+    ]
+
+    return JsonResponse({"ranking": ranking_json})
