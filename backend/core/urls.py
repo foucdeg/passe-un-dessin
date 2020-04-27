@@ -37,4 +37,7 @@ urlpatterns = [
         game.get_vote_results,
         name="get_vote_results",
     ),
+    path(
+        "room/<str:room_id>/ranking", room_management.get_ranking, name="get_ranking",
+    ),
 ]

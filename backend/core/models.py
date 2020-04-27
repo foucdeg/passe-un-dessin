@@ -161,7 +161,7 @@ class PadStep(BaseModel):
         choices=[(step_type.value, step_type.value) for step_type in StepType],
     )
     round_number = models.IntegerField()
-    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name="steps")
 
     sentence = models.CharField(max_length=100, blank=True, null=True)
     drawing = models.TextField(null=True, blank=True)
