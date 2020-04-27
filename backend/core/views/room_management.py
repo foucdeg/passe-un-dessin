@@ -1,12 +1,8 @@
 import json
 import logging
 
-from core.messages import (
-    GameStartsMessage,
-    NewAdminMessage,
-    PlayerConnectedMessage,
-    PlayerLeftMessage,
-)
+from core.messages import (GameStartsMessage, NewAdminMessage,
+                           PlayerConnectedMessage, PlayerLeftMessage)
 from core.models import Game, GamePhase, Player, Room
 from core.serializers import PlayerSerializer, RoomSerializer
 from core.service.game_service import initialize_game
@@ -210,7 +206,10 @@ def get_ranking(request, room_id):
 
     ranking = (
         Player.objects.values("uuid", "name", "color")
-        .filter(steps__pad__game__room_id=room_id)
+        .filter(
+            steps__pad__game__room_id=room_id,
+            steps__pad__game__phase=GamePhase.VOTE_RESULTS.value,
+        )
         .annotate(count=Count("steps__votes"))
         .order_by("-count")
     )
