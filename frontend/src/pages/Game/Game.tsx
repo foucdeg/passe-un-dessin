@@ -1,5 +1,12 @@
 import React, { useEffect, useCallback } from 'react';
-import { GameContainer, InnerGameContainer, HomeLink, HomeButton } from './Game.style';
+import {
+  GameContainer,
+  InnerGameContainer,
+  HomeLink,
+  HomeButton,
+  Ranking,
+  Score,
+} from './Game.style';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'redux/useSelector';
 
@@ -11,11 +18,11 @@ import { useServerSentEvent, SERVER_EVENT_TYPES } from 'services/networking/serv
 import { startRound, markPlayerFinished, setPlayerViewingPad, setAllVoteCount } from 'redux/Game';
 import { Credits } from '../Home/Home.style';
 import { GamePhase } from 'redux/Game/types';
-import { selectRoom } from 'redux/Room/selectors';
+import { selectRoom, selectRanking } from 'redux/Room/selectors';
 import { selectGame } from 'redux/Game/selectors';
 import { selectPlayer } from 'redux/Player/selectors';
 import PlayerOrder from 'components/PlayerOrder';
-import { useIntl } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 import { useLeaveRoom } from 'redux/Room/hooks';
 
 const PadInit = React.lazy(() => import('../PadInit'));
@@ -29,6 +36,7 @@ const Game: React.FunctionComponent = () => {
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
   const player = useSelector(selectPlayer);
+  const ranking = useSelector(selectRanking);
   const { push } = useHistory();
   const location = useLocation();
   const { path } = useRouteMatch();
@@ -144,6 +152,21 @@ const Game: React.FunctionComponent = () => {
           <Route path={`${path}/vote-results`} component={VoteResults} />
         </Switch>
       </InnerGameContainer>
+      {ranking && (
+        <Ranking>
+          {ranking.slice(0, 3).map(
+            (rank, index) =>
+              rank.vote_count > 0 && (
+                <Score>
+                  <FormattedMessage
+                    id={`ranking.${index + 1}`}
+                    values={{ playerName: rank.player.name, score: rank.vote_count }}
+                  />
+                </Score>
+              ),
+          )}
+        </Ranking>
+      )}
       <Credits>Michèle Ruaud \ Foucauld Degeorges</Credits>
     </GameContainer>
   );
