@@ -1,0 +1,23 @@
+Description: Job4 Api - Monitoring (Alarm, LogGroup, ...)
+
+Parameters:
+  LogGroupName:
+    Description: The name of the Cloudwatch log group
+    Type: String
+    Default: Job4Api-logs
+
+  Env:
+    Description: The environment name deployed
+    Type: String
+    Default: staging
+
+Resources:
+  CloudwatchLogsGroup:
+    Type: "AWS::Logs::LogGroup"
+    Properties:
+      LogGroupName: !Sub ${LogGroupName}-${Env}
+      RetentionInDays: 30
+
+Outputs:
+  CloudwatchLogsGroup:
+    Value: !Ref CloudwatchLogsGroup

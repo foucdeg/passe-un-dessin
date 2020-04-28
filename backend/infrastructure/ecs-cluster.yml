@@ -1,0 +1,19 @@
+Description: Job4 Api - ECS Clusters
+
+Parameters:
+  ClusterName:
+    Type: String
+    Default: Job4-api-cluster
+  Env:
+    Type: String
+    Default: staging
+
+Resources:
+  Cluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: !Sub ${ClusterName}-${Env}
+
+Outputs:
+  ECSCluster:
+    Value: !Ref Cluster
