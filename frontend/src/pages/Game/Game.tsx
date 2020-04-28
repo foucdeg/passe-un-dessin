@@ -167,7 +167,7 @@ const Game: React.FunctionComponent = () => {
           {ranking.slice(0, 3).map(
             (rank, index) =>
               rank.vote_count > 0 && (
-                <Score>
+                <Score key={rank.player.uuid}>
                   <FormattedMessage
                     id={`ranking.${index + 1}`}
                     values={{ playerName: rank.player.name, score: rank.vote_count }}
