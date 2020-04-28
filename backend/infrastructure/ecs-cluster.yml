@@ -1,9 +1,9 @@
-Description: Job4 Api - ECS Clusters
+Description: PasseUnDessin Api - ECS Clusters
 
 Parameters:
   ClusterName:
     Type: String
-    Default: Job4-api-cluster
+    Default: passe-un-dessin-api-cluster
   Env:
     Type: String
     Default: staging

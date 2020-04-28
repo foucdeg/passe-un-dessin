@@ -1,6 +1,6 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 
-Description: Job4 Api - Creation of all SecurityGroups
+Description: PasseUnDessin Api - Creation of all SecurityGroups
 
 Parameters:
   VpcId:
@@ -13,59 +13,53 @@ Parameters:
     Default: staging
 
 Resources:
-  Job4ApiSg:
+  PasseUnDessinApiSg:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupName: !Sub job4-api-sg-${Env}
       GroupDescription: job4-api-sg
       SecurityGroupIngress:
-      -
-        IpProtocol: tcp
-        FromPort: 0
-        ToPort: 65535
-        SourceSecurityGroupId: !Ref Job4ApiAlbSg
-      -
-        IpProtocol: tcp
-        FromPort: 22
-        ToPort: 22
-        CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 0
+          ToPort: 65535
+          SourceSecurityGroupId: !Ref PasseUnDessinApiAlbSg
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
       Tags:
-      - Key: Name
-        Value: job4-api-sg
+        - Key: Name
+          Value: job4-api-sg
       VpcId: !Ref VpcId
-  Job4ApiAlbSg:
+  PasseUnDessinApiAlbSg:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupName: !Sub job4-api-alb-sg-${Env}
       GroupDescription: job4-api-alb-sg
       SecurityGroupIngress:
-      -
-        IpProtocol: tcp
-        FromPort: 80
-        ToPort: 80
-        CidrIp: 0.0.0.0/0
-      -
-        IpProtocol: tcp
-        FromPort: 80
-        ToPort: 80
-        CidrIpv6: ::/0
-      -
-        IpProtocol: tcp
-        FromPort: 443
-        ToPort: 443
-        CidrIp: 0.0.0.0/0
-      -
-        IpProtocol: tcp
-        FromPort: 443
-        ToPort: 443
-        CidrIpv6: ::/0
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIpv6: ::/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIpv6: ::/0
       Tags:
-      - Key: Name
-        Value: job4-api-alb-sg
+        - Key: Name
+          Value: job4-api-alb-sg
       VpcId: !Ref VpcId
 
 Outputs:
-  Job4ApiSg:
-    Value: !Ref Job4ApiSg
-  Job4ApiAlbSg:
-    Value: !Ref Job4ApiAlbSg
+  PasseUnDessinApiSg:
+    Value: !Ref PasseUnDessinApiSg
+  PasseUnDessinApiAlbSg:
+    Value: !Ref PasseUnDessinApiAlbSg

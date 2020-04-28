@@ -1,4 +1,4 @@
-Description: Job4 Api - Autoscaling Group
+Description: PasseUnDessin Api - Autoscaling Group
 
 Parameters:
   InstanceProfile:
@@ -78,33 +78,33 @@ Resources:
       MaxSize: !Ref MaxClusterSize
       DesiredCapacity: !Ref MinClusterSize
       MetricsCollection:
-      - Granularity: 1Minute
+        - Granularity: 1Minute
       Tags:
-      - Key: Name
-        Value: Job4 Api - ECS Host
-        PropagateAtLaunch: true
-      - Key: Project
-        Value: !Sub Job4Api
-        PropagateAtLaunch: true
-      - Key: Env
-        Value: !Ref Env
-        PropagateAtLaunch: true
+        - Key: Name
+          Value: PasseUnDessin Api - ECS Host
+          PropagateAtLaunch: true
+        - Key: Project
+          Value: !Sub PasseUnDessinApi
+          PropagateAtLaunch: true
+        - Key: Env
+          Value: !Ref Env
+          PropagateAtLaunch: true
 
   LaunchConfiguration:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
       AssociatePublicIpAddress: !Ref AssiociatePublicIp
       KeyName: !Ref KeyName
-      ImageId: !FindInMap [ AWSRegionToAMI, !Ref "AWS::Region", AMI ]
+      ImageId: !FindInMap [AWSRegionToAMI, !Ref "AWS::Region", AMI]
       InstanceType: !Ref InstanceType
       IamInstanceProfile: !Ref InstanceProfile
       BlockDeviceMappings:
-      - DeviceName: "/dev/xvda"
-        Ebs:
-          VolumeSize: "50"
-          VolumeType: "gp2"
+        - DeviceName: "/dev/xvda"
+          Ebs:
+            VolumeSize: "50"
+            VolumeType: "gp2"
       SecurityGroups:
-      - !Ref SecurityGroup
+        - !Ref SecurityGroup
       UserData:
         "Fn::Base64": !Sub |
           #!/bin/bash
@@ -118,11 +118,11 @@ Resources:
       PolicyType: StepScaling
       MetricAggregationType: Average
       StepAdjustments:
-      - MetricIntervalLowerBound: 0
-        MetricIntervalUpperBound: 50
-        ScalingAdjustment: 1
-      - MetricIntervalLowerBound: 50
-        ScalingAdjustment: 2
+        - MetricIntervalLowerBound: 0
+          MetricIntervalUpperBound: 50
+          ScalingAdjustment: 1
+        - MetricIntervalLowerBound: 50
+          ScalingAdjustment: 2
 
   StepScalingDown:
     Type: AWS::AutoScaling::ScalingPolicy
@@ -132,24 +132,24 @@ Resources:
       PolicyType: StepScaling
       MetricAggregationType: Average
       StepAdjustments:
-      - MetricIntervalUpperBound: 0
-        ScalingAdjustment: -1
+        - MetricIntervalUpperBound: 0
+          ScalingAdjustment: -1
 
   InstancesMemoryReservedAlarmScaleDown:
     Type: AWS::CloudWatch::Alarm
     Properties:
       EvaluationPeriods: 4
       Statistic: Average
-      AlarmName: !Sub Job4ApiAutoscalingMemoryReservedScaleDownAlarm-${Env}
+      AlarmName: !Sub PasseUnDessinApiAutoscalingMemoryReservedScaleDownAlarm-${Env}
       Threshold: 30
       AlarmDescription: Alarm if memory reserved by the instances is too low
       Period: 60
       AlarmActions:
-      - !Ref StepScalingDown
+        - !Ref StepScalingDown
       Namespace: AWS/ECS
       Dimensions:
-      - Name: ClusterName
-        Value: !Ref ECSCluster
+        - Name: ClusterName
+          Value: !Ref ECSCluster
       ComparisonOperator: LessThanThreshold
       MetricName: MemoryReservation
 
@@ -157,17 +157,17 @@ Resources:
     Type: AWS::CloudWatch::Alarm
     Properties:
       EvaluationPeriods: 1
-      AlarmName: !Sub Job4ApiAutoscalingMemoryReservedScaleUpAlarm-${Env}
+      AlarmName: !Sub PasseUnDessinApiAutoscalingMemoryReservedScaleUpAlarm-${Env}
       Statistic: Average
       Threshold: 60
       AlarmDescription: Alarm if memory reserved by the instances is too high
       Period: 60
       AlarmActions:
-      - !Ref StepScalingUp
+        - !Ref StepScalingUp
       Namespace: AWS/ECS
       Dimensions:
-      - Name: ClusterName
-        Value: !Ref ECSCluster
+        - Name: ClusterName
+          Value: !Ref ECSCluster
       ComparisonOperator: GreaterThanThreshold
       MetricName: MemoryReservation
 
