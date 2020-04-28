@@ -41,3 +41,16 @@ HomeLink.displayName = 'HomeLink';
 
 export const HomeButton = styled.img.attrs({ src: homeIcon })``;
 HomeButton.displayName = 'HomeButton';
+
+export const Ranking = styled.div`
+  text-align: center;
+  color: ${colorPalette.white};
+  letter-spacing: 0.1em;
+  font-weight: bold;
+`;
+Ranking.displayName = 'Ranking';
+
+export const Score = styled.span`
+  margin-right: 20px;
+`;
+Score.displayName = 'Score';
