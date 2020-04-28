@@ -51,14 +51,14 @@ else
     MY_TAG=$TAG
 fi
 
-export $(aws cloudformation describe-stacks --stack-name Job4-api-ecs-repository-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
+export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-ecs-repository-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
 
 $(aws ecr get-login --no-include-email --region ${REGION})
 yarn build
-docker build --no-cache --tag "${Job4ApiRepository}:${MY_TAG}" ../.
-docker push "${Job4ApiRepository}:${MY_TAG}"
+docker build --no-cache --tag "${PasseUnDessinApiRepository}:${MY_TAG}" ../.
+docker push "${PasseUnDessinApiRepository}:${MY_TAG}"
 rm -rf ../dist
 
 # Delete untagged images
-IMAGES_TO_DELETE=$( aws ecr list-images --region ${REGION} --repository-name ${Job4ApiRepositoryName} --filter "tagStatus=UNTAGGED" --query 'imageIds[*]' --output json )
-aws ecr batch-delete-image --region ${REGION} --repository-name ${Job4ApiRepositoryName} --image-ids "$IMAGES_TO_DELETE" || true
+IMAGES_TO_DELETE=$( aws ecr list-images --region ${REGION} --repository-name ${PasseUnDessinApiRepositoryName} --filter "tagStatus=UNTAGGED" --query 'imageIds[*]' --output json )
+aws ecr batch-delete-image --region ${REGION} --repository-name ${PasseUnDessinApiRepositoryName} --image-ids "$IMAGES_TO_DELETE" || true

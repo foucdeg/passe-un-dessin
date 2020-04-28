@@ -1,6 +1,6 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 
-Description: Job4 Api - Creation of images S3 bucket
+Description: PasseUnDessin Api - Creation of images S3 bucket
 
 Parameters:
   BucketName:
@@ -20,14 +20,13 @@ Resources:
       BucketName: !Sub ${BucketName}-${Env}
       Tags:
         - Key: Project
-          Value: Job4Api
+          Value: PasseUnDessinApi
         - Key: Env
           Value: !Ref Env
       AccessControl: PublicRead
       CorsConfiguration:
         CorsRules:
-          -
-            AllowedMethods:
+          - AllowedMethods:
               - GET
               - POST
               - PUT
@@ -41,18 +40,18 @@ Resources:
     Properties:
       Bucket: !Ref ImagesBucket
       PolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Sid: PublicReadGetObject
             Effect: Allow
-            Principal: '*'
+            Principal: "*"
             Action: s3:GetObject
             Resource:
               Fn::Join:
-                - ''
-                - - 'arn:aws:s3:::'
+                - ""
+                - - "arn:aws:s3:::"
                   - !Ref ImagesBucket
-                  - '/*'
+                  - "/*"
 
 Outputs:
   ImagesS3Bucket:

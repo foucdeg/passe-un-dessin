@@ -1,12 +1,12 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 
-Description: Job4 Api - Application Load Balancer
+Description: PasseUnDessin Api - Application Load Balancer
 
 Parameters:
   AlbName:
     Description: An environment name that will be prefixed to resource names
     Type: String
-    Default: job4-api-alb
+    Default: passe-un-dessin-api-alb
 
   VpcId:
     Type: AWS::EC2::VPC::Id
@@ -36,17 +36,17 @@ Resources:
       Name: !Sub ${AlbName}-${Env}
       Subnets: !Ref Subnets
       LoadBalancerAttributes:
-      - Key: access_logs.s3.enabled
-        Value: false
+        - Key: access_logs.s3.enabled
+          Value: false
       SecurityGroups:
-      - !Ref SecurityGroup
+        - !Ref SecurityGroup
       Tags:
-      - Key: Name
-        Value: !Sub ${AlbName}-${Env}
-      - Key: Project
-        Value: Job4Api
-      - Key: Env
-        Value: !Ref Env
+        - Key: Name
+          Value: !Sub ${AlbName}-${Env}
+        - Key: Project
+          Value: PasseUnDessinApi
+        - Key: Env
+          Value: !Ref Env
 
   LoadBalancerListener:
     Type: AWS::ElasticLoadBalancingV2::Listener
@@ -55,10 +55,10 @@ Resources:
       Port: 443
       Protocol: HTTPS
       Certificates:
-      - CertificateArn: !Ref CertificateArn
+        - CertificateArn: !Ref CertificateArn
       DefaultActions:
-      - Type: forward
-        TargetGroupArn: !Ref TargetGroup
+        - Type: forward
+          TargetGroupArn: !Ref TargetGroup
 
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
@@ -75,8 +75,8 @@ Resources:
       HealthCheckTimeoutSeconds: 5
       HealthyThresholdCount: 2
       TargetGroupAttributes:
-      - Key: deregistration_delay.timeout_seconds
-        Value: 30
+        - Key: deregistration_delay.timeout_seconds
+          Value: 30
 
   ListenerRule:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
@@ -84,12 +84,12 @@ Resources:
       ListenerArn: !Ref LoadBalancerListener
       Priority: 1
       Conditions:
-      - Field: path-pattern
-        Values:
-        - /
+        - Field: path-pattern
+          Values:
+            - /
       Actions:
-      - TargetGroupArn: !Ref TargetGroup
-        Type: forward
+        - TargetGroupArn: !Ref TargetGroup
+          Type: forward
 
 Outputs:
   ServiceUrl:

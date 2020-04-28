@@ -23,14 +23,6 @@ case $key in
     PROFILE="$2"
     shift # past argument
     ;;
-    -d|--domain)
-    DOMAIN="$2"
-    shift # past argument
-    ;;
-    -pu|--prefix-url)
-    PREFIX_URL="$2"
-    shift # past argument
-    ;;
     *)
     printf "***************************\n"
     printf "* Error: Invalid argument.*\n"
@@ -48,15 +40,7 @@ else
     export AWS_PROFILE=${PROFILE}
 fi
 
-## Build backend URL
-if [ "$ENV" == "production" ]
-then
-    export REACT_APP_API_BASE_URL=https://api-${PREFIX_URL}.${DOMAIN}/
-else
-    export REACT_APP_API_BASE_URL=https://api-${ENV}-${PREFIX_URL}.${DOMAIN}/
-fi
-
-export $(aws cloudformation describe-stacks --stack-name job4-front-s3-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
+export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-front-s3-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
 
 yarn build
 

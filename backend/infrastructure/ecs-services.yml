@@ -1,4 +1,4 @@
-Description: Job4 Api - ECS Services
+Description: PasseUnDessin Api - ECS Services
 
 Parameters:
   DesiredCount:
@@ -41,29 +41,29 @@ Resources:
     Type: AWS::ECS::TaskDefinition
     Properties:
       NetworkMode: bridge
-      Family: !Sub Job4Api-TaskFamily-${Env}
+      Family: !Sub PasseUnDessinApi-TaskFamily-${Env}
       TaskRoleArn: !Sub arn:aws:iam::${AWS::AccountId}:role/${ECSTaskRole}
       ContainerDefinitions:
-      - Name: !Sub Job4ApiContainer-${Env}
-        Image: !Sub ${DockerRepository}:${Tag}
-        Essential: true
-        MemoryReservation: 512
-        Cpu: 256
-        PortMappings:
-        - ContainerPort: 80
-          HostPort: 0
-          Protocol: tcp
-        Environment:
-        - Name: NODE_ENV
-          Value: !Ref Env
-        - Name: AWS_REGION
-          Value: !Ref AWS::Region
-        LogConfiguration:
-          LogDriver: awslogs
-          Options:
-            awslogs-group: !Ref CloudwatchLogsGroup
-            awslogs-region: !Sub ${AWS::Region}
-            awslogs-stream-prefix: job4-apiAssiociatePublicIp
+        - Name: !Sub PasseUnDessinApiContainer-${Env}
+          Image: !Sub ${DockerRepository}:${Tag}
+          Essential: true
+          MemoryReservation: 512
+          Cpu: 256
+          PortMappings:
+            - ContainerPort: 80
+              HostPort: 0
+              Protocol: tcp
+          Environment:
+            - Name: NODE_ENV
+              Value: !Ref Env
+            - Name: AWS_REGION
+              Value: !Ref AWS::Region
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref CloudwatchLogsGroup
+              awslogs-region: !Sub ${AWS::Region}
+              awslogs-stream-prefix: job4-apiAssiociatePublicIp
 
   ECSService:
     Type: AWS::ECS::Service
@@ -71,15 +71,15 @@ Resources:
       Cluster: !Ref ECSCluster
       DesiredCount: !Ref DesiredCount
       TaskDefinition: !Ref TaskDefinition
-      ServiceName: !Sub Job4Api-Service-${Env}
+      ServiceName: !Sub PasseUnDessinApi-Service-${Env}
       Role: !Ref ECSServiceRole
       DeploymentConfiguration:
         MaximumPercent: 200
         MinimumHealthyPercent: 50
       LoadBalancers:
-      - ContainerName: !Sub Job4ApiContainer-${Env}
-        ContainerPort: 80
-        TargetGroupArn: !Ref TargetGroup
+        - ContainerName: !Sub PasseUnDessinApiContainer-${Env}
+          ContainerPort: 80
+          TargetGroupArn: !Ref TargetGroup
 
   scalingPolicyUp:
     Type: AWS::ApplicationAutoScaling::ScalingPolicy
@@ -92,8 +92,8 @@ Resources:
         Cooldown: 30
         MetricAggregationType: Average
         StepAdjustments:
-        - MetricIntervalLowerBound: 0
-          ScalingAdjustment: 2
+          - MetricIntervalLowerBound: 0
+            ScalingAdjustment: 2
 
   scalingPolicyDown:
     Type: AWS::ApplicationAutoScaling::ScalingPolicy
@@ -106,15 +106,16 @@ Resources:
         Cooldown: 30
         MetricAggregationType: Average
         StepAdjustments:
-        - MetricIntervalUpperBound: 0
-          ScalingAdjustment: -1
+          - MetricIntervalUpperBound: 0
+            ScalingAdjustment: -1
 
   scalableTarget:
     Type: AWS::ApplicationAutoScaling::ScalableTarget
     Properties:
       MaxCapacity: !Ref MaxCount
       MinCapacity: !Ref DesiredCount
-      ResourceId: !Join [ "/", [ "service", !Ref ECSCluster, !GetAtt ECSService.Name ] ]
+      ResourceId:
+        !Join ["/", ["service", !Ref ECSCluster, !GetAtt ECSService.Name]]
       RoleARN: !Sub arn:aws:iam::${AWS::AccountId}:role/${ECSAutoScaleRole}
       ScalableDimension: ecs:service:DesiredCount
       ServiceNamespace: ecs
@@ -124,16 +125,16 @@ Resources:
     Properties:
       EvaluationPeriods: 3
       Statistic: Average
-      AlarmName: !Sub Job4ApiServicescalingCPUscaleUpAlarm-${Env}
+      AlarmName: !Sub PasseUnDessinApiServicescalingCPUscaleUpAlarm-${Env}
       Threshold: 50
       AlarmDescription: Alarm if CPU is too high
       Period: 60
       AlarmActions:
-      - !Ref scalingPolicyUp
+        - !Ref scalingPolicyUp
       Namespace: AWS/ECS
       Dimensions:
-      - Name: ClusterName
-        Value: !Ref ECSCluster
+        - Name: ClusterName
+          Value: !Ref ECSCluster
       ComparisonOperator: GreaterThanThreshold
       MetricName: CPUUtilization
 
@@ -142,16 +143,16 @@ Resources:
     Properties:
       EvaluationPeriods: 4
       Statistic: Average
-      AlarmName: !Sub Job4ApiServicescalingCPUscaleDownAlarm-${Env}
+      AlarmName: !Sub PasseUnDessinApiServicescalingCPUscaleDownAlarm-${Env}
       Threshold: 10
       AlarmDescription: Alarm if CPU is too low
       Period: 60
       AlarmActions:
-      - !Ref scalingPolicyDown
+        - !Ref scalingPolicyDown
       Namespace: AWS/ECS
       Dimensions:
-      - Name: ClusterName
-        Value: !Ref ECSCluster
+        - Name: ClusterName
+          Value: !Ref ECSCluster
       ComparisonOperator: LessThanThreshold
       MetricName: CPUUtilization
 
@@ -159,4 +160,4 @@ Outputs:
   ServiceName:
     Value: !GetAtt ECSService.Name
   FamilyName:
-    Value: !Sub Job4Api-TaskFamily-${Env}
+    Value: !Sub PasseUnDessinApi-TaskFamily-${Env}

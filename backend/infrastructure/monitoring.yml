@@ -1,10 +1,10 @@
-Description: Job4 Api - Monitoring (Alarm, LogGroup, ...)
+Description: PasseUnDessin Api - Monitoring (Alarm, LogGroup, ...)
 
 Parameters:
   LogGroupName:
     Description: The name of the Cloudwatch log group
     Type: String
-    Default: Job4Api-logs
+    Default: PasseUnDessinApi-logs
 
   Env:
     Description: The environment name deployed
