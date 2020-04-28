@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import Header2 from 'atoms/Header2';
+import Modal from 'components/Modal';
+import Button from 'components/Button';
 import { colorPalette, fontSize, fontFamily } from 'stylesheet';
 
 export const OuterRecapContainer = styled.div`
@@ -18,14 +20,17 @@ export const GameRecapContainer = styled.div`
 
 GameRecapContainer.displayName = 'GameRecapContainer';
 
-export const InnerDoneModal = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+export const StyledModal = styled(Modal)`
   align-items: center;
 `;
 
-InnerDoneModal.displayName = 'InnerDoneModal';
+StyledModal.displayName = 'StyledModal';
+
+export const StyledButton = styled(Button)`
+  margin-top: 20px;
+`;
+
+StyledButton.displayName = 'StyledButton';
 
 export const PadTabsRow = styled.div`
   width: 100%;

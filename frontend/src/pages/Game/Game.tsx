@@ -11,7 +11,6 @@ import { useServerSentEvent, SERVER_EVENT_TYPES } from 'services/networking/serv
 import { startRound, markPlayerFinished, setPlayerViewingPad, setAllVoteCount } from 'redux/Game';
 import { GamePhase } from 'redux/Game/types';
 import { selectRoom } from 'redux/Room/selectors';
-import { useGetRanking } from 'redux/Room/hooks';
 import { selectGame } from 'redux/Game/selectors';
 import { selectPlayer } from 'redux/Player/selectors';
 import PlayerOrder from 'components/PlayerOrder';
@@ -36,7 +35,6 @@ const Game: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   const intl = useIntl();
   const doLeaveRoom = useLeaveRoom();
-  const doGetRanking = useGetRanking();
 
   const channelName = game ? `game-${game.uuid}` : null;
 
@@ -55,12 +53,6 @@ const Game: React.FunctionComponent = () => {
     }
     push(getRedirectPath(room, game, player));
   }, [game, player, push, location.pathname, room]);
-
-  useEffect(() => {
-    if (room?.uuid) {
-      doGetRanking(room.uuid);
-    }
-  }, [doGetRanking, room, gameId]);
 
   const eventCallback = useCallback(
     ({

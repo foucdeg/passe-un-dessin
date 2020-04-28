@@ -24,10 +24,10 @@ const VoteResults: React.FunctionComponent = () => {
   const doGetVoteResults = useGetVoteResults();
 
   useEffect(() => {
-    if (game) {
-      doGetVoteResults(game.uuid);
+    if (game && room) {
+      doGetVoteResults(game.uuid, room.uuid);
     }
-  }, [doGetVoteResults, game]);
+  }, [doGetVoteResults, game, room]);
 
   if (!room || !game) return null;
 

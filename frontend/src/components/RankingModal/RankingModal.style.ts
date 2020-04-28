@@ -11,7 +11,7 @@ export const StyledHeader = styled(Header2)`
 
 StyledHeader.displayName = 'StyledHeader';
 
-export const PlayerScore = styled.div`
+export const PlayerScore = styled.div<{ backgroundColor: string }>`
   padding: 6px 15px;
   margin-bottom: 8px;
   color: ${colorPalette.white};
@@ -19,6 +19,7 @@ export const PlayerScore = styled.div`
   display: flex;
   font-weight: ${fontWeight.bold};
   position: relative;
+  background-color: ${({ backgroundColor }) => backgroundColor};
 `;
 
 PlayerScore.displayName = 'PlayerScore';

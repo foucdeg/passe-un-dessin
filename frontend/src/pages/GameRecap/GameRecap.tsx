@@ -4,14 +4,13 @@ import PadRecap from 'components/PadRecap';
 import {
   OuterRecapContainer,
   GameRecapContainer,
-  InnerDoneModal,
+  StyledModal,
+  StyledButton,
   PadTabsRow,
   StyledHeader,
   VoteReminder,
 } from './GameRecap.style';
 import { Pad } from 'redux/Game/types';
-import Modal from 'components/Modal';
-import Button from 'components/Button';
 import { useGoToVoteResults } from 'redux/Game/hooks';
 import { selectRoom, selectPlayerIsAdmin } from 'redux/Room/selectors';
 import { selectGame, selectAllVoteCount } from 'redux/Game/selectors';
@@ -76,22 +75,20 @@ const GameRecap: React.FunctionComponent = () => {
       <VoteReminder>
         <FormattedMessage id="recap.availableVotes" values={{ availableVoteCount }} />
       </VoteReminder>
-      <Modal isOpen={doneModalIsOpen} onClose={() => setDoneModalIsOpen(false)}>
-        <InnerDoneModal>
-          <StyledHeader>
-            <FormattedMessage id="finishedModal.title" />
-          </StyledHeader>
-          <p>
-            <FormattedMessage id="finishedModal.description" />
-          </p>
-          <p>
-            <FormattedMessage id="finishedModal.navigate" />
-          </p>
-          <Button onClick={() => setDoneModalIsOpen(false)}>
-            <FormattedMessage id="finishedModal.seeResults" />
-          </Button>
-        </InnerDoneModal>
-      </Modal>
+      <StyledModal isOpen={doneModalIsOpen} onClose={() => setDoneModalIsOpen(false)}>
+        <StyledHeader>
+          <FormattedMessage id="finishedModal.title" />
+        </StyledHeader>
+        <p>
+          <FormattedMessage id="finishedModal.description" />
+        </p>
+        <p>
+          <FormattedMessage id="finishedModal.navigate" />
+        </p>
+        <StyledButton onClick={() => setDoneModalIsOpen(false)}>
+          <FormattedMessage id="finishedModal.seeResults" />
+        </StyledButton>
+      </StyledModal>
       {isPlayerAdmin && (
         <TopRightButtons>
           <TopRightButton onClick={goToVoteResults}>
