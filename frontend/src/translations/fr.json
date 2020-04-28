@@ -118,5 +118,10 @@
   "rankingModal": {
     "title": "Scores",
     "noRanking": "Il n'y a pas encore de classement."
+  },
+  "ranking": {
+    "1": "🏆 {playerName} ({score} point{ score, plural, one {} other {s}})",
+    "2": "🥈 {playerName} ({score} point{ score, plural, one {} other {s}})",
+    "3": "🥉 {playerName} ({score} point{ score, plural, one {} other {s}})"
   }
 }
