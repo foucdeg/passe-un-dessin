@@ -1,0 +1,59 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: Job4 Api - Creation of images S3 bucket
+
+Parameters:
+  BucketName:
+    Type: String
+    Description: S3 bucket name
+    Default: job4-api-images
+
+  Env:
+    Description: The environment name deployed
+    Type: String
+    Default: dev
+
+Resources:
+  ImagesBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub ${BucketName}-${Env}
+      Tags:
+        - Key: Project
+          Value: Job4Api
+        - Key: Env
+          Value: !Ref Env
+      AccessControl: PublicRead
+      CorsConfiguration:
+        CorsRules:
+          -
+            AllowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            AllowedOrigins:
+              - "*"
+            AllowedHeaders:
+              - "*"
+  S3PolicyImagesBucket:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref ImagesBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: PublicReadGetObject
+            Effect: Allow
+            Principal: '*'
+            Action: s3:GetObject
+            Resource:
+              Fn::Join:
+                - ''
+                - - 'arn:aws:s3:::'
+                  - !Ref ImagesBucket
+                  - '/*'
+
+Outputs:
+  ImagesS3Bucket:
+    Value: !Ref ImagesBucket

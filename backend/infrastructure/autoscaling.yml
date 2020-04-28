@@ -1,0 +1,176 @@
+Description: Job4 Api - Autoscaling Group
+
+Parameters:
+  InstanceProfile:
+    Type: String
+
+  Subnets:
+    Type: List<AWS::EC2::Subnet::Id>
+
+  Env:
+    Type: String
+    Default: staging
+
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+
+  MinClusterSize:
+    Type: Number
+    Default: 1
+
+  MaxClusterSize:
+    Type: Number
+    Default: 1
+
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup::Id
+
+  InstanceType:
+    Type: String
+    Default: t2.small
+
+  ECSCluster:
+    Type: String
+
+  AssiociatePublicIp:
+    Type: String
+
+Mappings:
+  AWSRegionToAMI:
+    us-east-1:
+      AMI: ami-07eb698ce660402d2
+    us-east-2:
+      AMI: ami-0a0c6574ce16ce87a
+    us-west-1:
+      AMI: ami-04c22ba97a0c063c4
+    us-west-2:
+      AMI: ami-09568291a9d6c804c
+    eu-west-1:
+      AMI: ami-066826c6a40879d75
+    eu-west-2:
+      AMI: ami-0cb31bf24b130a0f9
+    eu-west-3:
+      AMI: ami-0a0948de946510ec0
+    eu-central-1:
+      AMI: ami-0b9fee3a2d0596ed1
+    ap-northeast-1:
+      AMI: ami-0edf19001c48838c7
+    ap-northeast-2:
+      AMI: ami-0b52e57bed048ca48
+    ap-southeast-1:
+      AMI: ami-08d4fe232c67b81b8
+    ap-southeast-2:
+      AMI: ami-08c26730c8ee004fa
+    ca-central-1:
+      AMI: ami-055750f063052ec55
+    ap-south-1:
+      AMI: ami-05f009513cd58ac90
+    sa-east-1:
+      AMI: ami-0ada25501ac1375b3
+
+Resources:
+  AutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      VPCZoneIdentifier: !Ref Subnets
+      LaunchConfigurationName: !Ref LaunchConfiguration
+      MinSize: !Ref MinClusterSize
+      MaxSize: !Ref MaxClusterSize
+      DesiredCapacity: !Ref MinClusterSize
+      MetricsCollection:
+      - Granularity: 1Minute
+      Tags:
+      - Key: Name
+        Value: Job4 Api - ECS Host
+        PropagateAtLaunch: true
+      - Key: Project
+        Value: !Sub Job4Api
+        PropagateAtLaunch: true
+      - Key: Env
+        Value: !Ref Env
+        PropagateAtLaunch: true
+
+  LaunchConfiguration:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Properties:
+      AssociatePublicIpAddress: !Ref AssiociatePublicIp
+      KeyName: !Ref KeyName
+      ImageId: !FindInMap [ AWSRegionToAMI, !Ref "AWS::Region", AMI ]
+      InstanceType: !Ref InstanceType
+      IamInstanceProfile: !Ref InstanceProfile
+      BlockDeviceMappings:
+      - DeviceName: "/dev/xvda"
+        Ebs:
+          VolumeSize: "50"
+          VolumeType: "gp2"
+      SecurityGroups:
+      - !Ref SecurityGroup
+      UserData:
+        "Fn::Base64": !Sub |
+          #!/bin/bash
+          echo ECS_CLUSTER=${ECSCluster} > /etc/ecs/ecs.config
+
+  StepScalingUp:
+    Type: AWS::AutoScaling::ScalingPolicy
+    Properties:
+      AdjustmentType: ChangeInCapacity
+      AutoScalingGroupName: !Ref AutoScalingGroup
+      PolicyType: StepScaling
+      MetricAggregationType: Average
+      StepAdjustments:
+      - MetricIntervalLowerBound: 0
+        MetricIntervalUpperBound: 50
+        ScalingAdjustment: 1
+      - MetricIntervalLowerBound: 50
+        ScalingAdjustment: 2
+
+  StepScalingDown:
+    Type: AWS::AutoScaling::ScalingPolicy
+    Properties:
+      AdjustmentType: ChangeInCapacity
+      AutoScalingGroupName: !Ref AutoScalingGroup
+      PolicyType: StepScaling
+      MetricAggregationType: Average
+      StepAdjustments:
+      - MetricIntervalUpperBound: 0
+        ScalingAdjustment: -1
+
+  InstancesMemoryReservedAlarmScaleDown:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      EvaluationPeriods: 4
+      Statistic: Average
+      AlarmName: !Sub Job4ApiAutoscalingMemoryReservedScaleDownAlarm-${Env}
+      Threshold: 30
+      AlarmDescription: Alarm if memory reserved by the instances is too low
+      Period: 60
+      AlarmActions:
+      - !Ref StepScalingDown
+      Namespace: AWS/ECS
+      Dimensions:
+      - Name: ClusterName
+        Value: !Ref ECSCluster
+      ComparisonOperator: LessThanThreshold
+      MetricName: MemoryReservation
+
+  InstancesMemoryReservedAlarmScaleUp:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      EvaluationPeriods: 1
+      AlarmName: !Sub Job4ApiAutoscalingMemoryReservedScaleUpAlarm-${Env}
+      Statistic: Average
+      Threshold: 60
+      AlarmDescription: Alarm if memory reserved by the instances is too high
+      Period: 60
+      AlarmActions:
+      - !Ref StepScalingUp
+      Namespace: AWS/ECS
+      Dimensions:
+      - Name: ClusterName
+        Value: !Ref ECSCluster
+      ComparisonOperator: GreaterThanThreshold
+      MetricName: MemoryReservation
+
+Outputs:
+  AutoScaling:
+    Value: !Ref AutoScalingGroup

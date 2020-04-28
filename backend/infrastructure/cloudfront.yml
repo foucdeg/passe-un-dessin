@@ -1,0 +1,112 @@
+Description: Job4 Api - Cloudfront distribution
+
+Parameters:
+  CertificateArn:
+    Type: String
+
+  PublicAlias:
+    Type: String
+
+  Env:
+    Type: String
+    Default: staging
+
+  AlbDNS:
+    Type: String
+
+Resources:
+  Distribution:
+    Type: 'AWS::CloudFront::Distribution'
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        PriceClass: PriceClass_100
+        IPV6Enabled: false
+        Aliases:
+          - !Ref PublicAlias
+
+        DefaultCacheBehavior:
+          AllowedMethods:
+          - HEAD
+          - DELETE
+          - POST
+          - GET
+          - OPTIONS
+          - PUT
+          - PATCH
+          CachedMethods:
+          - GET
+          - HEAD
+          - OPTIONS
+          Compress: true
+          DefaultTTL: 0
+          MinTTL: 0
+          MaxTTL: 0
+          TargetOriginId: !Ref AlbDNS
+          ViewerProtocolPolicy: redirect-to-https
+          SmoothStreaming: false
+          ForwardedValues:
+            Headers:
+            - CloudFront-Forwarded-Proto
+            - Host
+            - Origin
+            - Authorization
+            - sessionid
+            Cookies:
+              Forward: all
+            QueryString: true
+
+        CustomErrorResponses:
+        - ErrorCode: 400
+          ErrorCachingMinTTL: 0
+        - ErrorCode: 403
+          ErrorCachingMinTTL: 0
+        - ErrorCode: 404
+          ErrorCachingMinTTL: 0
+        - ErrorCode: 405
+          ErrorCachingMinTTL: 0
+        - ErrorCode: 414
+          ErrorCachingMinTTL: 0
+        - ErrorCode: 416
+          ErrorCachingMinTTL: 0
+        - ErrorCode: 500
+          ErrorCachingMinTTL: 0
+        - ErrorCode: 501
+          ErrorCachingMinTTL: 0
+        - ErrorCode: 502
+          ErrorCachingMinTTL: 0
+        - ErrorCode: 503
+          ErrorCachingMinTTL: 0
+        - ErrorCode: 504
+          ErrorCachingMinTTL: 0
+
+        ViewerCertificate:
+          AcmCertificateArn: !Ref CertificateArn
+          SslSupportMethod: sni-only
+          MinimumProtocolVersion: TLSv1.1_2016
+
+        Origins:
+        - Id: !Ref AlbDNS
+          DomainName: !Ref AlbDNS
+          CustomOriginConfig:
+            OriginKeepaliveTimeout: 5
+            OriginReadTimeout: 30
+            HTTPPort: 80
+            HTTPSPort: 443
+            OriginProtocolPolicy: https-only
+            OriginSSLProtocols:
+            - TLSv1
+            - TLSv1.1
+            - TLSv1.2
+
+      Tags:
+      - Key: Project
+        Value: Job4Api
+
+Outputs:
+  Distribution:
+    Value: !Ref Distribution
+
+  DistribitionDomain:
+    Value: !GetAtt Distribution.DomainName
+

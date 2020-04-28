@@ -1,0 +1,122 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: Job4 Api - IAM Roles
+
+Parameters:
+  Env:
+    Type: String
+    Default: staging
+
+Resources:
+  Job4ApiEC2Role:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub job4-api-ec2-role-${Env}
+      Path: /
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        -
+          Effect: "Allow"
+          Principal:
+            Service:
+            - "ec2.amazonaws.com"
+          Action:
+          - "sts:AssumeRole"
+      ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role
+
+  Job4ApiEC2InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      InstanceProfileName: !Sub job4-api-ec2-instance-profile-${Env}
+      Path: /
+      Roles:
+      - !Ref Job4ApiEC2Role
+
+  Job4ApiServiceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub job4-api-service-role-${Env}
+      Path: /
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        -
+          Effect: "Allow"
+          Principal:
+            Service:
+            - "ecs.amazonaws.com"
+          Action:
+          - "sts:AssumeRole"
+      ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole
+
+  Job4ApiAutoScaleRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub job4-api-autoscale-role-${Env}
+      Path: /
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        -
+          Effect: "Allow"
+          Principal:
+            Service:
+            - "application-autoscaling.amazonaws.com"
+          Action:
+          - "sts:AssumeRole"
+      ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceAutoscaleRole
+
+  Job4ApiTaskRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub job4-api-task-role-${Env}
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        -
+          Effect: "Allow"
+          Principal:
+            Service:
+            - "ecs-tasks.amazonaws.com"
+          Action:
+          - "sts:AssumeRole"
+      Path: /
+      Policies:
+      -
+        PolicyName: !Sub LogAuthorization-${Env}
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+          -
+            Effect: "Allow"
+            Action:
+            - "logs:CreateLogGroup"
+            - "logs:CreateLogStream"
+            - "logs:PutLogEvents"
+            Resource: "*"
+      -
+        PolicyName: !Sub S3Access-${Env}
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Action:
+                - "s3:*"
+              Resource:
+                - "*"
+
+Outputs:
+  Job4ApiEC2Role:
+    Value: !Ref Job4ApiEC2Role
+  Job4ApiEC2InstanceProfile:
+    Value: !Ref Job4ApiEC2InstanceProfile
+  Job4ApiServiceRole:
+    Value: !Ref Job4ApiServiceRole
+  Job4ApiAutoScaleRole:
+    Value: !Ref Job4ApiAutoScaleRole
+  Job4ApiTaskRole:
+    Value: !Ref Job4ApiTaskRole

@@ -1,0 +1,21 @@
+Description: Job4 Api - ECR Repositories
+
+Parameters:
+  Job4ApiRepositoryName:
+    Type: String
+    Default: job4/api
+  Env:
+    Type: String
+    Default: staging
+
+Resources:
+  Job4ApiRepository:
+    Type: "AWS::ECR::Repository"
+    Properties:
+      RepositoryName: !Sub ${Job4ApiRepositoryName}-${Env}
+
+Outputs:
+  Job4ApiRepository:
+    Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${Job4ApiRepositoryName}-${Env}
+  Job4ApiRepositoryName:
+    Value: !Sub ${Job4ApiRepositoryName}-${Env}

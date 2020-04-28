@@ -1,0 +1,85 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: PasseUnDessin front - Cloudfront distribution for S3 frontend
+
+Parameters:
+  Env:
+    Type: String
+
+  S3Bucket:
+    Type: String
+
+Resources:
+  Distribution:
+    Type: 'AWS::CloudFront::Distribution'
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        PriceClass: PriceClass_100
+        IPV6Enabled: false
+
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+          CachedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+          Compress: true
+          DefaultTTL: 0
+          MinTTL: 0
+          MaxTTL: 0
+          TargetOriginId: !Sub S3-${S3Bucket}
+          ViewerProtocolPolicy: redirect-to-https
+          SmoothStreaming: false
+          ForwardedValues:
+            Cookies:
+              Forward: all
+            QueryString: true
+
+        CustomErrorResponses:
+          - ErrorCode: 400
+            ErrorCachingMinTTL: 0
+          - ErrorCode: 403
+            ErrorCachingMinTTL: 0
+          - ErrorCode: 404
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+            ErrorCachingMinTTL: 0
+          - ErrorCode: 405
+            ErrorCachingMinTTL: 0
+          - ErrorCode: 414
+            ErrorCachingMinTTL: 0
+          - ErrorCode: 416
+            ErrorCachingMinTTL: 0
+          - ErrorCode: 500
+            ErrorCachingMinTTL: 0
+          - ErrorCode: 501
+            ErrorCachingMinTTL: 0
+          - ErrorCode: 502
+            ErrorCachingMinTTL: 0
+          - ErrorCode: 503
+            ErrorCachingMinTTL: 0
+          - ErrorCode: 504
+            ErrorCachingMinTTL: 0
+
+        Origins:
+          - Id: !Sub S3-${S3Bucket}
+            DomainName: !Sub ${S3Bucket}.s3.amazonaws.com
+            S3OriginConfig:
+              OriginAccessIdentity: ''
+        DefaultRootObject: index.html
+
+      Tags:
+        - Key: Project
+          Value: PasseUnDessinFront
+        - Key: Env
+          Value: !Ref Env
+
+Outputs:
+  Distribution:
+    Value: !Ref Distribution
+  DistribitionDomain:
+    Value: !GetAtt Distribution.DomainName

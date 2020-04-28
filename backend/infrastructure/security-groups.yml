@@ -1,0 +1,71 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: Job4 Api - Creation of all SecurityGroups
+
+Parameters:
+  VpcId:
+    Description: VPC ID
+    Type: AWS::EC2::VPC::Id
+
+  Env:
+    Description: The environment name deployed
+    Type: String
+    Default: staging
+
+Resources:
+  Job4ApiSg:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub job4-api-sg-${Env}
+      GroupDescription: job4-api-sg
+      SecurityGroupIngress:
+      -
+        IpProtocol: tcp
+        FromPort: 0
+        ToPort: 65535
+        SourceSecurityGroupId: !Ref Job4ApiAlbSg
+      -
+        IpProtocol: tcp
+        FromPort: 22
+        ToPort: 22
+        CidrIp: 0.0.0.0/0
+      Tags:
+      - Key: Name
+        Value: job4-api-sg
+      VpcId: !Ref VpcId
+  Job4ApiAlbSg:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub job4-api-alb-sg-${Env}
+      GroupDescription: job4-api-alb-sg
+      SecurityGroupIngress:
+      -
+        IpProtocol: tcp
+        FromPort: 80
+        ToPort: 80
+        CidrIp: 0.0.0.0/0
+      -
+        IpProtocol: tcp
+        FromPort: 80
+        ToPort: 80
+        CidrIpv6: ::/0
+      -
+        IpProtocol: tcp
+        FromPort: 443
+        ToPort: 443
+        CidrIp: 0.0.0.0/0
+      -
+        IpProtocol: tcp
+        FromPort: 443
+        ToPort: 443
+        CidrIpv6: ::/0
+      Tags:
+      - Key: Name
+        Value: job4-api-alb-sg
+      VpcId: !Ref VpcId
+
+Outputs:
+  Job4ApiSg:
+    Value: !Ref Job4ApiSg
+  Job4ApiAlbSg:
+    Value: !Ref Job4ApiAlbSg
