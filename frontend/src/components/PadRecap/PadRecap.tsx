@@ -24,7 +24,11 @@ const PadRecap: React.FC<Props> = ({ pad }) => {
         <React.Fragment key={step.uuid}>
           <ArrowSpacer />
           {step.step_type === StepType.WORD_TO_DRAWING ? (
-            <DrawingRecap step={step} enableVote={player && step.player.uuid !== player.uuid} />
+            <DrawingRecap
+              width={236}
+              step={step}
+              enableVote={player && step.player.uuid !== player.uuid}
+            />
           ) : (
             <SentenceRecap
               sentence={step.sentence}

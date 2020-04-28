@@ -6,10 +6,11 @@ import { useGetVoteResults } from 'redux/Game/hooks';
 import { selectRoom, selectPlayerIsAdmin } from 'redux/Room/selectors';
 import { selectGame, selectWinners } from 'redux/Game/selectors';
 import NewGameModal from 'components/NewGameModal';
-import DrawingRecap from 'components/DrawingRecap';
+import Podium from 'components/Podium';
 import { FormattedMessage } from 'react-intl';
 import TopRightButtons from 'atoms/TopRightButtons';
 import TopRightButton from 'atoms/TopRightButton';
+import { Container } from './VoteResults.style';
 
 const VoteResults: React.FunctionComponent = () => {
   const room = useSelector(selectRoom);
@@ -37,18 +38,8 @@ const VoteResults: React.FunctionComponent = () => {
   };
 
   return (
-    <>
-      {winners &&
-        (winners.length ? (
-          winners.map((winner, index) => (
-            <div key={winner.uuid}>
-              <div>{index + 1}</div>
-              <DrawingRecap step={winner} />
-            </div>
-          ))
-        ) : (
-          <div>No votes</div>
-        ))}
+    <Container>
+      {winners && (winners.length ? <Podium winners={winners} /> : <div>No votes</div>)}
       <TopRightButtons>
         <TopRightButton onClick={leaveGame}>
           <FormattedMessage id="voteResults.leaveTeam" />
@@ -60,7 +51,7 @@ const VoteResults: React.FunctionComponent = () => {
         )}
       </TopRightButtons>
       <NewGameModal isOpen={newGameModalIsOpen} onClose={() => setNewGameModalIsOpen(false)} />
-    </>
+    </Container>
   );
 };
 
