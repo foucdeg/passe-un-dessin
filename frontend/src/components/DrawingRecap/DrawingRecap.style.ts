@@ -1,11 +1,16 @@
 import styled from 'styled-components';
 
-export const StyledDrawingRecap = styled.div`
+export const StyledDrawingRecap = styled.div<{
+  width: number;
+  hidePlayerName?: boolean;
+  hideBorder?: boolean;
+}>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 240px;
-  height: 260px;
+  width: ${({ width }) => width + 4}px;
+  height: ${({ width, hidePlayerName, hideBorder }) =>
+    width + (hideBorder ? 0 : 4) + (hidePlayerName ? 0 : 20)}px;
   justify-content: space-between;
   margin-bottom: 8px;
   letter-spacing: 0.1em;

@@ -34,12 +34,12 @@ export const Gutter = styled.div`
 `;
 RightSide.displayName = 'RightSide';
 
-export const CanvasWrapper = styled.div`
+export const CanvasWrapper = styled.div<{ hideBorder?: boolean }>`
   position: relative;
 
   /* canvas border */
   & > :first-child {
-    border: 2px solid ${colorPalette.textGrey};
+    ${({ hideBorder }) => !hideBorder && `border: 2px solid ${colorPalette.textGrey}`};
     border-radius: 16px;
   }
 `;

@@ -19,9 +19,12 @@ import thumb from 'assets/thumb.png';
 interface Props {
   step: PadStep;
   enableVote?: boolean | null;
+  hidePlayerName?: boolean;
+  hideBorder?: boolean;
+  width: number;
 }
 
-const DrawingRecap: React.FC<Props> = ({ step, enableVote }) => {
+const DrawingRecap: React.FC<Props> = ({ step, enableVote, hidePlayerName, hideBorder, width }) => {
   const player = useSelector(selectPlayer);
   const availableVoteCount = useSelector(selectAvailableVoteCount);
 
@@ -40,13 +43,13 @@ const DrawingRecap: React.FC<Props> = ({ step, enableVote }) => {
   };
 
   return (
-    <StyledDrawingRecap>
-      <SentenceHeader>{step.player.name}</SentenceHeader>
-      <CanvasWrapper>
+    <StyledDrawingRecap width={width} hidePlayerName={hidePlayerName} hideBorder={hideBorder}>
+      {!hidePlayerName && <SentenceHeader>{step.player.name}</SentenceHeader>}
+      <CanvasWrapper hideBorder={hideBorder}>
         <CanvasDraw
           disabled
-          canvasWidth={236}
-          canvasHeight={236}
+          canvasWidth={width}
+          canvasHeight={width}
           hideGrid
           saveData={lzString.decompressFromBase64(step.drawing)}
         />
