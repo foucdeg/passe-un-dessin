@@ -12,6 +12,7 @@ import { getRedirectPath } from 'services/game.service';
 import { DEFAULT_ROUND_DURATION } from './constants';
 import { useIntl } from 'react-intl';
 import { wait } from 'services/utils';
+import { useGetRanking } from 'redux/Room/hooks';
 
 export const useFetchGame = () => {
   const dispatch = useDispatch();
@@ -97,18 +98,20 @@ export const useGoToVoteResults = () => {
 
 export const useGetVoteResults = () => {
   const dispatch = useDispatch();
+  const doGetRanking = useGetRanking();
 
   return useCallback(
-    async (gameId: string) => {
+    async (gameId: string, roomId: string) => {
       try {
         const response = await client.get(`/game/${gameId}/vote-results`);
         dispatch(setWinners(response['winners']));
+        doGetRanking(roomId);
       } catch (e) {
         alert('Error - see console');
         console.error(e);
       }
     },
-    [dispatch],
+    [dispatch, doGetRanking],
   );
 };
 

@@ -7,7 +7,9 @@ export interface Room {
   is_in_game: boolean;
 }
 
-export interface Ranking {
+export interface PlayerRanking {
   player: Player;
   vote_count: number;
 }
+
+export type RoomRanking = PlayerRanking[];
