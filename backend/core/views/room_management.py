@@ -1,8 +1,12 @@
 import json
 import logging
 
-from core.messages import (GameStartsMessage, NewAdminMessage,
-                           PlayerConnectedMessage, PlayerLeftMessage)
+from core.messages import (
+    GameStartsMessage,
+    NewAdminMessage,
+    PlayerConnectedMessage,
+    PlayerLeftMessage,
+)
 from core.models import Game, GamePhase, Player, Room
 from core.serializers import PlayerSerializer, RoomSerializer
 from core.service.game_service import initialize_game
@@ -201,7 +205,7 @@ def start_game(request, room_id):
 
 def get_ranking(request, room_id):
     if request.method != "GET":
-        return HttpResponseBadRequest("PUT expected")
+        return HttpResponseBadRequest("GET expected")
 
     try:
         Room.objects.get(uuid=room_id)

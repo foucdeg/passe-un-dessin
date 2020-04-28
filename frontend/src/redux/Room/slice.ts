@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Room, Ranking } from './types';
+import { Room, RoomRanking } from './types';
 import { Player } from 'redux/Player/types';
 
 export type RoomState = Readonly<{
   room: Room | null;
-  ranking: Ranking[] | null;
+  ranking: RoomRanking | null;
 }>;
 
 const initialState: RoomState = { room: null, ranking: null } as RoomState;
@@ -16,7 +16,7 @@ const roomSlice = createSlice({
     updateRoom: (state, action: PayloadAction<Room | null>) => {
       state.room = action.payload;
     },
-    updateRanking: (state, action: PayloadAction<Ranking[]>) => {
+    updateRanking: (state, action: PayloadAction<RoomRanking>) => {
       state.ranking = action.payload;
     },
     addPlayerToRoom: (state, action: PayloadAction<Player>) => {
