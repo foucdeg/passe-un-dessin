@@ -96,7 +96,7 @@ const Game: React.FunctionComponent = () => {
           return dispatch(setPlayerViewingPad({ player: messagePlayer, pad: messagePad }));
 
         case SERVER_EVENT_TYPES.VOTE_RESULTS_STARTS:
-          doFetchGame(game.uuid);
+          doFetchGame({ gameId: game.uuid });
 
           return push(`/room/${room.uuid}/game/${game.uuid}/vote-results`);
 
