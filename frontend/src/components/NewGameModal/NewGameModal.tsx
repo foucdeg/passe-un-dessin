@@ -22,19 +22,19 @@ const NewGameModal: React.FC<Props> = ({ isOpen, onClose }) => {
 
   const doStartGame = useStartGame();
 
-  if (!room) return null;
+  if (!room || !game) return null;
 
   const startSameGame = () => {
     doStartGame(
       room.uuid,
       roundDuration,
-      room.players.map(player => player.uuid),
+      game.players.map(player => player.uuid),
     );
     onClose();
   };
 
   const startReverseGame = () => {
-    doStartGame(room.uuid, roundDuration, room.players.map(player => player.uuid).reverse());
+    doStartGame(room.uuid, roundDuration, game.players.map(player => player.uuid).reverse());
     onClose();
   };
 
