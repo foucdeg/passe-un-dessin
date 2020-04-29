@@ -18,18 +18,14 @@ import thumb from 'assets/thumb.png';
 
 interface Props {
   step: PadStep;
-  enableVote?: boolean | null;
-  hidePlayerName?: boolean;
-  hideBorder?: boolean;
-  width: number;
 }
 
-const DrawingRecap: React.FC<Props> = ({ step, enableVote, hidePlayerName, hideBorder, width }) => {
+const DrawingRecap: React.FC<Props> = ({ step }) => {
   const player = useSelector(selectPlayer);
   const availableVoteCount = useSelector(selectAvailableVoteCount);
 
   const liked = !!(player && step.votes.find(vote => vote.player.uuid === player.uuid));
-  const displayToggleVote = enableVote && (availableVoteCount > 0 || liked);
+  const displayToggleVote = availableVoteCount > 0 || liked;
 
   const doSaveVote = useSaveVote();
   const doDeleteVote = useDeleteVote();
@@ -43,13 +39,13 @@ const DrawingRecap: React.FC<Props> = ({ step, enableVote, hidePlayerName, hideB
   };
 
   return (
-    <StyledDrawingRecap width={width} hidePlayerName={hidePlayerName} hideBorder={hideBorder}>
-      {!hidePlayerName && <SentenceHeader>{step.player.name}</SentenceHeader>}
-      <CanvasWrapper hideBorder={hideBorder}>
+    <StyledDrawingRecap>
+      <SentenceHeader>{step.player.name}</SentenceHeader>
+      <CanvasWrapper>
         <CanvasDraw
           disabled
-          canvasWidth={width}
-          canvasHeight={width}
+          canvasWidth={236}
+          canvasHeight={236}
           hideGrid
           saveData={lzString.decompressFromBase64(step.drawing)}
         />
@@ -58,7 +54,7 @@ const DrawingRecap: React.FC<Props> = ({ step, enableVote, hidePlayerName, hideB
             <ToggleLikeThumb src={thumb} liked={liked} />
           </ToggleLike>
         )}
-        {liked && enableVote && <AlreadyLikedThumb src={thumb} />}
+        {liked && <AlreadyLikedThumb src={thumb} />}
       </CanvasWrapper>
     </StyledDrawingRecap>
   );
