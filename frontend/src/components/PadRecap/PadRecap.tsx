@@ -3,15 +3,12 @@ import { Pad, StepType } from 'redux/Game/types';
 import { PadRecapRow, ArrowSpacer } from './PadRecap.style';
 import SentenceRecap from 'components/SentenceRecap';
 import DrawingRecap from 'components/DrawingRecap';
-import { selectPlayer } from 'redux/Player/selectors';
-import { useSelector } from 'redux/useSelector';
 
 interface Props {
   pad: Pad;
 }
 
 const PadRecap: React.FC<Props> = ({ pad }) => {
-  const player = useSelector(selectPlayer);
   return (
     <PadRecapRow>
       <SentenceRecap
