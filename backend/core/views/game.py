@@ -194,7 +194,7 @@ def toggle_vote(request, pad_step_id):
     ):
         return HttpResponseBadRequest("You cannot vote for this game")
 
-    if pad_step.player.uuid == player_id:
+    if str(pad_step.player.uuid) == str(player_id):
         return HttpResponseBadRequest("You cannot vote for your own drawing")
 
     if request.method == "POST":
