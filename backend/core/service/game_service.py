@@ -2,6 +2,8 @@ import logging
 from random import sample
 from typing import List
 
+from django_eventstream import send_event
+
 from core.messages import (
     AllVoteCountMessage,
     DebriefStartsMessage,
@@ -9,7 +11,6 @@ from core.messages import (
     VoteResultsStartsMessage,
 )
 from core.models import Game, GamePhase, Pad, PadStep, Player, Room, StepType, Vote
-from django_eventstream import send_event
 
 logger = logging.getLogger(__name__)
 
