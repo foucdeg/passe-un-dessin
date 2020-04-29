@@ -27,6 +27,7 @@ class GamePhase(Enum):
     INIT = "INIT"
     ROUNDS = "ROUNDS"
     DEBRIEF = "DEBRIEF"
+    VOTE_RESULTS = "VOTE_RESULTS"
 
 
 class StepType(Enum):
@@ -42,7 +43,6 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
         get_latest_by = "created_at"
-        ordering = ("-created_at",)
 
     def __str__(self):
         return f"{self.__class__.__name__.lower()}:{str(self.uuid)[:6]}"
@@ -116,7 +116,7 @@ class Room(BaseModel):
 class Game(BaseModel):
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="games")
     phase = models.CharField(
-        max_length=10,
+        max_length=12,
         choices=[(phase.value, phase.value) for phase in GamePhase],
         default="INIT",
     )
@@ -161,10 +161,17 @@ class PadStep(BaseModel):
         choices=[(step_type.value, step_type.value) for step_type in StepType],
     )
     round_number = models.IntegerField()
-    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name="steps")
 
     sentence = models.CharField(max_length=100, blank=True, null=True)
     drawing = models.TextField(null=True, blank=True)
+
+
+class Vote(BaseModel):
+    pad_step = models.ForeignKey(
+        PadStep, on_delete=models.CASCADE, related_name="votes",
+    )
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
 
 
 @receiver(models.signals.pre_save, sender=Player)

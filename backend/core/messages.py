@@ -96,6 +96,19 @@ class DebriefStartsMessage:
         return DebriefStartsMessageSerializer(self).data
 
 
+class AllVoteCountMessage:
+    message_type = "ALL_VOTE_COUNT"
+    all_vote_count = None
+
+    def __init__(self, all_vote_count: int):
+        self.all_vote_count = all_vote_count
+
+    def serialize(self):
+        from core.serializers import AllVoteCountMessageSerializer
+
+        return AllVoteCountMessageSerializer(self).data
+
+
 class PlayerViewingPadMessage:
     message_type = "PLAYER_VIEWING_PAD"
     pad = None
@@ -109,3 +122,16 @@ class PlayerViewingPadMessage:
         from core.serializers import PlayerViewingPadMessageSerializer
 
         return PlayerViewingPadMessageSerializer(self).data
+
+
+class VoteResultsStartsMessage:
+    message_type = "VOTE_RESULTS_STARTS"
+    game = None
+
+    def __init__(self, game: Game):
+        self.game = game
+
+    def serialize(self):
+        from core.serializers import VoteResultsStartsMessageSerializer
+
+        return VoteResultsStartsMessageSerializer(self).data

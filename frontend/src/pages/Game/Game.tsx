@@ -1,5 +1,12 @@
 import React, { useEffect, useCallback } from 'react';
-import { GameContainer, InnerGameContainer, HomeLink, HomeButton } from './Game.style';
+import {
+  GameContainer,
+  InnerGameContainer,
+  HomeLink,
+  HomeButton,
+  Ranking,
+  Score,
+} from './Game.style';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'redux/useSelector';
 
@@ -8,19 +15,20 @@ import { useFetchGame } from 'redux/Game/hooks';
 
 import { getRedirectPath } from 'services/game.service';
 import { useServerSentEvent, SERVER_EVENT_TYPES } from 'services/networking/server-events';
-import { startRound, markPlayerFinished, setPlayerViewingPad } from 'redux/Game';
+import { startRound, markPlayerFinished, setPlayerViewingPad, setAllVoteCount } from 'redux/Game';
 import { GamePhase } from 'redux/Game/types';
-import { selectRoom } from 'redux/Room/selectors';
+import { selectRoom, selectRanking } from 'redux/Room/selectors';
 import { selectGame } from 'redux/Game/selectors';
 import { selectPlayer } from 'redux/Player/selectors';
 import PlayerOrder from 'components/PlayerOrder';
-import { useIntl } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 import { useLeaveRoom } from 'redux/Room/hooks';
 import Loader from 'components/Loader';
 
 const PadInit = React.lazy(() => import('../PadInit'));
 const PadStep = React.lazy(() => import('../PadStep'));
 const GameRecap = React.lazy(() => import('../GameRecap'));
+const VoteResults = React.lazy(() => import('../VoteResults'));
 
 const Game: React.FunctionComponent = () => {
   const { gameId } = useParams();
@@ -28,6 +36,7 @@ const Game: React.FunctionComponent = () => {
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
   const player = useSelector(selectPlayer);
+  const ranking = useSelector(selectRanking);
   const { push } = useHistory();
   const location = useLocation();
   const { path } = useRouteMatch();
@@ -59,6 +68,7 @@ const Game: React.FunctionComponent = () => {
       round_number: roundNumber,
       player: messagePlayer,
       pad: messagePad,
+      all_vote_count: allVoteCount,
     }) => {
       if (!room || !game || !player || !gameId) return;
 
@@ -84,6 +94,14 @@ const Game: React.FunctionComponent = () => {
           return push(`/room/${room.uuid}/game/${game.uuid}/recap`);
         case SERVER_EVENT_TYPES.PLAYER_VIEWING_PAD:
           return dispatch(setPlayerViewingPad({ player: messagePlayer, pad: messagePad }));
+
+        case SERVER_EVENT_TYPES.VOTE_RESULTS_STARTS:
+          doFetchGame({ gameId: game.uuid });
+
+          return push(`/room/${room.uuid}/game/${game.uuid}/vote-results`);
+
+        case SERVER_EVENT_TYPES.ALL_VOTE_COUNT:
+          return dispatch(setAllVoteCount({ allVoteCount }));
       }
     },
     [dispatch, doFetchGame, game, gameId, player, push, room],
@@ -136,13 +154,29 @@ const Game: React.FunctionComponent = () => {
         <HomeButton />
       </HomeLink>
       <InnerGameContainer hasTabs={game.phase === GamePhase.DEBRIEF}>
-        {game.phase !== GamePhase.DEBRIEF && <PlayerOrder />}
+        {[GamePhase.INIT, GamePhase.ROUNDS].includes(game.phase) && <PlayerOrder />}
         <Switch>
           <Route path={`${path}/pad/:padId/init`} component={PadInit} />
           <Route path={`${path}/step/:stepId`} component={PadStep} />
           <Route path={`${path}/recap`} component={GameRecap} />
+          <Route path={`${path}/vote-results`} component={VoteResults} />
         </Switch>
       </InnerGameContainer>
+      {ranking && (
+        <Ranking>
+          {ranking.slice(0, 3).map(
+            (rank, index) =>
+              rank.vote_count > 0 && (
+                <Score key={rank.player.uuid}>
+                  <FormattedMessage
+                    id={`ranking.${index + 1}`}
+                    values={{ playerName: rank.player.name, score: rank.vote_count }}
+                  />
+                </Score>
+              ),
+          )}
+        </Ranking>
+      )}
     </GameContainer>
   );
 };

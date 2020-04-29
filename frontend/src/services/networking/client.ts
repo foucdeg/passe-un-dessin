@@ -30,16 +30,16 @@ class Client {
     return this.request('get', endpoint);
   }
 
-  post(endpoint: string, data: object) {
+  post(endpoint: string, data?: object) {
     return this.request('post', endpoint, data);
   }
 
-  put(endpoint: string, data: object) {
+  put(endpoint: string, data?: object) {
     return this.request('put', endpoint, data);
   }
 
-  delete(endpoint: string, data: object) {
-    return this.request('delete', endpoint, data);
+  delete(endpoint: string) {
+    return this.request('delete', endpoint);
   }
 }
 

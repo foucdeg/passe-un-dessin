@@ -1,15 +1,21 @@
 import json
 import logging
 
+from core.messages import PlayerFinishedMessage, PlayerViewingPadMessage
+from core.models import Game, GamePhase, Pad, PadStep, Player, Vote
+from core.serializers import GameSerializer, PadSerializer, PadStepSerializer
+from core.service.game_service import (
+    end_debrief,
+    get_available_vote_count,
+    send_all_vote_count,
+    start_next_round,
+    switch_to_rounds,
+)
 from django.db import transaction
+from django.db.models import Count
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django_eventstream import send_event
 from rest_framework.generics import RetrieveAPIView
-
-from core.messages import PlayerFinishedMessage, PlayerViewingPadMessage
-from core.models import Game, Pad, PadStep, Player
-from core.serializers import GameSerializer, PadSerializer, PadStepSerializer
-from core.service.game_service import start_next_round, switch_to_rounds
 
 logger = logging.getLogger(__name__)
 
@@ -164,3 +170,98 @@ def review_pad(request, uuid):
         PlayerViewingPadMessage(pad, player).serialize(),
     )
     return HttpResponse(status=201)
+
+
+def toggle_vote(request, pad_step_id):
+    try:
+        player_id = request.session["player_id"]
+        player = Player.objects.get(uuid=player_id)
+    except (KeyError, Player.DoesNotExist):
+        return HttpResponseBadRequest("No player ID in session, or invalid")
+
+    try:
+        pad_step = PadStep.objects.get(uuid=pad_step_id)
+    except PadStep.DoesNotExist:
+        return HttpResponseBadRequest(
+            "Pad step with uuid %s does not exist" % pad_step_id
+        )
+
+    game = pad_step.pad.game
+
+    if (
+        player_id not in [str(player.uuid) for player in game.players.all()]
+        and game.phase != GamePhase.DEBRIEF.value
+    ):
+        return HttpResponseBadRequest("You cannot vote for this game")
+
+    if pad_step.player.uuid == player_id:
+        return HttpResponseBadRequest("You cannot vote for your own drawing")
+
+    if request.method == "POST":
+        try:
+            Vote.objects.get(player=player, pad_step=pad_step)
+            return HttpResponseBadRequest(
+                "You already voted for pad_step %s" % pad_step_id
+            )
+        except Vote.DoesNotExist:
+
+            existing_player_vote_count = Vote.objects.filter(
+                player_id=player_id, pad_step__pad__game_id=game.uuid
+            ).count()
+            available_vote_count = get_available_vote_count(game)
+
+            if existing_player_vote_count >= available_vote_count:
+                return HttpResponseBadRequest(
+                    "You already reached the maximal number of vote for this game : %s"
+                    % available_vote_count
+                )
+
+            Vote.objects.create(player=player, pad_step=pad_step)
+
+    elif request.method == "DELETE":
+        try:
+            vote = Vote.objects.get(player=player, pad_step=pad_step)
+            vote.delete()
+        except Vote.DoesNotExist:
+            return HttpResponseBadRequest(
+                "You didn't vote for pad_step %s" % pad_step_id
+            )
+
+    else:
+        return HttpResponseBadRequest("POST or DELETE method expected")
+
+    send_all_vote_count(game)
+
+    pad_step = PadStep.objects.get(uuid=pad_step_id)
+    data = PadStepSerializer(pad_step).data
+    return JsonResponse(data)
+
+
+def go_to_vote_results(request, game_id):
+    if request.method != "PUT":
+        return HttpResponseBadRequest("PUT expected")
+
+    try:
+        game = Game.objects.get(uuid=game_id)
+    except Game.DoesNotExist:
+        return HttpResponseBadRequest("Game with uuid %s does not exist" % game_id)
+
+    end_debrief(game)
+
+    return HttpResponse(status=200)
+
+
+def get_vote_results(request, game_id):
+    if request.method != "GET":
+        return HttpResponseBadRequest("GET expected")
+
+    pad_steps = (
+        PadStep.objects.filter(pad__game_id=game_id)
+        .annotate(count=Count("votes"))
+        .filter(count__gt=0)
+        .order_by("-count")[:3]
+    )
+
+    data = PadStepSerializer(pad_steps, many=True).data
+
+    return JsonResponse({"winners": data})

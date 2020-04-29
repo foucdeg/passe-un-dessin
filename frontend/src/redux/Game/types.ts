@@ -4,6 +4,7 @@ export enum GamePhase {
   INIT = 'INIT',
   ROUNDS = 'ROUNDS',
   DEBRIEF = 'DEBRIEF',
+  VOTE_RESULTS = 'VOTE_RESULTS',
 }
 
 export enum StepType {
@@ -19,6 +20,7 @@ export interface PadStep {
 
   sentence: string;
   drawing: string;
+  votes: Vote[];
 }
 
 export interface Pad {
@@ -37,4 +39,8 @@ export interface Game {
   phase: GamePhase;
   current_round: number | null;
   round_duration: number;
+}
+
+export interface Vote {
+  player: Player;
 }

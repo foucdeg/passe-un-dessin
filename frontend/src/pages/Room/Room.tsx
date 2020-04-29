@@ -5,12 +5,13 @@ import { useParams, Switch, Route, useRouteMatch, useHistory } from 'react-route
 import { useSelector } from 'redux/useSelector';
 import { addPlayerToRoom, removePlayerFromRoom, nameNewAdmin } from 'redux/Room';
 import { selectRoom } from 'redux/Room/selectors';
-import { useFetchRoom, useLeaveRoom } from 'redux/Room/hooks';
+import { useFetchRoom, useLeaveRoom, useGetRanking } from 'redux/Room/hooks';
 import { Player } from 'redux/Player/types';
 
 import { SERVER_EVENT_TYPES, useServerSentEvent } from 'services/networking/server-events';
 import { selectGame } from 'redux/Game/selectors';
 import { GamePhase } from 'redux/Game/types';
+import { resetGameMetadata } from 'redux/Game/slice';
 
 import { selectPlayer } from 'redux/Player/selectors';
 import LostPlayerModal from 'components/LostPlayerModal';
@@ -28,6 +29,7 @@ const Room: React.FunctionComponent = () => {
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
   const player = useSelector(selectPlayer);
+  const doGetRanking = useGetRanking();
 
   const { path } = useRouteMatch();
   const dispatch = useDispatch();
@@ -55,6 +57,8 @@ const Room: React.FunctionComponent = () => {
           return dispatch(nameNewAdmin(messagePlayer));
 
         case SERVER_EVENT_TYPES.GAME_STARTS:
+          dispatch(resetGameMetadata());
+
           return history.push(`/room/${room?.uuid}/game/${game.uuid}`);
       }
     },
@@ -83,6 +87,14 @@ const Room: React.FunctionComponent = () => {
     setPlayerWhoLeft(null);
     setAdminChanged(false);
   }, [game]);
+
+  const gameId = game?.uuid;
+
+  useEffect(() => {
+    if (room && gameId) {
+      doGetRanking(room.uuid);
+    }
+  }, [doGetRanking, room, gameId]);
 
   if (!room) return null;
 

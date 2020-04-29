@@ -1,6 +1,5 @@
-from django.urls import path
-
 from core.views import auth, game, general, room_management
+from django.urls import path
 
 urlpatterns = [
     path("suggestions", general.get_suggestions, name="get_suggestions"),
@@ -26,5 +25,19 @@ urlpatterns = [
         game.PadStepRetrieveAPIView.as_view(),
         name="get_pad_step",
     ),
-    path("pad-step/<str:uuid>/save", game.save_step, name="save_dtep"),
+    path("pad-step/<str:uuid>/save", game.save_step, name="save_step"),
+    path(
+        "game/<str:game_id>/go-to-vote-results",
+        game.go_to_vote_results,
+        name="go_to_vote_results",
+    ),
+    path("step/<str:pad_step_id>/vote", game.toggle_vote, name="toggle_vote"),
+    path(
+        "game/<str:game_id>/vote-results",
+        game.get_vote_results,
+        name="get_vote_results",
+    ),
+    path(
+        "room/<str:room_id>/ranking", room_management.get_ranking, name="get_ranking",
+    ),
 ]

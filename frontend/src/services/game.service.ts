@@ -25,6 +25,8 @@ export const getRedirectPath = (room: Room, game: Game, player: Player) => {
       return `/room/${room.uuid}/game/${game.uuid}/step/${playerStep.uuid}`;
     case GamePhase.DEBRIEF:
       return `/room/${room.uuid}/game/${game.uuid}/recap`;
+    case GamePhase.VOTE_RESULTS:
+      return `/room/${room.uuid}/game/${game.uuid}/vote-results`;
   }
 };
 
@@ -57,6 +59,11 @@ export const getPreviousNextPlayers = (game: Game, player: Player): PreviousNext
     game.players[(game.players.length + playerIndex - 1) % game.players.length],
     game.players[(playerIndex + 1) % game.players.length],
   ];
+};
+
+export const getAvailableVoteCount = (game: Game): number => {
+  if (game.players.length <= 3) return 1;
+  return 3;
 };
 
 export const getReorderedPlayers = (game: Game, player: Player): Player[] => {

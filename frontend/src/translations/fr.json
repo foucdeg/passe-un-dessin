@@ -11,7 +11,8 @@
       "1": "Pour jouer, vous devez être à partir de 4 joueurs. L'un ou l'une d'entre vous se proclame <strong>Maître du Jeu</strong> et crée la partie. Le Maître du Jeu envoie le lien de la partie aux autres joueurs.",
       "2": "Choisis un mot que la personne après toi devra dessiner. La partie commence quand tout le monde a choisi un mot.",
       "3": "Dessine le mot proposé ou devine ce que la personne avant toi a dessiné.",
-      "4": "Quand tout le monde a pu dessiner chacun des mots, on passe aux carnets de résultats ! <strong>Regarde ce que sont devenus les mots choisis</strong> initialement par tes amis avec les talents de certains pour le dessin."
+      "4": "Quand tout le monde a pu dessiner chacun des mots, on passe aux carnets de résultats ! <strong>Regarde ce que sont devenus les mots choisis</strong> initialement par tes amis avec les talents de certains pour le dessin.",
+      "5": "Tu peux voter pour tes dessins préférés et voir le podium des meilleurs dessins de ta partie."
     }
   },
   "roomLobby": {
@@ -31,6 +32,7 @@
     "playerMenu": "Joueur",
     "adminMenu": "Actions d'administration",
     "refresh": "Resynchroniser",
+    "ranking": "Classement",
     "confirmLeave": "Une partie est en cours, es-tu sûr•e de vouloir partir ?"
   },
   "padInit": {
@@ -62,9 +64,13 @@
     "seeResults": "Voir les résultats"
   },
   "recap": {
+    "initialWord": "Mot initial",
+    "goToVoteResults": "{allVoteCount}/{maxVoteCount} vote{ allVoteCount, plural, one {} other {s}} exprimé{ allVoteCount, plural, one {} other {s}}. Voir les résultats",
+    "availableVotes": "{availableVoteCount} vote{ availableVoteCount, plural, one {} other {s}} restant{ availableVoteCount, plural, one {} other {s}}"
+  },
+  "voteResults": {
     "leaveTeam": "Quitter l'équipe",
-    "newGame": "Nouvelle partie ?",
-    "initialWord": "Mot initial"
+    "newGame": "Nouvelle partie ?"
   },
   "newGameModal": {
     "title": "Relancer une partie",
@@ -108,5 +114,17 @@
     "title": "Joueur",
     "username": "Nom du joueur",
     "submit": "Valider"
+  },
+  "rankingModal": {
+    "title": "Scores",
+    "noRanking": "Il n'y a pas encore de classement."
+  },
+  "ranking": {
+    "1": "🏆 {playerName} ({score} point{ score, plural, one {} other {s}})",
+    "2": "🥈 {playerName} ({score} point{ score, plural, one {} other {s}})",
+    "3": "🥉 {playerName} ({score} point{ score, plural, one {} other {s}})"
+  },
+  "podium": {
+    "voteCount": "{voteCount} point{ voteCount, plural, one {} other {s}}"
   }
 }

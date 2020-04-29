@@ -1,11 +1,13 @@
 import styled from 'styled-components';
-import SecondaryButton from 'components/SecondaryButton';
 import Header2 from 'atoms/Header2';
+import Modal from 'components/Modal';
+import Button from 'components/Button';
+import { colorPalette, fontSize, fontFamily } from 'stylesheet';
 
 export const OuterRecapContainer = styled.div`
   display: flex;
   flex-direction: column;
-  max-height: 100%;
+  max-height: 490px;
   overflow-y: scroll;
   width: 100%;
 `;
@@ -18,14 +20,17 @@ export const GameRecapContainer = styled.div`
 
 GameRecapContainer.displayName = 'GameRecapContainer';
 
-export const InnerDoneModal = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+export const StyledModal = styled(Modal)`
   align-items: center;
 `;
 
-InnerDoneModal.displayName = 'InnerDoneModal';
+StyledModal.displayName = 'StyledModal';
+
+export const StyledButton = styled(Button)`
+  margin-top: 20px;
+`;
+
+StyledButton.displayName = 'StyledButton';
 
 export const PadTabsRow = styled.div`
   width: 100%;
@@ -37,26 +42,19 @@ export const PadTabsRow = styled.div`
 
 PadTabsRow.displayName = 'PadTabsRow';
 
-export const TopRightButtons = styled.div`
-  position: absolute;
-  right: 0;
-  top: -40px;
-`;
-
-TopRightButtons.displayName = 'TopRightButtons';
-
-export const TopRightButton = styled(SecondaryButton)`
-  height: 32px;
-  padding: 0 16px;
-  &:not(:last-child) {
-    margin-right: 8px;
-  }
-`;
-
-TopRightButton.displayName = 'TopRightButton';
-
 export const StyledHeader = styled(Header2)`
   margin-bottom: 16px;
 `;
 
 StyledHeader.displayName = 'StyledHeader';
+
+export const VoteReminder = styled.div`
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  color: ${colorPalette.purple};
+  font-size: ${fontSize.header2};
+  font-family: ${fontFamily.titles};
+  text-transform: uppercase;
+`;

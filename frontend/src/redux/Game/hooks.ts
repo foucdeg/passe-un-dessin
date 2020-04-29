@@ -1,6 +1,6 @@
 import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
-import { updateGame, updatePad, setSuggestions } from './slice';
+import { updateGame, updatePad, setSuggestions, updatePadStep, setWinners } from './slice';
 import { Pad } from './types';
 import { useCallback, useState } from 'react';
 import { useHistory } from 'react-router';
@@ -12,6 +12,7 @@ import { getRedirectPath } from 'services/game.service';
 import { DEFAULT_ROUND_DURATION } from './constants';
 import { useIntl } from 'react-intl';
 import { wait, useTypedAsyncFn } from 'services/utils';
+import { useGetRanking } from 'redux/Room/hooks';
 
 export const useFetchGame = () => {
   const dispatch = useDispatch();
@@ -75,6 +76,42 @@ export const useStartGame = () => {
   );
 };
 
+export const useGoToVoteResults = () => {
+  const history = useHistory();
+
+  return useCallback(
+    async (roomId: string, gameId: string) => {
+      try {
+        await client.put(`/game/${gameId}/go-to-vote-results`);
+        history.push(`/room/${roomId}/game/${gameId}/vote-results`);
+      } catch (e) {
+        alert('Error - see console');
+        console.error(e);
+      }
+    },
+    [history],
+  );
+};
+
+export const useGetVoteResults = () => {
+  const dispatch = useDispatch();
+  const doGetRanking = useGetRanking();
+
+  return useCallback(
+    async (gameId: string, roomId: string) => {
+      try {
+        const response = await client.get(`/game/${gameId}/vote-results`);
+        dispatch(setWinners(response['winners']));
+        doGetRanking(roomId);
+      } catch (e) {
+        alert('Error - see console');
+        console.error(e);
+      }
+    },
+    [dispatch, doGetRanking],
+  );
+};
+
 export const useSavePad = () => {
   const dispatch = useDispatch();
 
@@ -102,4 +139,38 @@ export const useRoundDuration = (initialValue?: number | null) => {
     : null;
 
   return useState<number>(initialValue || preferredRoundDuration || DEFAULT_ROUND_DURATION);
+};
+
+export const useSaveVote = () => {
+  const dispatch = useDispatch();
+
+  return useCallback(
+    async (padStepId: string) => {
+      try {
+        const updatedStep = await client.post(`/step/${padStepId}/vote`);
+        dispatch(updatePadStep(updatedStep));
+      } catch (e) {
+        alert('Error - see console');
+        console.error(e);
+      }
+    },
+    [dispatch],
+  );
+};
+
+export const useDeleteVote = () => {
+  const dispatch = useDispatch();
+
+  return useCallback(
+    async (padStepId: string) => {
+      try {
+        const updatedStep = await client.delete(`/step/${padStepId}/vote`);
+        dispatch(updatePadStep(updatedStep));
+      } catch (e) {
+        alert('Error - see console');
+        console.error(e);
+      }
+    },
+    [dispatch],
+  );
 };

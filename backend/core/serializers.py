@@ -1,6 +1,5 @@
+from core.models import Game, Pad, PadStep, Player, Room, Vote
 from rest_framework import serializers
-
-from core.models import Game, Pad, PadStep, Player, Room
 
 
 class BaseSerializer(serializers.ModelSerializer):
@@ -22,12 +21,33 @@ class RoomSerializer(BaseSerializer):
         fields = ("uuid", "players", "admin", "is_in_game")
 
 
-class PadStepSerializer(BaseSerializer):
+class VoteSerializer(BaseSerializer):
     player = PlayerSerializer()
 
     class Meta:
+        model = Vote
+        fields = ("player",)
+
+
+class PadStepSerializer(BaseSerializer):
+    player = PlayerSerializer()
+    votes = serializers.SerializerMethodField()
+
+    def get_votes(self, instance):
+        votes = instance.votes.all()
+        return VoteSerializer(votes, many=True).data
+
+    class Meta:
         model = PadStep
-        fields = ("uuid", "step_type", "round_number", "player", "sentence", "drawing")
+        fields = (
+            "uuid",
+            "step_type",
+            "round_number",
+            "player",
+            "sentence",
+            "drawing",
+            "votes",
+        )
 
 
 class PadIdSerializer(BaseSerializer):
@@ -133,6 +153,14 @@ class DebriefStartsMessageSerializer(MessageSerializer):
     game = GameIdSerializer()
 
 
+class AllVoteCountMessageSerializer(MessageSerializer):
+    all_vote_count = serializers.IntegerField()
+
+
 class PlayerViewingPadMessageSerializer(MessageSerializer):
     pad = PadIdSerializer()
     player = PlayerSerializer()
+
+
+class VoteResultsStartsMessageSerializer(MessageSerializer):
+    game = GameIdSerializer()

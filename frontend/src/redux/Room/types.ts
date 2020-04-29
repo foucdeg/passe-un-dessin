@@ -6,3 +6,10 @@ export interface Room {
   uuid: string;
   is_in_game: boolean;
 }
+
+export interface PlayerRanking {
+  player: Player;
+  vote_count: number;
+}
+
+export type RoomRanking = PlayerRanking[];
