@@ -1,5 +1,6 @@
-from core.models import Game, Pad, PadStep, Player, Room, Vote
 from rest_framework import serializers
+
+from core.models import Game, Pad, PadStep, Player, Room, Vote
 
 
 class BaseSerializer(serializers.ModelSerializer):
@@ -31,11 +32,7 @@ class VoteSerializer(BaseSerializer):
 
 class PadStepSerializer(BaseSerializer):
     player = PlayerSerializer()
-    votes = serializers.SerializerMethodField()
-
-    def get_votes(self, instance):
-        votes = instance.votes.all()
-        return VoteSerializer(votes, many=True).data
+    votes = VoteSerializer(many=True)
 
     class Meta:
         model = PadStep
