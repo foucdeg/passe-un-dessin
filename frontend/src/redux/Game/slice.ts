@@ -37,6 +37,7 @@ const gameSlice = createSlice({
 
       const firstPadUUID = state.game.pads[0].uuid;
       state.recapViews[firstPadUUID] = [...state.game.players];
+      state.suggestions = [];
     },
     updatePad: (state, action: PayloadAction<Pad>) => {
       if (!state.game) return;
