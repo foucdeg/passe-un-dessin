@@ -4,6 +4,7 @@ import playerIcon from 'assets/person.svg';
 import cogIcon from 'assets/cog.svg';
 import rankingIcon from 'assets/ranking.svg';
 import refreshIcon from 'assets/refresh.svg';
+import playerAddIcon from 'assets/person-add.svg';
 
 export const SideButtonsContainer = styled.div`
   display: flex;
@@ -27,6 +28,13 @@ export const AdminModalButton = styled.img.attrs({ src: cogIcon })`
 `;
 
 AdminModalButton.displayName = 'AdminModalButton';
+
+export const PlayerAddButton = styled.img.attrs({ src: playerAddIcon })`
+  cursor: pointer;
+  margin-bottom: 24px;
+`;
+
+PlayerAddButton.displayName = 'PlayerAddButton';
 
 export const RankingModalButton = styled.img.attrs({ src: rankingIcon })`
   cursor: pointer;

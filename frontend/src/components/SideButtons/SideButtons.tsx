@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import copy from 'copy-to-clipboard';
+
 import { useSelector } from 'redux/useSelector';
 import { selectPlayerIsAdmin, selectRoom } from 'redux/Room/selectors';
 import { selectGame } from 'redux/Game/selectors';
@@ -7,6 +9,7 @@ import {
   SideButtonsContainer,
   PlayerModalButton,
   AdminModalButton,
+  PlayerAddButton,
   RefreshButton,
   RankingModalButton,
 } from './SideButtons.style';
@@ -24,11 +27,26 @@ const SideButtons: React.FC<{}> = () => {
   const game = useSelector(selectGame);
   const player = useSelector(selectPlayer);
 
+  const intl = useIntl();
+  const [invitePlayerButtonText, setInvitePlayerButtonText] = useState<string>(
+    intl.formatMessage({ id: 'menu.addPlayer' }),
+  );
+
   const [isAdminModalOpen, setAdminModalOpen] = useState<boolean>(false);
   const [isPlayerModalOpen, setPlayerModalOpen] = useState<boolean>(false);
   const [isRankingModalOpen, setRankingModalOpen] = useState<boolean>(false);
 
-  const intl = useIntl();
+  const onCopy = () => {
+    if (!room) return;
+
+    const roomUrl = `${window.location.origin}/room/${room.uuid}`;
+    copy(roomUrl);
+
+    setInvitePlayerButtonText(intl.formatMessage({ id: 'menu.addPlayerLinkCopied' }));
+    setTimeout(() => {
+      setInvitePlayerButtonText(intl.formatMessage({ id: 'menu.addPlayer' }));
+    }, 5000);
+  };
 
   const [{ loading }, doRefreshGame] = useRefreshGame();
 
@@ -48,6 +66,11 @@ const SideButtons: React.FC<{}> = () => {
       {room && (
         <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.ranking' })}>
           <RankingModalButton alt="Ranking" onClick={() => setRankingModalOpen(true)} />
+        </IconAndTooltip>
+      )}
+      {game && (
+        <IconAndTooltip tooltipText={invitePlayerButtonText}>
+          <PlayerAddButton alt="Add player" onClick={onCopy} />
         </IconAndTooltip>
       )}
       {game && (

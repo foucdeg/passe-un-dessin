@@ -31,6 +31,8 @@
     "stopMusic": "Couper le son",
     "playerMenu": "Joueur",
     "adminMenu": "Actions d'administration",
+    "addPlayer": "Inviter un joueur",
+    "addPlayerLinkCopied": "Lien copié !",
     "refresh": "Resynchroniser",
     "ranking": "Classement",
     "confirmLeave": "Une partie est en cours, es-tu sûr•e de vouloir partir ?"
