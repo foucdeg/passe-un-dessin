@@ -31,6 +31,8 @@
     "stopMusic": "Stop music",
     "playerMenu": "Player",
     "adminMenu": "Admin window",
+    "addPlayer": "Invite player",
+    "addPlayerLinkCopied": "Link copied!",
     "refresh": "Resynchronize",
     "ranking": "Ranking",
     "confirmLeave": "Leaving mid-game forces everyone to restart the game. Are you sure?"
