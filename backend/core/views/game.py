@@ -1,6 +1,12 @@
 import json
 import logging
 
+from django.db import transaction
+from django.db.models import Count
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django_eventstream import send_event
+from rest_framework.generics import RetrieveAPIView
+
 from core.messages import PlayerFinishedMessage, PlayerViewingPadMessage
 from core.models import Game, GamePhase, Pad, PadStep, Player, Vote
 from core.serializers import GameSerializer, PadSerializer, PadStepSerializer
@@ -11,11 +17,6 @@ from core.service.game_service import (
     start_next_round,
     switch_to_rounds,
 )
-from django.db import transaction
-from django.db.models import Count
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
-from django_eventstream import send_event
-from rest_framework.generics import RetrieveAPIView
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +24,12 @@ logger = logging.getLogger(__name__)
 class GameRetrieveAPIView(RetrieveAPIView):
     lookup_field = "uuid"
     queryset = Game.objects.prefetch_related(
-        "players", "pads", "pads__initial_player", "pads__steps", "pads__steps__player"
+        "players",
+        "pads",
+        "pads__initial_player",
+        "pads__steps",
+        "pads__steps__player",
+        "pads__steps__votes",
     ).all()
     serializer_class = GameSerializer
 
