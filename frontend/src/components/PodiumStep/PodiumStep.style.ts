@@ -1,17 +1,20 @@
 import styled from 'styled-components';
 import { colorPalette, fontSize } from 'stylesheet';
 
-export const Container = styled.div`
+export const Container = styled.div<{ width: number }>`
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100%;
+  width: ${props => props.width}px;
 `;
 Container.displayName = 'Container';
 
 export const Sentence = styled.div`
   letter-spacing: 0.1em;
   font-weight: bold;
+  text-align: center;
+  line-height: 19px;
 `;
 Sentence.displayName = 'Sentence';
 

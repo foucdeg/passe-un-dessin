@@ -22,7 +22,7 @@ interface Props {
 
 const PodiumStep: React.FC<Props> = ({ winner, width, ranking }) => {
   return (
-    <Container>
+    <Container width={width}>
       <Spacer />
       {winner && (
         <WinnerSection>

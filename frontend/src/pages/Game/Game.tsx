@@ -161,22 +161,25 @@ const Game: React.FunctionComponent = () => {
           <Route path={`${path}/recap`} component={GameRecap} />
           <Route path={`${path}/vote-results`} component={VoteResults} />
         </Switch>
-      </InnerGameContainer>
-      {ranking && (
-        <Ranking>
-          {ranking.slice(0, 3).map(
-            (rank, index) =>
-              rank.vote_count > 0 && (
+        {ranking && !!ranking.length && (
+          <Ranking>
+            {ranking
+              .filter(rank => rank.vote_count > 0)
+              .map((rank, index) => (
                 <Score key={rank.player.uuid}>
                   <FormattedMessage
-                    id={`ranking.${index + 1}`}
-                    values={{ playerName: rank.player.name, score: rank.vote_count }}
+                    id="ranking"
+                    values={{
+                      playerName: rank.player.name,
+                      score: rank.vote_count,
+                      ranking: index,
+                    }}
                   />
                 </Score>
-              ),
-          )}
-        </Ranking>
-      )}
+              ))}
+          </Ranking>
+        )}
+      </InnerGameContainer>
     </GameContainer>
   );
 };
