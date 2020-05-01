@@ -1,22 +1,16 @@
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.http import JsonResponse
+from django.views.decorators.http import require_GET
 from rest_framework.generics import UpdateAPIView
 
+from core.decorators import requires_player
 from core.models import Player
 from core.serializers import PlayerSerializer
 
 
-def get_me(request):
-    if request.method != "GET":
-        return HttpResponseBadRequest("GET expected")
-
-    try:
-        player_id = request.session["player_id"]
-        player = Player.objects.get(uuid=player_id)
-
-        return JsonResponse(PlayerSerializer(player).data)
-
-    except (KeyError, Player.DoesNotExist):
-        return HttpResponse(status=401)
+@require_GET
+@requires_player
+def get_me(request, player):
+    return JsonResponse(PlayerSerializer(player).data)
 
 
 class PlayerEditAPIView(UpdateAPIView):

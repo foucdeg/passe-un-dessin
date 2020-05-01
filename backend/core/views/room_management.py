@@ -1,21 +1,20 @@
 import json
 import logging
 
-from core.messages import (
-    GameStartsMessage,
-    NewAdminMessage,
-    PlayerConnectedMessage,
-    PlayerLeftMessage,
-)
-from core.models import Game, GamePhase, Player, Room
-from core.serializers import PlayerSerializer, RoomSerializer
-from core.service.game_service import initialize_game
 from django.db import transaction
 from django.db.models import Count
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views import View
+from django.views.decorators.http import require_GET, require_http_methods
 from django_eventstream import send_event
 from rest_framework.generics import RetrieveAPIView
+
+from core.decorators import requires_player
+from core.messages import GameStartsMessage, PlayerConnectedMessage
+from core.models import Game, GamePhase, Player, Room
+from core.serializers import PlayerSerializer, RoomSerializer
+from core.service.game_service import initialize_game
+from core.service.room_service import remove_player_from_room
 
 logger = logging.getLogger(__name__)
 
@@ -65,16 +64,9 @@ class RoomRetrieveAPIView(RetrieveAPIView):
     serializer_class = RoomSerializer
 
 
-def join_room(request, room_id):
-    if request.method != "PUT":
-        return HttpResponseBadRequest("PUT expected")
-
-    try:
-        player_id = request.session["player_id"]
-        player = Player.objects.get(uuid=player_id)
-    except (KeyError, Player.DoesNotExist):
-        return HttpResponseBadRequest("No player ID in session, or invalid")
-
+@require_http_methods(["PUT"])
+@requires_player
+def join_room(request, player, room_id):
     try:
         room = Room.objects.get(uuid=room_id)
         if room == player.room:
@@ -98,22 +90,14 @@ def join_room(request, room_id):
     return HttpResponse(status=200)
 
 
-def leave_room(request, room_id):
-    if request.method != "PUT":
-        return HttpResponseBadRequest("PUT expected")
-
-    try:
-        player_id = request.session["player_id"]
-    except KeyError:
-        return HttpResponseBadRequest("No player ID in session")
-
-    return remove_player_from_room(room_id, player_id)
+@require_http_methods(["PUT"])
+@requires_player
+def leave_room(request, player, room_id):
+    return remove_player_from_room(room_id, player.uuid.hex)
 
 
+@require_http_methods(["PUT"])
 def kick_player(request, room_id):
-    if request.method != "PUT":
-        return HttpResponseBadRequest("PUT expected")
-
     try:
         json_body = json.loads(request.body)
         player_id = json_body["playerId"]
@@ -124,59 +108,8 @@ def kick_player(request, room_id):
     return remove_player_from_room(room_id, player_id)
 
 
-def remove_player_from_room(room_id: str, player_id: str):
-    try:
-        player = Player.objects.get(uuid=player_id)
-    except Player.DoesNotExist:
-        return HttpResponseBadRequest("No player by ID %s" % player_id)
-
-    try:
-        room = Room.objects.get(uuid=room_id)
-        if room != player.room:
-            return HttpResponseBadRequest(
-                "Player %s was not room %s" % (player_id, room_id)
-            )
-    except Room.DoesNotExist:
-        return HttpResponseBadRequest("Room %s does not exist" % room_id)
-
-    with transaction.atomic():
-        player.room = None
-        player.save()
-
-        needs_new_admin = room.admin == player
-        logger.debug(
-            "Sending message for player %s leaving room %s"
-            % (player.name, room.uuid.hex[:8])
-        )
-        send_event(
-            "room-%s" % room.uuid.hex,
-            "message",
-            PlayerLeftMessage(player, needs_new_admin).serialize(),
-        )
-        if needs_new_admin:
-            new_admin = room.players.all().first()
-
-            if new_admin is not None:
-                room.admin = new_admin
-                room.save()
-
-                logger.debug(
-                    "Player %s left room %s, choosing new admin %s"
-                    % (player.name, room.uuid.hex[:8], new_admin.name)
-                )
-                send_event(
-                    "room-%s" % room.uuid.hex,
-                    "message",
-                    NewAdminMessage(new_admin).serialize(),
-                )
-
-    return HttpResponse(status=200)
-
-
+@require_http_methods(["PUT"])
 def start_game(request, room_id):
-    if request.method != "PUT":
-        return HttpResponseBadRequest("PUT expected")
-
     json_body = json.loads(request.body)
     players_order = json_body.get("playersOrder", None)
     round_duration = json_body.get("roundDuration", None)
@@ -203,10 +136,8 @@ def start_game(request, room_id):
         return HttpResponseBadRequest("Room does not exist")
 
 
+@require_GET
 def get_ranking(request, room_id):
-    if request.method != "GET":
-        return HttpResponseBadRequest("GET expected")
-
     try:
         Room.objects.get(uuid=room_id)
     except Room.DoesNotExist:
