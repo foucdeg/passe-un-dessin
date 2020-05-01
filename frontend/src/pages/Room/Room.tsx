@@ -5,7 +5,7 @@ import { useParams, Switch, Route, useRouteMatch, useHistory } from 'react-route
 import { useSelector } from 'redux/useSelector';
 import { addPlayerToRoom, removePlayerFromRoom, nameNewAdmin } from 'redux/Room';
 import { selectRoom } from 'redux/Room/selectors';
-import { useFetchRoom, useLeaveRoom, useGetRanking } from 'redux/Room/hooks';
+import { useFetchRoom, useGetRanking } from 'redux/Room/hooks';
 import { Player } from 'redux/Player/types';
 
 import { SERVER_EVENT_TYPES, useServerSentEvent } from 'services/networking/server-events';
@@ -22,7 +22,6 @@ const RoomLobby = lazy(() => import('../../pages/RoomLobby'));
 const Room: React.FunctionComponent = () => {
   const { roomId } = useParams();
   const doFetchRoom = useFetchRoom();
-  const doLeaveRoom = useLeaveRoom();
   const [playerWhoLeft, setPlayerWhoLeft] = useState<Player | null>(null);
   const [adminChanged, setAdminChanged] = useState<boolean>(false);
 
@@ -68,20 +67,6 @@ const Room: React.FunctionComponent = () => {
   const channelName = room ? `room-${room.uuid}` : null;
 
   useServerSentEvent(channelName, onRoomEvent);
-
-  const roomLeaveListener = useCallback(() => {
-    if (room) {
-      doLeaveRoom(room);
-    }
-  }, [doLeaveRoom, room]);
-
-  useEffect(() => {
-    window.addEventListener('unload', roomLeaveListener);
-
-    return () => {
-      window.removeEventListener('unload', roomLeaveListener);
-    };
-  }, [roomLeaveListener]);
 
   useEffect(() => {
     setPlayerWhoLeft(null);

@@ -138,7 +138,7 @@ const Game: React.FunctionComponent = () => {
   if (!room || !game || !player) return null;
 
   const checkLeaveRoom = (event: React.MouseEvent) => {
-    const isOkayToLeave = [GamePhase.DEBRIEF].includes(game.phase);
+    const isOkayToLeave = [GamePhase.DEBRIEF, GamePhase.VOTE_RESULTS].includes(game.phase);
 
     if (isOkayToLeave || window.confirm(intl.formatMessage({ id: 'menu.confirmLeave' }))) {
       doLeaveRoom(room);
