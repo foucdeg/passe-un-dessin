@@ -1,16 +1,19 @@
 import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
-import { updateRoom, updateRanking } from './slice';
+import { updateRoom, joinRoom, updateRanking } from './slice';
 import { useHistory } from 'react-router';
 import { Room } from './types';
 import { useCallback } from 'react';
 import { Player } from 'redux/Player/types';
+import { useSelector } from 'redux/useSelector';
+import { selectPlayer } from 'redux/Player/selectors';
 
 export const useFetchRoom = () => {
   const dispatch = useDispatch();
 
   return useCallback(
     async (roomId: string) => {
+      dispatch(updateRoom(null));
       const room = await client.get(`/room/${roomId}`);
       dispatch(updateRoom(room));
     },
@@ -40,9 +43,18 @@ export const useCreateRoom = () => {
 };
 
 export const useJoinRoom = () => {
-  return useCallback(async (roomId: string) => {
-    await client.put(`/room/${roomId}/join`, {});
-  }, []);
+  const dispatch = useDispatch();
+  const player = useSelector(selectPlayer);
+
+  return useCallback(
+    async (roomId: string) => {
+      if (!player) return;
+
+      await client.put(`/room/${roomId}/join`, {});
+      dispatch(joinRoom(player));
+    },
+    [dispatch, player],
+  );
 };
 
 export const useLeaveRoom = () => {

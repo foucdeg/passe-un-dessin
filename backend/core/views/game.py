@@ -249,3 +249,14 @@ def get_vote_results(request, game_id):
     data = PadStepSerializer(pad_steps, many=True).data
 
     return JsonResponse({"winners": data})
+
+
+@require_GET
+@requires_player
+def is_player_in_game(request, player, game_id):
+    try:
+        game = Game.objects.get(uuid=game_id)
+    except Game.DoesNotExist:
+        return HttpResponseBadRequest("Game with uuid %s does not exist" % game_id)
+
+    return JsonResponse({"is_in_game": player in game.players.all()})

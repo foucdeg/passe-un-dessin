@@ -1,5 +1,6 @@
-from core.views import auth, game, general, room_management
 from django.urls import path
+
+from core.views import auth, game, general, room_management
 
 urlpatterns = [
     path("suggestions", general.get_suggestions, name="get_suggestions"),
@@ -39,5 +40,10 @@ urlpatterns = [
     ),
     path(
         "room/<str:room_id>/ranking", room_management.get_ranking, name="get_ranking",
+    ),
+    path(
+        "game/<str:game_id>/is-player-in-game",
+        game.is_player_in_game,
+        name="is_player_in_game",
     ),
 ]
