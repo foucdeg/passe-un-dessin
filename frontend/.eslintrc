@@ -56,7 +56,7 @@
     "@typescript-eslint/camelcase": 0,
     "@typescript-eslint/interface-name-prefix": 0,
     "complexity": "off",
-    "max-lines": ["error", 200],
+    "max-lines": ["error", 300],
     "max-depth": ["error", 3],
     "max-params": ["error", 4],
     "risxss/catch-potential-xss-react": "error"

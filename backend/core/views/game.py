@@ -4,11 +4,13 @@ import logging
 from django.db import transaction
 from django.db.models import Count
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.views.decorators.http import require_GET, require_http_methods
 from django_eventstream import send_event
 from rest_framework.generics import RetrieveAPIView
 
+from core.decorators import requires_player
 from core.messages import PlayerFinishedMessage, PlayerViewingPadMessage
-from core.models import Game, GamePhase, Pad, PadStep, Player, Vote
+from core.models import Game, GamePhase, Pad, PadStep, Vote
 from core.serializers import GameSerializer, PadSerializer, PadStepSerializer
 from core.service.game_service import (
     end_debrief,
@@ -48,10 +50,9 @@ class PadStepRetrieveAPIView(RetrieveAPIView):
     serializer_class = PadStepSerializer
 
 
-def save_pad(request, uuid):
-    if request.method != "PUT":
-        return HttpResponseBadRequest("PUT expected")
-
+@require_http_methods(["PUT"])
+@requires_player
+def save_pad(request, player, uuid):
     json_body = json.loads(request.body)
 
     try:
@@ -95,10 +96,9 @@ def save_pad(request, uuid):
     return JsonResponse(PadSerializer(pad).data)
 
 
-def save_step(request, uuid):
-    if request.method != "PUT":
-        return HttpResponseBadRequest("PUT expected")
-
+@require_http_methods(["PUT"])
+@requires_player
+def save_step(request, player, uuid):
     json_body = json.loads(request.body)
 
     try:
@@ -154,16 +154,9 @@ def save_step(request, uuid):
     return JsonResponse(data)
 
 
-def review_pad(request, uuid):
-    if request.method != "PUT":
-        return HttpResponseBadRequest("PUT expected")
-
-    try:
-        player_id = request.session["player_id"]
-        player = Player.objects.get(uuid=player_id)
-    except (KeyError, Player.DoesNotExist):
-        return HttpResponseBadRequest("No player ID in session, or invalid")
-
+@require_http_methods(["PUT"])
+@requires_player
+def review_pad(request, player, uuid):
     try:
         pad = Pad.objects.get(uuid=uuid)
         game = pad.game
@@ -178,13 +171,9 @@ def review_pad(request, uuid):
     return HttpResponse(status=201)
 
 
-def toggle_vote(request, pad_step_id):
-    try:
-        player_id = request.session["player_id"]
-        player = Player.objects.get(uuid=player_id)
-    except (KeyError, Player.DoesNotExist):
-        return HttpResponseBadRequest("No player ID in session, or invalid")
-
+@require_http_methods(["POST", "DELETE"])
+@requires_player
+def toggle_vote(request, player, pad_step_id):
     try:
         pad_step = PadStep.objects.get(uuid=pad_step_id)
     except PadStep.DoesNotExist:
@@ -194,13 +183,10 @@ def toggle_vote(request, pad_step_id):
 
     game = pad_step.pad.game
 
-    if (
-        player_id not in [str(player.uuid) for player in game.players.all()]
-        and game.phase != GamePhase.DEBRIEF.value
-    ):
+    if player not in game.players.all() or game.phase != GamePhase.DEBRIEF.value:
         return HttpResponseBadRequest("You cannot vote for this game")
 
-    if str(pad_step.player.uuid) == str(player_id):
+    if pad_step.player == player:
         return HttpResponseBadRequest("You cannot vote for your own drawing")
 
     if request.method == "POST":
@@ -210,9 +196,8 @@ def toggle_vote(request, pad_step_id):
                 "You already voted for pad_step %s" % pad_step_id
             )
         except Vote.DoesNotExist:
-
             existing_player_vote_count = Vote.objects.filter(
-                player_id=player_id, pad_step__pad__game_id=game.uuid
+                player=player, pad_step__pad__game=game
             ).count()
             available_vote_count = get_available_vote_count(game)
 
@@ -233,9 +218,6 @@ def toggle_vote(request, pad_step_id):
                 "You didn't vote for pad_step %s" % pad_step_id
             )
 
-    else:
-        return HttpResponseBadRequest("POST or DELETE method expected")
-
     send_all_vote_count(game)
 
     pad_step = PadStep.objects.get(uuid=pad_step_id)
@@ -243,10 +225,8 @@ def toggle_vote(request, pad_step_id):
     return JsonResponse(data)
 
 
+@require_http_methods(["PUT"])
 def go_to_vote_results(request, game_id):
-    if request.method != "PUT":
-        return HttpResponseBadRequest("PUT expected")
-
     try:
         game = Game.objects.get(uuid=game_id)
     except Game.DoesNotExist:
@@ -257,10 +237,8 @@ def go_to_vote_results(request, game_id):
     return HttpResponse(status=200)
 
 
+@require_GET
 def get_vote_results(request, game_id):
-    if request.method != "GET":
-        return HttpResponseBadRequest("GET expected")
-
     pad_steps = (
         PadStep.objects.filter(pad__game_id=game_id)
         .annotate(count=Count("votes"))
@@ -271,3 +249,14 @@ def get_vote_results(request, game_id):
     data = PadStepSerializer(pad_steps, many=True).data
 
     return JsonResponse({"winners": data})
+
+
+@require_GET
+@requires_player
+def is_player_in_game(request, player, game_id):
+    try:
+        game = Game.objects.get(uuid=game_id)
+    except Game.DoesNotExist:
+        return HttpResponseBadRequest("Game with uuid %s does not exist" % game_id)
+
+    return JsonResponse({"is_in_game": player in game.players.all()})

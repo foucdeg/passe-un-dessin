@@ -16,6 +16,11 @@ const roomSlice = createSlice({
     updateRoom: (state, action: PayloadAction<Room | null>) => {
       state.room = action.payload;
     },
+    joinRoom: (state, action: PayloadAction<Player>) => {
+      if (!state.room?.players.some(roomPlayer => roomPlayer.uuid === action.payload.uuid)) {
+        state.room?.players.push(action.payload);
+      }
+    },
     updateRanking: (state, action: PayloadAction<RoomRanking>) => {
       state.ranking = action.payload;
     },
@@ -39,6 +44,7 @@ const roomSlice = createSlice({
 
 export const {
   updateRoom,
+  joinRoom,
   addPlayerToRoom,
   removePlayerFromRoom,
   nameNewAdmin,

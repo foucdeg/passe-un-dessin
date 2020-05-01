@@ -16,10 +16,11 @@ class PlayerSerializer(BaseSerializer):
 class RoomSerializer(BaseSerializer):
     players = PlayerSerializer(many=True)
     admin = PlayerSerializer()
+    current_game_id = serializers.UUIDField(format="hex")
 
     class Meta:
         model = Room
-        fields = ("uuid", "players", "admin", "is_in_game")
+        fields = ("uuid", "players", "admin", "current_game_id")
 
 
 class VoteSerializer(BaseSerializer):

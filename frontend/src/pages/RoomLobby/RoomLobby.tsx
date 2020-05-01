@@ -4,7 +4,7 @@ import copy from 'copy-to-clipboard';
 
 import { useJoinRoom, useLeaveRoom } from 'redux/Room/hooks';
 import { MIN_PLAYERS, MAX_PLAYERS } from 'redux/Game/constants';
-import { useStartGame, useRoundDuration } from 'redux/Game/hooks';
+import { useStartGame, useRoundDuration, useCheckIfPlayerIsInGame } from 'redux/Game/hooks';
 import { useHistory } from 'react-router';
 import Modal from 'components/Modal';
 import FieldLabel from 'atoms/FieldLabel';
@@ -30,6 +30,7 @@ const Room: React.FunctionComponent = () => {
   const doJoinRoom = useJoinRoom();
   const doLeaveRoom = useLeaveRoom();
   const doStartGame = useStartGame();
+  const doCheckIfPlayerIsInGame = useCheckIfPlayerIsInGame();
   const room = useSelector(selectRoom);
   const player = useSelector(selectPlayer);
   const history = useHistory();
@@ -43,6 +44,17 @@ const Room: React.FunctionComponent = () => {
       doJoinRoom(room.uuid);
     }
   }, [room, player, doJoinRoom]);
+
+  useEffect(() => {
+    if (
+      room &&
+      player &&
+      room.players.some(roomPlayer => roomPlayer.uuid === player.uuid) &&
+      room.current_game_id
+    ) {
+      doCheckIfPlayerIsInGame(room.current_game_id);
+    }
+  }, [room, player, doCheckIfPlayerIsInGame]);
 
   if (!room) return null;
   if (!player) return null;
@@ -101,12 +113,12 @@ const Room: React.FunctionComponent = () => {
       </PlayerChips>
 
       <ButtonRow>
-        {room.is_in_game && (
+        {room.current_game_id && (
           <HelpText>
             <FormattedMessage id="roomLobby.inGame" />
           </HelpText>
         )}
-        {!room.is_in_game && !goodNumberOfPlayers && (
+        {!room.current_game_id && !goodNumberOfPlayers && (
           <HelpText>
             <FormattedMessage
               id="roomLobby.needMore"
@@ -114,7 +126,7 @@ const Room: React.FunctionComponent = () => {
             />
           </HelpText>
         )}
-        {!room.is_in_game &&
+        {!room.current_game_id &&
           goodNumberOfPlayers &&
           (isPlayerAdmin ? (
             <>

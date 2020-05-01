@@ -180,3 +180,25 @@ export const useDeleteVote = () => {
     [dispatch],
   );
 };
+
+export const useCheckIfPlayerIsInGame = () => {
+  const { push } = useHistory();
+  const room = useSelector(selectRoom);
+
+  return useCallback(
+    async (gameId: string) => {
+      if (!room) return;
+
+      try {
+        const response = await client.get(`/game/${gameId}/is-player-in-game`);
+        if (response.is_in_game) {
+          push(`/room/${room.uuid}/game/${gameId}`);
+        }
+      } catch (e) {
+        alert('Error - see console');
+        console.error(e);
+      }
+    },
+    [push, room],
+  );
+};
