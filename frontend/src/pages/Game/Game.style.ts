@@ -10,7 +10,7 @@ export const GameContainer = styled.div`
   height: 100%;
   background: url(${fullBackground});
   background-size: cover;
-  padding: 62px;
+  padding: 64px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -34,8 +34,8 @@ InnerGameContainer.displayName = 'InnerGameContainer';
 
 export const HomeLink = styled(Link)`
   position: absolute;
-  left: 16px;
-  top: 16px;
+  left: 24px;
+  top: 24px;
 `;
 HomeLink.displayName = 'HomeLink';
 
