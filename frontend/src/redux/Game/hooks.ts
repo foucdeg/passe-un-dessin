@@ -4,23 +4,26 @@ import { updateGame, updatePad, setSuggestions, updatePadStep, setWinners } from
 import { Pad } from './types';
 import { useCallback, useState } from 'react';
 import { useHistory } from 'react-router';
-import { useSelector } from 'redux/useSelector';
-import { selectGame } from './selectors';
-import { selectPlayer } from 'redux/Player/selectors';
-import { selectRoom } from 'redux/Room/selectors';
 import { getRedirectPath } from 'services/game.service';
 import { DEFAULT_ROUND_DURATION } from './constants';
 import { useIntl } from 'react-intl';
 import { wait, useTypedAsyncFn } from 'services/utils';
 import { useGetRanking } from 'redux/Room/hooks';
+import { selectRoom } from 'redux/Room/selectors';
+import { selectGame } from './selectors';
+import { selectPlayer } from 'redux/Player/selectors';
+import { useSelector } from 'redux/useSelector';
 
 export const useFetchGame = () => {
   const dispatch = useDispatch();
 
-  return useTypedAsyncFn<{ gameId: string }>(async ({ gameId }) => {
-    const game = await client.get(`/game/${gameId}`);
-    dispatch(updateGame(game));
-  });
+  return useTypedAsyncFn<{ gameId: string }>(
+    async ({ gameId }) => {
+      const game = await client.get(`/game/${gameId}`);
+      dispatch(updateGame(game));
+    },
+    [dispatch],
+  );
 };
 
 export const useGetSuggestions = () => {
@@ -45,12 +48,12 @@ export const useRefreshGame = () => {
   const [, doFetchGame] = useFetchGame();
 
   return useTypedAsyncFn<{}>(async () => {
-    if (!game || !room || !player) return;
+    if (!room || !game || !player) return;
 
     await doFetchGame({ gameId: game.uuid });
     const path = getRedirectPath(room, game, player);
     push(path);
-  });
+  }, [room, game, player]);
 };
 
 export const useStartGame = () => {
@@ -115,10 +118,13 @@ export const useGetVoteResults = () => {
 export const useSavePad = () => {
   const dispatch = useDispatch();
 
-  return useTypedAsyncFn<{ pad: Pad; sentence: string }>(async ({ pad, sentence }) => {
-    const updatedPad = await client.put(`/pad/${pad.uuid}/save`, { sentence });
-    dispatch(updatePad(updatedPad));
-  });
+  return useTypedAsyncFn<{ pad: Pad; sentence: string }>(
+    async ({ pad, sentence }) => {
+      const updatedPad = await client.put(`/pad/${pad.uuid}/save`, { sentence });
+      dispatch(updatePad(updatedPad));
+    },
+    [dispatch],
+  );
 };
 
 export const useReviewPad = () => {

@@ -20,27 +20,33 @@ export const useFetchStep = () => {
 export const useSaveStepDrawing = () => {
   const dispatch = useDispatch();
 
-  return useTypedAsyncFn<{ step: PadStep; drawing: string }>(async ({ step, drawing }) => {
-    await client.put(`/pad-step/${step.uuid}/save`, { drawing });
-    dispatch(
-      updateStep({
-        ...step,
-        drawing,
-      }),
-    );
-  });
+  return useTypedAsyncFn<{ step: PadStep; drawing: string }>(
+    async ({ step, drawing }) => {
+      await client.put(`/pad-step/${step.uuid}/save`, { drawing });
+      dispatch(
+        updateStep({
+          ...step,
+          drawing,
+        }),
+      );
+    },
+    [dispatch],
+  );
 };
 
 export const useSaveStepSentence = () => {
   const dispatch = useDispatch();
 
-  return useTypedAsyncFn<{ step: PadStep; sentence: string }>(async ({ step, sentence }) => {
-    await client.put(`/pad-step/${step.uuid}/save`, { sentence });
-    dispatch(
-      updateStep({
-        ...step,
-        sentence,
-      }),
-    );
-  });
+  return useTypedAsyncFn<{ step: PadStep; sentence: string }>(
+    async ({ step, sentence }) => {
+      await client.put(`/pad-step/${step.uuid}/save`, { sentence });
+      dispatch(
+        updateStep({
+          ...step,
+          sentence,
+        }),
+      );
+    },
+    [dispatch],
+  );
 };
