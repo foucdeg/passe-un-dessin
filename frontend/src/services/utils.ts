@@ -7,8 +7,8 @@ export async function wait(ms: number) {
 }
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-export function useTypedAsyncFn<T>(callback: (input: T) => Promise<any>) {
+export function useTypedAsyncFn<T>(callback: (input: T) => Promise<any>, deps: any[]) {
   return useAsyncFn(async (...args: T[]) => {
     await callback(args[0]);
-  });
+  }, deps);
 }

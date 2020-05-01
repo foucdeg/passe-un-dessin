@@ -10,9 +10,10 @@ export const SideButtonsContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
-  right: 32px;
-  top: 32px;
-  z-index: 25;
+  right: 24px;
+  top: 24px;
+  z-index: 35;
+  align-items: center;
 `;
 
 export const PlayerModalButton = styled.img.attrs({ src: playerIcon })`
