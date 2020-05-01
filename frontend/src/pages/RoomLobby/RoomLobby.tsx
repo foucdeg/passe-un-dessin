@@ -101,12 +101,12 @@ const Room: React.FunctionComponent = () => {
       </PlayerChips>
 
       <ButtonRow>
-        {room.is_in_game && (
+        {room.current_game_id && (
           <HelpText>
             <FormattedMessage id="roomLobby.inGame" />
           </HelpText>
         )}
-        {!room.is_in_game && !goodNumberOfPlayers && (
+        {!room.current_game_id && !goodNumberOfPlayers && (
           <HelpText>
             <FormattedMessage
               id="roomLobby.needMore"
@@ -114,7 +114,7 @@ const Room: React.FunctionComponent = () => {
             />
           </HelpText>
         )}
-        {!room.is_in_game &&
+        {!room.current_game_id &&
           goodNumberOfPlayers &&
           (isPlayerAdmin ? (
             <>
