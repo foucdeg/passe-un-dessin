@@ -16,8 +16,8 @@ Resources:
   PasseUnDessinApiSg:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupName: !Sub job4-api-sg-${Env}
-      GroupDescription: job4-api-sg
+      GroupName: !Sub passe-un-dessin-api-sg-${Env}
+      GroupDescription: passe-un-dessin-api-sg
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 0
@@ -29,13 +29,13 @@ Resources:
           CidrIp: 0.0.0.0/0
       Tags:
         - Key: Name
-          Value: job4-api-sg
+          Value: passe-un-dessin-api-sg
       VpcId: !Ref VpcId
   PasseUnDessinApiAlbSg:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupName: !Sub job4-api-alb-sg-${Env}
-      GroupDescription: job4-api-alb-sg
+      GroupName: !Sub passe-un-dessin-api-alb-sg-${Env}
+      GroupDescription: passe-un-dessin-api-alb-sg
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 80
@@ -55,7 +55,21 @@ Resources:
           CidrIpv6: ::/0
       Tags:
         - Key: Name
-          Value: job4-api-alb-sg
+          Value: passe-un-dessin-api-alb-sg
+      VpcId: !Ref VpcId
+  PasseUnDessinDatabaseSg:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub passe-un-dessin-database-sg-${Env}
+      GroupDescription: passe-un-dessin-database-sg
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 5432
+          ToPort: 5432
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: passe-un-dessin-database-sg
       VpcId: !Ref VpcId
 
 Outputs:
@@ -63,3 +77,5 @@ Outputs:
     Value: !Ref PasseUnDessinApiSg
   PasseUnDessinApiAlbSg:
     Value: !Ref PasseUnDessinApiAlbSg
+  PasseUnDessinDatabaseSg:
+    Value: !Ref PasseUnDessinDatabaseSg

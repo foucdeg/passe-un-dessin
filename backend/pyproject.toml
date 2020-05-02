@@ -23,6 +23,7 @@ sqlparse = "^0.3.1"
 watchtower = "^0.7.3"
 channels = "^2.4.0"
 django-eventstream = "^3.1.0"
+django-cors-headers = "^3.2.1"
 
 [tool.poetry.dev-dependencies]
 ptvsd = "^4.3.2"

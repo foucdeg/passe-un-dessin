@@ -6,7 +6,8 @@ Parameters:
   AlbName:
     Description: An environment name that will be prefixed to resource names
     Type: String
-    Default: passe-un-dessin-api-alb
+    ## Must be shorter than 32 characters when adding -${ENV}, so reduced name to 'pud'
+    Default: pud-api-alb
 
   VpcId:
     Type: AWS::EC2::VPC::Id
@@ -70,7 +71,7 @@ Resources:
       Matcher:
         HttpCode: 200-299
       HealthCheckIntervalSeconds: 10
-      HealthCheckPath: /health.html
+      HealthCheckPath: /health
       HealthCheckProtocol: HTTP
       HealthCheckTimeoutSeconds: 5
       HealthyThresholdCount: 2

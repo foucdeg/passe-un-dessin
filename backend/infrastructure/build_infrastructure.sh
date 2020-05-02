@@ -35,10 +35,6 @@ case $key in
     DOMAIN="$2"
     shift # past argument
     ;;
-    -pu|--prefix-url)
-    PREFIX_URL="$2"
-    shift # past argument
-    ;;
     -acmc|--acm-arn)
     ACM_ARN="$2"
     shift # past argument
@@ -59,9 +55,13 @@ case $key in
     DB_PASSWORD="$2"
     shift # past argument
     ;;
+    --secret)
+    SECRET="$2"
+    shift # past argument
+    ;;
     *)
     printf "***************************\n"
-    printf "* Error: Invalid argument.*\n"
+    printf "* Error: Invalid argument $key.*\n"
     printf "***************************\n"
     exit 1
 esac
@@ -84,12 +84,7 @@ else
 fi
 
 ## Build Public URL
-if [ "$ENV" == "production" ]
-then
-    PUBLIC_URL=api-${PREFIX_URL}.${DOMAIN}
-else
-    PUBLIC_URL=api-${ENV}-${PREFIX_URL}.${DOMAIN}
-fi
+PUBLIC_URL="api.${DOMAIN}"
 
 # We launch all the passe-un-dessin-api cloudformation and get Outputs into variables
 
@@ -126,7 +121,7 @@ export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-clo
 
 ## Postgres
 aws cloudformation deploy --stack-name passe-un-dessin-postgres-${ENV} --template-file postgres.yml \
---parameter-overrides Env=${ENV} DBPassword=${DB_PASSWORD} --region ${REGION} --no-fail-on-empty-changeset
+--parameter-overrides Env=${ENV} DBPassword=${DB_PASSWORD} SecurityGroup=$PasseUnDessinDatabaseSg --region ${REGION} --no-fail-on-empty-changeset
 
 export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-postgres-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
 
@@ -153,13 +148,10 @@ KeyName=${PEM_KEY} SecurityGroup=${PasseUnDessinApiSg} ECSCluster=${ECSCluster} 
 
 export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-ecs-autoscaling-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
 
+DATABASE_URL="postgres://passe_un_dessin_user:${DB_PASSWORD}@${DatabaseHostname}:${DatabasePort}/passeundessindb"
+
 ## ECS Services
 aws cloudformation deploy --stack-name passe-un-dessin-api-ecs-services-${ENV} --template-file ecs-services.yml \
 --parameter-overrides Env=${ENV} ECSTaskRole=${PasseUnDessinApiTaskRole} ECSAutoScaleRole=${PasseUnDessinApiAutoScaleRole} \
 DockerRepository=${PasseUnDessinApiRepository} CloudwatchLogsGroup=${CloudwatchLogsGroup} TargetGroup=${TargetGroup} TargetGroupName=${TargetGroupName} \
-ECSCluster=${ECSCluster} Tag=${MY_TAG} ECSServiceRole=${PasseUnDessinApiServiceRole} AlbName=${AlbName} --region ${REGION} --no-fail-on-empty-changeset
-
-## S3
-aws cloudformation deploy --stack-name passe-un-dessin-api-s3-${ENV} --template-file s3.yml --parameter-overrides Env=${ENV} --region ${REGION} --no-fail-on-empty-changeset
-
-export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-s3-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
+ECSCluster=${ECSCluster} Tag=${MY_TAG} ECSServiceRole=${PasseUnDessinApiServiceRole} AlbName=${AlbName} DatabaseUrl=${DATABASE_URL} Secret=${SECRET} --region ${REGION} --no-fail-on-empty-changeset

@@ -3,7 +3,7 @@ Description: PasseUnDessin Api - ECS Services
 Parameters:
   DesiredCount:
     Type: Number
-    Default: 2
+    Default: 1
 
   MaxCount:
     Type: Number
@@ -36,6 +36,14 @@ Parameters:
   TargetGroup:
     Type: String
 
+  DatabaseUrl:
+    Type: String
+    NoEcho: True
+
+  Secret:
+    Type: String
+    NoEcho: True
+
 Resources:
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
@@ -54,16 +62,22 @@ Resources:
               HostPort: 0
               Protocol: tcp
           Environment:
-            - Name: NODE_ENV
+            - Name: ENVIRONMENT
               Value: !Ref Env
             - Name: AWS_REGION
               Value: !Ref AWS::Region
+            - Name: ALLOWED_HOST
+              Value: '*'
+            - Name: SECRET_KEY
+              Value: !Ref Secret
+            - Name: DATABASE_URL
+              Value: !Ref DatabaseUrl
           LogConfiguration:
             LogDriver: awslogs
             Options:
               awslogs-group: !Ref CloudwatchLogsGroup
               awslogs-region: !Sub ${AWS::Region}
-              awslogs-stream-prefix: job4-apiAssiociatePublicIp
+              awslogs-stream-prefix: passe-un-dessin-apiAssiociatePublicIp
 
   ECSService:
     Type: AWS::ECS::Service
