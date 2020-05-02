@@ -195,9 +195,11 @@ export const fillContext = (coordinates: Point, canvasRef: canvasRefType, color:
   const image = context.getImageData(0, 0, context.canvas.width, context.canvas.height);
   const data = image.data;
   const { x, y } = coordinates;
+  const xi = Math.floor(x);
+  const yi = Math.floor(y);
   const width = image.width;
   const height = image.height;
   const tolerance = 1;
-  floodfill(data, x, y, hexToRgb(color), tolerance, width, height);
+  floodfill(data, xi, yi, hexToRgb(color), tolerance, width, height);
   context.putImageData(image, 0, 0);
 };
