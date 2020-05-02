@@ -164,6 +164,7 @@ const Game: React.FunctionComponent = () => {
         {ranking && !!ranking.length && (
           <Ranking>
             {ranking
+              .slice(0, 3)
               .filter(rank => rank.vote_count > 0)
               .map((rank, index) => (
                 <Score key={rank.player.uuid}>
