@@ -15,6 +15,11 @@ ALLOWED_HOSTS = [
 if "ALLOWED_HOST" in os.environ:
     ALLOWED_HOSTS.append(os.environ.get("ALLOWED_HOST"))
 
+CORS_ORIGIN_WHITELIST = [
+    "https://passeundessin.fouc.net",
+    "https://drawaround.fouc.net"
+]
+
 INSTALLED_APPS = INSTALLED_APPS + ["storages"]
 
 # Secure connection

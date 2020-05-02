@@ -23,6 +23,10 @@ CACHES = {
 }
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "[::1]", "192.168.1.72"]
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000"
+]
+
 DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TOOLBAR_CALLBACK": lambda request: request.META["SERVER_NAME"]
     != "testserver"

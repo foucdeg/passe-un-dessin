@@ -1,12 +1,12 @@
 AWSTemplateFormatVersion: "2010-09-09"
 
-Description: PasseUnDessin Api - Creation of images S3 bucket
+Description: passeundessin Api - Creation of images S3 bucket
 
 Parameters:
   BucketName:
     Type: String
     Description: S3 bucket name
-    Default: job4-api-images
+    Default: passeundessin-api-images
 
   Env:
     Description: The environment name deployed
@@ -20,7 +20,7 @@ Resources:
       BucketName: !Sub ${BucketName}-${Env}
       Tags:
         - Key: Project
-          Value: PasseUnDessinApi
+          Value: passeundessinApi
         - Key: Env
           Value: !Ref Env
       AccessControl: PublicRead

@@ -11,7 +11,7 @@ Resources:
   PasseUnDessinApiEC2Role:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Sub job4-api-ec2-role-${Env}
+      RoleName: !Sub passe-un-dessin-api-ec2-role-${Env}
       Path: /
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
@@ -28,7 +28,7 @@ Resources:
   PasseUnDessinApiEC2InstanceProfile:
     Type: AWS::IAM::InstanceProfile
     Properties:
-      InstanceProfileName: !Sub job4-api-ec2-instance-profile-${Env}
+      InstanceProfileName: !Sub passe-un-dessin-api-ec2-instance-profile-${Env}
       Path: /
       Roles:
         - !Ref PasseUnDessinApiEC2Role
@@ -36,7 +36,7 @@ Resources:
   PasseUnDessinApiServiceRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Sub job4-api-service-role-${Env}
+      RoleName: !Sub passe-un-dessin-api-service-role-${Env}
       Path: /
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
@@ -53,7 +53,7 @@ Resources:
   PasseUnDessinApiAutoScaleRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Sub job4-api-autoscale-role-${Env}
+      RoleName: !Sub passe-un-dessin-api-autoscale-role-${Env}
       Path: /
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
@@ -70,7 +70,7 @@ Resources:
   PasseUnDessinApiTaskRole:
     Type: "AWS::IAM::Role"
     Properties:
-      RoleName: !Sub job4-api-task-role-${Env}
+      RoleName: !Sub passe-un-dessin-api-task-role-${Env}
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:

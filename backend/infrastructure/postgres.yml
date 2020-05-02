@@ -11,23 +11,28 @@ Parameters:
   DBPassword:
     Type: String
     NoEcho: True
+  SecurityGroup:
+    Description: Select the Security Group to apply to the Database
+    Type: AWS::EC2::SecurityGroup::Id
 
 Resources:
   MasterInstance:
     Properties:
       AllocatedStorage: 20 # In Gigabytes
       DBInstanceIdentifier: !Sub postgres-${Env}
-      DBName: job4db
+      DBName: passeundessindb
       DBInstanceClass:
         Ref: DBInstanceClass
       StorageType: "gp2"
       Engine: "postgres"
       EngineVersion: "11.5"
-      MasterUsername: "job4"
+      MasterUsername: "passe_un_dessin_user"
       MasterUserPassword:
         Ref: DBPassword
       PubliclyAccessible: true
       DeletionProtection: true
+      VPCSecurityGroups:
+        - !Ref SecurityGroup
     Type: AWS::RDS::DBInstance
 
 Outputs:
