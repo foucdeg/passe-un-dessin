@@ -41,6 +41,7 @@ const CanvasDraw: React.FC<Props> = ({
   const [mousePosition, setMousePosition] = useState<Point | undefined>(undefined);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [selectedBrushColor, selectedBrushThickness] = getBrushAttributes(color, brushType);
+  const [archivedPaint, setArchivedPaint] = useState<Line[] | null>(null);
 
   const setBrushColor = (newColor: DrawingColor) => {
     setColor(newColor);
@@ -115,6 +116,11 @@ const CanvasDraw: React.FC<Props> = ({
     }
   }, [currentLine, isPainting]);
 
+  const handleClearAndArchive = () => {
+    setArchivedPaint(lines.current);
+    handleClear();
+  };
+
   const handleClear = () => {
     if (!canvasRef.current) {
       return;
@@ -128,6 +134,13 @@ const CanvasDraw: React.FC<Props> = ({
   };
 
   const handleUndo = () => {
+    if (lines.current.length === 0 && archivedPaint) {
+      lines.current = archivedPaint;
+      drawLines(archivedPaint, canvasRef);
+      setArchivedPaint(null);
+      return;
+    }
+
     const linesToRedraw = lines.current.slice(0, -1);
     handleClear();
     lines.current = linesToRedraw;
@@ -207,7 +220,7 @@ const CanvasDraw: React.FC<Props> = ({
         </PadStepDone>
       ) : (
         <>
-          <CanvasActions onClear={handleClear} onUndo={handleUndo} />
+          <CanvasActions onClear={handleClearAndArchive} onUndo={handleUndo} />
           <BrushTypePicker brushType={brushType} setBrushType={setBrushType} />
           <BrushColorPicker color={color} setColor={setBrushColor} />
         </>
