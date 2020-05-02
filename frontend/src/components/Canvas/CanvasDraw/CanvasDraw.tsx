@@ -62,16 +62,13 @@ const CanvasDraw: React.FC<Props> = ({
     };
   };
 
-  const doDrawLines = useCallback(drawLines, []);
-  const doDrawLine = useCallback(drawLine, []);
-
   const startPaint = useCallback(
     (event: MouseEvent) => {
       const coordinates = getCoordinates(event);
       if (coordinates) {
         setIsPainting(true);
         setMousePosition(coordinates);
-        doDrawLine(coordinates, coordinates, selectedBrushColor, selectedBrushThickness, canvasRef);
+        drawLine(coordinates, coordinates, selectedBrushColor, selectedBrushThickness, canvasRef);
         setCurrentLine({
           points: [coordinates],
           color: selectedBrushColor,
@@ -79,7 +76,7 @@ const CanvasDraw: React.FC<Props> = ({
         });
       }
     },
-    [selectedBrushColor, selectedBrushThickness, doDrawLine],
+    [selectedBrushColor, selectedBrushThickness],
   );
 
   const paint = useCallback(
@@ -87,7 +84,7 @@ const CanvasDraw: React.FC<Props> = ({
       if (isPainting) {
         const newPosition = getCoordinates(event);
         if (mousePosition && newPosition) {
-          doDrawLine(
+          drawLine(
             mousePosition,
             newPosition,
             selectedBrushColor,
@@ -104,14 +101,7 @@ const CanvasDraw: React.FC<Props> = ({
         }
       }
     },
-    [
-      isPainting,
-      mousePosition,
-      selectedBrushColor,
-      selectedBrushThickness,
-      currentLine,
-      doDrawLine,
-    ],
+    [isPainting, mousePosition, selectedBrushColor, selectedBrushThickness, currentLine],
   );
 
   const exitPaint = useCallback(() => {
@@ -137,12 +127,12 @@ const CanvasDraw: React.FC<Props> = ({
     }
   };
 
-  const handleUndo = useCallback(() => {
+  const handleUndo = () => {
     const linesToRedraw = lines.current.slice(0, -1);
     handleClear();
     lines.current = linesToRedraw;
-    doDrawLines(linesToRedraw, canvasRef);
-  }, [doDrawLines]);
+    drawLines(linesToRedraw, canvasRef);
+  };
 
   const saveDrawing = useCallback(
     (drawing: string) => {
