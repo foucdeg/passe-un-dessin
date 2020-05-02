@@ -23,6 +23,14 @@ case $key in
     PROFILE="$2"
     shift # past argument
     ;;
+    -d|--domain)
+    DOMAIN="$2"
+    shift # past argument
+    ;;
+    -acmc|--acm-arn)
+    ACM_ARN="$2"
+    shift # past argument
+    ;;
     *)
     printf "***************************\n"
     printf "* Error: Invalid argument.*\n"
@@ -47,6 +55,6 @@ export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-front-s
 
 ## Cloudfront
 aws cloudformation deploy --stack-name passe-un-dessin-front-cloudfront-${ENV} --template-file cloudfront.yml \
---parameter-overrides Env=${ENV} S3Bucket=${FrontS3Bucket} --region ${REGION} --no-fail-on-empty-changeset
+--parameter-overrides Env=${ENV} S3Bucket=${FrontS3Bucket} --region ${REGION} CertificateArn=${ACM_ARN} PublicAlias=${DOMAIN} --no-fail-on-empty-changeset
 
 export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-front-cloudfront-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')

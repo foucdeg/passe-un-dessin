@@ -3,6 +3,12 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: PasseUnDessin front - Cloudfront distribution for S3 frontend
 
 Parameters:
+  CertificateArn:
+    Type: String
+
+  PublicAlias:
+    Type: String
+
   Env:
     Type: String
 
@@ -17,6 +23,8 @@ Resources:
         Enabled: true
         PriceClass: PriceClass_100
         IPV6Enabled: false
+        Aliases:
+          - !Ref PublicAlias
 
         DefaultCacheBehavior:
           AllowedMethods:
@@ -64,6 +72,11 @@ Resources:
             ErrorCachingMinTTL: 0
           - ErrorCode: 504
             ErrorCachingMinTTL: 0
+
+        ViewerCertificate:
+          AcmCertificateArn: !Ref CertificateArn
+          SslSupportMethod: sni-only
+          MinimumProtocolVersion: TLSv1.1_2016
 
         Origins:
           - Id: !Sub S3-${S3Bucket}
