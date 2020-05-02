@@ -7,7 +7,7 @@ import lzString from 'lz-string';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { CanvasWrapper } from '../CanvasCommon.style';
-import { drawLine, drawLines, Line, Point } from '../utils';
+import { drawLine, drawLines, fillContext, Line, Point } from '../utils';
 import { PadStepDone, StyledTimerIcon, WhiteHeader } from './CanvasDraw.style';
 
 interface Props {
@@ -18,12 +18,15 @@ interface Props {
   saveStep: (values: { sentence?: string; drawing?: string }) => void;
 }
 
-const getBrushAttributes = (color: DrawingColor, brushType: BrushType): [DrawingColor, number] => {
+const getBrushAttributes = (
+  color: DrawingColor,
+  brushType: BrushType,
+): [DrawingColor, number, boolean] => {
   if ([BrushType.THICK_ERASER, BrushType.THIN_ERASER].includes(brushType)) {
-    return ['#FFFFFF' as DrawingColor, brushType === BrushType.THICK_ERASER ? 10 : 2];
+    return ['#FFFFFF' as DrawingColor, brushType === BrushType.THICK_ERASER ? 10 : 2, false];
   }
 
-  return [color, brushType === BrushType.THICK ? 6 : 2];
+  return [color, brushType === BrushType.THICK ? 6 : 2, brushType === BrushType.FILL];
 };
 
 const CanvasDraw: React.FC<Props> = ({
@@ -40,7 +43,10 @@ const CanvasDraw: React.FC<Props> = ({
   const [currentLine, setCurrentLine] = useState<Line | null>(null);
   const [mousePosition, setMousePosition] = useState<Point | undefined>(undefined);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [selectedBrushColor, selectedBrushThickness] = getBrushAttributes(color, brushType);
+  const [selectedBrushColor, selectedBrushThickness, isFillDrawSelected] = getBrushAttributes(
+    color,
+    brushType,
+  );
   const [archivedPaint, setArchivedPaint] = useState<Line[] | null>(null);
 
   const setBrushColor = (newColor: DrawingColor) => {
@@ -67,6 +73,11 @@ const CanvasDraw: React.FC<Props> = ({
     (event: MouseEvent) => {
       const coordinates = getCoordinates(event);
       if (coordinates) {
+        if (isFillDrawSelected) {
+          fillContext(coordinates, canvasRef, selectedBrushColor);
+          return;
+        }
+
         setIsPainting(true);
         setMousePosition(coordinates);
         drawLine(coordinates, coordinates, selectedBrushColor, selectedBrushThickness, canvasRef);
@@ -77,7 +88,7 @@ const CanvasDraw: React.FC<Props> = ({
         });
       }
     },
-    [selectedBrushColor, selectedBrushThickness],
+    [selectedBrushColor, selectedBrushThickness, isFillDrawSelected],
   );
 
   const paint = useCallback(

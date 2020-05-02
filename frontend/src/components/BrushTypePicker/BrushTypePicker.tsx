@@ -1,13 +1,12 @@
-import React from 'react';
-
-import thickBrushIcon from 'assets/pencil-thick.svg';
-import thinBrushIcon from 'assets/pencil-thin.svg';
 import thickEraserIcon from 'assets/eraser-thick.svg';
 import thinEraserIcon from 'assets/eraser-thin.svg';
-
-import { BrushPickerContainer, BrushBlock } from './BrushTypePicker.style';
+import thickBrushIcon from 'assets/pencil-thick.svg';
+import thinBrushIcon from 'assets/pencil-thin.svg';
+import React from 'react';
+import { BrushBlock, BrushPickerContainer } from './BrushTypePicker.style';
 
 export enum BrushType {
+  FILL = 'FILL',
   THICK = 'THICK',
   THIN = 'THIN',
   THICK_ERASER = 'THICK_ERASER',
@@ -15,6 +14,7 @@ export enum BrushType {
 }
 
 const icons: { [type: string]: string } = {
+  [BrushType.FILL]: thickBrushIcon,
   [BrushType.THICK]: thickBrushIcon,
   [BrushType.THIN]: thinBrushIcon,
   [BrushType.THICK_ERASER]: thickEraserIcon,
