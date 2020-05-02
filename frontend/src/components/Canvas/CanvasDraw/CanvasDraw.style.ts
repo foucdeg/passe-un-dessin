@@ -32,3 +32,19 @@ export const WhiteHeader = styled(Header2)`
 `;
 
 WhiteHeader.displayName = 'WhiteHeader';
+
+export const CanvasButtons = styled.div`
+  display: flex;
+  height: 400px;
+`;
+
+CanvasButtons.displayName = 'CanvasButtons';
+
+export const RightButtons = styled.div`
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+RightButtons.displayName = 'RightButtons';

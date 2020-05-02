@@ -8,7 +8,13 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { CanvasWrapper } from '../CanvasCommon.style';
 import { drawLine, drawPaint, fillContext, Line, Paint, Point } from '../utils';
-import { PadStepDone, StyledTimerIcon, WhiteHeader } from './CanvasDraw.style';
+import {
+  CanvasButtons,
+  PadStepDone,
+  RightButtons,
+  StyledTimerIcon,
+  WhiteHeader,
+} from './CanvasDraw.style';
 
 interface Props {
   finished: boolean;
@@ -226,8 +232,10 @@ const CanvasDraw: React.FC<Props> = ({
   }, [canvasWidth, canvasHeight, saveDrawing, round_duration, finished]);
 
   return (
-    <CanvasWrapper height={canvasHeight} width={canvasWidth}>
-      <canvas ref={canvasRef} height={canvasHeight - 4} width={canvasWidth - 4} />
+    <>
+      <CanvasWrapper height={canvasHeight} width={canvasWidth}>
+        <canvas ref={canvasRef} height={canvasHeight - 4} width={canvasWidth - 4} />
+      </CanvasWrapper>
       {finished ? (
         <PadStepDone>
           <StyledTimerIcon />
@@ -236,13 +244,15 @@ const CanvasDraw: React.FC<Props> = ({
           </WhiteHeader>
         </PadStepDone>
       ) : (
-        <>
-          <CanvasActions onClear={handleClearAndArchive} onUndo={handleUndo} />
-          <BrushTypePicker brushType={brushType} setBrushType={setBrushType} />
+        <CanvasButtons>
           <BrushColorPicker color={color} setColor={setBrushColor} />
-        </>
+          <RightButtons>
+            <CanvasActions onClear={handleClearAndArchive} onUndo={handleUndo} />
+            <BrushTypePicker brushType={brushType} setBrushType={setBrushType} />
+          </RightButtons>
+        </CanvasButtons>
       )}
-    </CanvasWrapper>
+    </>
   );
 };
 

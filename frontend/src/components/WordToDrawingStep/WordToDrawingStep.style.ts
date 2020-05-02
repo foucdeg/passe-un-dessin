@@ -10,11 +10,9 @@ export const LeftAndRightSide = styled.div`
 LeftAndRightSide.displayName = 'LeftAndRightSide';
 
 export const LeftSide = styled.div`
-  width: 538px;
   height: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  align-items: center;
 `;
 LeftSide.displayName = 'LeftSide';
 

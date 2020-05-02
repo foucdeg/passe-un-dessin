@@ -4,10 +4,8 @@ import { DrawingColor } from './BrushColorPicker';
 export const BrushPickerContainer = styled.div`
   display: flex;
   flex-direction: column;
-  position: absolute;
-  bottom: 16px;
-  right: 16px;
-  z-index: 25;
+  margin: 0 15px;
+  justify-content: space-between;
 `;
 
 export const ColorBlock = styled.div<{ color: DrawingColor; selected: boolean }>`
@@ -21,9 +19,4 @@ export const ColorBlock = styled.div<{ color: DrawingColor; selected: boolean }>
     css`
       border: 2px solid black;
     `}
-  margin-bottom: 16px;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
 `;

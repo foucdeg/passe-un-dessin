@@ -1,15 +1,10 @@
-import styled from 'styled-components';
-
-import undoIcon from 'assets/undo.svg';
 import deleteIcon from 'assets/delete.svg';
+import undoIcon from 'assets/undo.svg';
+import styled from 'styled-components';
 
 export const CanvasActionsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  z-index: 25;
 `;
 
 CanvasActionsContainer.displayName = 'CanvasActionsContainer';
