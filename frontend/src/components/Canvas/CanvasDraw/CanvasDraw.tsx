@@ -7,7 +7,7 @@ import lzString from 'lz-string';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { CanvasWrapper } from '../CanvasCommon.style';
-import { drawLine, drawLines, fillContext, Line, Point } from '../utils';
+import { drawLine, drawPaint, fillContext, Line, Paint, Point } from '../utils';
 import { PadStepDone, StyledTimerIcon, WhiteHeader } from './CanvasDraw.style';
 
 interface Props {
@@ -39,7 +39,7 @@ const CanvasDraw: React.FC<Props> = ({
   const [color, setColor] = useState<DrawingColor>(DrawingColor.BLACK);
   const [brushType, setBrushType] = useState<BrushType>(BrushType.THIN);
   const [isPainting, setIsPainting] = useState(false);
-  const lines = useRef<Line[]>([]);
+  const drawing = useRef<Paint>([]);
   const [currentLine, setCurrentLine] = useState<Line | null>(null);
   const [mousePosition, setMousePosition] = useState<Point | undefined>(undefined);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -47,7 +47,7 @@ const CanvasDraw: React.FC<Props> = ({
     color,
     brushType,
   );
-  const [archivedPaint, setArchivedPaint] = useState<Line[] | null>(null);
+  const [archivedPaint, setArchivedPaint] = useState<Paint | null>(null);
 
   const setBrushColor = (newColor: DrawingColor) => {
     setColor(newColor);
@@ -75,6 +75,11 @@ const CanvasDraw: React.FC<Props> = ({
       if (coordinates) {
         if (isFillDrawSelected) {
           fillContext(coordinates, canvasRef, selectedBrushColor);
+          drawing.current = drawing.current.concat({
+            point: coordinates,
+            color: selectedBrushColor,
+            type: 'fill',
+          });
           return;
         }
 
@@ -85,6 +90,7 @@ const CanvasDraw: React.FC<Props> = ({
           points: [coordinates],
           color: selectedBrushColor,
           thickness: selectedBrushThickness,
+          type: 'line',
         });
       }
     },
@@ -121,14 +127,14 @@ const CanvasDraw: React.FC<Props> = ({
       setIsPainting(false);
       setMousePosition(undefined);
       if (currentLine) {
-        lines.current = lines.current.concat(currentLine);
+        drawing.current = drawing.current.concat(currentLine);
       }
       setCurrentLine(null);
     }
   }, [currentLine, isPainting]);
 
   const handleClearAndArchive = () => {
-    setArchivedPaint(lines.current);
+    setArchivedPaint(drawing.current);
     handleClear();
   };
 
@@ -140,22 +146,22 @@ const CanvasDraw: React.FC<Props> = ({
     const context = canvas.getContext('2d');
     if (context) {
       context.clearRect(0, 0, canvas.width, canvas.height);
-      lines.current = [];
+      drawing.current = [];
     }
   };
 
   const handleUndo = () => {
-    if (lines.current.length === 0 && archivedPaint) {
-      lines.current = archivedPaint;
-      drawLines(archivedPaint, canvasRef);
+    if (drawing.current.length === 0 && archivedPaint) {
+      drawing.current = archivedPaint;
+      drawPaint(archivedPaint, canvasRef);
       setArchivedPaint(null);
       return;
     }
 
-    const linesToRedraw = lines.current.slice(0, -1);
+    const paintToRedraw = drawing.current.slice(0, -1);
     handleClear();
-    lines.current = linesToRedraw;
-    drawLines(linesToRedraw, canvasRef);
+    drawing.current = paintToRedraw;
+    drawPaint(paintToRedraw, canvasRef);
   };
 
   const saveDrawing = useCallback(
@@ -206,7 +212,7 @@ const CanvasDraw: React.FC<Props> = ({
     if (!round_duration || finished) return;
     const timeout = setTimeout(() => {
       const saveData = JSON.stringify({
-        lines: lines.current,
+        lines: drawing.current, // keep lines as key to be able to read previous drawings
         width: canvasWidth,
         height: canvasHeight,
       });

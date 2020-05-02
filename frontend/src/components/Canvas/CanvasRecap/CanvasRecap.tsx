@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { CanvasWrapper } from '../CanvasCommon.style';
-import { drawLines, Line } from '../utils';
+import { drawPaint, Paint } from '../utils';
 
 interface Props {
   canvasWidth: number;
@@ -9,28 +9,40 @@ interface Props {
   hideBorder?: boolean;
 }
 
-type ParsedData = { lines: Line[]; width: number; height: number };
+type ParsedData = { lines: Paint; width: number; height: number };
 
 const CanvasRecap: React.FC<Props> = ({ canvasWidth, canvasHeight, saveData, hideBorder }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const doDrawLines = useCallback(drawLines, []);
 
   useEffect(() => {
     if (saveData) {
-      const { lines, width, height }: ParsedData = JSON.parse(saveData);
+      const { lines: paint, width, height }: ParsedData = JSON.parse(saveData);
       const scaleX = canvasWidth / width;
       const scaleY = canvasHeight / height;
       const scaleAvg = (scaleX + scaleY) / 2;
 
-      const scaledLines = lines.map(line => ({
-        points: line.points.map(point => ({ x: point.x * scaleX, y: point.y * scaleY })),
-        color: line.color,
-        thickness: line.thickness * scaleAvg,
-      }));
+      const scaledPaint = paint.map(paintStep => {
+        switch (paintStep.type) {
+          case 'line':
+          case undefined: // To not break previous drawings
+            return {
+              ...paintStep,
+              points: paintStep.points.map(point => ({ x: point.x * scaleX, y: point.y * scaleY })),
+              thickness: paintStep.thickness * scaleAvg,
+            };
+          case 'fill':
+            return {
+              ...paintStep,
+              point: { x: paintStep.point.x * scaleX, y: paintStep.point.y * scaleY },
+            };
+          default:
+            return paintStep;
+        }
+      });
 
-      doDrawLines(scaledLines, canvasRef);
+      drawPaint(scaledPaint, canvasRef);
     }
-  }, [saveData, doDrawLines, canvasWidth, canvasHeight]);
+  }, [saveData, canvasWidth, canvasHeight]);
 
   return (
     <CanvasWrapper height={canvasHeight} width={canvasWidth} hideBorder={hideBorder}>

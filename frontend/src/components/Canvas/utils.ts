@@ -1,5 +1,7 @@
 export type Point = { x: number; y: number };
-export type Line = { points: Point[]; color: string; thickness: number };
+export type Line = { points: Point[]; color: string; thickness: number; type: 'line' };
+export type Fill = { point: Point; color: string; type: 'fill' };
+export type Paint = (Line | Fill)[];
 
 type canvasRefType = {
   readonly current: HTMLCanvasElement | null;
@@ -43,12 +45,22 @@ export const drawLine = (
   }
 };
 
-export const drawLines = (lines: Line[], canvasRef: canvasRefType) => {
-  lines.forEach(line => {
-    line.points.forEach((point, index) => {
-      const nextPoint = line.points[index + 1] || point;
-      drawLine(point, nextPoint, line.color, line.thickness, canvasRef);
-    });
+export const drawPaint = (paint: Paint, canvasRef: canvasRefType) => {
+  paint.forEach(paintStep => {
+    switch (paintStep.type) {
+      case 'line':
+      case undefined: // To not break previous drawings
+        paintStep.points.forEach((point, index) => {
+          const nextPoint = paintStep.points[index + 1] || point;
+          drawLine(point, nextPoint, paintStep.color, paintStep.thickness, canvasRef);
+        });
+        break;
+      case 'fill':
+        fillContext(paintStep.point, canvasRef, paintStep.color);
+        break;
+      default:
+        break;
+    }
   });
 };
 
