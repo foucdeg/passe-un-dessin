@@ -1,24 +1,25 @@
+import thumb from 'assets/thumb.png';
+import CanvasRecap from 'components/Canvas/CanvasRecap';
+import { SentenceHeader } from 'components/SentenceRecap/SentenceRecap.style';
+import lzString from 'lz-string';
 import React from 'react';
+import { useDeleteVote, useSaveVote } from 'redux/Game/hooks';
+import { selectAvailableVoteCount } from 'redux/Game/selectors';
+import { PadStep } from 'redux/Game/types';
+import { selectPlayer } from 'redux/Player/selectors';
+import { useSelector } from 'redux/useSelector';
 import {
+  AlreadyLikedThumb,
   StyledDrawingRecap,
   ToggleLike,
   ToggleLikeThumb,
-  AlreadyLikedThumb,
 } from './DrawingRecap.style';
-import CanvasDraw from 'react-canvas-draw';
-import lzString from 'lz-string';
-import { CanvasWrapper } from 'components/WordToDrawingStep/WordToDrawingStep.style';
-import { SentenceHeader } from 'components/SentenceRecap/SentenceRecap.style';
-import { PadStep } from 'redux/Game/types';
-import { useSaveVote, useDeleteVote } from 'redux/Game/hooks';
-import { selectPlayer } from 'redux/Player/selectors';
-import { useSelector } from 'redux/useSelector';
-import { selectAvailableVoteCount } from 'redux/Game/selectors';
-import thumb from 'assets/thumb.png';
 
 interface Props {
   step: PadStep;
 }
+
+const CANVAS_WIDTH = 236;
 
 const DrawingRecap: React.FC<Props> = ({ step }) => {
   const player = useSelector(selectPlayer);
@@ -42,21 +43,17 @@ const DrawingRecap: React.FC<Props> = ({ step }) => {
   return (
     <StyledDrawingRecap>
       <SentenceHeader>{step.player.name}</SentenceHeader>
-      <CanvasWrapper>
-        <CanvasDraw
-          disabled
-          canvasWidth={236}
-          canvasHeight={236}
-          hideGrid
-          saveData={lzString.decompressFromBase64(step.drawing)}
-        />
-        {displayToggleVote && (
-          <ToggleLike onClick={onLike}>
-            <ToggleLikeThumb src={thumb} liked={liked} />
-          </ToggleLike>
-        )}
-        {liked && <AlreadyLikedThumb src={thumb} />}
-      </CanvasWrapper>
+      <CanvasRecap
+        canvasWidth={CANVAS_WIDTH}
+        canvasHeight={CANVAS_WIDTH}
+        saveData={lzString.decompressFromBase64(step.drawing)}
+      />
+      {displayToggleVote && (
+        <ToggleLike onClick={onLike} width={CANVAS_WIDTH} height={CANVAS_WIDTH}>
+          <ToggleLikeThumb src={thumb} liked={liked} />
+        </ToggleLike>
+      )}
+      {liked && <AlreadyLikedThumb src={thumb} />}
     </StyledDrawingRecap>
   );
 };
