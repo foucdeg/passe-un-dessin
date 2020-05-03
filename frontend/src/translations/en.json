@@ -1,7 +1,7 @@
 {
   "home": {
     "title": "Draw Around",
-    "tagline": "Can't draw ? Awesome.",
+    "tagline": "Can't draw? Awesome.",
     "welcome": "Welcome",
     "howToPlay": "How to play",
     "startRoom": "Create a game",
@@ -48,7 +48,7 @@
   "wordToDrawing": {
     "sentenceToDraw": "Sentence to draw:",
     "previousPlayer": "({name}'s idea. Typical.)",
-    "duration": "You have {duration} seconds !",
+    "duration": "You have {duration} seconds!",
     "timesUp": "Time's up, drop that pencil!"
   },
   "drawingToWord": {
