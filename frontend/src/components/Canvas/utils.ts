@@ -81,6 +81,7 @@ const floodfill = (
   let me = width * 4;
   let mw = width * 4;
   const w2 = width * 4;
+  const seen: { [point: number]: true } = {};
 
   const targetcolor = [data[i], data[i + 1], data[i + 2], data[i + 3]];
 
@@ -90,6 +91,7 @@ const floodfill = (
   Q.push(i);
   while (Q.length) {
     i = Q.pop() as number;
+    seen[i] = true;
     if (pixelCompareAndSet(i, targetcolor, fillcolor, data, length, tolerance)) {
       e = i;
       w = i;
@@ -107,12 +109,16 @@ const floodfill = (
       ); //go right until edge hit
       for (let j = w + 4; j < e; j += 4) {
         if (j - w2 >= 0 && pixelCompare(j - w2, targetcolor, fillcolor, data, length, tolerance))
-          Q.push(j - w2); //queue y-1
+          if (!seen[j - w2]) {
+            Q.push(j - w2); //queue y-1
+          }
         if (
           j + w2 < length &&
           pixelCompare(j + w2, targetcolor, fillcolor, data, length, tolerance)
         )
-          Q.push(j + w2); //queue y+1
+          if (!seen[j + w2]) {
+            Q.push(j + w2); //queue y+1
+          }
       }
     }
   }
@@ -195,8 +201,8 @@ export const fillContext = (coordinates: Point, canvasRef: canvasRefType, color:
   const image = context.getImageData(0, 0, context.canvas.width, context.canvas.height);
   const data = image.data;
   const { x, y } = coordinates;
-  const xi = Math.floor(x);
-  const yi = Math.floor(y);
+  const xi = Math.round(x);
+  const yi = Math.round(y);
   const width = image.width;
   const height = image.height;
   const tolerance = 1;
