@@ -15,6 +15,7 @@ import {
   StyledTimerIcon,
   WhiteHeader,
 } from './CanvasDraw.style';
+import { getBrushAttributes } from './utils';
 
 interface Props {
   finished: boolean;
@@ -23,17 +24,6 @@ interface Props {
   round_duration: number;
   saveStep: (values: { sentence?: string; drawing?: string }) => void;
 }
-
-const getBrushAttributes = (
-  color: DrawingColor,
-  brushType: BrushType,
-): [DrawingColor, number, boolean] => {
-  if ([BrushType.THICK_ERASER, BrushType.THIN_ERASER].includes(brushType)) {
-    return ['#FFFFFF' as DrawingColor, brushType === BrushType.THICK_ERASER ? 10 : 2, false];
-  }
-
-  return [color, brushType === BrushType.THICK ? 6 : 2, brushType === BrushType.FILL];
-};
 
 const CanvasDraw: React.FC<Props> = ({
   canvasWidth,
@@ -49,11 +39,15 @@ const CanvasDraw: React.FC<Props> = ({
   const [currentLine, setCurrentLine] = useState<Line | null>(null);
   const [mousePosition, setMousePosition] = useState<Point | undefined>(undefined);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [selectedBrushColor, selectedBrushRadius, isFillDrawSelected] = getBrushAttributes(
-    color,
-    brushType,
-  );
+  const [
+    selectedBrushColor,
+    selectedBrushRadius,
+    isFillDrawSelected,
+    pointCursor,
+  ] = getBrushAttributes(color, brushType);
   const [archivedPaint, setArchivedPaint] = useState<Paint | null>(null);
+  const cursorPosition =
+    brushType === BrushType.FILL ? 19 : Math.round(selectedBrushRadius * Math.sqrt(2));
 
   const setBrushColor = (newColor: DrawingColor) => {
     setColor(newColor);
@@ -69,6 +63,7 @@ const CanvasDraw: React.FC<Props> = ({
 
     const canvas: HTMLCanvasElement = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
+
     return {
       x: event.pageX - rect.left - window.scrollX,
       y: event.pageY - rect.top - window.scrollY,
@@ -228,7 +223,12 @@ const CanvasDraw: React.FC<Props> = ({
   return (
     <>
       <CanvasWrapper height={canvasHeight} width={canvasWidth}>
-        <canvas ref={canvasRef} height={canvasHeight - 4} width={canvasWidth - 4} />
+        <canvas
+          style={{ cursor: `url(${pointCursor}) ${cursorPosition} ${cursorPosition}, auto` }}
+          ref={canvasRef}
+          height={canvasHeight - 4}
+          width={canvasWidth - 4}
+        />
       </CanvasWrapper>
       {finished ? (
         <PadStepDone>
