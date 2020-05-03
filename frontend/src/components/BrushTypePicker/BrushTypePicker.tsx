@@ -1,5 +1,6 @@
 import thickEraserIcon from 'assets/eraser-thick.svg';
 import thinEraserIcon from 'assets/eraser-thin.svg';
+import paintBrushIcon from 'assets/paint.svg';
 import thickBrushIcon from 'assets/pencil-thick.svg';
 import thinBrushIcon from 'assets/pencil-thin.svg';
 import React from 'react';
@@ -14,7 +15,7 @@ export enum BrushType {
 }
 
 const icons: { [type: string]: string } = {
-  [BrushType.FILL]: thickBrushIcon,
+  [BrushType.FILL]: paintBrushIcon,
   [BrushType.THICK]: thickBrushIcon,
   [BrushType.THIN]: thinBrushIcon,
   [BrushType.THICK_ERASER]: thickEraserIcon,
