@@ -28,8 +28,8 @@ const PodiumStep: React.FC<Props> = ({ winner, width, ranking }) => {
         <WinnerSection>
           <Sentence>{winner.sentence}</Sentence>
           <CanvasRecap
-            canvasWidth={width}
-            canvasHeight={width}
+            width={width}
+            height={width}
             saveData={lzString.decompressFromBase64(winner.drawing)}
             hideBorder
           />

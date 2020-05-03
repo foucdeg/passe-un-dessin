@@ -223,7 +223,12 @@ const CanvasDraw: React.FC<Props> = ({
 
   return (
     <>
-      <CanvasWrapper height={canvasHeight} width={canvasWidth}>
+      <CanvasWrapper
+        containerHeight={canvasHeight}
+        containerWidth={canvasWidth}
+        canvasHeight={canvasHeight}
+        canvasWidth={canvasWidth}
+      >
         <Canvas
           pointCursor={pointCursor}
           cursorPosition={cursorPosition}

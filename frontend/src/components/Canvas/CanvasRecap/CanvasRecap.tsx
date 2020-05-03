@@ -3,49 +3,32 @@ import { CanvasWrapper } from '../CanvasCommon.style';
 import { drawPaint, Paint } from '../utils';
 
 interface Props {
-  canvasWidth: number;
-  canvasHeight: number;
+  width: number;
+  height: number;
   saveData: string;
   hideBorder?: boolean;
 }
 
 type ParsedData = { lines: Paint; width: number; height: number };
 
-const CanvasRecap: React.FC<Props> = ({ canvasWidth, canvasHeight, saveData, hideBorder }) => {
+const CanvasRecap: React.FC<Props> = ({ width, height, saveData, hideBorder }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { lines: paint, width: canvasWidth, height: canvasHeight }: ParsedData = JSON.parse(
+    saveData,
+  );
 
   useEffect(() => {
-    if (saveData) {
-      const { lines: paint, width, height }: ParsedData = JSON.parse(saveData);
-      const scaleX = canvasWidth / width;
-      const scaleY = canvasHeight / height;
-      const scaleAvg = (scaleX + scaleY) / 2;
-
-      const scaledPaint = paint.map(paintStep => {
-        switch (paintStep.type) {
-          case 'line':
-          case undefined: // To not break previous drawings
-            return {
-              ...paintStep,
-              points: paintStep.points.map(point => ({ x: point.x * scaleX, y: point.y * scaleY })),
-              brushRadius: paintStep.brushRadius * scaleAvg,
-            };
-          case 'fill':
-            return {
-              ...paintStep,
-              point: { x: paintStep.point.x * scaleX, y: paintStep.point.y * scaleY },
-            };
-          default:
-            return paintStep;
-        }
-      });
-
-      drawPaint(scaledPaint, canvasRef);
-    }
-  }, [saveData, canvasWidth, canvasHeight]);
+    drawPaint(paint, canvasRef);
+  }, [paint]);
 
   return (
-    <CanvasWrapper height={canvasHeight} width={canvasWidth} hideBorder={hideBorder}>
+    <CanvasWrapper
+      canvasHeight={canvasHeight}
+      canvasWidth={canvasWidth}
+      containerHeight={height}
+      containerWidth={width}
+      hideBorder={hideBorder}
+    >
       <canvas ref={canvasRef} height={canvasHeight - 4} width={canvasWidth - 4} />
     </CanvasWrapper>
   );
