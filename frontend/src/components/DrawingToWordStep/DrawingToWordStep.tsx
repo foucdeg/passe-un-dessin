@@ -1,25 +1,26 @@
-import PlayerChip from 'atoms/PlayerChip';
-import Spacer from 'atoms/Spacer';
-import CanvasRecap from 'components/Canvas/CanvasRecap';
-import InputLoader from 'components/InputLoader';
-import { InputArrow } from 'components/PlayerModal/PlayerModal.style';
-import StaticInput from 'components/StaticInput';
+import React, { useState } from 'react';
+import { PadStep } from 'redux/Game/types';
+import CanvasDraw from 'react-canvas-draw';
 import TextInput from 'components/TextInput';
+import lzString from 'lz-string';
+import { Player } from 'redux/Player/types';
 import {
-  Gutter,
   LeftAndRightSide,
   LeftSide,
+  CanvasWrapper,
+  Gutter,
   RightSide,
   StyledHeader,
 } from 'components/WordToDrawingStep/WordToDrawingStep.style';
-import lzString from 'lz-string';
-import React, { useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { selectRemainingPlayers } from 'redux/Game/selectors';
-import { PadStep } from 'redux/Game/types';
-import { Player } from 'redux/Player/types';
+import { StyledForm, StyledButton, StyledPlayerChips, Subtext } from './DrawingToWordStep.style';
 import { useSelector } from 'redux/useSelector';
-import { StyledButton, StyledForm, StyledPlayerChips, Subtext } from './DrawingToWordStep.style';
+import PlayerChip from 'atoms/PlayerChip';
+import { selectRemainingPlayers } from 'redux/Game/selectors';
+import { useIntl, FormattedMessage } from 'react-intl';
+import Spacer from 'atoms/Spacer';
+import StaticInput from 'components/StaticInput';
+import InputLoader from 'components/InputLoader';
+import { InputArrow } from 'components/PlayerModal/PlayerModal.style';
 
 interface Props {
   padStep: PadStep;
@@ -52,11 +53,16 @@ const DrawingToWordStep: React.FC<Props> = ({
   return (
     <LeftAndRightSide>
       <LeftSide>
-        <CanvasRecap
-          canvasWidth={538}
-          canvasHeight={538}
-          saveData={lzString.decompressFromBase64(padStep.drawing)}
-        />
+        <CanvasWrapper>
+          <CanvasDraw
+            disabled
+            hideGrid
+            hideInterface
+            canvasWidth={538}
+            canvasHeight={538}
+            saveData={lzString.decompressFromBase64(padStep.drawing)}
+          />
+        </CanvasWrapper>
       </LeftSide>
       <Gutter />
       <RightSide>

@@ -1,18 +1,18 @@
-import podiumsSteps from 'assets/podium-steps';
-import Spacer from 'atoms/Spacer';
-import CanvasRecap from 'components/Canvas/CanvasRecap';
-import lzString from 'lz-string';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { PadStep } from 'redux/Game/types';
 import {
   Container,
-  PlayerName,
-  PodiumStepImage,
   Sentence,
+  PlayerName,
   VoteCount,
   WinnerSection,
+  PodiumStepImage,
 } from './PodiumStep.style';
+import { PadStep } from 'redux/Game/types';
+import lzString from 'lz-string';
+import CanvasDraw from 'react-canvas-draw';
+import Spacer from 'atoms/Spacer';
+import podiumsSteps from 'assets/podium-steps';
 
 interface Props {
   winner?: PadStep;
@@ -27,11 +27,12 @@ const PodiumStep: React.FC<Props> = ({ winner, width, ranking }) => {
       {winner && (
         <WinnerSection>
           <Sentence>{winner.sentence}</Sentence>
-          <CanvasRecap
+          <CanvasDraw
+            disabled
             canvasWidth={width}
             canvasHeight={width}
+            hideGrid
             saveData={lzString.decompressFromBase64(winner.drawing)}
-            hideBorder
           />
           <PlayerName>{winner.player.name}</PlayerName>
           <VoteCount>

@@ -3,6 +3,10 @@ import styled, { css } from 'styled-components';
 export const BrushPickerContainer = styled.div`
   display: flex;
   flex-direction: column;
+  position: absolute;
+  bottom: 16px;
+  right: 60px;
+  z-index: 25;
 `;
 
 export const BrushBlock = styled.img<{ selected: boolean }>`
