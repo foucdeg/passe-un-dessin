@@ -9,6 +9,7 @@ import { FormattedMessage } from 'react-intl';
 import { CanvasWrapper } from '../CanvasCommon.style';
 import { drawLine, drawPaint, fillContext, Line, Paint, Point } from '../utils';
 import {
+  Canvas,
   CanvasButtons,
   PadStepDone,
   RightButtons,
@@ -223,8 +224,9 @@ const CanvasDraw: React.FC<Props> = ({
   return (
     <>
       <CanvasWrapper height={canvasHeight} width={canvasWidth}>
-        <canvas
-          style={{ cursor: `url(${pointCursor}) ${cursorPosition} ${cursorPosition}, auto` }}
+        <Canvas
+          pointCursor={pointCursor}
+          cursorPosition={cursorPosition}
           ref={canvasRef}
           height={canvasHeight - 4}
           width={canvasWidth - 4}

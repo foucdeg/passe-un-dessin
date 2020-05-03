@@ -48,3 +48,11 @@ export const RightButtons = styled.div`
 `;
 
 RightButtons.displayName = 'RightButtons';
+
+export const Canvas = styled.canvas<{ pointCursor: string; cursorPosition: number }>`
+  cursor: ${({ pointCursor, cursorPosition }) =>
+    `url(${pointCursor}) ${cursorPosition} ${cursorPosition}, auto`};
+  border-radius: 14px;
+`;
+
+Canvas.displayName = 'Canvas';
