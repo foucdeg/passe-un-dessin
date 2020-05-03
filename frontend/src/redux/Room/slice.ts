@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Room, RoomRanking } from './types';
 import { Player } from 'redux/Player/types';
+import { Room, RoomRanking } from './types';
 
 export type RoomState = Readonly<{
   room: Room | null;
@@ -27,6 +27,10 @@ const roomSlice = createSlice({
     addPlayerToRoom: (state, action: PayloadAction<Player>) => {
       state.room?.players.push(action.payload);
     },
+    removeRoom: state => {
+      state.room = null;
+      state.ranking = null;
+    },
     removePlayerFromRoom: (state, action: PayloadAction<Player>) => {
       if (!state.room) return;
 
@@ -49,5 +53,6 @@ export const {
   removePlayerFromRoom,
   nameNewAdmin,
   updateRanking,
+  removeRoom,
 } = roomSlice.actions;
 export default roomSlice.reducer;
