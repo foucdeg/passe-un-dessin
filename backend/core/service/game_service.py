@@ -28,7 +28,10 @@ def order_players(players: List[Player], requested_players_order: List[str]):
         return sample(players, len(players))
 
     def sort_fn(player: Player):
-        return requested_players_order.index(player.uuid.hex)
+        try:
+            return requested_players_order.index(player.uuid.hex)
+        except ValueError:
+            return -1
 
     return sorted(players, key=sort_fn)
 
