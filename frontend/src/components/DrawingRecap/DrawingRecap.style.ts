@@ -22,15 +22,15 @@ export const SentenceHeader = styled.div`
 
 SentenceHeader.displayName = 'SentenceHeader';
 
-export const ToggleLike = styled.div`
+export const ToggleLike = styled.div<{ width: number; height: number }>`
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
   background-color: rgb(155, 81, 224, 0.4);
-  width: 100%;
-  height: 100%;
   position: absolute;
   opacity: 0;
   z-index: 25;
   border-radius: 16px;
-  top: 0;
+  bottom: 0;
   cursor: pointer;
   display: flex;
   justify-content: center;
