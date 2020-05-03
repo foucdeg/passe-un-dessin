@@ -25,7 +25,7 @@ const PodiumStep: React.FC<Props> = ({ winner, width, ranking }) => {
     <Container width={width}>
       <Spacer />
       {winner && (
-        <WinnerSection>
+        <WinnerSection width={width} height={width}>
           <Sentence>{winner.sentence}</Sentence>
           <CanvasRecap
             width={width}

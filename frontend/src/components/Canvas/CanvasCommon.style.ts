@@ -1,20 +1,26 @@
 import styled from 'styled-components';
 import { colorPalette } from 'stylesheet';
 
-export const CanvasWrapper = styled.div<{
+export const Canvas = styled.canvas<{
+  pointCursor?: string;
+  cursorPosition?: number;
   containerWidth: number;
   containerHeight: number;
-  canvasWidth: number;
-  canvasHeight: number;
+  width: number;
+  height: number;
   hideBorder?: boolean;
 }>`
-  width: ${({ canvasWidth }) => canvasWidth}px;
-  height: ${({ canvasHeight }) => canvasHeight}px;
-  position: relative;
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
+  ${({ pointCursor, cursorPosition }) =>
+    pointCursor &&
+    cursorPosition &&
+    `cursor: url(${pointCursor}) ${cursorPosition} ${cursorPosition}, auto`};
+  ${({ containerWidth, width }) => `border-radius: ${(16 * width) / containerWidth}px;`}
   ${({ hideBorder }) => !hideBorder && `border: 2px solid ${colorPalette.textGrey};`}
-  border-radius: 16px;
-  ${({ containerWidth, containerHeight, canvasHeight, canvasWidth }) =>
-    `transform: scale(${containerWidth / canvasWidth}, ${containerHeight / canvasHeight})`};
+  ${({ containerWidth, containerHeight, height, width }) =>
+    `transform: scale(${containerWidth / width}, ${containerHeight / height})`};
   transform-origin: top;
 `;
-CanvasWrapper.displayName = 'CanvasWrapper';
+
+Canvas.displayName = 'Canvas';

@@ -38,10 +38,12 @@ export const VoteCount = styled.div`
 
 VoteCount.displayName = 'VoteCount';
 
-export const WinnerSection = styled.div`
+export const WinnerSection = styled.div<{ width: number; height: number }>`
   display: flex;
   flex-direction: column;
   width: 100%;
+  width: ${props => props.width}px;
+  height: ${props => props.height + 20}px;
   position: relative;
   align-items: center;
 `;
@@ -49,6 +51,6 @@ export const WinnerSection = styled.div`
 WinnerSection.displayName = 'WinnerSection';
 
 export const PodiumStepImage = styled.img.attrs({ alt: 'podium' })<{ width: number }>`
-  width: ${props => props.width};
+  width: ${props => props.width}px;
 `;
 PodiumStepImage.displayName = 'PodiumStepImage';

@@ -6,10 +6,9 @@ import CanvasActions from 'components/Canvas/CanvasActions';
 import lzString from 'lz-string';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { CanvasWrapper } from '../CanvasCommon.style';
+import { Canvas } from '../CanvasCommon.style';
 import { drawLine, drawPaint, fillContext, Line, Paint, Point } from '../utils';
 import {
-  Canvas,
   CanvasButtons,
   PadStepDone,
   RightButtons,
@@ -223,20 +222,15 @@ const CanvasDraw: React.FC<Props> = ({
 
   return (
     <>
-      <CanvasWrapper
+      <Canvas
+        pointCursor={pointCursor}
+        cursorPosition={cursorPosition}
+        ref={canvasRef}
+        height={canvasHeight}
+        width={canvasWidth}
         containerHeight={canvasHeight}
         containerWidth={canvasWidth}
-        canvasHeight={canvasHeight}
-        canvasWidth={canvasWidth}
-      >
-        <Canvas
-          pointCursor={pointCursor}
-          cursorPosition={cursorPosition}
-          ref={canvasRef}
-          height={canvasHeight - 4}
-          width={canvasWidth - 4}
-        />
-      </CanvasWrapper>
+      />
       {finished ? (
         <PadStepDone>
           <StyledTimerIcon />
