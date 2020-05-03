@@ -49,7 +49,7 @@ const CanvasDraw: React.FC<Props> = ({
   const [currentLine, setCurrentLine] = useState<Line | null>(null);
   const [mousePosition, setMousePosition] = useState<Point | undefined>(undefined);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [selectedBrushColor, selectedBrushThickness, isFillDrawSelected] = getBrushAttributes(
+  const [selectedBrushColor, selectedBrushRadius, isFillDrawSelected] = getBrushAttributes(
     color,
     brushType,
   );
@@ -91,16 +91,16 @@ const CanvasDraw: React.FC<Props> = ({
 
         setIsPainting(true);
         setMousePosition(coordinates);
-        drawLine(coordinates, coordinates, selectedBrushColor, selectedBrushThickness, canvasRef);
+        drawLine(coordinates, coordinates, selectedBrushColor, selectedBrushRadius, canvasRef);
         setCurrentLine({
           points: [coordinates],
-          color: selectedBrushColor,
-          thickness: selectedBrushThickness,
+          brushColor: selectedBrushColor,
+          brushRadius: selectedBrushRadius,
           type: 'line',
         });
       }
     },
-    [selectedBrushColor, selectedBrushThickness, isFillDrawSelected],
+    [selectedBrushColor, selectedBrushRadius, isFillDrawSelected],
   );
 
   const paint = useCallback(
@@ -108,13 +108,7 @@ const CanvasDraw: React.FC<Props> = ({
       if (isPainting) {
         const newPosition = getCoordinates(event);
         if (mousePosition && newPosition) {
-          drawLine(
-            mousePosition,
-            newPosition,
-            selectedBrushColor,
-            selectedBrushThickness,
-            canvasRef,
-          );
+          drawLine(mousePosition, newPosition, selectedBrushColor, selectedBrushRadius, canvasRef);
           setMousePosition(newPosition);
           if (currentLine) {
             setCurrentLine({
@@ -125,7 +119,7 @@ const CanvasDraw: React.FC<Props> = ({
         }
       }
     },
-    [isPainting, mousePosition, selectedBrushColor, selectedBrushThickness, currentLine],
+    [isPainting, mousePosition, selectedBrushColor, selectedBrushRadius, currentLine],
   );
 
   const exitPaint = useCallback(() => {

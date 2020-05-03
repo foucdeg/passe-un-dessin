@@ -28,7 +28,7 @@ const CanvasRecap: React.FC<Props> = ({ canvasWidth, canvasHeight, saveData, hid
             return {
               ...paintStep,
               points: paintStep.points.map(point => ({ x: point.x * scaleX, y: point.y * scaleY })),
-              thickness: paintStep.thickness * scaleAvg,
+              brushRadius: paintStep.brushRadius * scaleAvg,
             };
           case 'fill':
             return {

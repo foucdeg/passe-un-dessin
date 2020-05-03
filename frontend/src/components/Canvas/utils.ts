@@ -1,5 +1,5 @@
 export type Point = { x: number; y: number };
-export type Line = { points: Point[]; color: string; thickness: number; type: 'line' };
+export type Line = { points: Point[]; brushColor: string; brushRadius: number; type: 'line' };
 export type Fill = { point: Point; color: string; type: 'fill' };
 export type Paint = (Line | Fill)[];
 
@@ -17,7 +17,7 @@ export const drawLine = (
   startPosition: Point,
   endPosition: Point,
   brushColor: string,
-  brushThickness: number,
+  brushRadius: number,
   canvasRef: canvasRefType,
 ) => {
   if (!canvasRef.current) {
@@ -29,12 +29,12 @@ export const drawLine = (
     context.strokeStyle = brushColor;
     context.fillStyle = brushColor;
     context.lineJoin = 'round';
-    context.lineWidth = brushThickness;
+    context.lineWidth = brushRadius * 2;
 
     context.beginPath();
 
     if (startPosition.x === endPosition.x && startPosition.y === endPosition.y) {
-      context.arc(startPosition.x, startPosition.y, brushThickness / 2, 0, Math.PI * 2);
+      context.arc(startPosition.x, startPosition.y, brushRadius, 0, Math.PI * 2);
       context.fill();
     } else {
       context.moveTo(startPosition.x, startPosition.y);
@@ -52,7 +52,7 @@ export const drawPaint = (paint: Paint, canvasRef: canvasRefType) => {
       case undefined: // To not break previous drawings
         paintStep.points.forEach((point, index) => {
           const nextPoint = paintStep.points[index + 1] || point;
-          drawLine(point, nextPoint, paintStep.color, paintStep.thickness, canvasRef);
+          drawLine(point, nextPoint, paintStep.brushColor, paintStep.brushRadius, canvasRef);
         });
         break;
       case 'fill':
