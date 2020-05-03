@@ -44,8 +44,8 @@ const DrawingRecap: React.FC<Props> = ({ step }) => {
     <StyledDrawingRecap>
       <SentenceHeader>{step.player.name}</SentenceHeader>
       <CanvasRecap
-        canvasWidth={CANVAS_WIDTH}
-        canvasHeight={CANVAS_WIDTH}
+        width={CANVAS_WIDTH}
+        height={CANVAS_WIDTH}
         saveData={lzString.decompressFromBase64(step.drawing)}
       />
       {displayToggleVote && (

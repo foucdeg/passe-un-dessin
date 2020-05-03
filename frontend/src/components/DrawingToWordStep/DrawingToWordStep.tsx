@@ -53,8 +53,8 @@ const DrawingToWordStep: React.FC<Props> = ({
     <LeftAndRightSide>
       <LeftSide>
         <CanvasRecap
-          canvasWidth={538}
-          canvasHeight={538}
+          width={538}
+          height={538}
           saveData={lzString.decompressFromBase64(padStep.drawing)}
         />
       </LeftSide>
