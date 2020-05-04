@@ -108,6 +108,7 @@ const CanvasDraw: React.FC<Props> = ({
   const paint = useCallback(
     (event: MouseEvent | TouchEvent) => {
       if (isPainting) {
+        event.preventDefault();
         const newPosition = getCoordinates(event);
         if (mousePosition && newPosition) {
           drawLine(mousePosition, newPosition, selectedBrushColor, selectedBrushRadius, canvasRef);
