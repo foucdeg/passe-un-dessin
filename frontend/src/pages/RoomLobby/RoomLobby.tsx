@@ -14,6 +14,7 @@ import {
   ButtonRow,
   HelpText,
   StyledHeader,
+  StyledRoomName,
   CopyLinkAdornment,
   CloseButton,
 } from './RoomLobby.style';
@@ -83,6 +84,7 @@ const Room: React.FunctionComponent = () => {
       <StyledHeader>
         <FormattedMessage id="roomLobby.title" />
       </StyledHeader>
+      <StyledRoomName>{room.friendly_name}</StyledRoomName>
       <FieldLabel>
         <FormattedMessage
           id="roomLobby.sendLink"

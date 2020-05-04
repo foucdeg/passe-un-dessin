@@ -5,6 +5,7 @@ export interface Room {
   admin: Player;
   uuid: string;
   current_game_id: string;
+  friendly_name: string;
 }
 
 export interface PlayerRanking {
