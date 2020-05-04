@@ -91,7 +91,6 @@ const floodfill = (
   Q.push(i);
   while (Q.length) {
     i = Q.pop() as number;
-    seen[i] = true;
     if (pixelCompareAndSet(i, targetcolor, fillcolor, data, length, tolerance)) {
       e = i;
       w = i;
@@ -111,6 +110,7 @@ const floodfill = (
         if (j - w2 >= 0 && pixelCompare(j - w2, targetcolor, fillcolor, data, length, tolerance))
           if (!seen[j - w2]) {
             Q.push(j - w2); //queue y-1
+            seen[j - w2] = true;
           }
         if (
           j + w2 < length &&
@@ -118,6 +118,7 @@ const floodfill = (
         )
           if (!seen[j + w2]) {
             Q.push(j + w2); //queue y+1
+            seen[j + w2] = true;
           }
       }
     }
@@ -205,7 +206,7 @@ export const fillContext = (coordinates: Point, canvasRef: canvasRefType, color:
   const yi = Math.round(y);
   const width = image.width;
   const height = image.height;
-  const tolerance = 1;
+  const tolerance = 10;
   floodfill(data, xi, yi, hexToRgb(color), tolerance, width, height);
   context.putImageData(image, 0, 0);
 };

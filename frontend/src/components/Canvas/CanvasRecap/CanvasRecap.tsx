@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { CanvasWrapper } from '../CanvasCommon.style';
+import { Canvas } from '../CanvasCommon.style';
 import { drawPaint, Paint } from '../utils';
 
 interface Props {
@@ -22,15 +22,14 @@ const CanvasRecap: React.FC<Props> = ({ width, height, saveData, hideBorder }) =
   }, [paint]);
 
   return (
-    <CanvasWrapper
-      canvasHeight={canvasHeight}
-      canvasWidth={canvasWidth}
+    <Canvas
+      ref={canvasRef}
+      height={canvasHeight}
+      width={canvasWidth}
       containerHeight={height}
       containerWidth={width}
       hideBorder={hideBorder}
-    >
-      <canvas ref={canvasRef} height={canvasHeight - 4} width={canvasWidth - 4} />
-    </CanvasWrapper>
+    />
   );
 };
 
