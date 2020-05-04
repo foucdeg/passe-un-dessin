@@ -7,7 +7,7 @@ import lzString from 'lz-string';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Canvas } from '../CanvasCommon.style';
-import { drawLine, drawPaint, fillContext, Line, Paint, Point } from '../utils';
+import { drawLine, drawPaint, fillContext, Line, Paint, Point, resetCanvas } from '../utils';
 import {
   CanvasButtons,
   PadStepDone,
@@ -148,7 +148,8 @@ const CanvasDraw: React.FC<Props> = ({
     const canvas: HTMLCanvasElement = canvasRef.current;
     const context = canvas.getContext('2d');
     if (context) {
-      context.clearRect(0, 0, canvas.width, canvas.height);
+      // Do not use clearRect because a cleared canvas is black transparent
+      resetCanvas(canvasRef);
       drawing.current = [];
     }
   };
@@ -235,6 +236,10 @@ const CanvasDraw: React.FC<Props> = ({
       clearTimeout(timeout);
     };
   }, [canvasWidth, canvasHeight, saveDrawing, round_duration, finished]);
+
+  useEffect(() => {
+    resetCanvas(canvasRef);
+  }, []);
 
   return (
     <>
