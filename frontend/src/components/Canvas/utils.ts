@@ -13,6 +13,16 @@ type RGBAColor = {
   a: number;
 };
 
+export const resetCanvas = (canvasRef: canvasRefType) => {
+  if (canvasRef.current) {
+    const context = canvasRef.current.getContext('2d');
+    if (context) {
+      context.fillStyle = '#FFFFFF';
+      context.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+    }
+  }
+};
+
 export const drawLine = (
   startPosition: Point,
   endPosition: Point,
