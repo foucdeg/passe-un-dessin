@@ -24,8 +24,9 @@ if (module.hot) {
   });
 }
 
-navigator.serviceWorker.getRegistrations().then(registrations => {
-  for (const registration of registrations) {
-    registration.unregister();
-  }
-});
+navigator.serviceWorker &&
+  navigator.serviceWorker.getRegistrations().then(registrations => {
+    for (const registration of registrations) {
+      registration.unregister();
+    }
+  });
