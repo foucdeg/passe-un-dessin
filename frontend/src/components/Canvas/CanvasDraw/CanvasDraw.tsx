@@ -56,13 +56,20 @@ const CanvasDraw: React.FC<Props> = ({
     }
   };
 
-  const getCoordinates = (event: MouseEvent): Point | undefined => {
+  const getCoordinates = (event: MouseEvent | TouchEvent): Point | undefined => {
     if (!canvasRef.current) {
       return;
     }
 
     const canvas: HTMLCanvasElement = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
+
+    if ('changedTouches' in event) {
+      return {
+        x: event.changedTouches[0].pageX - rect.left - window.scrollX,
+        y: event.changedTouches[0].pageY - rect.top - window.scrollY,
+      };
+    }
 
     return {
       x: event.pageX - rect.left - window.scrollX,
@@ -71,7 +78,7 @@ const CanvasDraw: React.FC<Props> = ({
   };
 
   const startPaint = useCallback(
-    (event: MouseEvent) => {
+    (event: MouseEvent | TouchEvent) => {
       const coordinates = getCoordinates(event);
       if (coordinates) {
         if (isFillDrawSelected) {
@@ -99,7 +106,7 @@ const CanvasDraw: React.FC<Props> = ({
   );
 
   const paint = useCallback(
-    (event: MouseEvent) => {
+    (event: MouseEvent | TouchEvent) => {
       if (isPainting) {
         const newPosition = getCoordinates(event);
         if (mousePosition && newPosition) {
@@ -174,8 +181,10 @@ const CanvasDraw: React.FC<Props> = ({
     }
     const canvas: HTMLCanvasElement = canvasRef.current;
     canvas.addEventListener('mousedown', startPaint);
+    canvas.addEventListener('touchstart', startPaint);
     return () => {
       canvas.removeEventListener('mousedown', startPaint);
+      canvas.removeEventListener('touchstart', startPaint);
     };
   }, [startPaint]);
 
@@ -185,8 +194,10 @@ const CanvasDraw: React.FC<Props> = ({
     }
     const canvas: HTMLCanvasElement = canvasRef.current;
     canvas.addEventListener('mousemove', paint);
+    canvas.addEventListener('touchmove', paint);
     return () => {
       canvas.removeEventListener('mousemove', paint);
+      canvas.removeEventListener('touchmove', paint);
     };
   }, [paint]);
 
@@ -197,9 +208,13 @@ const CanvasDraw: React.FC<Props> = ({
     const canvas: HTMLCanvasElement = canvasRef.current;
     canvas.addEventListener('mouseup', exitPaint);
     canvas.addEventListener('mouseleave', exitPaint);
+    canvas.addEventListener('touchend', exitPaint);
+    canvas.addEventListener('touchcancel', exitPaint);
     return () => {
       canvas.removeEventListener('mouseup', exitPaint);
       canvas.removeEventListener('mouseleave', exitPaint);
+      canvas.removeEventListener('touchend', exitPaint);
+      canvas.removeEventListener('touchcancel', exitPaint);
     };
   }, [exitPaint]);
 
