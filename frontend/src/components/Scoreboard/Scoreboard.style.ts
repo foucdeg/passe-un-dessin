@@ -38,6 +38,7 @@ RankingRow.displayName = 'RankingRow';
 export const RankEmoji = styled.span`
   font-size: ${fontSize.header2};
   margin-right: 8px;
+  width: 24px;
 `;
 
 RankEmoji.displayName = 'RankEmoji';

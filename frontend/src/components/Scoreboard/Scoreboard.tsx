@@ -1,6 +1,4 @@
 import React from 'react';
-import { RoomRanking } from 'redux/Room/types';
-import { PadStep } from 'redux/Game/types';
 import { FormattedMessage } from 'react-intl';
 import {
   ScoreboardContainer,
@@ -12,11 +10,9 @@ import {
   StyledPlayeChip,
 } from './Scoreboard.style';
 import Spacer from 'atoms/Spacer';
-
-interface Props {
-  ranking: RoomRanking;
-  winners: PadStep[];
-}
+import { useSelector } from 'redux/useSelector';
+import { selectRanking } from 'redux/Room/selectors';
+import { selectWinners } from 'redux/Game/selectors';
 
 type Deltas = {
   [playerId: string]: number;
@@ -35,7 +31,12 @@ const getRankEmoji = (ranking: number) => {
   }
 };
 
-const Scoreboard: React.FC<Props> = ({ ranking, winners }) => {
+const Scoreboard: React.FC<{}> = () => {
+  const ranking = useSelector(selectRanking);
+  const winners = useSelector(selectWinners);
+
+  if (!ranking || !winners) return null;
+
   const deltas = winners.reduce((currentDeltas, winningPadStep) => {
     return {
       ...currentDeltas,
