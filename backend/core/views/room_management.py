@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views import View
 from django.views.decorators.http import require_GET, require_http_methods
 from django_eventstream import send_event
+from django.utils.translation import get_language_from_request
 from rest_framework.generics import RetrieveAPIView
 
 from core.decorators import requires_player
@@ -15,6 +16,7 @@ from core.models import Game, GamePhase, Player, Room
 from core.serializers import PlayerSerializer, RoomSerializer
 from core.service.game_service import initialize_game
 from core.service.room_service import remove_player_from_room
+from core.service.suggestions import SuggestionEngine
 
 logger = logging.getLogger(__name__)
 
@@ -43,6 +45,22 @@ class PlayerView(View):
 
 
 class RoomCreationView(View):
+    def _generate_friendly_name(self, request):
+        """
+        Generates a human friendly name for a room, does not enforce uniqueness
+        """
+        engine = SuggestionEngine()
+
+        language = get_language_from_request(request)
+        language = language[:2].lower()
+        if language not in engine.get_supported_languages():
+            language = "en"  # defaults to en
+
+        suggestion = " ".join(engine.get_single_word_random(language, 3))
+        suggestion = suggestion[:127]
+
+        return suggestion
+
     def post(self, request):
 
         try:
@@ -51,7 +69,8 @@ class RoomCreationView(View):
         except (KeyError, Player.DoesNotExist):
             return HttpResponseBadRequest("No player ID in session, or invalid")
 
-        room = Room.objects.create(admin=player)
+        friendly_name = self._generate_friendly_name(request)
+        room = Room.objects.create(admin=player, friendly_name=friendly_name)
         player.room = room
         player.save()
 

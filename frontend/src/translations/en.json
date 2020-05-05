@@ -110,7 +110,7 @@
     "sendEmail": "Send link by email",
     "emailExample": "myemail@aol.fr",
     "emailSubject": "My link to Draw Around",
-    "emailBody": "Link : {link}\n\nSee you soon!"
+    "emailBody": "Link: {link}\n\nSee you soon!"
   },
   "playerModal": {
     "title": "Player",
