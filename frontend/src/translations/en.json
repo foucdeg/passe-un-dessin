@@ -72,7 +72,10 @@
   },
   "voteResults": {
     "leaveTeam": "Leave team",
-    "newGame": "New game?"
+    "newGame": "New game?",
+    "bestDrawings": "Best drawings",
+    "voteCount": "{voteCount} point{ voteCount, plural, one {} other {s}}",
+    "scoreboard": "Scoreboard"
   },
   "newGameModal": {
     "title": "Start a new game",
@@ -120,9 +123,5 @@
   "rankingModal": {
     "title": "Score",
     "noRanking": "No ranking yet"
-  },
-  "ranking": "{ ranking, select, 0 {🏆} 1 {🥈} 2 {🥉} other {👤}} {playerName} ({score} point{ score, plural, one {} other {s}})",
-  "podium": {
-    "voteCount": "{voteCount} point{ voteCount, plural, one {} other {s}}"
   }
 }

@@ -1,12 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import {
-  GameContainer,
-  InnerGameContainer,
-  HomeLink,
-  HomeButton,
-  Ranking,
-  Score,
-} from './Game.style';
+import { GameContainer, InnerGameContainer, HomeLink, HomeButton } from './Game.style';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'redux/useSelector';
 
@@ -17,11 +10,11 @@ import { getRedirectPath } from 'services/game.service';
 import { useServerSentEvent, SERVER_EVENT_TYPES } from 'services/networking/server-events';
 import { startRound, markPlayerFinished, setPlayerViewingPad, setAllVoteCount } from 'redux/Game';
 import { GamePhase } from 'redux/Game/types';
-import { selectRoom, selectRanking } from 'redux/Room/selectors';
+import { selectRoom } from 'redux/Room/selectors';
 import { selectGame } from 'redux/Game/selectors';
 import { selectPlayer } from 'redux/Player/selectors';
 import PlayerOrder from 'components/PlayerOrder';
-import { useIntl, FormattedMessage } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { useLeaveRoom } from 'redux/Room/hooks';
 import Loader from 'components/Loader';
 
@@ -36,7 +29,6 @@ const Game: React.FunctionComponent = () => {
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
   const player = useSelector(selectPlayer);
-  const ranking = useSelector(selectRanking);
   const { push } = useHistory();
   const location = useLocation();
   const { path } = useRouteMatch();
@@ -161,24 +153,6 @@ const Game: React.FunctionComponent = () => {
           <Route path={`${path}/recap`} component={GameRecap} />
           <Route path={`${path}/vote-results`} component={VoteResults} />
         </Switch>
-        {ranking && !!ranking.length && (
-          <Ranking>
-            {ranking
-              .filter(rank => rank.vote_count > 0)
-              .map((rank, index) => (
-                <Score key={rank.player.uuid}>
-                  <FormattedMessage
-                    id="ranking"
-                    values={{
-                      playerName: rank.player.name,
-                      score: rank.vote_count,
-                      ranking: index,
-                    }}
-                  />
-                </Score>
-              ))}
-          </Ranking>
-        )}
       </InnerGameContainer>
     </GameContainer>
   );
