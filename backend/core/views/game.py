@@ -12,13 +12,9 @@ from core.decorators import requires_player
 from core.messages import PlayerFinishedMessage, PlayerViewingPadMessage
 from core.models import Game, GamePhase, Pad, PadStep, Vote
 from core.serializers import GameSerializer, PadSerializer, PadStepSerializer
-from core.service.game_service import (
-    end_debrief,
-    get_available_vote_count,
-    send_all_vote_count,
-    start_next_round,
-    switch_to_rounds,
-)
+from core.service.game_service import (end_debrief, get_available_vote_count,
+                                       send_all_vote_count, start_next_round,
+                                       switch_to_rounds)
 
 logger = logging.getLogger(__name__)
 
@@ -243,7 +239,7 @@ def get_vote_results(request, game_id):
         PadStep.objects.filter(pad__game_id=game_id)
         .annotate(count=Count("votes"))
         .filter(count__gt=0)
-        .order_by("-count")[:3]
+        .order_by("-count")
     )
 
     data = PadStepSerializer(pad_steps, many=True).data

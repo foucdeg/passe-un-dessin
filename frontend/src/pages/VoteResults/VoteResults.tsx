@@ -11,6 +11,7 @@ import { FormattedMessage } from 'react-intl';
 import TopRightButtons from 'atoms/TopRightButtons';
 import TopRightButton from 'atoms/TopRightButton';
 import { Container } from './VoteResults.style';
+import Scoreboard from 'components/Scoreboard';
 
 const VoteResults: React.FunctionComponent = () => {
   const room = useSelector(selectRoom);
@@ -40,6 +41,7 @@ const VoteResults: React.FunctionComponent = () => {
   return (
     <Container>
       {winners && (winners.length ? <Podium winners={winners} /> : <div>No votes</div>)}
+      <Scoreboard />
       <TopRightButtons>
         <TopRightButton onClick={leaveGame}>
           <FormattedMessage id="voteResults.leaveTeam" />

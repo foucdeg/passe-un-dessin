@@ -35,7 +35,10 @@ const PodiumStep: React.FC<Props> = ({ winner, width, ranking }) => {
           />
           <PlayerName>{winner.player.name}</PlayerName>
           <VoteCount>
-            <FormattedMessage id="podium.voteCount" values={{ voteCount: winner.votes.length }} />
+            <FormattedMessage
+              id="voteResults.voteCount"
+              values={{ voteCount: winner.votes.length }}
+            />
           </VoteCount>
         </WinnerSection>
       )}
