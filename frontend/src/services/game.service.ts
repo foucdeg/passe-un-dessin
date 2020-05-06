@@ -1,4 +1,4 @@
-import { Game, PadStep, GamePhase } from 'redux/Game/types';
+import { Game, GamePhase, PadStep } from 'redux/Game/types';
 import { Player } from 'redux/Player/types';
 import { Room } from 'redux/Room/types';
 
@@ -62,8 +62,7 @@ export const getPreviousNextPlayers = (game: Game, player: Player): PreviousNext
 };
 
 export const getAvailableVoteCount = (game: Game): number => {
-  if (game.players.length <= 3) return 1;
-  return 3;
+  return Math.max(3, game.pads[0].steps.length / 2);
 };
 
 export const getReorderedPlayers = (game: Game, player: Player): Player[] => {
@@ -100,4 +99,11 @@ export const getNextPhaseAndRound = (game: Game) => {
     case GamePhase.VOTE_RESULTS:
       return [GamePhase.VOTE_RESULTS, 0];
   }
+};
+
+export const shouldDisplayDrawOwnWordSwitch = (playerCount: number) => {
+  if (playerCount <= 3) {
+    return false;
+  }
+  return playerCount % 2 === 0;
 };

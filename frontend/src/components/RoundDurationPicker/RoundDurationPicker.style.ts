@@ -15,7 +15,7 @@ DurationOption.displayName = 'DurationOption';
 
 export const RoundDurationPickerContainer = styled.div`
   width: 100%;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 `;
 
 RoundDurationPickerContainer.displayName = 'RoundDurationPickerContainer';

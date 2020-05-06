@@ -24,7 +24,9 @@
     "needMore": "We still need {count} {count, plural, one {player} many {players}}",
     "isEveryoneThere": "Is everyone there?",
     "play": "Play",
-    "adminWillStart": "{name} will start the game when ready!"
+    "adminWillStart": "{name} will start the game when ready!",
+    "timeDuration": "Time duration: {options} seconds",
+    "drawOwnWord": "I want to draw my own word at the first step"
   },
   "menu": {
     "startMusic": "Resume music",

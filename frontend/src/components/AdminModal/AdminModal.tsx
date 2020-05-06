@@ -1,18 +1,19 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'redux/useSelector';
-import { selectRoom } from 'redux/Room/selectors';
 import PlayerChip from 'atoms/PlayerChip';
-
-import { Player } from 'redux/Player/types';
-import Modal from 'components/Modal';
-import { useRemovePlayer } from 'redux/Room/hooks';
-import { useStartGame, useRoundDuration } from 'redux/Game/hooks';
-import SecondaryButton from 'components/SecondaryButton';
-import { StyledHeader, ButtonRow, StyledPlayerChips, StyledCrossIcon } from './AdminModal.style';
 import Button from 'components/Button';
-import { FormattedMessage } from 'react-intl';
-import { selectGame } from 'redux/Game/selectors';
+import DrawOwnWordSwitch from 'components/DrawOwnWordSwitch';
+import Modal from 'components/Modal';
 import RoundDurationPicker from 'components/RoundDurationPicker';
+import SecondaryButton from 'components/SecondaryButton';
+import React, { useEffect } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { useDrawOwnWordSwitch, useRoundDuration, useStartGame } from 'redux/Game/hooks';
+import { selectGame } from 'redux/Game/selectors';
+import { Player } from 'redux/Player/types';
+import { useRemovePlayer } from 'redux/Room/hooks';
+import { selectRoom } from 'redux/Room/selectors';
+import { useSelector } from 'redux/useSelector';
+import { shouldDisplayDrawOwnWordSwitch } from 'services/game.service';
+import { ButtonRow, StyledCrossIcon, StyledHeader, StyledPlayerChips } from './AdminModal.style';
 
 interface Props {
   isOpen: boolean;
@@ -23,6 +24,7 @@ const AdminModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
   const [roundDuration, setRoundDuration] = useRoundDuration(game?.round_duration);
+  const [drawOwnWord, setDrawOwnWord] = useDrawOwnWordSwitch(game?.draw_own_word);
 
   const doStartGame = useStartGame();
 
@@ -47,6 +49,7 @@ const AdminModal: React.FC<Props> = ({ isOpen, onClose }) => {
     doStartGame(
       room.uuid,
       roundDuration,
+      drawOwnWord,
       game.players.map(player => player.uuid),
     );
     onClose();
@@ -55,12 +58,17 @@ const AdminModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const startReverseGame = () => {
     if (!game) return;
 
-    doStartGame(room.uuid, roundDuration, game.players.map(player => player.uuid).reverse());
+    doStartGame(
+      room.uuid,
+      roundDuration,
+      drawOwnWord,
+      game.players.map(player => player.uuid).reverse(),
+    );
     onClose();
   };
 
   const startRandomGame = () => {
-    doStartGame(room.uuid, roundDuration);
+    doStartGame(room.uuid, roundDuration, drawOwnWord);
     onClose();
   };
 
@@ -74,7 +82,7 @@ const AdminModal: React.FC<Props> = ({ isOpen, onClose }) => {
       </p>
 
       <StyledPlayerChips>
-        {room?.players.map(player => (
+        {room.players.map(player => (
           <PlayerChip key={player.uuid} color={player.color}>
             {player.name} <StyledCrossIcon alt="Remove" onClick={() => onPlayerClick(player)} />
           </PlayerChip>
@@ -87,6 +95,9 @@ const AdminModal: React.FC<Props> = ({ isOpen, onClose }) => {
         <FormattedMessage id="adminModal.title" />
       </StyledHeader>
       <RoundDurationPicker duration={roundDuration} onDurationChange={setRoundDuration} />
+      {shouldDisplayDrawOwnWordSwitch(room.players.length) && (
+        <DrawOwnWordSwitch drawOwnWord={drawOwnWord} setDrawOwnWord={setDrawOwnWord} />
+      )}
       <ButtonRow>
         <SecondaryButton onClick={startRandomGame}>
           <FormattedMessage id="adminModal.randomOrder" />

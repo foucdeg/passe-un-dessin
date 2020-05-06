@@ -131,7 +131,7 @@ def kick_player(request, room_id):
 def start_game(request, room_id):
     json_body = json.loads(request.body)
     players_order = json_body.get("playersOrder", None)
-    round_duration = json_body.get("roundDuration", None)
+    round_duration = json_body.get("roundDuration")
     draw_own_word = json_body.get("drawOwnWord")
 
     try:

@@ -39,6 +39,7 @@ export interface Game {
   phase: GamePhase;
   current_round: number | null;
   round_duration: number;
+  draw_own_word: boolean;
 }
 
 export interface Vote {
