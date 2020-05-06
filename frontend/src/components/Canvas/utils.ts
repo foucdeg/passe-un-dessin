@@ -10,7 +10,6 @@ type RGBAColor = {
   r: number;
   g: number;
   b: number;
-  a: number;
 };
 
 export const resetCanvas = (canvasRef: canvasRefType) => {
@@ -81,112 +80,59 @@ const floodfill = (
   fillcolor: RGBAColor,
   tolerance: number,
   width: number,
-  height: number,
 ) => {
   const length = data.length;
-  const Q = [];
-  let i = (x + y * width) * 4;
-  let e = i;
-  let w = i;
-  let me = width * 4;
-  let mw = width * 4;
-  const w2 = width * 4;
-  const seen: { [point: number]: true } = {};
+  const queue = [];
+  let pixel = (x + y * width) * 4;
+  const dataWidth = width * 4;
 
-  const targetcolor = [data[i], data[i + 1], data[i + 2], data[i + 3]];
+  const targetColor = [data[pixel], data[pixel + 1], data[pixel + 2], data[pixel + 3]];
 
-  if (!pixelCompare(i, targetcolor, fillcolor, data, length, tolerance)) {
-    return false;
+  if (arePixelEqual(targetColor, [fillcolor.r, fillcolor.g, fillcolor.b], tolerance)) {
+    return;
   }
-  Q.push(i);
-  while (Q.length) {
-    i = Q.pop() as number;
-    if (pixelCompareAndSet(i, targetcolor, fillcolor, data, length, tolerance)) {
-      e = i;
-      w = i;
-      mw = Math.floor(i / w2) * w2; //left bound
-      me = mw + w2; //right bound
-      while (
-        mw < w &&
-        mw < (w -= 4) &&
-        pixelCompareAndSet(w, targetcolor, fillcolor, data, length, tolerance)
-      ); //go left until edge hit
-      while (
-        me > e &&
-        me > (e += 4) &&
-        pixelCompareAndSet(e, targetcolor, fillcolor, data, length, tolerance)
-      ); //go right until edge hit
-      for (let j = w + 4; j < e; j += 4) {
-        if (j - w2 >= 0 && pixelCompare(j - w2, targetcolor, fillcolor, data, length, tolerance))
-          if (!seen[j - w2]) {
-            Q.push(j - w2); //queue y-1
-            seen[j - w2] = true;
-          }
-        if (
-          j + w2 < length &&
-          pixelCompare(j + w2, targetcolor, fillcolor, data, length, tolerance)
-        )
-          if (!seen[j + w2]) {
-            Q.push(j + w2); //queue y+1
-            seen[j + w2] = true;
-          }
-      }
+
+  queue.push(pixel);
+  while (queue.length) {
+    pixel = queue.pop() as number;
+    if (setPixelIfNeeded(pixel, targetColor, fillcolor, data, length, tolerance)) {
+      queue.push(pixel - 4);
+      queue.push(pixel + 4);
+      queue.push(pixel - dataWidth);
+      queue.push(pixel + dataWidth);
     }
   }
-  return data;
 };
 
-const pixelCompare = (
-  i: number,
-  targetcolor: number[],
+const shouldUpdatePixel = (
+  pixel: number,
+  targetColor: number[],
+  data: Uint8ClampedArray,
+  length: number,
+  tolerance: number,
+) => {
+  if (pixel < 0 || pixel >= length) return false;
+  return arePixelEqual(targetColor, [data[pixel], data[pixel + 1], data[pixel + 2]], tolerance);
+};
+
+const arePixelEqual = (pixel1: number[], pixel2: number[], tolerance: number) =>
+  Math.abs(pixel1[0] - pixel2[0]) <= tolerance &&
+  Math.abs(pixel1[1] - pixel2[1]) <= tolerance &&
+  Math.abs(pixel1[2] - pixel2[2]) <= tolerance;
+
+const setPixelIfNeeded = (
+  pixel: number,
+  targetColor: number[],
   fillcolor: RGBAColor,
   data: Uint8ClampedArray,
   length: number,
   tolerance: number,
 ) => {
-  if (i < 0 || i >= length) return false; //out of bounds
-  if (data[i + 3] === 0 && fillcolor.a > 0) return true; //surface is invisible and fill is visible
-
-  if (
-    Math.abs(targetcolor[3] - fillcolor.a) <= tolerance &&
-    Math.abs(targetcolor[0] - fillcolor.r) <= tolerance &&
-    Math.abs(targetcolor[1] - fillcolor.g) <= tolerance &&
-    Math.abs(targetcolor[2] - fillcolor.b) <= tolerance
-  )
-    return false; //target is same as fill
-
-  if (
-    targetcolor[3] === data[i + 3] &&
-    targetcolor[0] === data[i] &&
-    targetcolor[1] === data[i + 1] &&
-    targetcolor[2] === data[i + 2]
-  )
-    return true; //target matches surface
-
-  if (
-    Math.abs(targetcolor[3] - data[i + 3]) <= 255 - tolerance &&
-    Math.abs(targetcolor[0] - data[i]) <= tolerance &&
-    Math.abs(targetcolor[1] - data[i + 1]) <= tolerance &&
-    Math.abs(targetcolor[2] - data[i + 2]) <= tolerance
-  )
-    return true; //target to surface within tolerance
-
-  return false; //no match
-};
-
-const pixelCompareAndSet = (
-  i: number,
-  targetcolor: number[],
-  fillcolor: RGBAColor,
-  data: Uint8ClampedArray,
-  length: number,
-  tolerance: number,
-) => {
-  if (pixelCompare(i, targetcolor, fillcolor, data, length, tolerance)) {
-    data[i] = fillcolor.r;
-    data[i + 1] = fillcolor.g;
-    data[i + 2] = fillcolor.b;
-    data[i + 3] = fillcolor.a;
+  if (shouldUpdatePixel(pixel, targetColor, data, length, tolerance)) {
+    data[pixel] = fillcolor.r;
+    data[pixel + 1] = fillcolor.g;
+    data[pixel + 2] = fillcolor.b;
+    data[pixel + 3] = 255;
     return true;
   }
   return false;
@@ -199,9 +145,8 @@ const hexToRgb = (hex: string) => {
         r: parseInt(result[1], 16),
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16),
-        a: 255,
       }
-    : { r: 0, g: 0, b: 0, a: 1 };
+    : { r: 0, g: 0, b: 0 };
 };
 
 export const fillContext = (coordinates: Point, canvasRef: canvasRefType, color: string) => {
@@ -215,8 +160,7 @@ export const fillContext = (coordinates: Point, canvasRef: canvasRefType, color:
   const xi = Math.round(x);
   const yi = Math.round(y);
   const width = image.width;
-  const height = image.height;
   const tolerance = 10;
-  floodfill(data, xi, yi, hexToRgb(color), tolerance, width, height);
+  floodfill(data, xi, yi, hexToRgb(color), tolerance, width);
   context.putImageData(image, 0, 0);
 };
