@@ -122,6 +122,7 @@ class Game(BaseModel):
     round_duration = models.IntegerField(default=60)
     current_round = models.IntegerField(null=True)
     pads_done = models.IntegerField(default=0)
+    draw_own_word = models.BooleanField(default=True)
 
     def rounds(self):
         def sort_fn(step: PadStep):
