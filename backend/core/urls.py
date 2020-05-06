@@ -46,4 +46,5 @@ urlpatterns = [
         game.is_player_in_game,
         name="is_player_in_game",
     ),
+    path("game/<str:game_id>/force-state", game.force_state, name="force_game_state",),
 ]
