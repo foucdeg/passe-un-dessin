@@ -15,6 +15,7 @@ import {
   Sentence,
   StyledHeader,
 } from './WordToDrawingStep.style';
+import RemainingPlayers from 'components/RemainingPlayers';
 
 interface Props {
   padStep: PadStep;
@@ -30,14 +31,16 @@ const WordToDrawingStep: React.FC<Props> = ({ padStep, previousPlayer, saveStep,
   if (!game) return null;
   if (!previousPlayer) return null;
 
+  const finished = loading || !!padStep.drawing;
+
   return (
     <LeftAndRightSide>
       <LeftSide>
         <CanvasDraw
-          canvasWidth={536}
-          canvasHeight={536}
+          canvasWidth={538}
+          canvasHeight={538}
           saveStep={saveStep}
-          finished={loading || !!padStep.drawing}
+          finished={finished}
           round_duration={game.round_duration}
         />
       </LeftSide>
@@ -46,7 +49,9 @@ const WordToDrawingStep: React.FC<Props> = ({ padStep, previousPlayer, saveStep,
         <StyledHeader>
           <FormattedMessage id="wordToDrawing.sentenceToDraw" />
         </StyledHeader>
-        <Sentence>{padStep.sentence}</Sentence>
+        <Sentence>
+          {padStep.sentence || <FormattedMessage id="wordToDrawing.noSentence" />}
+        </Sentence>
         <em>
           <FormattedMessage
             id="wordToDrawing.previousPlayer"
@@ -54,13 +59,19 @@ const WordToDrawingStep: React.FC<Props> = ({ padStep, previousPlayer, saveStep,
           />
         </em>
         <Spacer />
-        <p>
-          <FormattedMessage
-            id="wordToDrawing.duration"
-            values={{ duration: game.round_duration }}
-          />
-        </p>
-        <Timer duration={game.round_duration} />
+        {finished ? (
+          <RemainingPlayers />
+        ) : (
+          <>
+            <p>
+              <FormattedMessage
+                id="wordToDrawing.duration"
+                values={{ duration: game.round_duration }}
+              />
+            </p>
+            <Timer duration={game.round_duration} />
+          </>
+        )}
       </RightSide>
     </LeftAndRightSide>
   );

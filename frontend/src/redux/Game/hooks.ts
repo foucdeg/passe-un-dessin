@@ -4,7 +4,7 @@ import { updateGame, updatePad, setSuggestions, updatePadStep, setWinners } from
 import { Pad } from './types';
 import { useCallback, useState } from 'react';
 import { useHistory } from 'react-router';
-import { getRedirectPath } from 'services/game.service';
+import { getRedirectPath, getNextPhaseAndRound } from 'services/game.service';
 import { DEFAULT_ROUND_DURATION } from './constants';
 import { useIntl } from 'react-intl';
 import { wait, useTypedAsyncFn } from 'services/utils';
@@ -125,6 +125,19 @@ export const useSavePad = () => {
     },
     [dispatch],
   );
+};
+
+export const useForceState = () => {
+  const game = useSelector(selectGame);
+
+  return useTypedAsyncFn<{}>(async () => {
+    if (!game) {
+      return;
+    }
+    const [nextPhase, nextRound] = getNextPhaseAndRound(game);
+
+    await client.put(`/game/${game.uuid}/force-state`, { nextPhase, nextRound });
+  }, [game]);
 };
 
 export const useReviewPad = () => {

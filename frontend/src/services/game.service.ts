@@ -82,3 +82,22 @@ export const getReorderedPlayers = (game: Game, player: Player): Player[] => {
 
   return [currentPlayerPad.initial_player, ...currentPlayerPad.steps.map(step => step.player)];
 };
+
+export const getNextPhaseAndRound = (game: Game) => {
+  switch (game.phase) {
+    case GamePhase.INIT:
+      return [GamePhase.ROUNDS, 0];
+    case GamePhase.ROUNDS: {
+      const nextRoundNumber = (game.current_round || 0) + 1;
+      const roundCount = game.pads[0].steps.length;
+
+      if (nextRoundNumber >= roundCount) {
+        return [GamePhase.DEBRIEF, 0];
+      }
+      return [GamePhase.ROUNDS, nextRoundNumber];
+    }
+    case GamePhase.DEBRIEF:
+    case GamePhase.VOTE_RESULTS:
+      return [GamePhase.VOTE_RESULTS, 0];
+  }
+};

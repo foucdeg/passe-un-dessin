@@ -41,23 +41,3 @@ HomeLink.displayName = 'HomeLink';
 
 export const HomeButton = styled.img.attrs({ src: homeIcon })``;
 HomeButton.displayName = 'HomeButton';
-
-export const Ranking = styled.div`
-  margin: 0 auto;
-  position: absolute;
-  bottom: -35px;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-`;
-Ranking.displayName = 'Ranking';
-
-export const Score = styled.span`
-  margin-right: 20px;
-  line-height: 19px;
-  letter-spacing: 0.1em;
-  font-weight: bold;
-  border: red;
-  color: ${colorPalette.white};
-`;
-Score.displayName = 'Score';

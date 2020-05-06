@@ -41,7 +41,6 @@
     "chooseSentence": "Pick a word or sentence:",
     "placeholder": "A giraffe?",
     "youDraw": "Choose wisely, <strong>you</strong>'ll have to draw this!",
-    "waitingFor": "Waiting for these guys to finish:",
     "nextPlayer": "Let's just hope <strong>{name}</strong> can draw...",
     "getSuggestions": "Lacking imagination? Roll the dice!"
   },
@@ -49,6 +48,7 @@
     "sentenceToDraw": "Sentence to draw:",
     "previousPlayer": "({name}'s idea. Typical.)",
     "duration": "You have {duration} seconds!",
+    "noSentence": "Something went wrong, we didn't get that sentence 😞",
     "timesUp": "Time's up, drop that pencil!"
   },
   "drawingToWord": {
@@ -56,8 +56,8 @@
     "previousPlayer": "(Who knew {name} had such talent.)",
     "nextPlayer": "Let's just hope {next} can draw better than {previous} ...",
     "placeholder": "A sheep?",
-    "submit": "Submit",
-    "waitingFor": "Waiting for these guys to finish:"
+    "noSentence": "Something went wrong, we didn't get that drawing 😞",
+    "submit": "Submit"
   },
   "finishedModal": {
     "title": "It's over!",
@@ -123,5 +123,10 @@
   "rankingModal": {
     "title": "Score",
     "noRanking": "No ranking yet"
+  },
+  "remainingPlayers": {
+    "waitingFor": "Waiting for these guys to finish:",
+    "forceNextStep": "Force game to next step",
+    "confirmForceNextStep": "Are you sure you want to skip to next step? We didn't get everybody's drawing or sentence."
   }
 }
