@@ -14,10 +14,16 @@ export const PadStepDone = styled.div`
   flex-direction: column;
   align-items: center;
   border-radius: 16px;
-  z-index: 101;
+  z-index: 28;
 `;
 
 PadStepDone.displayName = 'PadStepDone';
+
+export const CanvasContainer = styled.div`
+  position: relative;
+`;
+
+CanvasContainer.displayName = 'CanvasContainer';
 
 export const StyledTimerIcon = styled.img.attrs({ src: timerIcon })`
   width: 80px;
