@@ -179,7 +179,7 @@ def review_pad(request, player, uuid):
         "message",
         PlayerViewingPadMessage(pad, player).serialize(),
     )
-    return HttpResponse(status=201)
+    return HttpResponse(status=204)
 
 
 @require_http_methods(["POST", "DELETE"])
@@ -279,10 +279,11 @@ def force_state(request, player, game_id):
     try:
         game = Game.objects.get(uuid=game_id)
 
-        if game.room.admin != player:
-            return HttpResponseForbidden("Player is not admin of game %s" % game_id)
     except Game.DoesNotExist:
         return HttpResponseBadRequest("Game with uuid %s does not exist" % game_id)
+
+    if game.room.admin != player:
+        return HttpResponseForbidden("Player is not admin of game %s" % game_id)
 
     json_body = json.loads(request.body)
     try:
@@ -297,13 +298,13 @@ def force_state(request, player, game_id):
             if next_round == 0:  # switching from init
                 assert_phase(game, GamePhase.INIT)
                 switch_to_rounds(game)
-                return HttpResponse(status=201)
+                return HttpResponse(status=204)
 
             # switching from previous round
             assert_phase(game, GamePhase.ROUNDS)
             assert_round(game, next_round - 1)
             start_next_round(game, next_round)
-            return HttpResponse(status=201)
+            return HttpResponse(status=204)
 
         # Requested phase is Debrief - switching from last round
         if next_phase == GamePhase.DEBRIEF.value:
@@ -312,13 +313,13 @@ def force_state(request, player, game_id):
             assert_round(game, game_round_count - 1)
 
             start_debrief(game)
-            return HttpResponse(status=201)
+            return HttpResponse(status=204)
 
         # Requested phase is Vote Results - switching from Debrief
         if next_phase == GamePhase.VOTE_RESULTS.value:
             assert_phase(game, GamePhase.DEBRIEF)
             switch_to_vote_results(game)
-            return HttpResponse(status=201)
+            return HttpResponse(status=204)
 
         # Requested phase was invalid
         return HttpResponseBadRequest("Invalid requested phase %s" % next_phase)
