@@ -27,7 +27,10 @@ const DrawingRecap: React.FC<Props> = ({ step }) => {
 
   const liked = !!(player && step.votes.find(vote => vote.player.uuid === player.uuid));
   const displayToggleVote =
-    player && player.uuid !== step.player.uuid && (availableVoteCount > 0 || liked);
+    !!player &&
+    player.uuid !== step.player.uuid &&
+    (availableVoteCount > 0 || liked) &&
+    !!step.drawing;
 
   const doSaveVote = useSaveVote();
   const doDeleteVote = useDeleteVote();
