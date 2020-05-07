@@ -127,6 +127,6 @@
   "remainingPlayers": {
     "waitingFor": "Toujours les mêmes qu'on attend :",
     "forceNextStep": "Forcer l'étape suivante",
-    "confirmForceNextStep": "Êtes-vous sûr.e de vouloir passer à l'étape suivante ? Nous n'avons pas reçu les contributions de tout le monde."
+    "confirmForceNextStep": "Es-tu sûr.e de vouloir passer à l'étape suivante ? Nous n'avons pas reçu les contributions de tout le monde."
   }
 }
