@@ -21,18 +21,16 @@ interface Props {
 }
 
 const PodiumStep: React.FC<Props> = ({ winner, width, ranking }) => {
+  const decodedWinnerDrawing =
+    winner && winner.drawing ? lzString.decompressFromBase64(winner.drawing) : null;
+
   return (
     <Container width={width}>
       <Spacer />
       {winner && (
         <WinnerSection width={width} height={width}>
           <Sentence>{winner.sentence}</Sentence>
-          <CanvasRecap
-            width={width}
-            height={width}
-            saveData={lzString.decompressFromBase64(winner.drawing)}
-            hideBorder
-          />
+          <CanvasRecap width={width} height={width} saveData={decodedWinnerDrawing} hideBorder />
           <PlayerName>{winner.player.name}</PlayerName>
           <VoteCount>
             <FormattedMessage

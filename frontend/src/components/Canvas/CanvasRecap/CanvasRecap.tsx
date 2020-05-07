@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 interface Props {
   width: number;
   height: number;
-  saveData: string;
+  saveData: string | null;
   hideBorder?: boolean;
 }
 

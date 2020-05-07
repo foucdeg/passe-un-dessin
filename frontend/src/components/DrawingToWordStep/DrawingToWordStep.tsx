@@ -47,14 +47,12 @@ const DrawingToWordStep: React.FC<Props> = ({
 
   if (!previousPlayer) return null;
 
+  const decodedSaveData = padStep.drawing && lzString.decompressFromBase64(padStep.drawing);
+
   return (
     <LeftAndRightSide>
       <LeftSide>
-        <CanvasRecap
-          width={538}
-          height={538}
-          saveData={lzString.decompressFromBase64(padStep.drawing)}
-        />
+        <CanvasRecap width={538} height={538} saveData={decodedSaveData} />
       </LeftSide>
       <Gutter />
       <RightSide>

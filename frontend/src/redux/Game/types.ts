@@ -18,8 +18,8 @@ export interface PadStep {
   round_number: number;
   player: Player;
 
-  sentence: string;
-  drawing: string;
+  sentence: string | null;
+  drawing: string | null;
   votes: Vote[];
 }
 
@@ -28,7 +28,7 @@ export interface Pad {
   initial_player: Player;
   steps: PadStep[];
   order: number;
-  sentence: string;
+  sentence: string | null;
 }
 
 export interface Game {

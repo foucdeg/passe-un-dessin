@@ -3,7 +3,7 @@ import { StyledSentenceRecap, SentenceHeader, Sentence } from './SentenceRecap.s
 import { useIntl } from 'react-intl';
 
 interface Props {
-  sentence: string;
+  sentence: string | null;
   playerName: string;
   color: string;
   isInitial?: boolean;
