@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import lzString from 'lz-string';
 
@@ -9,14 +8,8 @@ import { selectAvailableVoteCount } from 'redux/Game/selectors';
 import { PadStep } from 'redux/Game/types';
 import { selectPlayer } from 'redux/Player/selectors';
 import { useSelector } from 'redux/useSelector';
-import {
-  ReactionOverlay,
-  ThumbUpIcon,
-  ThumbDownIcon,
-  StyledDrawingRecap,
-  LikeClickArea,
-  LikesSection,
-} from './DrawingRecap.style';
+import { StyledDrawingRecap } from './DrawingRecap.style';
+import ReactionOverlay from 'components/ReactionOverlay';
 
 interface Props {
   step: PadStep;
@@ -32,11 +25,11 @@ const DrawingRecap: React.FC<Props> = ({ step }) => {
 
   if (!player) return null;
 
-  const likedCount = step.votes.filter(vote => vote.player.uuid === player.uuid).length;
+  const likeCount = step.votes.filter(vote => vote.player.uuid === player.uuid).length;
   const samePlayer = player.uuid === step.player.uuid;
 
   const canLike = !samePlayer && availableVoteCount > 0;
-  const canUnlike = !samePlayer && likedCount > 0;
+  const canUnlike = !samePlayer && likeCount > 0;
 
   const doLike = () => doSaveVote(step.uuid);
   const doUnlike = () => doDeleteVote(step.uuid);
@@ -47,28 +40,13 @@ const DrawingRecap: React.FC<Props> = ({ step }) => {
     <StyledDrawingRecap>
       <SentenceHeader>{step.player.name}</SentenceHeader>
       <CanvasRecap width={CANVAS_WIDTH} height={CANVAS_WIDTH} saveData={decodedSaveData} />
-      {(canLike || canUnlike) && (
-        <ReactionOverlay width={CANVAS_WIDTH} height={CANVAS_WIDTH}>
-          {canUnlike && (
-            <LikeClickArea onClick={doUnlike}>
-              <ThumbDownIcon />
-            </LikeClickArea>
-          )}
-          {canLike && (
-            <LikeClickArea onClick={doLike}>
-              <ThumbUpIcon />
-            </LikeClickArea>
-          )}
-        </ReactionOverlay>
-      )}
-
-      <LikesSection>
-        {Array(likedCount)
-          .fill('')
-          .map((_, index) => (
-            <ThumbUpIcon key={index} />
-          ))}
-      </LikesSection>
+      <ReactionOverlay
+        canLike={canLike}
+        canUnlike={canUnlike}
+        onLike={doLike}
+        onUnlike={doUnlike}
+        likeCount={likeCount}
+      />
     </StyledDrawingRecap>
   );
 };
