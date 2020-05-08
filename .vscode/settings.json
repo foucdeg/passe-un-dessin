@@ -43,6 +43,5 @@
       "username": "postgres"
     }
   ],
-  "eslint.workingDirectories": ["./frontend"],
-  "python.pythonPath": "/Users/quentinsomerville/.pyenv/versions/3.8.2/bin/python"
+  "eslint.workingDirectories": ["./frontend"]
 }
