@@ -1,4 +1,7 @@
-import PlayerChip from 'atoms/PlayerChip';
+import React, { useState } from 'react';
+import lzString from 'lz-string';
+import { FormattedMessage, useIntl } from 'react-intl';
+
 import Spacer from 'atoms/Spacer';
 import CanvasRecap from 'components/Canvas/CanvasRecap';
 import InputLoader from 'components/InputLoader';
@@ -12,14 +15,10 @@ import {
   RightSide,
   StyledHeader,
 } from 'components/WordToDrawingStep/WordToDrawingStep.style';
-import lzString from 'lz-string';
-import React, { useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { selectRemainingPlayers } from 'redux/Game/selectors';
 import { PadStep } from 'redux/Game/types';
 import { Player } from 'redux/Player/types';
-import { useSelector } from 'redux/useSelector';
-import { StyledButton, StyledForm, StyledPlayerChips, Subtext } from './DrawingToWordStep.style';
+import { StyledButton, StyledForm, Subtext } from './DrawingToWordStep.style';
+import RemainingPlayers from 'components/RemainingPlayers';
 
 interface Props {
   padStep: PadStep;
@@ -37,7 +36,6 @@ const DrawingToWordStep: React.FC<Props> = ({
   loading,
 }) => {
   const [sentence, setSentence] = useState<string>('');
-  const remainingPlayers = useSelector(selectRemainingPlayers);
   const intl = useIntl();
 
   const onSubmit = (event: React.MouseEvent | React.FormEvent) => {
@@ -49,14 +47,12 @@ const DrawingToWordStep: React.FC<Props> = ({
 
   if (!previousPlayer) return null;
 
+  const decodedSaveData = padStep.drawing && lzString.decompressFromBase64(padStep.drawing);
+
   return (
     <LeftAndRightSide>
       <LeftSide>
-        <CanvasRecap
-          width={538}
-          height={538}
-          saveData={lzString.decompressFromBase64(padStep.drawing)}
-        />
+        <CanvasRecap width={538} height={538} saveData={decodedSaveData} />
       </LeftSide>
       <Gutter />
       <RightSide>
@@ -98,16 +94,7 @@ const DrawingToWordStep: React.FC<Props> = ({
             />
           </p>
         )}
-        <em>
-          <FormattedMessage id="drawingToWord.waitingFor" />
-        </em>
-        <StyledPlayerChips>
-          {remainingPlayers.map(player => (
-            <PlayerChip key={player.uuid} color={player.color}>
-              {player.name}
-            </PlayerChip>
-          ))}
-        </StyledPlayerChips>
+        <RemainingPlayers />
       </RightSide>
     </LeftAndRightSide>
   );

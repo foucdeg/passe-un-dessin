@@ -1,14 +1,16 @@
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import lzString from 'lz-string';
+import { FormattedMessage } from 'react-intl';
+
 import BrushColorPicker from 'components/BrushColorPicker';
 import { DrawingColor } from 'components/BrushColorPicker/BrushColorPicker';
 import BrushTypePicker from 'components/BrushTypePicker';
 import { BrushType } from 'components/BrushTypePicker/BrushTypePicker';
 import CanvasActions from 'components/Canvas/CanvasActions';
-import lzString from 'lz-string';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { Canvas } from '../CanvasCommon.style';
 import { drawLine, drawPaint, fillContext, Line, Paint, Point, resetCanvas } from '../utils';
 import {
+  CanvasContainer,
   CanvasButtons,
   PadStepDone,
   RightButtons,
@@ -243,23 +245,27 @@ const CanvasDraw: React.FC<Props> = ({
 
   return (
     <>
-      <Canvas
-        pointCursor={pointCursor}
-        cursorPosition={cursorPosition}
-        ref={canvasRef}
-        height={canvasHeight}
-        width={canvasWidth}
-        containerHeight={canvasHeight}
-        containerWidth={canvasWidth}
-      />
-      {finished ? (
-        <PadStepDone>
-          <StyledTimerIcon />
-          <WhiteHeader>
-            <FormattedMessage id="wordToDrawing.timesUp" />
-          </WhiteHeader>
-        </PadStepDone>
-      ) : (
+      <CanvasContainer>
+        <Canvas
+          pointCursor={pointCursor}
+          cursorPosition={cursorPosition}
+          ref={canvasRef}
+          height={canvasHeight}
+          width={canvasWidth}
+          containerHeight={canvasHeight}
+          containerWidth={canvasWidth}
+        />
+        {finished && (
+          <PadStepDone>
+            <StyledTimerIcon />
+            <WhiteHeader>
+              <FormattedMessage id="wordToDrawing.timesUp" />
+            </WhiteHeader>
+          </PadStepDone>
+        )}
+      </CanvasContainer>
+
+      {!finished && (
         <CanvasButtons>
           <BrushColorPicker color={color} setColor={setBrushColor} />
           <RightButtons>

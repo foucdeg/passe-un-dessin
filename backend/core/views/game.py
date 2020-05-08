@@ -3,7 +3,12 @@ import logging
 
 from django.db import transaction
 from django.db.models import Count
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.http import (
+    HttpResponse,
+    HttpResponseBadRequest,
+    HttpResponseForbidden,
+    JsonResponse,
+)
 from django.views.decorators.http import require_GET, require_http_methods
 from django_eventstream import send_event
 from rest_framework.generics import RetrieveAPIView
@@ -12,9 +17,19 @@ from core.decorators import requires_player
 from core.messages import PlayerFinishedMessage, PlayerViewingPadMessage
 from core.models import Game, GamePhase, Pad, PadStep, Vote
 from core.serializers import GameSerializer, PadSerializer, PadStepSerializer
-from core.service.game_service import (end_debrief, get_available_vote_count,
-                                       send_all_vote_count, start_next_round,
-                                       switch_to_rounds)
+from core.service.game_service import (
+    GamePhaseAssertionException,
+    GameRoundAssertionException,
+    assert_phase,
+    assert_round,
+    get_available_vote_count,
+    get_round_count,
+    send_all_vote_count,
+    start_debrief,
+    start_next_round,
+    switch_to_rounds,
+    switch_to_vote_results,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -164,7 +179,7 @@ def review_pad(request, player, uuid):
         "message",
         PlayerViewingPadMessage(pad, player).serialize(),
     )
-    return HttpResponse(status=201)
+    return HttpResponse(status=204)
 
 
 @require_http_methods(["POST", "DELETE"])
@@ -228,7 +243,7 @@ def go_to_vote_results(request, game_id):
     except Game.DoesNotExist:
         return HttpResponseBadRequest("Game with uuid %s does not exist" % game_id)
 
-    end_debrief(game)
+    switch_to_vote_results(game)
 
     return HttpResponse(status=200)
 
@@ -256,3 +271,63 @@ def is_player_in_game(request, player, game_id):
         return HttpResponseBadRequest("Game with uuid %s does not exist" % game_id)
 
     return JsonResponse({"is_in_game": player in game.players.all()})
+
+
+@require_http_methods(["PUT"])
+@requires_player
+def force_state(request, player, game_id):
+    try:
+        game = Game.objects.get(uuid=game_id)
+
+    except Game.DoesNotExist:
+        return HttpResponseBadRequest("Game with uuid %s does not exist" % game_id)
+
+    if game.room.admin != player:
+        return HttpResponseForbidden("Player is not admin of game %s" % game_id)
+
+    json_body = json.loads(request.body)
+    try:
+        next_phase = json_body["nextPhase"]
+        next_round = json_body["nextRound"]
+    except KeyError:
+        return HttpResponseBadRequest("nextPhase or nextRound not found in payload")
+
+    try:
+        # Requested phase is a Round
+        if next_phase == GamePhase.ROUNDS.value:
+            if next_round == 0:  # switching from init
+                assert_phase(game, GamePhase.INIT)
+                switch_to_rounds(game)
+                return HttpResponse(status=204)
+
+            # switching from previous round
+            assert_phase(game, GamePhase.ROUNDS)
+            assert_round(game, next_round - 1)
+            start_next_round(game, next_round)
+            return HttpResponse(status=204)
+
+        # Requested phase is Debrief - switching from last round
+        if next_phase == GamePhase.DEBRIEF.value:
+            assert_phase(game, GamePhase.ROUNDS)
+            game_round_count = get_round_count(game)
+            assert_round(game, game_round_count - 1)
+
+            start_debrief(game)
+            return HttpResponse(status=204)
+
+        # Requested phase is Vote Results - switching from Debrief
+        if next_phase == GamePhase.VOTE_RESULTS.value:
+            assert_phase(game, GamePhase.DEBRIEF)
+            switch_to_vote_results(game)
+            return HttpResponse(status=204)
+
+        # Requested phase was invalid
+        return HttpResponseBadRequest("Invalid requested phase %s" % next_phase)
+    except GamePhaseAssertionException as e:
+        return HttpResponseBadRequest(
+            "Unfufilled game phase assertion when forcing game state: %s" % str(e)
+        )
+    except GameRoundAssertionException as e:
+        return HttpResponseBadRequest(
+            "Unfufilled game round assertion when forcing game state: %s" % str(e)
+        )

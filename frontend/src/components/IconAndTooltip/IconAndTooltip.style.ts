@@ -17,11 +17,11 @@ export const StyledTooltip = styled.span`
   visibility: hidden;
   position: absolute;
   right: 150%;
-  top: 0px;
+  top: 0;
   text-align: right;
   width: max-content;
-  color: white;
-  z-index: 30;
+  color: ${colorPalette.white};
+  z-index: 29;
   background: ${colorPalette.blackTransparent};
   padding: 4px 12px;
   border-radius: 12px;

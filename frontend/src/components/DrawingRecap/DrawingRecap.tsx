@@ -27,7 +27,10 @@ const DrawingRecap: React.FC<Props> = ({ step }) => {
 
   const liked = !!(player && step.votes.find(vote => vote.player.uuid === player.uuid));
   const displayToggleVote =
-    player && player.uuid !== step.player.uuid && (availableVoteCount > 0 || liked);
+    !!player &&
+    player.uuid !== step.player.uuid &&
+    (availableVoteCount > 0 || liked) &&
+    !!step.drawing;
 
   const doSaveVote = useSaveVote();
   const doDeleteVote = useDeleteVote();
@@ -40,14 +43,12 @@ const DrawingRecap: React.FC<Props> = ({ step }) => {
     }
   };
 
+  const decodedSaveData = step.drawing && lzString.decompressFromBase64(step.drawing);
+
   return (
     <StyledDrawingRecap>
       <SentenceHeader>{step.player.name}</SentenceHeader>
-      <CanvasRecap
-        width={CANVAS_WIDTH}
-        height={CANVAS_WIDTH}
-        saveData={lzString.decompressFromBase64(step.drawing)}
-      />
+      <CanvasRecap width={CANVAS_WIDTH} height={CANVAS_WIDTH} saveData={decodedSaveData} />
       {displayToggleVote && (
         <ToggleLike onClick={onLike} width={CANVAS_WIDTH} height={CANVAS_WIDTH}>
           <ToggleLikeThumb src={thumb} liked={liked} />

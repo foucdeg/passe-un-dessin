@@ -115,7 +115,7 @@ def switch_to_rounds(game: Game):
 def start_next_round(game: Game, new_round: int):
     round_count = get_round_count(game)
     if new_round >= round_count:
-        return end_rounds(game)
+        return start_debrief(game)
     game.current_round = new_round
     game.pads_done = 0
     game.save()
@@ -135,7 +135,7 @@ def start_next_round(game: Game, new_round: int):
     )
 
 
-def end_debrief(game: Game):
+def switch_to_vote_results(game: Game):
     game.phase = GamePhase.VOTE_RESULTS.value
     game.save()
     send_event(
@@ -154,7 +154,7 @@ def send_all_vote_count(game: Game):
     )
 
 
-def end_rounds(game: Game):
+def start_debrief(game: Game):
     game.phase = GamePhase.DEBRIEF.value
     game.current_round = None
     game.pads_done = 0
@@ -162,3 +162,35 @@ def end_rounds(game: Game):
     send_event(
         "game-%s" % game.uuid.hex, "message", DebriefStartsMessage(game).serialize(),
     )
+
+
+class GamePhaseAssertionException(Exception):
+    def __init__(self, expected, actual):
+        message = "Expected game to be at phase %s, actual phase %s" % (
+            expected,
+            actual,
+        )
+        super(Exception, self).__init__(message)
+        self.expected = expected
+        self.actual = actual
+
+
+class GameRoundAssertionException(Exception):
+    def __init__(self, expected, actual):
+        message = "Expected game to be at round %d, actual round %d" % (
+            expected,
+            actual,
+        )
+        super(Exception, self).__init__(message)
+        self.expected = expected
+        self.actual = actual
+
+
+def assert_phase(game, expected_phase):
+    if game.phase != expected_phase.value:
+        raise GamePhaseAssertionException(expected_phase.value, game.phase)
+
+
+def assert_round(game, expected_round):
+    if game.current_round != expected_round:
+        raise GameRoundAssertionException(expected_round, game.current_round)

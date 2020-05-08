@@ -10,23 +10,21 @@ import {
   StyledForm,
   InputArrow,
 } from './PadInit.style';
-import PlayerChip from 'atoms/PlayerChip';
-import { StyledPlayerChips } from 'components/DrawingToWordStep/DrawingToWordStep.style';
 
-import { selectGame, selectRemainingPlayers } from 'redux/Game/selectors';
+import { selectGame } from 'redux/Game/selectors';
 import { selectPlayer } from 'redux/Player/selectors';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Spacer from 'atoms/Spacer';
 import SuggestionGenerator from 'components/SuggestionGenerator';
 import StaticInput from 'components/StaticInput';
 import InputLoader from 'components/InputLoader';
+import RemainingPlayers from 'components/RemainingPlayers';
 
 const PadInit: React.FunctionComponent = () => {
   const { padId } = useParams();
   const game = useSelector(selectGame);
 
   const player = useSelector(selectPlayer);
-  const remainingPlayers = useSelector(selectRemainingPlayers);
   const intl = useIntl();
 
   const [sentence, setSentence] = useState<string>('');
@@ -87,16 +85,7 @@ const PadInit: React.FunctionComponent = () => {
       )}
       <SuggestionGenerator onSuggestionClick={setSentence} />
       <Spacer />
-      <em>
-        <FormattedMessage id="padInit.waitingFor" />
-      </em>
-      <StyledPlayerChips>
-        {remainingPlayers.map(player => (
-          <PlayerChip key={player.uuid} color={player.color}>
-            {player.name}
-          </PlayerChip>
-        ))}
-      </StyledPlayerChips>
+      <RemainingPlayers />
     </PadInitContainer>
   );
 };

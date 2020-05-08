@@ -41,7 +41,6 @@
     "chooseSentence": "Choisis un mot ou une phrase :",
     "placeholder": "Une girafe ?",
     "youDraw": "Attention, c'est <strong>toi</strong> qui devras dessiner ça !",
-    "waitingFor": "On attend ceux-là pour continuer :",
     "nextPlayer": "Espérons que <strong>{name}</strong> dessine bien ...",
     "getSuggestions": "Manque d'inspiration ? Lance le dé !"
   },
@@ -49,6 +48,7 @@
     "sentenceToDraw": "Phrase à dessiner :",
     "previousPlayer": "(sortie du cerveau malade de {name})",
     "duration": "Tu as {duration} secondes !",
+    "noSentence": "Il y a eu un problème, on n'a pas reçu cette phrase 😞",
     "timesUp": "On lève les stylos !"
   },
   "drawingToWord": {
@@ -56,8 +56,8 @@
     "previousPlayer": "(Un indéniable talent chez {name})",
     "nextPlayer": "En espérant que {next} sache mieux dessiner que {previous} ...",
     "placeholder": "Un mouton ?",
-    "submit": "Valider",
-    "waitingFor": "Toujours les mêmes qu'on attend :"
+    "noDrawing": "Il y a eu un problème, on n'a pas reçu ce dessin 😞",
+    "submit": "Valider"
   },
   "finishedModal": {
     "title": "C'est fini !",
@@ -123,5 +123,10 @@
   "rankingModal": {
     "title": "Scores",
     "noRanking": "Il n'y a pas encore de classement."
+  },
+  "remainingPlayers": {
+    "waitingFor": "Toujours les mêmes qu'on attend :",
+    "forceNextStep": "Forcer l'étape suivante",
+    "confirmForceNextStep": "Es-tu sûr.e de vouloir passer à l'étape suivante ? Nous n'avons pas reçu les contributions de tout le monde."
   }
 }

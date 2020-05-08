@@ -109,10 +109,7 @@ class Room(BaseModel):
         blank=True,
     )
 
-    friendly_name = models.CharField(
-        max_length=128,
-        default="",
-    )
+    friendly_name = models.CharField(max_length=128, default="",)
 
 
 class Game(BaseModel):
