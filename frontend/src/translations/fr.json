@@ -75,7 +75,7 @@
   "voteResults": {
     "leaveTeam": "Quitter l'équipe",
     "newGame": "Nouvelle partie ?",
-    "bestDrawings": "Meilleurs dessins",
+    "bestMoments": "Meilleurs moments",
     "voteCount": "{voteCount} point{ voteCount, plural, one {} other {s}}",
     "scoreboard": "Tableau des scores"
   },

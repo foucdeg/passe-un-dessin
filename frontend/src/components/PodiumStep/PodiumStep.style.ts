@@ -1,5 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { colorPalette, fontSize } from 'stylesheet';
+import { ReactComponent as FatArrowDown } from 'assets/fat-arrow-down.svg';
 
 export const Container = styled.div<{ width: number }>`
   display: flex;
@@ -7,14 +8,21 @@ export const Container = styled.div<{ width: number }>`
   align-items: center;
   height: 100%;
   width: ${props => props.width}px;
+  justify-content: flex-end;
 `;
 Container.displayName = 'Container';
 
-export const Sentence = styled.div`
+export const Sentence = styled.div<{ highlighted?: boolean }>`
   letter-spacing: 0.1em;
   font-weight: bold;
   text-align: center;
-  line-height: 19px;
+  line-height: 24px;
+  color: ${colorPalette.textGrey};
+  ${props =>
+    props.highlighted &&
+    css`
+      color: ${colorPalette.orange};
+    `};
 `;
 Sentence.displayName = 'Sentence';
 
@@ -38,12 +46,10 @@ export const VoteCount = styled.div`
 
 VoteCount.displayName = 'VoteCount';
 
-export const WinnerSection = styled.div<{ width: number; height: number }>`
+export const WinnerSection = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  width: ${props => props.width}px;
-  height: ${props => props.height + 20}px;
   position: relative;
   align-items: center;
 `;
@@ -54,3 +60,16 @@ export const PodiumStepImage = styled.img.attrs({ alt: 'podium' })<{ width: numb
   width: ${props => props.width}px;
 `;
 PodiumStepImage.displayName = 'PodiumStepImage';
+
+export const ArrowSpacer = styled(FatArrowDown)<{ highlighted?: boolean }>`
+  .main {
+    fill: ${colorPalette.textGrey};
+    ${props =>
+      props.highlighted &&
+      css`
+        fill: ${colorPalette.orange};
+      `};
+  }
+`;
+
+ArrowSpacer.displayName = 'ArrowSpacer';
