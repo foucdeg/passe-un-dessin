@@ -62,7 +62,10 @@ export const getPreviousNextPlayers = (game: Game, player: Player): PreviousNext
 };
 
 export const getAvailableVoteCount = (game: Game): number => {
-  return Math.max(3, game.pads[0].steps.length / 2);
+  const stepCount = game.pads[0].steps.length;
+  const playerCount = game.players.length;
+  const choiceCount = stepCount * (playerCount - 1);
+  return Math.max(1, Math.round(Math.sqrt(0.6 * choiceCount - 1)));
 };
 
 export const getReorderedPlayers = (game: Game, player: Player): Player[] => {

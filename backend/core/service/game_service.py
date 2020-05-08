@@ -1,4 +1,5 @@
 import logging
+from math import sqrt
 from random import sample
 from typing import List
 
@@ -16,14 +17,9 @@ logger = logging.getLogger(__name__)
 
 def get_round_count(game: Game):
     player_count = game.players.count()
-    even_players = player_count % 2 == 0
     # There should always be an even number of steps - the first player will play a step on their pad
     # or won't depending on that
-    if game.draw_own_word:
-        return player_count
-    if not even_players:
-        return player_count - 1
-    return player_count - 2
+    return 2 * ((player_count + int(game.draw_own_word) - 1) // 2)
 
 
 def order_players(players: List[Player], requested_players_order: List[str]):
@@ -41,7 +37,8 @@ def order_players(players: List[Player], requested_players_order: List[str]):
 
 def get_available_vote_count(game: Game):
     round_count = get_round_count(game)
-    return max(3, round_count / 2)
+    choice_count = round_count * (game.players.count() - 1)
+    return max(1, round(sqrt(0.6 * choice_count - 1)))
 
 
 def initialize_game(
@@ -54,7 +51,7 @@ def initialize_game(
 
     players = list(room.players.all())
     player_count = len(players)
-    even_players = player_count % 2
+    even_players = player_count % 2 == 0
 
     game = Game.objects.create(
         room=room,

@@ -26,7 +26,7 @@
     "play": "Jouer",
     "adminWillStart": "C'est à {name} de lancer la partie !",
     "timeDuration": "Durée de dessin : {options} secondes",
-    "drawOwnWord": "Je veux dessiner mon propre mot à la première manche"
+    "drawOwnWord": "Je veux dessiner mon propre mot à la première manche. Si je choisis de décocher cette option, je ne verrai pas l'un des mots proposé"
   },
   "menu": {
     "startMusic": "Lancer le son",

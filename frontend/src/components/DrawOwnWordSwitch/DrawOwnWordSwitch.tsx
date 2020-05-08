@@ -1,7 +1,7 @@
 import React from 'react';
 import Switch from 'components/Switch';
 import { FormattedMessage } from 'react-intl';
-import { Container } from './DrawOwnWordSwitch.style';
+import { Container, Description } from './DrawOwnWordSwitch.style';
 
 interface Props {
   drawOwnWord: boolean;
@@ -10,7 +10,9 @@ interface Props {
 
 const DrawOwnWordSwitch: React.FC<Props> = ({ drawOwnWord, setDrawOwnWord }) => (
   <Container>
-    <FormattedMessage id="roomLobby.drawOwnWord" />
+    <Description>
+      <FormattedMessage id="roomLobby.drawOwnWord" />
+    </Description>
     <Switch setSelected={setDrawOwnWord} selected={drawOwnWord} />
   </Container>
 );

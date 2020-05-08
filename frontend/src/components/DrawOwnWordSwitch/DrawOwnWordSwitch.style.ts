@@ -9,3 +9,11 @@ export const Container = styled.div`
 `;
 
 Container.displayName = 'Container';
+
+export const Description = styled.div`
+  width: 320px;
+  text-align: justify;
+  line-height: 18px;
+`;
+
+Container.displayName = 'Container';
