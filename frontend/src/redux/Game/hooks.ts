@@ -1,18 +1,18 @@
-import client from 'services/networking/client';
-import { useDispatch } from 'react-redux';
-import { updateGame, updatePad, setSuggestions, updatePadStep, setWinners } from './slice';
-import { Pad } from './types';
 import { useCallback, useState } from 'react';
-import { useHistory } from 'react-router';
-import { getRedirectPath, getNextPhaseAndRound } from 'services/game.service';
-import { DEFAULT_ROUND_DURATION } from './constants';
 import { useIntl } from 'react-intl';
-import { wait, useTypedAsyncFn } from 'services/utils';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
+import { selectPlayer } from 'redux/Player/selectors';
 import { useGetRanking } from 'redux/Room/hooks';
 import { selectRoom } from 'redux/Room/selectors';
-import { selectGame } from './selectors';
-import { selectPlayer } from 'redux/Player/selectors';
 import { useSelector } from 'redux/useSelector';
+import { getNextPhaseAndRound, getRedirectPath } from 'services/game.service';
+import client from 'services/networking/client';
+import { useTypedAsyncFn, wait } from 'services/utils';
+import { DEFAULT_DRAW_OWN_WORD_BOOL, DEFAULT_ROUND_DURATION } from './constants';
+import { selectGame } from './selectors';
+import { setSuggestions, setWinners, updateGame, updatePad, updatePadStep } from './slice';
+import { Pad } from './types';
 
 export const useFetchGame = () => {
   const dispatch = useDispatch();
@@ -60,15 +60,20 @@ export const useStartGame = () => {
   const history = useHistory();
 
   return useCallback(
-    async (roomId: string, roundDuration?: number, playersOrder?: string[] | null) => {
+    async (
+      roomId: string,
+      roundDuration: number,
+      drawOwnWord: boolean,
+      playersOrder?: string[] | null,
+    ) => {
       try {
         const { game_id: gameId } = await client.put(`/room/${roomId}/start`, {
           roundDuration,
           playersOrder,
+          drawOwnWord,
         });
-        if (roundDuration) {
-          localStorage.setItem('preferredRoundDuration', roundDuration.toString());
-        }
+        localStorage.setItem('preferredRoundDuration', roundDuration.toString());
+        localStorage.setItem('prefferedDrawOwnWord', drawOwnWord.toString());
         history.push(`/room/${roomId}/game/${gameId}`);
       } catch (e) {
         alert('Error - see console');
@@ -158,6 +163,18 @@ export const useRoundDuration = (initialValue?: number | null) => {
     : null;
 
   return useState<number>(initialValue || preferredRoundDuration || DEFAULT_ROUND_DURATION);
+};
+
+export const useDrawOwnWordSwitch = (initialValue?: boolean) => {
+  const useDrawOwnWordStr = localStorage.getItem('prefferedDrawOwnWord');
+
+  return useState<boolean>(
+    initialValue !== undefined
+      ? initialValue
+      : useDrawOwnWordStr !== null
+      ? useDrawOwnWordStr === 'true'
+      : DEFAULT_DRAW_OWN_WORD_BOOL,
+  );
 };
 
 export const useSaveVote = () => {

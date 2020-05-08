@@ -131,7 +131,8 @@ def kick_player(request, room_id):
 def start_game(request, room_id):
     json_body = json.loads(request.body)
     players_order = json_body.get("playersOrder", None)
-    round_duration = json_body.get("roundDuration", None)
+    round_duration = json_body.get("roundDuration")
+    draw_own_word = json_body.get("drawOwnWord")
 
     try:
         room = Room.objects.get(uuid=room_id)
@@ -142,7 +143,7 @@ def start_game(request, room_id):
             game.phase = GamePhase.VOTE_RESULTS.value
             game.save()
 
-        game = initialize_game(room, players_order, round_duration)
+        game = initialize_game(room, players_order, round_duration, draw_own_word)
         room.current_game = game
         room.save()
 

@@ -1,8 +1,8 @@
+import React from 'react';
 import podiumsSteps from 'assets/podium-steps';
 import Spacer from 'atoms/Spacer';
 import CanvasRecap from 'components/Canvas/CanvasRecap';
 import lzString from 'lz-string';
-import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { PadStep } from 'redux/Game/types';
 import {

@@ -1,9 +1,9 @@
+import React from 'react';
 import thickEraserIcon from 'assets/eraser-thick.svg';
 import thinEraserIcon from 'assets/eraser-thin.svg';
 import paintBrushIcon from 'assets/paint.svg';
 import thickBrushIcon from 'assets/pencil-thick.svg';
 import thinBrushIcon from 'assets/pencil-thin.svg';
-import React from 'react';
 import { BrushBlock, BrushPickerContainer } from './BrushTypePicker.style';
 
 export enum BrushType {

@@ -89,7 +89,10 @@ class GameSerializer(BaseSerializer):
         unique_ordered_player_uuids = uniquify(ordered_player_uuids)
 
         def sort_fn(player: Player):
-            return unique_ordered_player_uuids.index(player.uuid.hex)
+            try:
+                return unique_ordered_player_uuids.index(player.uuid.hex)
+            except ValueError:
+                return -1
 
         sorted_players = sorted(players, key=sort_fn)
 
@@ -105,6 +108,7 @@ class GameSerializer(BaseSerializer):
             "uuid",
             "players",
             "round_duration",
+            "draw_own_word",
             "phase",
             "current_round",
             "pads",

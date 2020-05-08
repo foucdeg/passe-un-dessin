@@ -1,31 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'redux/useSelector';
-import copy from 'copy-to-clipboard';
-
-import { useJoinRoom, useLeaveRoom } from 'redux/Room/hooks';
-import { MIN_PLAYERS, MAX_PLAYERS } from 'redux/Game/constants';
-import { useStartGame, useRoundDuration, useCheckIfPlayerIsInGame } from 'redux/Game/hooks';
-import { useHistory } from 'react-router';
-import Modal from 'components/Modal';
 import FieldLabel from 'atoms/FieldLabel';
+import PlayerChip from 'atoms/PlayerChip';
+import PlayerChips from 'atoms/PlayerChips';
+import Button from 'components/Button';
+import DrawOwnWordSwitch from 'components/DrawOwnWordSwitch';
+import Modal from 'components/Modal';
+import RoundDurationPicker from 'components/RoundDurationPicker';
+import copy from 'copy-to-clipboard';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useHistory } from 'react-router';
+import { MAX_PLAYERS, MIN_PLAYERS } from 'redux/Game/constants';
 import {
+  useCheckIfPlayerIsInGame,
+  useDrawOwnWordSwitch,
+  useRoundDuration,
+  useStartGame,
+} from 'redux/Game/hooks';
+import { selectPlayer } from 'redux/Player/selectors';
+import { useJoinRoom, useLeaveRoom } from 'redux/Room/hooks';
+import { selectRoom } from 'redux/Room/selectors';
+import { useSelector } from 'redux/useSelector';
+import { shouldDisplayDrawOwnWordSwitch } from 'services/game.service';
+import {
+  ButtonRow,
+  CloseButton,
+  CopyLinkAdornment,
+  HelpText,
   Info,
   StyledField,
-  ButtonRow,
-  HelpText,
   StyledHeader,
   StyledRoomName,
-  CopyLinkAdornment,
-  CloseButton,
 } from './RoomLobby.style';
-import Button from 'components/Button';
-import PlayerChips from 'atoms/PlayerChips';
-import PlayerChip from 'atoms/PlayerChip';
-
-import { selectPlayer } from 'redux/Player/selectors';
-import { selectRoom } from 'redux/Room/selectors';
-import { FormattedMessage, useIntl } from 'react-intl';
-import RoundDurationPicker from 'components/RoundDurationPicker';
 
 const Room: React.FunctionComponent = () => {
   const doJoinRoom = useJoinRoom();
@@ -37,6 +42,7 @@ const Room: React.FunctionComponent = () => {
   const history = useHistory();
   const [inputText, setInputText] = useState<string>(document.location.href);
   const [roundDuration, setRoundDuration] = useRoundDuration();
+  const [drawOwnWord, setDrawOwnWord] = useDrawOwnWordSwitch();
 
   const intl = useIntl();
 
@@ -101,7 +107,12 @@ const Room: React.FunctionComponent = () => {
         adornment={<CopyLinkAdornment onClick={onCopy} alt="Click to copy" />}
       />
       {isPlayerAdmin && (
-        <RoundDurationPicker duration={roundDuration} onDurationChange={setRoundDuration} />
+        <>
+          <RoundDurationPicker duration={roundDuration} onDurationChange={setRoundDuration} />
+          {shouldDisplayDrawOwnWordSwitch(room.players.length) && (
+            <DrawOwnWordSwitch drawOwnWord={drawOwnWord} setDrawOwnWord={setDrawOwnWord} />
+          )}
+        </>
       )}
       <FieldLabel>
         <FormattedMessage id="roomLobby.players" />
@@ -135,7 +146,7 @@ const Room: React.FunctionComponent = () => {
               <HelpText>
                 <FormattedMessage id="roomLobby.isEveryoneThere" />
               </HelpText>
-              <Button onClick={() => doStartGame(room.uuid, roundDuration)}>
+              <Button onClick={() => doStartGame(room.uuid, roundDuration, drawOwnWord)}>
                 <FormattedMessage id="roomLobby.play" />
               </Button>
             </>

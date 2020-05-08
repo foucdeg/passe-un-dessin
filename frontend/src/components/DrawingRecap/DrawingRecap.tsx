@@ -1,8 +1,8 @@
+import React from 'react';
 import thumb from 'assets/thumb.png';
 import CanvasRecap from 'components/Canvas/CanvasRecap';
 import { SentenceHeader } from 'components/SentenceRecap/SentenceRecap.style';
 import lzString from 'lz-string';
-import React from 'react';
 import { useDeleteVote, useSaveVote } from 'redux/Game/hooks';
 import { selectAvailableVoteCount } from 'redux/Game/selectors';
 import { PadStep } from 'redux/Game/types';

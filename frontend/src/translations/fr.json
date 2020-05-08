@@ -24,7 +24,9 @@
     "needMore": "Il manque encore {count} {count, plural, one {joueur} many {joueurs}}",
     "isEveryoneThere": "Tout le monde est là ?",
     "play": "Jouer",
-    "adminWillStart": "C'est à {name} de lancer la partie !"
+    "adminWillStart": "C'est à {name} de lancer la partie !",
+    "timeDuration": "Durée de dessin : {options} secondes",
+    "drawOwnWord": "Je veux dessiner mon propre mot à la première manche. Si je choisis de décocher cette option, je ne verrai pas l'un des mots proposés."
   },
   "menu": {
     "startMusic": "Lancer le son",

@@ -1,8 +1,7 @@
 import logging
+from math import sqrt
 from random import sample
 from typing import List
-
-from django_eventstream import send_event
 
 from core.messages import (
     AllVoteCountMessage,
@@ -11,16 +10,16 @@ from core.messages import (
     VoteResultsStartsMessage,
 )
 from core.models import Game, GamePhase, Pad, PadStep, Player, Room, StepType, Vote
+from django_eventstream import send_event
 
 logger = logging.getLogger(__name__)
 
 
 def get_round_count(game: Game):
     player_count = game.players.count()
-    even_players = player_count % 2 == 0
     # There should always be an even number of steps - the first player will play a step on their pad
     # or won't depending on that
-    return player_count if even_players else player_count - 1
+    return 2 * ((player_count + int(game.draw_own_word) - 1) // 2)
 
 
 def order_players(players: List[Player], requested_players_order: List[str]):
@@ -37,20 +36,29 @@ def order_players(players: List[Player], requested_players_order: List[str]):
 
 
 def get_available_vote_count(game: Game):
-    player_count = game.players.count()
-    if player_count <= 3:
-        return 1
-    return 3
+    round_count = get_round_count(game)
+    choice_count = round_count * (game.players.count() - 1)
+    return max(1, round(sqrt(0.6 * choice_count - 1)))
 
 
 def initialize_game(
-    room: Room, requested_players_order: List[str], round_duration: int
+    room: Room,
+    requested_players_order: List[str],
+    round_duration: int,
+    draw_own_word: bool,
 ):
     logger.debug("Initializing game for room %s" % room.uuid)
 
-    game = Game.objects.create(room=room, round_duration=round_duration)
-
     players = list(room.players.all())
+    player_count = len(players)
+    even_players = player_count % 2 == 0
+
+    game = Game.objects.create(
+        room=room,
+        round_duration=round_duration,
+        draw_own_word=(player_count == 2 or (even_players and draw_own_word)),
+    )
+
     ordered_players = order_players(players, requested_players_order)
 
     for player in ordered_players:
@@ -70,13 +78,12 @@ def initialize_pad(game: Game, index: int, players: List[Player]):
     pad = Pad.objects.create(game=game, initial_player=players[index], order=index)
     player_count = len(players)
 
-    even_players = player_count % 2 == 0
     step_count = get_round_count(game)
 
     for round_number in range(step_count):
         step_player = (
             players[(index + round_number) % player_count]
-            if even_players
+            if game.draw_own_word
             else players[(index + round_number + 1) % player_count]
         )
         step_type = (

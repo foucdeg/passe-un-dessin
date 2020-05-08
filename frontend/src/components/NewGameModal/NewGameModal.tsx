@@ -1,14 +1,16 @@
 import React from 'react';
-import { useSelector } from 'redux/useSelector';
-import { selectRoom } from 'redux/Room/selectors';
-import Modal from 'components/Modal';
-import { useStartGame, useRoundDuration } from 'redux/Game/hooks';
-import SecondaryButton from 'components/SecondaryButton';
-import { StyledHeader, ButtonRow } from './NewGameModal.style';
 import Button from 'components/Button';
-import { FormattedMessage } from 'react-intl';
-import { selectGame } from 'redux/Game/selectors';
+import DrawOwnWordSwitch from 'components/DrawOwnWordSwitch';
+import Modal from 'components/Modal';
 import RoundDurationPicker from 'components/RoundDurationPicker';
+import SecondaryButton from 'components/SecondaryButton';
+import { FormattedMessage } from 'react-intl';
+import { useDrawOwnWordSwitch, useRoundDuration, useStartGame } from 'redux/Game/hooks';
+import { selectGame } from 'redux/Game/selectors';
+import { selectRoom } from 'redux/Room/selectors';
+import { useSelector } from 'redux/useSelector';
+import { shouldDisplayDrawOwnWordSwitch } from 'services/game.service';
+import { ButtonRow, StyledHeader } from './NewGameModal.style';
 
 interface Props {
   isOpen: boolean;
@@ -19,6 +21,7 @@ const NewGameModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
   const [roundDuration, setRoundDuration] = useRoundDuration(game?.round_duration);
+  const [drawOwnWord, setDrawOwnWord] = useDrawOwnWordSwitch(game?.draw_own_word);
 
   const doStartGame = useStartGame();
 
@@ -28,18 +31,24 @@ const NewGameModal: React.FC<Props> = ({ isOpen, onClose }) => {
     doStartGame(
       room.uuid,
       roundDuration,
+      drawOwnWord,
       game.players.map(player => player.uuid),
     );
     onClose();
   };
 
   const startReverseGame = () => {
-    doStartGame(room.uuid, roundDuration, game.players.map(player => player.uuid).reverse());
+    doStartGame(
+      room.uuid,
+      roundDuration,
+      drawOwnWord,
+      game.players.map(player => player.uuid).reverse(),
+    );
     onClose();
   };
 
   const startRandomGame = () => {
-    doStartGame(room.uuid, roundDuration);
+    doStartGame(room.uuid, roundDuration, drawOwnWord);
     onClose();
   };
 
@@ -49,6 +58,9 @@ const NewGameModal: React.FC<Props> = ({ isOpen, onClose }) => {
         <FormattedMessage id="newGameModal.title" />
       </StyledHeader>
       <RoundDurationPicker duration={roundDuration} onDurationChange={setRoundDuration} />
+      {shouldDisplayDrawOwnWordSwitch(room.players.length) && (
+        <DrawOwnWordSwitch drawOwnWord={drawOwnWord} setDrawOwnWord={setDrawOwnWord} />
+      )}
       <ButtonRow>
         <SecondaryButton onClick={startRandomGame}>
           <FormattedMessage id="newGameModal.randomOrder" />
