@@ -130,5 +130,18 @@
     "waitingFor": "Toujours les mêmes qu'on attend :",
     "forceNextStep": "Forcer l'étape suivante",
     "confirmForceNextStep": "Es-tu sûr.e de vouloir passer à l'étape suivante ? Nous n'avons pas reçu les contributions de tout le monde."
+  },
+  "color": {
+    "green": "vert",
+    "blue": "bleu",
+    "skyblue": "bleu clair",
+    "beige": "beige",
+    "yellow": "jaune",
+    "orange": "orange",
+    "brown": "marron",
+    "red": "rouge",
+    "pink": "rose",
+    "grey": "gris",
+    "black": "noir"
   }
 }
