@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Canvas } from '../CanvasCommon.style';
-import { drawPaint, Paint } from '../utils';
+import { drawPaint, Paint, resetCanvas } from '../utils';
 import { FormattedMessage } from 'react-intl';
 
 interface Props {
@@ -15,6 +15,10 @@ type ParsedData = { lines: Paint; width: number; height: number };
 const CanvasRecap: React.FC<Props> = ({ width, height, saveData, hideBorder }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const parsedData: ParsedData | null = saveData && JSON.parse(saveData);
+
+  useEffect(() => {
+    resetCanvas(canvasRef);
+  }, []);
 
   useEffect(() => {
     if (parsedData) {
