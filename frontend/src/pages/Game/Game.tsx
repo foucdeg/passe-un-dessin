@@ -120,7 +120,7 @@ const Game: React.FunctionComponent = () => {
   if (loading) {
     return (
       <GameContainer>
-        <InnerGameContainer hasTabs={false}>
+        <InnerGameContainer>
           <Loader />
         </InnerGameContainer>
       </GameContainer>
@@ -145,7 +145,7 @@ const Game: React.FunctionComponent = () => {
       <HomeLink to="/" onClick={checkLeaveRoom}>
         <HomeButton />
       </HomeLink>
-      <InnerGameContainer hasTabs={game.phase === GamePhase.DEBRIEF}>
+      <InnerGameContainer hasTabs={!!window.location.pathname.match(/\/recap$/)}>
         {[GamePhase.INIT, GamePhase.ROUNDS].includes(game.phase) && <PlayerOrder />}
         <Switch>
           <Route path={`${path}/pad/:padId/init`} component={PadInit} />
