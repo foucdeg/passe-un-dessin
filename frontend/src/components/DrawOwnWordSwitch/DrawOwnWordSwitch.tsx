@@ -1,5 +1,5 @@
-import Switch from 'components/Switch';
 import React from 'react';
+import Switch from 'components/Switch';
 import { FormattedMessage } from 'react-intl';
 import { Container } from './DrawOwnWordSwitch.style';
 

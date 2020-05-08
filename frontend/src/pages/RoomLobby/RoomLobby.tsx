@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import FieldLabel from 'atoms/FieldLabel';
 import PlayerChip from 'atoms/PlayerChip';
 import PlayerChips from 'atoms/PlayerChips';
@@ -6,7 +7,6 @@ import DrawOwnWordSwitch from 'components/DrawOwnWordSwitch';
 import Modal from 'components/Modal';
 import RoundDurationPicker from 'components/RoundDurationPicker';
 import copy from 'copy-to-clipboard';
-import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useHistory } from 'react-router';
 import { MAX_PLAYERS, MIN_PLAYERS } from 'redux/Game/constants';

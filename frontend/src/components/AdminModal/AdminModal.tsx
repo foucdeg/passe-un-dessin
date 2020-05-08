@@ -1,10 +1,10 @@
+import React, { useEffect } from 'react';
 import PlayerChip from 'atoms/PlayerChip';
 import Button from 'components/Button';
 import DrawOwnWordSwitch from 'components/DrawOwnWordSwitch';
 import Modal from 'components/Modal';
 import RoundDurationPicker from 'components/RoundDurationPicker';
 import SecondaryButton from 'components/SecondaryButton';
-import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDrawOwnWordSwitch, useRoundDuration, useStartGame } from 'redux/Game/hooks';
 import { selectGame } from 'redux/Game/selectors';

@@ -1,7 +1,7 @@
+import React from 'react';
 import Spacer from 'atoms/Spacer';
 import CanvasDraw from 'components/Canvas/CanvasDraw';
 import Timer from 'components/Timer';
-import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { selectGame } from 'redux/Game/selectors';
 import { PadStep } from 'redux/Game/types';
