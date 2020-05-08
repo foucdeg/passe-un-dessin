@@ -3,12 +3,8 @@ import logging
 
 from django.db import transaction
 from django.db.models import Count
-from django.http import (
-    HttpResponse,
-    HttpResponseBadRequest,
-    HttpResponseForbidden,
-    JsonResponse,
-)
+from django.http import (HttpResponse, HttpResponseBadRequest,
+                         HttpResponseForbidden, JsonResponse)
 from django.views.decorators.http import require_GET, require_http_methods
 from django_eventstream import send_event
 from rest_framework.generics import RetrieveAPIView
@@ -17,19 +13,14 @@ from core.decorators import requires_player
 from core.messages import PlayerFinishedMessage, PlayerViewingPadMessage
 from core.models import Game, GamePhase, Pad, PadStep, Vote
 from core.serializers import GameSerializer, PadSerializer, PadStepSerializer
-from core.service.game_service import (
-    GamePhaseAssertionException,
-    GameRoundAssertionException,
-    assert_phase,
-    assert_round,
-    get_available_vote_count,
-    get_round_count,
-    send_all_vote_count,
-    start_debrief,
-    start_next_round,
-    switch_to_rounds,
-    switch_to_vote_results,
-)
+from core.service.game_service import (GamePhaseAssertionException,
+                                       GameRoundAssertionException,
+                                       assert_phase, assert_round,
+                                       get_available_vote_count,
+                                       get_round_count, send_all_vote_count,
+                                       start_debrief, start_next_round,
+                                       switch_to_rounds,
+                                       switch_to_vote_results)
 
 logger = logging.getLogger(__name__)
 
@@ -184,7 +175,7 @@ def review_pad(request, player, uuid):
 
 @require_http_methods(["POST", "DELETE"])
 @requires_player
-def toggle_vote(request, player, pad_step_id):
+def submit_vote(request, player, pad_step_id):
     try:
         pad_step = PadStep.objects.get(uuid=pad_step_id)
     except PadStep.DoesNotExist:
@@ -201,33 +192,26 @@ def toggle_vote(request, player, pad_step_id):
         return HttpResponseBadRequest("You cannot vote for your own drawing")
 
     if request.method == "POST":
-        try:
-            Vote.objects.get(player=player, pad_step=pad_step)
+        existing_player_vote_count = Vote.objects.filter(
+            player=player, pad_step__pad__game=game
+        ).count()
+        available_vote_count = get_available_vote_count(game)
+
+        if existing_player_vote_count >= available_vote_count:
             return HttpResponseBadRequest(
-                "You already voted for pad_step %s" % pad_step_id
+                "You already reached the maximal number of vote for this game : %s"
+                % available_vote_count
             )
-        except Vote.DoesNotExist:
-            existing_player_vote_count = Vote.objects.filter(
-                player=player, pad_step__pad__game=game
-            ).count()
-            available_vote_count = get_available_vote_count(game)
 
-            if existing_player_vote_count >= available_vote_count:
-                return HttpResponseBadRequest(
-                    "You already reached the maximal number of vote for this game : %s"
-                    % available_vote_count
-                )
-
-            Vote.objects.create(player=player, pad_step=pad_step)
+        Vote.objects.create(player=player, pad_step=pad_step)
 
     elif request.method == "DELETE":
-        try:
-            vote = Vote.objects.get(player=player, pad_step=pad_step)
-            vote.delete()
-        except Vote.DoesNotExist:
+        vote = Vote.objects.filter(player=player, pad_step=pad_step).first()
+        if vote is None:
             return HttpResponseBadRequest(
                 "You didn't vote for pad_step %s" % pad_step_id
             )
+        vote.delete()
 
     send_all_vote_count(game)
 

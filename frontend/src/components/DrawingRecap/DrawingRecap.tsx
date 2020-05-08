@@ -1,18 +1,21 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
-import thumb from 'assets/thumb.png';
+import lzString from 'lz-string';
+
 import CanvasRecap from 'components/Canvas/CanvasRecap';
 import { SentenceHeader } from 'components/SentenceRecap/SentenceRecap.style';
-import lzString from 'lz-string';
 import { useDeleteVote, useSaveVote } from 'redux/Game/hooks';
 import { selectAvailableVoteCount } from 'redux/Game/selectors';
 import { PadStep } from 'redux/Game/types';
 import { selectPlayer } from 'redux/Player/selectors';
 import { useSelector } from 'redux/useSelector';
 import {
-  AlreadyLikedThumb,
+  ReactionOverlay,
+  ThumbUpIcon,
+  ThumbDownIcon,
   StyledDrawingRecap,
-  ToggleLike,
-  ToggleLikeThumb,
+  LikeClickArea,
+  LikesSection,
 } from './DrawingRecap.style';
 
 interface Props {
@@ -24,24 +27,19 @@ const CANVAS_WIDTH = 236;
 const DrawingRecap: React.FC<Props> = ({ step }) => {
   const player = useSelector(selectPlayer);
   const availableVoteCount = useSelector(selectAvailableVoteCount);
-
-  const liked = !!(player && step.votes.find(vote => vote.player.uuid === player.uuid));
-  const displayToggleVote =
-    !!player &&
-    player.uuid !== step.player.uuid &&
-    (availableVoteCount > 0 || liked) &&
-    !!step.drawing;
-
   const doSaveVote = useSaveVote();
   const doDeleteVote = useDeleteVote();
 
-  const onLike = () => {
-    if (liked) {
-      doDeleteVote(step.uuid);
-    } else {
-      doSaveVote(step.uuid);
-    }
-  };
+  if (!player) return null;
+
+  const likedCount = step.votes.filter(vote => vote.player.uuid === player.uuid).length;
+  const samePlayer = player.uuid === step.player.uuid;
+
+  const canLike = !samePlayer && availableVoteCount > 0;
+  const canUnlike = !samePlayer && likedCount > 0;
+
+  const doLike = () => doSaveVote(step.uuid);
+  const doUnlike = () => doDeleteVote(step.uuid);
 
   const decodedSaveData = step.drawing && lzString.decompressFromBase64(step.drawing);
 
@@ -49,12 +47,28 @@ const DrawingRecap: React.FC<Props> = ({ step }) => {
     <StyledDrawingRecap>
       <SentenceHeader>{step.player.name}</SentenceHeader>
       <CanvasRecap width={CANVAS_WIDTH} height={CANVAS_WIDTH} saveData={decodedSaveData} />
-      {displayToggleVote && (
-        <ToggleLike onClick={onLike} width={CANVAS_WIDTH} height={CANVAS_WIDTH}>
-          <ToggleLikeThumb src={thumb} liked={liked} />
-        </ToggleLike>
+      {(canLike || canUnlike) && (
+        <ReactionOverlay width={CANVAS_WIDTH} height={CANVAS_WIDTH}>
+          {canUnlike && (
+            <LikeClickArea onClick={doUnlike}>
+              <ThumbDownIcon />
+            </LikeClickArea>
+          )}
+          {canLike && (
+            <LikeClickArea onClick={doLike}>
+              <ThumbUpIcon />
+            </LikeClickArea>
+          )}
+        </ReactionOverlay>
       )}
-      {liked && <AlreadyLikedThumb src={thumb} />}
+
+      <LikesSection>
+        {Array(likedCount)
+          .fill('')
+          .map((_, index) => (
+            <ThumbUpIcon key={index} />
+          ))}
+      </LikesSection>
     </StyledDrawingRecap>
   );
 };

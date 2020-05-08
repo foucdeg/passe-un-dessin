@@ -32,7 +32,7 @@ urlpatterns = [
         game.go_to_vote_results,
         name="go_to_vote_results",
     ),
-    path("step/<str:pad_step_id>/vote", game.toggle_vote, name="toggle_vote"),
+    path("step/<str:pad_step_id>/vote", game.submit_vote, name="submit_vote"),
     path(
         "game/<str:game_id>/vote-results",
         game.get_vote_results,
