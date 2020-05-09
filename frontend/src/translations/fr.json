@@ -64,18 +64,20 @@
   "finishedModal": {
     "title": "C'est fini !",
     "description": "Tu peux désormais voir l'ensemble des carnets pour comprendre tous les dessins que tu as eus à deviner.",
-    "navigate": "Navigue d'un carnet à l'autre avec les onglets en haut.",
+    "navigate": "Navigue d'un carnet à l'autre avec les onglets en haut.  N'oublie pas de voter pour les dessins et idées des autres !",
     "seeResults": "Voir les résultats"
   },
   "recap": {
     "initialWord": "Mot initial",
-    "goToVoteResults": "{allVoteCount}/{maxVoteCount} vote{ allVoteCount, plural, one {} other {s}} exprimé{ allVoteCount, plural, one {} other {s}}. Voir les résultats",
-    "availableVotes": "{availableVoteCount} vote{ availableVoteCount, plural, one {} other {s}} restant{ availableVoteCount, plural, one {} other {s}}"
+    "waitingFor": "N'ont pas fini de voter :",
+    "confirmForceNextStep": "Es-tu sûr.e de vouloir passer à l'étape suivante ? Nous n'avons pas reçu tous les votes de tout le monde.",
+    "availableVotes": "Votes restants :",
+    "noMoreVotes": "Plus de votes restants"
   },
   "voteResults": {
     "leaveTeam": "Quitter l'équipe",
     "newGame": "Nouvelle partie ?",
-    "bestDrawings": "Meilleurs dessins",
+    "bestMoments": "Meilleurs moments",
     "voteCount": "{voteCount} point{ voteCount, plural, one {} other {s}}",
     "scoreboard": "Tableau des scores"
   },

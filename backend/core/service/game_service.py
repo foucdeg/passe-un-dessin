@@ -3,14 +3,14 @@ from math import sqrt
 from random import sample
 from typing import List
 
+from django_eventstream import send_event
+
 from core.messages import (
-    AllVoteCountMessage,
     DebriefStartsMessage,
     RoundStartsMessage,
     VoteResultsStartsMessage,
 )
-from core.models import Game, GamePhase, Pad, PadStep, Player, Room, StepType, Vote
-from django_eventstream import send_event
+from core.models import Game, GamePhase, Pad, PadStep, Player, Room, StepType
 
 logger = logging.getLogger(__name__)
 
@@ -149,15 +149,6 @@ def switch_to_vote_results(game: Game):
         "game-%s" % game.uuid.hex,
         "message",
         VoteResultsStartsMessage(game).serialize(),
-    )
-
-
-def send_all_vote_count(game: Game):
-    all_vote_count = Vote.objects.filter(pad_step__pad__game_id=game.uuid).count()
-    send_event(
-        "game-%s" % game.uuid.hex,
-        "message",
-        AllVoteCountMessage(all_vote_count).serialize(),
     )
 
 

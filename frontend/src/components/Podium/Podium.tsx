@@ -14,7 +14,7 @@ const Podium: React.FC<Props> = ({ winners }) => {
   return (
     <OuterContainer>
       <StyledHeader>
-        <FormattedMessage id="voteResults.bestDrawings" />
+        <FormattedMessage id="voteResults.bestMoments" />
       </StyledHeader>
       <Spacer />
       <Container>

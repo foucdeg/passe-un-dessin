@@ -11,7 +11,14 @@ import client from 'services/networking/client';
 import { useTypedAsyncFn, wait } from 'services/utils';
 import { DEFAULT_DRAW_OWN_WORD_BOOL, DEFAULT_ROUND_DURATION } from './constants';
 import { selectGame } from './selectors';
-import { setSuggestions, setWinners, updateGame, updatePad, updatePadStep } from './slice';
+import {
+  setSuggestions,
+  setWinners,
+  updateGame,
+  updatePad,
+  addVoteToPadStep,
+  removeVoteFromPadStep,
+} from './slice';
 import { Pad } from './types';
 
 export const useFetchGame = () => {
@@ -75,23 +82,6 @@ export const useStartGame = () => {
         localStorage.setItem('preferredRoundDuration', roundDuration.toString());
         localStorage.setItem('prefferedDrawOwnWord', drawOwnWord.toString());
         history.push(`/room/${roomId}/game/${gameId}`);
-      } catch (e) {
-        alert('Error - see console');
-        console.error(e);
-      }
-    },
-    [history],
-  );
-};
-
-export const useGoToVoteResults = () => {
-  const history = useHistory();
-
-  return useCallback(
-    async (roomId: string, gameId: string) => {
-      try {
-        await client.put(`/game/${gameId}/go-to-vote-results`);
-        history.push(`/room/${roomId}/game/${gameId}/vote-results`);
       } catch (e) {
         alert('Error - see console');
         console.error(e);
@@ -179,35 +169,41 @@ export const useDrawOwnWordSwitch = (initialValue?: boolean) => {
 
 export const useSaveVote = () => {
   const dispatch = useDispatch();
+  const player = useSelector(selectPlayer);
 
   return useCallback(
     async (padStepId: string) => {
+      if (!player) return;
+
+      dispatch(addVoteToPadStep({ padStepId, player }));
       try {
-        const updatedStep = await client.post(`/step/${padStepId}/vote`);
-        dispatch(updatePadStep(updatedStep));
+        await client.post(`/step/${padStepId}/vote`);
       } catch (e) {
         alert('Error - see console');
         console.error(e);
       }
     },
-    [dispatch],
+    [dispatch, player],
   );
 };
 
 export const useDeleteVote = () => {
   const dispatch = useDispatch();
+  const player = useSelector(selectPlayer);
 
   return useCallback(
     async (padStepId: string) => {
+      if (!player) return;
+
+      dispatch(removeVoteFromPadStep({ padStepId, player }));
       try {
-        const updatedStep = await client.delete(`/step/${padStepId}/vote`);
-        dispatch(updatePadStep(updatedStep));
+        await client.delete(`/step/${padStepId}/vote`);
       } catch (e) {
         alert('Error - see console');
         console.error(e);
       }
     },
-    [dispatch],
+    [dispatch, player],
   );
 };
 

@@ -8,6 +8,7 @@ export const StyledSentenceRecap = styled.div`
   height: 260px;
   align-items: center;
   margin-bottom: 8px;
+  position: relative;
 `;
 
 StyledSentenceRecap.displayName = 'StyledSentenceRecap';

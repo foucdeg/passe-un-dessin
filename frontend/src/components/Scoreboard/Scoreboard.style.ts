@@ -4,6 +4,7 @@ import { colorPalette, fontSize } from 'stylesheet';
 import PlayerChip from 'atoms/PlayerChip';
 
 export const ScoreboardContainer = styled.div`
+  padding: 0 80px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;

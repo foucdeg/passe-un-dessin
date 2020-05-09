@@ -64,18 +64,20 @@
   "finishedModal": {
     "title": "It's over!",
     "description": "You can now see all of the pads, and finally understand the drawings you had to guess.",
-    "navigate": "Navigate between drawing pads using the tabs above.",
+    "navigate": "Navigate between drawing pads using the tabs above. Don't forget to cast your votes on other players' drawings and guesses!",
     "seeResults": "See results"
   },
   "recap": {
     "initialWord": "Initial word",
-    "goToVoteResults": "{allVoteCount}/{maxVoteCount} vote{ allVoteCount, plural, one {} other {s}}. See results",
-    "availableVotes": "{availableVoteCount} vote{ availableVoteCount, plural, one {} other {s}} left"
+    "waitingFor": "Aren't done voting yet:",
+    "confirmForceNextStep": "Are you sure you want to skip to next step? We didn't get everybody's votes.",
+    "availableVotes": "Remaining votes:",
+    "noMoreVotes": "No remaining votes"
   },
   "voteResults": {
     "leaveTeam": "Leave team",
     "newGame": "New game?",
-    "bestDrawings": "Best drawings",
+    "bestMoments": "Best moments",
     "voteCount": "{voteCount} point{ voteCount, plural, one {} other {s}}",
     "scoreboard": "Scoreboard"
   },

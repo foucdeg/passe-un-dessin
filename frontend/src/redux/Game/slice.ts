@@ -8,7 +8,6 @@ export type GameState = Readonly<{
   suggestions: string[];
   recapViews: { [padUuid: string]: Player[] };
   winners: PadStep[] | null;
-  allVoteCount: number;
 }>;
 
 const initialState: GameState = {
@@ -17,7 +16,6 @@ const initialState: GameState = {
   suggestions: [],
   recapViews: {},
   winners: null,
-  allVoteCount: 0,
 } as GameState;
 
 const gameSlice = createSlice({
@@ -46,19 +44,35 @@ const gameSlice = createSlice({
 
       state.game.pads[matchingPadIndex] = action.payload;
     },
-    updatePadStep: (state, action: PayloadAction<PadStep>) => {
+    addVoteToPadStep: (state, action: PayloadAction<{ padStepId: string; player: Player }>) => {
       if (!state.game) return;
+      const { player, padStepId } = action.payload;
 
-      const matchingPadIndex = state.game.pads.findIndex(pad =>
-        pad.steps.find(step => step.uuid === action.payload.uuid),
+      state.game.pads.forEach(pad =>
+        pad.steps
+          .filter(step => step.uuid === padStepId)
+          .forEach(padStep => padStep.votes.push({ player })),
       );
-      if (matchingPadIndex === undefined) return;
+    },
+    removeVoteFromPadStep: (
+      state,
+      action: PayloadAction<{ padStepId: string; player: Player }>,
+    ) => {
+      if (!state.game) return;
+      const { player, padStepId } = action.payload;
 
-      const matchingPadStepIndex = state.game.pads[matchingPadIndex].steps.findIndex(
-        step => step.uuid === action.payload.uuid,
+      state.game.pads.forEach(pad =>
+        pad.steps
+          .filter(step => step.uuid === padStepId)
+          .forEach(padStep => {
+            const firstVoteIndex = padStep.votes.findIndex(
+              vote => vote.player.uuid === player.uuid,
+            );
+            if (firstVoteIndex === -1) return;
+
+            padStep.votes.splice(firstVoteIndex, 1);
+          }),
       );
-
-      state.game.pads[matchingPadIndex].steps[matchingPadStepIndex] = action.payload;
     },
     startRound: (state, action: PayloadAction<{ roundNumber?: number }>) => {
       if (!state.game) return;
@@ -71,6 +85,11 @@ const gameSlice = createSlice({
       state.remainingPlayers = state.remainingPlayers.filter(
         remPlayer => remPlayer.uuid !== action.payload.uuid,
       );
+    },
+    markPlayerNotFinished: (state, action: PayloadAction<Player>) => {
+      if (!state.remainingPlayers.some(remPlayer => remPlayer.uuid === action.payload.uuid)) {
+        state.remainingPlayers.push(action.payload);
+      }
     },
     setSuggestions: (state, action: PayloadAction<string[]>) => {
       state.suggestions = action.payload;
@@ -86,12 +105,8 @@ const gameSlice = createSlice({
     setWinners: (state, action: PayloadAction<PadStep[]>) => {
       state.winners = action.payload;
     },
-    setAllVoteCount: (state, action: PayloadAction<{ allVoteCount: number }>) => {
-      state.allVoteCount = action.payload.allVoteCount;
-    },
     resetGameMetadata: state => {
       state.winners = null;
-      state.allVoteCount = 0;
     },
   },
 });
@@ -101,11 +116,12 @@ export const {
   updatePad,
   startRound,
   markPlayerFinished,
+  markPlayerNotFinished,
   setSuggestions,
   setPlayerViewingPad,
   setWinners,
-  updatePadStep,
-  setAllVoteCount,
+  addVoteToPadStep,
+  removeVoteFromPadStep,
   resetGameMetadata,
 } = gameSlice.actions;
 export default gameSlice.reducer;

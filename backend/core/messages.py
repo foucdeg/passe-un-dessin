@@ -55,6 +55,19 @@ class PlayerFinishedMessage:
         return PlayerFinishedMessageSerializer(self).data
 
 
+class PlayerNotFinishedMessage:
+    message_type = "PLAYER_NOT_FINISHED"
+    player = None
+
+    def __init__(self, player: Player):
+        self.player = player
+
+    def serialize(self):
+        from core.serializers import PlayerFinishedMessageSerializer
+
+        return PlayerFinishedMessageSerializer(self).data
+
+
 class GameStartsMessage:
     message_type = "GAME_STARTS"
     game = None
@@ -94,19 +107,6 @@ class DebriefStartsMessage:
         from core.serializers import DebriefStartsMessageSerializer
 
         return DebriefStartsMessageSerializer(self).data
-
-
-class AllVoteCountMessage:
-    message_type = "ALL_VOTE_COUNT"
-    all_vote_count = None
-
-    def __init__(self, all_vote_count: int):
-        self.all_vote_count = all_vote_count
-
-    def serialize(self):
-        from core.serializers import AllVoteCountMessageSerializer
-
-        return AllVoteCountMessageSerializer(self).data
 
 
 class PlayerViewingPadMessage:
