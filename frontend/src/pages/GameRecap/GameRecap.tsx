@@ -19,7 +19,7 @@ import TopRightButtons from 'atoms/TopRightButtons';
 import TopRightButton from 'atoms/TopRightButton';
 import { selectAvailableVoteCount } from 'redux/Game/selectors';
 import NewGameModal from 'components/NewGameModal';
-import { ThumbUpIcon } from 'components/ReactionOverlay/ReactionOverlay.style';
+import { ThumbUpButton } from 'components/ReactionOverlay/ReactionOverlay.style';
 import { useHistory } from 'react-router';
 import { useLeaveRoom } from 'redux/Room/hooks';
 import DoneModal from 'components/DoneModal';
@@ -80,7 +80,7 @@ const GameRecap: React.FunctionComponent = () => {
             {Array(availableVoteCount)
               .fill('')
               .map((_, index) => (
-                <ThumbUpIcon key={index} />
+                <ThumbUpButton key={index} />
               ))}
           </>
         ) : (

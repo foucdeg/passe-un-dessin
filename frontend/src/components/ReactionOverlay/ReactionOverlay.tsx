@@ -2,10 +2,13 @@
 import React from 'react';
 import {
   ReactionOverlayContainer,
+  ReactionOverlayTouchContainer,
   LikeClickArea,
-  ThumbDownIcon,
-  ThumbUpIcon,
+  TouchLikeClickArea,
+  ThumbDownButton,
+  ThumbUpButton,
   LikesSection,
+  TouchLikesSection,
 } from './ReactionOverlay.style';
 
 interface Props {
@@ -27,17 +30,42 @@ const ReactionOverlay: React.FC<Props> = ({
 }) => {
   if (!(canLike || canUnlike)) return null;
 
+  const isTouchScreen = window.matchMedia('(pointer: coarse)').matches;
+
+  if (isTouchScreen) {
+    return (
+      <>
+        <ReactionOverlayTouchContainer className={className}>
+          <TouchLikeClickArea>
+            {canUnlike && <ThumbDownButton primary onClick={onUnlike} />}
+          </TouchLikeClickArea>
+          <TouchLikeClickArea>
+            {canLike && <ThumbUpButton primary onClick={onLike} />}
+          </TouchLikeClickArea>
+        </ReactionOverlayTouchContainer>
+
+        <TouchLikesSection>
+          {Array(likeCount)
+            .fill('')
+            .map((_, index) => (
+              <ThumbUpButton key={index} />
+            ))}
+        </TouchLikesSection>
+      </>
+    );
+  }
+
   return (
     <>
       <ReactionOverlayContainer className={className}>
         {canUnlike && (
           <LikeClickArea onClick={onUnlike}>
-            <ThumbDownIcon />
+            <ThumbDownButton primary />
           </LikeClickArea>
         )}
         {canLike && (
           <LikeClickArea onClick={onLike}>
-            <ThumbUpIcon />
+            <ThumbUpButton primary />
           </LikeClickArea>
         )}
       </ReactionOverlayContainer>
@@ -46,7 +74,7 @@ const ReactionOverlay: React.FC<Props> = ({
         {Array(likeCount)
           .fill('')
           .map((_, index) => (
-            <ThumbUpIcon key={index} />
+            <ThumbUpButton key={index} />
           ))}
       </LikesSection>
     </>

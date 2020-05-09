@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { colorPalette } from 'stylesheet';
-import { ThumbUpIcon } from 'components/ReactionOverlay/ReactionOverlay.style';
+import { ThumbUpButton } from 'components/ReactionOverlay/ReactionOverlay.style';
 
 export const OuterRecapContainer = styled.div`
   display: flex;
@@ -40,7 +40,7 @@ export const VoteReminder = styled.div`
   align-items: center;
   justify-content: center;
 
-  & > ${ThumbUpIcon} {
+  & > ${ThumbUpButton} {
     margin-left: 8px;
   }
 `;

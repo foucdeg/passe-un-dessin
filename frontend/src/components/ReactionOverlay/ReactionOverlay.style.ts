@@ -1,15 +1,24 @@
 import styled from 'styled-components';
 
-import thumbUpIcon from 'assets/thumb-up.svg';
-import thumbDownIcon from 'assets/thumb-down.svg';
+import { ReactComponent as ThumbUpIcon } from 'assets/thumb-up.svg';
+import { ReactComponent as ThumbDownIcon } from 'assets/thumb-down.svg';
+import { colorPalette } from 'stylesheet';
 
-export const ThumbUpIcon = styled.img.attrs({ src: thumbUpIcon })``;
+export const ThumbUpButton = styled(ThumbUpIcon)<{ primary?: boolean }>`
+  .main {
+    fill: ${({ primary }) => (primary ? colorPalette.orange : colorPalette.purple)};
+  }
+`;
 
-ThumbUpIcon.displayName = 'ThumbUpIcon';
+ThumbUpButton.displayName = 'ThumbUpIcon';
 
-export const ThumbDownIcon = styled.img.attrs({ src: thumbDownIcon })``;
+export const ThumbDownButton = styled(ThumbDownIcon)<{ primary?: boolean }>`
+  .main {
+    fill: ${({ primary }) => (primary ? colorPalette.orange : colorPalette.purple)};
+  }
+`;
 
-ThumbDownIcon.displayName = 'ThumbDownIcon';
+ThumbDownButton.displayName = 'ThumbDownIcon';
 
 export const ReactionOverlayContainer = styled.div`
   width: 100%;
@@ -29,22 +38,43 @@ export const ReactionOverlayContainer = styled.div`
 
 ReactionOverlayContainer.displayName = 'ReactionOverlayContainer';
 
+export const ReactionOverlayTouchContainer = styled.div`
+  width: calc(100% + 24px);
+  height: 24px;
+  position: absolute;
+  bottom: -8px;
+  z-index: 25;
+  justify-content: space-between;
+  display: flex;
+`;
+
+ReactionOverlayTouchContainer.displayName = 'ReactionOverlayTouchContainer';
+
 export const LikeClickArea = styled.div`
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  ${ThumbDownIcon}, ${ThumbUpIcon} {
+  ${ThumbDownButton}, ${ThumbUpButton} {
     transition: transform 0.1s linear;
   }
 
-  :hover ${/* sc-selector */ ThumbDownIcon}, :hover ${ThumbUpIcon} {
+  :hover ${/* sc-selector */ ThumbDownButton}, :hover ${ThumbUpButton} {
     transform: scale(1.2, 1.2);
   }
 `;
 
 LikeClickArea.displayName = 'LikeClickArea';
+
+export const TouchLikeClickArea = styled(LikeClickArea)`
+  flex: 0;
+
+  :active ${/* sc-selector */ ThumbDownButton}, :active ${ThumbUpButton} {
+    transform: scale(1.2, 1.2);
+  }
+`;
+TouchLikeClickArea.displayName = 'TouchLikeClickArea';
 
 export const LikesSection = styled.div`
   display: flex;
@@ -56,3 +86,10 @@ export const LikesSection = styled.div`
 `;
 
 LikesSection.displayName = 'LikesSection';
+
+export const TouchLikesSection = styled(LikesSection)`
+  width: calc(100% - 16px);
+  justify-content: center;
+`;
+
+TouchLikesSection.displayName = 'TouchLikesSection';
