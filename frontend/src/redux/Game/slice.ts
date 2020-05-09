@@ -51,11 +51,7 @@ const gameSlice = createSlice({
       state.game.pads.forEach(pad =>
         pad.steps
           .filter(step => step.uuid === padStepId)
-          .forEach(padStep => {
-            if (!padStep.votes.find(vote => vote.player.uuid === player.uuid)) {
-              padStep.votes.push({ player });
-            }
-          }),
+          .forEach(padStep => padStep.votes.push({ player })),
       );
     },
     removeVoteFromPadStep: (
@@ -69,7 +65,12 @@ const gameSlice = createSlice({
         pad.steps
           .filter(step => step.uuid === padStepId)
           .forEach(padStep => {
-            padStep.votes = padStep.votes.filter(vote => vote.player.uuid !== player.uuid);
+            const firstVoteIndex = padStep.votes.findIndex(
+              vote => vote.player.uuid === player.uuid,
+            );
+            if (firstVoteIndex === -1) return;
+
+            padStep.votes.splice(firstVoteIndex, 1);
           }),
       );
     },
