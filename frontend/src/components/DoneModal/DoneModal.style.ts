@@ -24,7 +24,7 @@ export const StyledButton = styled(Button)`
 StyledButton.displayName = 'StyledButton';
 
 export const StyledParagraph = styled.p`
-  margin-top: 16px;
+  margin-bottom: 16px;
 `;
 
 StyledParagraph.displayName = 'StyledModal';
