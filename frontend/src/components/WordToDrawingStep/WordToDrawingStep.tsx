@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Spacer from 'atoms/Spacer';
 import CanvasDraw from 'components/Canvas/CanvasDraw';
 import Timer from 'components/Timer';
@@ -27,6 +27,19 @@ interface Props {
 
 const WordToDrawingStep: React.FC<Props> = ({ padStep, previousPlayer, saveStep, loading }) => {
   const game = useSelector(selectGame);
+  const [remainingTime, setRemainingTime] = useState<number | undefined>(game?.round_duration);
+
+  useEffect(() => {
+    let interval: number | undefined = undefined;
+    if (remainingTime) {
+      interval = setInterval(() => {
+        setRemainingTime(remainingTime - 1);
+      }, 1000);
+    } else {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [remainingTime, setRemainingTime]);
 
   if (!game) return null;
   if (!previousPlayer) return null;
@@ -64,10 +77,7 @@ const WordToDrawingStep: React.FC<Props> = ({ padStep, previousPlayer, saveStep,
         ) : (
           <>
             <p>
-              <FormattedMessage
-                id="wordToDrawing.duration"
-                values={{ duration: game.round_duration }}
-              />
+              <FormattedMessage id="wordToDrawing.duration" values={{ duration: remainingTime }} />
             </p>
             <Timer duration={game.round_duration} />
           </>
