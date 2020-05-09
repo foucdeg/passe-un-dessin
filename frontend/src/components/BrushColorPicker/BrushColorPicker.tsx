@@ -17,6 +17,7 @@ export enum DrawingColor {
   PINK = '#EA3FF7',
   GREY = '#BDBDBD',
   BLACK = '#000000',
+  WHITE = '#FFFFFF',
 }
 
 interface Props {
@@ -37,6 +38,7 @@ const BrushColorPicker: React.FC<Props> = ({ color, setColor }) => {
             onClick={() => setColor(colorOption)}
             color={colorOption}
             selected={colorOption === color}
+            withBorder={colorOption === DrawingColor.WHITE}
           />
         </IconAndTooltip>
       ))}
