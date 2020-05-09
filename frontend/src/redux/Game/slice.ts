@@ -8,7 +8,6 @@ export type GameState = Readonly<{
   suggestions: string[];
   recapViews: { [padUuid: string]: Player[] };
   winners: PadStep[] | null;
-  allVoteCount: number;
 }>;
 
 const initialState: GameState = {
@@ -17,7 +16,6 @@ const initialState: GameState = {
   suggestions: [],
   recapViews: {},
   winners: null,
-  allVoteCount: 0,
 } as GameState;
 
 const gameSlice = createSlice({
@@ -38,10 +36,6 @@ const gameSlice = createSlice({
       const firstPadUUID = state.game.pads[0].uuid;
       state.recapViews[firstPadUUID] = [...state.game.players];
       state.suggestions = [];
-      state.allVoteCount = state.game.pads.reduce(
-        (acc, pad) => acc + pad.steps.reduce((acc2, step) => acc2 + step.votes.length, 0),
-        0,
-      );
     },
     updatePad: (state, action: PayloadAction<Pad>) => {
       if (!state.game) return;
@@ -76,6 +70,11 @@ const gameSlice = createSlice({
         remPlayer => remPlayer.uuid !== action.payload.uuid,
       );
     },
+    markPlayerNotFinished: (state, action: PayloadAction<Player>) => {
+      if (!state.remainingPlayers.some(remPlayer => remPlayer.uuid === action.payload.uuid)) {
+        state.remainingPlayers.push(action.payload);
+      }
+    },
     setSuggestions: (state, action: PayloadAction<string[]>) => {
       state.suggestions = action.payload;
     },
@@ -90,12 +89,8 @@ const gameSlice = createSlice({
     setWinners: (state, action: PayloadAction<PadStep[]>) => {
       state.winners = action.payload;
     },
-    setAllVoteCount: (state, action: PayloadAction<{ allVoteCount: number }>) => {
-      state.allVoteCount = action.payload.allVoteCount;
-    },
     resetGameMetadata: state => {
       state.winners = null;
-      state.allVoteCount = 0;
     },
   },
 });
@@ -105,11 +100,11 @@ export const {
   updatePad,
   startRound,
   markPlayerFinished,
+  markPlayerNotFinished,
   setSuggestions,
   setPlayerViewingPad,
   setWinners,
   updatePadStep,
-  setAllVoteCount,
   resetGameMetadata,
 } = gameSlice.actions;
 export default gameSlice.reducer;

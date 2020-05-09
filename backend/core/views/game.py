@@ -3,24 +3,37 @@ import logging
 
 from django.db import transaction
 from django.db.models import Count
-from django.http import (HttpResponse, HttpResponseBadRequest,
-                         HttpResponseForbidden, JsonResponse)
+from django.http import (
+    HttpResponse,
+    HttpResponseBadRequest,
+    HttpResponseForbidden,
+    JsonResponse,
+)
 from django.views.decorators.http import require_GET, require_http_methods
 from django_eventstream import send_event
 from rest_framework.generics import RetrieveAPIView
 
 from core.decorators import requires_player
-from core.messages import PlayerFinishedMessage, PlayerViewingPadMessage
+from core.messages import (
+    PlayerFinishedMessage,
+    PlayerNotFinishedMessage,
+    PlayerViewingPadMessage,
+)
 from core.models import Game, GamePhase, Pad, PadStep, Vote
 from core.serializers import GameSerializer, PadSerializer, PadStepSerializer
-from core.service.game_service import (GamePhaseAssertionException,
-                                       GameRoundAssertionException,
-                                       assert_phase, assert_round,
-                                       get_available_vote_count,
-                                       get_round_count, send_all_vote_count,
-                                       start_debrief, start_next_round,
-                                       switch_to_rounds,
-                                       switch_to_vote_results)
+from core.service.game_service import (
+    GamePhaseAssertionException,
+    GameRoundAssertionException,
+    assert_phase,
+    assert_round,
+    get_available_vote_count,
+    get_round_count,
+    send_all_vote_count,
+    start_debrief,
+    start_next_round,
+    switch_to_rounds,
+    switch_to_vote_results,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -191,12 +204,12 @@ def submit_vote(request, player, pad_step_id):
     if pad_step.player == player:
         return HttpResponseBadRequest("You cannot vote for your own drawing")
 
-    if request.method == "POST":
-        existing_player_vote_count = Vote.objects.filter(
-            player=player, pad_step__pad__game=game
-        ).count()
-        available_vote_count = get_available_vote_count(game)
+    existing_player_vote_count = Vote.objects.filter(
+        player=player, pad_step__pad__game=game
+    ).count()
+    available_vote_count = get_available_vote_count(game)
 
+    if request.method == "POST":
         if existing_player_vote_count >= available_vote_count:
             return HttpResponseBadRequest(
                 "You already reached the maximal number of vote for this game : %s"
@@ -204,6 +217,21 @@ def submit_vote(request, player, pad_step_id):
             )
 
         Vote.objects.create(player=player, pad_step=pad_step)
+
+        if existing_player_vote_count + 1 == available_vote_count:
+            send_event(
+                "game-%s" % game.uuid.hex,
+                "message",
+                PlayerFinishedMessage(player).serialize(),
+            )
+
+            with transaction.atomic():
+                game = Game.objects.select_for_update().get(uuid=game.uuid)
+                game.pads_done = game.pads_done + 1
+                game.save()
+
+            if game.pads_done == game.players.count():
+                switch_to_vote_results(game)
 
     elif request.method == "DELETE":
         vote = Vote.objects.filter(player=player, pad_step=pad_step).first()
@@ -213,23 +241,24 @@ def submit_vote(request, player, pad_step_id):
             )
         vote.delete()
 
+        if existing_player_vote_count == available_vote_count:
+            # Player was done but is not anymore
+            send_event(
+                "game-%s" % game.uuid.hex,
+                "message",
+                PlayerNotFinishedMessage(player).serialize(),
+            )
+
+            with transaction.atomic():
+                game = Game.objects.select_for_update().get(uuid=game.uuid)
+                game.pads_done = game.pads_done - 1
+                game.save()
+
     send_all_vote_count(game)
 
     pad_step = PadStep.objects.get(uuid=pad_step_id)
     data = PadStepSerializer(pad_step).data
     return JsonResponse(data)
-
-
-@require_http_methods(["PUT"])
-def go_to_vote_results(request, game_id):
-    try:
-        game = Game.objects.get(uuid=game_id)
-    except Game.DoesNotExist:
-        return HttpResponseBadRequest("Game with uuid %s does not exist" % game_id)
-
-    switch_to_vote_results(game)
-
-    return HttpResponse(status=200)
 
 
 @require_GET

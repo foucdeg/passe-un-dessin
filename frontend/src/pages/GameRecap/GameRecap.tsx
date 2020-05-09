@@ -13,23 +13,24 @@ import {
   VoteReminder,
 } from './GameRecap.style';
 import { Pad } from 'redux/Game/types';
-import { useGoToVoteResults } from 'redux/Game/hooks';
 import { selectRoom, selectPlayerIsAdmin } from 'redux/Room/selectors';
-import { selectGame, selectAllVoteCount } from 'redux/Game/selectors';
+import { selectGame } from 'redux/Game/selectors';
 import { FormattedMessage } from 'react-intl';
 import { useReviewPad } from 'redux/Game/hooks';
 import PadTab from 'components/PadTab';
 import TopRightButtons from 'atoms/TopRightButtons';
 import TopRightButton from 'atoms/TopRightButton';
-import { getAvailableVoteCount } from 'services/game.service';
 import { selectAvailableVoteCount } from 'redux/Game/selectors';
 import NewGameModal from 'components/NewGameModal';
+import { ThumbUpIcon } from 'components/ReactionOverlay/ReactionOverlay.style';
+import { useHistory } from 'react-router';
+import { useLeaveRoom } from 'redux/Room/hooks';
+import DoneModal from 'components/DoneModal';
 
 const GameRecap: React.FunctionComponent = () => {
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
   const isPlayerAdmin = useSelector(selectPlayerIsAdmin);
-  const allVoteCount = useSelector(selectAllVoteCount);
   const availableVoteCount = useSelector(selectAvailableVoteCount);
 
   const [displayedPadId, setDisplayedPadId] = useState<string | null>(null);
@@ -37,7 +38,9 @@ const GameRecap: React.FunctionComponent = () => {
   const [newGameModalIsOpen, setNewGameModalIsOpen] = useState<boolean>(false);
 
   const doReviewPad = useReviewPad();
-  const doGoToVoteResults = useGoToVoteResults();
+
+  const history = useHistory();
+  const doLeaveRoom = useLeaveRoom();
 
   const displayedPad = game?.pads.find(pad => pad.uuid === displayedPadId);
 
@@ -48,15 +51,14 @@ const GameRecap: React.FunctionComponent = () => {
 
   if (!room || !game) return null;
 
-  const maxVoteCount = game.players.length * getAvailableVoteCount(game);
-
-  const goToVoteResults = () => {
-    doGoToVoteResults(room.uuid, game.uuid);
-  };
-
   const selectPad = (pad: Pad) => {
     doReviewPad(pad);
     setDisplayedPadId(pad.uuid);
+  };
+
+  const leaveGame = () => {
+    doLeaveRoom(room);
+    history.push('/');
   };
 
   return (
@@ -82,30 +84,17 @@ const GameRecap: React.FunctionComponent = () => {
             <ThumbUpIcon key={index} />
           ))}
       </VoteReminder>
-      <StyledModal isOpen={doneModalIsOpen} onClose={() => setDoneModalIsOpen(false)}>
-        <StyledHeader>
-          <FormattedMessage id="finishedModal.title" />
-        </StyledHeader>
-        <p>
-          <FormattedMessage id="finishedModal.description" />
-        </p>
-        <p>
-          <FormattedMessage id="finishedModal.navigate" />
-        </p>
-        <StyledButton onClick={() => setDoneModalIsOpen(false)}>
-          <FormattedMessage id="finishedModal.seeResults" />
-        </StyledButton>
-      </StyledModal>
-      {isPlayerAdmin && (
-        <TopRightButtons>
-          <TopRightButton onClick={goToVoteResults}>
-            <FormattedMessage id="recap.goToVoteResults" values={{ allVoteCount, maxVoteCount }} />
-          </TopRightButton>
+      {doneModalIsOpen && <DoneModal onClose={() => setDoneModalIsOpen(false)} />}
+      <TopRightButtons>
+        <TopRightButton onClick={leaveGame}>
+          <FormattedMessage id="voteResults.leaveTeam" />
+        </TopRightButton>
+        {isPlayerAdmin && (
           <TopRightButton onClick={() => setNewGameModalIsOpen(true)}>
             <FormattedMessage id="voteResults.newGame" />
           </TopRightButton>
-        </TopRightButtons>
-      )}
+        )}
+      </TopRightButtons>
       <NewGameModal isOpen={newGameModalIsOpen} onClose={() => setNewGameModalIsOpen(false)} />
     </>
   );

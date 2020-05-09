@@ -84,23 +84,6 @@ export const useStartGame = () => {
   );
 };
 
-export const useGoToVoteResults = () => {
-  const history = useHistory();
-
-  return useCallback(
-    async (roomId: string, gameId: string) => {
-      try {
-        await client.put(`/game/${gameId}/go-to-vote-results`);
-        history.push(`/room/${roomId}/game/${gameId}/vote-results`);
-      } catch (e) {
-        alert('Error - see console');
-        console.error(e);
-      }
-    },
-    [history],
-  );
-};
-
 export const useGetVoteResults = () => {
   const dispatch = useDispatch();
   const doGetRanking = useGetRanking();
