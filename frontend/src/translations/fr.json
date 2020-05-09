@@ -69,8 +69,9 @@
   },
   "recap": {
     "initialWord": "Mot initial",
-    "goToVoteResults": "{allVoteCount}/{maxVoteCount} vote{ allVoteCount, plural, one {} other {s}} exprimé{ allVoteCount, plural, one {} other {s}}. Voir les résultats",
-    "availableVotes": "{availableVoteCount} vote{ availableVoteCount, plural, one {} other {s}} restant{ availableVoteCount, plural, one {} other {s}}"
+    "waitingFor": "N'ont pas fini de voter :",
+    "confirmForceNextStep": "Es-tu sûr.e de vouloir passer à l'étape suivante ? Nous n'avons pas reçu tous les votes de tout le monde.",
+    "availableVotes": "Votes restants :"
   },
   "voteResults": {
     "leaveTeam": "Quitter l'équipe",

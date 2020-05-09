@@ -69,8 +69,9 @@
   },
   "recap": {
     "initialWord": "Initial word",
-    "goToVoteResults": "{allVoteCount}/{maxVoteCount} vote{ allVoteCount, plural, one {} other {s}}. See results",
-    "availableVotes": "{availableVoteCount} vote{ availableVoteCount, plural, one {} other {s}} left"
+    "waitingFor": "Aren't done voting yet:",
+    "confirmForceNextStep": "Are you sure you want to skip to next step? We didn't get everybody's votes.",
+    "availableVotes": "Remaining votes:"
   },
   "voteResults": {
     "leaveTeam": "Leave team",

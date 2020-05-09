@@ -3,6 +3,7 @@ import { Pad, StepType, PadStep } from 'redux/Game/types';
 import { PadRecapRow, ArrowSpacer } from './PadRecap.style';
 import SentenceRecap from 'components/SentenceRecap';
 import DrawingRecap from 'components/DrawingRecap';
+import RecapRemainingPlayers from 'components/RecapRemainingPlayers';
 
 interface Props {
   pad: Pad;
@@ -32,6 +33,7 @@ const PadRecap: React.FC<Props> = ({ pad }) => {
           )}
         </React.Fragment>
       ))}
+      <RecapRemainingPlayers />
     </PadRecapRow>
   );
 };
