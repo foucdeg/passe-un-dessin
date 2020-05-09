@@ -1,3 +1,5 @@
+/* eslint-disable react/no-array-index-key */
+
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'redux/useSelector';
 import PadRecap from 'components/PadRecap';
@@ -73,7 +75,12 @@ const GameRecap: React.FunctionComponent = () => {
         <GameRecapContainer>{displayedPad && <PadRecap pad={displayedPad} />}</GameRecapContainer>
       </OuterRecapContainer>
       <VoteReminder>
-        <FormattedMessage id="recap.availableVotes" values={{ availableVoteCount }} />
+        <FormattedMessage id="recap.availableVotes" />
+        {Array(availableVoteCount)
+          .fill('')
+          .map((_, index) => (
+            <ThumbUpIcon key={index} />
+          ))}
       </VoteReminder>
       <StyledModal isOpen={doneModalIsOpen} onClose={() => setDoneModalIsOpen(false)}>
         <StyledHeader>
