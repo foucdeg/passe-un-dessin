@@ -64,7 +64,7 @@
   "finishedModal": {
     "title": "C'est fini !",
     "description": "Tu peux désormais voir l'ensemble des carnets pour comprendre tous les dessins que tu as eus à deviner.",
-    "navigate": "Navigue d'un carnet à l'autre avec les onglets en haut.",
+    "navigate": "Navigue d'un carnet à l'autre avec les onglets en haut.  N'oublie pas de voter pour les dessins et idées des autres !",
     "seeResults": "Voir les résultats"
   },
   "recap": {

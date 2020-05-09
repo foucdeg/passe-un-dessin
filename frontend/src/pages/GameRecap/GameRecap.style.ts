@@ -18,18 +18,6 @@ export const GameRecapContainer = styled.div`
 
 GameRecapContainer.displayName = 'GameRecapContainer';
 
-export const StyledModal = styled(Modal)`
-  align-items: center;
-`;
-
-StyledModal.displayName = 'StyledModal';
-
-export const StyledButton = styled(Button)`
-  margin-top: 20px;
-`;
-
-StyledButton.displayName = 'StyledButton';
-
 export const PadTabsRow = styled.div`
   width: 100%;
   display: flex;

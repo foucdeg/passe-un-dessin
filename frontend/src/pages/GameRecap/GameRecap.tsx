@@ -6,10 +6,7 @@ import PadRecap from 'components/PadRecap';
 import {
   OuterRecapContainer,
   GameRecapContainer,
-  StyledModal,
-  StyledButton,
   PadTabsRow,
-  StyledHeader,
   VoteReminder,
 } from './GameRecap.style';
 import { Pad } from 'redux/Game/types';

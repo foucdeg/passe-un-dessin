@@ -64,7 +64,7 @@
   "finishedModal": {
     "title": "It's over!",
     "description": "You can now see all of the pads, and finally understand the drawings you had to guess.",
-    "navigate": "Navigate between drawing pads using the tabs above.",
+    "navigate": "Navigate between drawing pads using the tabs above. Don't forget to cast your votes on other players' drawings and guesses!",
     "seeResults": "See results"
   },
   "recap": {
