@@ -28,7 +28,6 @@ from core.service.game_service import (
     assert_round,
     get_available_vote_count,
     get_round_count,
-    send_all_vote_count,
     start_debrief,
     start_next_round,
     switch_to_rounds,
@@ -233,6 +232,8 @@ def submit_vote(request, player, pad_step_id):
             if game.pads_done == game.players.count():
                 switch_to_vote_results(game)
 
+        return HttpResponse(status=201)
+
     elif request.method == "DELETE":
         vote = Vote.objects.filter(player=player, pad_step=pad_step).first()
         if vote is None:
@@ -254,11 +255,7 @@ def submit_vote(request, player, pad_step_id):
                 game.pads_done = game.pads_done - 1
                 game.save()
 
-    send_all_vote_count(game)
-
-    pad_step = PadStep.objects.get(uuid=pad_step_id)
-    data = PadStepSerializer(pad_step).data
-    return JsonResponse(data)
+        return HttpResponse(status=204)
 
 
 @require_GET

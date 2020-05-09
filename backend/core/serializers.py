@@ -160,10 +160,6 @@ class DebriefStartsMessageSerializer(MessageSerializer):
     game = GameIdSerializer()
 
 
-class AllVoteCountMessageSerializer(MessageSerializer):
-    all_vote_count = serializers.IntegerField()
-
-
 class PlayerViewingPadMessageSerializer(MessageSerializer):
     pad = PadIdSerializer()
     player = PlayerSerializer()

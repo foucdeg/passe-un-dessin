@@ -109,19 +109,6 @@ class DebriefStartsMessage:
         return DebriefStartsMessageSerializer(self).data
 
 
-class AllVoteCountMessage:
-    message_type = "ALL_VOTE_COUNT"
-    all_vote_count = None
-
-    def __init__(self, all_vote_count: int):
-        self.all_vote_count = all_vote_count
-
-    def serialize(self):
-        from core.serializers import AllVoteCountMessageSerializer
-
-        return AllVoteCountMessageSerializer(self).data
-
-
 class PlayerViewingPadMessage:
     message_type = "PLAYER_VIEWING_PAD"
     pad = None
