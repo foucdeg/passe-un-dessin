@@ -4,6 +4,7 @@ import { selectPadViewers } from 'redux/Game/selectors';
 import { Pad } from 'redux/Game/types';
 import { PadTabContainer, ViewersContainer, ViewerEye } from './PadTab.style';
 import { selectPlayer } from 'redux/Player/selectors';
+import IconAndTooltip from 'components/IconAndTooltip';
 
 interface Props {
   pad: Pad;
@@ -25,7 +26,9 @@ const PadTab: React.FC<Props> = ({ pad, isActive, onClick }) => {
         {padViewers
           .filter(viewer => viewer.uuid !== player.uuid)
           .map(viewer => (
-            <ViewerEye key={viewer.uuid} color={viewer.color} title={viewer.name} />
+            <IconAndTooltip tooltipText={viewer.name} key={viewer.uuid}>
+              <ViewerEye color={viewer.color} />
+            </IconAndTooltip>
           ))}
       </ViewersContainer>
     </PadTabContainer>
