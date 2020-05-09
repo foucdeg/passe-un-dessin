@@ -31,6 +31,8 @@ import skyblueMediumPointCursor from './assets/skyblue-medium-point.svg';
 import skybluePaintCursor from './assets/skyblue-paint.svg';
 import skyblueSmallPointCursor from './assets/skyblue-small-point.svg';
 import whiteBigPointCursor from './assets/white-big-point.svg';
+import whiteMediumPointCursor from './assets/white-medium-point.svg';
+import whitePaintCursor from './assets/white-paint.svg';
 import whiteSmallPointCursor from './assets/white-small-point.svg';
 import yellowMediumPointCursor from './assets/yellow-medium-point.svg';
 import yellowPaintCursor from './assets/yellow-paint.svg';
@@ -114,9 +116,9 @@ const BRUSH_RADIUS_AND_COLOR_TO_CURSOR = {
     10: '',
   },
   ['#FFFFFF' as DrawingColor]: {
-    0: '',
+    0: whitePaintCursor,
     2: whiteSmallPointCursor,
-    6: '',
+    6: whiteMediumPointCursor,
     10: whiteBigPointCursor,
   },
 };

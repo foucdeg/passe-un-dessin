@@ -34,24 +34,110 @@ export const drawLine = (
   }
   const canvas: HTMLCanvasElement = canvasRef.current;
   const context = canvas.getContext('2d');
-  if (context) {
-    context.strokeStyle = brushColor;
-    context.fillStyle = brushColor;
-    context.lineJoin = 'round';
-    context.lineWidth = brushRadius * 2;
+  if (!context) {
+    return;
+  }
 
-    context.beginPath();
+  const x1 = Math.floor(startPosition.x);
+  const y1 = Math.floor(startPosition.y);
+  const x2 = Math.floor(endPosition.x);
+  const y2 = Math.floor(endPosition.y);
+  const lineWidth = Math.ceil(brushRadius * 2);
+  const canvasWidth = context.canvas.width;
+  const canvasHeight = context.canvas.height;
 
-    if (startPosition.x === endPosition.x && startPosition.y === endPosition.y) {
-      context.arc(startPosition.x, startPosition.y, brushRadius, 0, Math.PI * 2);
-      context.fill();
-    } else {
-      context.moveTo(startPosition.x, startPosition.y);
-      context.lineTo(endPosition.x, endPosition.y);
-      context.closePath();
-      context.stroke();
+  // calculate bounding box
+  const left = Math.max(0, Math.min(canvasWidth, Math.min(x1, x2) - lineWidth));
+  const top = Math.max(0, Math.min(canvasHeight, Math.min(y1, y2) - lineWidth));
+  const right = Math.max(0, Math.min(canvasWidth, Math.max(x1, x2) + lineWidth));
+  const bottom = Math.max(0, Math.min(canvasHeight, Math.max(y1, y2) + lineWidth));
+
+  // off canvas, so don't draw anything
+  if (right - left === 0 || bottom - top === 0) {
+    return;
+  }
+
+  const color = hexToRgb(brushColor);
+
+  const circleMap = generateCircleMap(Math.floor(lineWidth / 2));
+  const offset = Math.floor(circleMap.length / 2);
+
+  const imageData = context.getImageData(left, top, right - left, bottom - top);
+
+  for (let ix = 0; ix < circleMap.length; ix++) {
+    for (let iy = 0; iy < circleMap[ix].length; iy++) {
+      if (circleMap[ix][iy] === 1 || (x1 === x2 && y1 === y2 && circleMap[ix][iy] === 2)) {
+        const newX1 = x1 + ix - offset - left;
+        const newY1 = y1 + iy - offset - top;
+        const newX2 = x2 + ix - offset - left;
+        const newY2 = y2 + iy - offset - top;
+        drawBresenhamLine(imageData, newX1, newY1, newX2, newY2, color);
+      }
     }
   }
+  context.putImageData(imageData, left, top);
+};
+
+const drawBresenhamLine = (
+  imageData: ImageData,
+  x0: number,
+  y0: number,
+  x1: number,
+  y1: number,
+  color: RGBAColor,
+) => {
+  const dx = Math.abs(x1 - x0);
+  const dy = Math.abs(y1 - y0);
+  const sx = x0 < x1 ? 1 : -1;
+  const sy = y0 < y1 ? 1 : -1;
+  let err = dx - dy;
+
+  while (true) {
+    //check if pixel is inside the canvas
+    if (!(x0 < 0 || x0 >= imageData.width || y0 < 0 || y0 >= imageData.height)) {
+      setPixel(imageData, x0, y0, color);
+    }
+
+    if (x0 === x1 && y0 === y1) break;
+    const e2 = 2 * err;
+    if (e2 > -dy) {
+      err -= dy;
+      x0 += sx;
+    }
+    if (e2 < dx) {
+      err += dx;
+      y0 += sy;
+    }
+  }
+};
+
+const generateCircleMap = (radius: number) => {
+  const circleData: number[][] = [];
+
+  for (let x = 0; x < 2 * radius; x++) {
+    circleData[x] = [];
+    for (let y = 0; y < 2 * radius; y++) {
+      const distanceToRadius = Math.sqrt(Math.pow(radius - x, 2) + Math.pow(radius - y, 2));
+      if (distanceToRadius > radius) {
+        circleData[x][y] = 0;
+      } else if (distanceToRadius < radius - 2) {
+        //optimize for performance: fill circle only when mouse was not moved
+        circleData[x][y] = 2;
+      } else {
+        circleData[x][y] = 1;
+      }
+    }
+  }
+
+  return circleData;
+};
+
+const setPixel = (imageData: ImageData, x: number, y: number, color: RGBAColor) => {
+  const offset = (y * imageData.width + x) * 4;
+  imageData.data[offset] = color.r;
+  imageData.data[offset + 1] = color.g;
+  imageData.data[offset + 2] = color.b;
+  imageData.data[offset + 3] = 255;
 };
 
 export const drawPaint = (paint: Paint, canvasRef: canvasRefType) => {
