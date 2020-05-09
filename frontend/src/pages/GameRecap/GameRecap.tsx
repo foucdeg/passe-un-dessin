@@ -74,12 +74,18 @@ const GameRecap: React.FunctionComponent = () => {
         <GameRecapContainer>{displayedPad && <PadRecap pad={displayedPad} />}</GameRecapContainer>
       </OuterRecapContainer>
       <VoteReminder>
-        <FormattedMessage id="recap.availableVotes" />
-        {Array(availableVoteCount)
-          .fill('')
-          .map((_, index) => (
-            <ThumbUpIcon key={index} />
-          ))}
+        {availableVoteCount ? (
+          <>
+            <FormattedMessage id="recap.availableVotes" />
+            {Array(availableVoteCount)
+              .fill('')
+              .map((_, index) => (
+                <ThumbUpIcon key={index} />
+              ))}
+          </>
+        ) : (
+          <FormattedMessage id="recap.noMoreVotes" />
+        )}
       </VoteReminder>
       {doneModalIsOpen && <DoneModal onClose={() => setDoneModalIsOpen(false)} />}
       <TopRightButtons>

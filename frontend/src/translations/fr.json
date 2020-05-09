@@ -71,7 +71,8 @@
     "initialWord": "Mot initial",
     "waitingFor": "N'ont pas fini de voter :",
     "confirmForceNextStep": "Es-tu sûr.e de vouloir passer à l'étape suivante ? Nous n'avons pas reçu tous les votes de tout le monde.",
-    "availableVotes": "Votes restants :"
+    "availableVotes": "Votes restants :",
+    "noMoreVotes": "Plus de votes restants"
   },
   "voteResults": {
     "leaveTeam": "Quitter l'équipe",
