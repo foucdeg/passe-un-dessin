@@ -59,7 +59,8 @@
     "nextPlayer": "En espérant que {next} sache mieux dessiner que {previous} ...",
     "placeholder": "Un mouton ?",
     "noDrawing": "Il y a eu un problème, on n'a pas reçu ce dessin 😞",
-    "submit": "Valider"
+    "submit": "Valider",
+    "update": "Modifier"
   },
   "finishedModal": {
     "title": "C'est fini !",
