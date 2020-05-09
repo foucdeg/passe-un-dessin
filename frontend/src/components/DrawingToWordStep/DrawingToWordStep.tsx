@@ -35,13 +35,15 @@ const DrawingToWordStep: React.FC<Props> = ({
   nextPlayer,
   loading,
 }) => {
-  const [sentence, setSentence] = useState<string>('');
+  const [sentence, setSentence] = useState<string>(padStep.sentence || '');
+  const [isInputDisabled, setIsInputDisabled] = useState<boolean>(!!padStep.sentence);
   const intl = useIntl();
 
   const onSubmit = (event: React.MouseEvent | React.FormEvent) => {
     event.preventDefault();
     if (sentence !== '') {
       saveStep({ sentence });
+      setIsInputDisabled(true);
     }
   };
 
@@ -65,8 +67,13 @@ const DrawingToWordStep: React.FC<Props> = ({
             values={{ name: previousPlayer.name }}
           />
         </Subtext>
-        {padStep.sentence ? (
-          <StaticInput>{padStep.sentence}</StaticInput>
+        {isInputDisabled && !loading ? (
+          <>
+            <StaticInput>{padStep.sentence}</StaticInput>
+            <StyledButton type="button" onClick={() => setIsInputDisabled(false)}>
+              <FormattedMessage id="drawingToWord.update" />
+            </StyledButton>
+          </>
         ) : (
           <StyledForm onSubmit={onSubmit}>
             <TextInput

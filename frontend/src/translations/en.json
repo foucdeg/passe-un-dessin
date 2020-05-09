@@ -59,7 +59,8 @@
     "nextPlayer": "Let's just hope {next} can draw better than {previous} ...",
     "placeholder": "A sheep?",
     "noSentence": "Something went wrong, we didn't get that drawing 😞",
-    "submit": "Submit"
+    "submit": "Submit",
+    "update": "Modifier"
   },
   "finishedModal": {
     "title": "It's over!",

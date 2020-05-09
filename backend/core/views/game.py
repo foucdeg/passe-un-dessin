@@ -117,15 +117,16 @@ def save_step(request, player, uuid):
     except PadStep.DoesNotExist:
         return HttpResponseBadRequest("Pad step with uuid %s does not exist" % uuid)
 
+    assert_round(step.pad.game, step.round_number)
+    should_increment_game_pads_done = True
+
     try:
         sentence = json_body["sentence"]
         if sentence is None or sentence == "":
             return HttpResponseBadRequest("Sentence should not be empty")
 
         if step.sentence is not None:
-            return HttpResponseBadRequest(
-                "Step with uuid %s already has a sentence" % uuid
-            )
+            should_increment_game_pads_done = False
 
         step.sentence = sentence
     except KeyError:
@@ -153,10 +154,11 @@ def save_step(request, player, uuid):
         PlayerFinishedMessage(step.player).serialize(),
     )
 
-    with transaction.atomic():
-        game = Game.objects.select_for_update().get(uuid=game.uuid)
-        game.pads_done = game.pads_done + 1
-        game.save()
+    if should_increment_game_pads_done:
+        with transaction.atomic():
+            game = Game.objects.select_for_update().get(uuid=game.uuid)
+            game.pads_done = game.pads_done + 1
+            game.save()
 
     if game.pads_done == game.players.count():
         start_next_round(game, game.current_round + 1)
