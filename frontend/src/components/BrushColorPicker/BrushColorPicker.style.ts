@@ -18,9 +18,14 @@ export const ColorBlock = styled.div<{
   height: 24px;
   border-radius: 4px;
   cursor: pointer;
-  ${({ selected, withBorder }) =>
-    (selected || withBorder) &&
+  ${({ withBorder }) =>
+    withBorder &&
     css`
-      border: ${selected ? 2 : 1}px solid black;
+      border: 1px solid black;
+    `}
+  ${({ selected }) =>
+    selected &&
+    css`
+      border: 2px solid black;
     `}
 `;
