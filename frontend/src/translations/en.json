@@ -130,5 +130,18 @@
     "waitingFor": "Waiting for these guys to finish:",
     "forceNextStep": "Force game to next step",
     "confirmForceNextStep": "Are you sure you want to skip to next step? We didn't get everybody's drawing or sentence."
+  },
+  "color": {
+    "green": "green",
+    "blue": "blue",
+    "skyblue": "skyblue",
+    "beige": "beige",
+    "yellow": "yellow",
+    "orange": "orange",
+    "brown": "brown",
+    "red": "red",
+    "pink": "pink",
+    "grey": "grey",
+    "black": "black"
   }
 }

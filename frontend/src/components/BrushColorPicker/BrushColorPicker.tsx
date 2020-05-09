@@ -1,4 +1,7 @@
 import React from 'react';
+import { useIntl } from 'react-intl';
+
+import IconAndTooltip from 'components/IconAndTooltip';
 
 import { BrushPickerContainer, ColorBlock } from './BrushColorPicker.style';
 
@@ -21,17 +24,24 @@ interface Props {
   setColor: (color: DrawingColor) => void;
 }
 
-const BrushColorPicker: React.FC<Props> = ({ color, setColor }) => (
-  <BrushPickerContainer>
-    {Object.values(DrawingColor).map(colorOption => (
-      <ColorBlock
-        key={colorOption}
-        onClick={() => setColor(colorOption)}
-        color={colorOption}
-        selected={colorOption === color}
-      />
-    ))}
-  </BrushPickerContainer>
-);
+const BrushColorPicker: React.FC<Props> = ({ color, setColor }) => {
+  const intl = useIntl();
+  return (
+    <BrushPickerContainer>
+      {Object.entries(DrawingColor).map(([colorKey, colorOption]) => (
+        <IconAndTooltip
+          tooltipText={intl.formatMessage({ id: `color.${colorKey.toLowerCase()}` })}
+          key={colorOption}
+        >
+          <ColorBlock
+            onClick={() => setColor(colorOption)}
+            color={colorOption}
+            selected={colorOption === color}
+          />
+        </IconAndTooltip>
+      ))}
+    </BrushPickerContainer>
+  );
+};
 
 export default BrushColorPicker;
