@@ -5,14 +5,13 @@
     "welcome": "Welcome",
     "howToPlay": "How to play",
     "startRoom": "Create a game",
-    "buyGame": "If you enjoy Draw Around, once you're out of lockdown, consider trying Telestrations, the board game that this game is inspired from!",
+    "attribution": "Freely inspired by the board game Telestrations",
     "rules": {
       "0": "Make sure you have a <strong>stable Internet connection</strong> and <strong>enough battery left</strong> on your device.",
       "1": "You should be at least 4 people to play. One of you is named <strong>Game Master</strong> and creates the game. The Game Master sends the link to the game to the other players.",
-      "2": "Pick a word or sentence that the next person will have to sketch. The game starts when everybody has picked a word.",
-      "3": "Draw the word or sentence, or try to guess what the previous person drew.",
-      "4": "When everybody has drawn all of the words, we look at the drawing pads! <strong>Watch what the word or sentences</strong> your friends initially chose became thanks to their drawing skills.",
-      "5": "You can vote for your favorites drawings and see the podium of the bests drawings of your game"
+      "2": "Pick a word or sentence that the next person will have to sketch.",
+      "3": "<strong>Draw the word or sentence</strong>, or <strong>try to guess</strong> what the previous person drew. Then, your drawing or idea is passed on to the next player, and so on.",
+      "4": "When everybody has drawn all of the words, we look at the drawing pads! <strong>Look at what the initial words or sentences became</strong> and vote for your favorite sketches and ideas."
     }
   },
   "roomLobby": {
@@ -71,6 +70,7 @@
   "recap": {
     "initialWord": "Initial word",
     "waitingFor": "Aren't done voting yet:",
+    "forceNextStep": "Go to results",
     "confirmForceNextStep": "Are you sure you want to skip to next step? We didn't get everybody's votes.",
     "availableVotes": "Remaining votes:",
     "noMoreVotes": "No remaining votes"

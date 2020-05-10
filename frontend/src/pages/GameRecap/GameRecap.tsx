@@ -6,7 +6,8 @@ import PadRecap from 'components/PadRecap';
 import {
   OuterRecapContainer,
   GameRecapContainer,
-  PadTabsRow,
+  TopRow,
+  PadTabs,
   VoteReminder,
 } from './GameRecap.style';
 import { Pad } from 'redux/Game/types';
@@ -15,7 +16,6 @@ import { selectGame } from 'redux/Game/selectors';
 import { FormattedMessage } from 'react-intl';
 import { useReviewPad } from 'redux/Game/hooks';
 import PadTab from 'components/PadTab';
-import TopRightButtons from 'atoms/TopRightButtons';
 import TopRightButton from 'atoms/TopRightButton';
 import { selectAvailableVoteCount } from 'redux/Game/selectors';
 import NewGameModal from 'components/NewGameModal';
@@ -23,6 +23,7 @@ import { ThumbUpButton } from 'components/ReactionOverlay/ReactionOverlay.style'
 import { useHistory } from 'react-router';
 import { useLeaveRoom } from 'redux/Room/hooks';
 import DoneModal from 'components/DoneModal';
+import Spacer from 'atoms/Spacer';
 
 const GameRecap: React.FunctionComponent = () => {
   const room = useSelector(selectRoom);
@@ -61,16 +62,27 @@ const GameRecap: React.FunctionComponent = () => {
   return (
     <>
       <OuterRecapContainer>
-        <PadTabsRow>
-          {game.pads.map(pad => (
-            <PadTab
-              key={pad.uuid}
-              isActive={displayedPadId === pad.uuid}
-              onClick={() => selectPad(pad)}
-              pad={pad}
-            />
-          ))}
-        </PadTabsRow>
+        <TopRow>
+          <PadTabs>
+            {game.pads.map(pad => (
+              <PadTab
+                key={pad.uuid}
+                isActive={displayedPadId === pad.uuid}
+                onClick={() => selectPad(pad)}
+                pad={pad}
+              />
+            ))}
+          </PadTabs>
+          <Spacer />
+          <TopRightButton onClick={leaveGame}>
+            <FormattedMessage id="voteResults.leaveTeam" />
+          </TopRightButton>
+          {isPlayerAdmin && (
+            <TopRightButton onClick={() => setNewGameModalIsOpen(true)}>
+              <FormattedMessage id="voteResults.newGame" />
+            </TopRightButton>
+          )}
+        </TopRow>
         <GameRecapContainer>{displayedPad && <PadRecap pad={displayedPad} />}</GameRecapContainer>
       </OuterRecapContainer>
       <VoteReminder>
@@ -88,16 +100,6 @@ const GameRecap: React.FunctionComponent = () => {
         )}
       </VoteReminder>
       {doneModalIsOpen && <DoneModal onClose={() => setDoneModalIsOpen(false)} />}
-      <TopRightButtons>
-        <TopRightButton onClick={leaveGame}>
-          <FormattedMessage id="voteResults.leaveTeam" />
-        </TopRightButton>
-        {isPlayerAdmin && (
-          <TopRightButton onClick={() => setNewGameModalIsOpen(true)}>
-            <FormattedMessage id="voteResults.newGame" />
-          </TopRightButton>
-        )}
-      </TopRightButtons>
       <NewGameModal isOpen={newGameModalIsOpen} onClose={() => setNewGameModalIsOpen(false)} />
     </>
   );

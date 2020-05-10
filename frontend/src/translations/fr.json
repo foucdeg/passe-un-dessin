@@ -5,14 +5,13 @@
     "welcome": "Bienvenue",
     "howToPlay": "Comment jouer ?",
     "startRoom": "Lancer une partie",
-    "buyGame": "Si tu as apprécié Passe un Dessin pendant le confinement, jette un œil à Esquissé, le jeu de société dont s'inspire ce jeu !",
+    "attribution": "Librement inspiré du jeu de société Esquissé",
     "rules": {
       "0": "Assure-toi d'avoir une <strong>connexion Internet stable</strong> et <strong>suffisament de batterie</strong> sur ton appareil.",
       "1": "Pour jouer, vous devez être à partir de 4 joueurs. L'un ou l'une d'entre vous se proclame <strong>Maître du Jeu</strong> et crée la partie. Le Maître du Jeu envoie le lien de la partie aux autres joueurs.",
-      "2": "Choisis un mot que la personne après toi devra dessiner. La partie commence quand tout le monde a choisi un mot.",
-      "3": "Dessine le mot proposé ou devine ce que la personne avant toi a dessiné.",
-      "4": "Quand tout le monde a pu dessiner chacun des mots, on passe aux carnets de résultats ! <strong>Regarde ce que sont devenus les mots choisis</strong> initialement par tes amis avec les talents de certains pour le dessin.",
-      "5": "Tu peux voter pour tes dessins préférés et voir le podium des meilleurs dessins de ta partie."
+      "2": "Choisis un mot ou une expression que la personne après toi devra dessiner.",
+      "3": "<strong>Dessine</strong> le mot proposé ou <strong>devine</strong> ce que la personne avant toi a dessiné. Puis, ton dessin ou idée est passé au joueur suivant, et ainsi de suite.",
+      "4": "Quand tout le monde a pu dessiner chacun des mots, on passe aux carnets de résultats ! <strong>Regarde ce que sont devenus les mots choisis</strong> et vote pour tes dessins ou idées préférées."
     }
   },
   "roomLobby": {
@@ -71,6 +70,7 @@
   "recap": {
     "initialWord": "Mot initial",
     "waitingFor": "N'ont pas fini de voter :",
+    "forceNextStep": "Aller aux résultats",
     "confirmForceNextStep": "Es-tu sûr.e de vouloir passer à l'étape suivante ? Nous n'avons pas reçu tous les votes de tout le monde.",
     "availableVotes": "Votes restants :",
     "noMoreVotes": "Plus de votes restants"

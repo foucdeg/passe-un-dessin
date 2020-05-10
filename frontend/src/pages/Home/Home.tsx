@@ -61,7 +61,7 @@ const Home: React.FunctionComponent = () => {
         </StartButton>
         <Spacer />
         <Attribution>
-          <FormattedMessage id="home.buyGame" />
+          <FormattedMessage id="home.attribution" />
         </Attribution>
       </LeftSide>
       <RightSide>

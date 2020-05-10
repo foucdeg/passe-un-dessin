@@ -44,7 +44,7 @@ export const Header = styled(Header3)`
 Header.displayName = 'Header';
 
 export const StartButton = styled(Button)`
-  margin-top: 32px;
+  margin-top: 16px;
 `;
 
 StartButton.displayName = 'StartButton';
@@ -73,9 +73,7 @@ export const RightSideTitle = styled.h1`
   font-size: ${fontSize.XXLarge};
   color: ${colorPalette.white};
   text-transform: uppercase;
-  width: 156px;
-  word-wrap: break-word;
-  text-align: justify;
+  width: 200px;
   margin: auto;
 `;
 
