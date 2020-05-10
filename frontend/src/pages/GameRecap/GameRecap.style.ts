@@ -31,7 +31,6 @@ TopRow.displayName = 'TopRow';
 export const PadTabs = styled.div`
   flex-shrink: 1;
   display: flex;
-  overflow-x: auto;
 `;
 
 PadTabs.displayName = 'PadTabs';
