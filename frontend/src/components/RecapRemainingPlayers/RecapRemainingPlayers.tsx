@@ -41,7 +41,7 @@ const RecapRemainingPlayers: React.FC<{}> = () => {
         <>
           <Spacer />
           <AdminButton onClick={forceNextStep}>
-            <FormattedMessage id="remainingPlayers.forceNextStep" />
+            <FormattedMessage id="recap.forceNextStep" />
             <NextStepIcon />
           </AdminButton>
         </>

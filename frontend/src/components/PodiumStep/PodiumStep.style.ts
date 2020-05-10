@@ -6,7 +6,6 @@ export const Container = styled.div<{ width: number }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%;
   width: ${props => props.width}px;
   justify-content: flex-end;
 `;
