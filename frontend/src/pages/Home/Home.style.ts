@@ -73,9 +73,7 @@ export const RightSideTitle = styled.h1`
   font-size: ${fontSize.XXLarge};
   color: ${colorPalette.white};
   text-transform: uppercase;
-  width: 156px;
-  word-wrap: break-word;
-  text-align: justify;
+  width: 200px;
   margin: auto;
 `;
 
