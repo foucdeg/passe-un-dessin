@@ -18,6 +18,7 @@ const colorVariants = {
 export const PlayerOrderContainer = styled.div`
   width: 100%;
   display: flex;
+  overflow-x: auto;
   position: absolute;
   top: -45px;
   left: 0;

@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   ScoreboardContainer,
   StyledHeader,
+  InnerScoreboard,
   RankingRow,
   RankEmoji,
   RankingScore,
@@ -50,21 +51,23 @@ const Scoreboard: React.FC<{}> = () => {
       <StyledHeader>
         <FormattedMessage id="voteResults.scoreboard" />
       </StyledHeader>
-      {ranking.map((playerRanking, index) => {
-        const delta = deltas[playerRanking.player.uuid];
+      <InnerScoreboard>
+        {ranking.map((playerRanking, index) => {
+          const delta = deltas[playerRanking.player.uuid];
 
-        return (
-          <RankingRow key={playerRanking.player.uuid}>
-            <RankEmoji>{getRankEmoji(index)}</RankEmoji>
-            <StyledPlayeChip color={playerRanking.player.color}>
-              {playerRanking.player.name}
-            </StyledPlayeChip>
-            <Spacer />
-            {delta && <RankingDelta>+ {delta}</RankingDelta>}
-            <RankingScore>{playerRanking.vote_count}</RankingScore>
-          </RankingRow>
-        );
-      })}
+          return (
+            <RankingRow key={playerRanking.player.uuid}>
+              <RankEmoji>{getRankEmoji(index)}</RankEmoji>
+              <StyledPlayeChip color={playerRanking.player.color}>
+                {playerRanking.player.name}
+              </StyledPlayeChip>
+              <Spacer />
+              {delta && <RankingDelta>+ {delta}</RankingDelta>}
+              <RankingScore>{playerRanking.vote_count}</RankingScore>
+            </RankingRow>
+          );
+        })}
+      </InnerScoreboard>
     </ScoreboardContainer>
   );
 };

@@ -18,15 +18,23 @@ export const GameRecapContainer = styled.div`
 
 GameRecapContainer.displayName = 'GameRecapContainer';
 
-export const PadTabsRow = styled.div`
-  width: 100%;
+export const TopRow = styled.div`
   display: flex;
   position: absolute;
+  width: 100%;
   top: -40px;
   left: 0;
 `;
 
-PadTabsRow.displayName = 'PadTabsRow';
+TopRow.displayName = 'TopRow';
+
+export const PadTabs = styled.div`
+  flex-shrink: 1;
+  display: flex;
+  overflow-x: auto;
+`;
+
+PadTabs.displayName = 'PadTabs';
 
 export const VoteReminder = styled.div`
   color: ${colorPalette.white};

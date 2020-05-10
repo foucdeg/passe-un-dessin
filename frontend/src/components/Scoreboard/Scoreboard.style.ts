@@ -4,11 +4,11 @@ import { colorPalette, fontSize } from 'stylesheet';
 import PlayerChip from 'atoms/PlayerChip';
 
 export const ScoreboardContainer = styled.div`
-  padding: 0 80px;
+  max-width: 300px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  margin-left: 16px;
+  margin: 0 auto;
 `;
 
 ScoreboardContainer.displayName = 'ScoreboardContainer';
@@ -20,6 +20,14 @@ export const StyledHeader = styled(Header2)`
 `;
 
 StyledHeader.displayName = 'StyledHeader';
+
+export const InnerScoreboard = styled.div`
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+`;
+
+InnerScoreboard.displayName = 'InnerScoreboard';
 
 export const StyledPlayeChip = styled(PlayerChip)`
   margin: 0;

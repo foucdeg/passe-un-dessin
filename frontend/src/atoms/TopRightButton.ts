@@ -4,9 +4,8 @@ import SecondaryButton from 'components/SecondaryButton';
 const TopRightButton = styled(SecondaryButton)`
   height: 32px;
   padding: 0 16px;
-  &:not(:last-child) {
-    margin-right: 8px;
-  }
+  margin-left: 8px;
+  white-space: nowrap;
 `;
 
 TopRightButton.displayName = 'TopRightButton';
