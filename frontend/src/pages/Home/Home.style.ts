@@ -44,7 +44,7 @@ export const Header = styled(Header3)`
 Header.displayName = 'Header';
 
 export const StartButton = styled(Button)`
-  margin-top: 32px;
+  margin-top: 16px;
 `;
 
 StartButton.displayName = 'StartButton';
