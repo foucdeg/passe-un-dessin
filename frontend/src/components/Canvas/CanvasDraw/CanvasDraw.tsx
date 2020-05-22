@@ -109,18 +109,16 @@ const CanvasDraw: React.FC<Props> = ({
 
   const paint = useCallback(
     (event: MouseEvent | TouchEvent) => {
-      if (isPainting) {
+      if (isPainting && currentLine) {
         event.preventDefault();
         const newPosition = getCoordinates(event);
         if (mousePosition && newPosition) {
           drawLine(mousePosition, newPosition, selectedBrushColor, selectedBrushRadius, canvasRef);
           setMousePosition(newPosition);
-          if (currentLine) {
-            setCurrentLine({
-              ...currentLine,
-              points: currentLine.points.concat(newPosition),
-            });
-          }
+          setCurrentLine({
+            ...currentLine,
+            points: currentLine.points.concat(newPosition),
+          });
         }
       }
     },
@@ -144,16 +142,9 @@ const CanvasDraw: React.FC<Props> = ({
   };
 
   const handleClear = () => {
-    if (!canvasRef.current) {
-      return;
-    }
-    const canvas: HTMLCanvasElement = canvasRef.current;
-    const context = canvas.getContext('2d');
-    if (context) {
-      // Do not use clearRect because a cleared canvas is black transparent
-      resetCanvas(canvasRef);
-      drawing.current = [];
-    }
+    // Do not use clearRect because a cleared canvas is black transparent
+    resetCanvas(canvasRef);
+    drawing.current = [];
   };
 
   const handleUndo = () => {
@@ -240,7 +231,7 @@ const CanvasDraw: React.FC<Props> = ({
   }, [canvasWidth, canvasHeight, saveDrawing, round_duration, finished]);
 
   useEffect(() => {
-    resetCanvas(canvasRef);
+    handleClear();
   }, []);
 
   return (
