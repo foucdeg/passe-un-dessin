@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import { colorPalette, fontSize } from 'stylesheet';
 import { ReactComponent as FatArrowDown } from 'assets/fat-arrow-down.svg';
+import Drawing from 'components/Canvas/Drawing';
 
 export const Container = styled.div<{ width: number }>`
   display: flex;
@@ -10,6 +11,12 @@ export const Container = styled.div<{ width: number }>`
   justify-content: flex-end;
 `;
 Container.displayName = 'Container';
+
+export const StyledDrawing = styled(Drawing)`
+  border: 0;
+  max-width: 100%;
+`;
+StyledDrawing.displayName = 'StyledDrawing';
 
 export const Sentence = styled.div<{ highlighted?: boolean }>`
   letter-spacing: 0.1em;

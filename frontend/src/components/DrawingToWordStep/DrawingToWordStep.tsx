@@ -3,7 +3,6 @@ import lzString from 'lz-string';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import Spacer from 'atoms/Spacer';
-import CanvasRecap from 'components/Canvas/CanvasRecap';
 import InputLoader from 'components/InputLoader';
 import { InputArrow } from 'components/PlayerModal/PlayerModal.style';
 import StaticInput from 'components/StaticInput';
@@ -19,6 +18,7 @@ import { PadStep } from 'redux/Game/types';
 import { Player } from 'redux/Player/types';
 import { StyledButton, StyledForm, Subtext } from './DrawingToWordStep.style';
 import RemainingPlayers from 'components/RemainingPlayers';
+import Drawing from 'components/Canvas/Drawing';
 
 interface Props {
   padStep: PadStep;
@@ -54,7 +54,7 @@ const DrawingToWordStep: React.FC<Props> = ({
   return (
     <LeftAndRightSide>
       <LeftSide>
-        <CanvasRecap width={538} height={538} saveData={decodedSaveData} />
+        <Drawing data={decodedSaveData} />
       </LeftSide>
       <Gutter />
       <RightSide>

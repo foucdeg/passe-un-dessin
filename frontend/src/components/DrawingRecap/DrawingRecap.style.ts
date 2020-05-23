@@ -1,10 +1,11 @@
 import styled from 'styled-components';
+import Drawing from 'components/Canvas/Drawing';
 
 export const StyledDrawingRecap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 240px;
+  width: 236px;
   height: 260px;
   justify-content: space-between;
   margin-bottom: 8px;
@@ -14,10 +15,17 @@ export const StyledDrawingRecap = styled.div`
   position: relative;
 `;
 
-StyledDrawingRecap.displayName = 'StyledSentenceRecap';
+StyledDrawingRecap.displayName = 'StyledDrawingRecap';
 
-export const SentenceHeader = styled.div`
+export const StyledDrawing = styled(Drawing)`
+  width: 100%;
+  height: calc(100% - 24px);
+`;
+
+StyledDrawing.displayName = 'StyledDrawing';
+
+export const DrawingHeader = styled.div`
   text-transform: uppercase;
 `;
 
-SentenceHeader.displayName = 'SentenceHeader';
+DrawingHeader.displayName = 'DrawingHeader';
