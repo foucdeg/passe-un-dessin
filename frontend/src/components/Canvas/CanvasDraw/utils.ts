@@ -1,5 +1,5 @@
-import { DrawingColor } from 'components/BrushColorPicker/BrushColorPicker';
-import { BrushType } from 'components/BrushTypePicker/BrushTypePicker';
+import { DrawingColor } from 'components/Canvas/BrushColorPicker/BrushColorPicker';
+import { BrushType } from 'components/Canvas/BrushTypePicker/BrushTypePicker';
 import beigeMediumPointCursor from './assets/beige-medium-point.svg';
 import beigePaintCursor from './assets/beige-paint.svg';
 import beigeSmallPointCursor from './assets/beige-small-point.svg';

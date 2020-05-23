@@ -25,6 +25,25 @@ export const CanvasContainer = styled.div`
 
 CanvasContainer.displayName = 'CanvasContainer';
 
+export const Canvas = styled.canvas<{
+  pointCursor?: string;
+  cursorPosition?: number;
+  width: number;
+  height: number;
+}>`
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
+  border: 2px solid ${colorPalette.textGrey};
+  border-radius: 16px;
+  transform-origin: top;
+  ${({ pointCursor, cursorPosition }) =>
+    pointCursor &&
+    cursorPosition &&
+    `cursor: url(${pointCursor}) ${cursorPosition} ${cursorPosition}, auto`};
+`;
+
+Canvas.displayName = 'Canvas';
+
 export const StyledTimerIcon = styled.img.attrs({ src: timerIcon })`
   width: 80px;
   height: 80px;
@@ -41,7 +60,10 @@ WhiteHeader.displayName = 'WhiteHeader';
 
 export const CanvasButtons = styled.div`
   display: flex;
+  position: absolute;
   height: 400px;
+  right: -80px;
+  bottom: 40px;
 `;
 
 CanvasButtons.displayName = 'CanvasButtons';
