@@ -86,7 +86,6 @@
   ],
   "devDependencies": {
     "@types/cheerio": "^0.22.15",
-    "@types/enzyme": "^3.1.15",
     "@types/history": "^4.7.2",
     "@types/jest": "^24.0.23",
     "@types/jwt-decode": "^2.2.1",
@@ -107,9 +106,6 @@
     "babel-plugin-styled-components": "1.10.7",
     "bundlesize": "^0.18.0",
     "cypress": "^3.7.0",
-    "enzyme": "3.11.0",
-    "enzyme-adapter-react-16": "1.15.1",
-    "enzyme-to-json": "3.4.3",
     "eslint-config-prettier": "6.7.0",
     "eslint-config-react-app": "^5.1.0",
     "eslint-plugin-import": "2.18.2",
@@ -134,6 +130,6 @@
     "stylelint-processor-styled-components": "^1.9.0",
     "typescript": "^3.7.3",
     "wait-on": "^3.2.0",
-    "webpack-manifest-plugin": "^2.0.4"
+    "webpack-manifest-plugin": "2.2.0"
   }
 }
