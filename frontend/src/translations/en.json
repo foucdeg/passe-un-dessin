@@ -36,6 +36,7 @@
     "addPlayerLinkCopied": "Link copied!",
     "refresh": "Resynchronize",
     "ranking": "Ranking",
+    "leaveTeam": "Leave team",
     "confirmLeave": "Leaving mid-game forces everyone to restart the game. Are you sure?"
   },
   "padInit": {
@@ -76,7 +77,6 @@
     "noMoreVotes": "No remaining votes"
   },
   "voteResults": {
-    "leaveTeam": "Leave team",
     "newGame": "New game?",
     "bestMoments": "Best moments",
     "voteCount": "{voteCount} point{ voteCount, plural, one {} other {s}}",

@@ -36,6 +36,7 @@
     "addPlayerLinkCopied": "Lien copié !",
     "refresh": "Resynchroniser",
     "ranking": "Classement",
+    "leaveTeam": "Quitter l'équipe",
     "confirmLeave": "Une partie est en cours, es-tu sûr•e de vouloir partir ?"
   },
   "padInit": {
@@ -76,7 +77,6 @@
     "noMoreVotes": "Plus de votes restants"
   },
   "voteResults": {
-    "leaveTeam": "Quitter l'équipe",
     "newGame": "Nouvelle partie ?",
     "bestMoments": "Meilleurs moments",
     "voteCount": "{voteCount} point{ voteCount, plural, one {} other {s}}",

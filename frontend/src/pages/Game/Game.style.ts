@@ -3,7 +3,6 @@ import fullBackground from 'assets/full-background.svg';
 import homeIcon from 'assets/home.svg';
 
 import { colorPalette } from 'stylesheet';
-import { Link } from 'react-router-dom';
 
 export const GameContainer = styled.div`
   width: 100%;
@@ -32,12 +31,10 @@ export const InnerGameContainer = styled.div<{ hasTabs?: boolean }>`
 `;
 InnerGameContainer.displayName = 'InnerGameContainer';
 
-export const HomeLink = styled(Link)`
+export const HomeButton = styled.img.attrs({ src: homeIcon })`
   position: absolute;
   left: 24px;
   top: 24px;
+  cursor: pointer;
 `;
-HomeLink.displayName = 'HomeLink';
-
-export const HomeButton = styled.img.attrs({ src: homeIcon })``;
 HomeButton.displayName = 'HomeButton';

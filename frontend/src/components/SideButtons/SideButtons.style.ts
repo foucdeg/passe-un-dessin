@@ -5,6 +5,7 @@ import cogIcon from 'assets/cog.svg';
 import rankingIcon from 'assets/ranking.svg';
 import refreshIcon from 'assets/refresh.svg';
 import playerAddIcon from 'assets/person-add.svg';
+import leaveIcon from 'assets/leave.svg';
 
 export const SideButtonsContainer = styled.div`
   display: flex;
@@ -37,6 +38,13 @@ export const PlayerAddButton = styled.img.attrs({ src: playerAddIcon })`
 
 PlayerAddButton.displayName = 'PlayerAddButton';
 
+export const LeaveButton = styled.img.attrs({ src: leaveIcon })`
+  cursor: pointer;
+  margin-bottom: 24px;
+`;
+
+LeaveButton.displayName = 'LeaveButton';
+
 export const RankingModalButton = styled.img.attrs({ src: rankingIcon })`
   cursor: pointer;
   margin-bottom: 24px;
@@ -46,6 +54,7 @@ RankingModalButton.displayName = 'RankingModalButton';
 
 export const RefreshButton = styled.img.attrs({ src: refreshIcon })<{ isLoading: boolean }>`
   cursor: pointer;
+  margin-bottom: 24px;
   ${props =>
     props.isLoading &&
     css`

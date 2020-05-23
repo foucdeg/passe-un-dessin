@@ -7,6 +7,10 @@ import { useSelector } from 'redux/useSelector';
 import client from 'services/networking/client';
 import { joinRoom, removeRoom, updateRanking, updateRoom } from './slice';
 import { Room } from './types';
+import { selectGame } from 'redux/Game/selectors';
+import { selectRoom } from './selectors';
+import { GamePhase } from 'redux/Game/types';
+import { useIntl } from 'react-intl';
 
 export const useFetchRoom = () => {
   const dispatch = useDispatch();
@@ -59,14 +63,21 @@ export const useJoinRoom = () => {
 
 export const useLeaveRoom = () => {
   const dispatch = useDispatch();
+  const room = useSelector(selectRoom);
+  const game = useSelector(selectGame);
+  const intl = useIntl();
+  const history = useHistory();
 
-  return useCallback(
-    async (room: Room) => {
+  return useCallback(async () => {
+    if (!room) return;
+    const isOkayToLeave = !game || [GamePhase.DEBRIEF, GamePhase.VOTE_RESULTS].includes(game.phase);
+
+    if (isOkayToLeave || window.confirm(intl.formatMessage({ id: 'menu.confirmLeave' }))) {
       await client.put(`/room/${room.uuid}/leave`, {});
       dispatch(removeRoom());
-    },
-    [dispatch],
-  );
+      history.push('/');
+    }
+  }, [dispatch, game, history, intl, room]);
 };
 
 export const useRemovePlayer = () => {
