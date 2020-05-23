@@ -65,7 +65,6 @@ const Game: React.FunctionComponent = () => {
       round_number: roundNumber,
       player: messagePlayer,
       pad: messagePad,
-      all_vote_count: allVoteCount,
     }) => {
       if (!room || !game || !player || !gameId) return;
 
