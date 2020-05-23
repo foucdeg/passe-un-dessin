@@ -15,26 +15,17 @@ import {
   StyledHeader,
 } from 'components/WordToDrawingStep/WordToDrawingStep.style';
 import { PadStep } from 'redux/Game/types';
-import { Player } from 'redux/Player/types';
-import { StyledButton, StyledForm, Subtext } from './DrawingToWordStep.style';
+import { StyledButton, StyledForm } from './DrawingToWordStep.style';
 import RemainingPlayers from 'components/RemainingPlayers';
 import Drawing from 'components/Canvas/Drawing';
 
 interface Props {
   padStep: PadStep;
-  previousPlayer: Player | null;
-  nextPlayer: Player | null;
   saveStep: (values: { sentence?: string; drawing?: string }) => void;
   loading: boolean;
 }
 
-const DrawingToWordStep: React.FC<Props> = ({
-  padStep,
-  saveStep,
-  previousPlayer,
-  nextPlayer,
-  loading,
-}) => {
+const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, loading }) => {
   const [sentence, setSentence] = useState<string>(padStep.sentence || '');
   const [isInputDisabled, setIsInputDisabled] = useState<boolean>(!!padStep.sentence);
   const intl = useIntl();
@@ -46,8 +37,6 @@ const DrawingToWordStep: React.FC<Props> = ({
       setIsInputDisabled(true);
     }
   };
-
-  if (!previousPlayer) return null;
 
   const decodedSaveData = padStep.drawing && lzString.decompressFromBase64(padStep.drawing);
 
@@ -61,12 +50,6 @@ const DrawingToWordStep: React.FC<Props> = ({
         <StyledHeader>
           <FormattedMessage id="drawingToWord.drawingToGuess" />
         </StyledHeader>
-        <Subtext>
-          <FormattedMessage
-            id="drawingToWord.previousPlayer"
-            values={{ name: previousPlayer.name }}
-          />
-        </Subtext>
         {isInputDisabled && !loading ? (
           <>
             <StaticInput>{padStep.sentence}</StaticInput>
@@ -93,14 +76,6 @@ const DrawingToWordStep: React.FC<Props> = ({
         )}
 
         <Spacer />
-        {nextPlayer && sentence && (
-          <p>
-            <FormattedMessage
-              id="drawingToWord.nextPlayer"
-              values={{ previous: previousPlayer.name, next: nextPlayer.name }}
-            />
-          </p>
-        )}
         <RemainingPlayers />
       </RightSide>
     </LeftAndRightSide>

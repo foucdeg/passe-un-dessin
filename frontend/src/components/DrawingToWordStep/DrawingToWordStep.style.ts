@@ -14,9 +14,3 @@ export const StyledButton = styled(Button)`
 `;
 
 StyledButton.displayName = 'StyledButton';
-
-export const Subtext = styled.em`
-  margin-bottom: 24px;
-`;
-
-Subtext.displayName = 'Subtext';

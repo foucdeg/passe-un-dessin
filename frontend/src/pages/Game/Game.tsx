@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { GameContainer, InnerGameContainer, HomeLink, HomeButton } from './Game.style';
+import { GameContainer, InnerGameContainer, HomeButton } from './Game.style';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'redux/useSelector';
 
@@ -19,7 +19,6 @@ import { selectRoom } from 'redux/Room/selectors';
 import { selectGame } from 'redux/Game/selectors';
 import { selectPlayer } from 'redux/Player/selectors';
 import PlayerOrder from 'components/PlayerOrder';
-import { useIntl } from 'react-intl';
 import { useLeaveRoom } from 'redux/Room/hooks';
 import Loader from 'components/Loader';
 
@@ -38,7 +37,6 @@ const Game: React.FunctionComponent = () => {
   const location = useLocation();
   const { path } = useRouteMatch();
   const dispatch = useDispatch();
-  const intl = useIntl();
   const doLeaveRoom = useLeaveRoom();
 
   const channelName = game ? `game-${game.uuid}` : null;
@@ -133,22 +131,9 @@ const Game: React.FunctionComponent = () => {
 
   if (!room || !game || !player) return null;
 
-  const checkLeaveRoom = (event: React.MouseEvent) => {
-    const isOkayToLeave = [GamePhase.DEBRIEF, GamePhase.VOTE_RESULTS].includes(game.phase);
-
-    if (isOkayToLeave || window.confirm(intl.formatMessage({ id: 'menu.confirmLeave' }))) {
-      doLeaveRoom(room);
-    } else {
-      event.preventDefault();
-      return false;
-    }
-  };
-
   return (
     <GameContainer>
-      <HomeLink to="/" onClick={checkLeaveRoom}>
-        <HomeButton />
-      </HomeLink>
+      <HomeButton alt="Back to home" onClick={doLeaveRoom} />
       <InnerGameContainer hasTabs={!!window.location.pathname.match(/\/recap$/)}>
         {[GamePhase.INIT, GamePhase.ROUNDS].includes(game.phase) && <PlayerOrder />}
         <Switch>

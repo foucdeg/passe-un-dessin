@@ -13,6 +13,7 @@ export const LeftSide = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+  position: relative;
 `;
 LeftSide.displayName = 'LeftSide';
 

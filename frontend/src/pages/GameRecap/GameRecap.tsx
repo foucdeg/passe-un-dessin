@@ -11,24 +11,19 @@ import {
   VoteReminder,
 } from './GameRecap.style';
 import { Pad } from 'redux/Game/types';
-import { selectRoom, selectPlayerIsAdmin } from 'redux/Room/selectors';
+import { selectRoom } from 'redux/Room/selectors';
 import { selectGame } from 'redux/Game/selectors';
 import { FormattedMessage } from 'react-intl';
 import { useReviewPad } from 'redux/Game/hooks';
 import PadTab from 'components/PadTab';
-import TopRightButton from 'atoms/TopRightButton';
 import { selectAvailableVoteCount } from 'redux/Game/selectors';
 import NewGameModal from 'components/NewGameModal';
 import { ThumbUpButton } from 'components/ReactionOverlay/ReactionOverlay.style';
-import { useHistory } from 'react-router';
-import { useLeaveRoom } from 'redux/Room/hooks';
 import DoneModal from 'components/DoneModal';
-import Spacer from 'atoms/Spacer';
 
 const GameRecap: React.FunctionComponent = () => {
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
-  const isPlayerAdmin = useSelector(selectPlayerIsAdmin);
   const availableVoteCount = useSelector(selectAvailableVoteCount);
 
   const [displayedPadId, setDisplayedPadId] = useState<string | null>(null);
@@ -36,9 +31,6 @@ const GameRecap: React.FunctionComponent = () => {
   const [newGameModalIsOpen, setNewGameModalIsOpen] = useState<boolean>(false);
 
   const doReviewPad = useReviewPad();
-
-  const history = useHistory();
-  const doLeaveRoom = useLeaveRoom();
 
   const displayedPad = game?.pads.find(pad => pad.uuid === displayedPadId);
 
@@ -52,11 +44,6 @@ const GameRecap: React.FunctionComponent = () => {
   const selectPad = (pad: Pad) => {
     doReviewPad(pad);
     setDisplayedPadId(pad.uuid);
-  };
-
-  const leaveGame = () => {
-    doLeaveRoom(room);
-    history.push('/');
   };
 
   return (
@@ -73,15 +60,6 @@ const GameRecap: React.FunctionComponent = () => {
               />
             ))}
           </PadTabs>
-          <Spacer />
-          <TopRightButton onClick={leaveGame}>
-            <FormattedMessage id="voteResults.leaveTeam" />
-          </TopRightButton>
-          {isPlayerAdmin && (
-            <TopRightButton onClick={() => setNewGameModalIsOpen(true)}>
-              <FormattedMessage id="voteResults.newGame" />
-            </TopRightButton>
-          )}
         </TopRow>
         <GameRecapContainer>{displayedPad && <PadRecap pad={displayedPad} />}</GameRecapContainer>
       </OuterRecapContainer>

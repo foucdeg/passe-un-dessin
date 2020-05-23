@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'redux/useSelector';
-import { useHistory } from 'react-router';
-import { useLeaveRoom } from 'redux/Room/hooks';
 import { useGetVoteResults } from 'redux/Game/hooks';
 import { selectRoom, selectPlayerIsAdmin } from 'redux/Room/selectors';
 import { selectGame, selectWinners } from 'redux/Game/selectors';
@@ -18,11 +16,9 @@ const VoteResults: React.FunctionComponent = () => {
   const game = useSelector(selectGame);
   const isPlayerAdmin = useSelector(selectPlayerIsAdmin);
   const winners = useSelector(selectWinners);
-  const history = useHistory();
 
   const [newGameModalIsOpen, setNewGameModalIsOpen] = useState<boolean>(false);
 
-  const doLeaveRoom = useLeaveRoom();
   const doGetVoteResults = useGetVoteResults();
 
   useEffect(() => {
@@ -33,25 +29,17 @@ const VoteResults: React.FunctionComponent = () => {
 
   if (!room || !game) return null;
 
-  const leaveGame = () => {
-    doLeaveRoom(room);
-    history.push('/');
-  };
-
   return (
     <Container>
       {winners && (winners.length ? <Podium winners={winners} /> : <div>No votes</div>)}
       <Scoreboard />
-      <TopRightButtons>
-        <TopRightButton onClick={leaveGame}>
-          <FormattedMessage id="voteResults.leaveTeam" />
-        </TopRightButton>
-        {isPlayerAdmin && (
+      {isPlayerAdmin && (
+        <TopRightButtons>
           <TopRightButton onClick={() => setNewGameModalIsOpen(true)}>
             <FormattedMessage id="voteResults.newGame" />
           </TopRightButton>
-        )}
-      </TopRightButtons>
+        </TopRightButtons>
+      )}
       <NewGameModal isOpen={newGameModalIsOpen} onClose={() => setNewGameModalIsOpen(false)} />
     </Container>
   );

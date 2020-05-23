@@ -8,7 +8,6 @@ import Modal from 'components/Modal';
 import RoundDurationPicker from 'components/RoundDurationPicker';
 import copy from 'copy-to-clipboard';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useHistory } from 'react-router';
 import { MAX_PLAYERS, MIN_PLAYERS } from 'redux/Game/constants';
 import {
   useCheckIfPlayerIsInGame,
@@ -39,7 +38,6 @@ const Room: React.FunctionComponent = () => {
   const doCheckIfPlayerIsInGame = useCheckIfPlayerIsInGame();
   const room = useSelector(selectRoom);
   const player = useSelector(selectPlayer);
-  const history = useHistory();
   const [inputText, setInputText] = useState<string>(document.location.href);
   const [roundDuration, setRoundDuration] = useRoundDuration();
   const [drawOwnWord, setDrawOwnWord] = useDrawOwnWordSwitch();
@@ -79,14 +77,9 @@ const Room: React.FunctionComponent = () => {
     }, 5000);
   };
 
-  const onLeave = () => {
-    doLeaveRoom(room);
-    history.push('/');
-  };
-
   return (
     <Modal isOpen>
-      <CloseButton onClick={onLeave} />
+      <CloseButton onClick={doLeaveRoom} />
       <StyledHeader>
         <FormattedMessage id="roomLobby.title" />
       </StyledHeader>

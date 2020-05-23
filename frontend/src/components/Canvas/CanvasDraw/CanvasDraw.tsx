@@ -2,14 +2,14 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import lzString from 'lz-string';
 import { FormattedMessage } from 'react-intl';
 
-import BrushColorPicker from 'components/BrushColorPicker';
-import { DrawingColor } from 'components/BrushColorPicker/BrushColorPicker';
-import BrushTypePicker from 'components/BrushTypePicker';
-import { BrushType } from 'components/BrushTypePicker/BrushTypePicker';
+import BrushColorPicker from 'components/Canvas/BrushColorPicker';
+import { DrawingColor } from 'components/Canvas/BrushColorPicker/BrushColorPicker';
+import BrushTypePicker from 'components/Canvas/BrushTypePicker';
+import { BrushType } from 'components/Canvas/BrushTypePicker/BrushTypePicker';
 import CanvasActions from 'components/Canvas/CanvasActions';
-import { Canvas } from '../CanvasCommon.style';
 import { drawLine, drawPaint, fillContext, Line, Paint, Point, resetCanvas } from '../utils';
 import {
+  Canvas,
   CanvasContainer,
   CanvasButtons,
   PadStepDone,

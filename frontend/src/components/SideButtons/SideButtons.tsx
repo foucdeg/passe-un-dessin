@@ -11,6 +11,7 @@ import {
   AdminModalButton,
   PlayerAddButton,
   RefreshButton,
+  LeaveButton,
   RankingModalButton,
 } from './SideButtons.style';
 import AdminModal from 'components/AdminModal';
@@ -20,6 +21,7 @@ import { useIntl } from 'react-intl';
 import { selectPlayer } from 'redux/Player/selectors';
 import PlayerModal from 'components/PlayerModal';
 import RankingModal from 'components/RankingModal';
+import { useLeaveRoom } from 'redux/Room/hooks';
 
 const SideButtons: React.FC<{}> = () => {
   const isPlayerAdmin = useSelector(selectPlayerIsAdmin);
@@ -49,6 +51,7 @@ const SideButtons: React.FC<{}> = () => {
   };
 
   const [{ loading }, doRefreshGame] = useRefreshGame();
+  const doLeaveRoom = useLeaveRoom();
 
   return (
     <SideButtonsContainer>
@@ -76,6 +79,11 @@ const SideButtons: React.FC<{}> = () => {
       {game && (
         <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.refresh' })}>
           <RefreshButton alt="refresh" onClick={doRefreshGame} isLoading={loading} />
+        </IconAndTooltip>
+      )}
+      {room && (
+        <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.leaveTeam' })}>
+          <LeaveButton alt="leave game" onClick={doLeaveRoom} />
         </IconAndTooltip>
       )}
       <AdminModal isOpen={isAdminModalOpen} onClose={() => setAdminModalOpen(false)} />
