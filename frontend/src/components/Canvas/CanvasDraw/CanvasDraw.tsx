@@ -23,7 +23,7 @@ interface Props {
   finished: boolean;
   canvasWidth: number;
   canvasHeight: number;
-  round_duration: number;
+  roundDuration: number;
   saveStep: (values: { sentence?: string; drawing?: string }) => void;
 }
 
@@ -32,7 +32,7 @@ const CanvasDraw: React.FC<Props> = ({
   canvasHeight,
   finished,
   saveStep,
-  round_duration,
+  roundDuration,
 }) => {
   const [color, setColor] = useState<DrawingColor>(DrawingColor.BLACK);
   const [brushType, setBrushType] = useState<BrushType>(BrushType.THIN);
@@ -214,21 +214,21 @@ const CanvasDraw: React.FC<Props> = ({
   }, [exitPaint]);
 
   useEffect(() => {
-    if (!round_duration || finished) return;
+    if (!roundDuration || finished) return;
+
+    const canvas: HTMLCanvasElement | null = canvasRef.current;
+    if (!canvas) return;
+
     const timeout = setTimeout(() => {
-      const saveData = JSON.stringify({
-        lines: drawing.current, // keep lines as key to be able to read previous drawings
-        width: canvasWidth,
-        height: canvasHeight,
-      });
+      const saveData = canvas.toDataURL('image/png');
       const compressed = lzString.compressToBase64(saveData);
       saveDrawing(compressed);
-    }, round_duration * 1000);
+    }, roundDuration * 1000);
 
     return () => {
       clearTimeout(timeout);
     };
-  }, [canvasWidth, canvasHeight, saveDrawing, round_duration, finished]);
+  }, [canvasWidth, canvasHeight, saveDrawing, roundDuration, finished]);
 
   useEffect(() => {
     handleClear();
@@ -243,8 +243,6 @@ const CanvasDraw: React.FC<Props> = ({
           ref={canvasRef}
           height={canvasHeight}
           width={canvasWidth}
-          containerHeight={canvasHeight}
-          containerWidth={canvasWidth}
         />
         {finished && (
           <PadStepDone>

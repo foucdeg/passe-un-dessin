@@ -1,7 +1,6 @@
 import React from 'react';
 import lzString from 'lz-string';
 import { FormattedMessage } from 'react-intl';
-import CanvasRecap from 'components/Canvas/CanvasRecap';
 import podiumsSteps from 'assets/podium-steps';
 
 import { PadStep, StepType } from 'redux/Game/types';
@@ -15,6 +14,7 @@ import {
   WinnerSection,
   ArrowSpacer,
 } from './PodiumStep.style';
+import { StyledDrawing } from './PodiumStep.style';
 
 interface Props {
   winner?: PadStep;
@@ -36,9 +36,7 @@ const PodiumStep: React.FC<Props> = ({ winner, width, ranking }) => {
               <ArrowSpacer />
             </>
           )}
-          <div style={{ height: width }}>
-            <CanvasRecap width={width} height={width} saveData={decodedWinnerDrawing} hideBorder />
-          </div>
+          <StyledDrawing data={decodedWinnerDrawing} />
           {winner.step_type === StepType.DRAWING_TO_WORD && (
             <>
               <ArrowSpacer highlighted />

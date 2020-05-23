@@ -41,7 +41,7 @@ const WordToDrawingStep: React.FC<Props> = ({ padStep, previousPlayer, saveStep,
           canvasHeight={538}
           saveStep={saveStep}
           finished={finished}
-          round_duration={game.round_duration}
+          roundDuration={game.round_duration}
         />
       </LeftSide>
       <Gutter />

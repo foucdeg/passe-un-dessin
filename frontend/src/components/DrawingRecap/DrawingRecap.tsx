@@ -1,21 +1,17 @@
 import React from 'react';
 import lzString from 'lz-string';
 
-import CanvasRecap from 'components/Canvas/CanvasRecap';
-import { SentenceHeader } from 'components/SentenceRecap/SentenceRecap.style';
 import { useDeleteVote, useSaveVote } from 'redux/Game/hooks';
 import { selectAvailableVoteCount } from 'redux/Game/selectors';
 import { PadStep } from 'redux/Game/types';
 import { selectPlayer } from 'redux/Player/selectors';
 import { useSelector } from 'redux/useSelector';
-import { StyledDrawingRecap } from './DrawingRecap.style';
+import { StyledDrawingRecap, StyledDrawing, DrawingHeader } from './DrawingRecap.style';
 import ReactionOverlay from 'components/ReactionOverlay';
 
 interface Props {
   step: PadStep;
 }
-
-const CANVAS_WIDTH = 236;
 
 const DrawingRecap: React.FC<Props> = ({ step }) => {
   const player = useSelector(selectPlayer);
@@ -38,8 +34,8 @@ const DrawingRecap: React.FC<Props> = ({ step }) => {
 
   return (
     <StyledDrawingRecap>
-      <SentenceHeader>{step.player.name}</SentenceHeader>
-      <CanvasRecap width={CANVAS_WIDTH} height={CANVAS_WIDTH} saveData={decodedSaveData} />
+      <DrawingHeader>{step.player.name}</DrawingHeader>
+      <StyledDrawing data={decodedSaveData} />
       <ReactionOverlay
         canLike={canLike}
         canUnlike={canUnlike}
