@@ -73,10 +73,7 @@
         "functions": 0,
         "lines": 0
       }
-    },
-    "snapshotSerializers": [
-      "<rootDir>/node_modules/enzyme-to-json/serializer"
-    ]
+    }
   },
   "bundlesize": [
     {
