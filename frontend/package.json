@@ -104,7 +104,7 @@
     "@types/webpack-env": "^1.14.1",
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
-    "babel-plugin-styled-components": "1.10.6",
+    "babel-plugin-styled-components": "1.10.7",
     "bundlesize": "^0.18.0",
     "cypress": "^3.7.0",
     "enzyme": "3.10.0",
