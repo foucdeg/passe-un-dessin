@@ -24,13 +24,14 @@ export const TopRow = styled.div`
   width: 100%;
   top: -40px;
   left: 0;
+  height: 40px;
 `;
 
 TopRow.displayName = 'TopRow';
 
 export const PadTabs = styled.div`
-  flex-shrink: 1;
   display: flex;
+  flex-wrap: wrap-reverse;
 `;
 
 PadTabs.displayName = 'PadTabs';
