@@ -21,7 +21,7 @@
     "react-use": "14.3.0",
     "redux": "4.0.5",
     "regenerator-runtime": "0.13.5",
-    "styled-components": "4.4.1",
+    "styled-components": "5.1.0",
     "superagent": "5.2.2"
   },
   "proxy": "http://localhost:8000",
@@ -85,7 +85,7 @@
     "@types/react-redux": "7.1.9",
     "@types/react-router": "5.1.7",
     "@types/react-router-dom": "5.1.5",
-    "@types/styled-components": "4.4.3",
+    "@types/styled-components": "5.1.0",
     "@types/superagent": "4.1.7",
     "@types/webpack-env": "1.15.2",
     "@typescript-eslint/eslint-plugin": "2.34.0",
