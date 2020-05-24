@@ -19,7 +19,7 @@
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
     "react-use": "14.3.0",
-    "redux": "4.0.4",
+    "redux": "4.0.5",
     "regenerator-runtime": "0.13.5",
     "styled-components": "4.4.1",
     "superagent": "5.2.2"
