@@ -10,7 +10,7 @@ export const BrushBlock = styled.img<{ selected: boolean }>`
   height: 24px;
   border-radius: 4px;
   cursor: pointer;
-  ${props =>
+  ${(props) =>
     props.selected &&
     css`
       border: 2px solid black;

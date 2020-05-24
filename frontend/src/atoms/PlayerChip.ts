@@ -6,7 +6,7 @@ const PlayerChip = styled.div<{ color?: string }>`
   height: 36px;
   padding: 8px 16px;
   border-radius: 18px;
-  background-color: ${props => props.color || colorPalette.orange};
+  background-color: ${(props) => props.color || colorPalette.orange};
   margin-right: 8px;
   margin-bottom: 8px;
   line-height: 19px;

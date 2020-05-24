@@ -64,7 +64,7 @@ const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, loading }) => {
               autoFocus
               placeholder={intl.formatMessage({ id: 'drawingToWord.placeholder' })}
               value={sentence}
-              onChange={e => setSentence(e.target.value)}
+              onChange={(e) => setSentence(e.target.value)}
               adornment={
                 loading ? <InputLoader /> : <InputArrow alt="Valider" onClick={onSubmit} />
               }

@@ -28,7 +28,7 @@ export const Sentence = styled.div<{ color: string }>`
   justify-content: center;
   align-items: center;
   color: ${colorPalette.white};
-  background-color: ${props => props.color};
+  background-color: ${(props) => props.color};
   width: 100%;
   border-radius: 16px;
   text-align: center;

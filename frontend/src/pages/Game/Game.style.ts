@@ -23,7 +23,7 @@ export const InnerGameContainer = styled.div<{ hasTabs?: boolean }>`
   border-radius: 16px;
   padding: 16px;
   position: relative;
-  ${props =>
+  ${(props) =>
     props.hasTabs &&
     css`
       border-radius: 0 16px 16px 16px;

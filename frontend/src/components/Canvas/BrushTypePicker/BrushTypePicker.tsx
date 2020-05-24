@@ -29,7 +29,7 @@ interface Props {
 
 const BrushColorPicker: React.FC<Props> = ({ brushType, setBrushType }) => (
   <BrushPickerContainer>
-    {Object.values(BrushType).map(brushOption => (
+    {Object.values(BrushType).map((brushOption) => (
       <BrushBlock
         src={icons[brushOption]}
         key={brushOption}

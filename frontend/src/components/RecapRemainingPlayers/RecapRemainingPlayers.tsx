@@ -31,7 +31,7 @@ const RecapRemainingPlayers: React.FC<{}> = () => {
         <FormattedMessage id="recap.waitingFor" />
       </StyledHeader>
       <StyledPlayerChips>
-        {remainingPlayers.map(player => (
+        {remainingPlayers.map((player) => (
           <PlayerChip key={player.uuid} color={player.color}>
             {player.name}
           </PlayerChip>

@@ -14,7 +14,7 @@ const RoundDurationPicker: React.FC<Props> = ({ duration, onDurationChange }) =>
     <FormattedMessage
       id="roomLobby.timeDuration"
       values={{
-        options: DURATION_OPTIONS.map(option => (
+        options: DURATION_OPTIONS.map((option) => (
           <DurationOption
             key={option}
             selected={option === duration}

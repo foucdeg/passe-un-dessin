@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 export const DurationOption = styled.span<{ selected?: boolean }>`
-  ${props =>
+  ${(props) =>
     props.selected
       ? css`
           font-weight: bold;

@@ -32,7 +32,7 @@ const GameRecap: React.FunctionComponent = () => {
 
   const doReviewPad = useReviewPad();
 
-  const displayedPad = game?.pads.find(pad => pad.uuid === displayedPadId);
+  const displayedPad = game?.pads.find((pad) => pad.uuid === displayedPadId);
 
   useEffect(() => {
     if (!game || displayedPad) return;
@@ -51,7 +51,7 @@ const GameRecap: React.FunctionComponent = () => {
       <OuterRecapContainer>
         <TopRow>
           <PadTabs>
-            {game.pads.map(pad => (
+            {game.pads.map((pad) => (
               <PadTab
                 key={pad.uuid}
                 isActive={displayedPadId === pad.uuid}

@@ -141,7 +141,7 @@ const setPixel = (imageData: ImageData, x: number, y: number, color: RGBAColor) 
 };
 
 export const drawPaint = (paint: Paint, canvasRef: canvasRefType) => {
-  paint.forEach(paintStep => {
+  paint.forEach((paintStep) => {
     switch (paintStep.type) {
       case 'line':
       case undefined: // To not break previous drawings

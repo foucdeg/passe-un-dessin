@@ -32,7 +32,7 @@ const SuggestionGenerator: React.FC<Props> = ({ onSuggestionClick }) => {
     <SuggestionGeneratorContainer>
       {suggestions.length ? (
         <Suggestions>
-          {suggestions.map(suggestion => (
+          {suggestions.map((suggestion) => (
             <SuggestionChip key={suggestion} onClick={() => onSuggestionClick(suggestion)}>
               {suggestion}
             </SuggestionChip>

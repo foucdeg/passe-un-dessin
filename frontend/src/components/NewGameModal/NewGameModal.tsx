@@ -32,7 +32,7 @@ const NewGameModal: React.FC<Props> = ({ isOpen, onClose }) => {
       room.uuid,
       roundDuration,
       drawOwnWord,
-      game.players.map(player => player.uuid),
+      game.players.map((player) => player.uuid),
     );
     onClose();
   };
@@ -42,7 +42,7 @@ const NewGameModal: React.FC<Props> = ({ isOpen, onClose }) => {
       room.uuid,
       roundDuration,
       drawOwnWord,
-      game.players.map(player => player.uuid).reverse(),
+      game.players.map((player) => player.uuid).reverse(),
     );
     onClose();
   };

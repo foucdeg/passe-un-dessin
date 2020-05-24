@@ -41,7 +41,7 @@ const AudioControl: React.FC = () => {
       audioElt.current
         .play()
         .then(() => setPlaying(true))
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
           setPlaying(false);
         });

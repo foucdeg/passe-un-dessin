@@ -9,8 +9,8 @@ const Button = styled.button`
   letter-spacing: 0.05em;
   background: linear-gradient(90deg, #ff9314 0%, #ff0080 100%);
   font-size: ${fontSize.medium};
-  cursor: ${props => (props.disabled ? 'default' : 'pointer')};
-  ${props =>
+  cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
+  ${(props) =>
     props.disabled &&
     css`
       pointer-events: none;
@@ -19,7 +19,7 @@ const Button = styled.button`
   border: none;
   border-radius: 28px;
   color: ${colorPalette.white};
-  background-color: ${props => (props.disabled ? colorPalette.black : colorPalette.red)};
+  background-color: ${(props) => (props.disabled ? colorPalette.black : colorPalette.red)};
   outline: none;
 
   &:active {

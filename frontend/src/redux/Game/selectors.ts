@@ -24,7 +24,7 @@ export const selectAvailableVoteCount = (state: RootState) => {
         usedVoteCount +
         pad.steps.reduce(
           (usedVoteCount, step) =>
-            usedVoteCount + step.votes.filter(vote => vote.player.uuid === playerId).length,
+            usedVoteCount + step.votes.filter((vote) => vote.player.uuid === playerId).length,
           0,
         ),
       0,

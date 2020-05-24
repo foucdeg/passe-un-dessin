@@ -7,7 +7,7 @@ export const Container = styled.div<{ width: number }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: ${props => props.width}px;
+  width: ${(props) => props.width}px;
   justify-content: flex-end;
 `;
 Container.displayName = 'Container';
@@ -24,7 +24,7 @@ export const Sentence = styled.div<{ highlighted?: boolean }>`
   text-align: center;
   line-height: 24px;
   color: ${colorPalette.textGrey};
-  ${props =>
+  ${(props) =>
     props.highlighted &&
     css`
       color: ${colorPalette.orange};
@@ -63,14 +63,14 @@ export const WinnerSection = styled.div`
 WinnerSection.displayName = 'WinnerSection';
 
 export const PodiumStepImage = styled.img.attrs({ alt: 'podium' })<{ width: number }>`
-  width: ${props => props.width}px;
+  width: ${(props) => props.width}px;
 `;
 PodiumStepImage.displayName = 'PodiumStepImage';
 
 export const ArrowSpacer = styled(FatArrowDown)<{ highlighted?: boolean }>`
   .main {
     fill: ${colorPalette.textGrey};
-    ${props =>
+    ${(props) =>
       props.highlighted &&
       css`
         fill: ${colorPalette.orange};
