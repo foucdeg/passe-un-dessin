@@ -1,5 +1,5 @@
 deploy-front:
-	cd frontend && NODE_ENV=production yarn build
+	cd frontend && REACT_APP_ENV=production NODE_ENV=production yarn build
 	rsync -avz --delete-after ./frontend/build/ vps:/home/fouc/passe-un-dessin/build
 
 deploy-back:
