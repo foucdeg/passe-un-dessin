@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { colorPalette, fontFamily, fontSize, getSpacing, lineHeight } from 'stylesheet';
-import BaseButton from 'components/Button';
 
 export const Container = styled.div`
   display: flex;
@@ -26,7 +25,3 @@ export const HelperList = styled.ul`
   line-height: ${lineHeight.medium};
 `;
 HelperList.displayName = 'HelperList';
-
-export const Button = styled(BaseButton)`
-  padding: ${getSpacing(1)} ${getSpacing(2)};
-`;
