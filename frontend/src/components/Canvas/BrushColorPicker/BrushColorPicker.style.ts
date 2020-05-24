@@ -13,7 +13,7 @@ export const ColorBlock = styled.div<{
   selected: boolean;
   withBorder: boolean;
 }>`
-  background-color: ${props => props.color};
+  background-color: ${(props) => props.color};
   width: 24px;
   height: 24px;
   border-radius: 4px;

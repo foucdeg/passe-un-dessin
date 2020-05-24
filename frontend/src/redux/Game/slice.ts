@@ -40,7 +40,9 @@ const gameSlice = createSlice({
     updatePad: (state, action: PayloadAction<Pad>) => {
       if (!state.game) return;
 
-      const matchingPadIndex = state.game?.pads.findIndex(pad => pad.uuid === action.payload.uuid);
+      const matchingPadIndex = state.game?.pads.findIndex(
+        (pad) => pad.uuid === action.payload.uuid,
+      );
 
       state.game.pads[matchingPadIndex] = action.payload;
     },
@@ -48,10 +50,10 @@ const gameSlice = createSlice({
       if (!state.game) return;
       const { player, padStepId } = action.payload;
 
-      state.game.pads.forEach(pad =>
+      state.game.pads.forEach((pad) =>
         pad.steps
-          .filter(step => step.uuid === padStepId)
-          .forEach(padStep => padStep.votes.push({ player })),
+          .filter((step) => step.uuid === padStepId)
+          .forEach((padStep) => padStep.votes.push({ player })),
       );
     },
     removeVoteFromPadStep: (
@@ -61,12 +63,12 @@ const gameSlice = createSlice({
       if (!state.game) return;
       const { player, padStepId } = action.payload;
 
-      state.game.pads.forEach(pad =>
+      state.game.pads.forEach((pad) =>
         pad.steps
-          .filter(step => step.uuid === padStepId)
-          .forEach(padStep => {
+          .filter((step) => step.uuid === padStepId)
+          .forEach((padStep) => {
             const firstVoteIndex = padStep.votes.findIndex(
-              vote => vote.player.uuid === player.uuid,
+              (vote) => vote.player.uuid === player.uuid,
             );
             if (firstVoteIndex === -1) return;
 
@@ -83,11 +85,11 @@ const gameSlice = createSlice({
     },
     markPlayerFinished: (state, action: PayloadAction<Player>) => {
       state.remainingPlayers = state.remainingPlayers.filter(
-        remPlayer => remPlayer.uuid !== action.payload.uuid,
+        (remPlayer) => remPlayer.uuid !== action.payload.uuid,
       );
     },
     markPlayerNotFinished: (state, action: PayloadAction<Player>) => {
-      if (!state.remainingPlayers.some(remPlayer => remPlayer.uuid === action.payload.uuid)) {
+      if (!state.remainingPlayers.some((remPlayer) => remPlayer.uuid === action.payload.uuid)) {
         state.remainingPlayers.push(action.payload);
       }
     },
@@ -97,7 +99,7 @@ const gameSlice = createSlice({
     setPlayerViewingPad: (state, action: PayloadAction<{ player: Player; pad: Pad }>) => {
       for (const padId in state.recapViews) {
         state.recapViews[padId] = state.recapViews[padId].filter(
-          viewer => viewer.uuid !== action.payload.player.uuid,
+          (viewer) => viewer.uuid !== action.payload.player.uuid,
         );
       }
       state.recapViews[action.payload.pad.uuid].push(action.payload.player);
@@ -105,7 +107,7 @@ const gameSlice = createSlice({
     setWinners: (state, action: PayloadAction<PadStep[]>) => {
       state.winners = action.payload;
     },
-    resetGameMetadata: state => {
+    resetGameMetadata: (state) => {
       state.winners = null;
     },
   },

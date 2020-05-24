@@ -87,7 +87,7 @@ const Room: React.FunctionComponent = () => {
     playerWhoLeft &&
     game &&
     ![GamePhase.DEBRIEF, GamePhase.VOTE_RESULTS].includes(game.phase) &&
-    game.players.map(gamePlayer => gamePlayer.uuid).includes(playerWhoLeft.uuid);
+    game.players.map((gamePlayer) => gamePlayer.uuid).includes(playerWhoLeft.uuid);
 
   return (
     <>

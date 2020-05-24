@@ -18,7 +18,7 @@ export const InnerTimerBar = styled.div<{ duration: number }>`
   padding: 4px;
   width: 100%;
   background: ${colorPalette.red};
-  transition: width ${props => props.duration}s linear;
+  transition: width ${(props) => props.duration}s linear;
 
   &.started {
     width: 0%;

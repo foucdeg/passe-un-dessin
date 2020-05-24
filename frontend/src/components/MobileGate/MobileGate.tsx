@@ -18,7 +18,7 @@ interface Props {
 
 const mobileCheck = () => {
   let check = false;
-  (function(a: string) {
+  (function (a: string) {
     if (
       /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(
         a,
@@ -65,7 +65,7 @@ const MobileGate: React.FC<Props> = ({ children }) => {
           <LaptopTablet />
           <Spacer />
           <StyledForm
-            onSubmit={e => {
+            onSubmit={(e) => {
               e.preventDefault();
               sendEmail();
             }}
@@ -78,7 +78,7 @@ const MobileGate: React.FC<Props> = ({ children }) => {
               type="email"
               placeholder={intl.formatMessage({ id: 'mobileGate.emailExample' })}
               value={email}
-              onChange={e => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               adornment={<InputArrow onClick={sendEmail} />}
             />
           </StyledForm>

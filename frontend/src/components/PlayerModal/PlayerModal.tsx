@@ -37,7 +37,7 @@ const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
         <FormattedMessage id="playerModal.title" />
       </StyledHeader>
       <form
-        onSubmit={e => {
+        onSubmit={(e) => {
           e.preventDefault();
           onChooseName();
         }}
@@ -47,7 +47,7 @@ const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
         </FieldLabel>
         <TextInput
           value={playerName}
-          onChange={e => setPlayerName(e.target.value)}
+          onChange={(e) => setPlayerName(e.target.value)}
           adornment={<InputArrow alt="Valider" onClick={onChooseName} />}
         />
       </form>

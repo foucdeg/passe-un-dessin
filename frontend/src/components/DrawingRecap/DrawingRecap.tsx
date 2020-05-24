@@ -21,7 +21,7 @@ const DrawingRecap: React.FC<Props> = ({ step }) => {
 
   if (!player) return null;
 
-  const likeCount = step.votes.filter(vote => vote.player.uuid === player.uuid).length;
+  const likeCount = step.votes.filter((vote) => vote.player.uuid === player.uuid).length;
   const samePlayer = player.uuid === step.player.uuid;
 
   const canLike = !samePlayer && availableVoteCount > 0;

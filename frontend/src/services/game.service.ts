@@ -5,14 +5,14 @@ import { Room } from 'redux/Room/types';
 export const getRedirectPath = (room: Room, game: Game, player: Player) => {
   switch (game.phase) {
     case GamePhase.INIT:
-      const playerPad = game.pads.find(pad => pad.initial_player.uuid === player.uuid);
+      const playerPad = game.pads.find((pad) => pad.initial_player.uuid === player.uuid);
       if (!playerPad) {
         throw new Error(`Pad for player ${player.uuid} not found in game ${game.uuid}`);
       }
       return `/room/${room.uuid}/game/${game.uuid}/pad/${playerPad.uuid}/init`;
     case GamePhase.ROUNDS:
       const playerStep = game.rounds.find(
-        step => step.player.uuid === player.uuid && step.round_number === game.current_round,
+        (step) => step.player.uuid === player.uuid && step.round_number === game.current_round,
       );
       if (!playerStep) {
         throw new Error(
@@ -35,11 +35,11 @@ export const getAvailableVoteCount = (game: Game): number => {
 };
 
 export const getReorderedPlayers = (game: Game, player: Player): Player[] => {
-  const currentPlayerPad = game.pads.find(pad =>
+  const currentPlayerPad = game.pads.find((pad) =>
     game.phase === GamePhase.INIT
       ? pad.initial_player.uuid === player.uuid
       : pad.steps.some(
-          step => step.round_number === game.current_round && step.player.uuid === player.uuid,
+          (step) => step.round_number === game.current_round && step.player.uuid === player.uuid,
         ),
   );
   if (!currentPlayerPad) {
@@ -48,7 +48,7 @@ export const getReorderedPlayers = (game: Game, player: Player): Player[] => {
     );
   }
 
-  return [currentPlayerPad.initial_player, ...currentPlayerPad.steps.map(step => step.player)];
+  return [currentPlayerPad.initial_player, ...currentPlayerPad.steps.map((step) => step.player)];
 };
 
 export const getNextPhaseAndRound = (game: Game) => {

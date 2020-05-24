@@ -1,7 +1,7 @@
 import { useAsyncFn } from 'react-use';
 
 export async function wait(ms: number) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
 }

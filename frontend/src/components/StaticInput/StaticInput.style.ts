@@ -7,7 +7,7 @@ export const StyledStaticInput = styled.div<{ hasAdornment: boolean }>`
   line-height: 19px;
   width: 100%;
   text-align: left;
-  ${props =>
+  ${(props) =>
     props.hasAdornment &&
     css`
       padding-right: 52px;

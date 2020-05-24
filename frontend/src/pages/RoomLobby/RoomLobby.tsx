@@ -45,7 +45,7 @@ const Room: React.FunctionComponent = () => {
   const intl = useIntl();
 
   useEffect(() => {
-    if (room && player && !room.players.some(roomPlayer => roomPlayer.uuid === player.uuid)) {
+    if (room && player && !room.players.some((roomPlayer) => roomPlayer.uuid === player.uuid)) {
       doJoinRoom(room.uuid);
     }
   }, [room, player, doJoinRoom]);
@@ -54,7 +54,7 @@ const Room: React.FunctionComponent = () => {
     if (
       room &&
       player &&
-      room.players.some(roomPlayer => roomPlayer.uuid === player.uuid) &&
+      room.players.some((roomPlayer) => roomPlayer.uuid === player.uuid) &&
       room.current_game_id
     ) {
       doCheckIfPlayerIsInGame(room.current_game_id);
@@ -111,7 +111,7 @@ const Room: React.FunctionComponent = () => {
         <FormattedMessage id="roomLobby.players" />
       </FieldLabel>
       <PlayerChips>
-        {room.players.map(player => (
+        {room.players.map((player) => (
           <PlayerChip key={player.uuid} color={player.color}>
             {player.name}
           </PlayerChip>

@@ -20,7 +20,7 @@ const SentenceRecap: React.FC<Props> = ({ step }) => {
 
   if (!player) return null;
 
-  const likeCount = step.votes.filter(vote => vote.player.uuid === player.uuid).length;
+  const likeCount = step.votes.filter((vote) => vote.player.uuid === player.uuid).length;
   const samePlayer = player.uuid === step.player.uuid;
 
   const isInitial = step.round_number === -1;

@@ -17,7 +17,7 @@ const roomSlice = createSlice({
       state.room = action.payload;
     },
     joinRoom: (state, action: PayloadAction<Player>) => {
-      if (!state.room?.players.some(roomPlayer => roomPlayer.uuid === action.payload.uuid)) {
+      if (!state.room?.players.some((roomPlayer) => roomPlayer.uuid === action.payload.uuid)) {
         state.room?.players.push(action.payload);
       }
     },
@@ -27,7 +27,7 @@ const roomSlice = createSlice({
     addPlayerToRoom: (state, action: PayloadAction<Player>) => {
       state.room?.players.push(action.payload);
     },
-    removeRoom: state => {
+    removeRoom: (state) => {
       state.room = null;
       state.ranking = null;
     },
@@ -35,7 +35,7 @@ const roomSlice = createSlice({
       if (!state.room) return;
 
       state.room.players = state.room.players.filter(
-        roomPlayer => roomPlayer.uuid !== action.payload.uuid,
+        (roomPlayer) => roomPlayer.uuid !== action.payload.uuid,
       );
     },
     nameNewAdmin: (state, action: PayloadAction<Player>) => {

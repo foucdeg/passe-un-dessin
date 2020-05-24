@@ -32,7 +32,7 @@ const UserNameGate: React.FC<Props> = ({ children }) => {
             <FormattedMessage id="userNameModal.title" />
           </StyledHeader>
           <UsernameForm
-            onSubmit={e => {
+            onSubmit={(e) => {
               e.preventDefault();
               if (playerName !== '') {
                 doCreatePlayer(playerName);
@@ -48,7 +48,7 @@ const UserNameGate: React.FC<Props> = ({ children }) => {
               autoFocus
               value={playerName}
               placeholder={intl.formatMessage({ id: 'userNameModal.placeholder' })}
-              onChange={e => setPlayerName(e.target.value)}
+              onChange={(e) => setPlayerName(e.target.value)}
             />
             <StyledButton type="submit">
               <FormattedMessage id="userNameModal.submit" />

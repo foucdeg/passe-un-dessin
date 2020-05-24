@@ -14,7 +14,7 @@ export const ModalContainer = styled.div<ModalContainerProps>`
   height: 100vh;
   overflow: auto;
   background: rgba(155, 81, 224, 0.6);
-  display: ${props => (props.isOpen ? 'block' : 'none')};
+  display: ${(props) => (props.isOpen ? 'block' : 'none')};
 `;
 
 export const ModalContent = styled.div`

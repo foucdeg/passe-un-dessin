@@ -13,7 +13,7 @@ export const PadTabContainer = styled.div<{ isActive: boolean }>`
   cursor: pointer;
   box-shadow: inset 7px -4px 8px -7px rgba(0, 0, 0, 0.15);
   margin-top: -6px;
-  ${props =>
+  ${(props) =>
     props.isActive &&
     css`
       cursor: default;
@@ -44,7 +44,7 @@ export const ViewerEye = styled(EyeIcon)<{ color: string }>`
     margin-right: 0;
   }
   .eye {
-    fill: ${props => props.color};
+    fill: ${(props) => props.color};
   }
 `;
 

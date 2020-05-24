@@ -25,7 +25,7 @@ const RemainingPlayers: React.FC<{}> = () => {
         <FormattedMessage id="remainingPlayers.waitingFor" />
       </em>
       <StyledPlayerChips>
-        {remainingPlayers.map(player => (
+        {remainingPlayers.map((player) => (
           <PlayerChip key={player.uuid} color={player.color}>
             {player.name}
           </PlayerChip>

@@ -55,7 +55,7 @@ RankingModalButton.displayName = 'RankingModalButton';
 export const RefreshButton = styled.img.attrs({ src: refreshIcon })<{ isLoading: boolean }>`
   cursor: pointer;
   margin-bottom: 24px;
-  ${props =>
+  ${(props) =>
     props.isLoading &&
     css`
       @keyframes spin {

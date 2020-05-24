@@ -50,7 +50,7 @@ const AdminModal: React.FC<Props> = ({ isOpen, onClose }) => {
       room.uuid,
       roundDuration,
       drawOwnWord,
-      game.players.map(player => player.uuid),
+      game.players.map((player) => player.uuid),
     );
     onClose();
   };
@@ -62,7 +62,7 @@ const AdminModal: React.FC<Props> = ({ isOpen, onClose }) => {
       room.uuid,
       roundDuration,
       drawOwnWord,
-      game.players.map(player => player.uuid).reverse(),
+      game.players.map((player) => player.uuid).reverse(),
     );
     onClose();
   };
@@ -82,7 +82,7 @@ const AdminModal: React.FC<Props> = ({ isOpen, onClose }) => {
       </p>
 
       <StyledPlayerChips>
-        {room.players.map(player => (
+        {room.players.map((player) => (
           <PlayerChip key={player.uuid} color={player.color}>
             {player.name} <StyledCrossIcon alt="Remove" onClick={() => onPlayerClick(player)} />
           </PlayerChip>

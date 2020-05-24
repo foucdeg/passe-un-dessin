@@ -103,7 +103,7 @@ export const Rule = styled.div`
 Rule.displayName = 'Rule';
 
 export const RuleNumberBackground = styled.div<{ background: string }>`
-  background: url(${props => props.background});
+  background: url(${(props) => props.background});
   background-size: contain;
   height: 40px;
   width: 40px;

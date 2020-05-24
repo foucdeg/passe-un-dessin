@@ -22,10 +22,10 @@ const PadTab: React.FC<Props> = ({ pad, isActive, onClick }) => {
   return (
     <PadTabContainer isActive={isActive} onClick={onClick}>
       {pad.initial_player.name}
-      <ViewersContainer onClick={e => e.preventDefault()}>
+      <ViewersContainer onClick={(e) => e.preventDefault()}>
         {padViewers
-          .filter(viewer => viewer.uuid !== player.uuid)
-          .map(viewer => (
+          .filter((viewer) => viewer.uuid !== player.uuid)
+          .map((viewer) => (
             <IconAndTooltip tooltipText={viewer.name} key={viewer.uuid}>
               <ViewerEye color={viewer.color} />
             </IconAndTooltip>

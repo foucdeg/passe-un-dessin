@@ -77,7 +77,7 @@ const Game: React.FunctionComponent = () => {
           dispatch(startRound({ roundNumber }));
 
           const targetStep = game.rounds.find(
-            step => step.player.uuid === player.uuid && step.round_number === roundNumber,
+            (step) => step.player.uuid === player.uuid && step.round_number === roundNumber,
           );
           if (!targetStep) {
             console.error(`No step found for player ${player.uuid} and round ${roundNumber}`);

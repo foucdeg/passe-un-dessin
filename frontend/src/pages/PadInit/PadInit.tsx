@@ -30,7 +30,7 @@ const PadInit: React.FunctionComponent = () => {
   const [sentence, setSentence] = useState<string>('');
   const [{ loading }, doSavePad] = useSavePad();
 
-  const pad = game?.pads.find(pad => pad.uuid === padId);
+  const pad = game?.pads.find((pad) => pad.uuid === padId);
 
   if (!game) return null;
   if (!pad) return null;
@@ -60,7 +60,7 @@ const PadInit: React.FunctionComponent = () => {
             type="text"
             placeholder={intl.formatMessage({ id: 'padInit.placeholder' })}
             value={sentence}
-            onChange={e => setSentence(e.target.value)}
+            onChange={(e) => setSentence(e.target.value)}
             adornment={loading ? <InputLoader /> : <InputArrow alt="Valider" onClick={onSubmit} />}
           />
         )}

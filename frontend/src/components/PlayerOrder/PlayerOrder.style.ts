@@ -27,7 +27,7 @@ PlayerOrderContainer.displayName = 'PlayerOrderContainer';
 
 export const StyledPlayerChip = styled(PlayerChip)<{ variant: Variant }>`
   color: ${colorPalette.black};
-  background-color: ${props => colorVariants[props.variant]};
+  background-color: ${(props) => colorVariants[props.variant]};
   font-weight: bold;
   margin: 0;
   margin-right: 4px;
