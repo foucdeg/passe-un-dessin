@@ -115,7 +115,6 @@
     "stylelint-declaration-strict-value": "1.4.6",
     "stylelint-processor-styled-components": "1.10.0",
     "typescript": "3.9.3",
-    "wait-on": "3.3.0",
     "webpack-manifest-plugin": "2.2.0"
   }
 }
