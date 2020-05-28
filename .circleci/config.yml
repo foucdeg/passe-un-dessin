@@ -6,7 +6,7 @@ orbs:
 executors:
   defaults_typescript:
     docker:
-      - image: circleci/node:12.16
+      - image: circleci/node:12.17
 
 commands:
   yarn-install:
