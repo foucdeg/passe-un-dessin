@@ -12082,10 +12082,10 @@ stylelint-config-styled-components@0.1.1:
   resolved "https://registry.yarnpkg.com/stylelint-config-styled-components/-/stylelint-config-styled-components-0.1.1.tgz#b408388d7c687833ab4be4c4e6522d97d2827ede"
   integrity sha512-z5Xz/9GmvxO6e/DLzBMwkB85zHxEEjN6K7Cj80Bi+o/9vR9eS3GX3E9VuMnX9WLFYulqbqLtTapGGY28JBiy9Q==
 
-stylelint-declaration-strict-value@1.4.7:
-  version "1.4.7"
-  resolved "https://registry.yarnpkg.com/stylelint-declaration-strict-value/-/stylelint-declaration-strict-value-1.4.7.tgz#f0a53e22e10d455dc7540006a910755a6398c178"
-  integrity sha512-pjzBk027gN7ut6O+cTOtZ9vd1m0lf4Wg8/xVIzB0qTSi7VaPSTsgxcd/UbALau/8Xgh0MU0py9DJaSjKvEH1bQ==
+stylelint-declaration-strict-value@1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/stylelint-declaration-strict-value/-/stylelint-declaration-strict-value-1.5.0.tgz#8b6d0a3501934ba091cd76378188e94aeea52ad3"
+  integrity sha512-1sgayCQ+Lg8OWkedeNPFFgKsZctFH0r+XL9K1i5/XTwUOvNDdkKHi9Riy5vYa/n+s0E2M1XlBz3SwtNvoAHUGg==
   dependencies:
     shortcss "^0.1.3"
 
