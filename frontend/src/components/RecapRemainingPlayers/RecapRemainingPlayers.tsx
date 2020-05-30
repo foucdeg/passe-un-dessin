@@ -12,8 +12,9 @@ import {
 import PlayerChip from 'atoms/PlayerChip';
 import { RecapRemainingPlayersContainer, StyledHeader } from './RecapRemainingPlayers.style';
 import Spacer from 'atoms/Spacer';
+import { EmptyObject } from 'services/utils';
 
-const RecapRemainingPlayers: React.FC<{}> = () => {
+const RecapRemainingPlayers: React.FC<EmptyObject> = () => {
   const remainingPlayers = useSelector(selectRemainingPlayers);
   const isPlayerAdmin = useSelector(selectPlayerIsAdmin);
   const [, doForceState] = useForceState();

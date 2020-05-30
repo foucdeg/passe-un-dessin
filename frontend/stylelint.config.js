@@ -39,5 +39,17 @@ module.exports = {
         ignoreKeywords: ['transparent', 'inherit', 'initial', 'unset', 'none', 'currentColor'],
       },
     ],
+    'selector-type-no-unknown': [
+      true,
+      {
+        ignoreTypes: ['/-styled-mixin/', '$dummyValue'],
+      },
+    ],
+    'value-keyword-case': [
+      'lower',
+      {
+        ignoreKeywords: ['dummyValue'],
+      },
+    ],
   },
 };

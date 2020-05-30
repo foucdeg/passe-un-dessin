@@ -6,8 +6,9 @@ import { StyledPlayerChips, AdminButton, NextStepIcon } from './RemainingPlayers
 import { FormattedMessage, useIntl } from 'react-intl';
 import PlayerChip from 'atoms/PlayerChip';
 import { useForceState } from 'redux/Game/hooks';
+import { EmptyObject } from 'services/utils';
 
-const RemainingPlayers: React.FC<{}> = () => {
+const RemainingPlayers: React.FC<EmptyObject> = () => {
   const remainingPlayers = useSelector(selectRemainingPlayers);
   const isPlayerAdmin = useSelector(selectPlayerIsAdmin);
   const [, doForceState] = useForceState();
