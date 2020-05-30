@@ -4,6 +4,7 @@ import { Player } from 'redux/Player/types';
 
 export type GameState = Readonly<{
   game: Game | null;
+  gameStructure: Game | null;
   remainingPlayers: Player[];
   suggestions: string[];
   recapViews: { [padUuid: string]: Player[] };
@@ -12,6 +13,7 @@ export type GameState = Readonly<{
 
 const initialState: GameState = {
   game: null,
+  gameStructure: null,
   remainingPlayers: [],
   suggestions: [],
   recapViews: {},
@@ -22,16 +24,19 @@ const gameSlice = createSlice({
   name: 'Game',
   initialState,
   reducers: {
-    updateGame: (state, action: PayloadAction<Game | null>) => {
-      state.game = action.payload;
+    updateGame: (state, action: PayloadAction<{ game: Game; keepStructure: boolean }>) => {
+      state.game = action.payload.game;
+      if (!action.payload.keepStructure) {
+        state.gameStructure = action.payload.game;
+      }
+
       if (!state.game) return;
 
-      state.remainingPlayers = state.game.players || [];
-      state.recapViews =
-        state.game.pads.reduce(
-          (acc, pad) => ({ ...acc, [pad.uuid]: [] }),
-          {} as { [padUuid: string]: Player[] },
-        ) || {};
+      state.remainingPlayers = state.game.players;
+      state.recapViews = state.game.pads.reduce(
+        (acc, pad) => ({ ...acc, [pad.uuid]: [] }),
+        {} as { [padUuid: string]: Player[] },
+      );
 
       const firstPadUUID = state.game.pads[0].uuid;
       state.recapViews[firstPadUUID] = [...state.game.players];

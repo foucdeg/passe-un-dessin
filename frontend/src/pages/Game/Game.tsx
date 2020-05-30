@@ -16,7 +16,7 @@ import {
 } from 'redux/Game';
 import { GamePhase } from 'redux/Game/types';
 import { selectRoom } from 'redux/Room/selectors';
-import { selectGame } from 'redux/Game/selectors';
+import { selectGame, selectGameStructure } from 'redux/Game/selectors';
 import { selectPlayer } from 'redux/Player/selectors';
 import PlayerOrder from 'components/PlayerOrder';
 import { useLeaveRoom } from 'redux/Room/hooks';
@@ -32,6 +32,7 @@ const Game: React.FunctionComponent = () => {
   const [{ loading }, doFetchGame] = useFetchGame();
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
+  const gameStructure = useSelector(selectGameStructure);
   const player = useSelector(selectPlayer);
   const { push } = useHistory();
   const location = useLocation();
@@ -43,7 +44,6 @@ const Game: React.FunctionComponent = () => {
 
   useEffect(() => {
     if (!gameId) return;
-
     doFetchGame({ gameId });
   }, [doFetchGame, gameId]);
 
@@ -64,7 +64,8 @@ const Game: React.FunctionComponent = () => {
       player: messagePlayer,
       pad: messagePad,
     }) => {
-      if (!room || !game || !player || !gameId) return;
+      if (!room || !gameStructure || !player || !gameId) return;
+      if (gameStructure.uuid !== gameId) return;
 
       switch (messageType) {
         case SERVER_EVENT_TYPES.PLAYER_FINISHED:
@@ -76,7 +77,7 @@ const Game: React.FunctionComponent = () => {
         case SERVER_EVENT_TYPES.ROUND_STARTS:
           dispatch(startRound({ roundNumber }));
 
-          const targetStep = game.rounds.find(
+          const targetStep = gameStructure.rounds.find(
             (step) => step.player.uuid === player.uuid && step.round_number === roundNumber,
           );
           if (!targetStep) {
@@ -84,21 +85,21 @@ const Game: React.FunctionComponent = () => {
             return;
           }
 
-          return push(`/room/${room.uuid}/game/${game.uuid}/step/${targetStep.uuid}`);
+          return push(`/room/${room.uuid}/game/${gameStructure.uuid}/step/${targetStep.uuid}`);
         case SERVER_EVENT_TYPES.DEBRIEF_STARTS:
-          doFetchGame({ gameId: game.uuid });
+          doFetchGame({ gameId: gameStructure.uuid, keepStructure: true });
 
-          return push(`/room/${room.uuid}/game/${game.uuid}/recap`);
+          return push(`/room/${room.uuid}/game/${gameStructure.uuid}/recap`);
         case SERVER_EVENT_TYPES.PLAYER_VIEWING_PAD:
           return dispatch(setPlayerViewingPad({ player: messagePlayer, pad: messagePad }));
 
         case SERVER_EVENT_TYPES.VOTE_RESULTS_STARTS:
-          doFetchGame({ gameId: game.uuid });
+          doFetchGame({ gameId: gameStructure.uuid, keepStructure: true });
 
-          return push(`/room/${room.uuid}/game/${game.uuid}/vote-results`);
+          return push(`/room/${room.uuid}/game/${gameStructure.uuid}/vote-results`);
       }
     },
-    [dispatch, doFetchGame, game, gameId, player, push, room],
+    [dispatch, doFetchGame, gameId, gameStructure, player, push, room],
   );
 
   useServerSentEvent(channelName, eventCallback);
