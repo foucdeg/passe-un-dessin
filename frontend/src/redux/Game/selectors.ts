@@ -3,6 +3,8 @@ import { getAvailableVoteCount } from 'services/game.service';
 
 export const selectGame = (state: RootState) => state.game.game;
 
+export const selectGameStructure = (state: RootState) => state.game.gameStructure;
+
 export const selectRemainingPlayers = (state: RootState) => state.game.remainingPlayers;
 
 export const selectSuggestions = (state: RootState) => state.game.suggestions;

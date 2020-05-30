@@ -32,7 +32,7 @@ const Room: React.FunctionComponent = () => {
 
   const { path } = useRouteMatch();
   const dispatch = useDispatch();
-  const history = useHistory();
+  const { push } = useHistory();
 
   useEffect(() => {
     if (roomId) {
@@ -47,7 +47,7 @@ const Room: React.FunctionComponent = () => {
           return dispatch(addPlayerToRoom(messagePlayer));
         case SERVER_EVENT_TYPES.PLAYER_LEFT:
           if (player && messagePlayer.uuid === player.uuid) {
-            return history.push('/');
+            return push('/');
           }
           setPlayerWhoLeft(messagePlayer);
           setAdminChanged(adminChanged);
@@ -58,10 +58,10 @@ const Room: React.FunctionComponent = () => {
         case SERVER_EVENT_TYPES.GAME_STARTS:
           dispatch(resetGameMetadata());
 
-          return history.push(`/room/${room?.uuid}/game/${game.uuid}`);
+          return push(`/room/${roomId}/game/${game.uuid}`);
       }
     },
-    [dispatch, history, player, room],
+    [dispatch, push, player, roomId],
   );
 
   const channelName = room ? `room-${room.uuid}` : null;

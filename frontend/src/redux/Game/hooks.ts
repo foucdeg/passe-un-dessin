@@ -25,10 +25,10 @@ import { Room } from 'redux/Room/types';
 export const useFetchGame = () => {
   const dispatch = useDispatch();
 
-  return useTypedAsyncFn<{ gameId: string }>(
-    async ({ gameId }) => {
-      const game = await client.get(`/game/${gameId}`);
-      dispatch(updateGame(game));
+  return useTypedAsyncFn<{ gameId: string; keepStructure?: boolean }>(
+    async ({ gameId, keepStructure = false }) => {
+      const game: Game = await client.get(`/game/${gameId}`);
+      dispatch(updateGame({ game, keepStructure }));
     },
     [dispatch],
   );
