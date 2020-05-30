@@ -8,7 +8,7 @@ import { selectRoom } from 'redux/Room/selectors';
 import { useSelector } from 'redux/useSelector';
 import { getNextPhaseAndRound, getRedirectPath } from 'services/game.service';
 import client from 'services/networking/client';
-import { useTypedAsyncFn, wait } from 'services/utils';
+import { useTypedAsyncFn, wait, EmptyObject } from 'services/utils';
 import { DEFAULT_DRAW_OWN_WORD_BOOL, DEFAULT_ROUND_DURATION } from './constants';
 import { selectGame } from './selectors';
 import {
@@ -19,7 +19,8 @@ import {
   addVoteToPadStep,
   removeVoteFromPadStep,
 } from './slice';
-import { Pad } from './types';
+import { Pad, GamePhase, Game } from './types';
+import { Room } from 'redux/Room/types';
 
 export const useFetchGame = () => {
   const dispatch = useDispatch();
@@ -52,13 +53,21 @@ export const useRefreshGame = () => {
   const player = useSelector(selectPlayer);
   const { push } = useHistory();
 
-  const [, doFetchGame] = useFetchGame();
-
-  return useTypedAsyncFn<{}>(async () => {
+  return useTypedAsyncFn<EmptyObject>(async () => {
     if (!room || !game || !player) return;
 
-    await doFetchGame({ gameId: game.uuid });
-    const path = getRedirectPath(room, game, player);
+    const updatedGame: Game = await client.get(`/game/${game.uuid}`);
+
+    if ([GamePhase.DEBRIEF, GamePhase.VOTE_RESULTS].includes(updatedGame.phase)) {
+      const updatedRoom: Room = await client.get(`/room/${room.uuid}`);
+
+      if (updatedRoom.current_game_id !== updatedGame.uuid) {
+        const path = `/room/${updatedRoom.uuid}/game/${updatedRoom.current_game_id}`;
+        return push(path);
+      }
+    }
+
+    const path = getRedirectPath(room, updatedGame, player);
     push(path);
   }, [room, game, player]);
 };
@@ -125,7 +134,7 @@ export const useSavePad = () => {
 export const useForceState = () => {
   const game = useSelector(selectGame);
 
-  return useTypedAsyncFn<{}>(async () => {
+  return useTypedAsyncFn<EmptyObject>(async () => {
     if (!game) {
       return;
     }

@@ -14,6 +14,7 @@ import Spacer from 'atoms/Spacer';
 import { useSelector } from 'redux/useSelector';
 import { selectRanking } from 'redux/Room/selectors';
 import { selectWinners } from 'redux/Game/selectors';
+import { EmptyObject } from 'services/utils';
 
 type Deltas = {
   [playerId: string]: number;
@@ -32,7 +33,7 @@ const getRankEmoji = (ranking: number) => {
   }
 };
 
-const Scoreboard: React.FC<{}> = () => {
+const Scoreboard: React.FC<EmptyObject> = () => {
   const ranking = useSelector(selectRanking);
   const winners = useSelector(selectWinners);
 

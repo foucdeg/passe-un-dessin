@@ -5,8 +5,9 @@ import { selectPlayer } from 'redux/Player/selectors';
 import { getReorderedPlayers } from 'services/game.service';
 import { PlayerOrderContainer, StyledPlayerChip, ArrowSpacer, Variant } from './PlayerOrder.style';
 import { GamePhase } from 'redux/Game/types';
+import { EmptyObject } from 'services/utils';
 
-const PlayerOrder: React.FC<{}> = () => {
+const PlayerOrder: React.FC<EmptyObject> = () => {
   const game = useSelector(selectGame);
   const player = useSelector(selectPlayer);
 

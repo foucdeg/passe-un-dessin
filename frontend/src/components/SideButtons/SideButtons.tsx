@@ -22,8 +22,9 @@ import { selectPlayer } from 'redux/Player/selectors';
 import PlayerModal from 'components/PlayerModal';
 import RankingModal from 'components/RankingModal';
 import { useLeaveRoom } from 'redux/Room/hooks';
+import { EmptyObject } from 'services/utils';
 
-const SideButtons: React.FC<{}> = () => {
+const SideButtons: React.FC<EmptyObject> = () => {
   const isPlayerAdmin = useSelector(selectPlayerIsAdmin);
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
