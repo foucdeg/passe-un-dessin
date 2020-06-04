@@ -182,11 +182,22 @@ const floodfill = (
   while (queue.length) {
     pixel = queue.pop() as number;
     if (setPixelIfNeeded(pixel, targetColor, fillcolor, data, length, tolerance)) {
-      queue.push(pixel - 4);
-      queue.push(pixel + 4);
+      pushIfPixelAreOnTheSameLine(queue, pixel, pixel - 4, dataWidth);
+      pushIfPixelAreOnTheSameLine(queue, pixel, pixel + 4, dataWidth);
       queue.push(pixel - dataWidth);
       queue.push(pixel + dataWidth);
     }
+  }
+};
+
+const pushIfPixelAreOnTheSameLine = (
+  queue: number[],
+  currentPixel: number,
+  newPixel: number,
+  dataWidth: number,
+) => {
+  if (Math.floor(currentPixel / dataWidth) === Math.floor(newPixel / dataWidth)) {
+    queue.push(newPixel);
   }
 };
 
