@@ -14,7 +14,7 @@ class Client {
     this.agent.accept('application/json');
   }
 
-  async request(method: Method, endpoint: string, data: object | null = null) {
+  async request(method: Method, endpoint: string, data: Record<string, unknown> | null = null) {
     const url = /^https?:\/\//.test(endpoint) ? endpoint : `${this.baseUrl}${endpoint}`;
     let promise = this.agent[method](url);
 
@@ -30,11 +30,11 @@ class Client {
     return this.request('get', endpoint);
   }
 
-  post(endpoint: string, data?: object) {
+  post(endpoint: string, data?: Record<string, unknown>) {
     return this.request('post', endpoint, data);
   }
 
-  put(endpoint: string, data?: object) {
+  put(endpoint: string, data?: Record<string, unknown>) {
     return this.request('put', endpoint, data);
   }
 
