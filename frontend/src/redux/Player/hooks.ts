@@ -37,7 +37,7 @@ export const useEditPlayer = () => {
 
   return useCallback(
     async (player: Player) => {
-      const returnedPlayer = await client.put(`/player/${player.uuid}`, player);
+      const returnedPlayer = await client.put(`/player/${player.uuid}`, { ...player });
       dispatch(updatePlayer(returnedPlayer));
     },
     [dispatch],
