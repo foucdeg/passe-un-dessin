@@ -110,7 +110,7 @@
     "react-app-rewire-webpack-bundle-analyzer": "1.1.0",
     "react-app-rewired": "2.1.6",
     "stylelint": "13.6.1",
-    "stylelint-config-prettier": "8.0.1",
+    "stylelint-config-prettier": "8.0.2",
     "stylelint-config-standard": "20.0.0",
     "stylelint-config-styled-components": "0.1.1",
     "stylelint-declaration-strict-value": "1.5.0",
