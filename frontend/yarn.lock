@@ -1193,10 +1193,10 @@
   dependencies:
     "@formatjs/intl-utils" "^3.5.0"
 
-"@formatjs/intl-pluralrules@2.2.11":
-  version "2.2.11"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-pluralrules/-/intl-pluralrules-2.2.11.tgz#95885c8f4d51a445e7f7b86691f1cf92cf50036a"
-  integrity sha512-vrr6vpIGCw/PNkB9LmswJRE4T1QfWBIINzIct7bUHwEgG407aUOrn6FTjSHIprK2k0+QyEXnrQkrFVa6cK/RgA==
+"@formatjs/intl-pluralrules@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-pluralrules/-/intl-pluralrules-3.0.0.tgz#e10d3d674bec8f9e5b52e9bb9a3e3739e5583fa9"
+  integrity sha512-RzJ3tuvHLm1t9+3rZxW00OtpkZ9yCvBglfZAVr0UuFXj9PqIFSshGz0r3pe5PA/ry02WQglg2uvhkYVonZf/Vg==
   dependencies:
     "@formatjs/intl-utils" "^3.5.0"
 
@@ -1218,13 +1218,6 @@
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@formatjs/intl-utils/-/intl-utils-3.0.1.tgz#b9a7f79033b54bff1d03e7f05ba0e0627ba49451"
   integrity sha512-wA9jNZ/6sglIeOznDL19/EgX//xkj/IN0pffuKM2fFFm5F2LB/MItrMlLW0MJwdp/aRVa8UGNbSl1zg5mmYoiA==
-
-"@formatjs/intl-utils@^3.4.1":
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-utils/-/intl-utils-3.4.1.tgz#705646e3be11e5851c33c44448dc3d828997ac41"
-  integrity sha512-4rdSTl+ki74ncP0GsdqoKczVWHZQKAemW9YRkhbvpcJrAFDLSEMIagQ+YPy+25plyLfgE/iOYManLdpdUF2IcA==
-  dependencies:
-    emojis-list "^3.0.0"
 
 "@formatjs/intl-utils@^3.5.0":
   version "3.5.0"
