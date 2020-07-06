@@ -302,8 +302,8 @@ category = "dev"
 description = "Extensions for Django"
 name = "django-extensions"
 optional = false
-python-versions = "*"
-version = "2.2.9"
+python-versions = ">=3.5"
+version = "3.0.2"
 
 [package.dependencies]
 six = ">=1.2"
@@ -874,7 +874,7 @@ test = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 
 [metadata]
-content-hash = "7f97dcb578bb65ab71c91e830f64222f57ea8797ee0ab23600dce6b923c98ca7"
+content-hash = "a59c93f11d5f2682768180e4f467430c8fbb67af35ac2a3fbfed55097b46d4e5"
 python-versions = "3.8.2"
 
 [metadata.files]
@@ -1052,8 +1052,8 @@ django-eventstream = [
     {file = "django-eventstream-3.1.0.tar.gz", hash = "sha256:6e6a600e69d38b5d8d18bf4f474d58f410c74ec233295bb3aae36151ee7da333"},
 ]
 django-extensions = [
-    {file = "django-extensions-2.2.9.tar.gz", hash = "sha256:2f81b618ba4d1b0e58603e25012e5c74f88a4b706e0022a3b21f24f0322a6ce6"},
-    {file = "django_extensions-2.2.9-py2.py3-none-any.whl", hash = "sha256:b19182d101a441fe001c5753553a901e2ef3ff60e8fbbe38881eb4a61fdd17c4"},
+    {file = "django-extensions-3.0.2.tar.gz", hash = "sha256:c4e8cff39a26bfb72438cd52ab37d760a2aa146b715b6cd27fa8b862ac29fdc5"},
+    {file = "django_extensions-3.0.2-py2.py3-none-any.whl", hash = "sha256:2b96bb937329b4038809d0fa79c55f6c1e941bce5057ca9ff5f3207aadffcbb9"},
 ]
 django-grip = [
     {file = "django-grip-3.0.0.tar.gz", hash = "sha256:8cb5a3cd7a02e35f9b1e0debf631c98119a955ae05d14ffcf162ebe6060291ee"},
