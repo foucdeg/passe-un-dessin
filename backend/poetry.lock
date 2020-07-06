@@ -686,7 +686,7 @@ description = "Python client for Sentry (https://getsentry.com)"
 name = "sentry-sdk"
 optional = false
 python-versions = "*"
-version = "0.15.0"
+version = "0.16.0"
 
 [package.dependencies]
 certifi = "*"
@@ -694,7 +694,7 @@ urllib3 = ">=1.10.0"
 
 [package.extras]
 aiohttp = ["aiohttp (>=3.5)"]
-beam = ["beam (>=2.12)"]
+beam = ["apache-beam (>=2.12)"]
 bottle = ["bottle (>=0.12.13)"]
 celery = ["celery (>=3)"]
 django = ["django (>=1.8)"]
@@ -874,7 +874,7 @@ test = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 
 [metadata]
-content-hash = "a59c93f11d5f2682768180e4f467430c8fbb67af35ac2a3fbfed55097b46d4e5"
+content-hash = "d24b3e66adc685706040101ee8c17c3174604e838a6110e045d269ccfbd31c96"
 python-versions = "3.8.2"
 
 [metadata.files]
@@ -1282,8 +1282,8 @@ s3transfer = [
     {file = "s3transfer-0.3.3.tar.gz", hash = "sha256:921a37e2aefc64145e7b73d50c71bb4f26f46e4c9f414dc648c6245ff92cf7db"},
 ]
 sentry-sdk = [
-    {file = "sentry-sdk-0.15.0.tar.gz", hash = "sha256:c24428f04eb7fc77c6f2a4d32c58656bf347855b39930dc8947384226ac55daa"},
-    {file = "sentry_sdk-0.15.0-py2.py3-none-any.whl", hash = "sha256:ce5493d5ce4f0760661381c156a93667003c97c92ce04282d399d19fa79c8941"},
+    {file = "sentry-sdk-0.16.0.tar.gz", hash = "sha256:da06bc3641e81ec2c942f87a0676cd9180044fa3d1697524a0005345997542e2"},
+    {file = "sentry_sdk-0.16.0-py2.py3-none-any.whl", hash = "sha256:e80d61af85d99a1222c1a3e2a24023618374cd50a99673aa7fa3cf920e7d813b"},
 ]
 service-identity = [
     {file = "service_identity-18.1.0-py2.py3-none-any.whl", hash = "sha256:001c0707759cb3de7e49c078a7c0c9cd12594161d3bf06b9c254fdcb1a60dc36"},
