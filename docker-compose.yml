@@ -1,4 +1,4 @@
-version: '3.1'
+version: "3.1"
 
 services:
   db:
@@ -6,7 +6,8 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_HOST_AUTH_METHOD: 'trust'
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+    command: ["postgres", "-c", "log_statement=all"]
 
   backend:
     build: ./backend
@@ -21,8 +22,8 @@ services:
     env_file:
       - .env
     environment:
-      DATABASE_URL: 'postgres://postgres@db:5432/postgres'
-      ENVIRONMENT: 'development'
+      DATABASE_URL: "postgres://postgres@db:5432/postgres"
+      ENVIRONMENT: "development"
 
 networks:
   default:
