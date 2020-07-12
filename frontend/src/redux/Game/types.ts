@@ -31,9 +31,14 @@ export interface Pad {
   sentence: string | null;
 }
 
-export interface Game {
+export interface GamePlayerParticipation {
+  player: Player;
+  order: number;
+}
+
+export interface RawGame {
   uuid: string;
-  players: Player[];
+  participants: GamePlayerParticipation[];
   pads: Pad[];
   rounds: PadStep[];
   phase: GamePhase;
@@ -41,6 +46,10 @@ export interface Game {
   round_duration: number;
   draw_own_word: boolean;
 }
+
+export type Game = RawGame & {
+  players: Player[];
+};
 
 export interface Vote {
   player: Player;

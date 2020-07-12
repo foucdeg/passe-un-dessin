@@ -1,6 +1,14 @@
 from rest_framework import serializers
 
-from core.models import Game, Pad, PadStep, Player, Room, Vote
+from core.models import (
+    Game,
+    Pad,
+    PadStep,
+    Player,
+    PlayerGameParticipation,
+    Room,
+    Vote,
+)
 
 
 class BaseSerializer(serializers.ModelSerializer):
@@ -49,6 +57,17 @@ class PadStepSerializer(BaseSerializer):
         )
 
 
+class PlayerGameParticipationSerializer(BaseSerializer):
+    player = PlayerSerializer()
+
+    class Meta:
+        model = PlayerGameParticipation
+        fields = (
+            "player",
+            "order",
+        )
+
+
 class PadIdSerializer(BaseSerializer):
     class Meta:
         model = Pad
@@ -57,11 +76,7 @@ class PadIdSerializer(BaseSerializer):
 
 class PadSerializer(BaseSerializer):
     initial_player = PlayerSerializer()
-    steps = serializers.SerializerMethodField()
-
-    def get_steps(self, instance):
-        steps = instance.steps.all().order_by("round_number")
-        return PadStepSerializer(steps, many=True).data
+    steps = PadStepSerializer(many=True)
 
     class Meta:
         model = Pad
@@ -69,44 +84,15 @@ class PadSerializer(BaseSerializer):
 
 
 class GameSerializer(BaseSerializer):
-    players = serializers.SerializerMethodField()
-    pads = serializers.SerializerMethodField()
+    participants = PlayerGameParticipationSerializer(many=True)
+    pads = PadSerializer(many=True)
     rounds = PadStepSerializer(many=True)
-
-    def get_players(self, instance):
-        def uniquify(seq):
-            seen = set()
-            seen_add = seen.add
-            return [x for x in seq if not (x in seen or seen_add(x))]
-
-        players = instance.players.all()
-
-        pad = instance.pads.first()
-
-        ordered_player_uuids = [pad.initial_player.uuid.hex] + [
-            step.player.uuid.hex for step in pad.steps.all().order_by("round_number")
-        ]
-        unique_ordered_player_uuids = uniquify(ordered_player_uuids)
-
-        def sort_fn(player: Player):
-            try:
-                return unique_ordered_player_uuids.index(player.uuid.hex)
-            except ValueError:
-                return -1
-
-        sorted_players = sorted(players, key=sort_fn)
-
-        return PlayerSerializer(sorted_players, many=True).data
-
-    def get_pads(self, instance):
-        pads = instance.pads.all().order_by("order")
-        return PadSerializer(pads, many=True).data
 
     class Meta:
         model = Game
         fields = (
             "uuid",
-            "players",
+            "participants",
             "round_duration",
             "draw_own_word",
             "phase",

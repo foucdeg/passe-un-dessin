@@ -112,6 +112,14 @@ class Room(BaseModel):
     friendly_name = models.CharField(max_length=128, default="",)
 
 
+class Player(BaseModel):
+    name = models.CharField(max_length=30)
+    room = models.ForeignKey(
+        Room, on_delete=models.SET_NULL, related_name="players", null=True, blank=True
+    )
+    color = models.CharField(max_length=10)
+
+
 class Game(BaseModel):
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="games")
     phase = models.CharField(
@@ -136,15 +144,17 @@ class Game(BaseModel):
         return all_pad_steps
 
 
-class Player(BaseModel):
-    name = models.CharField(max_length=30)
-    room = models.ForeignKey(
-        Room, on_delete=models.SET_NULL, related_name="players", null=True, blank=True
+class PlayerGameParticipation(BaseModel):
+    player = models.ForeignKey(
+        Player, on_delete=models.CASCADE, related_name="participations"
     )
     game = models.ForeignKey(
-        Game, on_delete=models.SET_NULL, related_name="players", null=True, blank=True
+        Game, on_delete=models.CASCADE, related_name="participants"
     )
-    color = models.CharField(max_length=10)
+    order = models.IntegerField()
+
+    class Meta:
+        ordering = ("order",)
 
 
 class Pad(BaseModel):
@@ -152,6 +162,9 @@ class Pad(BaseModel):
     initial_player = models.ForeignKey(Player, on_delete=models.CASCADE)
     order = models.IntegerField()
     sentence = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        ordering = ("order",)
 
 
 class PadStep(BaseModel):
@@ -165,6 +178,9 @@ class PadStep(BaseModel):
 
     sentence = models.CharField(max_length=100, blank=True, null=True)
     drawing = models.TextField(null=True, blank=True)
+
+    class Meta:
+        ordering = ("round_number",)
 
 
 class Vote(BaseModel):

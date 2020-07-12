@@ -2,7 +2,7 @@ import json
 import logging
 
 from django.db import transaction
-from django.db.models import Count
+from django.db.models import Count, Prefetch
 from django.http import (
     HttpResponse,
     HttpResponseBadRequest,
@@ -19,7 +19,7 @@ from core.messages import (
     PlayerNotFinishedMessage,
     PlayerViewingPadMessage,
 )
-from core.models import Game, GamePhase, Pad, PadStep, Vote
+from core.models import Game, GamePhase, Pad, PadStep, PlayerGameParticipation, Vote
 from core.serializers import GameSerializer, PadSerializer, PadStepSerializer
 from core.service.game_service import (
     GamePhaseAssertionException,
@@ -28,6 +28,7 @@ from core.service.game_service import (
     assert_round,
     get_available_vote_count,
     get_round_count,
+    is_player_in_game,
     start_debrief,
     start_next_round,
     switch_to_rounds,
@@ -40,11 +41,14 @@ logger = logging.getLogger(__name__)
 class GameRetrieveAPIView(RetrieveAPIView):
     lookup_field = "uuid"
     queryset = Game.objects.prefetch_related(
-        "players",
-        "pads",
-        "pads__initial_player",
-        "pads__steps",
-        "pads__steps__player",
+        Prefetch(
+            "participants",
+            queryset=PlayerGameParticipation.objects.select_related(
+                "player"
+            ).order_by("order"),
+        ),
+        Prefetch("pads", queryset=Pad.objects.select_related("initial_player")),
+        Prefetch("pads__steps", queryset=PadStep.objects.select_related("player")),
         "pads__steps__votes",
     ).all()
     serializer_class = GameSerializer
@@ -101,7 +105,7 @@ def save_pad(request, player, uuid):
         game.pads_done = game.pads_done + 1
         game.save()
 
-    if game.pads_done == game.players.count():
+    if game.pads_done == game.participants.count():
         logger.debug(
             "All pads have their initial sentence for game %s" % game.uuid.hex[:8]
         )
@@ -163,7 +167,7 @@ def save_step(request, player, uuid):
             game.pads_done = game.pads_done + 1
             game.save()
 
-    if game.pads_done == game.players.count():
+    if game.pads_done == game.participants.count():
         start_next_round(game, game.current_round + 1)
 
     data = PadStepSerializer(step).data
@@ -199,7 +203,7 @@ def submit_vote(request, player, pad_step_id):
 
     game = pad_step.pad.game
 
-    if player not in game.players.all() or game.phase != GamePhase.DEBRIEF.value:
+    if not is_player_in_game(game, player) or game.phase != GamePhase.DEBRIEF.value:
         return HttpResponseBadRequest("You cannot vote for this game")
 
     if pad_step.player == player:
@@ -231,7 +235,7 @@ def submit_vote(request, player, pad_step_id):
                 game.pads_done = game.pads_done + 1
                 game.save()
 
-            if game.pads_done == game.players.count():
+            if game.pads_done == game.participants.count():
                 switch_to_vote_results(game)
 
         return HttpResponse(status=201)
@@ -276,13 +280,13 @@ def get_vote_results(request, game_id):
 
 @require_GET
 @requires_player
-def is_player_in_game(request, player, game_id):
+def check_is_player_in_game(request, player, game_id):
     try:
         game = Game.objects.get(uuid=game_id)
     except Game.DoesNotExist:
         return HttpResponseBadRequest("Game with uuid %s does not exist" % game_id)
 
-    return JsonResponse({"is_in_game": player in game.players.all()})
+    return JsonResponse({"is_in_game": is_player_in_game(game, player)})
 
 
 @require_http_methods(["PUT"])

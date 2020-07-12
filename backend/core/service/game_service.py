@@ -10,13 +10,22 @@ from core.messages import (
     RoundStartsMessage,
     VoteResultsStartsMessage,
 )
-from core.models import Game, GamePhase, Pad, PadStep, Player, Room, StepType
+from core.models import (
+    Game,
+    GamePhase,
+    Pad,
+    PadStep,
+    Player,
+    PlayerGameParticipation,
+    Room,
+    StepType,
+)
 
 logger = logging.getLogger(__name__)
 
 
 def get_round_count(game: Game):
-    player_count = game.players.count()
+    player_count = game.participants.count()
     # There should always be an even number of steps - the first player will play a step on their pad
     # or won't depending on that
     return 2 * ((player_count + int(game.draw_own_word) - 1) // 2)
@@ -37,7 +46,7 @@ def order_players(players: List[Player], requested_players_order: List[str]):
 
 def get_available_vote_count(game: Game):
     round_count = get_round_count(game)
-    choice_count = round_count * (game.players.count() - 1)
+    choice_count = round_count * (game.participants.count() - 1)
     return max(1, round(sqrt(0.6 * choice_count - 1)))
 
 
@@ -61,9 +70,8 @@ def initialize_game(
 
     ordered_players = order_players(players, requested_players_order)
 
-    for player in ordered_players:
-        player.game = game
-        player.save()
+    for index, player in enumerate(ordered_players):
+        PlayerGameParticipation.objects.create(game=game, player=player, order=index)
 
     for index in range(len(ordered_players)):
         initialize_pad(game, index, ordered_players)
@@ -184,11 +192,15 @@ class GameRoundAssertionException(Exception):
         self.actual = actual
 
 
-def assert_phase(game, expected_phase):
+def assert_phase(game: Game, expected_phase: GamePhase):
     if game.phase != expected_phase.value:
         raise GamePhaseAssertionException(expected_phase.value, game.phase)
 
 
-def assert_round(game, expected_round):
+def assert_round(game: Game, expected_round: int):
     if game.current_round != expected_round:
         raise GameRoundAssertionException(expected_round, game.current_round)
+
+
+def is_player_in_game(game: Game, player: Player):
+    return player in [participant.player for participant in game.participants.all()]
