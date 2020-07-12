@@ -9,8 +9,8 @@ import frMessages from 'translations/fr.json';
 https://github.com/formatjs/react-intl/blob/master/docs/Upgrade-Guide.md#migrate-to-using-native-intl-apis
 */
 import '@formatjs/intl-pluralrules/polyfill';
-import '@formatjs/intl-pluralrules/dist/locale-data/en';
-import '@formatjs/intl-pluralrules/dist/locale-data/fr';
+import '@formatjs/intl-pluralrules/locale-data/en';
+import '@formatjs/intl-pluralrules/locale-data/fr';
 /* End of language polyfills */
 
 import { RootContainer } from './Root.style';
