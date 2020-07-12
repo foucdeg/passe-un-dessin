@@ -47,10 +47,8 @@ class GameRetrieveAPIView(RetrieveAPIView):
                 "player"
             ).order_by("order"),
         ),
-        "pads",
-        "pads__initial_player",
-        "pads__steps",
-        "pads__steps__player",
+        Prefetch("pads", queryset=Pad.objects.select_related("initial_player")),
+        Prefetch("pads__steps", queryset=PadStep.objects.select_related("player")),
         "pads__steps__votes",
     ).all()
     serializer_class = GameSerializer
