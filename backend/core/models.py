@@ -153,6 +153,9 @@ class Pad(BaseModel):
     order = models.IntegerField()
     sentence = models.CharField(max_length=100, blank=True, null=True)
 
+    class Meta:
+        ordering = ("order",)
+
 
 class PadStep(BaseModel):
     pad = models.ForeignKey(Pad, on_delete=models.CASCADE, related_name="steps")
@@ -165,6 +168,9 @@ class PadStep(BaseModel):
 
     sentence = models.CharField(max_length=100, blank=True, null=True)
     drawing = models.TextField(null=True, blank=True)
+
+    class Meta:
+        ordering = ("round_number",)
 
 
 class Vote(BaseModel):

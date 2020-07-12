@@ -57,11 +57,7 @@ class PadIdSerializer(BaseSerializer):
 
 class PadSerializer(BaseSerializer):
     initial_player = PlayerSerializer()
-    steps = serializers.SerializerMethodField()
-
-    def get_steps(self, instance):
-        steps = instance.steps.all().order_by("round_number")
-        return PadStepSerializer(steps, many=True).data
+    steps = PadStepSerializer(many=True)
 
     class Meta:
         model = Pad
@@ -70,7 +66,7 @@ class PadSerializer(BaseSerializer):
 
 class GameSerializer(BaseSerializer):
     players = serializers.SerializerMethodField()
-    pads = serializers.SerializerMethodField()
+    pads = PadSerializer(many=True)
     rounds = PadStepSerializer(many=True)
 
     def get_players(self, instance):
@@ -97,10 +93,6 @@ class GameSerializer(BaseSerializer):
         sorted_players = sorted(players, key=sort_fn)
 
         return PlayerSerializer(sorted_players, many=True).data
-
-    def get_pads(self, instance):
-        pads = instance.pads.all().order_by("order")
-        return PadSerializer(pads, many=True).data
 
     class Meta:
         model = Game
