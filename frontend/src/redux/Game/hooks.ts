@@ -19,7 +19,7 @@ import {
   addVoteToPadStep,
   removeVoteFromPadStep,
 } from './slice';
-import { Pad, GamePhase, Game } from './types';
+import { Pad, GamePhase, Game, RawGame } from './types';
 import { Room } from 'redux/Room/types';
 
 export const useFetchGame = () => {
@@ -27,7 +27,11 @@ export const useFetchGame = () => {
 
   return useTypedAsyncFn<{ gameId: string; keepStructure?: boolean }>(
     async ({ gameId, keepStructure = false }) => {
-      const game: Game = await client.get(`/game/${gameId}`);
+      const rawGame: RawGame = await client.get(`/game/${gameId}`);
+      const game = {
+        ...rawGame,
+        players: rawGame.participants.map((participant) => participant.player),
+      };
       dispatch(updateGame({ game, keepStructure }));
     },
     [dispatch],

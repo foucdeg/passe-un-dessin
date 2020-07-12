@@ -38,7 +38,7 @@ urlpatterns = [
     ),
     path(
         "game/<str:game_id>/is-player-in-game",
-        game.is_player_in_game,
+        game.check_is_player_in_game,
         name="is_player_in_game",
     ),
     path(
