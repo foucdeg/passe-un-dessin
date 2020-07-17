@@ -21,6 +21,7 @@ import { FormattedMessage } from 'react-intl';
 
 import ruleBackgrounds from 'assets/rule-backgrounds';
 import Spacer from 'atoms/Spacer';
+import CreateAccountModal from 'components/CreateAccountModal';
 
 const Home: React.FunctionComponent = () => {
   const doCreateRoom = useCreateRoom();
@@ -71,6 +72,12 @@ const Home: React.FunctionComponent = () => {
         <Credits>Foucauld Degeorges • Michèle Ruaud</Credits>
         <Credits>Quentin Somerville • Léo Anesi</Credits>
       </RightSide>
+      <CreateAccountModal
+        isOpen={true}
+        onClose={() => {
+          /* implement */
+        }}
+      />
     </>
   );
 };

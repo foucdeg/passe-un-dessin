@@ -3,6 +3,7 @@ from django.urls import path
 from core.views import auth, game, general, room_management
 
 urlpatterns = [
+    path("auth/social-login", auth.social_login, name="login"),
     path("suggestions", general.get_suggestions, name="get_suggestions"),
     path("room", room_management.RoomCreationView.as_view(), name="room_creation"),
     path("player", room_management.PlayerView.as_view(), name="player"),

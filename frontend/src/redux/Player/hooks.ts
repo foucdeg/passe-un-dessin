@@ -4,6 +4,12 @@ import { updatePlayer } from './slice';
 import { useCallback } from 'react';
 import { Player } from './types';
 
+export enum AuthProvider {
+  GOOGLE = 'GOOGLE',
+  FACEBOOK = 'FACEBOOK',
+  CLASSIC = 'CLASSIC',
+}
+
 export const useFetchMe = () => {
   const dispatch = useDispatch();
 
@@ -42,4 +48,11 @@ export const useEditPlayer = () => {
     },
     [dispatch],
   );
+};
+
+export const useSocialLogin = () => {
+  return useCallback(async (token: string, provider: AuthProvider) => {
+    const response = await client.post(`/auth/social-login`, { token, provider });
+    console.log(response);
+  }, []);
 };

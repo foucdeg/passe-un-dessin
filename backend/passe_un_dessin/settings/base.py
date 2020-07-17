@@ -13,7 +13,9 @@ import os
 import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+)
 
 
 # Application definition
@@ -79,9 +81,16 @@ EVENTSTREAM_STORAGE_CLASS = "django_eventstream.storage.DjangoModelStorage"
 
 DATABASES = {"default": dj_database_url.config()}
 
+# Social auth
+AUTH_GOOGLE_CLIENT_ID = (
+    "805693370790-tf9clcvuu8tg5dibon9av5q3lu2o46qk.apps.googleusercontent.com"
+)
+AUTH_FACEBOOK_APP_ID = "2622893511372846"
+AUTH_FACEBOOK_APP_SECRET = os.environ.get("AUTH_FACEBOOK_APP_SECRET")
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {

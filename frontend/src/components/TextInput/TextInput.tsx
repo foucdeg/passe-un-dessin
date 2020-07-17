@@ -4,10 +4,11 @@ import { InputAndAdornment, StyledTextInput, AdornmentLocation } from './TextInp
 
 type Props = React.InputHTMLAttributes<HTMLInputElement> & {
   adornment?: React.ReactNode;
+  hasError?: boolean;
 };
 
-const TextInput: React.FC<Props> = ({ adornment, className, ...inputProps }) => (
-  <InputAndAdornment className={className}>
+const TextInput: React.FC<Props> = ({ adornment, className, hasError, ...inputProps }) => (
+  <InputAndAdornment className={className} hasError={hasError}>
     <StyledTextInput {...inputProps} />
     {adornment && <AdornmentLocation>{adornment}</AdornmentLocation>}
   </InputAndAdornment>
