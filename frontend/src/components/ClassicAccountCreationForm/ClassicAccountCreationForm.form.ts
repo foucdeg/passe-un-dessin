@@ -1,11 +1,11 @@
 import { withFormik, FormikErrors } from 'formik';
 import { isValidEmail } from 'services/utils';
-import InnerForm from './ClassicLoginForm';
+import InnerForm from './ClassicAccountCreationForm';
 import { AsyncFnReturn } from 'react-use/lib/useAsync';
 import { FnReturningPromise } from 'react-use/lib/util';
 
 export interface OutsideProps {
-  login: AsyncFnReturn<FnReturningPromise>;
+  createAccount: AsyncFnReturn<FnReturningPromise>;
 }
 // Shape of form values
 export interface FormValues {
@@ -13,7 +13,7 @@ export interface FormValues {
   password: string;
 }
 
-const ClassicLoginForm = withFormik<OutsideProps, FormValues>({
+const ClassicAccountCreationForm = withFormik<OutsideProps, FormValues>({
   mapPropsToValues: () => {
     return {
       email: '',
@@ -36,9 +36,9 @@ const ClassicLoginForm = withFormik<OutsideProps, FormValues>({
   validateOnChange: true,
 
   handleSubmit: (values, { props }) => {
-    const [, doLogin] = props.login;
-    doLogin({ email: values.email, password: values.password });
+    const [, doCreateAccount] = props.createAccount;
+    doCreateAccount({ email: values.email, password: values.password });
   },
 })(InnerForm);
 
-export default ClassicLoginForm;
+export default ClassicAccountCreationForm;

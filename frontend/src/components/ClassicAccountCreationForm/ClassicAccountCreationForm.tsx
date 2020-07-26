@@ -1,31 +1,28 @@
 import React, { useEffect } from 'react';
 
 import { FormikProps, Field } from 'formik';
-import { OutsideProps, FormValues } from './ClassicLoginForm.form';
+import { OutsideProps, FormValues } from './ClassicAccountCreationForm.form';
 import TextInput from 'components/TextInput';
-import { StyledLabel, StyledForm, StyledButton } from './ClassicLoginForm.style';
+import { StyledLabel, StyledForm, StyledButton } from './ClassicAccountCreationForm.style';
 import { useIntl } from 'react-intl';
-import { AUTH_ERROR_INVALID_USERNAME_PASSWORD } from 'redux/Player/hooks';
+import { AUTH_ERROR_EMAIL_IN_USE } from 'redux/Player/hooks';
 
-const ClassicLoginFormView: React.FC<OutsideProps & FormikProps<FormValues>> = ({
+const ClassicAccountCreationFormView: React.FC<OutsideProps & FormikProps<FormValues>> = ({
   touched,
   errors,
   isValid,
   isSubmitting,
-  setErrors,
-  login,
+  setFieldError,
+  createAccount,
 }) => {
   const intl = useIntl();
-  const [{ loading, error: outsideError }] = login;
+  const [{ loading, error: outsideError }] = createAccount;
 
   useEffect(() => {
-    if (outsideError && outsideError.message === AUTH_ERROR_INVALID_USERNAME_PASSWORD) {
-      setErrors({
-        email: 'Invalid email or password combination',
-        password: 'Invalid email or password combination',
-      });
+    if (outsideError && outsideError.message === AUTH_ERROR_EMAIL_IN_USE) {
+      setFieldError('email', 'Email already in use');
     }
-  }, [outsideError, setErrors]);
+  }, [outsideError, setFieldError]);
 
   return (
     <StyledForm>
@@ -38,11 +35,11 @@ const ClassicLoginFormView: React.FC<OutsideProps & FormikProps<FormValues>> = (
         hasError={touched.email && errors.email}
         placeholder={intl.formatMessage({ id: 'mobileGate.emailExample' })}
       />
-      <StyledLabel htmlFor="password">Mot de passe</StyledLabel>
+      <StyledLabel htmlFor="password">Choisis un mot de passe</StyledLabel>
       <Field
         type="password"
         name="password"
-        autoComplete="current-password"
+        autoComplete="new-password"
         as={TextInput}
         hasError={touched.password && errors.password}
       />
@@ -53,4 +50,4 @@ const ClassicLoginFormView: React.FC<OutsideProps & FormikProps<FormValues>> = (
   );
 };
 
-export default ClassicLoginFormView;
+export default ClassicAccountCreationFormView;

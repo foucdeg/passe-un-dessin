@@ -3,6 +3,10 @@ import { useDispatch } from 'react-redux';
 import { updatePlayer } from './slice';
 import { useCallback } from 'react';
 import { Player } from './types';
+import { useTypedAsyncFn } from 'services/utils';
+
+export const AUTH_ERROR_EMAIL_IN_USE = 'AUTH_ERROR_EMAIL_IN_USE';
+export const AUTH_ERROR_INVALID_USERNAME_PASSWORD = 'AUTH_ERROR_INVALID_USERNAME_PASSWORD';
 
 export enum AuthProvider {
   GOOGLE = 'GOOGLE',
@@ -51,8 +55,51 @@ export const useEditPlayer = () => {
 };
 
 export const useSocialLogin = () => {
-  return useCallback(async (token: string, provider: AuthProvider) => {
-    const response = await client.post(`/auth/social-login`, { token, provider });
-    console.log(response);
-  }, []);
+  const doFetchMe = useFetchMe();
+
+  return useCallback(
+    async (token: string, provider: AuthProvider) => {
+      await client.post(`/auth/social-login`, { token, provider });
+      await doFetchMe();
+    },
+    [doFetchMe],
+  );
+};
+
+export const useLogin = () => {
+  const doFetchMe = useFetchMe();
+
+  return useTypedAsyncFn<{ email: string; password: string }>(
+    async ({ email, password }) => {
+      try {
+        await client.post(`/auth/login`, { email, password });
+        await doFetchMe();
+      } catch (e) {
+        if (e.status === 401) {
+          throw new Error(AUTH_ERROR_INVALID_USERNAME_PASSWORD);
+        }
+        throw e;
+      }
+    },
+    [doFetchMe],
+  );
+};
+
+export const useCreateAccount = () => {
+  const doFetchMe = useFetchMe();
+
+  return useTypedAsyncFn<{ email: string; password: string }>(
+    async ({ email, password }) => {
+      try {
+        await client.post(`/auth/create-account`, { email, password });
+        await doFetchMe();
+      } catch (e) {
+        if (e.status === 400) {
+          throw new Error(AUTH_ERROR_EMAIL_IN_USE);
+        }
+        throw e;
+      }
+    },
+    [doFetchMe],
+  );
 };

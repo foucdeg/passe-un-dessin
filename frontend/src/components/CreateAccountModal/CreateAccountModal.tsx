@@ -15,9 +15,10 @@ import {
 } from './CreateAccountModal.style';
 import LoginWithFacebook from 'components/LogInWithFacebook';
 import LoginWithGoogle from 'components/LogInWithGoogle';
-import ClassicLoginForm from 'components/ClassicLoginForm';
 import HorizontalSeparator from 'components/HorizontalSeparator';
 import Spacer from 'atoms/Spacer';
+import { useCreateAccount } from 'redux/Player/hooks';
+import ClassicAccountCreationForm from 'components/ClassicAccountCreationForm';
 
 interface Props {
   isOpen: boolean;
@@ -26,6 +27,7 @@ interface Props {
 
 const CreateAccountModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const player = useSelector(selectPlayer);
+  const createAccount = useCreateAccount();
 
   if (!player) return null;
 
@@ -55,7 +57,7 @@ const CreateAccountModal: React.FC<Props> = ({ isOpen, onClose }) => {
           <HorizontalSeparator>
             <SeparatorText>Ou à l'ancienne :</SeparatorText>
           </HorizontalSeparator>
-          <ClassicLoginForm />
+          <ClassicAccountCreationForm createAccount={createAccount} />
         </Column>
       </CreateAccountContainer>
     </WideModal>
