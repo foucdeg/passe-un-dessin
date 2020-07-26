@@ -1,4 +1,3 @@
 {
-  "extends": ["config:base", ":automergeMinor"],
-  "requiredStatusChecks": null
+  "extends": ["config:base", ":automergeMinor"]
 }
