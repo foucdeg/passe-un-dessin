@@ -7,12 +7,27 @@ from core.models import (
     Player,
     PlayerGameParticipation,
     Room,
+    User,
     Vote,
 )
 
 
 class BaseSerializer(serializers.ModelSerializer):
     uuid = serializers.UUIDField(format="hex")
+
+
+class UserSerializer(BaseSerializer):
+    class Meta:
+        model = User
+        fields = ("email",)
+
+
+class PlayerWithUserSerializer(BaseSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = Player
+        fields = ("uuid", "name", "color", "user")
 
 
 class PlayerSerializer(BaseSerializer):

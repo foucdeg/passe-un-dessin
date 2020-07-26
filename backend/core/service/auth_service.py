@@ -1,3 +1,4 @@
+import logging
 from enum import Enum
 from time import time
 
@@ -5,7 +6,19 @@ from django.conf import settings
 from google.auth.transport import requests
 from google.oauth2 import id_token
 
+from core.models import (
+    Pad,
+    PadStep,
+    Player,
+    PlayerGameParticipation,
+    Room,
+    User,
+    Vote,
+)
+
 from .facebook_client import get_user_email, verify_token
+
+logger = logging.getLogger(__name__)
 
 
 class SocialAuthProvider(Enum):
@@ -52,3 +65,36 @@ def verify_user(auth_token: str, provider: SocialAuthProvider):
         return get_user_email(auth_token)
 
     raise ValueError("Incorrect social auth provider")
+
+
+def do_user_player_coherence(request, user: User):
+    try:
+        player_id = request.session["player_id"]
+        player = Player.objects.get(uuid=player_id)
+
+        if user.player is None:
+            logger.info("Attributing player %s to user %s" % (player, user))
+            user.player = player
+            user.save()
+        else:
+            if user.player == player:
+                pass
+            else:
+                logger.info(
+                    "Merging player %s into user player %s" % (player, user.player)
+                )
+                merge_players(from_player=player, into_player=user.player)
+                request.session["player_id"] = user.player.uuid.__str__()
+
+    except (KeyError, Player.DoesNotExist):
+        pass
+
+
+def merge_players(from_player: Player, into_player: Player):
+    Room.objects.filter(admin=from_player).update(admin=into_player)
+    PlayerGameParticipation.objects.filter(player=from_player).update(
+        player=into_player
+    )
+    Pad.objects.filter(initial_player=from_player).update(initial_player=into_player)
+    PadStep.objects.filter(player=from_player).update(player=into_player)
+    Vote.objects.filter(player=from_player).update(player=into_player)
