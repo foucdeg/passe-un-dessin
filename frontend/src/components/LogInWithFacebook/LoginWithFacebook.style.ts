@@ -18,8 +18,6 @@ export const StyledFacebookButton = styled.button`
   width: 100%;
   height: 48px;
   color: ${colorPalette.white};
-  font-weight: bold;
-  letter-spacing: 0.05em;
   padding: 0;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
   cursor: pointer;

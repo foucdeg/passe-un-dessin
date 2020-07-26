@@ -30,6 +30,7 @@
   "menu": {
     "startMusic": "Lancer le son",
     "stopMusic": "Couper le son",
+    "accountMenu": "Compte",
     "playerMenu": "Joueur",
     "adminMenu": "Actions d'administration",
     "addPlayer": "Inviter un joueur",
@@ -102,6 +103,23 @@
     "placeholder": "XXBogossDu62",
     "submit": "Valider"
   },
+  "auth": {
+    "facebookLogin": "Se connecter avec Facebook",
+    "googleLogin": "Se connecter avec Google",
+    "oldStyle": "Ou à l'ancienne :",
+    "email": "Adresse email",
+    "password": "Mot de passe",
+    "pickPassword": "Choisis un mot de passe",
+    "emailExample": "monadresse@wanadoo.fr",
+    "createAccount": "Créer un compte",
+    "logIn": "Se connecter",
+    "errors": {
+      "required": "Ce champ est nécessaire",
+      "invalidEmail": "Cette adresse email n'est pas valide",
+      "emailInUse": "Cette adresse email est déjà utilisée. Se connecter à ce compte ?",
+      "incorrectEmailPassword": "Mauvaise combinaison d'adresse email et mot de passe"
+    }
+  },
   "lostPlayerModal": {
     "title": "On a perdu quelqu'un !",
     "whoLeft": "{name} semble avoir quitté la partie 😢 On est obligés d'en recommencer une.",
@@ -111,6 +129,16 @@
     "newAdminRestarts": "C'est {name} qui peut désormais relancer une partie.",
     "goToSettings": "Ouvre les réglages en haut à droite.",
     "adminRestarts": "C'est {name} qui peut relancer une partie."
+  },
+  "createAccountModal": {
+    "niceGame": "Belle partie, {name} !",
+    "keepHistory": "Ce serait dommage de la laisser disparaître dans l'oubli ! Pour garder en mémoire tes plus belles créations, il suffit de te créer un compte.",
+    "features": "Tu auras ainsi accès aux fonctionnalités suivantes :",
+    "history": "Historique de tes parties",
+    "leaderboard": "Leaderboard mondial des meilleurs joueurs",
+    "safeNickname": "Réservation de ton pseudo",
+    "andMore": "... et plus à venir !",
+    "later": "Plus tard"
   },
   "mobileGate": {
     "bigFingers": "Gros doigts, petit écran",
@@ -122,8 +150,8 @@
   },
   "playerModal": {
     "title": "Joueur",
-    "username": "Nom du joueur",
-    "submit": "Valider"
+    "playerName": "Nom du joueur",
+    "account": "Compte"
   },
   "rankingModal": {
     "title": "Scores",

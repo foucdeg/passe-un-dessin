@@ -1,8 +1,9 @@
 /*  eslint @typescript-eslint/no-explicit-any: off */
-import React, { useLayoutEffect, useCallback } from 'react';
-import { EmptyObject as NoProps } from 'services/utils';
+import React, { useCallback, useEffect, useRef } from 'react';
+import { NoProps } from 'services/utils';
 import { useSocialLogin, AuthProvider } from 'redux/Player/hooks';
-import { Container } from './LoginWithGoogle.style';
+import { GoogleLogo, TextContent, StyledGoogleButton } from './LoginWithGoogle.style';
+import { FormattedMessage } from 'react-intl';
 
 interface GoogleUser {
   getAuthResponse: () => { id_token: string };
@@ -10,34 +11,32 @@ interface GoogleUser {
 
 const LoginWithGoogle: React.FC<NoProps> = () => {
   const doLogin = useSocialLogin();
+  const buttonRef = useRef(null);
 
   const onLoginSuccess = useCallback(
     (googleUser: GoogleUser) => {
+      console.log(googleUser);
       const idToken = googleUser.getAuthResponse().id_token;
       doLogin(idToken, AuthProvider.GOOGLE);
     },
     [doLogin],
   );
 
-  useLayoutEffect(() => {
-    const gapi = (window as any).gapi;
-    if (!gapi) return;
+  useEffect(() => {
+    const authInstance = (window as any).authInstance;
+    if (!authInstance) return;
+    if (!buttonRef.current) return;
 
-    gapi.signin2.render('gSignIn', {
-      width: 335,
-      height: 48,
-      longtitle: true,
-      onsuccess: onLoginSuccess,
-      onerror: function (err: string) {
-        console.log('Google signIn2.render button err: ' + err);
-      },
-    });
-  }, [onLoginSuccess]);
+    authInstance.attachClickHandler(buttonRef.current, {}, onLoginSuccess);
+  }, [buttonRef, onLoginSuccess]);
 
   return (
-    <Container>
-      <div id="gSignIn"></div>
-    </Container>
+    <StyledGoogleButton ref={buttonRef}>
+      <GoogleLogo />
+      <TextContent>
+        <FormattedMessage id="auth.googleLogin" />
+      </TextContent>
+    </StyledGoogleButton>
   );
 };
 

@@ -4,7 +4,7 @@ import { FormikProps, Field } from 'formik';
 import { OutsideProps, FormValues } from './ClassicLoginForm.form';
 import TextInput from 'components/TextInput';
 import { StyledLabel, StyledForm, StyledButton } from './ClassicLoginForm.style';
-import { useIntl } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 import { AUTH_ERROR_INVALID_USERNAME_PASSWORD } from 'redux/Player/hooks';
 
 const ClassicLoginFormView: React.FC<OutsideProps & FormikProps<FormValues>> = ({
@@ -21,24 +21,28 @@ const ClassicLoginFormView: React.FC<OutsideProps & FormikProps<FormValues>> = (
   useEffect(() => {
     if (outsideError && outsideError.message === AUTH_ERROR_INVALID_USERNAME_PASSWORD) {
       setErrors({
-        email: 'Invalid email or password combination',
-        password: 'Invalid email or password combination',
+        email: 'auth.errors.incorrectEmailPassword',
+        password: 'auth.errors.incorrectEmailPassword',
       });
     }
   }, [outsideError, setErrors]);
 
   return (
     <StyledForm>
-      <StyledLabel htmlFor="email">Adresse email</StyledLabel>
+      <StyledLabel htmlFor="email">
+        <FormattedMessage id="auth.email" />
+      </StyledLabel>
       <Field
         type="email"
         name="email"
         autoComplete="email"
         as={TextInput}
         hasError={touched.email && errors.email}
-        placeholder={intl.formatMessage({ id: 'mobileGate.emailExample' })}
+        placeholder={intl.formatMessage({ id: 'auth.emailExample' })}
       />
-      <StyledLabel htmlFor="password">Mot de passe</StyledLabel>
+      <StyledLabel htmlFor="password">
+        <FormattedMessage id="auth.password" />
+      </StyledLabel>
       <Field
         type="password"
         name="password"
@@ -47,7 +51,7 @@ const ClassicLoginFormView: React.FC<OutsideProps & FormikProps<FormValues>> = (
         hasError={touched.password && errors.password}
       />
       <StyledButton type="submit" disabled={isSubmitting || loading || !isValid}>
-        Créer un compte
+        <FormattedMessage id="auth.logIn" />
       </StyledButton>
     </StyledForm>
   );

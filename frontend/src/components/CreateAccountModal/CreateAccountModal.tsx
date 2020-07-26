@@ -19,6 +19,7 @@ import HorizontalSeparator from 'components/HorizontalSeparator';
 import Spacer from 'atoms/Spacer';
 import { useCreateAccount } from 'redux/Player/hooks';
 import ClassicAccountCreationForm from 'components/ClassicAccountCreationForm';
+import { FormattedMessage } from 'react-intl';
 
 interface Props {
   isOpen: boolean;
@@ -35,27 +36,42 @@ const CreateAccountModal: React.FC<Props> = ({ isOpen, onClose }) => {
     <WideModal isOpen={isOpen} onClose={onClose}>
       <CreateAccountContainer>
         <Column>
-          <StyledHeader>Belle partie, {player.name} !</StyledHeader>
+          <StyledHeader>
+            <FormattedMessage id="createAccountModal.niceGame" values={{ name: player.name }} />
+          </StyledHeader>
           <StyledParagraph>
-            Ce serait dommage de la laisser disparaître dans l'oubli ! Pour garder en mémoire tes
-            plus belles créations, il suffit de te créer un compte.
+            <FormattedMessage id="createAccountModal.keepHistory" />
           </StyledParagraph>
-          <StyledParagraph>Tu auras ainsi accès aux fonctionnalités suivantes :</StyledParagraph>
+          <StyledParagraph>
+            <FormattedMessage id="createAccountModal.features" />
+          </StyledParagraph>
           <Features>
-            <Feature>Historique de tes parties</Feature>
-            <Feature>Leaderboard mondial des meilleurs joueurs</Feature>
-            <Feature>Réservation de ton pseudo</Feature>
-            <Feature>... et plus à venir !</Feature>
+            <Feature>
+              <FormattedMessage id="createAccountModal.history" />
+            </Feature>
+            <Feature>
+              <FormattedMessage id="createAccountModal.leaderboard" />
+            </Feature>
+            <Feature>
+              <FormattedMessage id="createAccountModal.safeNickname" />
+            </Feature>
+            <Feature>
+              <FormattedMessage id="createAccountModal.andMore" />
+            </Feature>
           </Features>
           <Spacer />
-          <SecondaryButton onClick={onClose}>Plus tard</SecondaryButton>
+          <SecondaryButton onClick={onClose}>
+            <FormattedMessage id="createAccountModal.later" />
+          </SecondaryButton>
         </Column>
         <Gutter />
         <Column>
           <LoginWithFacebook />
           <LoginWithGoogle />
           <HorizontalSeparator>
-            <SeparatorText>Ou à l'ancienne :</SeparatorText>
+            <SeparatorText>
+              <FormattedMessage id="auth.oldStyle" />
+            </SeparatorText>
           </HorizontalSeparator>
           <ClassicAccountCreationForm createAccount={createAccount} />
         </Column>

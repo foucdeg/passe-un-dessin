@@ -4,7 +4,7 @@ import { FormikProps, Field } from 'formik';
 import { OutsideProps, FormValues } from './ClassicAccountCreationForm.form';
 import TextInput from 'components/TextInput';
 import { StyledLabel, StyledForm, StyledButton } from './ClassicAccountCreationForm.style';
-import { useIntl } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 import { AUTH_ERROR_EMAIL_IN_USE } from 'redux/Player/hooks';
 
 const ClassicAccountCreationFormView: React.FC<OutsideProps & FormikProps<FormValues>> = ({
@@ -20,13 +20,15 @@ const ClassicAccountCreationFormView: React.FC<OutsideProps & FormikProps<FormVa
 
   useEffect(() => {
     if (outsideError && outsideError.message === AUTH_ERROR_EMAIL_IN_USE) {
-      setFieldError('email', 'Email already in use');
+      setFieldError('email', 'auth.errors.emailInUse');
     }
   }, [outsideError, setFieldError]);
 
   return (
     <StyledForm>
-      <StyledLabel htmlFor="email">Adresse email</StyledLabel>
+      <StyledLabel htmlFor="email">
+        <FormattedMessage id="auth.email" />
+      </StyledLabel>
       <Field
         type="email"
         name="email"
@@ -35,7 +37,9 @@ const ClassicAccountCreationFormView: React.FC<OutsideProps & FormikProps<FormVa
         hasError={touched.email && errors.email}
         placeholder={intl.formatMessage({ id: 'mobileGate.emailExample' })}
       />
-      <StyledLabel htmlFor="password">Choisis un mot de passe</StyledLabel>
+      <StyledLabel htmlFor="password">
+        <FormattedMessage id="auth.pickPassword" />
+      </StyledLabel>
       <Field
         type="password"
         name="password"
@@ -44,7 +48,7 @@ const ClassicAccountCreationFormView: React.FC<OutsideProps & FormikProps<FormVa
         hasError={touched.password && errors.password}
       />
       <StyledButton type="submit" disabled={isSubmitting || loading || !isValid}>
-        Créer un compte
+        <FormattedMessage id="auth.createAccount" />
       </StyledButton>
     </StyledForm>
   );

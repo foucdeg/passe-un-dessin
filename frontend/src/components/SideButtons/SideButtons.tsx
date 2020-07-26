@@ -7,6 +7,7 @@ import { selectGame } from 'redux/Game/selectors';
 import AudioControl from 'components/AudioControl';
 import {
   SideButtonsContainer,
+  UserModalButton,
   PlayerModalButton,
   AdminModalButton,
   PlayerAddButton,
@@ -57,11 +58,16 @@ const SideButtons: React.FC<EmptyObject> = () => {
   return (
     <SideButtonsContainer>
       <AudioControl />
-      {player && (
-        <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.playerMenu' })}>
-          <PlayerModalButton alt="Player" onClick={() => setPlayerModalOpen(true)} />
-        </IconAndTooltip>
-      )}
+      {player &&
+        (player.user ? (
+          <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.accountMenu' })}>
+            <UserModalButton alt="User" onClick={() => setPlayerModalOpen(true)} />
+          </IconAndTooltip>
+        ) : (
+          <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.playerMenu' })}>
+            <PlayerModalButton alt="Player" onClick={() => setPlayerModalOpen(true)} />
+          </IconAndTooltip>
+        ))}
       {room && isPlayerAdmin && (
         <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.adminMenu' })}>
           <AdminModalButton alt="Settings" onClick={() => setAdminModalOpen(true)} />

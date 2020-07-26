@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 
+import userIcon from 'assets/person-filled.svg';
 import playerIcon from 'assets/person.svg';
 import cogIcon from 'assets/cog.svg';
 import rankingIcon from 'assets/ranking.svg';
@@ -23,6 +24,13 @@ export const PlayerModalButton = styled.img.attrs({ src: playerIcon })`
 `;
 
 PlayerModalButton.displayName = 'PlayerModalButton';
+
+export const UserModalButton = styled.img.attrs({ src: userIcon })`
+  cursor: pointer;
+  margin-bottom: 24px;
+`;
+
+UserModalButton.displayName = 'UserModalButton';
 
 export const AdminModalButton = styled.img.attrs({ src: cogIcon })`
   cursor: pointer;

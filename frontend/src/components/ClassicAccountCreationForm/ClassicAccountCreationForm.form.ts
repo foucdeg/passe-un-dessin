@@ -24,12 +24,12 @@ const ClassicAccountCreationForm = withFormik<OutsideProps, FormValues>({
   validate: (values: FormValues) => {
     const errors: FormikErrors<FormValues> = {};
     if (!values.email) {
-      errors.email = 'Required';
+      errors.email = 'auth.errors.required';
     } else if (!isValidEmail(values.email)) {
-      errors.email = 'Invalid email address';
+      errors.email = 'auth.errors.invalidEmail';
     }
     if (!values.password) {
-      errors.password = 'Required';
+      errors.password = 'auth.errors.required';
     }
     return errors;
   },

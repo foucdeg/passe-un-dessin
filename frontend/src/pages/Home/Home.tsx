@@ -73,7 +73,7 @@ const Home: React.FunctionComponent = () => {
         <Credits>Quentin Somerville • Léo Anesi</Credits>
       </RightSide>
       <CreateAccountModal
-        isOpen={true}
+        isOpen={false}
         onClose={() => {
           /* implement */
         }}

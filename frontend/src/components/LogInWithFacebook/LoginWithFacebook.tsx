@@ -3,6 +3,7 @@ import React, { useEffect, useCallback } from 'react';
 import { EmptyObject as NoProps } from 'services/utils';
 import { useSocialLogin, AuthProvider } from 'redux/Player/hooks';
 import { StyledFacebookButton, FacebookLogo, TextContent } from './LoginWithFacebook.style';
+import { FormattedMessage } from 'react-intl';
 
 enum FacebookAuthStatus {
   CONNECTED = 'connected',
@@ -59,7 +60,9 @@ const LoginWithFacebook: React.FC<NoProps> = () => {
   return (
     <StyledFacebookButton onClick={doFacebookLogin}>
       <FacebookLogo />
-      <TextContent>Login with Facebook</TextContent>
+      <TextContent>
+        <FormattedMessage id="auth.facebookLogin" />
+      </TextContent>
     </StyledFacebookButton>
   );
 };
