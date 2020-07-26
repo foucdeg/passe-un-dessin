@@ -2,21 +2,32 @@ version: 2.1
 orbs:
   node: circleci/node@3.0.1
 jobs:
-  build-and-lint:
-    working_directory: frontend
+  lint:
     executor:
       name: node/default
     steps:
       - checkout
       - node/install-packages:
           pkg-manager: yarn
+          app-dir: frontend
       - run:
           command: yarn lint
           name: Run linter
+          working_directory: frontend
+  tsc:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+          app-dir: frontend
       - run:
           command: yarn tsc
           name: Run TypeScript check
+          working_directory: frontend
 workflows:
-  build-and-lint:
+  build-lint-tsc:
     jobs:
-      - build-and-lint
+      - lint
+      - tsc
