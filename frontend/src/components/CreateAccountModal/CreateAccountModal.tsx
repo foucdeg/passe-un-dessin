@@ -11,15 +11,10 @@ import {
   Feature,
   StyledHeader,
   StyledParagraph,
-  SeparatorText,
 } from './CreateAccountModal.style';
-import LoginWithFacebook from 'components/LogInWithFacebook';
-import LoginWithGoogle from 'components/LogInWithGoogle';
-import HorizontalSeparator from 'components/HorizontalSeparator';
 import Spacer from 'atoms/Spacer';
-import { useCreateAccount } from 'redux/Player/hooks';
-import ClassicAccountCreationForm from 'components/ClassicAccountCreationForm';
 import { FormattedMessage } from 'react-intl';
+import AuthPanel from 'components/AuthPanel';
 
 interface Props {
   isOpen: boolean;
@@ -28,7 +23,6 @@ interface Props {
 
 const CreateAccountModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const player = useSelector(selectPlayer);
-  const createAccount = useCreateAccount();
 
   if (!player) return null;
 
@@ -66,14 +60,7 @@ const CreateAccountModal: React.FC<Props> = ({ isOpen, onClose }) => {
         </Column>
         <Gutter />
         <Column>
-          <LoginWithFacebook />
-          <LoginWithGoogle />
-          <HorizontalSeparator>
-            <SeparatorText>
-              <FormattedMessage id="auth.oldStyle" />
-            </SeparatorText>
-          </HorizontalSeparator>
-          <ClassicAccountCreationForm createAccount={createAccount} />
+          <AuthPanel />
         </Column>
       </CreateAccountContainer>
     </WideModal>

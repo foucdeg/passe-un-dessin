@@ -20,7 +20,12 @@ const ClassicLoginForm = withFormik<OutsideProps, FormValues>({
       password: '',
     };
   },
-
+  mapPropsToErrors: () => {
+    return {
+      email: 'auth.errors.required',
+      password: 'auth.errors.required',
+    };
+  },
   validate: (values: FormValues) => {
     const errors: FormikErrors<FormValues> = {};
     if (!values.email) {

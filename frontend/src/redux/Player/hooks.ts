@@ -75,7 +75,7 @@ export const useLogin = () => {
         await client.post(`/auth/login`, { email, password });
         await doFetchMe();
       } catch (e) {
-        if (e.status === 401) {
+        if (e.status === 403) {
           throw new Error(AUTH_ERROR_INVALID_USERNAME_PASSWORD);
         }
         throw e;

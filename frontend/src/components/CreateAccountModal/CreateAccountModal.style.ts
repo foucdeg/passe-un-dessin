@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import Modal from 'components/Modal';
 import Header2 from 'atoms/Header2';
 import { colorPalette } from 'stylesheet';
-import Header4 from 'atoms/Header4';
 
 export const WideModal = styled(Modal)`
   width: 768px;
@@ -40,12 +39,6 @@ export const Gutter = styled.div`
 `;
 
 Gutter.displayName = 'Gutter';
-
-export const SeparatorText = styled(Header4)`
-  color: ${colorPalette.textGrey};
-`;
-
-SeparatorText.displayName = 'SeparatorText';
 
 export const StyledParagraph = styled.p`
   margin-bottom: 16px;

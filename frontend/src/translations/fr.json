@@ -98,8 +98,8 @@
     "reverseOrder": "Ordre inverse"
   },
   "userNameModal": {
-    "title": "Comment tu t'appelles ?",
-    "pickName": "Choisis un nom",
+    "title": "Hello toi ! Comment tu t'appelles ?",
+    "pickName": "Choisis un nom :",
     "placeholder": "XXBogossDu62",
     "submit": "Valider"
   },

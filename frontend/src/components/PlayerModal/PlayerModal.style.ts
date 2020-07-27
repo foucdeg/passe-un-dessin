@@ -3,7 +3,6 @@ import Header2 from 'atoms/Header2';
 import { colorPalette } from 'stylesheet';
 import arrowRight from 'assets/arrow-right.svg';
 import Modal from 'components/Modal';
-import Header4 from 'atoms/Header4';
 
 export const WideModal = styled(Modal)`
   width: 768px;
@@ -41,12 +40,6 @@ export const Gutter = styled.div`
 `;
 
 Gutter.displayName = 'Gutter';
-
-export const SeparatorText = styled(Header4)`
-  color: ${colorPalette.textGrey};
-`;
-
-SeparatorText.displayName = 'SeparatorText';
 
 export const InputArrow = styled.img.attrs({ src: arrowRight })`
   cursor: pointer;

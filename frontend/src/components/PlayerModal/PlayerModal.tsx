@@ -6,18 +6,14 @@ import {
   Column,
   StyledHeader,
   InputArrow,
-  SeparatorText,
   Gutter,
 } from './PlayerModal.style';
 import { FormattedMessage } from 'react-intl';
 import FieldLabel from 'atoms/FieldLabel';
 import TextInput from 'components/TextInput';
 import { selectPlayer } from 'redux/Player/selectors';
-import { useEditPlayer, useCreateAccount } from 'redux/Player/hooks';
-import LoginWithFacebook from 'components/LogInWithFacebook';
-import LoginWithGoogle from 'components/LogInWithGoogle';
-import HorizontalSeparator from 'components/HorizontalSeparator';
-import ClassicAccountCreationForm from 'components/ClassicAccountCreationForm';
+import { useEditPlayer } from 'redux/Player/hooks';
+import AuthPanel from 'components/AuthPanel';
 
 interface Props {
   isOpen: boolean;
@@ -28,7 +24,6 @@ const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const player = useSelector(selectPlayer);
   const [playerName, setPlayerName] = useState<string>('');
   const doEditPlayer = useEditPlayer();
-  const createAccount = useCreateAccount();
 
   useEffect(() => {
     if (player) {
@@ -71,14 +66,7 @@ const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
           <StyledHeader>
             <FormattedMessage id="playerModal.account" />
           </StyledHeader>
-          <LoginWithFacebook />
-          <LoginWithGoogle />
-          <HorizontalSeparator>
-            <SeparatorText>
-              <FormattedMessage id="auth.oldStyle" />
-            </SeparatorText>
-          </HorizontalSeparator>
-          <ClassicAccountCreationForm createAccount={createAccount} />
+          <AuthPanel />
         </Column>
       </PlayerModalContainer>
     </WideModal>

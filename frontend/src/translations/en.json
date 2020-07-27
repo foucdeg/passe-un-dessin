@@ -98,8 +98,8 @@
     "reverseOrder": "Reverse order"
   },
   "userNameModal": {
-    "title": "What's your name?",
-    "pickName": "Pick a nickname",
+    "title": "Hey there! What's your name?",
+    "pickName": "Pick a nickname:",
     "placeholder": "M4sterSk3tcher_69",
     "submit": "Submit"
   },
