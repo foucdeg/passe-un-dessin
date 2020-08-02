@@ -1,14 +1,20 @@
 import json
 import logging
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.http import HttpResponseBadRequest, HttpResponseForbidden, JsonResponse
+from django.http import (
+    HttpResponse,
+    HttpResponseBadRequest,
+    HttpResponseForbidden,
+    JsonResponse,
+)
 from django.views.decorators.http import require_GET, require_POST
 from rest_framework.generics import UpdateAPIView
 
 from core.decorators import requires_player
-from core.models import Player, User
+from core.models import Player, User, Vote
 from core.serializers import (
     PlayerSerializer,
     PlayerWithUserSerializer,
@@ -26,7 +32,10 @@ logger = logging.getLogger(__name__)
 @require_GET
 @requires_player
 def get_me(request, player):
-    return JsonResponse(PlayerWithUserSerializer(player).data)
+    if request.user.is_authenticated:
+        return JsonResponse(PlayerWithUserSerializer(player).data)
+
+    return JsonResponse(PlayerSerializer(player).data)
 
 
 class PlayerEditAPIView(UpdateAPIView):
@@ -103,3 +112,18 @@ def check_login(request):
         return JsonResponse(UserSerializer(user).data)
     else:
         return HttpResponseForbidden("Invalid email or password")
+
+
+@require_POST
+@login_required
+def do_logout(request):
+    logout(request)
+
+    return HttpResponse("Logout successful")
+
+
+@require_GET
+@requires_player
+def get_total_score(request, player):
+    total_score = Vote.objects.filter(pad_step__player=player).count()
+    return JsonResponse({"score": total_score})

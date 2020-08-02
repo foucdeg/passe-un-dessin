@@ -1,9 +1,9 @@
 import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
-import { updatePlayer } from './slice';
+import { updatePlayer, updatePlayerTotalScore } from './slice';
 import { useCallback } from 'react';
 import { Player } from './types';
-import { useTypedAsyncFn } from 'services/utils';
+import { useTypedAsyncFn, EmptyObject } from 'services/utils';
 
 export const AUTH_ERROR_EMAIL_IN_USE = 'AUTH_ERROR_EMAIL_IN_USE';
 export const AUTH_ERROR_INVALID_USERNAME_PASSWORD = 'AUTH_ERROR_INVALID_USERNAME_PASSWORD';
@@ -85,6 +85,30 @@ export const useLogin = () => {
   );
 };
 
+/*  eslint-disable @typescript-eslint/no-explicit-any */
+export const useLogout = () => {
+  const doFetchMe = useFetchMe();
+
+  return useCallback(async () => {
+    await client.post(`/auth/logout`);
+
+    const FB = (window as any).FB;
+    FB.getLoginStatus((response: any) => {
+      if (response.status === 'connected') {
+        FB.logout();
+      }
+    });
+
+    const authInstance = (window as any).authInstance;
+    if (authInstance) {
+      authInstance.signOut();
+    }
+
+    await doFetchMe();
+  }, [doFetchMe]);
+};
+/*  eslint-enable @typescript-eslint/no-explicit-any */
+
 export const useCreateAccount = () => {
   const doFetchMe = useFetchMe();
 
@@ -102,4 +126,13 @@ export const useCreateAccount = () => {
     },
     [doFetchMe],
   );
+};
+
+export const useFetchTotalScore = () => {
+  const dispatch = useDispatch();
+
+  return useTypedAsyncFn<EmptyObject>(async () => {
+    const result = await client.get(`/player/total-score`);
+    dispatch(updatePlayerTotalScore(result.score));
+  }, [dispatch]);
 };

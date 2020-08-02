@@ -40,9 +40,10 @@ const ClassicLoginForm = withFormik<OutsideProps, FormValues>({
   },
   validateOnChange: true,
 
-  handleSubmit: (values, { props }) => {
+  handleSubmit: async (values, { props, setSubmitting }) => {
     const [, doLogin] = props.login;
-    doLogin({ email: values.email, password: values.password });
+    await doLogin({ email: values.email, password: values.password });
+    setSubmitting(false);
   },
 })(InnerForm);
 

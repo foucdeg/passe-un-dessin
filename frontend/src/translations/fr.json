@@ -149,9 +149,23 @@
     "emailBody": "Lien : {link}\n\nÀ tout de suite !"
   },
   "playerModal": {
-    "title": "Joueur",
+    "title": "Réglages du compte",
     "playerName": "Nom du joueur",
-    "account": "Compte"
+    "playerColor": "Couleur du joueur",
+    "colors": {
+      "purple": "Violet",
+      "lightBlue": "Bleu clair",
+      "lightGreen": "Vert clair",
+      "mauve": "Mauve",
+      "orange": "Orange",
+      "bloodOrange": "Orange sanguine",
+      "yellow": "Jaune",
+      "fuschia": "Fuschia"
+    },
+    "totalScore": "Score total",
+    "ranking": "Classement mondial",
+    "changePassword": "Changer de mot de passe",
+    "logOut": "Se déconnecter"
   },
   "rankingModal": {
     "title": "Scores",

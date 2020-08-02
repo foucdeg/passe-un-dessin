@@ -21,7 +21,7 @@ export const ModalContent = styled.div`
   background-color: ${colorPalette.white};
   z-index: 35;
   margin: auto;
-  margin-top: 180px;
+  margin-top: 120px;
   width: 512px;
   border-radius: 16px;
   padding: 24px 54px;

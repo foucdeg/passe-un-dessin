@@ -149,9 +149,23 @@
     "emailBody": "Link: {link}\n\nSee you soon!"
   },
   "playerModal": {
-    "title": "Player",
+    "title": "Account settings",
     "playerName": "Player Name",
-    "account": "Account"
+    "playerColor": "Player color",
+    "colors": {
+      "purple": "Purple",
+      "lightBlue": "Light blue",
+      "lightGreen": "Light green",
+      "mauve": "Mauve",
+      "orange": "Orange",
+      "bloodOrange": "Blood Orange",
+      "yellow": "Yellow",
+      "fuschia": "Fuschia"
+    },
+    "totalScore": "Total score",
+    "ranking": "World ranking",
+    "changePassword": "Changer password",
+    "logOut": "Log out"
   },
   "rankingModal": {
     "title": "Score",

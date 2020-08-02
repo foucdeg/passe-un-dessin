@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import Header2 from 'atoms/Header2';
 import { colorPalette } from 'stylesheet';
-import arrowRight from 'assets/arrow-right.svg';
 import Modal from 'components/Modal';
 
 export const WideModal = styled(Modal)`
@@ -13,36 +12,29 @@ WideModal.displayName = 'WideModal';
 
 export const StyledHeader = styled(Header2)`
   color: ${colorPalette.purple};
-  margin-bottom: 24px;
-  text-align: center;
 `;
 
 StyledHeader.displayName = 'StyledHeader';
 
-export const PlayerModalContainer = styled.div`
+export const HeaderSection = styled.div`
+  text-align: center;
+  margin-bottom: 24px;
+`;
+
+HeaderSection.displayName = 'HeaderSection';
+
+export const ScoreCardRow = styled.div`
   display: flex;
+  justify-content: space-between;
+  margin: 24px 0;
 `;
 
-PlayerModalContainer.displayName = 'PlayerModalContainer';
+ScoreCardRow.displayName = 'ScoreCardRow';
 
-export const Column = styled.div`
+export const ButtonRow = styled.div`
   display: flex;
-  flex-direction: column;
-  flex: 1 1 0;
+  justify-content: space-between;
+  flex-wrap: wrap;
 `;
 
-Column.displayName = 'Column';
-
-export const Gutter = styled.div`
-  border: 1px solid ${colorPalette.textGrey};
-  margin: 0 24px;
-  flex-grow: 0;
-`;
-
-Gutter.displayName = 'Gutter';
-
-export const InputArrow = styled.img.attrs({ src: arrowRight })`
-  cursor: pointer;
-`;
-
-InputArrow.displayName = 'InputArrow';
+ButtonRow.displayName = 'ButtonRow';

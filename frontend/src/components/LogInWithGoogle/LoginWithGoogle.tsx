@@ -15,7 +15,6 @@ const LoginWithGoogle: React.FC<NoProps> = () => {
 
   const onLoginSuccess = useCallback(
     (googleUser: GoogleUser) => {
-      console.log(googleUser);
       const idToken = googleUser.getAuthResponse().id_token;
       doLogin(idToken, AuthProvider.GOOGLE);
     },
