@@ -1,28 +1,25 @@
 import React, { useState } from 'react';
-import { NoProps } from 'services/utils';
 import LoginWithFacebook from 'components/LogInWithFacebook';
 import LoginWithGoogle from 'components/LogInWithGoogle';
 import HorizontalSeparator from 'components/HorizontalSeparator';
-import { SeparatorText, InlineSwitch, StyledSwitch } from './AuthPanel.style';
+import { InlineSwitch, StyledSwitch } from './AuthPanel.style';
 import { FormattedMessage } from 'react-intl';
 import ClassicAccountCreationForm from 'components/ClassicAccountCreationForm';
-import { useCreateAccount, useLogin } from 'redux/Player/hooks';
 import ClassicLoginForm from 'components/ClassicLoginForm';
 
-const AuthPanel: React.FC<NoProps> = () => {
-  const createAccount = useCreateAccount();
-  const login = useLogin();
+interface Props {
+  onDone?: () => void;
+}
 
+const AuthPanel: React.FC<Props> = ({ onDone }) => {
   const [isCreatingAccount, setIsCreatingAccount] = useState<boolean>(true);
 
   return (
     <>
-      <LoginWithFacebook />
-      <LoginWithGoogle />
+      <LoginWithFacebook onDone={onDone} />
+      <LoginWithGoogle onDone={onDone} />
       <HorizontalSeparator>
-        <SeparatorText>
-          <FormattedMessage id="auth.oldStyle" />
-        </SeparatorText>
+        <FormattedMessage id="auth.oldStyle" />
       </HorizontalSeparator>
       <InlineSwitch>
         <FormattedMessage tagName="span" id="auth.logIn" />
@@ -30,9 +27,9 @@ const AuthPanel: React.FC<NoProps> = () => {
         <FormattedMessage tagName="span" id="auth.createAccount" />
       </InlineSwitch>
       {isCreatingAccount ? (
-        <ClassicAccountCreationForm createAccount={createAccount} />
+        <ClassicAccountCreationForm onAccountCreated={onDone} />
       ) : (
-        <ClassicLoginForm login={login} />
+        <ClassicLoginForm onLoggedIn={onDone} />
       )}
     </>
   );

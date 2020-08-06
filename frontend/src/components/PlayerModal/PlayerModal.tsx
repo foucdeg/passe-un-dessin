@@ -1,9 +1,15 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'redux/useSelector';
-import { StyledHeader, HeaderSection, ButtonRow, ScoreCardRow } from './PlayerModal.style';
+import {
+  StyledHeader,
+  HeaderSection,
+  ButtonRow,
+  ScoreCardRow,
+  StyledSeparator,
+} from './PlayerModal.style';
 import { FormattedMessage } from 'react-intl';
 import PlayerForm from 'components/PlayerForm';
-import { selectPlayer, selectPlayerTotalScore } from 'redux/Player/selectors';
+import { selectPlayer, selectPlayerTotalScore, selectPlayerRanking } from 'redux/Player/selectors';
 import { useLogout, useFetchTotalScore } from 'redux/Player/hooks';
 import Header4 from 'atoms/Header4';
 import Modal from 'components/Modal';
@@ -21,12 +27,18 @@ const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const doLogout = useLogout();
   const [{ loading: scoreLoading }, fetchTotalScore] = useFetchTotalScore();
   const totalScore = useSelector(selectPlayerTotalScore);
+  const ranking = useSelector(selectPlayerRanking);
 
   useEffect(() => {
     if (isOpen) {
       fetchTotalScore();
     }
   }, [fetchTotalScore, isOpen]);
+
+  const logoutAndClose = () => {
+    onClose();
+    doLogout();
+  };
 
   if (!player) return null;
   if (!player.user) return null;
@@ -41,7 +53,13 @@ const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
           {player.name} - {player.user.email}
         </Header4>
       </HeaderSection>
+      <StyledSeparator>
+        <FormattedMessage id="playerModal.myInfos" />
+      </StyledSeparator>
       <PlayerForm />
+      <StyledSeparator>
+        <FormattedMessage id="playerModal.myStats" />
+      </StyledSeparator>
       <ScoreCardRow>
         <ScoreCard
           loading={scoreLoading}
@@ -50,15 +68,16 @@ const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
         />
         <ScoreCard
           color={colorPalette.purple}
+          loading={scoreLoading}
           label={<FormattedMessage id="playerModal.ranking" />}
-          value={326}
+          value={'#' + ranking}
         />
       </ScoreCardRow>
       <ButtonRow>
         {/* <SecondaryButton>
           <FormattedMessage id="playerModal.changePassword" />
         </SecondaryButton> */}
-        <SecondaryButton onClick={doLogout}>
+        <SecondaryButton onClick={logoutAndClose}>
           <FormattedMessage id="playerModal.logOut" />
         </SecondaryButton>
       </ButtonRow>

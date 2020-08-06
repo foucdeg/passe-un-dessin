@@ -1,19 +1,25 @@
+import React from 'react';
 import { withFormik, FormikErrors } from 'formik';
 import { isValidEmail } from 'services/utils';
 import InnerForm from './ClassicAccountCreationForm';
 import { AsyncFnReturn } from 'react-use/lib/useAsync';
 import { FnReturningPromise } from 'react-use/lib/util';
+import { useCreateAccount } from 'redux/Player/hooks';
 
-export interface OutsideProps {
-  createAccount: AsyncFnReturn<FnReturningPromise>;
+interface OutsideProps {
+  onAccountCreated?: () => void;
 }
+
+export type FormOutsideProps = OutsideProps & {
+  createAccount: AsyncFnReturn<FnReturningPromise>;
+};
 // Shape of form values
 export interface FormValues {
   email: string;
   password: string;
 }
 
-const ClassicAccountCreationForm = withFormik<OutsideProps, FormValues>({
+const ClassicAccountCreationForm = withFormik<FormOutsideProps, FormValues>({
   mapPropsToValues: () => {
     return {
       email: '',
@@ -40,10 +46,22 @@ const ClassicAccountCreationForm = withFormik<OutsideProps, FormValues>({
   },
   validateOnChange: true,
 
-  handleSubmit: (values, { props }) => {
+  handleSubmit: async (values, { props, setSubmitting }) => {
     const [, doCreateAccount] = props.createAccount;
-    doCreateAccount({ email: values.email, password: values.password });
+    await doCreateAccount({ email: values.email, password: values.password });
+    setSubmitting(false);
+    if (props.onAccountCreated) {
+      props.onAccountCreated();
+    }
   },
 })(InnerForm);
 
-export default ClassicAccountCreationForm;
+const OuterClassicAccountCreationForm: React.FC<OutsideProps> = ({ onAccountCreated }) => {
+  const createAccount = useCreateAccount();
+
+  return (
+    <ClassicAccountCreationForm onAccountCreated={onAccountCreated} createAccount={createAccount} />
+  );
+};
+
+export default OuterClassicAccountCreationForm;

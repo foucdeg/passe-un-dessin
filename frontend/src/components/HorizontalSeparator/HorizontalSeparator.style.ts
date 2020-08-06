@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { colorPalette } from 'stylesheet';
+import Header4 from 'atoms/Header4';
 
 export const SeparatorRow = styled.div`
   display: flex;
@@ -16,7 +17,10 @@ export const Line = styled.div`
 
 Line.displayName = 'Line';
 
-export const TextContent = styled.div`
+export const SeparatorText = styled(Header4)`
+  color: ${colorPalette.textGrey};
   flex-grow: 0;
   margin: 0 16px;
 `;
+
+SeparatorText.displayName = 'SeparatorText';

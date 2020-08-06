@@ -149,7 +149,8 @@
     "emailBody": "Link: {link}\n\nSee you soon!"
   },
   "playerModal": {
-    "title": "Account settings",
+    "title": "My account",
+    "myInfos": "My infos",
     "playerName": "Player Name",
     "playerColor": "Player color",
     "colors": {
@@ -162,6 +163,7 @@
       "yellow": "Yellow",
       "fuschia": "Fuschia"
     },
+    "myStats": "My stats",
     "totalScore": "Total score",
     "ranking": "World ranking",
     "changePassword": "Changer password",

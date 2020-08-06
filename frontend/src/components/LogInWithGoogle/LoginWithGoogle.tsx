@@ -1,6 +1,5 @@
 /*  eslint @typescript-eslint/no-explicit-any: off */
 import React, { useCallback, useEffect, useRef } from 'react';
-import { NoProps } from 'services/utils';
 import { useSocialLogin, AuthProvider } from 'redux/Player/hooks';
 import { GoogleLogo, TextContent, StyledGoogleButton } from './LoginWithGoogle.style';
 import { FormattedMessage } from 'react-intl';
@@ -9,16 +8,23 @@ interface GoogleUser {
   getAuthResponse: () => { id_token: string };
 }
 
-const LoginWithGoogle: React.FC<NoProps> = () => {
+interface Props {
+  onDone?: () => void;
+}
+
+const LoginWithGoogle: React.FC<Props> = ({ onDone }) => {
   const doLogin = useSocialLogin();
   const buttonRef = useRef(null);
 
   const onLoginSuccess = useCallback(
-    (googleUser: GoogleUser) => {
+    async (googleUser: GoogleUser) => {
       const idToken = googleUser.getAuthResponse().id_token;
-      doLogin(idToken, AuthProvider.GOOGLE);
+      await doLogin(idToken, AuthProvider.GOOGLE);
+      if (onDone) {
+        onDone();
+      }
     },
-    [doLogin],
+    [doLogin, onDone],
   );
 
   useEffect(() => {

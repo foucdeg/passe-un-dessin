@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 
 import { FormikProps, Field } from 'formik';
-import { OutsideProps, FormValues } from './ClassicLoginForm.form';
+import { FormValues, FormOutsideProps } from './ClassicLoginForm.form';
 import TextInput from 'components/TextInput';
 import { StyledLabel, StyledForm, StyledButton } from './ClassicLoginForm.style';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { AUTH_ERROR_INVALID_USERNAME_PASSWORD } from 'redux/Player/hooks';
 
-const ClassicLoginFormView: React.FC<OutsideProps & FormikProps<FormValues>> = ({
+const ClassicLoginFormView: React.FC<FormOutsideProps & FormikProps<FormValues>> = ({
   touched,
   errors,
   isValid,

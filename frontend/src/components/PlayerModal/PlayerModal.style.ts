@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Header2 from 'atoms/Header2';
 import { colorPalette } from 'stylesheet';
 import Modal from 'components/Modal';
+import HorizontalSeparator from 'components/HorizontalSeparator';
 
 export const WideModal = styled(Modal)`
   width: 768px;
@@ -23,10 +24,15 @@ export const HeaderSection = styled.div`
 
 HeaderSection.displayName = 'HeaderSection';
 
+export const StyledSeparator = styled(HorizontalSeparator)`
+  margin-bottom: 16px;
+`;
+StyledSeparator.displayName = 'StyledSeparator';
+
 export const ScoreCardRow = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 24px 0;
+  margin-bottom: 24px;
 `;
 
 ScoreCardRow.displayName = 'ScoreCardRow';

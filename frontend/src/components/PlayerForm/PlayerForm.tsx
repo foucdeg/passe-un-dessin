@@ -1,32 +1,49 @@
 import React from 'react';
-import { FormikProps, Form, Field } from 'formik';
+import { FormikProps, Field } from 'formik';
 import { FormValues, OutsideProps } from './PlayerForm.form';
-import FieldLabel from 'atoms/FieldLabel';
-import { FormattedMessage } from 'react-intl';
-import TextInput from 'components/TextInput';
-import { PLAYER_COLORS } from './PlayerForm.style';
+import {
+  Square,
+  StyledEditIcon,
+  StyledCheckIcon,
+  Row,
+  StyledForm,
+  StyledNonInput,
+  StyledTextInput,
+  AirButton,
+} from './PlayerForm.style';
 
-const InnerPlayerForm: React.FC<OutsideProps & FormikProps<FormValues>> = ({ touched, errors }) => (
-  <Form>
-    <FieldLabel>
-      <FormattedMessage id="playerModal.playerName" />
-    </FieldLabel>
-    <Field as={TextInput} type="string" name="name" hasError={touched.name && errors.name} />
-    <FieldLabel>
-      <FormattedMessage id="playerModal.playerColor" />
-    </FieldLabel>
-    <Field as="select" name="color">
-      {Object.entries(PLAYER_COLORS).map(([colorHash, colorName]) => (
-        <FormattedMessage key={colorHash} id={`playerModal.colors.${colorName}`}>
-          {(message: string) => (
-            <option value={colorHash} color={colorHash}>
-              {message}
-            </option>
-          )}
-        </FormattedMessage>
-      ))}
-    </Field>
-  </Form>
-);
+const InnerPlayerForm: React.FC<OutsideProps & FormikProps<FormValues>> = ({
+  touched,
+  errors,
+  values,
+  player,
+  isEditing,
+  setIsEditing,
+}) => {
+  if (!isEditing)
+    return (
+      <Row>
+        <Square color={player.color} />
+        <StyledNonInput>{player.name}</StyledNonInput>
+        <StyledEditIcon onClick={() => setIsEditing(true)} />
+      </Row>
+    );
+
+  return (
+    <StyledForm>
+      <Square color={values.color} />
+      <Field
+        as={StyledTextInput}
+        type="string"
+        name="name"
+        hasError={touched.name && errors.name}
+        autoFocus
+      />
+      <AirButton type="submit">
+        <StyledCheckIcon />
+      </AirButton>
+    </StyledForm>
+  );
+};
 
 export default InnerPlayerForm;

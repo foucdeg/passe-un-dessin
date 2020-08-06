@@ -43,14 +43,14 @@ export const useCreatePlayer = () => {
 };
 
 export const useEditPlayer = () => {
-  const dispatch = useDispatch();
+  const doFetchMe = useFetchMe();
 
   return useCallback(
     async (player: Player) => {
-      const returnedPlayer = await client.put(`/player/${player.uuid}`, { ...player });
-      dispatch(updatePlayer(returnedPlayer));
+      await client.put(`/player/${player.uuid}`, { ...player });
+      await doFetchMe();
     },
-    [dispatch],
+    [doFetchMe],
   );
 };
 
@@ -133,6 +133,7 @@ export const useFetchTotalScore = () => {
 
   return useTypedAsyncFn<EmptyObject>(async () => {
     const result = await client.get(`/player/total-score`);
-    dispatch(updatePlayerTotalScore(result.score));
+    const { score, ranking } = result;
+    dispatch(updatePlayerTotalScore({ score, ranking }));
   }, [dispatch]);
 };

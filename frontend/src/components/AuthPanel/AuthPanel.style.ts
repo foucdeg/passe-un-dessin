@@ -1,13 +1,5 @@
 import styled from 'styled-components';
-import Header4 from 'atoms/Header4';
-import { colorPalette } from 'stylesheet';
 import Switch from 'components/Switch';
-
-export const SeparatorText = styled(Header4)`
-  color: ${colorPalette.textGrey};
-`;
-
-SeparatorText.displayName = 'SeparatorText';
 
 export const InlineSwitch = styled.div`
   display: flex;

@@ -1,6 +1,5 @@
 /*  eslint @typescript-eslint/no-explicit-any: off */
 import React, { useEffect, useCallback } from 'react';
-import { EmptyObject as NoProps } from 'services/utils';
 import { useSocialLogin, AuthProvider } from 'redux/Player/hooks';
 import { StyledFacebookButton, FacebookLogo, TextContent } from './LoginWithFacebook.style';
 import { FormattedMessage } from 'react-intl';
@@ -31,21 +30,28 @@ const isSucessful = (
 ): response is SuccessfulFacebookAuthStatusResponse =>
   response.status === FacebookAuthStatus.CONNECTED;
 
-const LoginWithFacebook: React.FC<NoProps> = () => {
+interface Props {
+  onDone?: () => void;
+}
+
+const LoginWithFacebook: React.FC<Props> = ({ onDone }) => {
   const doLogin = useSocialLogin();
 
   const doFacebookLogin = useCallback(() => {
     const FB = (window as any).FB;
 
     FB.login(
-      function (response: FacebookAuthStatusResponse) {
+      async function (response: FacebookAuthStatusResponse) {
         if (isSucessful(response)) {
-          return doLogin(response.authResponse.accessToken, AuthProvider.FACEBOOK);
+          await doLogin(response.authResponse.accessToken, AuthProvider.FACEBOOK);
+          if (onDone) {
+            onDone();
+          }
         }
       },
       { scope: 'email' },
     );
-  }, [doLogin]);
+  }, [doLogin, onDone]);
 
   useEffect(() => {
     const FB = (window as any).FB;

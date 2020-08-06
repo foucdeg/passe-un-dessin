@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { withFormik, FormikErrors } from 'formik';
 import { NoProps } from 'services/utils';
@@ -11,6 +11,8 @@ import { selectPlayer } from 'redux/Player/selectors';
 export interface OutsideProps {
   player: Player;
   onSubmit: (player: Player) => Promise<void>;
+  isEditing: boolean;
+  setIsEditing: (isEditing: boolean) => void;
 }
 // Shape of form values
 export interface FormValues {
@@ -39,19 +41,29 @@ const PlayerForm = withFormik<OutsideProps, FormValues>({
 
   handleSubmit: async (values, { props, setSubmitting }) => {
     const { onSubmit, player } = props;
+    const { user, ...playerWithoutUser } = player;
     const { name, color } = values;
-    await onSubmit({ ...player, name, color });
+    await onSubmit({ ...playerWithoutUser, name, color });
     setSubmitting(false);
+    props.setIsEditing(false);
   },
 })(InnerForm);
 
 const OuterPlayerForm: React.FC<NoProps> = () => {
   const player = useSelector(selectPlayer);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const doEditPlayer = useEditPlayer();
 
   if (!player) return null;
 
-  return <PlayerForm player={player} onSubmit={doEditPlayer} />;
+  return (
+    <PlayerForm
+      player={player}
+      onSubmit={doEditPlayer}
+      isEditing={isEditing}
+      setIsEditing={setIsEditing}
+    />
+  );
 };
 
 export default OuterPlayerForm;

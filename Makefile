@@ -1,3 +1,5 @@
+include .env
+
 deploy-front:
 	cd frontend && REACT_APP_ENV=production NODE_ENV=production yarn build
 	rsync -avz --delete-after ./frontend/build/ vps:/home/fouc/passe-un-dessin/build
@@ -7,3 +9,9 @@ deploy-back:
 	docker push foucdeg/passe-un-dessin:latest
 
 deploy: deploy-back deploy-front
+
+load_prod_dump:
+	ssh vps "PGPASSWORD=$(DB_PASSWORD) pg_dump -U passe_un_dessin_user -d passe_un_dessin  -c -f /tmp/dump.pgbackup"
+	scp vps:/tmp/dump.pgbackup /tmp/dump.pgbackup
+	docker cp /tmp/dump.pgbackup $(dc ps -q db):/tmp/dump.pgbackup
+	dc exec db psql -U postgres -d postgres < /tmp/dump

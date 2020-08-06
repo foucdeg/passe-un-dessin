@@ -24,6 +24,7 @@ import PlayerModal from 'components/PlayerModal';
 import RankingModal from 'components/RankingModal';
 import { useLeaveRoom } from 'redux/Room/hooks';
 import { EmptyObject } from 'services/utils';
+import AuthModal from 'components/AuthModal';
 
 const SideButtons: React.FC<EmptyObject> = () => {
   const isPlayerAdmin = useSelector(selectPlayerIsAdmin);
@@ -37,6 +38,7 @@ const SideButtons: React.FC<EmptyObject> = () => {
   );
 
   const [isAdminModalOpen, setAdminModalOpen] = useState<boolean>(false);
+  const [isAuthModalOpen, setAuthModalOpen] = useState<boolean>(false);
   const [isPlayerModalOpen, setPlayerModalOpen] = useState<boolean>(false);
   const [isRankingModalOpen, setRankingModalOpen] = useState<boolean>(false);
 
@@ -65,7 +67,7 @@ const SideButtons: React.FC<EmptyObject> = () => {
           </IconAndTooltip>
         ) : (
           <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.playerMenu' })}>
-            <PlayerModalButton alt="Player" onClick={() => setPlayerModalOpen(true)} />
+            <PlayerModalButton alt="Player" onClick={() => setAuthModalOpen(true)} />
           </IconAndTooltip>
         ))}
       {room && isPlayerAdmin && (
@@ -94,6 +96,7 @@ const SideButtons: React.FC<EmptyObject> = () => {
         </IconAndTooltip>
       )}
       <AdminModal isOpen={isAdminModalOpen} onClose={() => setAdminModalOpen(false)} />
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => setAuthModalOpen(false)} />
       <PlayerModal isOpen={isPlayerModalOpen} onClose={() => setPlayerModalOpen(false)} />
       <RankingModal isOpen={isRankingModalOpen} onClose={() => setRankingModalOpen(false)} />
     </SideButtonsContainer>

@@ -4,6 +4,7 @@ import logging
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
+from django.db.models import Count
 from django.http import (
     HttpResponse,
     HttpResponseBadRequest,
@@ -126,4 +127,15 @@ def do_logout(request):
 @requires_player
 def get_total_score(request, player):
     total_score = Vote.objects.filter(pad_step__player=player).count()
-    return JsonResponse({"score": total_score})
+    full_ranking = (
+        Player.objects.values("name")
+        .annotate(vote_count=Count("steps__votes"))
+        .filter(vote_count__gt=0)
+        .order_by("-vote_count")
+    )
+    my_ranking = [
+        index + 1
+        for index in range(len(full_ranking))
+        if full_ranking[index]["name"] == player.name
+    ][0]
+    return JsonResponse({"score": total_score, "ranking": my_ranking})
