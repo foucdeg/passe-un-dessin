@@ -70,7 +70,7 @@ const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
           color={colorPalette.purple}
           loading={scoreLoading}
           label={<FormattedMessage id="playerModal.ranking" />}
-          value={'#' + ranking}
+          value={ranking ? '#' + ranking : 'N/A'}
         />
       </ScoreCardRow>
       <ButtonRow>

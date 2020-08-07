@@ -101,7 +101,7 @@
     "title": "Hey there! What's your name?",
     "pickName": "Pick a nickname:",
     "placeholder": "M4sterSk3tcher_69",
-    "submit": "Submit"
+    "iHaveAnAccount": "I have an account or I wish to create one →"
   },
   "auth": {
     "facebookLogin": "Sign in with Facebook",

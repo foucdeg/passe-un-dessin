@@ -98,10 +98,10 @@
     "reverseOrder": "Ordre inverse"
   },
   "userNameModal": {
-    "title": "Hello toi ! Comment tu t'appelles ?",
+    "title": "Salut toi ! Comment tu t'appelles ?",
     "pickName": "Choisis un nom :",
     "placeholder": "XXBogossDu62",
-    "submit": "Valider"
+    "iHaveAnAccount": "J'ai déjà un compte ou je souhaite en créer un →"
   },
   "auth": {
     "facebookLogin": "Se connecter avec Facebook",

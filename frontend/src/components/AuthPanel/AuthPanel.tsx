@@ -9,10 +9,13 @@ import ClassicLoginForm from 'components/ClassicLoginForm';
 
 interface Props {
   onDone?: () => void;
+  defaultLogIn?: boolean;
 }
 
-const AuthPanel: React.FC<Props> = ({ onDone }) => {
-  const [isCreatingAccount, setIsCreatingAccount] = useState<boolean>(true);
+const AuthPanel: React.FC<Props> = ({ onDone, defaultLogIn }) => {
+  const [isCreatingAccount, setIsCreatingAccount] = useState<boolean>(
+    defaultLogIn === undefined ? true : !defaultLogIn,
+  );
 
   return (
     <>

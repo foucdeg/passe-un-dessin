@@ -84,10 +84,14 @@ def do_user_player_coherence(request, user: User):
                     "Merging player %s into user player %s" % (player, user.player)
                 )
                 merge_players(from_player=player, into_player=user.player)
-                request.session["player_id"] = user.player.uuid.__str__()
 
     except (KeyError, Player.DoesNotExist):
-        pass
+        if user.player is None:
+            player = Player.objects.create(name=user.email)
+            user.player = player
+            user.save()
+
+    request.session["player_id"] = user.player.uuid.__str__()
 
 
 def merge_players(from_player: Player, into_player: Player):

@@ -133,9 +133,12 @@ def get_total_score(request, player):
         .filter(vote_count__gt=0)
         .order_by("-vote_count")
     )
-    my_ranking = [
-        index + 1
-        for index in range(len(full_ranking))
-        if full_ranking[index]["name"] == player.name
-    ][0]
+    try:
+        my_ranking = [
+            index + 1
+            for index in range(len(full_ranking))
+            if full_ranking[index]["name"] == player.name
+        ][0]
+    except IndexError:  # Player is not in ranking
+        my_ranking = None
     return JsonResponse({"score": total_score, "ranking": my_ranking})
