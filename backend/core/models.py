@@ -157,12 +157,18 @@ class PlayerGameParticipation(BaseModel):
     order = models.IntegerField()
 
     class Meta:
+        unique_together = (
+            "player",
+            "game",
+        )
         ordering = ("order",)
 
 
 class Pad(BaseModel):
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="pads")
-    initial_player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    initial_player = models.ForeignKey(
+        Player, on_delete=models.CASCADE, related_name="pads"
+    )
     order = models.IntegerField()
     sentence = models.CharField(max_length=100, blank=True, null=True)
 
