@@ -6,6 +6,8 @@ import { InlineSwitch, StyledSwitch } from './AuthPanel.style';
 import { FormattedMessage } from 'react-intl';
 import ClassicAccountCreationForm from 'components/ClassicAccountCreationForm';
 import ClassicLoginForm from 'components/ClassicLoginForm';
+import { LegalLinks } from 'pages/Home/Home.style';
+import { Link } from 'react-router-dom';
 
 interface Props {
   onDone?: () => void;
@@ -34,6 +36,15 @@ const AuthPanel: React.FC<Props> = ({ onDone, defaultLogIn }) => {
       ) : (
         <ClassicLoginForm onLoggedIn={onDone} />
       )}
+      <LegalLinks>
+        <Link to="/legal#terms-and-conditions">
+          <FormattedMessage id="home.termsAndConditions" />
+        </Link>
+        &nbsp;&middot;&nbsp;
+        <Link to="/legal#privacy-policy">
+          <FormattedMessage id="home.privacyPolicy" />
+        </Link>
+      </LegalLinks>
     </>
   );
 };

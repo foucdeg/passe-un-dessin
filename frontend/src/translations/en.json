@@ -12,7 +12,9 @@
       "2": "Pick a word or sentence that the next person will have to sketch.",
       "3": "<strong>Draw the word or sentence</strong>, or <strong>try to guess</strong> what the previous person drew. Then, your drawing or idea is passed on to the next player, and so on.",
       "4": "When everybody has drawn all of the words, we look at the drawing pads! <strong>Look at what the initial words or sentences became</strong> and vote for your favorite sketches and ideas."
-    }
+    },
+    "termsAndConditions": "Terms and Conditions",
+    "privacyPolicy": "Privacy Policy"
   },
   "roomLobby": {
     "title": "Lobby",
@@ -191,5 +193,10 @@
     "grey": "grey",
     "black": "black",
     "white": "white"
+  },
+  "legal": {
+    "termsAndConditionsTitle": "Terms and Conditions",
+    "privacyPolicyTitle": "Privacy Policy",
+    "backToHome": "Back to home"
   }
 }

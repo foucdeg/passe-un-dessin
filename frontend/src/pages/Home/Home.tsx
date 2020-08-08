@@ -14,6 +14,7 @@ import {
   Rule,
   RuleSection,
   Attribution,
+  LegalLinks,
 } from './Home.style';
 import { useCreateRoom } from 'redux/Room/hooks';
 import { useLocation } from 'react-router';
@@ -22,6 +23,7 @@ import { FormattedMessage } from 'react-intl';
 import ruleBackgrounds from 'assets/rule-backgrounds';
 import Spacer from 'atoms/Spacer';
 import CreateAccountModal from 'components/CreateAccountModal';
+import { Link } from 'react-router-dom';
 
 const Home: React.FunctionComponent = () => {
   const doCreateRoom = useCreateRoom();
@@ -62,8 +64,17 @@ const Home: React.FunctionComponent = () => {
         </StartButton>
         <Spacer />
         <Attribution>
-          <FormattedMessage id="home.attribution" />
+          <FormattedMessage id="home.attribution" />.{' '}
         </Attribution>
+        <LegalLinks>
+          <Link to="/legal#terms-and-conditions">
+            <FormattedMessage id="home.termsAndConditions" />
+          </Link>
+          &nbsp;&middot;&nbsp;
+          <Link to="/legal#privacy-policy">
+            <FormattedMessage id="home.privacyPolicy" />
+          </Link>
+        </LegalLinks>
       </LeftSide>
       <RightSide>
         <RightSideTitle>

@@ -12,7 +12,9 @@
       "2": "Choisis un mot ou une expression que la personne après toi devra dessiner.",
       "3": "<strong>Dessine</strong> le mot proposé ou <strong>devine</strong> ce que la personne avant toi a dessiné. Puis, ton dessin ou idée est passé au joueur suivant, et ainsi de suite.",
       "4": "Quand tout le monde a pu dessiner chacun des mots, on passe aux carnets de résultats ! <strong>Regarde ce que sont devenus les mots choisis</strong> et vote pour tes dessins ou idées préférées."
-    }
+    },
+    "termsAndConditions": "Conditions d'utilisation",
+    "privacyPolicy": "Politique de confidentialité"
   },
   "roomLobby": {
     "title": "Salle d'attente",
@@ -191,5 +193,10 @@
     "grey": "gris",
     "black": "noir",
     "white": "blanc"
+  },
+  "legal": {
+    "termsAndConditionsTitle": "Conditions d'utilisation",
+    "privacyPolicyTitle": "Politique de confidentialité",
+    "backToHome": "Retour à l'accueil"
   }
 }
