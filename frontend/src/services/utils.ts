@@ -19,3 +19,8 @@ export function useTypedAsyncFn<T>(
 
 export type EmptyObject = Omit<Record<any, never>, keyof any>;
 /* eslint-enable @typescript-eslint/no-explicit-any */
+export type NoProps = EmptyObject;
+
+const emailRegexp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+
+export const isValidEmail = (input: string) => !!input.match(emailRegexp);

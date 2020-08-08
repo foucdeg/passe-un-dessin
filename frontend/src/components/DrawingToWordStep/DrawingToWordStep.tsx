@@ -4,7 +4,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import Spacer from 'atoms/Spacer';
 import InputLoader from 'components/InputLoader';
-import { InputArrow } from 'components/PlayerModal/PlayerModal.style';
+import { InputArrow } from 'components/PlayerForm/PlayerForm.style';
 import StaticInput from 'components/StaticInput';
 import TextInput from 'components/TextInput';
 import {

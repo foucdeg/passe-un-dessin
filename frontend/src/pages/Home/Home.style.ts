@@ -55,6 +55,22 @@ export const Attribution = styled.p`
 
 Attribution.displayName = 'Attribution';
 
+export const LegalLinks = styled.p`
+  text-align: center;
+  margin-top: 8px;
+  font-size: ${fontSize.small};
+  a {
+    color: ${colorPalette.textGrey};
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
+
+LegalLinks.displayName = 'LegalLinks';
+
 export const RightSide = styled.div`
   display: flex;
   height: 100%;

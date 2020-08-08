@@ -12,7 +12,9 @@
       "2": "Pick a word or sentence that the next person will have to sketch.",
       "3": "<strong>Draw the word or sentence</strong>, or <strong>try to guess</strong> what the previous person drew. Then, your drawing or idea is passed on to the next player, and so on.",
       "4": "When everybody has drawn all of the words, we look at the drawing pads! <strong>Look at what the initial words or sentences became</strong> and vote for your favorite sketches and ideas."
-    }
+    },
+    "termsAndConditions": "Terms and Conditions",
+    "privacyPolicy": "Privacy Policy"
   },
   "roomLobby": {
     "title": "Lobby",
@@ -30,6 +32,7 @@
   "menu": {
     "startMusic": "Resume music",
     "stopMusic": "Stop music",
+    "accountMenu": "Account",
     "playerMenu": "Player",
     "adminMenu": "Admin window",
     "addPlayer": "Invite player",
@@ -97,10 +100,27 @@
     "reverseOrder": "Reverse order"
   },
   "userNameModal": {
-    "title": "What's your name?",
-    "pickName": "Pick a nickname",
+    "title": "Hey there! What's your name?",
+    "pickName": "Pick a nickname:",
     "placeholder": "M4sterSk3tcher_69",
-    "submit": "Submit"
+    "iHaveAnAccount": "I have an account or I wish to create one →"
+  },
+  "auth": {
+    "facebookLogin": "Sign in with Facebook",
+    "googleLogin": "Sign in with Google",
+    "oldStyle": "Or the classic way:",
+    "email": "Email address",
+    "password": "Password",
+    "pickPassword": "Choose a password",
+    "emailExample": "myemail@aol.com",
+    "createAccount": "Create an account",
+    "logIn": "Log in",
+    "errors": {
+      "required": "This field is required",
+      "invalidEmail": "This email address is not valid",
+      "emailInUse": "This email address is already in use. Need to log in?",
+      "incorrectEmailPassword": "Incorrect username or password combination."
+    }
   },
   "lostPlayerModal": {
     "title": "We lost someone!",
@@ -112,18 +132,44 @@
     "goToSettings": "Open the admin settings (top right).",
     "adminRestarts": "{name} can start a new game."
   },
+  "createAccountModal": {
+    "niceGame": "Good game, {name}!",
+    "keepHistory": "Let your art not be forgotten! To keep access to your masterpieces, we suggest you create an account.",
+    "features": "An account will bring you nice and shiny new features:",
+    "history": "History of all your games",
+    "leaderboard": "A world leaderboard comparing the best Draw Around players",
+    "safeNickname": "Your nickname is reserved to you",
+    "andMore": "...and more to come!",
+    "later": "Later"
+  },
   "mobileGate": {
     "bigFingers": "Big fingers, small screen",
     "laptopOrTablet": "Draw Around is more practical on a computer or tablet.",
     "sendEmail": "Send link by email",
-    "emailExample": "myemail@aol.fr",
+    "emailExample": "myemail@aol.com",
     "emailSubject": "My link to Draw Around",
     "emailBody": "Link: {link}\n\nSee you soon!"
   },
   "playerModal": {
-    "title": "Player",
-    "username": "Player Name",
-    "submit": "Submit"
+    "title": "My account",
+    "myInfos": "My infos",
+    "playerName": "Player Name",
+    "playerColor": "Player color",
+    "colors": {
+      "purple": "Purple",
+      "lightBlue": "Light blue",
+      "lightGreen": "Light green",
+      "mauve": "Mauve",
+      "orange": "Orange",
+      "bloodOrange": "Blood Orange",
+      "yellow": "Yellow",
+      "fuschia": "Fuschia"
+    },
+    "myStats": "My stats",
+    "totalScore": "Total score",
+    "ranking": "World ranking",
+    "changePassword": "Changer password",
+    "logOut": "Log out"
   },
   "rankingModal": {
     "title": "Score",
@@ -147,5 +193,10 @@
     "grey": "grey",
     "black": "black",
     "white": "white"
+  },
+  "legal": {
+    "termsAndConditionsTitle": "Terms and Conditions",
+    "privacyPolicyTitle": "Privacy Policy",
+    "backToHome": "Back to home"
   }
 }

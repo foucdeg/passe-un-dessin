@@ -12,7 +12,9 @@
       "2": "Choisis un mot ou une expression que la personne après toi devra dessiner.",
       "3": "<strong>Dessine</strong> le mot proposé ou <strong>devine</strong> ce que la personne avant toi a dessiné. Puis, ton dessin ou idée est passé au joueur suivant, et ainsi de suite.",
       "4": "Quand tout le monde a pu dessiner chacun des mots, on passe aux carnets de résultats ! <strong>Regarde ce que sont devenus les mots choisis</strong> et vote pour tes dessins ou idées préférées."
-    }
+    },
+    "termsAndConditions": "Conditions d'utilisation",
+    "privacyPolicy": "Politique de confidentialité"
   },
   "roomLobby": {
     "title": "Salle d'attente",
@@ -30,6 +32,7 @@
   "menu": {
     "startMusic": "Lancer le son",
     "stopMusic": "Couper le son",
+    "accountMenu": "Compte",
     "playerMenu": "Joueur",
     "adminMenu": "Actions d'administration",
     "addPlayer": "Inviter un joueur",
@@ -97,10 +100,27 @@
     "reverseOrder": "Ordre inverse"
   },
   "userNameModal": {
-    "title": "Comment tu t'appelles ?",
-    "pickName": "Choisis un nom",
+    "title": "Salut toi ! Comment tu t'appelles ?",
+    "pickName": "Choisis un nom :",
     "placeholder": "XXBogossDu62",
-    "submit": "Valider"
+    "iHaveAnAccount": "J'ai déjà un compte ou je souhaite en créer un →"
+  },
+  "auth": {
+    "facebookLogin": "Se connecter avec Facebook",
+    "googleLogin": "Se connecter avec Google",
+    "oldStyle": "Ou à l'ancienne :",
+    "email": "Adresse email",
+    "password": "Mot de passe",
+    "pickPassword": "Choisis un mot de passe",
+    "emailExample": "monadresse@wanadoo.fr",
+    "createAccount": "Créer un compte",
+    "logIn": "Se connecter",
+    "errors": {
+      "required": "Ce champ est nécessaire",
+      "invalidEmail": "Cette adresse email n'est pas valide",
+      "emailInUse": "Cette adresse email est déjà utilisée. Se connecter à ce compte ?",
+      "incorrectEmailPassword": "Mauvaise combinaison d'adresse email et mot de passe"
+    }
   },
   "lostPlayerModal": {
     "title": "On a perdu quelqu'un !",
@@ -112,6 +132,16 @@
     "goToSettings": "Ouvre les réglages en haut à droite.",
     "adminRestarts": "C'est {name} qui peut relancer une partie."
   },
+  "createAccountModal": {
+    "niceGame": "Belle partie, {name} !",
+    "keepHistory": "Ce serait dommage de la laisser disparaître dans l'oubli ! Pour garder en mémoire tes plus belles créations, il suffit de te créer un compte.",
+    "features": "Tu auras ainsi accès aux fonctionnalités suivantes :",
+    "history": "Historique de tes parties",
+    "leaderboard": "Leaderboard mondial des meilleurs joueurs",
+    "safeNickname": "Réservation de ton pseudo",
+    "andMore": "... et plus à venir !",
+    "later": "Plus tard"
+  },
   "mobileGate": {
     "bigFingers": "Gros doigts, petit écran",
     "laptopOrTablet": "Passe un Dessin se joue mieux sur ordinateur ou tablette.",
@@ -121,9 +151,25 @@
     "emailBody": "Lien : {link}\n\nÀ tout de suite !"
   },
   "playerModal": {
-    "title": "Joueur",
-    "username": "Nom du joueur",
-    "submit": "Valider"
+    "title": "Mon compte",
+    "myInfos": "Mes infos",
+    "playerName": "Nom du joueur",
+    "playerColor": "Couleur du joueur",
+    "colors": {
+      "purple": "Violet",
+      "lightBlue": "Bleu clair",
+      "lightGreen": "Vert clair",
+      "mauve": "Mauve",
+      "orange": "Orange",
+      "bloodOrange": "Orange sanguine",
+      "yellow": "Jaune",
+      "fuschia": "Fuschia"
+    },
+    "myStats": "Mes stats",
+    "totalScore": "Score total",
+    "ranking": "Classement mondial",
+    "changePassword": "Changer de mot de passe",
+    "logOut": "Se déconnecter"
   },
   "rankingModal": {
     "title": "Scores",
@@ -147,5 +193,10 @@
     "grey": "gris",
     "black": "noir",
     "white": "blanc"
+  },
+  "legal": {
+    "termsAndConditionsTitle": "Conditions d'utilisation",
+    "privacyPolicyTitle": "Politique de confidentialité",
+    "backToHome": "Retour à l'accueil"
   }
 }

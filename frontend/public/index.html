@@ -16,6 +16,17 @@
     <meta property="og:image" content="/social.png" />
     <meta property="og:url" content="https://passe-un-dessin.fouc.net" />
     <meta name="twitter:card" content="summary_large_image" />
+    <script src="https://apis.google.com/js/api:client.js"></script>
+    <script>
+      const googleAppId = '805693370790-tf9clcvuu8tg5dibon9av5q3lu2o46qk.apps.googleusercontent.com';
+
+      gapi.load('auth2', () => {
+        window.authInstance = gapi.auth2.init({
+          client_id: googleAppId,
+          cookiepolicy: 'single_host_origin',
+        });
+      });
+    </script>
     <link
       href="https://fonts.googleapis.com/css2?family=Raleway:wght@900&family=Roboto+Condensed:wght@300;400;700&display=swap"
       rel="stylesheet"
@@ -25,6 +36,8 @@
   </head>
 
   <body>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v7.0&appId=2622893511372846&autoLogAppEvents=1" nonce="jpK3DX9m"></script>
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
@@ -55,6 +68,25 @@
       gtag('js', new Date());
 
       gtag('config', 'UA-109852306-3', { anonymize_ip: true });
+    </script>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId: '2622893511372846',
+          cookie: true,
+          xfbml: true,
+          version: 'v7.0'
+        });
+        FB.AppEvents.logPageView();
+      };
+
+      (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
     </script>
   </body>
 </html>

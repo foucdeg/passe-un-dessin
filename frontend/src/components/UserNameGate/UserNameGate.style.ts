@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import TextInput from 'components/TextInput';
-import Button from 'components/Button';
 import { colorPalette } from 'stylesheet';
 import Header2 from 'atoms/Header2';
 
@@ -17,15 +16,27 @@ export const StyledField = styled(TextInput)`
 
 StyledField.displayName = 'StyledField';
 
-export const StyledButton = styled(Button)`
-  align-self: flex-end;
-`;
-
-StyledButton.displayName = 'StyledButton';
-
 export const UsernameForm = styled.form`
   display: flex;
   flex-direction: column;
+  margin-bottom: 32px;
 `;
 
 UsernameForm.displayName = 'UsernameForm';
+
+export const VirtualButton = styled.button`
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  outline: none;
+  font-size: inherit;
+  color: inherit;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+VirtualButton.displayName = 'VirtualButton';

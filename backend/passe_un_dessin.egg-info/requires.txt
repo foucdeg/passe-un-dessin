@@ -9,6 +9,7 @@ django-storages<2.0.0,>=1.9.1
 django<4.0.0,>=3.0.4
 djangorestframework<4.0.0,>=3.11.0
 djangorestframework_simplejwt<5.0.0,>=4.4.0
+google-auth<2.0.0,>=1.19.0
 psycopg2-binary<3.0.0,>=2.8.4
 pytz<2020.0,>=2019.3
 requests<3.0.0,>=2.23.0

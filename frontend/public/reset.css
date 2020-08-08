@@ -156,3 +156,12 @@ p {
   letter-spacing: 0.05em;
   line-height: 19px;
 }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  box-shadow: 0 0 0 30px white inset !important;
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  font-size: inherit !important;
+}

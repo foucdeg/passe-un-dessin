@@ -16,10 +16,8 @@ class SuggestionEngine:
                 if len(suggestion.split()) == 1:
                     self.single_words[language].append(suggestion)
 
-
         def get_random(self, language: str, count: int):
             return random.choices(self.words[language], k=count)
-
 
         def get_single_word_random(self, language: str, count: int):
             return random.choices(self.single_words[language], k=count)

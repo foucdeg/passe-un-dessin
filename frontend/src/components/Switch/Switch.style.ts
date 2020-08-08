@@ -9,6 +9,7 @@ export const Container = styled.button`
   cursor: pointer;
   outline: none;
   position: relative;
+  background-color: inherit;
 `;
 Container.displayName = 'Container';
 
@@ -23,11 +24,13 @@ Rod.displayName = 'Rod';
 
 export const Circle = styled.div<{ selected: boolean }>`
   border-radius: 50%;
-  position: absolute;
   height: 18px;
   width: 20px;
+  position: absolute;
   top: 0;
+  right: 20px;
   background-color: ${({ selected }) => (selected ? colorPalette.purple : colorPalette.black)};
   ${({ selected }) => selected && 'right: 0;'}
+  transition: right 0.2s;
 `;
 Circle.displayName = 'Circle';

@@ -27,4 +27,4 @@ export const StyledParagraph = styled.p`
   margin-bottom: 16px;
 `;
 
-StyledParagraph.displayName = 'StyledModal';
+StyledParagraph.displayName = 'StyledParagraph';

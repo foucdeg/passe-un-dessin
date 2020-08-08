@@ -7,6 +7,7 @@ import { selectGame } from 'redux/Game/selectors';
 import AudioControl from 'components/AudioControl';
 import {
   SideButtonsContainer,
+  UserModalButton,
   PlayerModalButton,
   AdminModalButton,
   PlayerAddButton,
@@ -23,6 +24,7 @@ import PlayerModal from 'components/PlayerModal';
 import RankingModal from 'components/RankingModal';
 import { useLeaveRoom } from 'redux/Room/hooks';
 import { EmptyObject } from 'services/utils';
+import AuthModal from 'components/AuthModal';
 
 const SideButtons: React.FC<EmptyObject> = () => {
   const isPlayerAdmin = useSelector(selectPlayerIsAdmin);
@@ -36,6 +38,7 @@ const SideButtons: React.FC<EmptyObject> = () => {
   );
 
   const [isAdminModalOpen, setAdminModalOpen] = useState<boolean>(false);
+  const [isAuthModalOpen, setAuthModalOpen] = useState<boolean>(false);
   const [isPlayerModalOpen, setPlayerModalOpen] = useState<boolean>(false);
   const [isRankingModalOpen, setRankingModalOpen] = useState<boolean>(false);
 
@@ -57,11 +60,16 @@ const SideButtons: React.FC<EmptyObject> = () => {
   return (
     <SideButtonsContainer>
       <AudioControl />
-      {player && (
-        <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.playerMenu' })}>
-          <PlayerModalButton alt="Player" onClick={() => setPlayerModalOpen(true)} />
-        </IconAndTooltip>
-      )}
+      {player &&
+        (player.user ? (
+          <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.accountMenu' })}>
+            <UserModalButton alt="User" onClick={() => setPlayerModalOpen(true)} />
+          </IconAndTooltip>
+        ) : (
+          <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.playerMenu' })}>
+            <PlayerModalButton alt="Player" onClick={() => setAuthModalOpen(true)} />
+          </IconAndTooltip>
+        ))}
       {room && isPlayerAdmin && (
         <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.adminMenu' })}>
           <AdminModalButton alt="Settings" onClick={() => setAdminModalOpen(true)} />
@@ -88,6 +96,7 @@ const SideButtons: React.FC<EmptyObject> = () => {
         </IconAndTooltip>
       )}
       <AdminModal isOpen={isAdminModalOpen} onClose={() => setAdminModalOpen(false)} />
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => setAuthModalOpen(false)} />
       <PlayerModal isOpen={isPlayerModalOpen} onClose={() => setPlayerModalOpen(false)} />
       <RankingModal isOpen={isRankingModalOpen} onClose={() => setRankingModalOpen(false)} />
     </SideButtonsContainer>

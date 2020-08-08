@@ -82,21 +82,6 @@ class UserManager(BaseUserManager):
         return self._create_user(email, password, **extra_fields)
 
 
-class User(AbstractUser):
-    email = models.EmailField(_("email address"), unique=True)
-
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
-
-    objects = UserManager()
-
-    def save(self, *args, **kwargs):
-        "Set username to email when it's empty."
-        if not self.username:
-            self.username = self.email
-        super().save(*args, **kwargs)
-
-
 class Room(BaseModel):
     admin = models.ForeignKey(
         "Player", on_delete=models.CASCADE, related_name="room_as_admin"
@@ -118,6 +103,24 @@ class Player(BaseModel):
         Room, on_delete=models.SET_NULL, related_name="players", null=True, blank=True
     )
     color = models.CharField(max_length=10)
+
+
+class User(AbstractUser):
+    email = models.EmailField(_("email address"), unique=True)
+    player = models.OneToOneField(
+        Player, on_delete=models.CASCADE, related_name="user", null=True
+    )
+
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = []
+
+    objects = UserManager()
+
+    def save(self, *args, **kwargs):
+        "Set username to email when it's empty."
+        if not self.username:
+            self.username = self.email
+        super().save(*args, **kwargs)
 
 
 class Game(BaseModel):
@@ -154,12 +157,18 @@ class PlayerGameParticipation(BaseModel):
     order = models.IntegerField()
 
     class Meta:
+        unique_together = (
+            "player",
+            "game",
+        )
         ordering = ("order",)
 
 
 class Pad(BaseModel):
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="pads")
-    initial_player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    initial_player = models.ForeignKey(
+        Player, on_delete=models.CASCADE, related_name="pads"
+    )
     order = models.IntegerField()
     sentence = models.CharField(max_length=100, blank=True, null=True)
 

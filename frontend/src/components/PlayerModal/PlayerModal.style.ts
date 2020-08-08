@@ -1,17 +1,46 @@
 import styled from 'styled-components';
 import Header2 from 'atoms/Header2';
 import { colorPalette } from 'stylesheet';
-import arrowRight from 'assets/arrow-right.svg';
+import Modal from 'components/Modal';
+import HorizontalSeparator from 'components/HorizontalSeparator';
+
+export const WideModal = styled(Modal)`
+  width: 768px;
+  padding: 24px;
+`;
+
+WideModal.displayName = 'WideModal';
 
 export const StyledHeader = styled(Header2)`
   color: ${colorPalette.purple};
-  margin-bottom: 16px;
 `;
 
 StyledHeader.displayName = 'StyledHeader';
 
-export const InputArrow = styled.img.attrs({ src: arrowRight })`
-  cursor: pointer;
+export const HeaderSection = styled.div`
+  text-align: center;
+  margin-bottom: 24px;
 `;
 
-InputArrow.displayName = 'InputArrow';
+HeaderSection.displayName = 'HeaderSection';
+
+export const StyledSeparator = styled(HorizontalSeparator)`
+  margin-bottom: 16px;
+`;
+StyledSeparator.displayName = 'StyledSeparator';
+
+export const ScoreCardRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+`;
+
+ScoreCardRow.displayName = 'ScoreCardRow';
+
+export const ButtonRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+`;
+
+ButtonRow.displayName = 'ButtonRow';
