@@ -1,5 +1,6 @@
 import logging
 from enum import Enum
+from random import randrange
 from time import time
 
 from django.conf import settings
@@ -36,6 +37,15 @@ class GoogleAuthInvalidTokenException(SocialAuthInvalidTokenException):
 
 class FacebookAuthInvalidTokenException(SocialAuthInvalidTokenException):
     pass
+
+
+def generate_player_name():
+    while True:
+        player_name = "Player%d" % randrange(100000)
+        try:
+            Player.objects.get(name=player_name)
+        except Player.DoesNotExist:
+            return player_name
 
 
 def verify_user(auth_token: str, provider: SocialAuthProvider):
@@ -87,7 +97,7 @@ def do_user_player_coherence(request, user: User):
 
     except (KeyError, Player.DoesNotExist):
         if user.player is None:
-            player = Player.objects.create(name=user.email)
+            player = Player.objects.create(name=generate_player_name())
             user.player = player
             user.save()
 
