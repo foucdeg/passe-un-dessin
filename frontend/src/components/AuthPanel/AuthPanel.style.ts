@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Switch from 'components/Switch';
+import Switch from 'atoms/Switch';
 
 export const InlineSwitch = styled.div`
   display: flex;

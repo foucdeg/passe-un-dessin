@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { colorPalette } from 'stylesheet';
-import { ThumbUpButton } from 'components/ReactionOverlay/ReactionOverlay.style';
+import { ThumbUpButton } from 'pages/GameRecap/components/ReactionOverlay/ReactionOverlay.style';
 
 export const OuterRecapContainer = styled.div`
   display: flex;

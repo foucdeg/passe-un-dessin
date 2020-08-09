@@ -18,9 +18,9 @@ import { GamePhase } from 'redux/Game/types';
 import { selectRoom } from 'redux/Room/selectors';
 import { selectGame, selectGameStructure } from 'redux/Game/selectors';
 import { selectPlayer } from 'redux/Player/selectors';
-import PlayerOrder from 'components/PlayerOrder';
+import PlayerOrder from './components/PlayerOrder';
 import { useLeaveRoom } from 'redux/Room/hooks';
-import Loader from 'components/Loader';
+import Loader from 'atoms/Loader';
 
 const PadInit = React.lazy(() => import('../PadInit'));
 const PadStep = React.lazy(() => import('../PadStep'));

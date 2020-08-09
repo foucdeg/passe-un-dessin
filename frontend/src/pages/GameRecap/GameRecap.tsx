@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'redux/useSelector';
-import PadRecap from 'components/PadRecap';
+import PadRecap from './components/PadRecap';
 import {
   OuterRecapContainer,
   GameRecapContainer,
@@ -15,11 +15,11 @@ import { selectRoom } from 'redux/Room/selectors';
 import { selectGame } from 'redux/Game/selectors';
 import { FormattedMessage } from 'react-intl';
 import { useReviewPad } from 'redux/Game/hooks';
-import PadTab from 'components/PadTab';
+import PadTab from './components/PadTab';
 import { selectAvailableVoteCount } from 'redux/Game/selectors';
-import NewGameModal from 'components/NewGameModal';
-import { ThumbUpButton } from 'components/ReactionOverlay/ReactionOverlay.style';
-import DoneModal from 'components/DoneModal';
+import NewGameModal from 'modals/NewGameModal';
+import { ThumbUpButton } from './components/ReactionOverlay/ReactionOverlay.style';
+import DoneModal from 'modals/DoneModal';
 
 const GameRecap: React.FunctionComponent = () => {
   const room = useSelector(selectRoom);

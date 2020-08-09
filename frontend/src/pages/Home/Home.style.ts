@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import rightSideBackground from 'assets/full-background.svg';
 
 import { fontSize, fontFamily, colorPalette } from 'stylesheet';
-import Button from 'components/Button';
+import Button from 'atoms/Button';
 import Header4 from 'atoms/Header4';
 import Header3 from 'atoms/Header3';
 import Header2 from 'atoms/Header2';

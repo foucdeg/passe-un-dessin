@@ -12,7 +12,7 @@ import {
   ArrowLeft,
 } from './Legal.style';
 import { FormattedMessage } from 'react-intl';
-import SecondaryButton from 'components/SecondaryButton';
+import SecondaryButton from 'atoms/SecondaryButton';
 
 const Legal: React.FC<NoProps> = () => (
   <>

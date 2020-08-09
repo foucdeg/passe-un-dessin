@@ -22,7 +22,7 @@ import { FormattedMessage } from 'react-intl';
 
 import ruleBackgrounds from 'assets/rule-backgrounds';
 import Spacer from 'atoms/Spacer';
-import CreateAccountModal from 'components/CreateAccountModal';
+import CreateAccountModal from 'modals/CreateAccountModal';
 import { Link } from 'react-router-dom';
 
 const Home: React.FunctionComponent = () => {

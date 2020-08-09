@@ -14,9 +14,9 @@ import '@formatjs/intl-pluralrules/locale-data/fr';
 /* End of language polyfills */
 
 import { RootContainer } from './Root.style';
-import UserNameGate from 'components/UserNameGate';
-import SideButtons from 'components/SideButtons';
-import MobileGate from 'components/MobileGate';
+import UserNameGate from './components/UserNameGate';
+import SideButtons from './components/SideButtons';
+import MobileGate from './components/MobileGate';
 import { useHistory } from 'react-router';
 import useAnchors from 'useAnchors';
 
