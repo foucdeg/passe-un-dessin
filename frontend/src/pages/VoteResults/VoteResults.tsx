@@ -3,13 +3,11 @@ import { useSelector } from 'redux/useSelector';
 import { useGetVoteResults } from 'redux/Game/hooks';
 import { selectRoom, selectPlayerIsAdmin } from 'redux/Room/selectors';
 import { selectGame, selectWinners } from 'redux/Game/selectors';
-import NewGameModal from 'components/NewGameModal';
-import Podium from 'components/Podium';
+import NewGameModal from 'modals/NewGameModal';
+import Podium from './components/Podium';
 import { FormattedMessage } from 'react-intl';
-import TopRightButtons from 'atoms/TopRightButtons';
-import TopRightButton from 'atoms/TopRightButton';
-import { Container } from './VoteResults.style';
-import Scoreboard from 'components/Scoreboard';
+import { Container, TopRightButtons, TopRightButton } from './VoteResults.style';
+import Scoreboard from './components/Scoreboard';
 
 const VoteResults: React.FunctionComponent = () => {
   const room = useSelector(selectRoom);

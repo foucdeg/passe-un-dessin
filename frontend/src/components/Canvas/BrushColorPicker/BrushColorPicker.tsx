@@ -1,7 +1,7 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 
-import IconAndTooltip from 'components/IconAndTooltip';
+import IconAndTooltip from 'atoms/IconAndTooltip';
 
 import { BrushPickerContainer, ColorBlock } from './BrushColorPicker.style';
 

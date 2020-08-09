@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import TextInput from 'components/TextInput';
+import TextInput from 'atoms/TextInput';
 import { colorPalette } from 'stylesheet';
 import Header2 from 'atoms/Header2';
 import arrowRight from 'assets/arrow-right.svg';
