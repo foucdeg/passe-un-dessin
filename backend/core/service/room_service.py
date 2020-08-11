@@ -26,6 +26,8 @@ def remove_player_from_room(room_id: str, player_id: str):
     except Room.DoesNotExist:
         return HttpResponseBadRequest("Room %s does not exist" % room_id)
 
+    initial_room_number_of_players = room.players.count()
+
     with transaction.atomic():
         player.room = None
         player.save()
@@ -63,6 +65,7 @@ def remove_player_from_room(room_id: str, player_id: str):
         if (
             room.current_game is not None
             and room.current_game.phase == GamePhase.INIT.value
+            and initial_room_number_of_players > 2
         ):
             # Create new game with same params
             new_game = initialize_game(

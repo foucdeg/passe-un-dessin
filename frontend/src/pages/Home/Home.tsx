@@ -5,7 +5,6 @@ import {
   LeftSideTitle,
   Subtitle,
   Header,
-  StartButton,
   Credits,
   RightSideTitle,
   RuleNumberBackground,
@@ -16,7 +15,6 @@ import {
   Attribution,
   LegalLinks,
 } from './Home.style';
-import { useCreateRoom } from 'redux/Room/hooks';
 import { useLocation } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 
@@ -24,9 +22,9 @@ import ruleBackgrounds from 'assets/rule-backgrounds';
 import Spacer from 'atoms/Spacer';
 import CreateAccountModal from 'modals/CreateAccountModal';
 import { Link } from 'react-router-dom';
+import PlayerGameForm from './components/PlayerGameForm';
 
 const Home: React.FunctionComponent = () => {
-  const doCreateRoom = useCreateRoom();
   const location = useLocation();
 
   if (!location.pathname.match(/\/(room\/[^/]+)?$/)) return null;
@@ -59,9 +57,7 @@ const Home: React.FunctionComponent = () => {
             </Rule>
           ))}
         </RuleSection>
-        <StartButton onClick={doCreateRoom}>
-          <FormattedMessage id="home.startRoom" />
-        </StartButton>
+        <PlayerGameForm />
         <Spacer />
         <Attribution>
           <FormattedMessage id="home.attribution" />.{' '}
