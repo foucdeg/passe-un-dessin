@@ -34,6 +34,7 @@ const PadInit: React.FunctionComponent = () => {
 
   if (!game) return null;
   if (!pad) return null;
+  if (!pad.steps.length) return null;
   if (!player) return null;
 
   const nextPlayer = pad.steps[0].player;

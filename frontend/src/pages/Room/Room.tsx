@@ -16,8 +16,8 @@ import { resetGameMetadata } from 'redux/Game/slice';
 import { selectPlayer } from 'redux/Player/selectors';
 import LostPlayerModal from 'modals/LostPlayerModal';
 
-const Game = lazy(() => import('../../pages/Game'));
-const RoomLobby = lazy(() => import('../../pages/RoomLobby'));
+const Game = lazy(() => import('pages/Game'));
+const RoomLobby = lazy(() => import('pages/RoomLobby'));
 
 const Room: React.FunctionComponent = () => {
   const { roomId } = useParams();

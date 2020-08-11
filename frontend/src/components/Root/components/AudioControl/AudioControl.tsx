@@ -36,18 +36,6 @@ const AudioControl: React.FC = () => {
     localStorage.setItem('noSound', 'true');
   };
 
-  useEffect(() => {
-    if (audioElt.current && !localStorage.getItem('noSound')) {
-      audioElt.current
-        .play()
-        .then(() => setPlaying(true))
-        .catch((err) => {
-          console.error(err);
-          setPlaying(false);
-        });
-    }
-  }, [audioElt]);
-
   return (
     <>
       <audio loop ref={audioElt}>

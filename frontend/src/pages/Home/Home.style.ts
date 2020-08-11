@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import rightSideBackground from 'assets/full-background.svg';
 
 import { fontSize, fontFamily, colorPalette } from 'stylesheet';
-import Button from 'atoms/Button';
 import Header4 from 'atoms/Header4';
 import Header3 from 'atoms/Header3';
 import Header2 from 'atoms/Header2';
@@ -42,12 +41,6 @@ export const Header = styled(Header3)`
 `;
 
 Header.displayName = 'Header';
-
-export const StartButton = styled(Button)`
-  margin-top: 16px;
-`;
-
-StartButton.displayName = 'StartButton';
 
 export const Attribution = styled.p`
   text-align: center;
