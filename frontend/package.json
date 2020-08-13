@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@formatjs/intl-pluralrules": "3.2.5",
+    "@formatjs/intl-pluralrules": "3.3.0",
     "@reduxjs/toolkit": "1.4.0",
     "babel-polyfill": "6.26.0",
     "copy-to-clipboard": "3.3.1",
