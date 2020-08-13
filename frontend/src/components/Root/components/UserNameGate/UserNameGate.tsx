@@ -5,6 +5,7 @@ import { useFetchMe } from 'redux/Player/hooks';
 import { selectPlayer } from 'redux/Player/selectors';
 import UserNameModal from 'modals/UserNameModal';
 import { useLocation } from 'react-router';
+import { PUBLIC_PATHS } from 'routes';
 
 interface Props {
   children: React.ReactNode;
@@ -24,7 +25,9 @@ const UserNameGate: React.FC<Props> = ({ children }) => {
   return (
     <>
       {children}
-      {player === false && location.pathname !== '/' && <UserNameModal />}
+      {player === false && !Object.values(PUBLIC_PATHS).includes(location.pathname) && (
+        <UserNameModal />
+      )}
     </>
   );
 };
