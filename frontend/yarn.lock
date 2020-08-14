@@ -1199,10 +1199,10 @@
     "@formatjs/intl-getcanonicallocales" "^1.3.0"
     "@formatjs/intl-utils" "^3.8.1"
 
-"@formatjs/intl-datetimeformat@^2.4.1":
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-datetimeformat/-/intl-datetimeformat-2.4.1.tgz#66c1ff9c7c46e9e4753785369843be8910e8d65d"
-  integrity sha512-WH19o2CksJoSR9E0BK5vRQGaveys6nH6GGJGZK7WlocSttcw2Yy+Umo/9R9+Zu/qki0acTcndjk6nt3eOO5IGw==
+"@formatjs/intl-datetimeformat@^2.4.2":
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-datetimeformat/-/intl-datetimeformat-2.4.2.tgz#8c3b1766eb0879fac977c22da8592d3181f08c38"
+  integrity sha512-4yn4srUNdD0Umu1EzfozKef4S/AeHvtZxkxudn3dKhU/hiZ329AUYXehnalLN8yGeTzeQrDU6KvhnYCyHh8QFQ==
   dependencies:
     "@formatjs/intl-getcanonicallocales" "^1.3.2"
     "@formatjs/intl-utils" "^3.8.3"
@@ -10567,12 +10567,12 @@ react-intl@*:
     intl-messageformat-parser "^5.3.4"
     shallow-equal "^1.2.1"
 
-react-intl@5.6.0:
-  version "5.6.0"
-  resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-5.6.0.tgz#4423592dc3b669bf3d970c96838ff67ec879893f"
-  integrity sha512-OaMr1scc1nYdYELwo+BFHkBvIQi/6mFIkr+ajMy3bsqRRqC0EE15Ss10xF3YJ3IVTXlipZEZZcbiMisGpWgIjA==
+react-intl@5.6.1:
+  version "5.6.1"
+  resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-5.6.1.tgz#06eb944fda6e502c136ec501cf5b28fca0cbd0f2"
+  integrity sha512-om+9QvEWiEMmM5E/0lq2EhsXgwj3+Ceb8X8eU+2B3UHD70NlDJP0GGsH2d6BF594pIbS0TG6YdQ32e8RvMEzig==
   dependencies:
-    "@formatjs/intl-datetimeformat" "^2.4.1"
+    "@formatjs/intl-datetimeformat" "^2.4.2"
     "@formatjs/intl-displaynames" "^3.2.1"
     "@formatjs/intl-listformat" "^4.1.1"
     "@formatjs/intl-numberformat" "^5.4.1"
