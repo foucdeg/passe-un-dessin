@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { fontSize, colorPalette } from 'stylesheet';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.div<{ color?: string }>`
   border: 4px solid ${(props) => props.color || colorPalette.orange};
@@ -26,3 +27,6 @@ export const Value = styled.span<{ color?: string }>`
   margin: auto 0;
 `;
 Value.displayName = 'Value';
+
+export const StyledLink = styled(Link)``;
+StyledLink.displayName = 'StyledLink';

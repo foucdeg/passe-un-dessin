@@ -169,7 +169,8 @@
     "totalScore": "Total score",
     "ranking": "World ranking",
     "changePassword": "Changer password",
-    "logOut": "Log out"
+    "logOut": "Log out",
+    "leaderboard": "Leaderboard"
   },
   "rankingModal": {
     "title": "Score",
@@ -198,5 +199,8 @@
     "termsAndConditionsTitle": "Terms and Conditions",
     "privacyPolicyTitle": "Privacy Policy",
     "backToHome": "Back to home"
+  },
+  "leaderboard": {
+    "title": "Leaderboard"
   }
 }

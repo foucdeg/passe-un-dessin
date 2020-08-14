@@ -8,6 +8,7 @@ urlpatterns = [
     path("auth/login", auth.check_login, name="login"),
     path("auth/logout", auth.do_logout, name="logout"),
     path("suggestions", general.get_suggestions, name="get_suggestions"),
+    path("leaderboard", general.get_leaderboard, name="get_leaderboard"),
     path("room", room_management.RoomCreationView.as_view(), name="room_creation"),
     path("player", room_management.PlayerView.as_view(), name="player"),
     path("player/me", auth.get_me, name="me"),

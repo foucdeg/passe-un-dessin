@@ -7,7 +7,7 @@ import NewGameModal from 'modals/NewGameModal';
 import Podium from './components/Podium';
 import { FormattedMessage } from 'react-intl';
 import { Container, TopRightButtons, TopRightButton } from './VoteResults.style';
-import Scoreboard from './components/Scoreboard';
+import Scoreboard from './components/GameScoreboard';
 
 const VoteResults: React.FunctionComponent = () => {
   const room = useSelector(selectRoom);
