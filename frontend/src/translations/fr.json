@@ -169,7 +169,8 @@
     "totalScore": "Score total",
     "ranking": "Classement mondial",
     "changePassword": "Changer de mot de passe",
-    "logOut": "Se déconnecter"
+    "logOut": "Se déconnecter",
+    "leaderboard": "Leaderboard"
   },
   "rankingModal": {
     "title": "Scores",
@@ -198,5 +199,8 @@
     "termsAndConditionsTitle": "Conditions d'utilisation",
     "privacyPolicyTitle": "Politique de confidentialité",
     "backToHome": "Retour à l'accueil"
+  },
+  "leaderboard": {
+    "title": "Leaderboard"
   }
 }

@@ -67,6 +67,8 @@ const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
           value={totalScore}
         />
         <ScoreCard
+          linkTo="/leaderboard"
+          linkToLabelId="playerModal.leaderboard"
           color={colorPalette.purple}
           loading={scoreLoading}
           label={<FormattedMessage id="playerModal.ranking" />}

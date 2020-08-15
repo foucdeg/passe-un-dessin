@@ -36,6 +36,14 @@ class PlayerSerializer(BaseSerializer):
         fields = ("uuid", "name", "color")
 
 
+class PlayerInRankingSerializer(BaseSerializer):
+    vote_count = serializers.IntegerField()
+
+    class Meta:
+        model = Player
+        fields = ("uuid", "name", "color", "vote_count")
+
+
 class RoomSerializer(BaseSerializer):
     players = PlayerSerializer(many=True)
     admin = PlayerSerializer()

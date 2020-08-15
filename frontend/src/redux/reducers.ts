@@ -5,13 +5,16 @@
 
 import { combineReducers } from 'redux';
 
+import { reducer as general } from './General';
 import { reducer as room } from './Room';
 import { reducer as game } from './Game';
 import { reducer as player } from './Player';
 import { reducer as step } from './Step';
+
 import { RootState } from './types';
 
 const rootReducer = combineReducers<RootState>({
+  general,
   room,
   game,
   player,

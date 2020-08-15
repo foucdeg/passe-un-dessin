@@ -1,25 +1,6 @@
 import styled from 'styled-components';
-import Header2 from 'atoms/Header2';
-import { colorPalette, fontSize } from 'stylesheet';
+import { fontSize } from 'stylesheet';
 import PlayerChip from 'atoms/PlayerChip';
-
-export const ScoreboardContainer = styled.div`
-  max-width: 300px;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  margin: 0 auto;
-`;
-
-ScoreboardContainer.displayName = 'ScoreboardContainer';
-
-export const StyledHeader = styled(Header2)`
-  color: ${colorPalette.purple};
-  margin-bottom: 32px;
-  text-align: center;
-`;
-
-StyledHeader.displayName = 'StyledHeader';
 
 export const InnerScoreboard = styled.div`
   display: flex;
@@ -33,7 +14,7 @@ export const StyledPlayeChip = styled(PlayerChip)`
   margin: 0;
 `;
 
-StyledHeader.displayName = 'StyledHeader';
+StyledPlayeChip.displayName = 'StyledPlayeChip';
 
 export const RankingRow = styled.div`
   display: flex;
@@ -46,11 +27,19 @@ RankingRow.displayName = 'RankingRow';
 
 export const RankEmoji = styled.span`
   font-size: ${fontSize.header2};
-  margin-right: 8px;
   width: 24px;
+  margin-right: 8px;
 `;
 
 RankEmoji.displayName = 'RankEmoji';
+
+export const RankText = styled.span`
+  text-align: center;
+  width: 24px;
+  margin-right: 8px;
+`;
+
+RankText.displayName = 'RankText';
 
 export const RankingDelta = styled.span``;
 
