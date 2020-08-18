@@ -1235,6 +1235,13 @@
   dependencies:
     cldr-core "36.0.0"
 
+"@formatjs/intl-getcanonicallocales@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-getcanonicallocales/-/intl-getcanonicallocales-1.4.0.tgz#16583c7ed03688334ea2bb95e43d7ac5fc7713de"
+  integrity sha512-hI/GvIS0+TVIWHDced7989pG/sGr0ourhC6fbjUSwx/htSuWoQFdwkE8dJ4MmEpE+X9sNoG7DT+fpywKEeqZFg==
+  dependencies:
+    cldr-core "36.0.0"
+
 "@formatjs/intl-listformat@^3.1.4":
   version "3.1.4"
   resolved "https://registry.yarnpkg.com/@formatjs/intl-listformat/-/intl-listformat-3.1.4.tgz#9fa7c911149bb34b03d75dc10f4408d40f4562fe"
@@ -1263,12 +1270,12 @@
   dependencies:
     "@formatjs/intl-utils" "^3.8.4"
 
-"@formatjs/intl-pluralrules@3.3.2":
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-pluralrules/-/intl-pluralrules-3.3.2.tgz#c05c4432fdb7f6f49a32c31eb2043139046bb409"
-  integrity sha512-GlfC6MGsPP29up6VUhW680jPYDVfFkn2Qt3g6OiBzlh/4gPWd6bNC4voW3aHpzDDnC4qZIWY+uUvrdeWufiuww==
+"@formatjs/intl-pluralrules@3.4.0":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-pluralrules/-/intl-pluralrules-3.4.0.tgz#cb6a9165bc68233656b9f4ddeb31e1a1a81ea7df"
+  integrity sha512-Pg+ZaVS3J6YZvxoJ4u3LgFE9RmublmtKKT8mgNzI0Csi+HJhLi6GhPZuuD/QuslZRPfFGj9i209VQjfRmezW8Q==
   dependencies:
-    "@formatjs/intl-getcanonicallocales" "^1.3.2"
+    "@formatjs/intl-getcanonicallocales" "^1.4.0"
     "@formatjs/intl-utils" "^3.8.4"
 
 "@formatjs/intl-relativetimeformat@^6.2.3":
