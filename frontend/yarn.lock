@@ -1199,6 +1199,14 @@
     "@types/es-abstract" "^1.17.1"
     es-abstract "^1.17.6"
 
+"@formatjs/ecma402-abstract@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@formatjs/ecma402-abstract/-/ecma402-abstract-1.0.3.tgz#26c77b2c33512f4c59dd03bbd1e10f5d400e0042"
+  integrity sha512-ZT5ZwqT9o+5pqDSI840s+CaAmUcyfA8KjbPrxUD2maCh99K5Iwu0L8tGmF20aZ6NAd8mBasrB999bV12kasQJA==
+  dependencies:
+    "@types/es-abstract" "^1.17.1"
+    es-abstract "^1.17.6"
+
 "@formatjs/intl-datetimeformat@^2.1.4":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@formatjs/intl-datetimeformat/-/intl-datetimeformat-2.1.4.tgz#72df737212225173aaaec1ee1b09ead1b2a3c52d"
@@ -1247,6 +1255,15 @@
   dependencies:
     cldr-core "36.0.0"
 
+"@formatjs/intl-getcanonicallocales@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-getcanonicallocales/-/intl-getcanonicallocales-1.4.2.tgz#f58c74e64b1f675f01fc0fdc1eac720e732b6c27"
+  integrity sha512-oDEG3yiG0ysDgKuRfKl/JKrDAAvLYGrQzwqVKC0C359dS/cRa366/CDFP4kVprghQMdZZEqPrO5xe69SmLOcYQ==
+  dependencies:
+    "@types/es-abstract" "^1.17.1"
+    cldr-core "36.0.0"
+    es-abstract "^1.17.6"
+
 "@formatjs/intl-listformat@^3.1.4":
   version "3.1.4"
   resolved "https://registry.yarnpkg.com/@formatjs/intl-listformat/-/intl-listformat-3.1.4.tgz#9fa7c911149bb34b03d75dc10f4408d40f4562fe"
@@ -1279,13 +1296,13 @@
     "@types/es-abstract" "^1.17.1"
     es-abstract "^1.17.6"
 
-"@formatjs/intl-pluralrules@3.4.2":
-  version "3.4.2"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-pluralrules/-/intl-pluralrules-3.4.2.tgz#2ec19d458b9ee8dace166b44b4ebfb68565a7fa0"
-  integrity sha512-a2PzPxrOvLPSjwx51/+TXP2Jhv4P8cVUh4Ff0UfGovV1doIUBVh0l6bu3GKUHTLc+WednDq3vPru9PGguhK+1w==
+"@formatjs/intl-pluralrules@3.4.3":
+  version "3.4.3"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-pluralrules/-/intl-pluralrules-3.4.3.tgz#cd1e9ee954e54176970fec26645d43d5ea5cdcec"
+  integrity sha512-VzxdfUn54vD7I/d/BFjexoeIhtfL2Zb4TI8MnZ4r1Zi/AjuTeDUlKLLOUeWcKtqJJKZtqSNlnnSmdKX2TJjBvA==
   dependencies:
-    "@formatjs/ecma402-abstract" "^1.0.2"
-    "@formatjs/intl-getcanonicallocales" "^1.4.1"
+    "@formatjs/ecma402-abstract" "^1.0.3"
+    "@formatjs/intl-getcanonicallocales" "^1.4.2"
     "@types/es-abstract" "^1.17.1"
     es-abstract "^1.17.6"
 
