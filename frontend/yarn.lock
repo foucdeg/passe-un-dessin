@@ -1314,10 +1314,10 @@
   dependencies:
     emojis-list "^3.0.0"
 
-"@formatjs/intl@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl/-/intl-1.1.0.tgz#e4fc5687eeb33350b8fb4be2c7e22a45ff506455"
-  integrity sha512-mZ3BnE6qGX7CuUC+GCniRuisn5MzdVoI9eOwbUeRXkmpVdYIWIhqj6IKBJ6Dz5d36jwCng75StgyabC4w2zWvw==
+"@formatjs/intl@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl/-/intl-1.2.0.tgz#f62a28d6a19c91f41430bdd6c9604891ac453b10"
+  integrity sha512-gzHkXEFhSUb1Xy4gKaL1ewDjOlrUruoMulKQNavpa7c5ayyRmhPh9T1Vrst6iakGc1UUYpIo7VK+XhnQEq+MLw==
   dependencies:
     "@formatjs/ecma402-abstract" "^1.0.3"
     "@formatjs/intl-datetimeformat" "^2.6.3"
@@ -10671,13 +10671,13 @@ react-intl@*:
     intl-messageformat-parser "^5.3.4"
     shallow-equal "^1.2.1"
 
-react-intl@5.6.10:
-  version "5.6.10"
-  resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-5.6.10.tgz#f822342b064eb861c170e215bf3532d462c43c45"
-  integrity sha512-uZBlHNel2eOzzh24fB5rIKJ+7Hmdh3rhtgH8h4zPjOX7kUCIzWqCqKh44u4cnM/TWHHay6ZOe9pNZz+Mr3J1IA==
+react-intl@5.7.0:
+  version "5.7.0"
+  resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-5.7.0.tgz#36894113a8f2ebe9c68c705434edd7e06f49841d"
+  integrity sha512-2bH+piiMyIcRgbz3QxFcEVn+VNTLDRknO/3VN+hPCwcQEy56jIo/Y//UQ4WCzfg8Aeo90120Qi0Z562Ivi6MHA==
   dependencies:
     "@formatjs/ecma402-abstract" "^1.0.3"
-    "@formatjs/intl" "^1.1.0"
+    "@formatjs/intl" "^1.2.0"
     "@formatjs/intl-datetimeformat" "^2.6.3"
     "@formatjs/intl-displaynames" "^3.3.4"
     "@formatjs/intl-listformat" "^4.2.3"
