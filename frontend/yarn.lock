@@ -1199,6 +1199,11 @@
     "@types/es-abstract" "^1.17.1"
     es-abstract "^1.17.6"
 
+"@formatjs/ecma402-abstract@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@formatjs/ecma402-abstract/-/ecma402-abstract-1.1.0.tgz#a109d2cc963953ba7cb22ffb998abd6a4e9b7e18"
+  integrity sha512-t5wDT1bIF5v5O9mk/reI0TvhqBKs0WiLf2ihVQcUvVCc0qb7poP/KFXWPehooaARDNRJ66LGFLVOHPPsJ+W2Xg==
+
 "@formatjs/intl-datetimeformat@^2.1.4":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@formatjs/intl-datetimeformat/-/intl-datetimeformat-2.1.4.tgz#72df737212225173aaaec1ee1b09ead1b2a3c52d"
@@ -1281,15 +1286,12 @@
     "@types/es-abstract" "^1.17.1"
     es-abstract "^1.17.6"
 
-"@formatjs/intl-pluralrules@3.4.3":
-  version "3.4.3"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-pluralrules/-/intl-pluralrules-3.4.3.tgz#cd1e9ee954e54176970fec26645d43d5ea5cdcec"
-  integrity sha512-VzxdfUn54vD7I/d/BFjexoeIhtfL2Zb4TI8MnZ4r1Zi/AjuTeDUlKLLOUeWcKtqJJKZtqSNlnnSmdKX2TJjBvA==
+"@formatjs/intl-pluralrules@3.4.4":
+  version "3.4.4"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-pluralrules/-/intl-pluralrules-3.4.4.tgz#0e9ff4c60fd1d2e8f46a11c438121a17678d2a7f"
+  integrity sha512-sQ7m4JloezEVItBbuDRqYYDLNGnecRexutRIExXc3jwLdaG6izosUKDPZf/ePSZY+uCMDUsTvnYNMywVcLE6Ww==
   dependencies:
-    "@formatjs/ecma402-abstract" "^1.0.3"
-    "@formatjs/intl-getcanonicallocales" "^1.4.2"
-    "@types/es-abstract" "^1.17.1"
-    es-abstract "^1.17.6"
+    "@formatjs/ecma402-abstract" "^1.1.0"
 
 "@formatjs/intl-relativetimeformat@^6.2.3":
   version "6.2.3"
