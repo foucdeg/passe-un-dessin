@@ -23,7 +23,7 @@
     "redux": "4.0.5",
     "regenerator-runtime": "0.13.7",
     "styled-components": "5.1.1",
-    "superagent": "6.0.0"
+    "superagent": "6.1.0"
   },
   "proxy": "http://localhost:8000",
   "scripts": {
