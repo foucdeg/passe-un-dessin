@@ -8,13 +8,17 @@ import { useFetchStep, useSaveStepDrawing, useSaveStepSentence } from 'redux/Ste
 import { selectGame } from 'redux/Game/selectors';
 import { selectStep } from 'redux/Step/selectors';
 
+interface RouteParams {
+  stepId: string;
+}
+
 const PadStep: React.FunctionComponent = () => {
   const game = useSelector(selectGame);
   const step = useSelector(selectStep);
   const doFetchStep = useFetchStep();
   const [{ loading: isSaveStepDrawingLoading }, doSaveStepDrawing] = useSaveStepDrawing();
   const [{ loading: isSaveStepSentenceLoading }, doSaveStepSentence] = useSaveStepSentence();
-  const { stepId } = useParams();
+  const { stepId } = useParams<RouteParams>();
 
   useEffect(() => {
     if (stepId) {

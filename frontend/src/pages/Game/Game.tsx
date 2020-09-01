@@ -27,8 +27,12 @@ const PadStep = React.lazy(() => import('../PadStep'));
 const GameRecap = React.lazy(() => import('../GameRecap'));
 const VoteResults = React.lazy(() => import('../VoteResults'));
 
+interface RouteParams {
+  gameId: string;
+}
+
 const Game: React.FunctionComponent = () => {
-  const { gameId } = useParams();
+  const { gameId } = useParams<RouteParams>();
   const [{ loading }, doFetchGame] = useFetchGame();
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);

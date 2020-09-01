@@ -19,8 +19,12 @@ import LostPlayerModal from 'modals/LostPlayerModal';
 const Game = lazy(() => import('pages/Game'));
 const RoomLobby = lazy(() => import('pages/RoomLobby'));
 
+interface RouteParams {
+  roomId: string;
+}
+
 const Room: React.FunctionComponent = () => {
-  const { roomId } = useParams();
+  const { roomId } = useParams<RouteParams>();
   const doFetchRoom = useFetchRoom();
   const [playerWhoLeft, setPlayerWhoLeft] = useState<Player | null>(null);
   const [adminChanged, setAdminChanged] = useState<boolean>(false);
