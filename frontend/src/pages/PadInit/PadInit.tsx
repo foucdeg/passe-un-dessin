@@ -20,8 +20,12 @@ import StaticInput from 'atoms/StaticInput';
 import InputLoader from 'atoms/InputLoader';
 import RemainingPlayers from 'components/RemainingPlayers';
 
+interface RouteParams {
+  padId: string;
+}
+
 const PadInit: React.FunctionComponent = () => {
-  const { padId } = useParams();
+  const { padId } = useParams<RouteParams>();
   const game = useSelector(selectGame);
 
   const player = useSelector(selectPlayer);
