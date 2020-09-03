@@ -60,16 +60,15 @@ const SideButtons: React.FC<EmptyObject> = () => {
   return (
     <SideButtonsContainer>
       <AudioControl />
-      {player &&
-        (player.user ? (
-          <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.accountMenu' })}>
-            <UserModalButton alt="User" onClick={() => setPlayerModalOpen(true)} />
-          </IconAndTooltip>
-        ) : (
-          <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.playerMenu' })}>
-            <PlayerModalButton alt="Player" onClick={() => setAuthModalOpen(true)} />
-          </IconAndTooltip>
-        ))}
+      {player && player.user ? (
+        <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.accountMenu' })}>
+          <UserModalButton alt="User" onClick={() => setPlayerModalOpen(true)} />
+        </IconAndTooltip>
+      ) : (
+        <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.playerMenu' })}>
+          <PlayerModalButton alt="Player" onClick={() => setAuthModalOpen(true)} />
+        </IconAndTooltip>
+      )}
       {room && isPlayerAdmin && (
         <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.adminMenu' })}>
           <AdminModalButton alt="Settings" onClick={() => setAdminModalOpen(true)} />
