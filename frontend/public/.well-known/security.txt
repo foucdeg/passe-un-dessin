@@ -1,4 +1,4 @@
-Contact: foucauld.degeorges@gmail.com
+Contact: mailto:foucauld.degeorges@gmail.com
 Acknowledgments: https://github.com/foucdeg/passe-un-dessin
 Preferred-Languages: en, fr
 Canonical: https://passe-un-dessin.fouc.net
