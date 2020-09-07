@@ -16,11 +16,7 @@ from rest_framework.generics import UpdateAPIView
 
 from core.decorators import requires_player
 from core.models import Player, User, Vote
-from core.serializers import (
-    PlayerSerializer,
-    PlayerWithUserSerializer,
-    UserSerializer,
-)
+from core.serializers import PlayerSerializer, PlayerWithUserSerializer, UserSerializer
 from core.service.auth_service import (
     SocialAuthInvalidTokenException,
     do_user_player_coherence,
@@ -64,15 +60,19 @@ def social_login(request):
 
     try:
         user = User.objects.get(email=email)
+        created = False
     except User.DoesNotExist:
         user = User.objects.create_user(email)
+        created = True
 
     # If there is already a player in the session, set it on the user
     do_user_player_coherence(request, user)
 
     login(request, user)
 
-    return JsonResponse(UserSerializer(user).data)
+    resp = UserSerializer(user).data
+    resp['_created'] = created
+    return JsonResponse(resp)
 
 
 @require_POST

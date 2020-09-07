@@ -59,7 +59,19 @@ export const useSocialLogin = () => {
 
   return useCallback(
     async (token: string, provider: AuthProvider) => {
-      await client.post(`/auth/social-login`, { token, provider });
+      const player = await client.post(`/auth/social-login`, { token, provider });
+      const gtag = (window as any).gtag; // eslint-disable-line @typescript-eslint/no-explicit-any
+
+      if (player._created) {
+        gtag('event', 'sign_up', {
+          method: provider,
+        });
+      } else {
+        gtag('event', 'login', {
+          method: provider,
+        });
+      }
+
       await doFetchMe();
     },
     [doFetchMe],
@@ -73,6 +85,10 @@ export const useLogin = () => {
     async ({ email, password }) => {
       try {
         await client.post(`/auth/login`, { email, password });
+        const gtag = (window as any).gtag; // eslint-disable-line @typescript-eslint/no-explicit-any
+        gtag('event', 'login', {
+          method: 'form',
+        });
         await doFetchMe();
       } catch (e) {
         if (e.status === 403) {
@@ -116,6 +132,10 @@ export const useCreateAccount = () => {
     async ({ email, password }) => {
       try {
         await client.post(`/auth/create-account`, { email, password });
+        const gtag = (window as any).gtag; // eslint-disable-line @typescript-eslint/no-explicit-any
+        gtag('event', 'sign_up', {
+          method: 'form',
+        });
         await doFetchMe();
       } catch (e) {
         if (e.status === 400) {

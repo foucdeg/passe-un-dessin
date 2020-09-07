@@ -92,6 +92,10 @@ export const useStartGame = () => {
           playersOrder,
           drawOwnWord,
         });
+        const gtag = (window as any).gtag; // eslint-disable-line @typescript-eslint/no-explicit-any
+        gtag('event', 'start_game', {
+          event_category: 'engagement',
+        });
         localStorage.setItem('preferredRoundDuration', roundDuration.toString());
         localStorage.setItem('prefferedDrawOwnWord', drawOwnWord.toString());
         history.push(`/room/${roomId}/game/${gameId}`);
