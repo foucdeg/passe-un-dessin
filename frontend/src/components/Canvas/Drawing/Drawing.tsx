@@ -3,19 +3,19 @@ import { FormattedMessage } from 'react-intl';
 import { StyledDrawing } from './Drawing.style';
 
 interface Props {
-  data: string | null;
+  src: string | null;
   className?: string;
 }
 
-const Drawing: React.FC<Props> = ({ data, className }) => {
-  if (!data)
+const Drawing: React.FC<Props> = ({ src, className }) => {
+  if (!src)
     return (
       <div>
         <FormattedMessage id="drawingToWord.noDrawing" />
       </div>
     );
 
-  return <StyledDrawing src={data} className={className} />;
+  return <StyledDrawing src={src} className={className} />;
 };
 
 export default Drawing;

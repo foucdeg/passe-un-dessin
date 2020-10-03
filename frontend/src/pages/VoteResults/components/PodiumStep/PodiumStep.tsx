@@ -1,5 +1,4 @@
 import React from 'react';
-import lzString from 'lz-string';
 import { FormattedMessage } from 'react-intl';
 import podiumsSteps from 'assets/podium-steps';
 
@@ -23,9 +22,6 @@ interface Props {
 }
 
 const PodiumStep: React.FC<Props> = ({ winner, width, ranking }) => {
-  const decodedWinnerDrawing =
-    winner && winner.drawing ? lzString.decompressFromBase64(winner.drawing) : null;
-
   return (
     <Container width={width}>
       {winner && (
@@ -36,7 +32,7 @@ const PodiumStep: React.FC<Props> = ({ winner, width, ranking }) => {
               <ArrowSpacer />
             </>
           )}
-          <StyledDrawing data={decodedWinnerDrawing} />
+          <StyledDrawing src={winner?.drawing_url} />
           {winner.step_type === StepType.DRAWING_TO_WORD && (
             <>
               <ArrowSpacer highlighted />

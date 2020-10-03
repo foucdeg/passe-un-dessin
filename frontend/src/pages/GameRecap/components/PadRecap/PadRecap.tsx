@@ -17,7 +17,7 @@ const PadRecap: React.FC<Props> = ({ pad }) => {
     step_type: StepType.DRAWING_TO_WORD,
     votes: [],
     round_number: -1,
-    drawing: null,
+    drawing_url: '',
   };
 
   return (

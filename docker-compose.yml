@@ -25,6 +25,20 @@ services:
       DATABASE_URL: "postgres://postgres@db:5432/postgres"
       ENVIRONMENT: "development"
 
+  drawing-renderer:
+    image: node:alpine
+    command: npm start
+    ports:
+      - "8888:80"
+    volumes:
+      - ./drawing-renderer:/code:delegated
+    working_dir: "/code"
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: "postgres://postgres@db:5432/postgres"
+      ENVIRONMENT: "development"
+
 networks:
   default:
     ipam:

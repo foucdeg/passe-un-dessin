@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import Spacer from 'atoms/Spacer';
 import CanvasDraw from 'components/Canvas/CanvasDraw';
 import Timer from 'pages/PadStep/components/Timer';
@@ -24,10 +24,17 @@ interface Props {
 
 const WordToDrawingStep: React.FC<Props> = ({ padStep, saveStep, loading }) => {
   const game = useSelector(selectGame);
+  const [finished, setFinished] = useState<boolean>(false);
+
+  const doSaveStep = useCallback(
+    async (values: { sentence?: string; drawing?: string }) => {
+      await saveStep(values);
+      setFinished(true);
+    },
+    [setFinished, saveStep],
+  );
 
   if (!game) return null;
-
-  const finished = loading || !!padStep.drawing;
 
   return (
     <LeftAndRightSide>
@@ -35,8 +42,8 @@ const WordToDrawingStep: React.FC<Props> = ({ padStep, saveStep, loading }) => {
         <CanvasDraw
           canvasWidth={538}
           canvasHeight={538}
-          saveStep={saveStep}
-          finished={finished}
+          saveStep={doSaveStep}
+          finished={loading || finished}
           roundDuration={game.round_duration}
         />
       </LeftSide>
@@ -49,7 +56,7 @@ const WordToDrawingStep: React.FC<Props> = ({ padStep, saveStep, loading }) => {
           {padStep.sentence || <FormattedMessage id="wordToDrawing.noSentence" />}
         </Sentence>
         <Spacer />
-        {finished ? (
+        {loading || finished ? (
           <RemainingPlayers />
         ) : (
           <>

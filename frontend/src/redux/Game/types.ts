@@ -12,6 +12,10 @@ export enum StepType {
   DRAWING_TO_WORD = 'DRAWING_TO_WORD',
 }
 
+export interface Vote {
+  player: Player;
+}
+
 export interface PadStep {
   uuid: string;
   step_type: StepType;
@@ -19,7 +23,7 @@ export interface PadStep {
   player: Player;
 
   sentence: string | null;
-  drawing: string | null;
+  drawing_url: string;
   votes: Vote[];
 }
 
@@ -50,7 +54,3 @@ export interface RawGame {
 export type Game = RawGame & {
   players: Player[];
 };
-
-export interface Vote {
-  player: Player;
-}

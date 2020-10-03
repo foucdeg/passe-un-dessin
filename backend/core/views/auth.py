@@ -16,7 +16,11 @@ from rest_framework.generics import UpdateAPIView
 
 from core.decorators import requires_player
 from core.models import Player, User, Vote
-from core.serializers import PlayerSerializer, PlayerWithUserSerializer, UserSerializer
+from core.serializers import (
+    PlayerSerializer,
+    PlayerWithUserSerializer,
+    UserSerializer,
+)
 from core.service.auth_service import (
     SocialAuthInvalidTokenException,
     do_user_player_coherence,
@@ -71,7 +75,7 @@ def social_login(request):
     login(request, user)
 
     resp = UserSerializer(user).data
-    resp['_created'] = created
+    resp["_created"] = created
     return JsonResponse(resp)
 
 

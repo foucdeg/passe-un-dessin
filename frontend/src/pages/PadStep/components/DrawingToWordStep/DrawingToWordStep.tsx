@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import lzString from 'lz-string';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import Spacer from 'atoms/Spacer';
@@ -38,12 +37,10 @@ const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, loading }) => {
     }
   };
 
-  const decodedSaveData = padStep.drawing && lzString.decompressFromBase64(padStep.drawing);
-
   return (
     <LeftAndRightSide>
       <LeftSide>
-        <Drawing data={decodedSaveData} />
+        <Drawing src={padStep.drawing_url} />
       </LeftSide>
       <Gutter />
       <RightSide>

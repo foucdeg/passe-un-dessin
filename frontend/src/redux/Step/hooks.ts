@@ -18,20 +18,9 @@ export const useFetchStep = () => {
 };
 
 export const useSaveStepDrawing = () => {
-  const dispatch = useDispatch();
-
-  return useTypedAsyncFn<{ step: PadStep; drawing: string }>(
-    async ({ step, drawing }) => {
-      await client.put(`/pad-step/${step.uuid}/save`, { drawing });
-      dispatch(
-        updateStep({
-          ...step,
-          drawing,
-        }),
-      );
-    },
-    [dispatch],
-  );
+  return useTypedAsyncFn<{ step: PadStep; drawing: string }>(async ({ step, drawing }) => {
+    await client.put(`/pad-step/${step.uuid}/save`, { drawing });
+  }, []);
 };
 
 export const useSaveStepSentence = () => {
