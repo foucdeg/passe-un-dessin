@@ -1,0 +1,15 @@
+{
+  "name": "passe-un-dessin-drawing-renderer",
+  "version": "1.0.0",
+  "description": "PNG renderer of drawings for P1D",
+  "main": "server.js",
+  "repository": "https://github.com/foucdeg/passe-un-dessin",
+  "author": "Foucauld Degeorges",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "express": "^4.17.1",
+    "lz-string": "^1.4.4",
+    "pg": "^8.3.3"
+  }
+}

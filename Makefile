@@ -9,6 +9,10 @@ deploy-back:
 	cd backend && docker build -f ./docker/Dockerfile.prod . -t foucdeg/passe-un-dessin:latest
 	docker push foucdeg/passe-un-dessin:latest
 
+deploy-drawing-renderer:
+	cd drawing-renderer && docker build -f ./Dockerfile.prod . -t foucdeg/passe-un-dessin-drawing-renderer:latest
+	docker push foucdeg/passe-un-dessin-drawing-renderer:latest
+
 deploy: deploy-back deploy-front
 
 load_prod_dump:
