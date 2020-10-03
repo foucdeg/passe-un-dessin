@@ -66,6 +66,10 @@ class VoteSerializer(BaseSerializer):
 class PadStepSerializer(BaseSerializer):
     player = PlayerSerializer()
     votes = VoteSerializer(many=True)
+    drawing_url = serializers.SerializerMethodField()
+
+    def get_drawing_url(self, obj):
+        return "/drawings/%s.png" % obj.uuid
 
     class Meta:
         model = PadStep
@@ -75,7 +79,7 @@ class PadStepSerializer(BaseSerializer):
             "round_number",
             "player",
             "sentence",
-            "drawing",
+            "drawing_url",
             "votes",
         )
 
