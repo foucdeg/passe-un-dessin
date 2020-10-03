@@ -1,5 +1,4 @@
 import React from 'react';
-import lzString from 'lz-string';
 
 import { useDeleteVote, useSaveVote } from 'redux/Game/hooks';
 import { selectAvailableVoteCount } from 'redux/Game/selectors';
@@ -30,12 +29,10 @@ const DrawingRecap: React.FC<Props> = ({ step }) => {
   const doLike = () => doSaveVote(step.uuid);
   const doUnlike = () => doDeleteVote(step.uuid);
 
-  const decodedSaveData = step.drawing && lzString.decompressFromBase64(step.drawing);
-
   return (
     <StyledDrawingRecap>
       <DrawingHeader>{step.player.name}</DrawingHeader>
-      <StyledDrawing data={decodedSaveData} />
+      <StyledDrawing src={step.drawing_url} />
       <ReactionOverlay
         canLike={canLike}
         canUnlike={canUnlike}
