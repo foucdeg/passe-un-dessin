@@ -1,4 +1,4 @@
-FROM python:3.8-alpine
+FROM python:3.9-alpine
 
 RUN apk add gcc==9.2.0-r4 musl-dev==1.1.24-r2 postgresql-dev==12.2-r0 postgresql-client==12.2-r0 gettext==0.20.1-r2 libressl-dev==3.0.2-r0 libffi-dev==3.2.1-r6 make==4.2.1-r2 --no-cache
 RUN pip install daphne==2.5.0
