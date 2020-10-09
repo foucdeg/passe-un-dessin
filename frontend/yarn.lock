@@ -1797,10 +1797,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.23.tgz#676fa0883450ed9da0bb24156213636290892806"
   integrity sha512-Z4U8yDAl5TFkmYsZdFPdjeMa57NOvnaf1tljHzhouaPEp7LCj2JKkejpI1ODviIAQuW4CcQmxkQ77rnLsOOoKw==
 
-"@types/node@12.12.66":
-  version "12.12.66"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.66.tgz#5a2650f5c25e9f24d8f65d06f39a4650249bd5fc"
-  integrity sha512-VwJbrfz53hQo/3uUhan/ZQJD9AQSSbmODtbtFhPmT07KTIp9zw2dVZhoV0TezZv2NZMuFdKHY6z9SosB4Vtj3A==
+"@types/node@12.12.67":
+  version "12.12.67"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.67.tgz#4f86badb292e822e3b13730a1f9713ed2377f789"
+  integrity sha512-R48tgL2izApf+9rYNH+3RBMbRpPeW3N8f0I9HMhggeq4UXwBDqumJ14SDs4ctTMhG11pIOduZ4z3QWGOiMc9Vg==
 
 "@types/node@^14.0.18":
   version "14.0.26"
