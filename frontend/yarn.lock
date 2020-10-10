@@ -1198,6 +1198,13 @@
   dependencies:
     tslib "^2.0.1"
 
+"@formatjs/ecma402-abstract@^1.2.5":
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/@formatjs/ecma402-abstract/-/ecma402-abstract-1.2.5.tgz#5a61ac1990ff2df8d1348ab12e186c1ca2a2bd71"
+  integrity sha512-k0fqS3LBNOHueAoMdgig8Ni6TchsH+zbzWBzX2gTFm50X9mxHwnuXdCk0XLlCIbvgVVlzcO254Men/mHAheMbg==
+  dependencies:
+    tslib "^2.0.1"
+
 "@formatjs/intl-datetimeformat@^2.1.4":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@formatjs/intl-datetimeformat/-/intl-datetimeformat-2.1.4.tgz#72df737212225173aaaec1ee1b09ead1b2a3c52d"
@@ -1250,12 +1257,12 @@
   dependencies:
     "@formatjs/intl-utils" "^3.8.1"
 
-"@formatjs/intl-pluralrules@3.4.9":
-  version "3.4.9"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-pluralrules/-/intl-pluralrules-3.4.9.tgz#2e4254086332cadc735d7634d3f2575d08c96024"
-  integrity sha512-3CC9PMUiKczOvYPU+ssvjxP53WW+lKq20gGgYmVawuC4t7uvXrZcZEtAPXclGcmsg5IAV07fTJHAwuE6UySh4w==
+"@formatjs/intl-pluralrules@3.4.10":
+  version "3.4.10"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-pluralrules/-/intl-pluralrules-3.4.10.tgz#7ed3b03190971f21d482cb0e46791d90783a74d3"
+  integrity sha512-KcZZv38bu0pho9+9pMUOsCAi9/Kayh4+V5QZ/I9ps5OFSQlQaFMP5sX/zHBp41SsT6HxTfrPw5CHWpGrS75NQQ==
   dependencies:
-    "@formatjs/ecma402-abstract" "^1.2.4"
+    "@formatjs/ecma402-abstract" "^1.2.5"
     tslib "^2.0.1"
 
 "@formatjs/intl-relativetimeformat@^6.2.3":
