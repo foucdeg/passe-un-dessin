@@ -102,7 +102,7 @@
     "eslint-plugin-mysticatea": "4.2.4",
     "eslint-plugin-prefer-object-spread": "1.2.1",
     "eslint-plugin-prettier": "3.1.4",
-    "eslint-plugin-react": "7.21.4",
+    "eslint-plugin-react": "7.21.5",
     "eslint-plugin-risxss": "1.1.1",
     "http-proxy-middleware": "1.0.6",
     "npm-audit-resolver": "2.2.1",
