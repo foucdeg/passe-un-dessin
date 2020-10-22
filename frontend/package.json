@@ -90,7 +90,7 @@
     "@types/webpack-env": "1.15.3",
     "@typescript-eslint/eslint-plugin": "4.5.0",
     "@typescript-eslint/parser": "4.5.0",
-    "@welldone-software/why-did-you-render": "4.3.2",
+    "@welldone-software/why-did-you-render": "5.0.0",
     "babel-plugin-styled-components": "1.11.1",
     "bundlesize": "0.18.0",
     "cypress": "5.4.0",
