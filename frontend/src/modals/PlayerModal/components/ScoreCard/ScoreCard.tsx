@@ -1,7 +1,7 @@
 import React from 'react';
-import { Container, Label, Value, StyledLink } from './ScoreCard.style';
 import Loader from 'atoms/Loader';
 import { FormattedMessage } from 'react-intl';
+import { Container, Label, Value, StyledLink } from './ScoreCard.style';
 
 interface Props {
   label: React.ReactNode;
@@ -26,7 +26,7 @@ const ScoreCard: React.FC<Props> = ({
     <Label color={color}>{label}</Label>
     {loading ? <Loader /> : <Value color={color}>{value}</Value>}
     {linkTo && linkToLabelId && (
-      <StyledLink to={linkTo} target="_blank">
+      <StyledLink to={linkTo} color={color} target="_blank">
         <FormattedMessage id={linkToLabelId} />
       </StyledLink>
     )}

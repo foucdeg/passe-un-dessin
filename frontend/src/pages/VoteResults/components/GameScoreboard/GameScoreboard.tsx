@@ -1,11 +1,11 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { GameScoreboardContainer, StyledHeader } from './GameScoreboard.style';
 import { useSelector } from 'redux/useSelector';
 import { selectRanking } from 'redux/Room/selectors';
 import { selectWinners } from 'redux/Game/selectors';
 import { EmptyObject } from 'services/utils';
 import Scoreboard from 'components/Scoreboard';
+import { GameScoreboardContainer, StyledHeader } from './GameScoreboard.style';
 
 const GameScoreboard: React.FC<EmptyObject> = () => {
   const ranking = useSelector(selectRanking);

@@ -17,15 +17,17 @@ const roomSlice = createSlice({
       state.room = action.payload;
     },
     joinRoom: (state, action: PayloadAction<Player>) => {
-      if (!state.room?.players.some((roomPlayer) => roomPlayer.uuid === action.payload.uuid)) {
-        state.room?.players.push(action.payload);
+      if (!state.room) return;
+      if (!state.room.players.some((roomPlayer) => roomPlayer.uuid === action.payload.uuid)) {
+        state.room.players.push(action.payload);
       }
     },
     updateRanking: (state, action: PayloadAction<RoomRanking>) => {
       state.ranking = action.payload;
     },
     addPlayerToRoom: (state, action: PayloadAction<Player>) => {
-      state.room?.players.push(action.payload);
+      if (!state.room) return;
+      state.room.players.push(action.payload);
     },
     removeRoom: (state) => {
       state.room = null;

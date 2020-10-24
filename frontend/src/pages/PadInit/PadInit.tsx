@@ -3,6 +3,15 @@ import { useSelector } from 'redux/useSelector';
 import { useParams } from 'react-router';
 
 import { useSavePad } from 'redux/Game/hooks';
+
+import { selectGame } from 'redux/Game/selectors';
+import { selectPlayer } from 'redux/Player/selectors';
+import { FormattedMessage, useIntl } from 'react-intl';
+import Spacer from 'atoms/Spacer';
+import StaticInput from 'atoms/StaticInput';
+import InputLoader from 'atoms/InputLoader';
+import RemainingPlayers from 'components/RemainingPlayers';
+import SuggestionGenerator from './components/SuggestionGenerator';
 import {
   StyledHeader,
   PadInitContainer,
@@ -10,15 +19,6 @@ import {
   StyledForm,
   InputArrow,
 } from './PadInit.style';
-
-import { selectGame } from 'redux/Game/selectors';
-import { selectPlayer } from 'redux/Player/selectors';
-import { FormattedMessage, useIntl } from 'react-intl';
-import Spacer from 'atoms/Spacer';
-import SuggestionGenerator from './components/SuggestionGenerator';
-import StaticInput from 'atoms/StaticInput';
-import InputLoader from 'atoms/InputLoader';
-import RemainingPlayers from 'components/RemainingPlayers';
 
 interface RouteParams {
   padId: string;

@@ -1,5 +1,4 @@
 import React from 'react';
-import { StyledSentenceRecap, SentenceHeader, Sentence } from './SentenceRecap.style';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'redux/useSelector';
 import { selectPlayer } from 'redux/Player/selectors';
@@ -7,6 +6,7 @@ import { useSaveVote, useDeleteVote } from 'redux/Game/hooks';
 import { selectAvailableVoteCount } from 'redux/Game/selectors';
 import { PadStep } from 'redux/Game/types';
 import ReactionOverlay from 'pages/GameRecap/components/ReactionOverlay';
+import { StyledSentenceRecap, SentenceHeader, Sentence } from './SentenceRecap.style';
 
 interface Props {
   step: PadStep;

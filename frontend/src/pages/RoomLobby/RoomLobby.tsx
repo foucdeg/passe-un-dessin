@@ -3,9 +3,7 @@ import FieldLabel from 'atoms/FieldLabel';
 import PlayerChip from 'atoms/PlayerChip';
 import PlayerChips from 'atoms/PlayerChips';
 import Button from 'atoms/Button';
-import DrawOwnWordSwitch from './components/DrawOwnWordSwitch';
 import Modal from 'components/Modal';
-import RoundDurationPicker from './components/RoundDurationPicker';
 import copy from 'copy-to-clipboard';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { MAX_PLAYERS, MIN_PLAYERS } from 'redux/Game/constants';
@@ -20,6 +18,10 @@ import { useJoinRoom, useLeaveRoom } from 'redux/Room/hooks';
 import { selectRoom } from 'redux/Room/selectors';
 import { useSelector } from 'redux/useSelector';
 import { shouldDisplayDrawOwnWordSwitch } from 'services/game.service';
+import { PUBLIC_PATHS } from 'routes';
+import BareLink from 'atoms/BareLink';
+import RoundDurationPicker from './components/RoundDurationPicker';
+import DrawOwnWordSwitch from './components/DrawOwnWordSwitch';
 import {
   ButtonRow,
   CloseButton,
@@ -113,7 +115,12 @@ const Room: React.FunctionComponent = () => {
       <PlayerChips>
         {room.players.map((player) => (
           <PlayerChip key={player.uuid} color={player.color}>
-            {player.name}
+            <BareLink
+              to={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', player.uuid)}
+              target="_blank"
+            >
+              {player.name}
+            </BareLink>
           </PlayerChip>
         ))}
       </PlayerChips>

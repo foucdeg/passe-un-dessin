@@ -2,9 +2,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectPadViewers } from 'redux/Game/selectors';
 import { Pad } from 'redux/Game/types';
-import { PadTabContainer, ViewersContainer, ViewerEye } from './PadTab.style';
 import { selectPlayer } from 'redux/Player/selectors';
 import IconAndTooltip from 'atoms/IconAndTooltip';
+import { PadTabContainer, ViewersContainer, ViewerEye } from './PadTab.style';
 
 interface Props {
   pad: Pad;

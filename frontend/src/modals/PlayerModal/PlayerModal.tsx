@@ -1,5 +1,15 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'redux/useSelector';
+import { FormattedMessage } from 'react-intl';
+import { selectPlayer, selectPlayerTotalScore, selectPlayerRanking } from 'redux/Player/selectors';
+import { useLogout, useFetchMyTotalScore } from 'redux/Player/hooks';
+import Header4 from 'atoms/Header4';
+import Modal from 'components/Modal';
+import SecondaryButton from 'atoms/SecondaryButton';
+import { colorPalette } from 'stylesheet';
+import { PUBLIC_PATHS } from 'routes';
+import ScoreCard from './components/ScoreCard';
+import PlayerForm from './components/PlayerForm';
 import {
   StyledHeader,
   HeaderSection,
@@ -7,15 +17,6 @@ import {
   ScoreCardRow,
   StyledSeparator,
 } from './PlayerModal.style';
-import { FormattedMessage } from 'react-intl';
-import PlayerForm from './components/PlayerForm';
-import { selectPlayer, selectPlayerTotalScore, selectPlayerRanking } from 'redux/Player/selectors';
-import { useLogout, useFetchTotalScore } from 'redux/Player/hooks';
-import Header4 from 'atoms/Header4';
-import Modal from 'components/Modal';
-import SecondaryButton from 'atoms/SecondaryButton';
-import ScoreCard from './components/ScoreCard';
-import { colorPalette } from 'stylesheet';
 
 interface Props {
   isOpen: boolean;
@@ -25,15 +26,15 @@ interface Props {
 const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const player = useSelector(selectPlayer);
   const doLogout = useLogout();
-  const [{ loading: scoreLoading }, fetchTotalScore] = useFetchTotalScore();
+  const [{ loading: scoreLoading }, fetchMyTotalScore] = useFetchMyTotalScore();
   const totalScore = useSelector(selectPlayerTotalScore);
   const ranking = useSelector(selectPlayerRanking);
 
   useEffect(() => {
     if (isOpen) {
-      fetchTotalScore();
+      fetchMyTotalScore();
     }
-  }, [fetchTotalScore, isOpen]);
+  }, [fetchMyTotalScore, isOpen]);
 
   const logoutAndClose = () => {
     onClose();
@@ -62,6 +63,8 @@ const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
       </StyledSeparator>
       <ScoreCardRow>
         <ScoreCard
+          linkTo={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', player.uuid)}
+          linkToLabelId="playerModal.history"
           loading={scoreLoading}
           label={<FormattedMessage id="playerModal.totalScore" />}
           value={totalScore}

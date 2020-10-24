@@ -5,12 +5,12 @@ import { selectPlayer } from 'redux/Player/selectors';
 import { Player } from 'redux/Player/types';
 import { useSelector } from 'redux/useSelector';
 import client from 'services/networking/client';
-import { joinRoom, removeRoom, updateRanking, updateRoom } from './slice';
-import { Room } from './types';
 import { selectGame } from 'redux/Game/selectors';
-import { selectRoom } from './selectors';
 import { GamePhase } from 'redux/Game/types';
 import { useIntl } from 'react-intl';
+import { joinRoom, removeRoom, updateRanking, updateRoom } from './slice';
+import { Room } from './types';
+import { selectRoom } from './selectors';
 
 export const useFetchRoom = () => {
   const dispatch = useDispatch();

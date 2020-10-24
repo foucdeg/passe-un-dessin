@@ -1,3 +1,5 @@
+import { GamePlayerParticipation } from 'redux/Game/types';
+
 export interface User {
   email: string;
 }
@@ -8,3 +10,18 @@ export interface Player {
   color: string;
   user?: null | User;
 }
+
+export interface GameWithParticipants {
+  uuid: string;
+  created_at: string;
+  participants: GamePlayerParticipation[];
+}
+
+export interface Participation {
+  game: GameWithParticipants | null;
+}
+
+export type PlayerWithParticipations = Player & {
+  participations: Participation[];
+  created_at: string;
+};

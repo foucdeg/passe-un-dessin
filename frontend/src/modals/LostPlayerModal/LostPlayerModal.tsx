@@ -1,10 +1,10 @@
 import React from 'react';
 import Modal from 'components/Modal';
 import { FormattedMessage } from 'react-intl';
-import { StyledHeader, StyledParagraph } from './LostPlayerModal.style';
 import { useSelector } from 'redux/useSelector';
 import { selectAdmin, selectPlayerIsAdmin } from 'redux/Room/selectors';
 import { Player } from 'redux/Player/types';
+import { StyledHeader, StyledParagraph } from './LostPlayerModal.style';
 
 interface Props {
   playerWhoLeft: Player;

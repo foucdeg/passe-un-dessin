@@ -1,6 +1,6 @@
 import React from 'react';
-import { OuterLoader, InnerLoader } from './InputLoader.style';
 import { EmptyObject } from 'services/utils';
+import { OuterLoader, InnerLoader } from './InputLoader.style';
 
 const InputLoader: React.FC<EmptyObject> = () => (
   <OuterLoader>

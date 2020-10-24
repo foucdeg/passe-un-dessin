@@ -1,7 +1,7 @@
 import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
-import { updateLeaderboard } from './slice';
 import { useCallback } from 'react';
+import { updateLeaderboard } from './slice';
 
 export const useFetchLeaderboard = () => {
   const dispatch = useDispatch();

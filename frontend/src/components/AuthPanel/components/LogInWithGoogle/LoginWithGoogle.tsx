@@ -1,8 +1,8 @@
 /*  eslint @typescript-eslint/no-explicit-any: off */
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useSocialLogin, AuthProvider } from 'redux/Player/hooks';
-import { GoogleLogo, TextContent, StyledGoogleButton } from './LoginWithGoogle.style';
 import { FormattedMessage } from 'react-intl';
+import { GoogleLogo, TextContent, StyledGoogleButton } from './LoginWithGoogle.style';
 
 interface GoogleUser {
   getAuthResponse: () => { id_token: string };

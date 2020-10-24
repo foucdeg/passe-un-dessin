@@ -95,6 +95,34 @@ class PlayerGameParticipationSerializer(BaseSerializer):
         )
 
 
+class GameWithParticipantsSerializer(BaseSerializer):
+    participants = PlayerGameParticipationSerializer(many=True)
+
+    class Meta:
+        model = Game
+        fields = (
+            "uuid",
+            "participants",
+            "created_at",
+        )
+
+
+class PlayerGameParticipationWithGameSerializer(BaseSerializer):
+    game = GameWithParticipantsSerializer()
+
+    class Meta:
+        model = PlayerGameParticipation
+        fields = ("game",)
+
+
+class PlayerWithHistorySerializer(BaseSerializer):
+    participations = PlayerGameParticipationWithGameSerializer(many=True)
+
+    class Meta:
+        model = Player
+        fields = ("uuid", "name", "color", "created_at", "participations")
+
+
 class PadIdSerializer(BaseSerializer):
     class Meta:
         model = Pad

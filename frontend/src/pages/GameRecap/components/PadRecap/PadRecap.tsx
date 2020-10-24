@@ -1,9 +1,9 @@
 import React from 'react';
 import { Pad, StepType, PadStep } from 'redux/Game/types';
-import { PadRecapRow, ArrowSpacer } from './PadRecap.style';
 import SentenceRecap from 'pages/GameRecap/components/SentenceRecap';
 import DrawingRecap from 'pages/GameRecap/components/DrawingRecap';
 import RecapRemainingPlayers from 'pages/GameRecap/components/RecapRemainingPlayers';
+import { PadRecapRow, ArrowSpacer } from './PadRecap.style';
 
 interface Props {
   pad: Pad;

@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 
+import { FormattedMessage, useIntl } from 'react-intl';
+import FieldLabel from 'atoms/FieldLabel';
+import TextInput from 'atoms/TextInput';
+import Spacer from 'atoms/Spacer';
 import {
   MobileGateBackground,
   LaptopTablet,
@@ -7,10 +11,6 @@ import {
   InputArrow,
   StyledHeader,
 } from './MobileGate.style';
-import { FormattedMessage, useIntl } from 'react-intl';
-import FieldLabel from 'atoms/FieldLabel';
-import TextInput from 'atoms/TextInput';
-import Spacer from 'atoms/Spacer';
 
 interface Props {
   children: React.ReactNode;

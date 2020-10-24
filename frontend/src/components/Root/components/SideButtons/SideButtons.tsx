@@ -5,16 +5,6 @@ import { useSelector } from 'redux/useSelector';
 import { selectPlayerIsAdmin, selectRoom } from 'redux/Room/selectors';
 import { selectGame } from 'redux/Game/selectors';
 import AudioControl from 'components/Root/components/AudioControl';
-import {
-  SideButtonsContainer,
-  UserModalButton,
-  PlayerModalButton,
-  AdminModalButton,
-  PlayerAddButton,
-  RefreshButton,
-  LeaveButton,
-  RankingModalButton,
-} from './SideButtons.style';
 import AdminModal from 'modals/AdminModal';
 import { useRefreshGame } from 'redux/Game/hooks';
 import IconAndTooltip from 'atoms/IconAndTooltip';
@@ -25,6 +15,16 @@ import RankingModal from 'modals/RankingModal';
 import { useLeaveRoom } from 'redux/Room/hooks';
 import { EmptyObject } from 'services/utils';
 import AuthModal from 'modals/AuthModal';
+import {
+  SideButtonsContainer,
+  UserModalButton,
+  PlayerModalButton,
+  AdminModalButton,
+  PlayerAddButton,
+  RefreshButton,
+  LeaveButton,
+  RankingModalButton,
+} from './SideButtons.style';
 
 const SideButtons: React.FC<EmptyObject> = () => {
   const isPlayerAdmin = useSelector(selectPlayerIsAdmin);

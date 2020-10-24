@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Game, Pad, GamePhase, PadStep } from './types';
 import { Player } from 'redux/Player/types';
+import { Game, Pad, GamePhase, PadStep } from './types';
 
 export type GameState = Readonly<{
   game: Game | null;

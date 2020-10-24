@@ -41,6 +41,7 @@
       "error",
       { "devDependencies": true, "optionalDependencies": false, "peerDependencies": false }
     ],
+    "import/order": ["error"],
     "import/no-unresolved": 0,
     "import/prefer-default-export": 0,
     "mysticatea/no-useless-rest-spread": "error",
