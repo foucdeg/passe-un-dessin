@@ -5,6 +5,7 @@ jobs:
   lint:
     executor:
       name: node/default
+      tag: 12.19
     steps:
       - checkout
       - node/install-packages:
