@@ -1,9 +1,9 @@
 import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
-import { updateStep } from './slice';
 import { useCallback } from 'react';
 import { PadStep } from 'redux/Game/types';
 import { useTypedAsyncFn } from 'services/utils';
+import { updateStep } from './slice';
 
 export const useFetchStep = () => {
   const dispatch = useDispatch();

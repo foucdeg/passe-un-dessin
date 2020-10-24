@@ -170,6 +170,7 @@
     "ranking": "World ranking",
     "changePassword": "Changer password",
     "logOut": "Log out",
+    "history": "Game history",
     "leaderboard": "Leaderboard"
   },
   "rankingModal": {
@@ -202,5 +203,8 @@
   },
   "leaderboard": {
     "title": "Leaderboard"
+  },
+  "playerDetails": {
+    "joinedOn": "joined us on {dateString}."
   }
 }

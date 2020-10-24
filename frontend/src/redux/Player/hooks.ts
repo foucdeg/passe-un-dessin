@@ -1,9 +1,16 @@
 import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
-import { updatePlayer, updatePlayerTotalScore } from './slice';
 import { useCallback } from 'react';
-import { Player } from './types';
 import { useTypedAsyncFn, EmptyObject } from 'services/utils';
+import { useSelector } from 'redux/useSelector';
+import {
+  updatePlayer,
+  updatePlayerTotalScore,
+  updateDisplayedPlayer,
+  updateDisplayedPlayerTotalScore,
+} from './slice';
+import { Player } from './types';
+import { selectPlayer } from './selectors';
 
 export const AUTH_ERROR_EMAIL_IN_USE = 'AUTH_ERROR_EMAIL_IN_USE';
 export const AUTH_ERROR_INVALID_USERNAME_PASSWORD = 'AUTH_ERROR_INVALID_USERNAME_PASSWORD';
@@ -28,6 +35,18 @@ export const useFetchMe = () => {
       throw e;
     }
   }, [dispatch]);
+};
+
+export const useFetchPlayer = () => {
+  const dispatch = useDispatch();
+
+  return useTypedAsyncFn<{ playerId: string }>(
+    async ({ playerId }) => {
+      const player = await client.get(`/player/${playerId}`);
+      dispatch(updateDisplayedPlayer(player));
+    },
+    [dispatch],
+  );
 };
 
 export const useCreatePlayer = () => {
@@ -148,12 +167,27 @@ export const useCreateAccount = () => {
   );
 };
 
-export const useFetchTotalScore = () => {
+export const useFetchPlayerTotalScore = () => {
   const dispatch = useDispatch();
 
+  return useTypedAsyncFn<{ playerId: string }>(
+    async ({ playerId }) => {
+      const result = await client.get(`/player/${playerId}/total-score`);
+      const { score, ranking } = result;
+      dispatch(updateDisplayedPlayerTotalScore({ score, ranking }));
+    },
+    [dispatch],
+  );
+};
+
+export const useFetchMyTotalScore = () => {
+  const dispatch = useDispatch();
+  const player = useSelector(selectPlayer);
+
   return useTypedAsyncFn<EmptyObject>(async () => {
-    const result = await client.get(`/player/total-score`);
+    if (!player) return;
+    const result = await client.get(`/player/${player.uuid}/total-score`);
     const { score, ranking } = result;
     dispatch(updatePlayerTotalScore({ score, ranking }));
-  }, [dispatch]);
+  }, [dispatch, player]);
 };

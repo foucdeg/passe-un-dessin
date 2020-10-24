@@ -1,8 +1,8 @@
 /*  eslint @typescript-eslint/no-explicit-any: off */
 import React, { useEffect, useCallback } from 'react';
 import { useSocialLogin, AuthProvider } from 'redux/Player/hooks';
-import { StyledFacebookButton, FacebookLogo, TextContent } from './LoginWithFacebook.style';
 import { FormattedMessage } from 'react-intl';
+import { StyledFacebookButton, FacebookLogo, TextContent } from './LoginWithFacebook.style';
 
 enum FacebookAuthStatus {
   CONNECTED = 'connected',

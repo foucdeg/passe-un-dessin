@@ -28,5 +28,7 @@ export const Value = styled.span<{ color?: string }>`
 `;
 Value.displayName = 'Value';
 
-export const StyledLink = styled(Link)``;
+export const StyledLink = styled(Link)<{ color?: string }>`
+  color: ${(props) => props.color || colorPalette.orange};
+`;
 StyledLink.displayName = 'StyledLink';

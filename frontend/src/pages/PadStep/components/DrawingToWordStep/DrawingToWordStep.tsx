@@ -14,9 +14,9 @@ import {
   StyledHeader,
 } from 'pages/PadStep/components/WordToDrawingStep/WordToDrawingStep.style';
 import { PadStep } from 'redux/Game/types';
-import { StyledButton, StyledForm } from './DrawingToWordStep.style';
 import RemainingPlayers from 'components/RemainingPlayers';
 import Drawing from 'components/Canvas/Drawing';
+import { StyledButton, StyledForm } from './DrawingToWordStep.style';
 
 interface Props {
   padStep: PadStep;

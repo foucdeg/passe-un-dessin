@@ -15,9 +15,9 @@ export const selectWinners = (state: RootState) => state.game.winners;
 
 export const selectAvailableVoteCount = (state: RootState) => {
   if (!state.game.game) return 0;
-  if (!state.player.player) return 0;
+  if (!state.player.current.player) return 0;
 
-  const playerId = state.player.player.uuid;
+  const playerId = state.player.current.player.uuid;
 
   return (
     getAvailableVoteCount(state.game.game) -

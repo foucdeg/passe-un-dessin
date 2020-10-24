@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { StartButton, StyledForm } from './PlayerGameForm.style';
 import { useCreateRoom } from 'redux/Room/hooks';
 import Button from 'atoms/Button';
 import TextInput from 'atoms/TextInput';
@@ -8,11 +7,12 @@ import { useCreatePlayer } from 'redux/Player/hooks';
 import { useSelector } from 'redux/useSelector';
 import { selectPlayer } from 'redux/Player/selectors';
 import { NoProps } from 'services/utils';
+import { StartButton, StyledForm } from './PlayerGameForm.style';
 
 export const PlayerGameForm: React.FC<NoProps> = () => {
   const intl = useIntl();
   const player = useSelector(selectPlayer);
-  const [playerName, setPlayerName] = useState<string>('');
+  const [playerName, setPlayerName] = useState<string>('  ');
   const doCreateRoom = useCreateRoom();
   const doCreatePlayer = useCreatePlayer();
 

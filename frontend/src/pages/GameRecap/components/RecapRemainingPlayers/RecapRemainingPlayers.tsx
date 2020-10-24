@@ -10,9 +10,9 @@ import {
   NextStepIcon,
 } from 'components/RemainingPlayers/RemainingPlayers.style';
 import PlayerChip from 'atoms/PlayerChip';
-import { RecapRemainingPlayersContainer, StyledHeader } from './RecapRemainingPlayers.style';
 import Spacer from 'atoms/Spacer';
 import { EmptyObject } from 'services/utils';
+import { RecapRemainingPlayersContainer, StyledHeader } from './RecapRemainingPlayers.style';
 
 const RecapRemainingPlayers: React.FC<EmptyObject> = () => {
   const remainingPlayers = useSelector(selectRemainingPlayers);

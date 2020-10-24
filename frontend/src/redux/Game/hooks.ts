@@ -9,6 +9,7 @@ import { useSelector } from 'redux/useSelector';
 import { getNextPhaseAndRound, getRedirectPath } from 'services/game.service';
 import client from 'services/networking/client';
 import { useTypedAsyncFn, wait, EmptyObject } from 'services/utils';
+import { Room } from 'redux/Room/types';
 import { DEFAULT_DRAW_OWN_WORD_BOOL, DEFAULT_ROUND_DURATION } from './constants';
 import { selectGame } from './selectors';
 import {
@@ -20,7 +21,6 @@ import {
   removeVoteFromPadStep,
 } from './slice';
 import { Pad, GamePhase, Game, RawGame } from './types';
-import { Room } from 'redux/Room/types';
 
 export const useFetchGame = () => {
   const dispatch = useDispatch();

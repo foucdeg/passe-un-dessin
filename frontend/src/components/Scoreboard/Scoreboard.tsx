@@ -1,4 +1,8 @@
 import React from 'react';
+import Spacer from 'atoms/Spacer';
+import { Player } from 'redux/Player/types';
+import BareLink from 'atoms/BareLink';
+import { PUBLIC_PATHS } from 'routes';
 import {
   InnerScoreboard,
   RankingRow,
@@ -8,8 +12,6 @@ import {
   RankingDelta,
   StyledPlayeChip,
 } from './Scoreboard.style';
-import Spacer from 'atoms/Spacer';
-import { Player } from 'redux/Player/types';
 
 type PlayerWithScore = Player & {
   score: number;
@@ -40,7 +42,14 @@ const Scoreboard: React.FC<Props> = ({ list, className }) => (
         ) : (
           <RankText>{index + 1}</RankText>
         )}
-        <StyledPlayeChip color={playerWithScore.color}>{playerWithScore.name}</StyledPlayeChip>
+        <StyledPlayeChip color={playerWithScore.color}>
+          <BareLink
+            to={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', playerWithScore.uuid)}
+            target="_blank"
+          >
+            {playerWithScore.name}
+          </BareLink>
+        </StyledPlayeChip>
         <Spacer />
         {playerWithScore.delta && <RankingDelta>+ {playerWithScore.delta}</RankingDelta>}
         <RankingScore>{playerWithScore.score}</RankingScore>

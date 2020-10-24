@@ -1,5 +1,8 @@
 import React, { useEffect, useCallback } from 'react';
-import { GameContainer, InnerGameContainer, HomeButton } from './Game.style';
+import GameContainer from 'layout/GameLayout/GameContainer';
+import InnerGameContainer from 'layout/GameLayout/InnerGameContainer';
+import HomeButton from 'atoms/HomeButton';
+
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'redux/useSelector';
 
@@ -18,9 +21,9 @@ import { GamePhase } from 'redux/Game/types';
 import { selectRoom } from 'redux/Room/selectors';
 import { selectGame, selectGameStructure } from 'redux/Game/selectors';
 import { selectPlayer } from 'redux/Player/selectors';
-import PlayerOrder from './components/PlayerOrder';
 import { useLeaveRoom } from 'redux/Room/hooks';
 import Loader from 'atoms/Loader';
+import PlayerOrder from './components/PlayerOrder';
 
 const PadInit = React.lazy(() => import('../PadInit'));
 const PadStep = React.lazy(() => import('../PadStep'));

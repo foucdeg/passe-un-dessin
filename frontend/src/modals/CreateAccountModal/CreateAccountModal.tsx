@@ -2,6 +2,9 @@ import React from 'react';
 import { useSelector } from 'redux/useSelector';
 import { selectPlayer } from 'redux/Player/selectors';
 import SecondaryButton from 'atoms/SecondaryButton';
+import Spacer from 'atoms/Spacer';
+import { FormattedMessage } from 'react-intl';
+import AuthPanel from 'components/AuthPanel';
 import {
   CreateAccountContainer,
   Column,
@@ -12,9 +15,6 @@ import {
   StyledHeader,
   StyledParagraph,
 } from './CreateAccountModal.style';
-import Spacer from 'atoms/Spacer';
-import { FormattedMessage } from 'react-intl';
-import AuthPanel from 'components/AuthPanel';
 
 interface Props {
   isOpen: boolean;

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'redux/useSelector';
-import { StyledHeader, PlayerScore, StyledModal, VoteCount, Trophy } from './RankingModal.style';
 import { FormattedMessage } from 'react-intl';
 import { selectRanking } from 'redux/Room/selectors';
+import { StyledHeader, PlayerScore, StyledModal, VoteCount, Trophy } from './RankingModal.style';
 
 interface Props {
   isOpen: boolean;

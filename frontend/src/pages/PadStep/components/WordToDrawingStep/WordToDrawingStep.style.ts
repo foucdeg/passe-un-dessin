@@ -1,5 +1,5 @@
-import Header2 from 'atoms/Header2';
 import styled from 'styled-components';
+import Header2 from 'atoms/Header2';
 import { colorPalette } from 'stylesheet';
 
 export const LeftAndRightSide = styled.div`

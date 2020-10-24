@@ -2,11 +2,11 @@ import React, { useEffect, useCallback } from 'react';
 import { useSelector } from 'redux/useSelector';
 import { useParams } from 'react-router';
 import { StepType } from 'redux/Game/types';
-import DrawingToWordStep from './components/DrawingToWordStep';
-import WordToDrawingStep from './components/WordToDrawingStep';
 import { useFetchStep, useSaveStepDrawing, useSaveStepSentence } from 'redux/Step/hooks';
 import { selectGame } from 'redux/Game/selectors';
 import { selectStep } from 'redux/Step/selectors';
+import WordToDrawingStep from './components/WordToDrawingStep';
+import DrawingToWordStep from './components/DrawingToWordStep';
 
 interface RouteParams {
   stepId: string;

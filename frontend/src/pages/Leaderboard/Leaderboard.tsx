@@ -1,5 +1,13 @@
 import React, { useEffect } from 'react';
 import { NoProps } from 'services/utils';
+
+import GameContainer from 'layout/GameLayout/GameContainer';
+import InnerGameContainer from 'layout/GameLayout/InnerGameContainer';
+
+import { useFetchLeaderboard } from 'redux/General/hooks';
+import { useSelector } from 'redux/useSelector';
+import { selectLeaderboard } from 'redux/General/selectors';
+import { FormattedMessage } from 'react-intl';
 import {
   Container,
   StyledHeader,
@@ -7,11 +15,6 @@ import {
   HomeButton,
   StyledLink,
 } from './Leaderboard.style';
-import { GameContainer, InnerGameContainer } from 'pages/Game/Game.style';
-import { useFetchLeaderboard } from 'redux/General/hooks';
-import { useSelector } from 'redux/useSelector';
-import { selectLeaderboard } from 'redux/General/selectors';
-import { FormattedMessage } from 'react-intl';
 
 const Leaderboard: React.FC<NoProps> = () => {
   const doFetchLeaderboard = useFetchLeaderboard();

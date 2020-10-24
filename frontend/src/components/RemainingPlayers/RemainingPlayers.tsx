@@ -2,11 +2,11 @@ import React, { useCallback } from 'react';
 import { selectRemainingPlayers } from 'redux/Game/selectors';
 import { useSelector } from 'redux/useSelector';
 import { selectPlayerIsAdmin } from 'redux/Room/selectors';
-import { StyledPlayerChips, AdminButton, NextStepIcon } from './RemainingPlayers.style';
 import { FormattedMessage, useIntl } from 'react-intl';
 import PlayerChip from 'atoms/PlayerChip';
 import { useForceState } from 'redux/Game/hooks';
 import { EmptyObject } from 'services/utils';
+import { StyledPlayerChips, AdminButton, NextStepIcon } from './RemainingPlayers.style';
 
 const RemainingPlayers: React.FC<EmptyObject> = () => {
   const remainingPlayers = useSelector(selectRemainingPlayers);

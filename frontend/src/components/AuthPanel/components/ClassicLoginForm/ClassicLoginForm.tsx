@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 
 import { FormikProps, Field } from 'formik';
-import { FormValues, FormOutsideProps } from './ClassicLoginForm.form';
 import TextInput from 'atoms/TextInput';
-import { StyledLabel, StyledForm, StyledButton } from './ClassicLoginForm.style';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { AUTH_ERROR_INVALID_USERNAME_PASSWORD } from 'redux/Player/hooks';
+import { StyledLabel, StyledForm, StyledButton } from './ClassicLoginForm.style';
+import { FormValues, FormOutsideProps } from './ClassicLoginForm.form';
 
 const ClassicLoginFormView: React.FC<FormOutsideProps & FormikProps<FormValues>> = ({
   touched,

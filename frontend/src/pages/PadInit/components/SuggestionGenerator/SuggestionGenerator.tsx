@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'redux/useSelector';
 import { selectSuggestions } from 'redux/Game/selectors';
 import { useGetSuggestions } from 'redux/Game/hooks';
+import { FormattedMessage } from 'react-intl';
 import {
   SuggestionGeneratorContainer,
   Suggestions,
@@ -9,7 +10,6 @@ import {
   Dice,
   Subheader,
 } from './SuggestionGenerator.style';
-import { FormattedMessage } from 'react-intl';
 
 interface Props {
   onSuggestionClick: (suggestion: string) => void;

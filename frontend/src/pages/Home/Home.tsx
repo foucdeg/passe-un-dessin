@@ -1,4 +1,11 @@
 import React from 'react';
+import { useLocation } from 'react-router';
+import { FormattedMessage } from 'react-intl';
+
+import ruleBackgrounds from 'assets/rule-backgrounds';
+import Spacer from 'atoms/Spacer';
+import CreateAccountModal from 'modals/CreateAccountModal';
+import { Link } from 'react-router-dom';
 import {
   LeftSide,
   RightSide,
@@ -15,13 +22,6 @@ import {
   Attribution,
   LegalLinks,
 } from './Home.style';
-import { useLocation } from 'react-router';
-import { FormattedMessage } from 'react-intl';
-
-import ruleBackgrounds from 'assets/rule-backgrounds';
-import Spacer from 'atoms/Spacer';
-import CreateAccountModal from 'modals/CreateAccountModal';
-import { Link } from 'react-router-dom';
 import PlayerGameForm from './components/PlayerGameForm';
 
 const Home: React.FunctionComponent = () => {

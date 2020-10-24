@@ -1,9 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { AudioControlButton } from './AudioControl.style';
 import soundOn from 'assets/sound-on.svg';
 import soundOff from 'assets/sound-off.svg';
 import IconAndTooltip from 'atoms/IconAndTooltip';
 import { useIntl } from 'react-intl';
+import { AudioControlButton } from './AudioControl.style';
 
 const AudioControl: React.FC = () => {
   const audioElt = useRef<HTMLAudioElement>(null);
@@ -27,12 +27,16 @@ const AudioControl: React.FC = () => {
   }, [audioElt]);
 
   const play = () => {
-    audioElt.current?.play();
+    if (!audioElt.current) return;
+
+    audioElt.current.play();
     localStorage.removeItem('noSound');
   };
 
   const pause = () => {
-    audioElt.current?.pause();
+    if (!audioElt.current) return;
+
+    audioElt.current.pause();
     localStorage.setItem('noSound', 'true');
   };
 

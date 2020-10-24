@@ -1,10 +1,10 @@
 import React from 'react';
 import { withFormik, FormikErrors } from 'formik';
 import { isValidEmail } from 'services/utils';
-import InnerForm from './ClassicLoginForm';
 import { AsyncFnReturn } from 'react-use/lib/useAsync';
 import { FnReturningPromise } from 'react-use/lib/util';
 import { useLogin } from 'redux/Player/hooks';
+import InnerForm from './ClassicLoginForm';
 
 interface OutsideProps {
   onLoggedIn?: () => void;

@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import LoginWithFacebook from 'components/AuthPanel/components/LogInWithFacebook';
 import LoginWithGoogle from 'components/AuthPanel/components/LogInWithGoogle';
 import HorizontalSeparator from 'atoms/HorizontalSeparator';
-import { InlineSwitch, StyledSwitch } from './AuthPanel.style';
 import { FormattedMessage } from 'react-intl';
-import ClassicAccountCreationForm from './components/ClassicAccountCreationForm';
-import ClassicLoginForm from './components/ClassicLoginForm';
 import { LegalLinks } from 'pages/Home/Home.style';
 import { Link } from 'react-router-dom';
+import { InlineSwitch, StyledSwitch } from './AuthPanel.style';
+import ClassicAccountCreationForm from './components/ClassicAccountCreationForm';
+import ClassicLoginForm from './components/ClassicLoginForm';
 
 interface Props {
   onDone?: () => void;

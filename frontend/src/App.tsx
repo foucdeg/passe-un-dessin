@@ -3,11 +3,11 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
 
+import { BrowserRouter } from 'react-router-dom';
 import AppCrashFallback from './components/AppCrashFallback';
 import ErrorBoundary from './components/ErrorBoundary';
 import Root from './components/Root';
 import Routes from './routes';
-import { BrowserRouter } from 'react-router-dom';
 
 interface Props {
   store: Store;

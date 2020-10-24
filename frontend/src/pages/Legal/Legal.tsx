@@ -1,5 +1,7 @@
 import React from 'react';
 import { NoProps } from 'services/utils';
+import { FormattedMessage } from 'react-intl';
+import SecondaryButton from 'atoms/SecondaryButton';
 import {
   LeftSide,
   LeftSideTitle,
@@ -11,8 +13,6 @@ import {
   LegalParagraph,
   ArrowLeft,
 } from './Legal.style';
-import { FormattedMessage } from 'react-intl';
-import SecondaryButton from 'atoms/SecondaryButton';
 
 const Legal: React.FC<NoProps> = () => (
   <>

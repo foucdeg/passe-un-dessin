@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 
 import { FormikProps, Field } from 'formik';
-import { FormValues, FormOutsideProps } from './ClassicAccountCreationForm.form';
 import TextInput from 'atoms/TextInput';
-import { StyledLabel, StyledForm, StyledButton } from './ClassicAccountCreationForm.style';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { AUTH_ERROR_EMAIL_IN_USE } from 'redux/Player/hooks';
+import { StyledLabel, StyledForm, StyledButton } from './ClassicAccountCreationForm.style';
+import { FormValues, FormOutsideProps } from './ClassicAccountCreationForm.form';
 
 const ClassicAccountCreationFormView: React.FC<FormOutsideProps & FormikProps<FormValues>> = ({
   touched,

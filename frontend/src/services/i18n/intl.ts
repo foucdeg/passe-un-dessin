@@ -1,4 +1,4 @@
-type Message = string | NestedDictionary;
+type Message = string | Record<string, string | Record<string, string>>;
 interface NestedDictionary {
   [x: string]: Message;
 }

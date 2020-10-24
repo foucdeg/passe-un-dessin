@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { selectGame } from 'redux/Game/selectors';
 import { PadStep } from 'redux/Game/types';
 import { useSelector } from 'redux/useSelector';
+import RemainingPlayers from 'components/RemainingPlayers';
 import {
   Gutter,
   LeftAndRightSide,
@@ -14,7 +15,6 @@ import {
   Sentence,
   StyledHeader,
 } from './WordToDrawingStep.style';
-import RemainingPlayers from 'components/RemainingPlayers';
 
 interface Props {
   padStep: PadStep;

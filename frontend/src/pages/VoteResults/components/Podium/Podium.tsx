@@ -1,10 +1,10 @@
 import React from 'react';
-import { OuterContainer, Container, StyledHeader } from './Podium.style';
 import { PadStep } from 'redux/Game/types';
 
 import PodiumStep from 'pages/VoteResults/components/PodiumStep';
 import { FormattedMessage } from 'react-intl';
 import Spacer from 'atoms/Spacer';
+import { OuterContainer, Container, StyledHeader } from './Podium.style';
 
 interface Props {
   winners: PadStep[];

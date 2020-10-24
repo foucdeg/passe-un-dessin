@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 
 import { withFormik, FormikErrors } from 'formik';
 import { NoProps } from 'services/utils';
-import InnerForm from './PlayerForm';
 import { Player } from 'redux/Player/types';
 import { useEditPlayer } from 'redux/Player/hooks';
 import { useSelector } from 'redux/useSelector';
 import { selectPlayer } from 'redux/Player/selectors';
+import InnerForm from './PlayerForm';
 
 export interface OutsideProps {
   player: Player;

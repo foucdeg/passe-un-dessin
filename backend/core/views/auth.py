@@ -4,20 +4,22 @@ import logging
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.db.models import Count
+from django.db.models import Count, Prefetch
 from django.http import (
     HttpResponse,
     HttpResponseBadRequest,
     HttpResponseForbidden,
     JsonResponse,
 )
+from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_GET, require_POST
-from rest_framework.generics import UpdateAPIView
+from rest_framework.generics import RetrieveUpdateAPIView
 
 from core.decorators import requires_player
-from core.models import Player, User, Vote
+from core.models import Game, GamePhase, Player, PlayerGameParticipation, User, Vote
 from core.serializers import (
     PlayerSerializer,
+    PlayerWithHistorySerializer,
     PlayerWithUserSerializer,
     UserSerializer,
 )
@@ -39,10 +41,31 @@ def get_me(request, player):
     return JsonResponse(PlayerSerializer(player).data)
 
 
-class PlayerEditAPIView(UpdateAPIView):
+class PlayerAPIView(RetrieveUpdateAPIView):
     lookup_field = "uuid"
     queryset = Player.objects.all()
     serializer_class = PlayerSerializer
+
+    def retrieve(self, request, uuid):
+        queryset = (
+            self.get_queryset()
+            .prefetch_related(
+                Prefetch(
+                    "participations",
+                    queryset=PlayerGameParticipation.objects.order_by("-created_at"),
+                ),
+                Prefetch(
+                    "participations__game",
+                    queryset=Game.objects.exclude(phase=GamePhase.INIT.value),
+                ),
+                "participations__game",
+                "participations__game__participants",
+                "participations__game__participants__player",
+            )
+            .get(uuid=uuid)
+        )
+        serializer = PlayerWithHistorySerializer(queryset)
+        return JsonResponse(serializer.data)
 
 
 @require_POST
@@ -128,8 +151,8 @@ def do_logout(request):
 
 
 @require_GET
-@requires_player
-def get_total_score(request, player):
+def get_total_score(request, uuid):
+    player = get_object_or_404(Player, pk=uuid)
     total_score = Vote.objects.filter(pad_step__player=player).count()
     full_ranking = (
         Player.objects.values("name")

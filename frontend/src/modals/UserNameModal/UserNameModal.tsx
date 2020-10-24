@@ -3,10 +3,10 @@ import { NoProps } from 'services/utils';
 import Modal from 'components/Modal';
 import { FormattedMessage, useIntl } from 'react-intl';
 import FieldLabel from 'atoms/FieldLabel';
-import { StyledHeader, UsernameForm, StyledField, VirtualButton } from './UserNameModal.style';
 import AuthPanel from 'components/AuthPanel';
 import { useCreatePlayer } from 'redux/Player/hooks';
 import arrowRight from 'assets/arrow-right.svg';
+import { StyledHeader, UsernameForm, StyledField, VirtualButton } from './UserNameModal.style';
 
 const UserNameModal: React.FC<NoProps> = () => {
   const [playerName, setPlayerName] = useState<string>('');

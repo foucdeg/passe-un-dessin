@@ -5,8 +5,8 @@ import { selectAvailableVoteCount } from 'redux/Game/selectors';
 import { PadStep } from 'redux/Game/types';
 import { selectPlayer } from 'redux/Player/selectors';
 import { useSelector } from 'redux/useSelector';
-import { StyledDrawingRecap, StyledDrawing, DrawingHeader } from './DrawingRecap.style';
 import ReactionOverlay from 'pages/GameRecap/components/ReactionOverlay';
+import { StyledDrawingRecap, StyledDrawing, DrawingHeader } from './DrawingRecap.style';
 
 interface Props {
   step: PadStep;
