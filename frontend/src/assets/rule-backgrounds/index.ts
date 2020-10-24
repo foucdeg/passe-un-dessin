@@ -4,10 +4,12 @@ import rule3Background from './rule-3.png';
 import rule4Background from './rule-4.png';
 import rule5Background from './rule-5.png';
 
-export default [
+const ruleBackgrounds = [
   rule1Background,
   rule2Background,
   rule3Background,
   rule4Background,
   rule5Background,
 ];
+
+export default ruleBackgrounds;

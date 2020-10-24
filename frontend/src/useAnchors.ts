@@ -1,6 +1,6 @@
 import * as H from 'history'; // eslint-disable-line
 
-export default (
+const useAnchors = (
   history: H.History<H.LocationState>,
   timeout = 1000,
   mainSelector = 'right-side',
@@ -90,3 +90,5 @@ export default (
     scroll(window.location);
   });
 };
+
+export default useAnchors;
