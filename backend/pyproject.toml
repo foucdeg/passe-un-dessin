@@ -5,7 +5,7 @@ description = "A new Theodo project"
 authors = ["Theodo <contact@theodo.co.uk>"]
 
 [tool.poetry.dependencies]
-python = "3.8.2"
+python = "3.9.0"
 argon2-cffi = "^20.0.0"
 asgiref = "^3.2.5"
 boto3 = "^1.12.26"
@@ -14,7 +14,8 @@ django = "^3.0.4"
 django-memoize = "^2.2.1"
 django-storages = "^1.9.1"
 djangorestframework = "^3.11.0"
-djangorestframework_simplejwt = "^4.4.0"
+# see https://github.com/SimpleJWT/django-rest-framework-simplejwt/issues/313
+djangorestframework_simplejwt = { git = "https://github.com/SimpleJWT/django-rest-framework-simplejwt.git", rev = "953a6bf2dd01872b86dd12e7212a652f90d738db" }
 psycopg2-binary = "^2.8.4"
 pytz = "^2019.3"
 requests = "^2.23.0"
