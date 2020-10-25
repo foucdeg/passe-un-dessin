@@ -51,9 +51,7 @@ jobs:
           password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 19.03.13
-          docker_layer_caching: true
+      - setup_remote_docker
       - run:
           command: docker build -f ./docker/Dockerfile.prod . -t foucdeg/passe-un-dessin:$CIRCLE_BRANCH
           name: Build backend app
@@ -69,9 +67,7 @@ jobs:
           password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 19.03.13
-          docker_layer_caching: true
+      - setup_remote_docker
       - run:
           command: docker build -f ./docker/Dockerfile.prod . -t foucdeg/passe-un-dessin-drawing-renderer:$CIRCLE_BRANCH
           name: Build backend app
