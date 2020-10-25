@@ -49,9 +49,6 @@ jobs:
   build-back:
     docker:
       - image: cimg/base:2020.01
-        auth:
-          username: foucdeg
-          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - setup_remote_docker
@@ -60,14 +57,14 @@ jobs:
           name: Build backend app
           working_directory: backend
       - run:
+          name: Login to Docker Hub
+          command: echo "$DOCKERHUB_PASSWORD" | docker login --username foucdeg --password-stdin
+      - run:
           command: docker push foucdeg/passe-un-dessin:$CIRCLE_BRANCH
           name: Push backend Docker image
   build-drawing-renderer:
     docker:
       - image: cimg/base:2020.01
-        auth:
-          username: foucdeg
-          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - setup_remote_docker
@@ -75,6 +72,9 @@ jobs:
           command: docker build -f ./Dockerfile.prod . -t foucdeg/passe-un-dessin-drawing-renderer:$CIRCLE_BRANCH
           name: Build backend app
           working_directory: drawing-renderer
+      - run:
+          name: Login to Docker Hub
+          command: echo "$DOCKERHUB_PASSWORD" | docker login --username foucdeg --password-stdin
       - run:
           command: docker push foucdeg/passe-un-dessin-drawing-renderer:$CIRCLE_BRANCH
           name: Push drawing-renderer Docker image
