@@ -34,7 +34,6 @@ jobs:
       tag: "12.19"
     environment:
       REACT_APP_ENV: production
-      NODE_ENV: production
     steps:
       - checkout
       - node/install-packages:
