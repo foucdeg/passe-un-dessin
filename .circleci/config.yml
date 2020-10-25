@@ -28,8 +28,66 @@ jobs:
           command: yarn tsc
           name: Run TypeScript check
           working_directory: frontend
+  build-front:
+    executor:
+      name: node/default
+      tag: "12.19"
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+          app-dir: frontend
+      - run:
+          command: yarn build
+          name: Build app
+          working_directory: frontend
+      - store_artifacts:
+          path: frontend/build
+  build-back:
+    docker:
+      - image: cimg/base:2020.01
+        auth:
+          username: foucdeg
+          password: $DOCKERHUB_PASSWORD
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+          docker_layer_caching: true
+      - run:
+          command: docker build -f ./docker/Dockerfile.prod . -t foucdeg/passe-un-dessin:$CIRCLE_BRANCH
+          name: Build backend app
+          working_directory: backend
+      - run:
+          command: docker push foucdeg/passe-un-dessin:$CIRCLE_BRANCH
+          name: Push backend Docker image
+  build-drawing-renderer:
+    docker:
+      - image: cimg/base:2020.01
+        auth:
+          username: foucdeg
+          password: $DOCKERHUB_PASSWORD
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+          docker_layer_caching: true
+      - run:
+          command: docker build -f ./docker/Dockerfile.prod . -t foucdeg/passe-un-dessin-drawing-renderer:$CIRCLE_BRANCH
+          name: Build backend app
+          working_directory: drawing-renderer
+      - run:
+          command: docker push foucdeg/passe-un-dessin-drawing-renderer:$CIRCLE_BRANCH
+          name: Push drawing-renderer Docker image
+
 workflows:
   build-lint-tsc:
     jobs:
       - lint
       - tsc
+      - build-back
+      - build-drawing-renderer
+      - build-front:
+          requires:
+            - lint
+            - tsc
