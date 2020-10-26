@@ -21,8 +21,10 @@ def get_suggestions(request):
 def get_leaderboard(request):
     page_number = request.GET.get("page", 1)
 
-    qs = Player.objects.annotate(vote_count=Count("steps__votes")).order_by(
-        "-vote_count"
+    qs = (
+        Player.objects.annotate(vote_count=Count("steps__votes"))
+        .filter(vote_count__gt=0)
+        .order_by("-vote_count")
     )
     paginator = Paginator(qs, 10)
     page = paginator.get_page(page_number)
