@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 
 from core.models import Player, User
-from core.service.auth_service import merge_players
+from core.service.auth_service import merge_players, reset_creation_dates
 
 
 class Command(BaseCommand):
@@ -44,6 +44,8 @@ class Command(BaseCommand):
                     )
                 )
                 merge_players(from_player=player, into_player=user.player)
+
+        reset_creation_dates(user.player)
 
         user.player.name = player_name
         user.player.save()
