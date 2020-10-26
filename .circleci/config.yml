@@ -47,7 +47,7 @@ jobs:
           path: frontend/build
   build-back:
     docker:
-      - image: cimg/base:2020.01
+      - image: cimg/base:2020.10
     steps:
       - checkout
       - setup_remote_docker
@@ -67,7 +67,7 @@ jobs:
             fi
   build-drawing-renderer:
     docker:
-      - image: cimg/base:2020.01
+      - image: cimg/base:2020.10
     steps:
       - checkout
       - setup_remote_docker
