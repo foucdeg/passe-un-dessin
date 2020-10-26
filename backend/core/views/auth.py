@@ -155,16 +155,16 @@ def get_total_score(request, uuid):
     player = get_object_or_404(Player, pk=uuid)
     total_score = Vote.objects.filter(pad_step__player=player).count()
     full_ranking = (
-        Player.objects.values("name")
-        .annotate(vote_count=Count("steps__votes"))
+        Player.objects.annotate(vote_count=Count("steps__votes"))
         .filter(vote_count__gt=0)
         .order_by("-vote_count")
     )
+
     try:
         my_ranking = [
             index + 1
             for index in range(len(full_ranking))
-            if full_ranking[index]["name"] == player.name
+            if full_ranking[index].name == player.name
         ][0]
     except IndexError:  # Player is not in ranking
         my_ranking = None

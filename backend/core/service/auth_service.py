@@ -94,6 +94,8 @@ def do_user_player_coherence(request, user: User):
                     "Merging player %s into user player %s" % (player, user.player)
                 )
                 merge_players(from_player=player, into_player=user.player)
+                reset_creation_dates(user.player)
+                user.player.save()
 
     except (KeyError, Player.DoesNotExist):
         if user.player is None:
@@ -113,3 +115,16 @@ def merge_players(from_player: Player, into_player: Player):
     PadStep.objects.filter(player=from_player).update(player=into_player)
     Vote.objects.filter(player=from_player).update(player=into_player)
     from_player.delete()
+
+
+def reset_creation_dates(player: Player):
+    first_participation = player.participations.order_by("game__created_at").first()
+    if not first_participation:
+        return
+    first_game_created_at = first_participation.game.created_at
+    if first_game_created_at < player.created_at:
+        logger.info(
+            "Updating player %s's creation date to %s"
+            % (player.name, str(first_game_created_at))
+        )
+        player.created_at = first_game_created_at
