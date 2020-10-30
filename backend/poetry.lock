@@ -162,6 +162,7 @@ pycparser = "*"
 
 [[package]]
 name = "channels"
+<<<<<<< HEAD
 version = "2.4.0"
 description = "Brings async, event-driven capabilities to Django. Django 2.2 and up only."
 category = "main"
@@ -171,10 +172,21 @@ python-versions = ">=3.5"
 [package.dependencies]
 asgiref = ">=3.2,<4.0"
 daphne = ">=2.3,<3.0"
+=======
+version = "3.0.0"
+description = "Brings async, event-driven capabilities to Django. Django 2.2 and up only."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+asgiref = ">=3.2.10,<4"
+daphne = ">=3.0,<4"
+>>>>>>> fix(deps): update dependency channels to v3
 Django = ">=2.2"
 
 [package.extras]
-tests = ["pytest (>=4.4,<5.0)", "pytest-django (>=3.4,<4.0)", "pytest-asyncio (>=0.10,<1.0)", "async-generator (>=1.10,<2.0)", "async-timeout (>=3.0,<4.0)", "coverage (>=4.5,<5.0)"]
+tests = ["pytest", "pytest-django", "pytest-asyncio", "async-generator", "async-timeout", "coverage (>=4.5,<5.0)"]
 
 [[package]]
 name = "chardet"
@@ -232,14 +244,22 @@ test = ["pytest (>=3.6.0,!=3.9.0,!=3.9.1,!=3.9.2)", "pretend", "iso8601", "pytz"
 
 [[package]]
 name = "daphne"
+<<<<<<< HEAD
 version = "2.5.0"
 description = "Django ASGI (HTTP/WebSocket) server"
 category = "main"
 optional = false
 python-versions = "*"
+=======
+version = "3.0.0"
+description = "Django ASGI (HTTP/WebSocket) server"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+>>>>>>> fix(deps): update dependency channels to v3
 
 [package.dependencies]
-asgiref = ">=3.2,<4.0"
+asgiref = ">=3.2.10,<4"
 autobahn = ">=0.18"
 twisted = {version = ">=18.7", extras = ["tls"]}
 
@@ -986,8 +1006,8 @@ cffi = [
     {file = "cffi-1.14.3.tar.gz", hash = "sha256:f92f789e4f9241cd262ad7a555ca2c648a98178a953af117ef7fad46aa1d5591"},
 ]
 channels = [
-    {file = "channels-2.4.0-py2.py3-none-any.whl", hash = "sha256:80a5ad1962ae039a3dcc0a5cb5212413e66e2f11ad9e9db8004834436daf3400"},
-    {file = "channels-2.4.0.tar.gz", hash = "sha256:08e756406d7165cb32f6fc3090c0643f41ca9f7e0f7fada0b31194662f20f414"},
+    {file = "channels-3.0.0-py3-none-any.whl", hash = "sha256:fd3596f252e8415523e2b33bf76363127326c18fb338a7b1191a6ff52e7d3f0f"},
+    {file = "channels-3.0.0.tar.gz", hash = "sha256:af2206de0b76b3209fe8cc71b4a7c2975fee97ed975313d7c098414af060c1da"},
 ]
 chardet = [
     {file = "chardet-3.0.4-py2.py3-none-any.whl", hash = "sha256:fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691"},
@@ -1062,8 +1082,8 @@ cryptography = [
     {file = "cryptography-3.1.1.tar.gz", hash = "sha256:9d9fc6a16357965d282dd4ab6531013935425d0dc4950df2e0cf2a1b1ac1017d"},
 ]
 daphne = [
-    {file = "daphne-2.5.0-py2.py3-none-any.whl", hash = "sha256:aa64840015709bbc9daa3c4464a4a4d437937d6cda10a9b51e913eb319272553"},
-    {file = "daphne-2.5.0.tar.gz", hash = "sha256:1ca46d7419103958bbc9576fb7ba3b25b053006e22058bc97084ee1a7d44f4ba"},
+    {file = "daphne-3.0.0-py3-none-any.whl", hash = "sha256:60856f7efa0b1e1b969efa074e8698bd09de4713ecc06e6a4d19d04c66c4a3bd"},
+    {file = "daphne-3.0.0.tar.gz", hash = "sha256:b43e70d74ff832a634ff6c92badd208824e4530e08b340116517e5aad0aca774"},
 ]
 dj-database-url = [
     {file = "dj-database-url-0.5.0.tar.gz", hash = "sha256:4aeaeb1f573c74835b0686a2b46b85990571159ffc21aa57ecd4d1e1cb334163"},
