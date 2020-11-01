@@ -55,7 +55,7 @@ class PlayerWithUserAndAvatarSerializer(PlayerWithAvatarSerializer):
         fields = ("uuid", "name", "color", "user", "avatar_url", "avatar")
 
 
-class PlayerInRankingSerializer(BaseSerializer):
+class PlayerInRankingSerializer(PlayerSerializer):
     vote_count = serializers.IntegerField()
 
     class Meta:
