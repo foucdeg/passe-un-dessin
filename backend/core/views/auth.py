@@ -20,8 +20,9 @@ from core.decorators import requires_player
 from core.models import Game, GamePhase, Player, PlayerGameParticipation, User, Vote
 from core.serializers import (
     PlayerSerializer,
+    PlayerWithAvatarSerializer,
     PlayerWithHistorySerializer,
-    PlayerWithUserSerializer,
+    PlayerWithUserAndAvatarSerializer,
     UserSerializer,
 )
 from core.service.auth_service import (
@@ -31,13 +32,6 @@ from core.service.auth_service import (
 )
 
 logger = logging.getLogger(__name__)
-
-
-def get_player_response(user, player):
-    if user.is_authenticated:
-        return JsonResponse(PlayerWithUserSerializer(player).data)
-
-    return JsonResponse(PlayerSerializer(player).data)
 
 
 def is_user_allowed_to_update_player(request, playerId):
@@ -53,13 +47,16 @@ def is_color_allowed(request):
 @require_GET
 @requires_player
 def get_me(request, player):
-    return get_player_response(request.user, player)
+    if request.user.is_authenticated:
+        return JsonResponse(PlayerWithUserAndAvatarSerializer(player).data)
+
+    return JsonResponse(PlayerWithAvatarSerializer(player).data)
 
 
 class PlayerAPIView(RetrieveUpdateAPIView):
     lookup_field = "uuid"
     queryset = Player.objects.all()
-    serializer_class = PlayerSerializer
+    serializer_class = PlayerWithAvatarSerializer
 
     def retrieve(self, request, uuid):
         queryset = (
