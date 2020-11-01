@@ -12,9 +12,14 @@ from django.http import (
     JsonResponse,
 )
 from django.shortcuts import get_object_or_404
-from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.http import (
+    require_GET,
+    require_http_methods,
+    require_POST,
+)
 from rest_framework.generics import RetrieveUpdateAPIView
 
+from core.constants import COLORS
 from core.decorators import requires_player
 from core.models import Game, GamePhase, Player, PlayerGameParticipation, User, Vote
 from core.serializers import (
@@ -32,13 +37,17 @@ from core.service.auth_service import (
 logger = logging.getLogger(__name__)
 
 
-@require_GET
-@requires_player
-def get_me(request, player):
-    if request.user.is_authenticated:
+def get_player_response(user, player):
+    if user.is_authenticated:
         return JsonResponse(PlayerWithUserSerializer(player).data)
 
     return JsonResponse(PlayerSerializer(player).data)
+
+
+@require_GET
+@requires_player
+def get_me(request, player):
+    return get_player_response(request.user, player)
 
 
 class PlayerAPIView(RetrieveUpdateAPIView):
@@ -169,3 +178,22 @@ def get_total_score(request, uuid):
     except IndexError:  # Player is not in ranking
         my_ranking = None
     return JsonResponse({"score": total_score, "ranking": my_ranking})
+
+
+@require_http_methods(["PATCH"])
+@requires_player
+def update_player(request, player):
+    json_body = json.loads(request.body)
+
+    if "avatar" in json_body:
+        player.avatar = json_body["avatar"]
+
+    if "color" in json_body:
+        color = json_body["color"]
+        if color not in COLORS:
+            return HttpResponseBadRequest(
+                "color must be in the following list : {}".format(COLORS)
+            )
+        player.color = color
+
+    return get_player_response(request.user, player)

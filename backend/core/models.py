@@ -7,19 +7,10 @@ from django.db import models
 from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 
+from core.constants import COLORS
+
 
 def random_color():
-    COLORS = [
-        "#9337AE",
-        "#60DAFF",
-        "#62FAD3",
-        "#8A80F1",
-        "#FF9314",
-        "#FF5257",
-        "#FDC737",
-        "#FF0080",
-    ]
-
     return random.choice(COLORS)
 
 
