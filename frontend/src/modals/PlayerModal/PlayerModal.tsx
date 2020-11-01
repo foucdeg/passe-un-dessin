@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector } from 'redux/useSelector';
 import { FormattedMessage } from 'react-intl';
 import { selectPlayer, selectPlayerTotalScore, selectPlayerRanking } from 'redux/Player/selectors';
-import { useLogout, useFetchMyTotalScore } from 'redux/Player/hooks';
+import { useLogout, useFetchMyTotalScore, useEditPlayer } from 'redux/Player/hooks';
 import Header4 from 'atoms/Header4';
 import Modal from 'components/Modal';
+import CanvasDraw from 'components/Canvas/CanvasDraw';
 import SecondaryButton from 'atoms/SecondaryButton';
 import { colorPalette } from 'stylesheet';
 import { PUBLIC_PATHS } from 'routes';
@@ -16,6 +17,7 @@ import {
   ButtonRow,
   ScoreCardRow,
   StyledSeparator,
+  UndoAction,
 } from './PlayerModal.style';
 
 interface Props {
@@ -29,6 +31,17 @@ const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const [{ loading: scoreLoading }, fetchMyTotalScore] = useFetchMyTotalScore();
   const totalScore = useSelector(selectPlayerTotalScore);
   const ranking = useSelector(selectPlayerRanking);
+  const [isAvatarDrawing, setIsAvatarDrawing] = useState<boolean>(false);
+  const doEditPlayer = useEditPlayer();
+
+  const doSaveAvatar = useCallback(
+    async (values: { drawing: string }) => {
+      if (!player) return;
+      await doEditPlayer({ ...player, avatar: values.drawing });
+      setIsAvatarDrawing(false);
+    },
+    [setIsAvatarDrawing, doEditPlayer, player],
+  );
 
   useEffect(() => {
     if (isOpen) {
@@ -46,6 +59,7 @@ const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
+      {isAvatarDrawing && <UndoAction onClick={() => setIsAvatarDrawing(false)} />}
       <HeaderSection>
         <StyledHeader>
           <FormattedMessage id="playerModal.title" />
@@ -57,35 +71,47 @@ const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
       <StyledSeparator>
         <FormattedMessage id="playerModal.myInfos" />
       </StyledSeparator>
-      <PlayerForm />
-      <StyledSeparator>
-        <FormattedMessage id="playerModal.myStats" />
-      </StyledSeparator>
-      <ScoreCardRow>
-        <ScoreCard
-          linkTo={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', player.uuid)}
-          linkToLabelId="playerModal.history"
-          loading={scoreLoading}
-          label={<FormattedMessage id="playerModal.totalScore" />}
-          value={totalScore}
+      {isAvatarDrawing ? (
+        <CanvasDraw
+          canvasWidth={350}
+          canvasHeight={350}
+          saveStep={doSaveAvatar}
+          displaySaveButton
+          initialDrawing={player.avatar}
         />
-        <ScoreCard
-          linkTo="/leaderboard"
-          linkToLabelId="playerModal.leaderboard"
-          color={colorPalette.purple}
-          loading={scoreLoading}
-          label={<FormattedMessage id="playerModal.ranking" />}
-          value={ranking ? '#' + ranking : 'N/A'}
-        />
-      </ScoreCardRow>
-      <ButtonRow>
-        {/* <SecondaryButton>
+      ) : (
+        <>
+          <PlayerForm openAvatarDrawing={() => setIsAvatarDrawing(true)} />
+          <StyledSeparator>
+            <FormattedMessage id="playerModal.myStats" />
+          </StyledSeparator>
+          <ScoreCardRow>
+            <ScoreCard
+              linkTo={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', player.uuid)}
+              linkToLabelId="playerModal.history"
+              loading={scoreLoading}
+              label={<FormattedMessage id="playerModal.totalScore" />}
+              value={totalScore}
+            />
+            <ScoreCard
+              linkTo="/leaderboard"
+              linkToLabelId="playerModal.leaderboard"
+              color={colorPalette.purple}
+              loading={scoreLoading}
+              label={<FormattedMessage id="playerModal.ranking" />}
+              value={ranking ? '#' + ranking : 'N/A'}
+            />
+          </ScoreCardRow>
+          <ButtonRow>
+            {/* <SecondaryButton>
           <FormattedMessage id="playerModal.changePassword" />
         </SecondaryButton> */}
-        <SecondaryButton onClick={logoutAndClose}>
-          <FormattedMessage id="playerModal.logOut" />
-        </SecondaryButton>
-      </ButtonRow>
+            <SecondaryButton onClick={logoutAndClose}>
+              <FormattedMessage id="playerModal.logOut" />
+            </SecondaryButton>
+          </ButtonRow>
+        </>
+      )}
     </Modal>
   );
 };

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Header2 from 'atoms/Header2';
+import { ReactComponent as UndoIcon } from 'assets/undo.svg';
 import { colorPalette } from 'stylesheet';
 import Modal from 'components/Modal';
 import HorizontalSeparator from 'atoms/HorizontalSeparator';
@@ -44,3 +45,16 @@ export const ButtonRow = styled.div`
 `;
 
 ButtonRow.displayName = 'ButtonRow';
+
+export const UndoAction = styled(UndoIcon)`
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  position: absolute;
+  left: 20px;
+
+  .main {
+    fill: ${colorPalette.purple};
+  }
+`;
+UndoAction.displayName = 'UndoAction';

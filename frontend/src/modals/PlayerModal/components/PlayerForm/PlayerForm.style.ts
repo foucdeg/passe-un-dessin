@@ -62,10 +62,6 @@ StyledTextInput.displayName = 'StyledTextInput';
 
 export const StyledEditIcon = styled(EditIcon)`
   cursor: pointer;
-
-  .main {
-    fill: ${colorPalette.purple};
-  }
 `;
 
 StyledEditIcon.displayName = 'StyledEditIcon';

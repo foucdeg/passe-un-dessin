@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
 import { withFormik, FormikErrors } from 'formik';
-import { NoProps } from 'services/utils';
 import { Player } from 'redux/Player/types';
 import { useEditPlayer } from 'redux/Player/hooks';
 import { useSelector } from 'redux/useSelector';
 import { selectPlayer } from 'redux/Player/selectors';
+import Avatar from '../Avatar';
 import InnerForm from './PlayerForm';
 
 export interface OutsideProps {
@@ -13,6 +13,10 @@ export interface OutsideProps {
   onSubmit: (player: Player) => Promise<void>;
   isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
+}
+
+export interface OwnProps {
+  openAvatarDrawing: () => void;
 }
 // Shape of form values
 export interface FormValues {
@@ -49,7 +53,7 @@ const PlayerForm = withFormik<OutsideProps, FormValues>({
   },
 })(InnerForm);
 
-const OuterPlayerForm: React.FC<NoProps> = () => {
+const OuterPlayerForm: React.FC<OwnProps> = ({ openAvatarDrawing }) => {
   const player = useSelector(selectPlayer);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const doEditPlayer = useEditPlayer();
@@ -57,12 +61,15 @@ const OuterPlayerForm: React.FC<NoProps> = () => {
   if (!player) return null;
 
   return (
-    <PlayerForm
-      player={player}
-      onSubmit={doEditPlayer}
-      isEditing={isEditing}
-      setIsEditing={setIsEditing}
-    />
+    <>
+      <Avatar player={player} onAvatarClick={openAvatarDrawing} />
+      <PlayerForm
+        player={player}
+        onSubmit={doEditPlayer}
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+      />
+    </>
   );
 };
 
