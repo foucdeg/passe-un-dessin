@@ -248,7 +248,7 @@ const CanvasDraw: React.FC<Props> = ({
       drawing.current = drawing.current.concat({ type: 'init', drawing: decodedDrawing });
       initializeCanvas(canvasRef, decodedDrawing);
     }
-  }, []);
+  }, [initialDrawing]);
 
   return (
     <CanvasContainer>
