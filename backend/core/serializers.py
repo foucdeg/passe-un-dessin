@@ -132,10 +132,21 @@ class PlayerGameParticipationWithGameSerializer(BaseSerializer):
 
 class PlayerWithHistorySerializer(BaseSerializer):
     participations = PlayerGameParticipationWithGameSerializer(many=True)
+    avatar_url = serializers.SerializerMethodField()
+
+    def get_avatar_url(self, obj):
+        return get_generic_avatar_url(obj)
 
     class Meta:
         model = Player
-        fields = ("uuid", "name", "color", "created_at", "participations")
+        fields = (
+            "uuid",
+            "name",
+            "color",
+            "created_at",
+            "avatar_url",
+            "participations",
+        )
 
 
 class PadIdSerializer(BaseSerializer):

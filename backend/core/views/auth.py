@@ -12,11 +12,7 @@ from django.http import (
     JsonResponse,
 )
 from django.shortcuts import get_object_or_404
-from django.views.decorators.http import (
-    require_GET,
-    require_http_methods,
-    require_POST,
-)
+from django.views.decorators.http import require_GET, require_POST
 from rest_framework.generics import RetrieveUpdateAPIView
 
 from core.constants import COLORS
@@ -42,6 +38,16 @@ def get_player_response(user, player):
         return JsonResponse(PlayerWithUserSerializer(player).data)
 
     return JsonResponse(PlayerSerializer(player).data)
+
+
+def is_user_allowed_to_update_player(request, playerId):
+    user = request.user
+    return hasattr(user, "player") and user.player.uuid == playerId
+
+
+def is_color_allowed(request):
+    json_body = json.loads(request.body)
+    return "color" not in json_body or json_body["color"] in COLORS
 
 
 @require_GET
@@ -75,6 +81,28 @@ class PlayerAPIView(RetrieveUpdateAPIView):
         )
         serializer = PlayerWithHistorySerializer(queryset)
         return JsonResponse(serializer.data)
+
+    def update(self, request, *args, **kwargs):
+        if not is_user_allowed_to_update_player(request, kwargs["uuid"]):
+            return HttpResponseForbidden()
+
+        if not is_color_allowed(request):
+            return HttpResponseBadRequest(
+                "color must be in the following list : {}".format(COLORS)
+            )
+
+        return super().update(request, *args, **kwargs)
+
+    def partial_update(self, request, *args, **kwargs):
+        if not is_user_allowed_to_update_player(request, kwargs["uuid"]):
+            return HttpResponseForbidden()
+
+        if not is_color_allowed(request):
+            return HttpResponseBadRequest(
+                "color must be in the following list : {}".format(COLORS)
+            )
+
+        return super().partial_update(request, *args, **kwargs)
 
 
 @require_POST
@@ -178,22 +206,3 @@ def get_total_score(request, uuid):
     except IndexError:  # Player is not in ranking
         my_ranking = None
     return JsonResponse({"score": total_score, "ranking": my_ranking})
-
-
-@require_http_methods(["PATCH"])
-@requires_player
-def update_player(request, player):
-    json_body = json.loads(request.body)
-
-    if "avatar" in json_body:
-        player.avatar = json_body["avatar"]
-
-    if "color" in json_body:
-        color = json_body["color"]
-        if color not in COLORS:
-            return HttpResponseBadRequest(
-                "color must be in the following list : {}".format(COLORS)
-            )
-        player.color = color
-
-    return get_player_response(request.user, player)

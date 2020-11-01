@@ -12,7 +12,6 @@ urlpatterns = [
     path("room", room_management.RoomCreationView.as_view(), name="room_creation"),
     path("player", room_management.PlayerView.as_view(), name="player"),
     path("player/me", auth.get_me, name="me"),
-    path("player/update", auth.update_player, name="update_player"),
     path("player/<str:uuid>", auth.PlayerAPIView.as_view(), name="player"),
     path(
         "player/<str:uuid>/total-score",
