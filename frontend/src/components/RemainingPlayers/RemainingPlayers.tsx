@@ -6,7 +6,8 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import PlayerChip from 'atoms/PlayerChip';
 import { useForceState } from 'redux/Game/hooks';
 import { EmptyObject } from 'services/utils';
-import { StyledPlayerChips, AdminButton, NextStepIcon } from './RemainingPlayers.style';
+import ChipButton, { NextStepIcon } from 'atoms/ChipButton';
+import { StyledPlayerChips } from './RemainingPlayers.style';
 
 const RemainingPlayers: React.FC<EmptyObject> = () => {
   const remainingPlayers = useSelector(selectRemainingPlayers);
@@ -32,10 +33,10 @@ const RemainingPlayers: React.FC<EmptyObject> = () => {
           </PlayerChip>
         ))}
         {isPlayerAdmin && (
-          <AdminButton onClick={forceNextStep}>
+          <ChipButton onClick={forceNextStep}>
             <FormattedMessage id="remainingPlayers.forceNextStep" />
             <NextStepIcon />
-          </AdminButton>
+          </ChipButton>
         )}
       </StyledPlayerChips>
     </>

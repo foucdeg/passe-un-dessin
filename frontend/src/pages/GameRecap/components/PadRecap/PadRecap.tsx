@@ -7,9 +7,10 @@ import { PadRecapRow, ArrowSpacer } from './PadRecap.style';
 
 interface Props {
   pad: Pad;
+  publicMode?: boolean;
 }
 
-const PadRecap: React.FC<Props> = ({ pad }) => {
+const PadRecap: React.FC<Props> = ({ pad, publicMode }) => {
   const initialStep: PadStep = {
     uuid: pad.uuid,
     sentence: pad.sentence,
@@ -22,18 +23,18 @@ const PadRecap: React.FC<Props> = ({ pad }) => {
 
   return (
     <PadRecapRow>
-      <SentenceRecap step={initialStep} />
+      <SentenceRecap step={initialStep} publicMode={publicMode} />
       {pad.steps.map((step) => (
         <React.Fragment key={step.uuid}>
           <ArrowSpacer />
           {step.step_type === StepType.WORD_TO_DRAWING ? (
-            <DrawingRecap step={step} />
+            <DrawingRecap step={step} publicMode={publicMode} />
           ) : (
-            <SentenceRecap step={step} />
+            <SentenceRecap step={step} publicMode={publicMode} />
           )}
         </React.Fragment>
       ))}
-      <RecapRemainingPlayers />
+      {!publicMode && <RecapRemainingPlayers />}
     </PadRecapRow>
   );
 };

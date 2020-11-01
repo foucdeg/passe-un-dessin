@@ -77,7 +77,8 @@
     "forceNextStep": "Aller aux résultats",
     "confirmForceNextStep": "Es-tu sûr.e de vouloir passer à l'étape suivante ? Nous n'avons pas reçu tous les votes de tout le monde.",
     "availableVotes": "Votes restants :",
-    "noMoreVotes": "Plus de votes restants"
+    "noMoreVotes": "Plus de votes restants",
+    "voteResults": "🏆 Résultats du vote"
   },
   "voteResults": {
     "newGame": "Nouvelle partie ?",
@@ -205,6 +206,7 @@
     "title": "Leaderboard"
   },
   "playerDetails": {
-    "joinedOn": "nous a rejoint le {dateString}."
+    "joinedOn": "nous a rejoint le {dateString}.",
+    "seeGame": "Revoir la partie"
   }
 }

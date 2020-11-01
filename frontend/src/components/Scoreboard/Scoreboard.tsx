@@ -13,7 +13,7 @@ import {
   StyledPlayeChip,
 } from './Scoreboard.style';
 
-type PlayerWithScore = Player & {
+export type PlayerWithScore = Player & {
   score: number;
   delta?: number;
 };

@@ -77,7 +77,8 @@
     "forceNextStep": "Go to results",
     "confirmForceNextStep": "Are you sure you want to skip to next step? We didn't get everybody's votes.",
     "availableVotes": "Remaining votes:",
-    "noMoreVotes": "No remaining votes"
+    "noMoreVotes": "No remaining votes",
+    "voteResults": "🏆 Résultats du vote"
   },
   "voteResults": {
     "newGame": "New game?",
@@ -205,6 +206,7 @@
     "title": "Leaderboard"
   },
   "playerDetails": {
-    "joinedOn": "joined us on {dateString}."
+    "joinedOn": "joined us on {dateString}.",
+    "seeGame": "Review game"
   }
 }

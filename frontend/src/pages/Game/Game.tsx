@@ -141,7 +141,7 @@ const Game: React.FunctionComponent = () => {
 
   return (
     <GameContainer>
-      <HomeButton alt="Back to home" onClick={doLeaveRoom} />
+      <HomeButton onClick={doLeaveRoom} />
       <InnerGameContainer hasTabs={!!window.location.pathname.match(/\/recap$/)}>
         {[GamePhase.INIT, GamePhase.ROUNDS].includes(game.phase) && <PlayerOrder />}
         <Switch>

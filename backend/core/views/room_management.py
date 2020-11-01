@@ -4,10 +4,10 @@ import logging
 from django.db import transaction
 from django.db.models import Count
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.utils.translation import get_language_from_request
 from django.views import View
 from django.views.decorators.http import require_GET, require_http_methods
 from django_eventstream import send_event
-from django.utils.translation import get_language_from_request
 from rest_framework.generics import RetrieveAPIView
 
 from core.decorators import requires_player

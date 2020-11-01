@@ -33,3 +33,5 @@ export const selectAvailableVoteCount = (state: RootState) => {
     )
   );
 };
+
+export const selectViewingAsPublic = (state: RootState) => state.game.viewingAsPublic;
