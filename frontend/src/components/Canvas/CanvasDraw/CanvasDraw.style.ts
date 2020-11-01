@@ -2,6 +2,7 @@ import timerIcon from 'assets/timer.svg';
 import Header2 from 'atoms/Header2';
 import styled from 'styled-components';
 import { colorPalette } from 'stylesheet';
+import { ReactComponent as CheckIcon } from 'assets/check.svg';
 
 export const PadStepDone = styled.div`
   position: absolute;
@@ -20,7 +21,8 @@ export const PadStepDone = styled.div`
 PadStepDone.displayName = 'PadStepDone';
 
 export const CanvasContainer = styled.div`
-  position: relative;
+  display: flex;
+  align-items: center;
 `;
 
 CanvasContainer.displayName = 'CanvasContainer';
@@ -60,10 +62,7 @@ WhiteHeader.displayName = 'WhiteHeader';
 
 export const CanvasButtons = styled.div`
   display: flex;
-  position: absolute;
   height: 400px;
-  right: -80px;
-  bottom: 40px;
 `;
 
 CanvasButtons.displayName = 'CanvasButtons';
@@ -76,3 +75,20 @@ export const RightButtons = styled.div`
 `;
 
 RightButtons.displayName = 'RightButtons';
+
+export const StyledCheckIcon = styled(CheckIcon)`
+  cursor: pointer;
+  margin: auto;
+  margin-top: 15px;
+
+  .main {
+    fill: ${colorPalette.purple};
+  }
+`;
+StyledCheckIcon.displayName = 'StyledCheckIcon';
+
+export const CanvasAndSaveContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+CanvasAndSaveContainer.displayName = 'CanvasAndSaveContainer';

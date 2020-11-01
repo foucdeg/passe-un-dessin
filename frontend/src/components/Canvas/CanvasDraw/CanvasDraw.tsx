@@ -7,7 +7,16 @@ import { DrawingColor } from 'components/Canvas/BrushColorPicker/BrushColorPicke
 import BrushTypePicker from 'components/Canvas/BrushTypePicker';
 import { BrushType } from 'components/Canvas/BrushTypePicker/BrushTypePicker';
 import CanvasActions from 'components/Canvas/CanvasActions';
-import { drawLine, drawPaint, fillContext, Line, Paint, Point, resetCanvas } from '../utils';
+import {
+  drawLine,
+  drawPaint,
+  fillContext,
+  Line,
+  Paint,
+  Point,
+  resetCanvas,
+  initializeCanvas,
+} from '../utils';
 import {
   Canvas,
   CanvasContainer,
@@ -16,15 +25,19 @@ import {
   RightButtons,
   StyledTimerIcon,
   WhiteHeader,
+  StyledCheckIcon,
+  CanvasAndSaveContainer,
 } from './CanvasDraw.style';
 import { getBrushAttributes } from './utils';
 
 interface Props {
-  finished: boolean;
+  finished?: boolean;
   canvasWidth: number;
   canvasHeight: number;
-  roundDuration: number;
-  saveStep: (values: { sentence?: string; drawing?: string }) => void;
+  roundDuration?: number;
+  saveStep: (values: { drawing: string }) => void;
+  displaySaveButton?: boolean;
+  initialDrawing?: string | null;
 }
 
 const CanvasDraw: React.FC<Props> = ({
@@ -33,6 +46,8 @@ const CanvasDraw: React.FC<Props> = ({
   finished,
   saveStep,
   roundDuration,
+  displaySaveButton,
+  initialDrawing,
 }) => {
   const [color, setColor] = useState<DrawingColor>(DrawingColor.BLACK);
   const [brushType, setBrushType] = useState<BrushType>(BrushType.THIN);
@@ -161,14 +176,15 @@ const CanvasDraw: React.FC<Props> = ({
     drawPaint(paintToRedraw, canvasRef);
   };
 
-  const saveDrawing = useCallback(
-    (drawing: string) => {
-      if (saveStep) {
-        saveStep({ drawing });
-      }
-    },
-    [saveStep],
-  );
+  const saveDrawing = useCallback(() => {
+    const canvas: HTMLCanvasElement | null = canvasRef.current;
+    if (!canvas) return;
+
+    const saveData = canvas.toDataURL('image/png');
+    const compressed = lzString.compressToBase64(saveData);
+
+    saveStep({ drawing: compressed });
+  }, [saveStep]);
 
   useEffect(() => {
     if (!canvasRef.current) {
@@ -216,13 +232,8 @@ const CanvasDraw: React.FC<Props> = ({
   useEffect(() => {
     if (!roundDuration || finished) return;
 
-    const canvas: HTMLCanvasElement | null = canvasRef.current;
-    if (!canvas) return;
-
     const timeout = setTimeout(() => {
-      const saveData = canvas.toDataURL('image/png');
-      const compressed = lzString.compressToBase64(saveData);
-      saveDrawing(compressed);
+      saveDrawing();
     }, roundDuration * 1000);
 
     return () => {
@@ -232,11 +243,16 @@ const CanvasDraw: React.FC<Props> = ({
 
   useEffect(() => {
     handleClear();
+    const decodedDrawing = initialDrawing && lzString.decompressFromBase64(initialDrawing);
+    if (decodedDrawing) {
+      drawing.current = drawing.current.concat({ type: 'init', drawing: decodedDrawing });
+      initializeCanvas(canvasRef, decodedDrawing);
+    }
   }, []);
 
   return (
-    <>
-      <CanvasContainer>
+    <CanvasContainer>
+      <CanvasAndSaveContainer>
         <Canvas
           pointCursor={pointCursor}
           cursorPosition={cursorPosition}
@@ -244,17 +260,16 @@ const CanvasDraw: React.FC<Props> = ({
           height={canvasHeight}
           width={canvasWidth}
         />
-        {finished && (
-          <PadStepDone>
-            <StyledTimerIcon />
-            <WhiteHeader>
-              <FormattedMessage id="wordToDrawing.timesUp" />
-            </WhiteHeader>
-          </PadStepDone>
-        )}
-      </CanvasContainer>
-
-      {!finished && (
+        {displaySaveButton && <StyledCheckIcon onClick={saveDrawing} />}
+      </CanvasAndSaveContainer>
+      {finished ? (
+        <PadStepDone>
+          <StyledTimerIcon />
+          <WhiteHeader>
+            <FormattedMessage id="wordToDrawing.timesUp" />
+          </WhiteHeader>
+        </PadStepDone>
+      ) : (
         <CanvasButtons>
           <BrushColorPicker color={color} setColor={setBrushColor} />
           <RightButtons>
@@ -263,7 +278,7 @@ const CanvasDraw: React.FC<Props> = ({
           </RightButtons>
         </CanvasButtons>
       )}
-    </>
+    </CanvasContainer>
   );
 };
 
