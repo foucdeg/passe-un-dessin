@@ -5,12 +5,11 @@ import { colorPalette } from 'stylesheet';
 import Modal from 'components/Modal';
 import HorizontalSeparator from 'atoms/HorizontalSeparator';
 
-export const WideModal = styled(Modal)`
-  width: 768px;
-  padding: 24px;
+export const StyledModal = styled(Modal)`
+  margin-top: 80px;
 `;
 
-WideModal.displayName = 'WideModal';
+StyledModal.displayName = 'StyledModal';
 
 export const StyledHeader = styled(Header2)`
   color: ${colorPalette.purple};

@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import { selectPlayer, selectPlayerTotalScore, selectPlayerRanking } from 'redux/Player/selectors';
 import { useLogout, useFetchMyTotalScore, useEditPlayer } from 'redux/Player/hooks';
 import Header4 from 'atoms/Header4';
-import Modal from 'components/Modal';
 import CanvasDraw from 'components/Canvas/CanvasDraw';
 import SecondaryButton from 'atoms/SecondaryButton';
 import { colorPalette } from 'stylesheet';
@@ -18,6 +17,7 @@ import {
   ScoreCardRow,
   StyledSeparator,
   UndoAction,
+  StyledModal,
 } from './PlayerModal.style';
 
 interface Props {
@@ -58,7 +58,7 @@ const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
   if (!player.user) return null;
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <StyledModal isOpen={isOpen} onClose={onClose}>
       {isAvatarDrawing && <UndoAction onClick={() => setIsAvatarDrawing(false)} />}
       <HeaderSection>
         <StyledHeader>
@@ -112,7 +112,7 @@ const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
           </ButtonRow>
         </>
       )}
-    </Modal>
+    </StyledModal>
   );
 };
 
