@@ -24,7 +24,8 @@ CACHES = {
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "[::1]", "192.168.1.72"]
 DEBUG_TOOLBAR_CONFIG = {
-    "SHOW_TOOLBAR_CALLBACK": lambda request: request.META["SERVER_NAME"] != "testserver"
+    "SHOW_TOOLBAR_CALLBACK": lambda request: request.META["SERVER_NAME"]
+    != "testserver"
 }
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
@@ -42,6 +43,14 @@ LOGGING = {
         "django.db.backends": {
             "handlers": ["console"],
             "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
+        },
+        "channels": {
+            "handlers": ["console"],
+            "level": os.getenv("DJANGO_LOG_LEVEL", "DEBUG"),
+        },
+        "django_eventstream": {
+            "handlers": ["console"],
+            "level": os.getenv("DJANGO_LOG_LEVEL", "DEBUG"),
         },
         "core.service.game_service": {
             "handlers": ["console"],

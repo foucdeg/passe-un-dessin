@@ -71,7 +71,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "passe_un_dessin.wsgi.application"
-ASGI_APPLICATION = "passe_un_dessin.asgi.application"
+ASGI_APPLICATION = "passe_un_dessin.routing.application"
 
 EVENTSTREAM_STORAGE_CLASS = "django_eventstream.storage.DjangoModelStorage"
 
