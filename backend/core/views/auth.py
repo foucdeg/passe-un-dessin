@@ -15,8 +15,7 @@ from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_GET, require_POST
 from rest_framework.generics import RetrieveUpdateAPIView
 
-from core.constants import COLORS
-from core.decorators import requires_player
+from core.decorators import check_player_color, check_player_id, requires_player
 from core.models import Game, GamePhase, Player, PlayerGameParticipation, User, Vote
 from core.serializers import (
     PlayerSerializer,
@@ -32,16 +31,6 @@ from core.service.auth_service import (
 )
 
 logger = logging.getLogger(__name__)
-
-
-def is_user_allowed_to_update_player(request, playerId):
-    user = request.user
-    return hasattr(user, "player") and user.player.uuid == playerId
-
-
-def is_color_allowed(request):
-    json_body = json.loads(request.body)
-    return "color" not in json_body or json_body["color"] in COLORS
 
 
 @require_GET
@@ -79,26 +68,14 @@ class PlayerAPIView(RetrieveUpdateAPIView):
         serializer = PlayerWithHistorySerializer(queryset)
         return JsonResponse(serializer.data)
 
+    @check_player_id
+    @check_player_color
     def update(self, request, *args, **kwargs):
-        if not is_user_allowed_to_update_player(request, kwargs["uuid"]):
-            return HttpResponseForbidden()
-
-        if not is_color_allowed(request):
-            return HttpResponseBadRequest(
-                "color must be in the following list : {}".format(COLORS)
-            )
-
         return super().update(request, *args, **kwargs)
 
+    @check_player_id
+    @check_player_color
     def partial_update(self, request, *args, **kwargs):
-        if not is_user_allowed_to_update_player(request, kwargs["uuid"]):
-            return HttpResponseForbidden()
-
-        if not is_color_allowed(request):
-            return HttpResponseBadRequest(
-                "color must be in the following list : {}".format(COLORS)
-            )
-
         return super().partial_update(request, *args, **kwargs)
 
 
