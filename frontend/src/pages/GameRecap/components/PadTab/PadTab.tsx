@@ -10,27 +10,30 @@ interface Props {
   pad: Pad;
   isActive: boolean;
   onClick: () => void;
+  publicMode?: boolean;
 }
 
-const PadTab: React.FC<Props> = ({ pad, isActive, onClick }) => {
+const PadTab: React.FC<Props> = ({ pad, isActive, onClick, publicMode }) => {
   const allViewers = useSelector(selectPadViewers);
   const player = useSelector(selectPlayer);
   const padViewers = allViewers[pad.uuid];
 
-  if (!player) return null;
+  if (!publicMode && !player) return null;
 
   return (
     <PadTabContainer isActive={isActive} onClick={onClick}>
       {pad.initial_player.name}
-      <ViewersContainer onClick={(e) => e.preventDefault()}>
-        {padViewers
-          .filter((viewer) => viewer.uuid !== player.uuid)
-          .map((viewer) => (
-            <IconAndTooltip tooltipText={viewer.name} key={viewer.uuid}>
-              <ViewerEye color={viewer.color} />
-            </IconAndTooltip>
-          ))}
-      </ViewersContainer>
+      {!publicMode && (
+        <ViewersContainer onClick={(e) => e.preventDefault()}>
+          {padViewers
+            .filter((viewer) => player && viewer.uuid !== player.uuid)
+            .map((viewer) => (
+              <IconAndTooltip tooltipText={viewer.name} key={viewer.uuid}>
+                <ViewerEye color={viewer.color} />
+              </IconAndTooltip>
+            ))}
+        </ViewersContainer>
+      )}
     </PadTabContainer>
   );
 };

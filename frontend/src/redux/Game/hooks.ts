@@ -25,14 +25,14 @@ import { Pad, GamePhase, Game, RawGame } from './types';
 export const useFetchGame = () => {
   const dispatch = useDispatch();
 
-  return useTypedAsyncFn<{ gameId: string; keepStructure?: boolean }>(
-    async ({ gameId, keepStructure = false }) => {
+  return useTypedAsyncFn<{ gameId: string; keepStructure?: boolean; asPublic?: boolean }>(
+    async ({ gameId, keepStructure = false, asPublic = false }) => {
       const rawGame: RawGame = await client.get(`/game/${gameId}`);
       const game = {
         ...rawGame,
         players: rawGame.participants.map((participant) => participant.player),
       };
-      dispatch(updateGame({ game, keepStructure }));
+      dispatch(updateGame({ game, keepStructure, asPublic }));
     },
     [dispatch],
   );
@@ -113,11 +113,13 @@ export const useGetVoteResults = () => {
   const doGetRanking = useGetRanking();
 
   return useCallback(
-    async (gameId: string, roomId: string) => {
+    async (gameId: string, roomId?: string) => {
       try {
         const response = await client.get(`/game/${gameId}/vote-results`);
         dispatch(setWinners(response['winners']));
-        doGetRanking(roomId);
+        if (roomId) {
+          doGetRanking(roomId);
+        }
       } catch (e) {
         alert('Error - see console');
         console.error(e);

@@ -3,7 +3,7 @@ import copy from 'copy-to-clipboard';
 
 import { useSelector } from 'redux/useSelector';
 import { selectPlayerIsAdmin, selectRoom } from 'redux/Room/selectors';
-import { selectGame } from 'redux/Game/selectors';
+import { selectGame, selectViewingAsPublic } from 'redux/Game/selectors';
 import AudioControl from 'components/Root/components/AudioControl';
 import AdminModal from 'modals/AdminModal';
 import { useRefreshGame } from 'redux/Game/hooks';
@@ -31,6 +31,7 @@ const SideButtons: React.FC<EmptyObject> = () => {
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
   const player = useSelector(selectPlayer);
+  const viewingAsPublic = useSelector(selectViewingAsPublic);
 
   const intl = useIntl();
   const [invitePlayerButtonText, setInvitePlayerButtonText] = useState<string>(
@@ -79,12 +80,12 @@ const SideButtons: React.FC<EmptyObject> = () => {
           <RankingModalButton alt="Ranking" onClick={() => setRankingModalOpen(true)} />
         </IconAndTooltip>
       )}
-      {game && (
+      {game && !viewingAsPublic && (
         <IconAndTooltip tooltipText={invitePlayerButtonText}>
           <PlayerAddButton alt="Add player" onClick={onCopy} />
         </IconAndTooltip>
       )}
-      {game && (
+      {game && !viewingAsPublic && (
         <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.refresh' })}>
           <RefreshButton alt="refresh" onClick={doRefreshGame} isLoading={loading} />
         </IconAndTooltip>

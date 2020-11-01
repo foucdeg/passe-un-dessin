@@ -4,14 +4,11 @@ import { selectRemainingPlayers } from 'redux/Game/selectors';
 import { selectPlayerIsAdmin } from 'redux/Room/selectors';
 import { useForceState } from 'redux/Game/hooks';
 import { useIntl, FormattedMessage } from 'react-intl';
-import {
-  StyledPlayerChips,
-  AdminButton,
-  NextStepIcon,
-} from 'components/RemainingPlayers/RemainingPlayers.style';
+import { StyledPlayerChips } from 'components/RemainingPlayers/RemainingPlayers.style';
 import PlayerChip from 'atoms/PlayerChip';
 import Spacer from 'atoms/Spacer';
 import { EmptyObject } from 'services/utils';
+import ChipButton, { NextStepIcon } from 'atoms/ChipButton';
 import { RecapRemainingPlayersContainer, StyledHeader } from './RecapRemainingPlayers.style';
 
 const RecapRemainingPlayers: React.FC<EmptyObject> = () => {
@@ -41,10 +38,10 @@ const RecapRemainingPlayers: React.FC<EmptyObject> = () => {
       {isPlayerAdmin && (
         <>
           <Spacer />
-          <AdminButton onClick={forceNextStep}>
+          <ChipButton onClick={forceNextStep}>
             <FormattedMessage id="recap.forceNextStep" />
             <NextStepIcon />
-          </AdminButton>
+          </ChipButton>
         </>
       )}
     </RecapRemainingPlayersContainer>

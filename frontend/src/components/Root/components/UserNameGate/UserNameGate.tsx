@@ -4,8 +4,8 @@ import { useSelector } from 'redux/useSelector';
 import { useFetchMe } from 'redux/Player/hooks';
 import { selectPlayer } from 'redux/Player/selectors';
 import UserNameModal from 'modals/UserNameModal';
-import { useLocation } from 'react-router';
-import { PUBLIC_PATHS } from 'routes';
+import { useRouteMatch } from 'react-router';
+import { PLAYER_PATHS } from 'routes';
 
 interface Props {
   children: React.ReactNode;
@@ -14,7 +14,7 @@ interface Props {
 const UserNameGate: React.FC<Props> = ({ children }) => {
   const player = useSelector(selectPlayer);
   const doFetchMe = useFetchMe();
-  const location = useLocation();
+  const match = useRouteMatch(PLAYER_PATHS.ROOM);
 
   useEffect(() => {
     if (!player) {
@@ -25,9 +25,7 @@ const UserNameGate: React.FC<Props> = ({ children }) => {
   return (
     <>
       {children}
-      {player === false && !Object.values(PUBLIC_PATHS).includes(location.pathname) && (
-        <UserNameModal />
-      )}
+      {player === false && match && <UserNameModal />}
     </>
   );
 };

@@ -40,7 +40,7 @@ app.get("/drawings/:padStepId.png", async function (req, res, next) {
     const decodedDrawing = lzString.decompressFromBase64(encodedDrawing);
 
     const base64Data = decodedDrawing.replace("data:image/png;base64,", "");
-    const buffer = new Buffer(base64Data, "base64");
+    const buffer = Buffer.from(base64Data, "base64");
     res.writeHead(200, {
       "Content-Type": "image/png",
       "Content-disposition":

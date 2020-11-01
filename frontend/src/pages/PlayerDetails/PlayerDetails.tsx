@@ -21,6 +21,7 @@ import PlayerChip from 'atoms/PlayerChip';
 import { GameWithParticipants, Participation } from 'redux/Player/types';
 import { PUBLIC_PATHS } from 'routes';
 import BareLink from 'atoms/BareLink';
+import ChipButton, { NextStepIcon } from 'atoms/ChipButton';
 import {
   StyledInnerContainer,
   LeftSide,
@@ -151,6 +152,12 @@ const PlayerDetails: React.FC<NoProps> = () => {
                           </BareLink>
                         </PlayerChip>
                       ))}
+                    <BareLink to={`/game/${participation.game.uuid}`} target="_blank">
+                      <ChipButton>
+                        <FormattedMessage id="playerDetails.seeGame" />
+                        <NextStepIcon />
+                      </ChipButton>
+                    </BareLink>
                   </PlayerChips>
                 </HistoryGame>
               </>

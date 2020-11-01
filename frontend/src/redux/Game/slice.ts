@@ -3,6 +3,7 @@ import { Player } from 'redux/Player/types';
 import { Game, Pad, GamePhase, PadStep } from './types';
 
 export type GameState = Readonly<{
+  viewingAsPublic: boolean;
   game: Game | null;
   gameStructure: Game | null;
   remainingPlayers: Player[];
@@ -12,6 +13,7 @@ export type GameState = Readonly<{
 }>;
 
 const initialState: GameState = {
+  viewingAsPublic: true,
   game: null,
   gameStructure: null,
   remainingPlayers: [],
@@ -24,7 +26,10 @@ const gameSlice = createSlice({
   name: 'Game',
   initialState,
   reducers: {
-    updateGame: (state, action: PayloadAction<{ game: Game; keepStructure: boolean }>) => {
+    updateGame: (
+      state,
+      action: PayloadAction<{ game: Game; keepStructure: boolean; asPublic: boolean }>,
+    ) => {
       state.game = action.payload.game;
       if (!action.payload.keepStructure) {
         state.gameStructure = action.payload.game;
@@ -41,6 +46,7 @@ const gameSlice = createSlice({
       const firstPadUUID = state.game.pads[0].uuid;
       state.recapViews[firstPadUUID] = [...state.game.players];
       state.suggestions = [];
+      state.viewingAsPublic = action.payload.asPublic;
     },
     updatePad: (state, action: PayloadAction<Pad>) => {
       if (!state.game) return;

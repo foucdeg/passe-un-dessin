@@ -10,8 +10,10 @@ import { useReviewPad } from 'redux/Game/hooks';
 import { selectAvailableVoteCount } from 'redux/Game/selectors';
 import NewGameModal from 'modals/NewGameModal';
 import DoneModal from 'modals/DoneModal';
+
 import { ThumbUpButton } from './components/ReactionOverlay/ReactionOverlay.style';
 import PadTab from './components/PadTab';
+
 import {
   OuterRecapContainer,
   GameRecapContainer,
@@ -20,13 +22,20 @@ import {
   VoteReminder,
 } from './GameRecap.style';
 import PadRecap from './components/PadRecap';
+import RecapTab from './components/RecapTab';
+import VoteResultsTab from './components/VoteResultsTab';
 
-const GameRecap: React.FunctionComponent = () => {
+interface Props {
+  publicMode?: boolean;
+}
+
+const GameRecap: React.FunctionComponent<Props> = ({ publicMode }) => {
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
   const availableVoteCount = useSelector(selectAvailableVoteCount);
 
   const [displayedPadId, setDisplayedPadId] = useState<string | null>(null);
+  const [isVoteResultsDisplayed, setVoteResultsDisplayed] = useState<boolean>(false);
   const [doneModalIsOpen, setDoneModalIsOpen] = useState<boolean>(true);
   const [newGameModalIsOpen, setNewGameModalIsOpen] = useState<boolean>(false);
 
@@ -35,15 +44,27 @@ const GameRecap: React.FunctionComponent = () => {
   const displayedPad = game?.pads.find((pad) => pad.uuid === displayedPadId);
 
   useEffect(() => {
-    if (!game || displayedPad) return;
+    if (!game || displayedPad || isVoteResultsDisplayed) return;
     setDisplayedPadId(game.pads[0].uuid);
-  }, [game, displayedPad]);
+  }, [game, displayedPad, isVoteResultsDisplayed]);
 
-  if (!room || !game) return null;
+  if (!game) return null;
+
+  if (!publicMode && !room) return null;
 
   const selectPad = (pad: Pad) => {
-    doReviewPad(pad);
+    if (!publicMode) {
+      doReviewPad(pad);
+    }
     setDisplayedPadId(pad.uuid);
+    setVoteResultsDisplayed(false);
+  };
+
+  const selectResults = () => {
+    if (!publicMode) return;
+
+    setDisplayedPadId(null);
+    setVoteResultsDisplayed(true);
   };
 
   return (
@@ -53,32 +74,42 @@ const GameRecap: React.FunctionComponent = () => {
           <PadTabs>
             {game.pads.map((pad) => (
               <PadTab
+                publicMode={publicMode}
                 key={pad.uuid}
                 isActive={displayedPadId === pad.uuid}
                 onClick={() => selectPad(pad)}
                 pad={pad}
               />
             ))}
+            {publicMode && <RecapTab isActive={isVoteResultsDisplayed} onClick={selectResults} />}
           </PadTabs>
         </TopRow>
-        <GameRecapContainer>{displayedPad && <PadRecap pad={displayedPad} />}</GameRecapContainer>
+        <GameRecapContainer>
+          {displayedPad && <PadRecap pad={displayedPad} publicMode={publicMode} />}
+          {publicMode && isVoteResultsDisplayed && <VoteResultsTab />}
+        </GameRecapContainer>
       </OuterRecapContainer>
-      <VoteReminder>
-        {availableVoteCount ? (
-          <>
-            <FormattedMessage id="recap.availableVotes" />
-            {Array(availableVoteCount)
-              .fill('')
-              .map((_, index) => (
-                <ThumbUpButton key={index} />
-              ))}
-          </>
-        ) : (
-          <FormattedMessage id="recap.noMoreVotes" />
-        )}
-      </VoteReminder>
-      {doneModalIsOpen && <DoneModal onClose={() => setDoneModalIsOpen(false)} />}
-      <NewGameModal isOpen={newGameModalIsOpen} onClose={() => setNewGameModalIsOpen(false)} />
+      {!publicMode && (
+        <VoteReminder>
+          {availableVoteCount ? (
+            <>
+              <FormattedMessage id="recap.availableVotes" />
+              {Array(availableVoteCount)
+                .fill('')
+                .map((_, index) => (
+                  <ThumbUpButton key={index} />
+                ))}
+            </>
+          ) : (
+            <FormattedMessage id="recap.noMoreVotes" />
+          )}
+        </VoteReminder>
+      )}
+      {doneModalIsOpen && !publicMode && <DoneModal onClose={() => setDoneModalIsOpen(false)} />}
+      <NewGameModal
+        isOpen={!publicMode && newGameModalIsOpen}
+        onClose={() => setNewGameModalIsOpen(false)}
+      />
     </>
   );
 };
