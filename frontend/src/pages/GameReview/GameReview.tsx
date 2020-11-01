@@ -32,7 +32,7 @@ const Game: React.FunctionComponent = () => {
 
   return (
     <GameContainer>
-      <HomeButton alt="Back to home" />
+      <HomeButton />
       <InnerGameContainer hasTabs>
         <GameRecap publicMode />
       </InnerGameContainer>
