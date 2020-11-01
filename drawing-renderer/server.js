@@ -26,17 +26,17 @@ app.get("/health", (req, res) => {
   res.send("I'm up!");
 });
 
-app.get("/drawings/:padStepId.png", async function (req, res, next) {
+async function sendPng(res, next, table, column, id) {
   const dbClient = await pool.connect();
   try {
     const dbResponse = await dbClient.query(
-      "SELECT uuid, drawing FROM core_padstep WHERE uuid = $1",
-      [req.params.padStepId]
+      "SELECT $1 FROM $2 WHERE uuid = $3",
+      [column, table, id]
     );
     if (!dbResponse.rows.length) {
       res.status(404).send("Not found!");
     }
-    const encodedDrawing = dbResponse.rows[0].drawing;
+    const encodedDrawing = dbResponse.rows[0][column];
     const decodedDrawing = lzString.decompressFromBase64(encodedDrawing);
 
     const base64Data = decodedDrawing.replace("data:image/png;base64,", "");
@@ -44,7 +44,7 @@ app.get("/drawings/:padStepId.png", async function (req, res, next) {
     res.writeHead(200, {
       "Content-Type": "image/png",
       "Content-disposition":
-        "attachment;filename=" + req.params.padStepId + ".png",
+        "attachment;filename=" + id + ".png",
       "Content-Length": buffer.length,
       "Cache-Control": "max-age=31556926",
     });
@@ -54,6 +54,14 @@ app.get("/drawings/:padStepId.png", async function (req, res, next) {
   } finally {
     await dbClient.release();
   }
+}
+
+app.get("/drawings/:padStepId.png", async function (req, res, next) {
+  sendPng(res, next, "core_padstep", "drawing", req.params.padStepId)
+});
+
+app.get("/drawings/avatar/:playerId/:firstCharacters.png", async function (req, res, next) {
+  sendPng(res, next, "core_player", "avatar", req.params.playerId)
 });
 
 app.listen(APP_PORT, () => {

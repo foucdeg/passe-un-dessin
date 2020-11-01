@@ -22,18 +22,33 @@ class UserSerializer(BaseSerializer):
         fields = ("email",)
 
 
+def get_generic_avatar_url(player):
+    if not player.avatar:
+        return None
+    return "/drawings/avatar/%s/%s.png" % player.uuid % player.avatar[:10]
+
+
 class PlayerWithUserSerializer(BaseSerializer):
     user = UserSerializer()
+    avatar_url = serializers.SerializerMethodField()
+
+    def get_avatar_url(self, obj):
+        return get_generic_avatar_url(obj)
 
     class Meta:
         model = Player
-        fields = ("uuid", "name", "color", "user")
+        fields = ("uuid", "name", "color", "user", "avatar_url")
 
 
 class PlayerSerializer(BaseSerializer):
+    avatar_url = serializers.SerializerMethodField()
+
+    def get_avatar_url(self, obj):
+        return get_generic_avatar_url(obj)
+
     class Meta:
         model = Player
-        fields = ("uuid", "name", "color")
+        fields = ("uuid", "name", "color", "avatar_url")
 
 
 class PlayerInRankingSerializer(BaseSerializer):

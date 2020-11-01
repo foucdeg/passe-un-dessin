@@ -103,6 +103,7 @@ class Player(BaseModel):
         Room, on_delete=models.SET_NULL, related_name="players", null=True, blank=True
     )
     color = models.CharField(max_length=10)
+    avatar = models.TextField(null=True, blank=True)
 
 
 class User(AbstractUser):
