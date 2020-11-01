@@ -200,5 +200,4 @@ def pick_color_and_avatar(sender, **kwargs):
         f = open("core/avatar_default_value.txt", "r")
         default_avatar = f.read()
         instance.avatar = default_avatar
-        print(default_avatar)
         f.close()

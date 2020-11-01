@@ -21,5 +21,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(create_default_avatar),
+        migrations.RunPython(
+            create_default_avatar, reverse_code=migrations.RunPython.noop
+        ),
     ]
