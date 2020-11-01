@@ -30,8 +30,8 @@ async function sendPng(res, next, table, column, id) {
   const dbClient = await pool.connect();
   try {
     const dbResponse = await dbClient.query(
-      "SELECT $1 FROM $2 WHERE uuid = $3",
-      [column, table, id]
+      `SELECT ${column} FROM ${table} WHERE uuid = $1`,
+      [id]
     );
     if (!dbResponse.rows.length) {
       res.status(404).send("Not found!");
