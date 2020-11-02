@@ -94,7 +94,7 @@ class Player(BaseModel):
         Room, on_delete=models.SET_NULL, related_name="players", null=True, blank=True
     )
     color = models.CharField(max_length=10)
-    avatar = models.TextField()
+    avatar = models.TextField(null=True, blank=True)
 
 
 class User(AbstractUser):
@@ -192,12 +192,7 @@ class Vote(BaseModel):
 
 
 @receiver(models.signals.pre_save, sender=Player)
-def pick_color_and_avatar(sender, **kwargs):
+def pick_color(sender, **kwargs):
     instance = kwargs["instance"]
     if instance.color is None or instance.color == "":
         instance.color = random_color()
-    if instance.avatar is None or instance.avatar == "":
-        f = open("core/avatar_default_value.txt", "r")
-        default_avatar = f.read()
-        instance.avatar = default_avatar
-        f.close()

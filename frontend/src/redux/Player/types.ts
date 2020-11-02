@@ -9,8 +9,8 @@ export interface Player {
   uuid: string;
   color: string;
   user?: null | User;
-  avatar_url: string;
-  avatar?: string;
+  avatar_url: string | null;
+  avatar?: string | null;
 }
 
 export interface GameWithParticipants {
