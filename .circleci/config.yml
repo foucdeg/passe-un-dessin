@@ -72,7 +72,7 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-          name: Build backend app
+          name: Build drawing renderer
           command: docker build -f ./Dockerfile.prod . -t foucdeg/passe-un-dessin-drawing-renderer:$CIRCLE_SHA1
           working_directory: drawing-renderer
       - run:
