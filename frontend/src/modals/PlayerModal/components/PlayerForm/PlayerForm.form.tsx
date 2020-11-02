@@ -5,7 +5,6 @@ import { Player } from 'redux/Player/types';
 import { useEditPlayer } from 'redux/Player/hooks';
 import { useSelector } from 'redux/useSelector';
 import { selectPlayer } from 'redux/Player/selectors';
-import Avatar from '../Avatar';
 import InnerForm from './PlayerForm';
 
 export interface OutsideProps {
@@ -13,6 +12,7 @@ export interface OutsideProps {
   onSubmit: (player: Player) => Promise<void>;
   isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
+  openAvatarDrawing: () => void;
 }
 
 export interface OwnProps {
@@ -61,15 +61,13 @@ const OuterPlayerForm: React.FC<OwnProps> = ({ openAvatarDrawing }) => {
   if (!player) return null;
 
   return (
-    <>
-      <Avatar player={player} onAvatarClick={openAvatarDrawing} />
-      <PlayerForm
-        player={player}
-        onSubmit={doEditPlayer}
-        isEditing={isEditing}
-        setIsEditing={setIsEditing}
-      />
-    </>
+    <PlayerForm
+      openAvatarDrawing={openAvatarDrawing}
+      player={player}
+      onSubmit={doEditPlayer}
+      isEditing={isEditing}
+      setIsEditing={setIsEditing}
+    />
   );
 };
 

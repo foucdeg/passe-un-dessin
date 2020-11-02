@@ -1,16 +1,26 @@
 import styled from 'styled-components';
 import Drawing from 'components/Canvas/Drawing';
-import editIcon from 'assets/edit.svg';
+import { ReactComponent as EditIcon } from 'assets/edit.svg';
 
 const SQUARE_SIDE = 80;
+
+export const StyledEditIcon = styled(EditIcon)`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: none;
+`;
+StyledEditIcon.displayName = 'StyledEditIcon';
 
 export const Container = styled.div`
   height: ${SQUARE_SIDE}px;
   width: ${SQUARE_SIDE}px;
   border-radius: 5px;
-  margin: auto;
-  margin-bottom: 16px;
-  cursor: url(${editIcon}) 2 20, auto;
+  position: relative;
+
+  &:hover > ${StyledEditIcon} {
+    display: block;
+  }
 `;
 Container.displayName = 'Container';
 

@@ -5,6 +5,7 @@ import { ReactComponent as CheckIcon } from 'assets/check.svg';
 import TextInput from 'atoms/TextInput';
 import { colorPalette } from 'stylesheet';
 import { Form } from 'formik';
+import Avatar from '../Avatar';
 
 export const PLAYER_COLORS = {
   '#9337AE': 'purple',
@@ -26,7 +27,6 @@ InputArrow.displayName = 'InputArrow';
 export const Row = styled.div`
   display: flex;
   align-items: center;
-  height: 51px;
   margin-bottom: 16px;
 `;
 Row.displayName = 'Row';
@@ -84,3 +84,9 @@ export const AirButton = styled.button`
   border: none;
 `;
 AirButton.displayName = 'AirButton';
+
+export const StyledAvatar = styled(Avatar)`
+  margin-right: 16px;
+  cursor: pointer;
+`;
+StyledAvatar.displayName = 'StyledAvatar';
