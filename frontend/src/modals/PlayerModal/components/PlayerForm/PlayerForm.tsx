@@ -10,6 +10,7 @@ import {
   StyledNonInput,
   StyledTextInput,
   AirButton,
+  StyledAvatar,
 } from './PlayerForm.style';
 
 const InnerPlayerForm: React.FC<OutsideProps & FormikProps<FormValues>> = ({
@@ -19,10 +20,12 @@ const InnerPlayerForm: React.FC<OutsideProps & FormikProps<FormValues>> = ({
   player,
   isEditing,
   setIsEditing,
+  openAvatarDrawing,
 }) => {
   if (!isEditing)
     return (
       <Row>
+        <StyledAvatar player={player} onClick={openAvatarDrawing} editOnHover />
         <Square color={player.color} />
         <StyledNonInput>{player.name}</StyledNonInput>
         <StyledEditIcon onClick={() => setIsEditing(true)} />
@@ -31,6 +34,7 @@ const InnerPlayerForm: React.FC<OutsideProps & FormikProps<FormValues>> = ({
 
   return (
     <StyledForm>
+      <StyledAvatar player={player} onClick={openAvatarDrawing} editOnHover />
       <Square color={values.color} />
       <Field
         as={StyledTextInput}

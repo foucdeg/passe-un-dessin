@@ -4,7 +4,7 @@ import { DrawingColor } from './BrushColorPicker';
 export const BrushPickerContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 15px;
+  margin: 0 15px 0 30px;
   justify-content: space-between;
 `;
 

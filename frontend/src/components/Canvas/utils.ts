@@ -1,7 +1,8 @@
 export type Point = { x: number; y: number };
 export type Line = { points: Point[]; brushColor: string; brushRadius: number; type: 'line' };
 export type Fill = { point: Point; color: string; type: 'fill' };
-export type Paint = (Line | Fill)[];
+export type Initialization = { drawing: string; type: 'init' };
+export type Paint = (Line | Fill | Initialization)[];
 
 type canvasRefType = {
   readonly current: HTMLCanvasElement | null;
@@ -22,7 +23,29 @@ export const resetCanvas = (canvasRef: canvasRefType) => {
   }
 };
 
-export const drawLine = (
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export const initializeCanvas = async (canvasRef: canvasRefType, drawing: string) => {
+  if (!canvasRef.current) {
+    return;
+  }
+  const canvas: HTMLCanvasElement = canvasRef.current;
+  const context = canvas.getContext('2d');
+  if (!context) {
+    return;
+  }
+  const img = new Image();
+  img.onload = function () {
+    context.drawImage(img, 0, 0);
+  };
+  img.src = drawing;
+
+  // We need await to make this function async because this operation take a few time.
+  // If you do not use that, it will erase future modification of drawing appening just after
+  await sleep(1);
+};
+
+export const drawLine = async (
   startPosition: Point,
   endPosition: Point,
   brushColor: string,
@@ -140,8 +163,10 @@ const setPixel = (imageData: ImageData, x: number, y: number, color: RGBAColor) 
   imageData.data[offset + 3] = 255;
 };
 
-export const drawPaint = (paint: Paint, canvasRef: canvasRefType) => {
-  paint.forEach((paintStep) => {
+export const drawPaint = async (paint: Paint, canvasRef: canvasRefType) => {
+  // Do not use foreach because initializeCanvas need to use async
+  for (let i = 0; i < paint.length; i++) {
+    const paintStep = paint[i];
     switch (paintStep.type) {
       case 'line':
       case undefined: // To not break previous drawings
@@ -153,10 +178,13 @@ export const drawPaint = (paint: Paint, canvasRef: canvasRefType) => {
       case 'fill':
         fillContext(paintStep.point, canvasRef, paintStep.color);
         break;
+      case 'init':
+        await initializeCanvas(canvasRef, paintStep.drawing);
+        break;
       default:
         break;
     }
-  });
+  }
 };
 
 const floodfill = (

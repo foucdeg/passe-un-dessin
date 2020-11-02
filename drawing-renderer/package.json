@@ -11,5 +11,8 @@
     "express": "^4.17.1",
     "lz-string": "^1.4.4",
     "pg": "^8.3.3"
+  },
+  "scripts": {
+    "start": "node server.js"
   }
 }

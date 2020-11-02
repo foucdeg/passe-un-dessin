@@ -15,12 +15,13 @@ from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_GET, require_POST
 from rest_framework.generics import RetrieveUpdateAPIView
 
-from core.decorators import requires_player
+from core.decorators import check_player_color, check_player_id, requires_player
 from core.models import Game, GamePhase, Player, PlayerGameParticipation, User, Vote
 from core.serializers import (
     PlayerSerializer,
+    PlayerWithAvatarSerializer,
     PlayerWithHistorySerializer,
-    PlayerWithUserSerializer,
+    PlayerWithUserAndAvatarSerializer,
     UserSerializer,
 )
 from core.service.auth_service import (
@@ -36,15 +37,15 @@ logger = logging.getLogger(__name__)
 @requires_player
 def get_me(request, player):
     if request.user.is_authenticated:
-        return JsonResponse(PlayerWithUserSerializer(player).data)
+        return JsonResponse(PlayerWithUserAndAvatarSerializer(player).data)
 
-    return JsonResponse(PlayerSerializer(player).data)
+    return JsonResponse(PlayerWithAvatarSerializer(player).data)
 
 
 class PlayerAPIView(RetrieveUpdateAPIView):
     lookup_field = "uuid"
     queryset = Player.objects.all()
-    serializer_class = PlayerSerializer
+    serializer_class = PlayerWithAvatarSerializer
 
     def retrieve(self, request, uuid):
         queryset = (
@@ -66,6 +67,16 @@ class PlayerAPIView(RetrieveUpdateAPIView):
         )
         serializer = PlayerWithHistorySerializer(queryset)
         return JsonResponse(serializer.data)
+
+    @check_player_id
+    @check_player_color
+    def update(self, request, *args, **kwargs):
+        return super().update(request, *args, **kwargs)
+
+    @check_player_id
+    @check_player_color
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
 
 
 @require_POST

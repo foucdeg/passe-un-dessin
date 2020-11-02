@@ -22,26 +22,45 @@ class UserSerializer(BaseSerializer):
         fields = ("email",)
 
 
-class PlayerWithUserSerializer(BaseSerializer):
+def get_generic_avatar_url(player):
+    if not player.avatar:
+        return None
+    return "/drawings/avatar/%s/%s.png" % (player.uuid, player.avatar[-10:])
+
+
+class PlayerSerializer(BaseSerializer):
+    avatar_url = serializers.SerializerMethodField()
+
+    def get_avatar_url(self, obj):
+        if not obj.avatar:
+            return None
+        return "/drawings/avatar/%s/%s.png" % (obj.uuid, obj.avatar[-10:])
+
+    class Meta:
+        model = Player
+        fields = ("uuid", "name", "color", "avatar_url")
+
+
+class PlayerWithAvatarSerializer(PlayerSerializer):
+    class Meta:
+        model = Player
+        fields = ("uuid", "name", "color", "avatar", "avatar_url")
+
+
+class PlayerWithUserAndAvatarSerializer(PlayerWithAvatarSerializer):
     user = UserSerializer()
 
     class Meta:
         model = Player
-        fields = ("uuid", "name", "color", "user")
+        fields = ("uuid", "name", "color", "user", "avatar_url", "avatar")
 
 
-class PlayerSerializer(BaseSerializer):
-    class Meta:
-        model = Player
-        fields = ("uuid", "name", "color")
-
-
-class PlayerInRankingSerializer(BaseSerializer):
+class PlayerInRankingSerializer(PlayerSerializer):
     vote_count = serializers.IntegerField()
 
     class Meta:
         model = Player
-        fields = ("uuid", "name", "color", "vote_count")
+        fields = ("uuid", "name", "color", "vote_count", "avatar_url")
 
 
 class RoomSerializer(BaseSerializer):
@@ -115,12 +134,19 @@ class PlayerGameParticipationWithGameSerializer(BaseSerializer):
         fields = ("game",)
 
 
-class PlayerWithHistorySerializer(BaseSerializer):
+class PlayerWithHistorySerializer(PlayerSerializer):
     participations = PlayerGameParticipationWithGameSerializer(many=True)
 
     class Meta:
         model = Player
-        fields = ("uuid", "name", "color", "created_at", "participations")
+        fields = (
+            "uuid",
+            "name",
+            "color",
+            "created_at",
+            "avatar_url",
+            "participations",
+        )
 
 
 class PadIdSerializer(BaseSerializer):
