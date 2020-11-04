@@ -5,7 +5,7 @@ import { ReactComponent as CheckIcon } from 'assets/check.svg';
 import TextInput from 'atoms/TextInput';
 import { colorPalette } from 'stylesheet';
 import { Form } from 'formik';
-import Avatar from '../Avatar';
+import Avatar from 'components/Avatar';
 
 export const PLAYER_COLORS = {
   '#9337AE': 'purple',
