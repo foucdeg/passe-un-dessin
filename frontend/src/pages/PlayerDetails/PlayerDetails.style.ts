@@ -6,15 +6,17 @@ import ScoreCard from 'modals/PlayerModal/components/ScoreCard';
 import HorizontalSeparator from 'atoms/HorizontalSeparator';
 import Avatar from 'components/Avatar';
 
+const LEFT_COLUMN_WIDTH = 160;
+
 export const LeftSide = styled.div`
   height: 100%;
-  width: 250px;
+  width: ${LEFT_COLUMN_WIDTH}px;
   display: flex;
   align-items: center;
   position: relative;
   flex-direction: column;
   justify-content: space-between;
-  margin-right: 16px;
+  margin-right: 32px;
   text-align: center;
 `;
 LeftSide.displayName = 'LeftSide';
@@ -35,25 +37,22 @@ StyledInnerContainer.displayName = 'StyledInnerContainer';
 
 export const StyledHeader = styled(Header2)`
   color: ${colorPalette.purple};
-  margin-bottom: 16px;
 `;
 StyledHeader.displayName = 'StyledHeader';
 
-export const Subtext = styled.p`
-  margin-bottom: 16px;
-`;
-Subtext.displayName = 'Subtext';
-
 export const StyledScoreCard = styled(ScoreCard)`
-  margin-top: 16px;
-  width: 160px;
-  height: 160px;
+  margin-top: 10px;
+  width: ${LEFT_COLUMN_WIDTH}px;
+  height: ${LEFT_COLUMN_WIDTH}px;
 `;
 StyledScoreCard.displayName = 'StyledScoreCard';
 
 export const SyledSeparator = styled(HorizontalSeparator)`
-  margin-top: 16px;
   margin-bottom: 16px;
+
+  &:not(:first-child) {
+    margin-top: 16px;
+  }
 `;
 SyledSeparator.displayName = 'SyledSeparator';
 
@@ -73,5 +72,7 @@ PlayerChips.displayName = 'PlayerChips';
 
 export const StyledAvatar = styled(Avatar)`
   margin-bottom: 10px;
+  width: ${LEFT_COLUMN_WIDTH}px;
+  height: ${LEFT_COLUMN_WIDTH}px;
 `;
 StyledAvatar.displayName = 'StyledAvatar';

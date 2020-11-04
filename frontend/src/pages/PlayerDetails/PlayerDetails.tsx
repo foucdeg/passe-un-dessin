@@ -27,7 +27,6 @@ import {
   LeftSide,
   RightSide,
   StyledHeader,
-  Subtext,
   StyledScoreCard,
   SyledSeparator,
   PlayerChips,
@@ -90,16 +89,6 @@ const PlayerDetails: React.FC<NoProps> = () => {
         <LeftSide>
           <StyledAvatar player={displayedPlayer} />
           <StyledHeader>{displayedPlayer.name}</StyledHeader>
-          <Subtext>
-            <FormattedMessage
-              id="playerDetails.joinedOn"
-              values={{
-                dateString: format(parseISO(displayedPlayer.created_at), 'd MMMM y', {
-                  locale: dateLocale,
-                }),
-              }}
-            />
-          </Subtext>
 
           <StyledScoreCard
             loading={scoreLoading}
