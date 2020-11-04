@@ -14,7 +14,7 @@ interface Props {
   publicMode?: boolean;
 }
 
-const DrawingRecap: React.FC<Props> = ({ step, publicMode }) => {
+const DrawingRecap: React.FC<Props> = ({ step, publicMode = false }) => {
   const player = useSelector(selectPlayer);
   const availableVoteCount = useSelector(selectAvailableVoteCount);
   const doSaveVote = useSaveVote();

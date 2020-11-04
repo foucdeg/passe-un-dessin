@@ -14,7 +14,7 @@ interface Props {
   publicMode?: boolean;
 }
 
-const SentenceRecap: React.FC<Props> = ({ step, publicMode }) => {
+const SentenceRecap: React.FC<Props> = ({ step, publicMode = false }) => {
   const player = useSelector(selectPlayer);
   const viewingAsPublic = useSelector(selectViewingAsPublic);
   const availableVoteCount = useSelector(selectAvailableVoteCount);
