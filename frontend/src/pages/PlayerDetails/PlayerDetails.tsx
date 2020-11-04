@@ -27,11 +27,11 @@ import {
   LeftSide,
   RightSide,
   StyledHeader,
-  Subtext,
   StyledScoreCard,
   SyledSeparator,
   PlayerChips,
   HistoryGame,
+  StyledAvatar,
 } from './PlayerDetails.style';
 
 interface RouteParams {
@@ -87,17 +87,8 @@ const PlayerDetails: React.FC<NoProps> = () => {
     <GameContainer>
       <StyledInnerContainer>
         <LeftSide>
+          <StyledAvatar player={displayedPlayer} />
           <StyledHeader>{displayedPlayer.name}</StyledHeader>
-          <Subtext>
-            <FormattedMessage
-              id="playerDetails.joinedOn"
-              values={{
-                dateString: format(parseISO(displayedPlayer.created_at), 'd MMMM y', {
-                  locale: dateLocale,
-                }),
-              }}
-            />
-          </Subtext>
 
           <StyledScoreCard
             loading={scoreLoading}

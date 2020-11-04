@@ -5,7 +5,7 @@ import { Container, StyledDrawing, StyledEditIcon } from './Avatar.style';
 
 interface Props {
   player: Player;
-  onClick: () => void;
+  onClick?: () => void;
   className?: string;
   editOnHover?: boolean;
 }

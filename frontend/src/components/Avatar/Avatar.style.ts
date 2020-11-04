@@ -25,7 +25,7 @@ export const Container = styled.div`
 Container.displayName = 'Container';
 
 export const StyledDrawing = styled(Drawing)`
-  height: ${SQUARE_SIDE}px;
-  width: ${SQUARE_SIDE}px;
+  height: 100%;
+  width: 100%;
 `;
 StyledDrawing.displayName = 'StyledDrawing';
