@@ -4,6 +4,7 @@ import { colorPalette } from 'stylesheet';
 import InnerGameContainer from 'layout/GameLayout/InnerGameContainer';
 import ScoreCard from 'modals/PlayerModal/components/ScoreCard';
 import HorizontalSeparator from 'atoms/HorizontalSeparator';
+import Avatar from 'components/Avatar';
 
 export const LeftSide = styled.div`
   height: 100%;
@@ -45,6 +46,8 @@ Subtext.displayName = 'Subtext';
 
 export const StyledScoreCard = styled(ScoreCard)`
   margin-top: 16px;
+  width: 160px;
+  height: 160px;
 `;
 StyledScoreCard.displayName = 'StyledScoreCard';
 
@@ -67,3 +70,8 @@ export const PlayerChips = styled.div`
   margin-left: 16px;
 `;
 PlayerChips.displayName = 'PlayerChips';
+
+export const StyledAvatar = styled(Avatar)`
+  margin-bottom: 10px;
+`;
+StyledAvatar.displayName = 'StyledAvatar';

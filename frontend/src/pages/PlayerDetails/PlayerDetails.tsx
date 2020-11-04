@@ -32,6 +32,7 @@ import {
   SyledSeparator,
   PlayerChips,
   HistoryGame,
+  StyledAvatar,
 } from './PlayerDetails.style';
 
 interface RouteParams {
@@ -87,6 +88,7 @@ const PlayerDetails: React.FC<NoProps> = () => {
     <GameContainer>
       <StyledInnerContainer>
         <LeftSide>
+          <StyledAvatar player={displayedPlayer} />
           <StyledHeader>{displayedPlayer.name}</StyledHeader>
           <Subtext>
             <FormattedMessage
