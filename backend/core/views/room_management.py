@@ -164,7 +164,7 @@ def get_ranking(request, room_id):
         return HttpResponseBadRequest("Room does not exist")
 
     ranking = (
-        Player.objects.values("uuid", "name", "color")
+        Player.objects.values("uuid", "name", "color", "avatar")
         .filter(
             steps__pad__game__room_id=room_id,
             steps__pad__game__phase=GamePhase.VOTE_RESULTS.value,
@@ -176,7 +176,7 @@ def get_ranking(request, room_id):
     ranking_json = [
         {
             "player": PlayerSerializer(
-                Player(uuid=rank["uuid"], color=rank["color"], name=rank["name"])
+                Player(uuid=rank["uuid"], color=rank["color"], name=rank["name"], avatar=rank["avatar"])
             ).data,
             "vote_count": rank["count"],
         }

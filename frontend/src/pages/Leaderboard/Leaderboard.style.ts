@@ -33,6 +33,7 @@ export const HomeButton = styled.img.attrs({ src: homeIcon })``;
 HomeButton.displayName = 'HomeButton';
 
 export const StyledScoreboard = styled(Scoreboard)`
-  width: 600px;
+  width: 640px;
+  padding: 0 20px;
 `;
 StyledScoreboard.displayName = 'StyledScoreboard';
