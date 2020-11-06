@@ -20,7 +20,6 @@
     "title": "Salle d'attente",
     "sendLink": "Envoie ce lien aux autres participants <info>({min} à {max} joueurs)</info>",
     "copiedLink": "Lien copié !",
-    "players": "Participants ayant rejoint la partie :",
     "inGame": "Une partie est en cours. Reste ici pour être dans la suivante !",
     "needMore": "Il manque encore {count} {count, plural, one {joueur} many {joueurs}}",
     "isEveryoneThere": "Tout le monde est là ?",
