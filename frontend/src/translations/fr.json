@@ -184,17 +184,19 @@
     "confirmForceNextStep": "Es-tu sûr.e de vouloir passer à l'étape suivante ? Nous n'avons pas reçu les contributions de tout le monde."
   },
   "color": {
-    "green": "vert",
+    "pink": "rose",
+    "purple": "violet",
     "blue": "bleu",
     "skyblue": "bleu clair",
+    "green": "vert",
+    "lime": "vert clair",
     "beige": "beige",
     "yellow": "jaune",
     "orange": "orange",
-    "brown": "marron",
     "red": "rouge",
-    "pink": "rose",
-    "grey": "gris",
+    "brown": "marron",
     "black": "noir",
+    "grey": "gris",
     "white": "blanc"
   },
   "legal": {
