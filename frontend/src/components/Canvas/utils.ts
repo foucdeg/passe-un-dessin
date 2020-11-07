@@ -1,8 +1,12 @@
+/* eslint-disable max-lines */
+
 export type Point = { x: number; y: number };
 export type Line = { points: Point[]; brushColor: string; brushRadius: number; type: 'line' };
 export type Fill = { point: Point; color: string; type: 'fill' };
 export type Initialization = { drawing: string; type: 'init' };
-export type Paint = (Line | Fill | Initialization)[];
+export type Clear = { type: 'clear' };
+export type Step = Line | Fill | Initialization | Clear;
+export type Paint = Step[];
 
 type canvasRefType = {
   readonly current: HTMLCanvasElement | null;
@@ -163,9 +167,22 @@ const setPixel = (imageData: ImageData, x: number, y: number, color: RGBAColor) 
   imageData.data[offset + 3] = 255;
 };
 
+const findLastClearIndex = (paint: Paint) => {
+  const firstReversedClearIndex = paint
+    .slice()
+    .reverse()
+    .findIndex((step: Step) => step.type === 'clear');
+  if (firstReversedClearIndex === -1) {
+    return -1;
+  }
+  return paint.length - firstReversedClearIndex - 1;
+};
+
 export const drawPaint = async (paint: Paint, canvasRef: canvasRefType) => {
   // Do not use foreach because initializeCanvas need to use async
-  for (let i = 0; i < paint.length; i++) {
+  const lastClearIndex = findLastClearIndex(paint);
+  const startIndex = lastClearIndex === -1 ? 0 : lastClearIndex;
+  for (let i = startIndex; i < paint.length; i++) {
     const paintStep = paint[i];
     switch (paintStep.type) {
       case 'line':
@@ -177,6 +194,9 @@ export const drawPaint = async (paint: Paint, canvasRef: canvasRefType) => {
         break;
       case 'fill':
         fillContext(paintStep.point, canvasRef, paintStep.color);
+        break;
+      case 'clear':
+        resetCanvas(canvasRef);
         break;
       case 'init':
         await initializeCanvas(canvasRef, paintStep.drawing);

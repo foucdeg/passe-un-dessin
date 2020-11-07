@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import lzString from 'lz-string';
 import { FormattedMessage } from 'react-intl';
@@ -7,12 +9,13 @@ import { DrawingColor } from 'components/Canvas/BrushColorPicker/BrushColorPicke
 import BrushTypePicker from 'components/Canvas/BrushTypePicker';
 import { BrushType } from 'components/Canvas/BrushTypePicker/BrushTypePicker';
 import CanvasActions from 'components/Canvas/CanvasActions';
-import { undoHandler } from 'services/utils';
+import { undoAndRedoHandlerBuilder, deleteHandlerBuilder } from 'services/utils';
 import {
   drawLine,
   drawPaint,
   fillContext,
   Line,
+  Step,
   Paint,
   Point,
   resetCanvas,
@@ -54,6 +57,7 @@ const CanvasDraw: React.FC<Props> = ({
   const [brushType, setBrushType] = useState<BrushType>(BrushType.THIN);
   const [isPainting, setIsPainting] = useState(false);
   const drawing = useRef<Paint>([]);
+  const undoneDrawing = useRef<Paint>([]);
   const [currentLine, setCurrentLine] = useState<Line | null>(null);
   const [mousePosition, setMousePosition] = useState<Point | undefined>(undefined);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -63,7 +67,6 @@ const CanvasDraw: React.FC<Props> = ({
     isFillDrawSelected,
     pointCursor,
   ] = getBrushAttributes(color, brushType);
-  const [archivedPaint, setArchivedPaint] = useState<Paint | null>(null);
   const cursorPosition =
     brushType === BrushType.FILL ? 19 : Math.round(selectedBrushRadius * Math.sqrt(2));
 
@@ -95,13 +98,20 @@ const CanvasDraw: React.FC<Props> = ({
     };
   };
 
+  const addToDrawing = (step: Step, resetUndoneDrawing = true) => {
+    drawing.current.push(step);
+    if (resetUndoneDrawing) {
+      undoneDrawing.current = [];
+    }
+  };
+
   const startPaint = useCallback(
     (event: MouseEvent | TouchEvent) => {
       const coordinates = getCoordinates(event);
       if (coordinates) {
         if (isFillDrawSelected) {
           fillContext(coordinates, canvasRef, selectedBrushColor);
-          drawing.current = drawing.current.concat({
+          addToDrawing({
             point: coordinates,
             color: selectedBrushColor,
             type: 'fill',
@@ -131,10 +141,7 @@ const CanvasDraw: React.FC<Props> = ({
         if (mousePosition && newPosition) {
           drawLine(mousePosition, newPosition, selectedBrushColor, selectedBrushRadius, canvasRef);
           setMousePosition(newPosition);
-          setCurrentLine({
-            ...currentLine,
-            points: currentLine.points.concat(newPosition),
-          });
+          currentLine.points.push(newPosition);
         }
       }
     },
@@ -146,36 +153,38 @@ const CanvasDraw: React.FC<Props> = ({
       setIsPainting(false);
       setMousePosition(undefined);
       if (currentLine) {
-        drawing.current = drawing.current.concat(currentLine);
+        addToDrawing(currentLine);
       }
       setCurrentLine(null);
     }
   }, [currentLine, isPainting]);
 
-  const handleClearAndArchive = () => {
-    setArchivedPaint(drawing.current);
-    handleClear();
-  };
-
-  const handleClear = () => {
-    // Do not use clearRect because a cleared canvas is black transparent
-    resetCanvas(canvasRef);
-    drawing.current = [];
-  };
-
-  const handleUndo = useCallback(() => {
-    if (drawing.current.length === 0 && archivedPaint) {
-      drawing.current = archivedPaint;
-      drawPaint(archivedPaint, canvasRef);
-      setArchivedPaint(null);
+  const handleClear = useCallback(() => {
+    const lastDrawingStep = drawing.current[drawing.current.length - 1];
+    if (lastDrawingStep && lastDrawingStep.type === 'clear') {
       return;
     }
+    // Do not use clearRect because a cleared canvas is black transparent
+    resetCanvas(canvasRef);
+    addToDrawing({ type: 'clear' });
+  }, []);
 
-    const paintToRedraw = drawing.current.slice(0, -1);
-    handleClear();
-    drawing.current = paintToRedraw;
-    drawPaint(paintToRedraw, canvasRef);
-  }, [archivedPaint]);
+  const handleUndo = useCallback(() => {
+    const removedStep = drawing.current.pop();
+    if (removedStep) {
+      undoneDrawing.current.push(removedStep);
+      resetCanvas(canvasRef);
+      drawPaint(drawing.current, canvasRef);
+    }
+  }, []);
+
+  const handleRedo = useCallback(() => {
+    const stepToRedraw = undoneDrawing.current.pop();
+    if (stepToRedraw) {
+      drawPaint([stepToRedraw], canvasRef);
+      addToDrawing(stepToRedraw, false);
+    }
+  }, []);
 
   const saveDrawing = useCallback(() => {
     const canvas: HTMLCanvasElement | null = canvasRef.current;
@@ -188,12 +197,15 @@ const CanvasDraw: React.FC<Props> = ({
   }, [saveStep]);
 
   useEffect(() => {
-    const handler = undoHandler(handleUndo);
+    const handler = (event: KeyboardEvent) => {
+      undoAndRedoHandlerBuilder(handleUndo, handleRedo)(event);
+      deleteHandlerBuilder(handleClear)(event);
+    };
     window.addEventListener('keydown', handler);
     return () => {
       window.removeEventListener('keydown', handler);
     };
-  }, [handleUndo]);
+  }, [handleUndo, handleRedo, handleClear]);
 
   useEffect(() => {
     if (!canvasRef.current) {
@@ -251,10 +263,10 @@ const CanvasDraw: React.FC<Props> = ({
   }, [canvasWidth, canvasHeight, saveDrawing, roundDuration, finished]);
 
   useEffect(() => {
-    handleClear();
+    resetCanvas(canvasRef);
     const decodedDrawing = initialDrawing && lzString.decompressFromBase64(initialDrawing);
     if (decodedDrawing) {
-      drawing.current = drawing.current.concat({ type: 'init', drawing: decodedDrawing });
+      addToDrawing({ type: 'init', drawing: decodedDrawing });
       initializeCanvas(canvasRef, decodedDrawing);
     }
   }, [initialDrawing]);
@@ -282,7 +294,7 @@ const CanvasDraw: React.FC<Props> = ({
         <CanvasButtons>
           <BrushColorPicker color={color} setColor={setBrushColor} />
           <RightButtons>
-            <CanvasActions onClear={handleClearAndArchive} onUndo={handleUndo} />
+            <CanvasActions onClear={handleClear} onUndo={handleUndo} onRedo={handleRedo} />
             <BrushTypePicker brushType={brushType} setBrushType={setBrushType} />
           </RightButtons>
         </CanvasButtons>

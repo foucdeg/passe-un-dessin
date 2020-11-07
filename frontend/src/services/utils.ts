@@ -25,15 +25,41 @@ const emailRegexp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([
 
 export const isValidEmail = (input: string) => !!input.match(emailRegexp);
 
+const MAC_OS_PLATFORMS = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'];
+
+const isDeviceMacOs = () => MAC_OS_PLATFORMS.includes(window.navigator.platform);
+
 const isCtrlOrCmdPressed = (event: KeyboardEvent) => {
-  if (['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'].includes(window.navigator.platform)) {
+  if (isDeviceMacOs()) {
     return event.metaKey;
   }
   return event.ctrlKey;
 };
 
-export const undoHandler = (action: () => void) => (event: KeyboardEvent) => {
+const isRedoKeyPadTouched = (event: KeyboardEvent) => {
+  if (isDeviceMacOs()) {
+    return event.key === 'Z';
+  }
+  return event.key === 'y';
+};
+
+export const undoAndRedoHandlerBuilder = (undoAction: () => void, redoAction: () => void) => (
+  event: KeyboardEvent,
+) => {
   if (event.key === 'z' && isCtrlOrCmdPressed(event)) {
-    action();
+    undoAction();
+  }
+  if (isRedoKeyPadTouched(event) && isCtrlOrCmdPressed(event)) {
+    redoAction();
   }
 };
+
+export const deleteHandlerBuilder = (deleteAction: () => void) => (event: KeyboardEvent) => {
+  if (event.key === 'Backspace') {
+    deleteAction();
+  }
+};
+
+export const getUndoCommand = () => (isDeviceMacOs() ? '⌘ + Z' : 'Ctrl + Z');
+
+export const getRedoCommand = () => (isDeviceMacOs() ? '⌘ + ⇧ + Z' : 'Ctrl + Y');
