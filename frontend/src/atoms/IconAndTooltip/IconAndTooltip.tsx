@@ -5,12 +5,13 @@ interface Props {
   tooltipText: string;
   className?: string;
   children: ReactNode;
+  isRight?: boolean;
 }
 
-const IconAndTooltip: React.FC<Props> = ({ tooltipText, children, className }) => (
+const IconAndTooltip: React.FC<Props> = ({ tooltipText, children, className, isRight }) => (
   <IconContainer className={className}>
     {children}
-    <StyledTooltip>{tooltipText}</StyledTooltip>
+    <StyledTooltip isRight={isRight}>{tooltipText}</StyledTooltip>
   </IconContainer>
 );
 

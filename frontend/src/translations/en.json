@@ -199,6 +199,11 @@
     "grey": "grey",
     "white": "white"
   },
+  "action": {
+    "undo": "Undo {command}",
+    "redo": "Redo {command}",
+    "clear": "Delete ⌫"
+  },
   "legal": {
     "termsAndConditionsTitle": "Terms and Conditions",
     "privacyPolicyTitle": "Privacy Policy",

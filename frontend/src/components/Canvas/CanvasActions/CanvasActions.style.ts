@@ -4,7 +4,7 @@ import redoIcon from 'assets/redo.svg';
 import styled from 'styled-components';
 
 export const CanvasActionsContainer = styled.div`
-  height: 100px;
+  height: 110px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

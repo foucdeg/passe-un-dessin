@@ -59,3 +59,7 @@ export const deleteHandlerBuilder = (deleteAction: () => void) => (event: Keyboa
     deleteAction();
   }
 };
+
+export const getUndoCommand = () => (isDeviceMacOs() ? '⌘ + Z' : 'Ctrl + Z');
+
+export const getRedoCommand = () => (isDeviceMacOs() ? '⌘ + ⇧ + Z' : 'Ctrl + Y');

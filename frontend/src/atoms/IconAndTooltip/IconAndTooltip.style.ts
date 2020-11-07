@@ -13,10 +13,10 @@ export const StyledIcon = styled.img`
 
 StyledIcon.displayName = 'StyledIcon';
 
-export const StyledTooltip = styled.span`
+export const StyledTooltip = styled.span<{ isRight: boolean | undefined }>`
   visibility: hidden;
   position: absolute;
-  right: 150%;
+  ${({ isRight }) => (isRight ? 'left: 160%' : 'right: 150%')};
   top: 0;
   text-align: right;
   width: max-content;
