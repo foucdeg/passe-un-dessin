@@ -84,7 +84,8 @@
     "newGame": "Nouvelle partie ?",
     "bestMoments": "Meilleurs moments",
     "voteCount": "{voteCount} point{ voteCount, plural, one {} other {s}}",
-    "scoreboard": "Tableau des scores"
+    "scoreboard": "Tableau des scores",
+    "reviewGame": "Revoir la partie"
   },
   "newGameModal": {
     "title": "Relancer une partie",

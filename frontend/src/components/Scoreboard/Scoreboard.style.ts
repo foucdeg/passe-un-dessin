@@ -10,9 +10,9 @@ export const InnerScoreboard = styled.div`
 
 InnerScoreboard.displayName = 'InnerScoreboard';
 
-export const PlayerName = styled.div<{ isBig: boolean | undefined }>`
+export const PlayerName = styled.div`
   font-size: ${fontSize.header2};
-  font-weight: ${({ isBig }) => (isBig ? fontWeight.bold : fontWeight.normal)};
+  font-weight: ${fontWeight.normal};
 `;
 PlayerName.displayName = 'PlayerName';
 
@@ -24,28 +24,23 @@ export const RankingRow = styled.div`
 `;
 RankingRow.displayName = 'RankingRow';
 
-export const RankEmoji = styled.span`
-  font-size: ${fontSize.titles};
-  width: 40px;
-  margin-right: 8px;
-`;
-RankEmoji.displayName = 'RankEmoji';
-
 export const RankText = styled.span`
-  font-size: ${fontSize.titles};
+  font-size: ${fontSize.header2};
   width: 40px;
   text-align: center;
   margin-right: 8px;
 `;
 RankText.displayName = 'RankText';
 
-export const RankingScore = styled.strong<{ isBig: boolean | undefined }>`
+export const RankingScore = styled.strong`
   margin-left: 16px;
-  font-size: ${({ isBig }) => (isBig ? fontSize.titles : fontSize.header2)};
+  font-size: ${fontSize.header2};
 `;
 RankingScore.displayName = 'RankingScore';
 
 export const StyledAvatar = styled(Avatar)`
   margin-right: 16px;
+  height: 60px;
+  width: 60px;
 `;
 StyledAvatar.displayName = 'StyledAvatar';

@@ -7,7 +7,6 @@ import {
   InnerScoreboard,
   RankingRow,
   RankText,
-  RankEmoji,
   RankingScore,
   StyledAvatar,
   PlayerName,
@@ -21,7 +20,7 @@ export type PlayerWithScore = Player & {
 interface Props {
   list: PlayerWithScore[];
   className?: string;
-  isBig?: boolean;
+  showRankings?: boolean;
 }
 const getRankDisplay = (ranking: number) => {
   switch (ranking) {
@@ -31,29 +30,26 @@ const getRankDisplay = (ranking: number) => {
       return '🥈';
     case 2:
       return '🥉';
+    default:
+      return ranking + 1;
   }
 };
 
-const Scoreboard: React.FC<Props> = ({ list, className, isBig }) => (
+const Scoreboard: React.FC<Props> = ({ list, className, showRankings }) => (
   <InnerScoreboard className={className}>
     {list.map((playerWithScore, index) => (
       <RankingRow key={playerWithScore.uuid}>
-        {isBig &&
-          (index < 3 ? (
-            <RankEmoji>{getRankDisplay(index)}</RankEmoji>
-          ) : (
-            <RankText>{index + 1}</RankText>
-          ))}
+        {showRankings && <RankText>{getRankDisplay(index)}</RankText>}
         <StyledAvatar player={playerWithScore} />
         <BareLink
           to={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', playerWithScore.uuid)}
           target="_blank"
         >
-          <PlayerName isBig={isBig}>{playerWithScore.name}</PlayerName>
+          <PlayerName>{playerWithScore.name}</PlayerName>
         </BareLink>
         <Spacer />
         {playerWithScore.delta && <span>+ {playerWithScore.delta}</span>}
-        <RankingScore isBig={isBig}>{playerWithScore.score}</RankingScore>
+        <RankingScore>{playerWithScore.score}</RankingScore>
       </RankingRow>
     ))}
   </InnerScoreboard>
