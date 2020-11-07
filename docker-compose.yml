@@ -26,8 +26,8 @@ services:
       ENVIRONMENT: "development"
 
   drawing-renderer:
-    image: node:alpine
-    command: npm start
+    build: ./drawing-renderer
+    command: yarn start
     ports:
       - "8888:80"
     volumes:

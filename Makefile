@@ -20,3 +20,8 @@ load_prod_dump:
 	scp vps:/tmp/dump.pgbackup /tmp/dump.pgbackup
 	docker cp /tmp/dump.pgbackup $(DB_CONTAINER_ID):/tmp/dump.pgbackup
 	docker-compose exec db psql -U postgres -d postgres -f /tmp/dump.pgbackup
+
+frontend/localhost-key.pem:
+	mkcert -cert-file frontend/localhost.pem -key-file frontend/localhost-key.pem localhost
+
+certs: frontend/localhost-key.pem
