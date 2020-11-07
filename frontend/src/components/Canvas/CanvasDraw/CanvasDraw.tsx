@@ -9,7 +9,7 @@ import { DrawingColor } from 'components/Canvas/BrushColorPicker/BrushColorPicke
 import BrushTypePicker from 'components/Canvas/BrushTypePicker';
 import { BrushType } from 'components/Canvas/BrushTypePicker/BrushTypePicker';
 import CanvasActions from 'components/Canvas/CanvasActions';
-import { undoAndRedoHandler } from 'services/utils';
+import { undoAndRedoHandlerBuilder, deleteHandlerBuilder } from 'services/utils';
 import {
   drawLine,
   drawPaint,
@@ -159,7 +159,7 @@ const CanvasDraw: React.FC<Props> = ({
     }
   }, [currentLine, isPainting]);
 
-  const handleClear = () => {
+  const handleClear = useCallback(() => {
     const lastDrawingStep = drawing.current[drawing.current.length - 1];
     if (lastDrawingStep && lastDrawingStep.type === 'clear') {
       return;
@@ -167,7 +167,7 @@ const CanvasDraw: React.FC<Props> = ({
     // Do not use clearRect because a cleared canvas is black transparent
     resetCanvas(canvasRef);
     addToDrawing({ type: 'clear' });
-  };
+  }, []);
 
   const handleUndo = useCallback(() => {
     const removedStep = drawing.current.pop();
@@ -197,12 +197,15 @@ const CanvasDraw: React.FC<Props> = ({
   }, [saveStep]);
 
   useEffect(() => {
-    const handler = undoAndRedoHandler(handleUndo, handleRedo);
+    const handler = (event: KeyboardEvent) => {
+      undoAndRedoHandlerBuilder(handleUndo, handleRedo)(event);
+      deleteHandlerBuilder(handleClear)(event);
+    };
     window.addEventListener('keydown', handler);
     return () => {
       window.removeEventListener('keydown', handler);
     };
-  }, [handleUndo, handleRedo]);
+  }, [handleUndo, handleRedo, handleClear]);
 
   useEffect(() => {
     if (!canvasRef.current) {

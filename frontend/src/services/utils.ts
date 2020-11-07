@@ -43,7 +43,7 @@ const isRedoKeyPadTouched = (event: KeyboardEvent) => {
   return event.key === 'y';
 };
 
-export const undoAndRedoHandler = (undoAction: () => void, redoAction: () => void) => (
+export const undoAndRedoHandlerBuilder = (undoAction: () => void, redoAction: () => void) => (
   event: KeyboardEvent,
 ) => {
   if (event.key === 'z' && isCtrlOrCmdPressed(event)) {
@@ -51,5 +51,11 @@ export const undoAndRedoHandler = (undoAction: () => void, redoAction: () => voi
   }
   if (isRedoKeyPadTouched(event) && isCtrlOrCmdPressed(event)) {
     redoAction();
+  }
+};
+
+export const deleteHandlerBuilder = (deleteAction: () => void) => (event: KeyboardEvent) => {
+  if (event.key === 'Backspace') {
+    deleteAction();
   }
 };
