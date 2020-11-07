@@ -60,6 +60,25 @@ export const deleteHandlerBuilder = (deleteAction: () => void) => (event: Keyboa
   }
 };
 
+export const upAndDownHandlerBuilder = (upAction: () => void, downAction: () => void) => (
+  event: KeyboardEvent,
+) => {
+  if (event.key === 'ArrowUp') {
+    upAction();
+  }
+  if (event.key === 'ArrowDown') {
+    downAction();
+  }
+};
+
+export const tabHandlerBuilder = (tabAction: () => void, unTabAction: () => void) => (
+  event: KeyboardEvent,
+) => {
+  if (event.key === 'Tab') {
+    event.shiftKey ? unTabAction() : tabAction();
+  }
+};
+
 export const getUndoCommand = () => (isDeviceMacOs() ? '⌘ + Z' : 'Ctrl + Z');
 
 export const getRedoCommand = () => (isDeviceMacOs() ? '⌘ + ⇧ + Z' : 'Ctrl + Y');
