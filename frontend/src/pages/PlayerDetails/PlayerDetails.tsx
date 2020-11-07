@@ -116,7 +116,7 @@ const PlayerDetails: React.FC<NoProps> = () => {
                 parseISO(participation.game.created_at).getMonth();
 
             return (
-              <>
+              <React.Fragment key={participation.game.uuid}>
                 {displayMonthSeparator && (
                   <SyledSeparator>
                     {format(parseISO(participation.game.created_at), 'MMMM y', {
@@ -151,7 +151,7 @@ const PlayerDetails: React.FC<NoProps> = () => {
                     </BareLink>
                   </PlayerChips>
                 </HistoryGame>
-              </>
+              </React.Fragment>
             );
           })}
         </RightSide>
