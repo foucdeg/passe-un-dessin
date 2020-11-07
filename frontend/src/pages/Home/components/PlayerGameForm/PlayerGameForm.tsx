@@ -35,6 +35,7 @@ export const PlayerGameForm: React.FC<NoProps> = () => {
       <TextInput
         name="player_name"
         value={playerName}
+        maxLength={30}
         autoFocus
         placeholder={intl.formatMessage({ id: 'userNameModal.pickName' })}
         onChange={(e) => setPlayerName(e.target.value)}

@@ -82,6 +82,7 @@ const PadInit: React.FunctionComponent = () => {
             autoFocus
             type="text"
             placeholder={intl.formatMessage({ id: 'padInit.placeholder' })}
+            maxLength={100}
             value={sentence}
             onChange={(e) => setSentence(e.target.value)}
             adornment={loading ? <InputLoader /> : <InputArrow alt="Valider" onClick={onSubmit} />}

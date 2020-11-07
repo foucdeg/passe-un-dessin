@@ -38,6 +38,7 @@ const InnerPlayerForm: React.FC<OutsideProps & FormikProps<FormValues>> = ({
       <Square color={values.color} />
       <Field
         as={StyledTextInput}
+        maxLength={30}
         type="string"
         name="name"
         hasError={touched.name && errors.name}
