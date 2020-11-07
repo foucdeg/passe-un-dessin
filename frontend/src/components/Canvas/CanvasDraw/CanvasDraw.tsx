@@ -9,7 +9,11 @@ import { DrawingColor } from 'components/Canvas/BrushColorPicker/BrushColorPicke
 import BrushTypePicker from 'components/Canvas/BrushTypePicker';
 import { BrushType } from 'components/Canvas/BrushTypePicker/BrushTypePicker';
 import CanvasActions from 'components/Canvas/CanvasActions';
-import { undoAndRedoHandlerBuilder, deleteHandlerBuilder } from 'services/utils';
+import {
+  undoAndRedoHandlerBuilder,
+  deleteHandlerBuilder,
+  upAndDownHandlerBuilder,
+} from 'services/utils';
 import {
   drawLine,
   drawPaint,
@@ -44,6 +48,24 @@ interface Props {
   initialDrawing?: string | null;
 }
 
+type ColorTransition = {
+  [key: string]: {
+    previousColor: DrawingColor | undefined;
+    nextColor: DrawingColor | undefined;
+  };
+};
+
+const DRAWING_COLOR_VALUES = Object.values(DrawingColor);
+const COLOR_TRANSITIONS = DRAWING_COLOR_VALUES.reduce((acc, color, index) => {
+  const previousColor = DRAWING_COLOR_VALUES[index - 1];
+  const nextColor = DRAWING_COLOR_VALUES[index + 1];
+  acc[color] = {
+    previousColor,
+    nextColor,
+  };
+  return acc;
+}, {} as ColorTransition);
+
 const CanvasDraw: React.FC<Props> = ({
   canvasWidth,
   canvasHeight,
@@ -70,12 +92,15 @@ const CanvasDraw: React.FC<Props> = ({
   const cursorPosition =
     brushType === BrushType.FILL ? 19 : Math.round(selectedBrushRadius * Math.sqrt(2));
 
-  const setBrushColor = (newColor: DrawingColor) => {
-    setColor(newColor);
-    if ([BrushType.THIN_ERASER, BrushType.THICK_ERASER].includes(brushType)) {
-      setBrushType(BrushType.THIN);
-    }
-  };
+  const setBrushColor = useCallback(
+    (newColor: DrawingColor) => {
+      setColor(newColor);
+      if ([BrushType.THIN_ERASER, BrushType.THICK_ERASER].includes(brushType)) {
+        setBrushType(BrushType.THIN);
+      }
+    },
+    [brushType],
+  );
 
   const getCoordinates = (event: MouseEvent | TouchEvent): Point | undefined => {
     if (!canvasRef.current) {
@@ -104,6 +129,20 @@ const CanvasDraw: React.FC<Props> = ({
       undoneDrawing.current = [];
     }
   };
+
+  const selectPreviousColor = useCallback(() => {
+    const previousColor = COLOR_TRANSITIONS[selectedBrushColor].previousColor;
+    if (previousColor) {
+      setBrushColor(previousColor);
+    }
+  }, [setBrushColor, selectedBrushColor]);
+
+  const selectNextColor = useCallback(() => {
+    const nextColor = COLOR_TRANSITIONS[selectedBrushColor].nextColor;
+    if (nextColor) {
+      setBrushColor(nextColor);
+    }
+  }, [setBrushColor, selectedBrushColor]);
 
   const startPaint = useCallback(
     (event: MouseEvent | TouchEvent) => {
@@ -198,14 +237,16 @@ const CanvasDraw: React.FC<Props> = ({
 
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
+      event.preventDefault();
       undoAndRedoHandlerBuilder(handleUndo, handleRedo)(event);
       deleteHandlerBuilder(handleClear)(event);
+      upAndDownHandlerBuilder(selectPreviousColor, selectNextColor)(event);
     };
     window.addEventListener('keydown', handler);
     return () => {
       window.removeEventListener('keydown', handler);
     };
-  }, [handleUndo, handleRedo, handleClear]);
+  }, [handleUndo, handleRedo, handleClear, selectPreviousColor, selectNextColor]);
 
   useEffect(() => {
     if (!canvasRef.current) {
