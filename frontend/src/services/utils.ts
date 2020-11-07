@@ -24,3 +24,16 @@ export type NoProps = EmptyObject;
 const emailRegexp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
 
 export const isValidEmail = (input: string) => !!input.match(emailRegexp);
+
+const isCtrlOrCmdPressed = (event: KeyboardEvent) => {
+  if (['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'].includes(window.navigator.platform)) {
+    return event.metaKey;
+  }
+  return event.ctrlKey;
+};
+
+export const undoHandler = (action: () => void) => (event: KeyboardEvent) => {
+  if (event.key === 'z' && isCtrlOrCmdPressed(event)) {
+    action();
+  }
+};
