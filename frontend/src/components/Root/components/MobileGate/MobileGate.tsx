@@ -78,6 +78,7 @@ const MobileGate: React.FC<Props> = ({ children }) => {
               type="email"
               placeholder={intl.formatMessage({ id: 'mobileGate.emailExample' })}
               value={email}
+              maxLength={254}
               onChange={(e) => setEmail(e.target.value)}
               adornment={<InputArrow onClick={sendEmail} />}
             />

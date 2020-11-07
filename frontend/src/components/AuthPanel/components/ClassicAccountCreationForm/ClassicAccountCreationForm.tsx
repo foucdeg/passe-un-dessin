@@ -34,6 +34,7 @@ const ClassicAccountCreationFormView: React.FC<FormOutsideProps & FormikProps<Fo
         name="email"
         autoComplete="email"
         as={TextInput}
+        maxLength={254}
         hasError={touched.email && errors.email}
         placeholder={intl.formatMessage({ id: 'mobileGate.emailExample' })}
       />
@@ -45,6 +46,7 @@ const ClassicAccountCreationFormView: React.FC<FormOutsideProps & FormikProps<Fo
         name="password"
         autoComplete="new-password"
         as={TextInput}
+        maxLength={254}
         hasError={touched.password && errors.password}
       />
       <StyledButton type="submit" disabled={isSubmitting || loading || !isValid}>

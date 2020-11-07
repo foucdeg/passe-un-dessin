@@ -38,6 +38,7 @@ const UserNameModal: React.FC<NoProps> = () => {
               id="username"
               type="text"
               autoFocus
+              maxLength={30}
               value={playerName}
               placeholder={intl.formatMessage({ id: 'userNameModal.placeholder' })}
               onChange={(e) => setPlayerName(e.target.value)}

@@ -37,6 +37,7 @@ const ClassicLoginFormView: React.FC<FormOutsideProps & FormikProps<FormValues>>
         name="email"
         autoComplete="email"
         as={TextInput}
+        maxLength={254}
         hasError={touched.email && errors.email}
         placeholder={intl.formatMessage({ id: 'auth.emailExample' })}
       />
@@ -48,6 +49,7 @@ const ClassicLoginFormView: React.FC<FormOutsideProps & FormikProps<FormValues>>
         name="password"
         autoComplete="current-password"
         as={TextInput}
+        maxLength={254}
         hasError={touched.password && errors.password}
       />
       <StyledButton type="submit" disabled={isSubmitting || loading || !isValid}>
