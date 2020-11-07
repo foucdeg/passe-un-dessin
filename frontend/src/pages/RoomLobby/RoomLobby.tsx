@@ -113,16 +113,16 @@ const Room: React.FunctionComponent = () => {
       )}
       <PlayerList>
         {room.players.map((player) => (
-          <AvatarWithName>
-            <Avatar player={player} />
-            <PlayerName key={player.uuid} color={player.color}>
-              <BareLink
-                to={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', player.uuid)}
-                target="_blank"
-              >
+          <AvatarWithName key={player.uuid}>
+            <BareLink
+              to={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', player.uuid)}
+              target="_blank"
+            >
+              <Avatar player={player} />
+              <PlayerName key={player.uuid} color={player.color}>
                 {player.name}
-              </BareLink>
-            </PlayerName>
+              </PlayerName>
+            </BareLink>
           </AvatarWithName>
         ))}
       </PlayerList>
