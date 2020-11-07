@@ -48,23 +48,7 @@ interface Props {
   initialDrawing?: string | null;
 }
 
-type ColorTransition = {
-  [key: string]: {
-    previousColor: DrawingColor | undefined;
-    nextColor: DrawingColor | undefined;
-  };
-};
-
 const DRAWING_COLOR_VALUES = Object.values(DrawingColor);
-const COLOR_TRANSITIONS = DRAWING_COLOR_VALUES.reduce((acc, color, index) => {
-  const previousColor = DRAWING_COLOR_VALUES[index - 1];
-  const nextColor = DRAWING_COLOR_VALUES[index + 1];
-  acc[color] = {
-    previousColor,
-    nextColor,
-  };
-  return acc;
-}, {} as ColorTransition);
 
 const CanvasDraw: React.FC<Props> = ({
   canvasWidth,
@@ -89,6 +73,7 @@ const CanvasDraw: React.FC<Props> = ({
     isFillDrawSelected,
     pointCursor,
   ] = getBrushAttributes(color, brushType);
+  const currentColorIndex = DRAWING_COLOR_VALUES.indexOf(selectedBrushColor);
   const cursorPosition =
     brushType === BrushType.FILL ? 19 : Math.round(selectedBrushRadius * Math.sqrt(2));
 
@@ -131,18 +116,18 @@ const CanvasDraw: React.FC<Props> = ({
   };
 
   const selectPreviousColor = useCallback(() => {
-    const previousColor = COLOR_TRANSITIONS[selectedBrushColor].previousColor;
+    const previousColor = DRAWING_COLOR_VALUES[currentColorIndex - 1];
     if (previousColor) {
       setBrushColor(previousColor);
     }
-  }, [setBrushColor, selectedBrushColor]);
+  }, [setBrushColor, currentColorIndex]);
 
   const selectNextColor = useCallback(() => {
-    const nextColor = COLOR_TRANSITIONS[selectedBrushColor].nextColor;
+    const nextColor = DRAWING_COLOR_VALUES[currentColorIndex + 1];
     if (nextColor) {
       setBrushColor(nextColor);
     }
-  }, [setBrushColor, selectedBrushColor]);
+  }, [setBrushColor, currentColorIndex]);
 
   const startPaint = useCallback(
     (event: MouseEvent | TouchEvent) => {
