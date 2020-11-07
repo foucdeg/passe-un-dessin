@@ -5,8 +5,6 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "jpoissonnier.vscode-styled-components",
-    "Orta.vscode-jest",
-    "ms-vsliveshare.vsliveshare",
     "EditorConfig.EditorConfig",
     "stylelint.vscode-stylelint"
   ]
