@@ -9,8 +9,8 @@ import {
   RankText,
   RankEmoji,
   RankingScore,
-  RankingDelta,
-  StyledPlayeChip,
+  StyledAvatar,
+  PlayerName,
 } from './Scoreboard.style';
 
 export type PlayerWithScore = Player & {
@@ -21,6 +21,7 @@ export type PlayerWithScore = Player & {
 interface Props {
   list: PlayerWithScore[];
   className?: string;
+  isBig?: boolean;
 }
 const getRankDisplay = (ranking: number) => {
   switch (ranking) {
@@ -33,26 +34,26 @@ const getRankDisplay = (ranking: number) => {
   }
 };
 
-const Scoreboard: React.FC<Props> = ({ list, className }) => (
+const Scoreboard: React.FC<Props> = ({ list, className, isBig }) => (
   <InnerScoreboard className={className}>
     {list.map((playerWithScore, index) => (
       <RankingRow key={playerWithScore.uuid}>
-        {index < 3 ? (
-          <RankEmoji>{getRankDisplay(index)}</RankEmoji>
-        ) : (
-          <RankText>{index + 1}</RankText>
-        )}
-        <StyledPlayeChip color={playerWithScore.color}>
-          <BareLink
-            to={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', playerWithScore.uuid)}
-            target="_blank"
-          >
-            {playerWithScore.name}
-          </BareLink>
-        </StyledPlayeChip>
+        {isBig &&
+          (index < 3 ? (
+            <RankEmoji>{getRankDisplay(index)}</RankEmoji>
+          ) : (
+            <RankText>{index + 1}</RankText>
+          ))}
+        <StyledAvatar player={playerWithScore} />
+        <BareLink
+          to={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', playerWithScore.uuid)}
+          target="_blank"
+        >
+          <PlayerName isBig={isBig}>{playerWithScore.name}</PlayerName>
+        </BareLink>
         <Spacer />
-        {playerWithScore.delta && <RankingDelta>+ {playerWithScore.delta}</RankingDelta>}
-        <RankingScore>{playerWithScore.score}</RankingScore>
+        {playerWithScore.delta && <span>+ {playerWithScore.delta}</span>}
+        <RankingScore isBig={isBig}>{playerWithScore.score}</RankingScore>
       </RankingRow>
     ))}
   </InnerScoreboard>

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { colorPalette } from 'stylesheet';
+import { colorPalette, fontSize } from 'stylesheet';
 import TextInput from 'atoms/TextInput';
 import Header2 from 'atoms/Header2';
 
@@ -60,3 +60,21 @@ export const StyledRoomName = styled(Header4)`
   text-align: center;
   margin-bottom: 18px;
 `;
+
+export const PlayerName = styled.div`
+  font-size: ${fontSize.medium};
+  text-align: center;
+`;
+PlayerName.displayName = 'PlayerName';
+
+export const PlayerList = styled.div`
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+`;
+PlayerList.displayName = 'PlayerList';
+
+export const AvatarWithName = styled.div`
+  margin: 0 16px 5px 0;
+`;
+AvatarWithName.displayName = 'AvatarWithName';

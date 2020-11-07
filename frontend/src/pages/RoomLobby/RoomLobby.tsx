@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import FieldLabel from 'atoms/FieldLabel';
-import PlayerChip from 'atoms/PlayerChip';
-import PlayerChips from 'atoms/PlayerChips';
 import Button from 'atoms/Button';
 import Modal from 'components/Modal';
+import Avatar from 'components/Avatar';
 import copy from 'copy-to-clipboard';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { MAX_PLAYERS, MIN_PLAYERS } from 'redux/Game/constants';
@@ -31,6 +30,9 @@ import {
   StyledField,
   StyledHeader,
   StyledRoomName,
+  PlayerName,
+  PlayerList,
+  AvatarWithName,
 } from './RoomLobby.style';
 
 const Room: React.FunctionComponent = () => {
@@ -109,21 +111,19 @@ const Room: React.FunctionComponent = () => {
           )}
         </>
       )}
-      <FieldLabel>
-        <FormattedMessage id="roomLobby.players" />
-      </FieldLabel>
-      <PlayerChips>
+      <PlayerList>
         {room.players.map((player) => (
-          <PlayerChip key={player.uuid} color={player.color}>
+          <AvatarWithName key={player.uuid}>
             <BareLink
               to={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', player.uuid)}
               target="_blank"
             >
-              {player.name}
+              <Avatar player={player} />
+              <PlayerName color={player.color}>{player.name}</PlayerName>
             </BareLink>
-          </PlayerChip>
+          </AvatarWithName>
         ))}
-      </PlayerChips>
+      </PlayerList>
 
       <ButtonRow>
         {room.current_game_id && (

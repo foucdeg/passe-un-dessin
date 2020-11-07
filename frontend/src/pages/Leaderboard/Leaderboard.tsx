@@ -47,7 +47,7 @@ const Leaderboard: React.FC<NoProps> = () => {
             <StyledHeader>
               <FormattedMessage id="leaderboard.title" />
             </StyledHeader>
-            {leaderboard && <StyledScoreboard list={formattedLeaderboard} />}
+            {leaderboard && <StyledScoreboard list={formattedLeaderboard} isBig />}
           </Container>
         </InnerGameContainer>
       </GameContainer>
