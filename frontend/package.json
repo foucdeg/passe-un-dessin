@@ -35,7 +35,7 @@
     "analyze": "env-cmd -f .env.${REACT_APP_ENV} react-app-rewired build --analyze-bundle",
     "test:coverage": "npm run test -- --coverage",
     "generate": "plop --plopfile scripts/generators/index.js",
-    "lint": "eslint 'src/**/*.{js,ts,tsx}'",
+    "lint": "eslint 'src/**/*.{js,ts,tsx}' --max-warnings 0",
     "lint:fix": "eslint 'src/**/*.{js,ts,tsx}' --fix",
     "lint-style": "stylelint 'src/**/*.style.{ts,tsx}' 'src/**/style.{ts,tsx}'",
     "type-check": "tsc"
