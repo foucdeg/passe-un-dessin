@@ -46,7 +46,8 @@
     "placeholder": "Une girafe ?",
     "youDraw": "Attention, c'est <strong>toi</strong> qui devras dessiner ça !",
     "nextPlayer": "Espérons que <strong>{name}</strong> dessine bien ...",
-    "getSuggestions": "Manque d'inspiration ? Lance le dé !"
+    "getSuggestions": "Manque d'inspiration ? Lance le dé !",
+    "update": "Modifier"
   },
   "wordToDrawing": {
     "sentenceToDraw": "Phrase à dessiner :",
