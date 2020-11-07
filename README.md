@@ -30,7 +30,7 @@ yarn # install dependencies
 
 ### Backend and microservices
 
-Copy `.env.sample` into `.env` and fill in the real values.
+Copy `.env.example` into `.env` and fill in the real values.
 
 Then run:
 
