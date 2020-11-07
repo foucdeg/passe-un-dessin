@@ -18,12 +18,18 @@ import greenSmallPointCursor from './assets/green-small-point.svg';
 import greyMediumPointCursor from './assets/grey-medium-point.svg';
 import greyPaintCursor from './assets/grey-paint.svg';
 import greySmallPointCursor from './assets/grey-small-point.svg';
+import limeMediumPointCursor from './assets/lime-medium-point.svg';
+import limePaintCursor from './assets/lime-paint.svg';
+import limeSmallPointCursor from './assets/lime-small-point.svg';
 import orangeMediumPointCursor from './assets/orange-medium-point.svg';
 import orangePaintCursor from './assets/orange-paint.svg';
 import orangeSmallPointCursor from './assets/orange-small-point.svg';
 import pinkMediumPointCursor from './assets/pink-medium-point.svg';
 import pinkPaintCursor from './assets/pink-paint.svg';
 import pinkSmallPointCursor from './assets/pink-small-point.svg';
+import purpleMediumPointCursor from './assets/purple-medium-point.svg';
+import purplePaintCursor from './assets/purple-paint.svg';
+import purpleSmallPointCursor from './assets/purple-small-point.svg';
 import redMediumPointCursor from './assets/red-medium-point.svg';
 import redPaintCursor from './assets/red-paint.svg';
 import redSmallPointCursor from './assets/red-small-point.svg';
@@ -85,6 +91,12 @@ const BRUSH_RADIUS_AND_COLOR_TO_CURSOR = {
     6: greyMediumPointCursor,
     10: '',
   },
+  [DrawingColor.LIME]: {
+    0: limePaintCursor,
+    2: limeSmallPointCursor,
+    6: limeMediumPointCursor,
+    10: '',
+  },
   [DrawingColor.ORANGE]: {
     0: orangePaintCursor,
     2: orangeSmallPointCursor,
@@ -95,6 +107,12 @@ const BRUSH_RADIUS_AND_COLOR_TO_CURSOR = {
     0: pinkPaintCursor,
     2: pinkSmallPointCursor,
     6: pinkMediumPointCursor,
+    10: '',
+  },
+  [DrawingColor.PURPLE]: {
+    0: purplePaintCursor,
+    2: purpleSmallPointCursor,
+    6: purpleMediumPointCursor,
     10: '',
   },
   [DrawingColor.RED]: {

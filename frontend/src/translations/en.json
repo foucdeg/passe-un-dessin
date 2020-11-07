@@ -184,17 +184,19 @@
     "confirmForceNextStep": "Are you sure you want to skip to next step? We didn't get everybody's drawing or sentence."
   },
   "color": {
-    "green": "green",
+    "pink": "pink",
+    "purple": "purple",
     "blue": "blue",
     "skyblue": "skyblue",
+    "green": "green",
+    "lime": "lime",
     "beige": "beige",
     "yellow": "yellow",
     "orange": "orange",
-    "brown": "brown",
     "red": "red",
-    "pink": "pink",
-    "grey": "grey",
+    "brown": "brown",
     "black": "black",
+    "grey": "grey",
     "white": "white"
   },
   "legal": {
