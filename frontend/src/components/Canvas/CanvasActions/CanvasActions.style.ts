@@ -1,5 +1,6 @@
 import deleteIcon from 'assets/delete.svg';
 import undoIcon from 'assets/undo.svg';
+import redoIcon from 'assets/redo.svg';
 import styled from 'styled-components';
 
 export const CanvasActionsContainer = styled.div`
@@ -20,9 +21,8 @@ export const UndoAction = styled.img.attrs({ src: undoIcon })`
   ${actionDefaultStyle}
 `;
 
-export const RedoAction = styled.img.attrs({ src: undoIcon })`
+export const RedoAction = styled.img.attrs({ src: redoIcon })`
   ${actionDefaultStyle}
-  transform: rotate(180deg);
 `;
 RedoAction.displayName = 'RedoAction';
 
