@@ -7,6 +7,7 @@ import { DrawingColor } from 'components/Canvas/BrushColorPicker/BrushColorPicke
 import BrushTypePicker from 'components/Canvas/BrushTypePicker';
 import { BrushType } from 'components/Canvas/BrushTypePicker/BrushTypePicker';
 import CanvasActions from 'components/Canvas/CanvasActions';
+import { undoHandler } from 'services/utils';
 import {
   drawLine,
   drawPaint,
@@ -162,7 +163,7 @@ const CanvasDraw: React.FC<Props> = ({
     drawing.current = [];
   };
 
-  const handleUndo = () => {
+  const handleUndo = useCallback(() => {
     if (drawing.current.length === 0 && archivedPaint) {
       drawing.current = archivedPaint;
       drawPaint(archivedPaint, canvasRef);
@@ -174,7 +175,7 @@ const CanvasDraw: React.FC<Props> = ({
     handleClear();
     drawing.current = paintToRedraw;
     drawPaint(paintToRedraw, canvasRef);
-  };
+  }, [archivedPaint]);
 
   const saveDrawing = useCallback(() => {
     const canvas: HTMLCanvasElement | null = canvasRef.current;
@@ -185,6 +186,14 @@ const CanvasDraw: React.FC<Props> = ({
 
     saveStep({ drawing: compressed });
   }, [saveStep]);
+
+  useEffect(() => {
+    const handler = undoHandler(handleUndo);
+    window.addEventListener('keydown', handler);
+    return () => {
+      window.removeEventListener('keydown', handler);
+    };
+  }, [handleUndo]);
 
   useEffect(() => {
     if (!canvasRef.current) {
