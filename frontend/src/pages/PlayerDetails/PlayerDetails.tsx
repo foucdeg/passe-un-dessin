@@ -132,7 +132,7 @@ const PlayerDetails: React.FC<NoProps> = () => {
                     {participation.game.participants
                       .filter((participant) => participant.player.uuid !== displayedPlayer.uuid)
                       .map((participant) => (
-                        <PlayerChip color={participant.player.color}>
+                        <PlayerChip color={participant.player.color} key={participant.player.uuid}>
                           <BareLink
                             to={PUBLIC_PATHS.PLAYER_DETAILS.replace(
                               ':playerId',

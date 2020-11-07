@@ -119,9 +119,7 @@ const Room: React.FunctionComponent = () => {
               target="_blank"
             >
               <Avatar player={player} />
-              <PlayerName key={player.uuid} color={player.color}>
-                {player.name}
-              </PlayerName>
+              <PlayerName color={player.color}>{player.name}</PlayerName>
             </BareLink>
           </AvatarWithName>
         ))}
