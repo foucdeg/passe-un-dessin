@@ -46,7 +46,8 @@
     "placeholder": "A giraffe?",
     "youDraw": "Choose wisely, <strong>you</strong>'ll have to draw this!",
     "nextPlayer": "Let's just hope <strong>{name}</strong> can draw...",
-    "getSuggestions": "Lacking imagination? Roll the dice!"
+    "getSuggestions": "Lacking imagination? Roll the dice!",
+    "update": "Edit"
   },
   "wordToDrawing": {
     "sentenceToDraw": "Sentence to draw:",
@@ -62,7 +63,7 @@
     "placeholder": "A sheep?",
     "noSentence": "Something went wrong, we didn't get that drawing 😞",
     "submit": "Submit",
-    "update": "Modifier"
+    "update": "Edit"
   },
   "finishedModal": {
     "title": "It's over!",

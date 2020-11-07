@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'redux/useSelector';
 import { useParams } from 'react-router';
 
@@ -8,7 +8,6 @@ import { selectGame } from 'redux/Game/selectors';
 import { selectPlayer } from 'redux/Player/selectors';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Spacer from 'atoms/Spacer';
-import StaticInput from 'atoms/StaticInput';
 import InputLoader from 'atoms/InputLoader';
 import RemainingPlayers from 'components/RemainingPlayers';
 import SuggestionGenerator from './components/SuggestionGenerator';
@@ -18,6 +17,8 @@ import {
   StyledTextInput,
   StyledForm,
   InputArrow,
+  StyledButton,
+  StyledStaticInput,
 } from './PadInit.style';
 
 interface RouteParams {
@@ -32,11 +33,22 @@ const PadInit: React.FunctionComponent = () => {
   const intl = useIntl();
 
   const [sentence, setSentence] = useState<string>('');
+  const [isInputDisabled, setIsInputDisabled] = useState<boolean>(false);
+
   const [{ loading }, doSavePad] = useSavePad();
 
-  const pad = game?.pads.find((pad) => pad.uuid === padId);
+  useEffect(() => {
+    if (!game) return;
+    const pad = game.pads.find((pad) => pad.uuid === padId);
+    if (!pad) return;
+
+    if (pad.sentence) {
+      setIsInputDisabled(true);
+    }
+  }, [game, padId]);
 
   if (!game) return null;
+  const pad = game.pads.find((pad) => pad.uuid === padId);
   if (!pad) return null;
   if (!pad.steps.length) return null;
   if (!player) return null;
@@ -48,6 +60,7 @@ const PadInit: React.FunctionComponent = () => {
     event.preventDefault();
     if (sentence !== '' && !loading) {
       doSavePad({ pad, sentence });
+      setIsInputDisabled(true);
     }
   };
 
@@ -57,8 +70,13 @@ const PadInit: React.FunctionComponent = () => {
         <FormattedMessage id="padInit.chooseSentence" />
       </StyledHeader>
       <StyledForm onSubmit={onSubmit}>
-        {pad.sentence ? (
-          <StaticInput>{pad.sentence}</StaticInput>
+        {isInputDisabled && !loading ? (
+          <>
+            <StyledStaticInput>{pad.sentence}</StyledStaticInput>
+            <StyledButton type="button" onClick={() => setIsInputDisabled(false)}>
+              <FormattedMessage id="padInit.update" />
+            </StyledButton>
+          </>
         ) : (
           <StyledTextInput
             autoFocus

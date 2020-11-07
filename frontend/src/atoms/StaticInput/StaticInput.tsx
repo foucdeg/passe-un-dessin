@@ -6,8 +6,8 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
   adornment?: React.ReactNode;
 };
 
-const StaticInput: React.FC<Props> = ({ adornment, ...inputProps }) => (
-  <InputAndAdornment>
+const StaticInput: React.FC<Props> = ({ adornment, className, ...inputProps }) => (
+  <InputAndAdornment className={className}>
     <StyledStaticInput {...inputProps} hasAdornment={!!adornment} />
     {adornment && <AdornmentLocation>{adornment}</AdornmentLocation>}
   </InputAndAdornment>

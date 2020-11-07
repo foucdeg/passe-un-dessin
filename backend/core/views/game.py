@@ -73,6 +73,8 @@ class PadStepRetrieveAPIView(RetrieveAPIView):
 def save_pad(request, player, uuid):
     json_body = json.loads(request.body)
 
+    should_increment_game_pads_done = True
+
     try:
         sentence = json_body["sentence"]
     except KeyError:
@@ -83,11 +85,13 @@ def save_pad(request, player, uuid):
     except Pad.DoesNotExist:
         return HttpResponseBadRequest("Pad with uuid %s does not exist" % uuid)
 
+    assert_phase(pad.game, GamePhase.INIT)
+
     if sentence is None or sentence == "":
         return HttpResponseBadRequest("Invalid empty sentence")
 
     if pad.sentence is not None:
-        return HttpResponseBadRequest("Pad with uuid %s already saved" % uuid)
+        should_increment_game_pads_done = False
 
     pad.sentence = sentence
     pad.save()
@@ -100,16 +104,17 @@ def save_pad(request, player, uuid):
         PlayerFinishedMessage(pad.initial_player).serialize(),
     )
 
-    with transaction.atomic():
-        game = Game.objects.select_for_update().get(uuid=game.uuid)
-        game.pads_done = game.pads_done + 1
-        game.save()
+    if should_increment_game_pads_done:
+        with transaction.atomic():
+            game = Game.objects.select_for_update().get(uuid=game.uuid)
+            game.pads_done = game.pads_done + 1
+            game.save()
 
-    if game.pads_done == game.participants.count():
-        logger.debug(
-            "All pads have their initial sentence for game %s" % game.uuid.hex[:8]
-        )
-        switch_to_rounds(game)
+        if game.pads_done == game.participants.count():
+            logger.debug(
+                "All pads have their initial sentence for game %s" % game.uuid.hex[:8]
+            )
+            switch_to_rounds(game)
 
     return JsonResponse(PadSerializer(pad).data)
 
