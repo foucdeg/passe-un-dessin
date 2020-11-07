@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'redux/useSelector';
 import { Pad } from 'redux/Game/types';
 import { selectRoom } from 'redux/Room/selectors';
@@ -11,6 +11,7 @@ import { selectAvailableVoteCount } from 'redux/Game/selectors';
 import NewGameModal from 'modals/NewGameModal';
 import DoneModal from 'modals/DoneModal';
 
+import { tabHandlerBuilder } from 'services/utils';
 import { ThumbUpButton } from './components/ReactionOverlay/ReactionOverlay.style';
 import PadTab from './components/PadTab';
 
@@ -34,37 +35,60 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode }) => {
   const game = useSelector(selectGame);
   const availableVoteCount = useSelector(selectAvailableVoteCount);
 
-  const [displayedPadId, setDisplayedPadId] = useState<string | null>(null);
-  const [isVoteResultsDisplayed, setVoteResultsDisplayed] = useState<boolean>(false);
+  const [displayedPadIndex, setDisplayedPadIndex] = useState<number>(0);
   const [doneModalIsOpen, setDoneModalIsOpen] = useState<boolean>(true);
   const [newGameModalIsOpen, setNewGameModalIsOpen] = useState<boolean>(false);
 
   const doReviewPad = useReviewPad();
 
-  const displayedPad = game?.pads.find((pad) => pad.uuid === displayedPadId);
+  const selectPad = useCallback(
+    (index: number) => {
+      if (!game) return;
+      if (!publicMode) {
+        doReviewPad(game.pads[index]);
+      }
+      setDisplayedPadIndex(index);
+    },
+    [setDisplayedPadIndex, doReviewPad, game, publicMode],
+  );
+
+  const selectNextPad = useCallback(() => {
+    if (!game) return;
+    const maxPadIndex = publicMode ? game.pads.length : game.pads.length - 1;
+    if (displayedPadIndex + 1 <= maxPadIndex) {
+      selectPad(displayedPadIndex + 1);
+    }
+  }, [game, publicMode, displayedPadIndex, selectPad]);
+
+  const selectPreviousPad = useCallback(() => {
+    if (!game) return;
+    if (displayedPadIndex - 1 >= 0) {
+      selectPad(displayedPadIndex - 1);
+    }
+  }, [game, displayedPadIndex, selectPad]);
 
   useEffect(() => {
-    if (!game || displayedPad || isVoteResultsDisplayed) return;
-    setDisplayedPadId(game.pads[0].uuid);
-  }, [game, displayedPad, isVoteResultsDisplayed]);
+    const handler = (event: KeyboardEvent) => {
+      event.preventDefault();
+      tabHandlerBuilder(selectNextPad, selectPreviousPad)(event);
+    };
+    window.addEventListener('keydown', handler);
+    return () => {
+      window.removeEventListener('keydown', handler);
+    };
+  }, [selectNextPad, selectPreviousPad]);
 
   if (!game) return null;
 
   if (!publicMode && !room) return null;
 
-  const selectPad = (pad: Pad) => {
-    if (!publicMode) {
-      doReviewPad(pad);
-    }
-    setDisplayedPadId(pad.uuid);
-    setVoteResultsDisplayed(false);
-  };
+  const displayedPad: Pad | undefined = game.pads[displayedPadIndex];
+  const isVoteResultsDisplayed = displayedPad === undefined;
 
   const selectResults = () => {
     if (!publicMode) return;
 
-    setDisplayedPadId(null);
-    setVoteResultsDisplayed(true);
+    setDisplayedPadIndex(game.pads.length);
   };
 
   return (
@@ -72,12 +96,12 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode }) => {
       <OuterRecapContainer>
         <TopRow>
           <PadTabs>
-            {game.pads.map((pad) => (
+            {game.pads.map((pad, index) => (
               <PadTab
                 publicMode={publicMode}
                 key={pad.uuid}
-                isActive={displayedPadId === pad.uuid}
-                onClick={() => selectPad(pad)}
+                isActive={index === displayedPadIndex}
+                onClick={() => selectPad(index)}
                 pad={pad}
               />
             ))}
