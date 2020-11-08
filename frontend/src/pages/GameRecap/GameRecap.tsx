@@ -69,7 +69,6 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode }) => {
 
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
-      event.preventDefault();
       tabHandlerBuilder(selectNextPad, selectPreviousPad)(event);
     };
     window.addEventListener('keydown', handler);

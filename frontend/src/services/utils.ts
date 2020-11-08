@@ -53,15 +53,18 @@ export const undoAndRedoHandlerBuilder = (undoAction: () => void, redoAction: ()
   event: KeyboardEvent,
 ) => {
   if (event.key === 'z' && isCtrlOrCmdPressed(event)) {
+    event.preventDefault();
     undoAction();
   }
   if (isRedoKeyPadTouched(event) && isCtrlOrCmdPressed(event)) {
+    event.preventDefault();
     redoAction();
   }
 };
 
 export const deleteHandlerBuilder = (deleteAction: () => void) => (event: KeyboardEvent) => {
   if (event.key === 'Backspace') {
+    event.preventDefault();
     deleteAction();
   }
 };
@@ -70,9 +73,11 @@ export const upAndDownHandlerBuilder = (upAction: () => void, downAction: () => 
   event: KeyboardEvent,
 ) => {
   if (event.key === 'ArrowUp') {
+    event.preventDefault();
     upAction();
   }
   if (event.key === 'ArrowDown') {
+    event.preventDefault();
     downAction();
   }
 };
@@ -81,6 +86,7 @@ export const tabHandlerBuilder = (tabAction: () => void, unTabAction: () => void
   event: KeyboardEvent,
 ) => {
   if (event.key === 'Tab') {
+    event.preventDefault();
     event.shiftKey ? unTabAction() : tabAction();
   }
 };
