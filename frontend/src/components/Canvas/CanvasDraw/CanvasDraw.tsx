@@ -222,7 +222,6 @@ const CanvasDraw: React.FC<Props> = ({
 
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
-      event.preventDefault();
       undoAndRedoHandlerBuilder(handleUndo, handleRedo)(event);
       deleteHandlerBuilder(handleClear)(event);
       upAndDownHandlerBuilder(selectPreviousColor, selectNextColor)(event);
