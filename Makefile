@@ -3,7 +3,7 @@ DB_CONTAINER_ID := $(shell docker-compose ps -q db)
 
 deploy-front:
 	cd frontend && REACT_APP_ENV=production NODE_ENV=production yarn build
-	rsync -avz --delete-after ./frontend/build/ vps:/home/fouc/passe-un-dessin/build
+	rsync -avz ./frontend/build/ vps:/home/fouc/passe-un-dessin/build
 
 deploy-back:
 	cd backend && docker build -f ./docker/Dockerfile.prod . -t foucdeg/passe-un-dessin:latest
