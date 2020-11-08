@@ -8,10 +8,10 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "@sentry/node": "^5.27.3",
-    "express": "^4.17.1",
-    "lz-string": "^1.4.4",
-    "pg": "^8.3.3"
+    "@sentry/node": "5.27.3",
+    "express": "4.17.1",
+    "lz-string": "1.4.4",
+    "pg": "8.3.3"
   },
   "scripts": {
     "start": "node server.js"
