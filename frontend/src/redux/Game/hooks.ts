@@ -28,6 +28,7 @@ export const useFetchGame = () => {
   return useTypedAsyncFn<{ gameId: string; keepStructure?: boolean; asPublic?: boolean }>(
     async ({ gameId, keepStructure = false, asPublic = false }) => {
       const rawGame: RawGame = await client.get(`/game/${gameId}`);
+
       const game = {
         ...rawGame,
         players: rawGame.participants.map((participant) => participant.player),

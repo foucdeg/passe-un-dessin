@@ -88,5 +88,13 @@
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
     </script>
+    <script type="text/javascript">
+      window.config = {
+        sentry: {
+          dsn: "<%= process.env.REACT_APP_SENTRY_DSN %>",
+          environment: "<%= process.env.REACT_APP_ENV %>",
+        }
+      };
+    </script>
   </body>
 </html>

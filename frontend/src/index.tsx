@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+import * as Sentry from '@sentry/browser';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import React from 'react';
@@ -6,6 +7,26 @@ import ReactDOM from 'react-dom';
 
 import App from './App';
 import configureStore from './redux/store';
+
+declare global {
+  interface Window {
+    config: {
+      sentry: {
+        dsn: string;
+        release: string;
+        environment: string;
+      };
+    };
+  }
+}
+
+if (window.config && window.config.sentry && window.config.sentry.dsn) {
+  Sentry.init({
+    dsn: window.config.sentry.dsn,
+    release: window.config.sentry.release,
+    environment: window.config.sentry.environment,
+  });
+}
 
 const { store } = configureStore();
 

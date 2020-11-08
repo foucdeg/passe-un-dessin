@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/browser';
 import { useAsyncFn } from 'react-use';
 import { AsyncFnReturn } from 'react-use/lib/useAsync';
 
@@ -13,7 +14,12 @@ export function useTypedAsyncFn<T>(
   deps: any[],
 ): AsyncFnReturn {
   return useAsyncFn(async (...args: T[]) => {
-    await callback(args[0]);
+    try {
+      return await callback(args[0]);
+    } catch (err) {
+      Sentry.captureException(err);
+      throw err;
+    }
   }, deps);
 }
 
