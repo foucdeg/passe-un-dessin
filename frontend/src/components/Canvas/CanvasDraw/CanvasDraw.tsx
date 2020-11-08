@@ -75,7 +75,7 @@ const CanvasDraw: React.FC<Props> = ({
   ] = getBrushAttributes(color, brushType);
   const currentColorIndex = DRAWING_COLOR_VALUES.indexOf(selectedBrushColor);
   const cursorPosition =
-    brushType === BrushType.FILL ? 19 : Math.round(selectedBrushRadius * Math.sqrt(2));
+    brushType === BrushType.FILL ? 17 : Math.round(selectedBrushRadius * Math.sqrt(2));
   const decodedDrawing = initialDrawing && lzString.decompressFromBase64(initialDrawing);
 
   const setBrushColor = useCallback(

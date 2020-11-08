@@ -35,7 +35,7 @@ export const Canvas = styled.canvas<{
 }>`
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
-  border: 2px solid ${colorPalette.textGrey};
+  box-shadow: 0 0 0 2px ${colorPalette.textGrey};
   border-radius: 16px;
   transform-origin: top;
   ${({ pointCursor, cursorPosition }) =>
