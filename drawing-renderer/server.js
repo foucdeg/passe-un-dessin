@@ -1,6 +1,9 @@
 const express = require("express");
 const lzString = require("lz-string");
 const { Pool: PGPool } = require("pg");
+const Sentry = require('@sentry/node');
+
+Sentry.init({ dsn: process.env.SENTRY_DSN, environment: process.env.ENVIRONMENT });
 
 const APP_PORT = 80;
 const DATABASE_URL = process.env.DATABASE_URL;
@@ -21,6 +24,8 @@ pool.on("error", (err, client) => {
 });
 
 const app = express();
+
+app.use(Sentry.Handlers.requestHandler());
 
 app.get("/health", (req, res) => {
   res.send("I'm up!");
@@ -63,6 +68,8 @@ app.get("/drawings/:padStepId.png", async function (req, res, next) {
 app.get("/drawings/avatar/:playerId/:firstCharacters.png", async function (req, res, next) {
   sendPng(res, next, "core_player", "avatar", req.params.playerId)
 });
+
+app.use(Sentry.Handlers.errorHandler());
 
 app.listen(APP_PORT, () => {
   console.log(`Drawing renderer listening at http://localhost:${APP_PORT}`);
