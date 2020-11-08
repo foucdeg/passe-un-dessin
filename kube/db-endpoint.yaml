@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: db-service
+subsets:
+  - addresses:
+      - ip: 51.255.40.71
+    ports:
+      - port: 5432

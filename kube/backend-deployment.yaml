@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  labels:
+    name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: backend
+  template:
+    metadata:
+      labels:
+        name: backend
+    spec:
+      containers:
+        - name: backend
+          # Replace  with your project ID or use `make template`
+          image: foucdeg/passe-un-dessin
+          # This setting makes nodes pull the docker image every time before
+          # starting the pod. This is useful when debugging, but should be turned
+          # off in production.
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9001
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secret
+                  key: DATABASE_URL
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secret
+                  key: SECRET_KEY
+            - name: AUTH_FACEBOOK_APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secret
+                  key: AUTH_FACEBOOK_APP_SECRET
+            - name: ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: ENVIRONMENT
+            - name: SENTRY_DSN
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: SENTRY_DSN
+            - name: ALLOWED_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: ALLOWED_HOST
+          readinessProbe:
+            httpGet:
+              port: 9001
+              path: health
