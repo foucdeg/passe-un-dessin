@@ -1524,7 +1524,7 @@
   dependencies:
     any-observable "^0.3.0"
 
-"@sentry/browser@^5.27.3":
+"@sentry/browser@5.27.3":
   version "5.27.3"
   resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-5.27.3.tgz#02e78a4502ee99988d3cbb0075a11ec44b503871"
   integrity sha512-vczS+XTW4Nk2A7TIpAw8IVFHpp+NK6mV9euBG2I61Bs2QbQY9yKLfbjiln/yH2Q8X4THX6MKa0GuiPoCEeq3uw==
