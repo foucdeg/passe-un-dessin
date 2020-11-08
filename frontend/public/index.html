@@ -91,7 +91,7 @@
     <script type="text/javascript">
       window.config = {
         sentry: {
-          dsn: "https://4564f9e9570f4f57a9055453dcba0adf@o473402.ingest.sentry.io/5508276",
+          dsn: "<%= process.env.REACT_APP_SENTRY_DSN %>",
           environment: "<%= process.env.REACT_APP_ENV %>",
         }
       };

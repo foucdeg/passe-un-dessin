@@ -139,3 +139,16 @@ STATIC_URL = "/static/"
 # Emails
 
 EMAIL_BASE_URL = os.environ.get("EMAIL_BASE_URL")
+
+
+# Sentry
+if "SENTRY_DSN" in os.environ:
+    import sentry_sdk
+    from sentry_sdk.integrations.django import DjangoIntegration
+
+    sentry_sdk.init(
+        dsn=os.environ.get("SENTRY_DSN"),
+        integrations=[DjangoIntegration()],
+        environment=os.environ.get("ENVIRONMENT"),
+        release=os.environ.get("VERSION"),
+    )
