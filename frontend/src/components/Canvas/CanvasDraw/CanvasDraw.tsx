@@ -76,6 +76,7 @@ const CanvasDraw: React.FC<Props> = ({
   const currentColorIndex = DRAWING_COLOR_VALUES.indexOf(selectedBrushColor);
   const cursorPosition =
     brushType === BrushType.FILL ? 19 : Math.round(selectedBrushRadius * Math.sqrt(2));
+  const decodedDrawing = initialDrawing && lzString.decompressFromBase64(initialDrawing);
 
   const setBrushColor = useCallback(
     (newColor: DrawingColor) => {
@@ -197,10 +198,9 @@ const CanvasDraw: React.FC<Props> = ({
     const removedStep = drawing.current.pop();
     if (removedStep) {
       undoneDrawing.current.push(removedStep);
-      resetCanvas(canvasRef);
-      drawPaint(drawing.current, canvasRef);
+      drawPaint(drawing.current, canvasRef, true, decodedDrawing);
     }
-  }, []);
+  }, [decodedDrawing]);
 
   const handleRedo = useCallback(() => {
     const stepToRedraw = undoneDrawing.current.pop();
@@ -290,12 +290,10 @@ const CanvasDraw: React.FC<Props> = ({
 
   useEffect(() => {
     resetCanvas(canvasRef);
-    const decodedDrawing = initialDrawing && lzString.decompressFromBase64(initialDrawing);
     if (decodedDrawing) {
-      addToDrawing({ type: 'init', drawing: decodedDrawing });
       initializeCanvas(canvasRef, decodedDrawing);
     }
-  }, [initialDrawing]);
+  }, [initialDrawing, decodedDrawing]);
 
   return (
     <CanvasContainer>

@@ -3,9 +3,8 @@
 export type Point = { x: number; y: number };
 export type Line = { points: Point[]; brushColor: string; brushRadius: number; type: 'line' };
 export type Fill = { point: Point; color: string; type: 'fill' };
-export type Initialization = { drawing: string; type: 'init' };
 export type Clear = { type: 'clear' };
-export type Step = Line | Fill | Initialization | Clear;
+export type Step = Line | Fill | Clear;
 export type Paint = Step[];
 
 type canvasRefType = {
@@ -15,6 +14,14 @@ type RGBAColor = {
   r: number;
   g: number;
   b: number;
+};
+
+const resetCanvasFromImage = (image: ImageData, width: number, height: number) => {
+  for (let x = 0; x < width; x++) {
+    for (let y = 0; y < height; y++) {
+      setPixel(image, x, y, { r: 255, g: 255, b: 255 });
+    }
+  }
 };
 
 export const resetCanvas = (canvasRef: canvasRefType) => {
@@ -49,29 +56,20 @@ export const initializeCanvas = async (canvasRef: canvasRefType, drawing: string
   await sleep(1);
 };
 
-export const drawLine = async (
+const drawLineFromImage = (
+  image: ImageData,
+  canvasWidth: number,
+  canvasHeight: number,
   startPosition: Point,
   endPosition: Point,
-  brushColor: string,
   brushRadius: number,
-  canvasRef: canvasRefType,
+  brushColor: string,
 ) => {
-  if (!canvasRef.current) {
-    return;
-  }
-  const canvas: HTMLCanvasElement = canvasRef.current;
-  const context = canvas.getContext('2d');
-  if (!context) {
-    return;
-  }
-
   const x1 = Math.floor(startPosition.x);
   const y1 = Math.floor(startPosition.y);
   const x2 = Math.floor(endPosition.x);
   const y2 = Math.floor(endPosition.y);
   const lineWidth = Math.ceil(brushRadius * 2);
-  const canvasWidth = context.canvas.width;
-  const canvasHeight = context.canvas.height;
 
   // calculate bounding box
   const left = Math.max(0, Math.min(canvasWidth, Math.min(x1, x2) - lineWidth));
@@ -80,29 +78,49 @@ export const drawLine = async (
   const bottom = Math.max(0, Math.min(canvasHeight, Math.max(y1, y2) + lineWidth));
 
   // off canvas, so don't draw anything
-  if (right - left === 0 || bottom - top === 0) {
-    return;
-  }
+  if (right - left === 0 || bottom - top === 0) return;
 
   const color = hexToRgb(brushColor);
 
   const circleMap = generateCircleMap(Math.floor(lineWidth / 2));
   const offset = Math.floor(circleMap.length / 2);
 
-  const imageData = context.getImageData(left, top, right - left, bottom - top);
-
   for (let ix = 0; ix < circleMap.length; ix++) {
     for (let iy = 0; iy < circleMap[ix].length; iy++) {
       if (circleMap[ix][iy] === 1 || (x1 === x2 && y1 === y2 && circleMap[ix][iy] === 2)) {
-        const newX1 = x1 + ix - offset - left;
-        const newY1 = y1 + iy - offset - top;
-        const newX2 = x2 + ix - offset - left;
-        const newY2 = y2 + iy - offset - top;
-        drawBresenhamLine(imageData, newX1, newY1, newX2, newY2, color);
+        const newX1 = x1 + ix - offset;
+        const newY1 = y1 + iy - offset;
+        const newX2 = x2 + ix - offset;
+        const newY2 = y2 + iy - offset;
+        drawBresenhamLine(image, newX1, newY1, newX2, newY2, color);
       }
     }
   }
-  context.putImageData(imageData, left, top);
+};
+
+export const drawLine = (
+  startPosition: Point,
+  endPosition: Point,
+  brushColor: string,
+  brushRadius: number,
+  canvasRef: canvasRefType,
+) => {
+  if (!canvasRef.current) return;
+  const context = canvasRef.current.getContext('2d');
+  if (!context) return;
+  const canvasWidth = context.canvas.width;
+  const canvasHeight = context.canvas.height;
+  const image = context.getImageData(0, 0, canvasWidth, canvasHeight);
+  drawLineFromImage(
+    image,
+    canvasWidth,
+    canvasHeight,
+    startPosition,
+    endPosition,
+    brushRadius,
+    brushColor,
+  );
+  context.putImageData(image, 0, 0);
 };
 
 const drawBresenhamLine = (
@@ -178,33 +196,64 @@ const findLastClearIndex = (paint: Paint) => {
   return paint.length - firstReversedClearIndex - 1;
 };
 
-export const drawPaint = async (paint: Paint, canvasRef: canvasRefType) => {
+export const drawPaint = async (
+  paint: Paint,
+  canvasRef: canvasRefType,
+  shouldResetCanvas = false,
+  initialDrawing: string | null = null,
+) => {
   // Do not use foreach because initializeCanvas need to use async
   const lastClearIndex = findLastClearIndex(paint);
-  const startIndex = lastClearIndex === -1 ? 0 : lastClearIndex;
+  let startIndex = lastClearIndex === -1 ? 0 : lastClearIndex;
+
+  if (shouldResetCanvas && initialDrawing && startIndex === 0) {
+    await initializeCanvas(canvasRef, initialDrawing);
+  }
+
+  if (!canvasRef.current) return;
+  const context = canvasRef.current.getContext('2d');
+  if (!context) return;
+  const canvasWidth = context.canvas.width;
+  const canvasHeight = context.canvas.height;
+  const image = context.getImageData(0, 0, canvasWidth, canvasHeight);
+
+  if (shouldResetCanvas && !initialDrawing && startIndex === 0) {
+    resetCanvasFromImage(image, canvasWidth, canvasHeight);
+  }
+
+  if (startIndex !== 0) {
+    resetCanvasFromImage(image, canvasWidth, canvasHeight);
+    startIndex++;
+  }
+
   for (let i = startIndex; i < paint.length; i++) {
     const paintStep = paint[i];
     switch (paintStep.type) {
       case 'line':
-      case undefined: // To not break previous drawings
-        paintStep.points.forEach((point, index) => {
+        paintStep.points.forEach((point: Point, index: number) => {
           const nextPoint = paintStep.points[index + 1] || point;
-          drawLine(point, nextPoint, paintStep.brushColor, paintStep.brushRadius, canvasRef);
+          drawLineFromImage(
+            image,
+            canvasWidth,
+            canvasHeight,
+            point,
+            nextPoint,
+            paintStep.brushRadius,
+            paintStep.brushColor,
+          );
         });
         break;
       case 'fill':
-        fillContext(paintStep.point, canvasRef, paintStep.color);
+        fillContextFromImage(image, paintStep.point, paintStep.color);
         break;
       case 'clear':
-        resetCanvas(canvasRef);
-        break;
-      case 'init':
-        await initializeCanvas(canvasRef, paintStep.drawing);
+        resetCanvasFromImage(image, canvasWidth, canvasHeight);
         break;
       default:
         break;
     }
   }
+  context.putImageData(image, 0, 0);
 };
 
 const floodfill = (
@@ -294,12 +343,7 @@ const hexToRgb = (hex: string) => {
     : { r: 0, g: 0, b: 0 };
 };
 
-export const fillContext = (coordinates: Point, canvasRef: canvasRefType, color: string) => {
-  if (!canvasRef.current) return;
-  const context = canvasRef.current.getContext('2d');
-  if (!context) return;
-
-  const image = context.getImageData(0, 0, context.canvas.width, context.canvas.height);
+const fillContextFromImage = (image: ImageData, coordinates: Point, color: string) => {
   const data = image.data;
   const { x, y } = coordinates;
   const xi = Math.round(x);
@@ -307,5 +351,14 @@ export const fillContext = (coordinates: Point, canvasRef: canvasRefType, color:
   const width = image.width;
   const tolerance = 10;
   floodfill(data, xi, yi, hexToRgb(color), tolerance, width);
+};
+
+export const fillContext = (coordinates: Point, canvasRef: canvasRefType, color: string) => {
+  if (!canvasRef.current) return;
+  const context = canvasRef.current.getContext('2d');
+  if (!context) return;
+
+  const image = context.getImageData(0, 0, context.canvas.width, context.canvas.height);
+  fillContextFromImage(image, coordinates, color);
   context.putImageData(image, 0, 0);
 };
