@@ -5,8 +5,17 @@ import { selectRoom, selectPlayerIsAdmin } from 'redux/Room/selectors';
 import { selectGame, selectWinners } from 'redux/Game/selectors';
 import NewGameModal from 'modals/NewGameModal';
 import { FormattedMessage } from 'react-intl';
+import Spacer from 'atoms/Spacer';
+import BareLink from 'atoms/BareLink';
 import Podium from './components/Podium';
-import { Container, TopRightButtons, TopRightButton } from './VoteResults.style';
+import {
+  Container,
+  TopRightButtons,
+  TopRightButton,
+  LeftSide,
+  StyledHeader,
+  StyledLaunchIcon,
+} from './VoteResults.style';
 import Scoreboard from './components/GameRoomScoreboard';
 
 const VoteResults: React.FunctionComponent = () => {
@@ -29,15 +38,27 @@ const VoteResults: React.FunctionComponent = () => {
 
   return (
     <Container>
-      {winners && (winners.length ? <Podium winners={winners} /> : <div>No votes</div>)}
+      <LeftSide>
+        <StyledHeader>
+          <FormattedMessage id="voteResults.bestMoments" />
+        </StyledHeader>
+        <Spacer />
+        {winners && (winners.length ? <Podium winners={winners} /> : <div>No votes</div>)}
+      </LeftSide>
       <Scoreboard />
-      {isPlayerAdmin && (
-        <TopRightButtons>
+      <TopRightButtons>
+        <BareLink to={`/game/${game.uuid}`} target="_blank">
+          <TopRightButton>
+            <FormattedMessage id="voteResults.reviewGame" />
+            <StyledLaunchIcon />
+          </TopRightButton>
+        </BareLink>
+        {isPlayerAdmin && (
           <TopRightButton onClick={() => setNewGameModalIsOpen(true)}>
             <FormattedMessage id="voteResults.newGame" />
           </TopRightButton>
-        </TopRightButtons>
-      )}
+        )}
+      </TopRightButtons>
       <NewGameModal isOpen={newGameModalIsOpen} onClose={() => setNewGameModalIsOpen(false)} />
     </Container>
   );

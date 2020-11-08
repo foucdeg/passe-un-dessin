@@ -84,7 +84,8 @@
     "newGame": "New game?",
     "bestMoments": "Best moments",
     "voteCount": "{voteCount} point{ voteCount, plural, one {} other {s}}",
-    "scoreboard": "Scoreboard"
+    "scoreboard": "Scoreboard",
+    "reviewGame": "Review game"
   },
   "newGameModal": {
     "title": "Start a new game",
