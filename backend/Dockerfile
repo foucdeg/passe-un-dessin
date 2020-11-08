@@ -8,7 +8,7 @@ ENV PYTHONPATH /code
 # This is to print directly to stdout instead of buffering output
 ENV PYTHONUNBUFFERED 1
 
-RUN pip install poetry==1.0.10 pywatchman==1.4.1
+RUN pip install poetry==1.1.4 pywatchman==1.4.1
 
 # Install Watchman
 ARG WATCHMAN_VERSION
