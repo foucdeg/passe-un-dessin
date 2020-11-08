@@ -101,7 +101,7 @@ Resources:
       BlockDeviceMappings:
         - DeviceName: "/dev/xvda"
           Ebs:
-            VolumeSize: "50"
+            VolumeSize: "25"
             VolumeType: "gp2"
       SecurityGroups:
         - !Ref SecurityGroup
