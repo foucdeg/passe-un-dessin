@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: drawing-renderer
+  labels:
+    name: drawing-renderer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: drawing-renderer
+  template:
+    metadata:
+      labels:
+        name: drawing-renderer
+    spec:
+      containers:
+        - name: drawing-renderer
+          # Replace  with your project ID or use `make template`
+          image: foucdeg/passe-un-dessin-drawing-renderer
+          # This setting makes nodes pull the docker image every time before
+          # starting the pod. This is useful when debugging, but should be turned
+          # off in production.
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: drawing-renderer-secret
+                  key: DATABASE_URL
+            - name: ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: drawing-renderer-config
+                  key: ENVIRONMENT
+            - name: SENTRY_DSN
+              valueFrom:
+                configMapKeyRef:
+                  name: drawing-renderer-config
+                  key: SENTRY_DSN
+          readinessProbe:
+            httpGet:
+              port: 80
+              path: health
