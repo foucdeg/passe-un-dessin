@@ -7,7 +7,6 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 9002
-      targetPort: 9001
+    - port: 9001
   selector:
     app: backend
