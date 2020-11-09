@@ -7,7 +7,7 @@ authors = ["Theodo <contact@theodo.co.uk>"]
 [tool.poetry.dependencies]
 python = "3.9.0"
 argon2-cffi = "20.1.0"
-asgiref = "3.3.0"
+asgiref = "==3.3.1"
 boto3 = "1.16.13"
 dj-database-url = "0.5.0"
 django = "3.1.3"
