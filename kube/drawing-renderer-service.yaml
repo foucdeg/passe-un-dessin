@@ -5,7 +5,9 @@ metadata:
   labels:
     app: drawing-renderer
 spec:
-  type: NodePort
+  type: LoadBalancer
+  externalIPs:
+    - 192.168.10.20
   ports:
     - port: 80
   selector:

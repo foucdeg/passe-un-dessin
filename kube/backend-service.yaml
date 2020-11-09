@@ -5,7 +5,9 @@ metadata:
   labels:
     app: backend
 spec:
-  type: NodePort
+  type: LoadBalancer
+  externalIPs:
+    - 192.168.10.10
   ports:
     - port: 9001
   selector:
