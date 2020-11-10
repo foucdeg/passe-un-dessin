@@ -10818,10 +10818,10 @@ react-intl@*:
     shallow-equal "^1.2.1"
     tslib "^2.0.1"
 
-react-intl@5.9.4:
-  version "5.9.4"
-  resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-5.9.4.tgz#c5bcc56192eb52bd165566c0cfafe885a559dd94"
-  integrity sha512-+GUj5eNuZ5JE2LKVSERGRpI9CMdIZlpdO6p4Nybe2qj3N7J4rOPNj60HsVSKurXQkw1Os+biIOvpxr1vDS9D/A==
+react-intl@5.10.0:
+  version "5.10.0"
+  resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-5.10.0.tgz#076d73a2ec08fe0eaa02a856a29496863dec8acd"
+  integrity sha512-s+y+eIbM6u50n4GeAOx/6gAblwMFyMCVG5nJXUlPMG0ga4uv9nDThgPlZQFOO9/E9co8GhkRtWBqFxJd/C7QiQ==
   dependencies:
     "@formatjs/ecma402-abstract" "1.3.2"
     "@formatjs/intl" "1.4.4"
