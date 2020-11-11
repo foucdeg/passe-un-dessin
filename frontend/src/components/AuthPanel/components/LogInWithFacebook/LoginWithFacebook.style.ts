@@ -24,6 +24,11 @@ export const StyledFacebookButton = styled.button`
   margin-bottom: 16px;
   display: flex;
   align-items: center;
+
+  &[disabled] {
+    background-color: ${colorPalette.backgroundGrey};
+    color: ${colorPalette.textGrey};
+  }
 `;
 
 StyledFacebookButton.displayName = 'StyledFacebookButton';
