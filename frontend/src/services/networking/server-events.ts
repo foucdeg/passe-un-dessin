@@ -1,24 +1,11 @@
 import { useEffect } from 'react';
-import { Player } from 'redux/Player/types';
-import { Game } from 'redux/Game/types';
-
-export interface NewPlayerEventDataType {
-  player: Player;
-}
-
-export interface GameStartsEventDataType {
-  game: Game;
-}
-
-export interface RoundStartsEventType {
-  round_number: number;
-}
 
 export enum SERVER_EVENT_TYPES {
   PLAYER_FINISHED = 'PLAYER_FINISHED',
   PLAYER_NOT_FINISHED = 'PLAYER_NOT_FINISHED',
   PLAYER_CONNECTED = 'PLAYER_CONNECTED',
   PLAYER_LEFT = 'PLAYER_LEFT',
+  PLAYER_REPLACED = 'PLAYER_REPLACED',
   NEW_ADMIN = 'NEW_ADMIN',
   GAME_STARTS = 'GAME_STARTS',
   ROUND_STARTS = 'ROUND_STARTS',
