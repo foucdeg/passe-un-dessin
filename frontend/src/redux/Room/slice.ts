@@ -27,7 +27,9 @@ const roomSlice = createSlice({
     },
     addPlayerToRoom: (state, action: PayloadAction<Player>) => {
       if (!state.room) return;
-      state.room.players.push(action.payload);
+      if (!state.room.players.find((player) => player.uuid === action.payload.uuid)) {
+        state.room.players.push(action.payload);
+      }
     },
     removeRoom: (state) => {
       state.room = null;
