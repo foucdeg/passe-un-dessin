@@ -1,34 +1,8 @@
-/*  eslint @typescript-eslint/no-explicit-any: off */
 import React, { useEffect, useCallback } from 'react';
 import { useSocialLogin, AuthProvider } from 'redux/Player/hooks';
 import { FormattedMessage } from 'react-intl';
+import { FacebookAuthStatusResponse, isSuccessful } from 'window';
 import { StyledFacebookButton, FacebookLogo, TextContent } from './LoginWithFacebook.style';
-
-enum FacebookAuthStatus {
-  CONNECTED = 'connected',
-  NOT_AUTHORIZED = 'not_authorized',
-  UNKNOWN = 'unknown',
-}
-
-interface FacebookAuthResponse {
-  accessToken: string;
-  expiresIn: string;
-  signedRequest: string;
-  userID: string;
-}
-
-interface FacebookAuthStatusResponse {
-  status: FacebookAuthStatus;
-}
-
-type SuccessfulFacebookAuthStatusResponse = FacebookAuthStatusResponse & {
-  authResponse: FacebookAuthResponse;
-};
-
-const isSucessful = (
-  response: FacebookAuthStatusResponse,
-): response is SuccessfulFacebookAuthStatusResponse =>
-  response.status === FacebookAuthStatus.CONNECTED;
 
 interface Props {
   onDone?: () => void;
@@ -38,11 +12,11 @@ const LoginWithFacebook: React.FC<Props> = ({ onDone }) => {
   const doLogin = useSocialLogin();
 
   const doFacebookLogin = useCallback(() => {
-    const FB = (window as any).FB;
+    if (!window.FB) return;
 
-    FB.login(
+    window.FB.login(
       async function (response: FacebookAuthStatusResponse) {
-        if (isSucessful(response)) {
+        if (isSuccessful(response)) {
           await doLogin(response.authResponse.accessToken, AuthProvider.FACEBOOK);
           if (onDone) {
             onDone();
@@ -54,17 +28,17 @@ const LoginWithFacebook: React.FC<Props> = ({ onDone }) => {
   }, [doLogin, onDone]);
 
   useEffect(() => {
-    const FB = (window as any).FB;
+    if (!window.FB) return;
 
-    FB.getLoginStatus((response: FacebookAuthStatusResponse) => {
-      if (isSucessful(response)) {
+    window.FB.getLoginStatus((response: FacebookAuthStatusResponse) => {
+      if (isSuccessful(response)) {
         return doLogin(response.authResponse.accessToken, AuthProvider.FACEBOOK);
       }
     });
   }, [doLogin]);
 
   return (
-    <StyledFacebookButton onClick={doFacebookLogin}>
+    <StyledFacebookButton onClick={doFacebookLogin} disabled={!window.FB}>
       <FacebookLogo />
       <TextContent>
         <FormattedMessage id="auth.facebookLogin" />
