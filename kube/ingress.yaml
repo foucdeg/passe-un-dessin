@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Ingress
+metadata:
+  name: p1d-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+    - host: localhost
+      http:
+        paths:
+          - path: /django-static/(.*)
+            backend:
+              serviceName: statics-service
+              servicePort: 9002
+          - path: /api/(.*)
+            backend:
+              serviceName: django-service
+              servicePort: 8000
