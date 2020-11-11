@@ -18,7 +18,7 @@ djangorestframework = "3.12.2"
 djangorestframework_simplejwt = { git = "https://github.com/SimpleJWT/django-rest-framework-simplejwt.git", rev = "953a6bf2dd01872b86dd12e7212a652f90d738db" }
 psycopg2-binary = "2.8.6"
 pytz = "^2019.3"
-requests = "2.24.0"
+requests = "==2.25.0"
 sentry-sdk = "0.19.2"
 sqlparse = "0.4.1"
 watchtower = "1.0.0"
