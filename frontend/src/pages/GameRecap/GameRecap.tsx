@@ -120,7 +120,7 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode }) => {
               {Array(availableVoteCount)
                 .fill('')
                 .map((_, index) => (
-                  <ThumbUpButton key={index} />
+                  <ThumbUpButton primary key={index} />
                 ))}
             </>
           ) : (
