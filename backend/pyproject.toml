@@ -19,7 +19,7 @@ djangorestframework_simplejwt = { git = "https://github.com/SimpleJWT/django-res
 psycopg2-binary = "2.8.6"
 pytz = "^2019.3"
 requests = "==2.25.0"
-sentry-sdk = "0.19.2"
+sentry-sdk = "==0.19.3"
 sqlparse = "0.4.1"
 watchtower = "1.0.0"
 channels = "2.4.0"
