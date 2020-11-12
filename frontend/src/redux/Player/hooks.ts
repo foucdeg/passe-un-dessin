@@ -78,6 +78,7 @@ export const useSocialLogin = () => {
 
   return useCallback(
     async (token: string, provider: AuthProvider) => {
+      window.loginLock = true;
       const player = await client.post(`/auth/social-login`, { token, provider });
       const gtag = (window as any).gtag; // eslint-disable-line @typescript-eslint/no-explicit-any
 
@@ -92,6 +93,7 @@ export const useSocialLogin = () => {
       }
 
       await doFetchMe();
+      window.loginLock = false;
     },
     [doFetchMe],
   );
@@ -102,6 +104,7 @@ export const useLogin = () => {
 
   return useTypedAsyncFn<{ email: string; password: string }>(
     async ({ email, password }) => {
+      window.loginLock = true;
       try {
         await client.post(`/auth/login`, { email, password });
         const gtag = (window as any).gtag; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -114,6 +117,8 @@ export const useLogin = () => {
           throw new Error(AUTH_ERROR_INVALID_USERNAME_PASSWORD);
         }
         throw e;
+      } finally {
+        window.loginLock = false;
       }
     },
     [doFetchMe],
@@ -149,6 +154,7 @@ export const useCreateAccount = () => {
 
   return useTypedAsyncFn<{ email: string; password: string }>(
     async ({ email, password }) => {
+      window.loginLock = true;
       try {
         await client.post(`/auth/create-account`, { email, password });
         const gtag = (window as any).gtag; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -161,6 +167,8 @@ export const useCreateAccount = () => {
           throw new Error(AUTH_ERROR_EMAIL_IN_USE);
         }
         throw e;
+      } finally {
+        window.loginLock = false;
       }
     },
     [doFetchMe],

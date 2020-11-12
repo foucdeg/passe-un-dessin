@@ -18,46 +18,46 @@ enum ROOM_EVENT_TYPE {
   GAME_STARTS = 'GAME_STARTS',
 }
 
-interface BaseMessage {
+interface RoomEvent {
   message_type: ROOM_EVENT_TYPE;
 }
 
-type PlayerConnectedMessage = BaseMessage & {
+type PlayerConnectedEvent = RoomEvent & {
   message_type: ROOM_EVENT_TYPE.PLAYER_CONNECTED;
   player: Player;
 };
-const isPlayerConnectedMessage = (message: BaseMessage): message is PlayerConnectedMessage =>
-  message.message_type === ROOM_EVENT_TYPE.PLAYER_CONNECTED;
+const isPlayerConnectedEvent = (event: RoomEvent): event is PlayerConnectedEvent =>
+  event.message_type === ROOM_EVENT_TYPE.PLAYER_CONNECTED;
 
-type PlayerLeftMessage = BaseMessage & {
+type PlayerLeftEvent = RoomEvent & {
   message_type: ROOM_EVENT_TYPE.PLAYER_LEFT;
   player: Player;
   needs_new_admin: boolean;
 };
-const isPlayerLeftMessage = (message: BaseMessage): message is PlayerLeftMessage =>
-  message.message_type === ROOM_EVENT_TYPE.PLAYER_LEFT;
+const isPlayerLeftEvent = (event: RoomEvent): event is PlayerLeftEvent =>
+  event.message_type === ROOM_EVENT_TYPE.PLAYER_LEFT;
 
-type PlayerReplacedMessage = BaseMessage & {
+type PlayerReplacedEvent = RoomEvent & {
   message_type: ROOM_EVENT_TYPE.PLAYER_REPLACED;
   old_player: Player;
   new_player: Player;
 };
-const isPlayerReplacedMessage = (message: BaseMessage): message is PlayerReplacedMessage =>
-  message.message_type === ROOM_EVENT_TYPE.PLAYER_REPLACED;
+const isPlayerReplacedEvent = (event: RoomEvent): event is PlayerReplacedEvent =>
+  event.message_type === ROOM_EVENT_TYPE.PLAYER_REPLACED;
 
-type NewAdminMessage = BaseMessage & {
+type NewAdminEvent = RoomEvent & {
   message_type: ROOM_EVENT_TYPE.NEW_ADMIN;
   player: Player;
 };
-const isNewAdminMessage = (message: BaseMessage): message is NewAdminMessage =>
-  message.message_type === ROOM_EVENT_TYPE.NEW_ADMIN;
+const isNewAdminEvent = (event: RoomEvent): event is NewAdminEvent =>
+  event.message_type === ROOM_EVENT_TYPE.NEW_ADMIN;
 
-type GameStartsMessage = BaseMessage & {
+type GameStartsEvent = RoomEvent & {
   message_type: ROOM_EVENT_TYPE.GAME_STARTS;
   game: Game;
 };
-const isGameStartsMessage = (message: BaseMessage): message is GameStartsMessage =>
-  message.message_type === ROOM_EVENT_TYPE.GAME_STARTS;
+const isGameStartsEvent = (event: RoomEvent): event is GameStartsEvent =>
+  event.message_type === ROOM_EVENT_TYPE.GAME_STARTS;
 
 export const useRoomEvents = (
   roomId: string,
@@ -69,40 +69,38 @@ export const useRoomEvents = (
   const player = useSelector(selectPlayer);
 
   const onRoomEvent = useCallback(
-    (message: BaseMessage) => {
-      if (isPlayerConnectedMessage(message)) {
-        dispatch(addPlayerToRoom(message.player));
+    (event: RoomEvent) => {
+      if (isPlayerConnectedEvent(event)) {
+        dispatch(addPlayerToRoom(event.player));
         return;
       }
-      if (isPlayerLeftMessage(message)) {
-        if (player && message.player.uuid === player.uuid) {
+      if (isPlayerLeftEvent(event)) {
+        if (player && event.player.uuid === player.uuid) {
           push('/');
           return;
         }
-        setPlayerWhoLeft(message.player);
-        setAdminChanged(message.needs_new_admin);
-        dispatch(removePlayerFromRoom(message.player));
+        setPlayerWhoLeft(event.player);
+        setAdminChanged(event.needs_new_admin);
+        dispatch(removePlayerFromRoom(event.player));
         return;
       }
-      if (isPlayerReplacedMessage(message)) {
-        dispatch(addPlayerToRoom(message.new_player));
-        dispatch(removePlayerFromRoom(message.old_player));
+      if (isPlayerReplacedEvent(event)) {
+        dispatch(addPlayerToRoom(event.new_player));
+        dispatch(removePlayerFromRoom(event.old_player));
         return;
       }
-      if (isNewAdminMessage(message)) {
-        dispatch(nameNewAdmin(message.player));
+      if (isNewAdminEvent(event)) {
+        dispatch(nameNewAdmin(event.player));
         return;
       }
-      if (isGameStartsMessage(message)) {
+      if (isGameStartsEvent(event)) {
         dispatch(resetGameMetadata());
-        push(`/room/${roomId}/game/${message.game.uuid}`);
+        push(`/room/${roomId}/game/${event.game.uuid}`);
         return;
       }
     },
     [dispatch, push, player, roomId, setPlayerWhoLeft, setAdminChanged],
   );
 
-  const channelName = `room-${roomId}`;
-
-  useServerSentEvent<BaseMessage>(channelName, onRoomEvent);
+  useServerSentEvent<RoomEvent>(`room-${roomId}`, onRoomEvent);
 };

@@ -1,21 +1,10 @@
 import { useEffect } from 'react';
 
-export enum SERVER_EVENT_TYPES {
-  PLAYER_FINISHED = 'PLAYER_FINISHED',
-  PLAYER_NOT_FINISHED = 'PLAYER_NOT_FINISHED',
-  PLAYER_CONNECTED = 'PLAYER_CONNECTED',
-  PLAYER_LEFT = 'PLAYER_LEFT',
-  PLAYER_REPLACED = 'PLAYER_REPLACED',
-  NEW_ADMIN = 'NEW_ADMIN',
-  GAME_STARTS = 'GAME_STARTS',
-  ROUND_STARTS = 'ROUND_STARTS',
-  DEBRIEF_STARTS = 'DEBRIEF_STARTS',
-  PLAYER_VIEWING_PAD = 'PLAYER_VIEWING_PAD',
-  VOTE_RESULTS_STARTS = 'VOTE_RESULTS_STARTS',
+export interface BaseEvent {
+  message_type: string;
 }
 
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-export function useServerSentEvent<EventDataType = any>(
+export function useServerSentEvent<EventDataType = BaseEvent>(
   channel: string | null,
   callback: (msg: EventDataType) => void,
 ) {

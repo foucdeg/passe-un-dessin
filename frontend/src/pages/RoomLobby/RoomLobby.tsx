@@ -49,7 +49,12 @@ const Room: React.FunctionComponent = () => {
   const intl = useIntl();
 
   useEffect(() => {
-    if (room && player && !room.players.some((roomPlayer) => roomPlayer.uuid === player.uuid)) {
+    if (
+      room &&
+      player &&
+      !room.players.some((roomPlayer) => roomPlayer.uuid === player.uuid) &&
+      !window.loginLock
+    ) {
       doJoinRoom(room.uuid);
     }
   }, [room, player, doJoinRoom]);
