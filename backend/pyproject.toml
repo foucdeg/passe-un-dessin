@@ -8,7 +8,7 @@ authors = ["Theodo <contact@theodo.co.uk>"]
 python = "3.9.0"
 argon2-cffi = "20.1.0"
 asgiref = "==3.3.1"
-boto3 = "==1.16.16"
+boto3 = "==1.16.17"
 dj-database-url = "0.5.0"
 django = "3.1.3"
 django-memoize = "2.3.1"
