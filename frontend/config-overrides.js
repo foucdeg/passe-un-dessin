@@ -31,9 +31,13 @@ module.exports = {
     );
 
     const SitemapPlugin = require('sitemap-webpack-plugin').default;
-    const paths = ['/'];
+    const paths = ['/', '/leaderboard'];
     config.plugins.push(
-      new SitemapPlugin('https://passe-un-dessin.fouc.net', paths, { lastmod: true }),
+      new SitemapPlugin({
+        base: 'https://passe-un-dessin.fouc.net',
+        paths,
+        options: { lastmod: true },
+      }),
     );
 
     return config;

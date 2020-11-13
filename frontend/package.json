@@ -95,7 +95,6 @@
     "@welldone-software/why-did-you-render": "5.0.0",
     "babel-plugin-styled-components": "1.11.1",
     "bundlesize": "0.18.0",
-    "cypress": "5.6.0",
     "eslint-config-prettier": "6.15.0",
     "eslint-config-react-app": "6.0.0",
     "eslint-plugin-import": "2.22.1",
