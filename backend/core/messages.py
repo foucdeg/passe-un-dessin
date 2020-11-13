@@ -29,6 +29,21 @@ class PlayerLeftMessage:
         return PlayerLeftMessageSerializer(self).data
 
 
+class PlayerReplacedMessage:
+    message_type = "PLAYER_REPLACED"
+    old_player = None
+    new_player = None
+
+    def __init__(self, old_player: Player, new_player: Player):
+        self.old_player = old_player
+        self.new_player = new_player
+
+    def serialize(self):
+        from core.serializers import PlayerReplacedMessageSerializer
+
+        return PlayerReplacedMessageSerializer(self).data
+
+
 class NewAdminMessage:
     message_type = "NEW_ADMIN"
     player = None

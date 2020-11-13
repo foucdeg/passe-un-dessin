@@ -35,7 +35,7 @@
   "sqltools.connections": [
     {
       "database": "postgres",
-      "dialect": "PostgreSQL",
+      "driver": "PostgreSQL",
       "name": "p1d",
       "password": "postgres",
       "port": 5432,

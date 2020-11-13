@@ -18,6 +18,7 @@ declare global {
         callback: (googleUser: GoogleUser) => void,
       ) => void;
     };
+    loginLock?: boolean;
   }
 }
 

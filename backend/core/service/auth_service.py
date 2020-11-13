@@ -4,9 +4,11 @@ from random import randrange
 from time import time
 
 from django.conf import settings
+from django_eventstream import send_event
 from google.auth.transport import requests
 from google.oauth2 import id_token
 
+from core.messages import PlayerReplacedMessage
 from core.models import (
     Pad,
     PadStep,
@@ -114,6 +116,15 @@ def merge_players(from_player: Player, into_player: Player):
     Pad.objects.filter(initial_player=from_player).update(initial_player=into_player)
     PadStep.objects.filter(player=from_player).update(player=into_player)
     Vote.objects.filter(player=from_player).update(player=into_player)
+
+    if from_player.room is not None:
+        into_player.room = from_player.room
+        into_player.save()
+        send_event(
+            "room-%s" % from_player.room.uuid.hex,
+            "message",
+            PlayerReplacedMessage(from_player, into_player).serialize(),
+        )
     from_player.delete()
 
 
