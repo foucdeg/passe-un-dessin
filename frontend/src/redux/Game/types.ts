@@ -25,6 +25,7 @@ export interface PadStep {
   sentence: string | null;
   drawing_url: string;
   votes: Vote[];
+  created_at: string;
 }
 
 export interface Pad {

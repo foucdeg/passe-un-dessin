@@ -25,7 +25,6 @@ export const ModalContent = styled.div`
   width: 512px;
   border-radius: 16px;
   padding: 24px 54px;
-  line-height: 150%;
   position: relative;
   display: flex;
   flex-direction: column;

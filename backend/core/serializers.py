@@ -100,6 +100,7 @@ class PadStepSerializer(BaseSerializer):
             "sentence",
             "drawing_url",
             "votes",
+            "created_at"
         )
 
 

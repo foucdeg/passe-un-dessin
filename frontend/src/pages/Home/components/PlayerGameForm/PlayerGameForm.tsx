@@ -12,7 +12,7 @@ import { StartButton, StyledForm } from './PlayerGameForm.style';
 export const PlayerGameForm: React.FC<NoProps> = () => {
   const intl = useIntl();
   const player = useSelector(selectPlayer);
-  const [playerName, setPlayerName] = useState<string>('  ');
+  const [playerName, setPlayerName] = useState<string>('');
   const doCreateRoom = useCreateRoom();
   const doCreatePlayer = useCreatePlayer();
 
