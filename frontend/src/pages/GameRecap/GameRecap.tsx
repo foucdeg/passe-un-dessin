@@ -8,8 +8,6 @@ import { selectGame } from 'redux/Game/selectors';
 import { FormattedMessage } from 'react-intl';
 import { useReviewPad } from 'redux/Game/hooks';
 import { selectAvailableVoteCount } from 'redux/Game/selectors';
-import NewGameModal from 'modals/NewGameModal';
-import DoneModal from 'modals/DoneModal';
 
 import { tabHandlerBuilder } from 'services/utils';
 import { ThumbUpButton } from './components/ReactionOverlay/ReactionOverlay.style';
@@ -36,8 +34,6 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode }) => {
   const availableVoteCount = useSelector(selectAvailableVoteCount);
 
   const [displayedPadIndex, setDisplayedPadIndex] = useState<number>(0);
-  const [doneModalIsOpen, setDoneModalIsOpen] = useState<boolean>(true);
-  const [newGameModalIsOpen, setNewGameModalIsOpen] = useState<boolean>(false);
 
   const doReviewPad = useReviewPad();
 
@@ -128,11 +124,6 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode }) => {
           )}
         </VoteReminder>
       )}
-      {doneModalIsOpen && !publicMode && <DoneModal onClose={() => setDoneModalIsOpen(false)} />}
-      <NewGameModal
-        isOpen={!publicMode && newGameModalIsOpen}
-        onClose={() => setNewGameModalIsOpen(false)}
-      />
     </>
   );
 };

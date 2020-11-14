@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useBoolean } from 'services/utils';
 import { OuterTimerBar, InnerTimerBar } from './Timer.style';
 
 interface Props {
   duration: number;
 }
 const Timer: React.FC<Props> = ({ duration }) => {
-  const [started, setStarted] = useState<boolean>(false);
+  const [started, start] = useBoolean(false);
   useEffect(() => {
-    setTimeout(() => setStarted(true), 0);
-  }, []);
+    setTimeout(start, 0);
+  }, [start]);
 
   return (
     <OuterTimerBar>

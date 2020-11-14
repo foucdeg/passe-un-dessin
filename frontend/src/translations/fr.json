@@ -14,7 +14,13 @@
       "4": "Quand tout le monde a pu dessiner chacun des mots, on passe aux carnets de résultats ! <strong>Regarde ce que sont devenus les mots choisis</strong> et vote pour tes dessins ou idées préférées."
     },
     "termsAndConditions": "Conditions d'utilisation",
-    "privacyPolicy": "Politique de confidentialité"
+    "privacyPolicy": "Politique de confidentialité",
+    "leaderboard": "Classement mondial",
+    "openRules": "Règles du jeu",
+    "findPlayers": "Trouver des joueurs",
+    "discordText": "Rejoins ce serveur Discord pour trouver des gens qui veulent jouer, et pour partager tes plus belles parties !",
+    "rulesUnderstood": "Compris !",
+    "highlightedDrawingCaption": "<em>{sentence}</em>, par {name}, {year}"
   },
   "roomLobby": {
     "title": "Salle d'attente",

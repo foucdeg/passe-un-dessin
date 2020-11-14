@@ -16,6 +16,7 @@ import {
 import { PadStep } from 'redux/Game/types';
 import RemainingPlayers from 'components/RemainingPlayers';
 import Drawing from 'components/Canvas/Drawing';
+import { useBoolean } from 'services/utils';
 import { StyledButton, StyledForm } from './DrawingToWordStep.style';
 
 interface Props {
@@ -26,14 +27,14 @@ interface Props {
 
 const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, loading }) => {
   const [sentence, setSentence] = useState<string>(padStep.sentence || '');
-  const [isInputDisabled, setIsInputDisabled] = useState<boolean>(!!padStep.sentence);
+  const [isInputDisabled, disableInput, reenableInput] = useBoolean(!!padStep.sentence);
   const intl = useIntl();
 
   const onSubmit = (event: React.MouseEvent | React.FormEvent) => {
     event.preventDefault();
     if (sentence !== '') {
       saveStep({ sentence });
-      setIsInputDisabled(true);
+      disableInput();
     }
   };
 
@@ -50,7 +51,7 @@ const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, loading }) => {
         {isInputDisabled && !loading ? (
           <>
             <StaticInput>{padStep.sentence}</StaticInput>
-            <StyledButton type="button" onClick={() => setIsInputDisabled(false)}>
+            <StyledButton type="button" onClick={reenableInput}>
               <FormattedMessage id="drawingToWord.update" />
             </StyledButton>
           </>

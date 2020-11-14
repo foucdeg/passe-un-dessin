@@ -14,7 +14,13 @@
       "4": "When everybody has drawn all of the words, we look at the drawing pads! <strong>Look at what the initial words or sentences became</strong> and vote for your favorite sketches and ideas."
     },
     "termsAndConditions": "Terms and Conditions",
-    "privacyPolicy": "Privacy Policy"
+    "privacyPolicy": "Privacy Policy",
+    "leaderboard": "World leaderboard",
+    "openRules": "Game rules",
+    "findPlayers": "Find players",
+    "discordText": "Join this Discord server to find people who want to play, and to share your best games!",
+    "rulesUnderstood": "Got it!",
+    "highlightedDrawingCaption": "<em>{sentence}</em>, by {name}, {year}"
   },
   "roomLobby": {
     "title": "Lobby",

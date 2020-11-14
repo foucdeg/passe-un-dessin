@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import Spacer from 'atoms/Spacer';
 import CanvasDraw from 'components/Canvas/CanvasDraw';
 import Timer from 'pages/PadStep/components/Timer';
@@ -7,6 +7,7 @@ import { selectGame } from 'redux/Game/selectors';
 import { PadStep } from 'redux/Game/types';
 import { useSelector } from 'redux/useSelector';
 import RemainingPlayers from 'components/RemainingPlayers';
+import { useBoolean } from 'services/utils';
 import {
   Gutter,
   LeftAndRightSide,
@@ -24,12 +25,12 @@ interface Props {
 
 const WordToDrawingStep: React.FC<Props> = ({ padStep, saveStep, loading }) => {
   const game = useSelector(selectGame);
-  const [finished, setFinished] = useState<boolean>(false);
+  const [finished, setFinished] = useBoolean(false);
 
   const doSaveStep = useCallback(
     async (values: { sentence?: string; drawing?: string }) => {
       await saveStep(values);
-      setFinished(true);
+      setFinished();
     },
     [setFinished, saveStep],
   );

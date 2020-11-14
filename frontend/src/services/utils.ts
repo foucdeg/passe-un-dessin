@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/browser';
+import { useState } from 'react';
 import { useAsyncFn } from 'react-use';
 import { AsyncFnReturn } from 'react-use/lib/useAsync';
 
@@ -94,3 +95,9 @@ export const tabHandlerBuilder = (tabAction: () => void, unTabAction: () => void
 export const getUndoCommand = () => (isDeviceMacOs() ? '⌘ + Z' : 'Ctrl + Z');
 
 export const getRedoCommand = () => (isDeviceMacOs() ? '⌘ + ⇧ + Z' : 'Ctrl + Y');
+
+export const useBoolean = (initialValue = false): [boolean, () => void, () => void, () => void] => {
+  const [value, setter] = useState<boolean>(initialValue);
+
+  return [value, () => setter(true), () => setter(false), () => setter((value) => !value)];
+};

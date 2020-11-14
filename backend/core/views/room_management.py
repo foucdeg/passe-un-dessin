@@ -176,7 +176,12 @@ def get_ranking(request, room_id):
     ranking_json = [
         {
             "player": PlayerSerializer(
-                Player(uuid=rank["uuid"], color=rank["color"], name=rank["name"], avatar=rank["avatar"])
+                Player(
+                    uuid=rank["uuid"],
+                    color=rank["color"],
+                    name=rank["name"],
+                    avatar=rank["avatar"],
+                )
             ).data,
             "vote_count": rank["count"],
         }

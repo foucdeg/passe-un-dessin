@@ -19,6 +19,7 @@ const PadRecap: React.FC<Props> = ({ pad, publicMode }) => {
     votes: [],
     round_number: -1,
     drawing_url: '',
+    created_at: '',
   };
 
   return (

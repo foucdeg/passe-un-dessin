@@ -64,7 +64,12 @@ class PadRetrieveAPIView(RetrieveAPIView):
 
 class PadStepRetrieveAPIView(RetrieveAPIView):
     lookup_field = "uuid"
-    queryset = PadStep.objects.prefetch_related("player").all()
+    queryset = (
+        PadStep.objects.prefetch_related("player")
+        .prefetch_related("votes")
+        .prefetch_related("votes__player")
+        .all()
+    )
     serializer_class = PadStepSerializer
 
 
