@@ -10,6 +10,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import Spacer from 'atoms/Spacer';
 import InputLoader from 'atoms/InputLoader';
 import RemainingPlayers from 'components/RemainingPlayers';
+import { useBoolean } from 'services/utils';
 import SuggestionGenerator from './components/SuggestionGenerator';
 import {
   StyledHeader,
@@ -33,7 +34,7 @@ const PadInit: React.FunctionComponent = () => {
   const intl = useIntl();
 
   const [sentence, setSentence] = useState<string>('');
-  const [isInputDisabled, setIsInputDisabled] = useState<boolean>(false);
+  const [isInputDisabled, disableInput, reenableInput] = useBoolean(false);
 
   const [{ loading }, doSavePad] = useSavePad();
 
@@ -43,9 +44,9 @@ const PadInit: React.FunctionComponent = () => {
     if (!pad) return;
 
     if (pad.sentence) {
-      setIsInputDisabled(true);
+      disableInput();
     }
-  }, [game, padId]);
+  }, [game, padId, disableInput]);
 
   if (!game) return null;
   const pad = game.pads.find((pad) => pad.uuid === padId);
@@ -60,7 +61,7 @@ const PadInit: React.FunctionComponent = () => {
     event.preventDefault();
     if (sentence !== '' && !loading) {
       doSavePad({ pad, sentence });
-      setIsInputDisabled(true);
+      disableInput();
     }
   };
 
@@ -73,7 +74,7 @@ const PadInit: React.FunctionComponent = () => {
         {isInputDisabled && !loading ? (
           <>
             <StyledStaticInput>{pad.sentence}</StyledStaticInput>
-            <StyledButton type="button" onClick={() => setIsInputDisabled(false)}>
+            <StyledButton type="button" onClick={reenableInput}>
               <FormattedMessage id="padInit.update" />
             </StyledButton>
           </>

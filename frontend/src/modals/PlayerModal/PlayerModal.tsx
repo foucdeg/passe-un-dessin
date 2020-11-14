@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useSelector } from 'redux/useSelector';
 import { FormattedMessage } from 'react-intl';
 import { selectPlayer, selectPlayerTotalScore, selectPlayerRanking } from 'redux/Player/selectors';
@@ -8,6 +8,7 @@ import CanvasDraw from 'components/Canvas/CanvasDraw';
 import SecondaryButton from 'atoms/SecondaryButton';
 import { colorPalette } from 'stylesheet';
 import { PUBLIC_PATHS } from 'routes';
+import { useBoolean } from 'services/utils';
 import ScoreCard from './components/ScoreCard';
 import PlayerForm from './components/PlayerForm';
 import {
@@ -31,16 +32,16 @@ const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const [{ loading: scoreLoading }, fetchMyTotalScore] = useFetchMyTotalScore();
   const totalScore = useSelector(selectPlayerTotalScore);
   const ranking = useSelector(selectPlayerRanking);
-  const [isAvatarDrawing, setIsAvatarDrawing] = useState<boolean>(false);
+  const [isAvatarDrawing, openAvatarDrawing, closeAvatarDrawing] = useBoolean(false);
   const doEditPlayer = useEditPlayer();
 
   const doSaveAvatar = useCallback(
     async (values: { drawing: string }) => {
       if (!player) return;
       await doEditPlayer({ ...player, avatar: values.drawing });
-      setIsAvatarDrawing(false);
+      closeAvatarDrawing();
     },
-    [setIsAvatarDrawing, doEditPlayer, player],
+    [closeAvatarDrawing, doEditPlayer, player],
   );
 
   useEffect(() => {
@@ -59,7 +60,7 @@ const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
 
   return (
     <StyledModal isOpen={isOpen} onClose={onClose}>
-      {isAvatarDrawing && <UndoAction onClick={() => setIsAvatarDrawing(false)} />}
+      {isAvatarDrawing && <UndoAction onClick={closeAvatarDrawing} />}
       <HeaderSection>
         <StyledHeader>
           <FormattedMessage id="playerModal.title" />
@@ -81,7 +82,7 @@ const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
         />
       ) : (
         <>
-          <PlayerForm openAvatarDrawing={() => setIsAvatarDrawing(true)} />
+          <PlayerForm openAvatarDrawing={openAvatarDrawing} />
           <StyledSeparator>
             <FormattedMessage id="playerModal.myStats" />
           </StyledSeparator>

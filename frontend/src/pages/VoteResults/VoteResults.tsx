@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'redux/useSelector';
 import { useGetVoteResults } from 'redux/Game/hooks';
 import { selectRoom, selectPlayerIsAdmin } from 'redux/Room/selectors';
@@ -7,6 +7,7 @@ import NewGameModal from 'modals/NewGameModal';
 import { FormattedMessage } from 'react-intl';
 import Spacer from 'atoms/Spacer';
 import BareLink from 'atoms/BareLink';
+import { useBoolean } from 'services/utils';
 import Podium from './components/Podium';
 import {
   Container,
@@ -24,7 +25,7 @@ const VoteResults: React.FunctionComponent = () => {
   const isPlayerAdmin = useSelector(selectPlayerIsAdmin);
   const winners = useSelector(selectWinners);
 
-  const [newGameModalIsOpen, setNewGameModalIsOpen] = useState<boolean>(false);
+  const [modalIsOpen, openModal, closeModal] = useBoolean(false);
 
   const doGetVoteResults = useGetVoteResults();
 
@@ -54,12 +55,12 @@ const VoteResults: React.FunctionComponent = () => {
           </TopRightButton>
         </BareLink>
         {isPlayerAdmin && (
-          <TopRightButton onClick={() => setNewGameModalIsOpen(true)}>
+          <TopRightButton onClick={openModal}>
             <FormattedMessage id="voteResults.newGame" />
           </TopRightButton>
         )}
       </TopRightButtons>
-      <NewGameModal isOpen={newGameModalIsOpen} onClose={() => setNewGameModalIsOpen(false)} />
+      <NewGameModal isOpen={modalIsOpen} onClose={closeModal} />
     </Container>
   );
 };

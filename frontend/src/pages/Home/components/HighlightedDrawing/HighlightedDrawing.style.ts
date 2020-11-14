@@ -1,6 +1,6 @@
 import Drawing from 'components/Canvas/Drawing';
 import styled from 'styled-components';
-import { colorPalette, fontSize } from 'stylesheet';
+import { fontSize } from 'stylesheet';
 
 export const StyledDrawing = styled(Drawing)`
   width: 250px;

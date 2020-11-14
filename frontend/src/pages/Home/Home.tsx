@@ -40,8 +40,6 @@ const Home: React.FunctionComponent = () => {
     return (await client.get(`/pad-step/${highlightedStepId}`)) as PadStep;
   }, []);
 
-  console.log(loading, hightlightedPadStep);
-
   useEffect(() => {
     doFetchHighlightedStep();
   }, [doFetchHighlightedStep]);

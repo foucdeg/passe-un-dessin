@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NoProps } from 'services/utils';
+import { NoProps, useBoolean } from 'services/utils';
 import Modal from 'components/Modal';
 import { FormattedMessage, useIntl } from 'react-intl';
 import FieldLabel from 'atoms/FieldLabel';
@@ -12,7 +12,7 @@ const UserNameModal: React.FC<NoProps> = () => {
   const [playerName, setPlayerName] = useState<string>('');
   const intl = useIntl();
   const doCreatePlayer = useCreatePlayer();
-  const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
+  const [isLoggingIn, activateLoggingIn] = useBoolean(false);
 
   return (
     <Modal isOpen>
@@ -50,7 +50,7 @@ const UserNameModal: React.FC<NoProps> = () => {
             />
             <p></p>
           </UsernameForm>
-          <VirtualButton onClick={() => setIsLoggingIn(true)}>
+          <VirtualButton onClick={activateLoggingIn}>
             <p>
               <FormattedMessage id="userNameModal.iHaveAnAccount" />
             </p>

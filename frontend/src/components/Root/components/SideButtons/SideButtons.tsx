@@ -13,7 +13,7 @@ import { selectPlayer } from 'redux/Player/selectors';
 import PlayerModal from 'modals/PlayerModal';
 import RankingModal from 'modals/RankingModal';
 import { useLeaveRoom } from 'redux/Room/hooks';
-import { EmptyObject } from 'services/utils';
+import { EmptyObject, useBoolean } from 'services/utils';
 import AuthModal from 'modals/AuthModal';
 import {
   SideButtonsContainer,
@@ -38,10 +38,10 @@ const SideButtons: React.FC<EmptyObject> = () => {
     intl.formatMessage({ id: 'menu.addPlayer' }),
   );
 
-  const [isAdminModalOpen, setAdminModalOpen] = useState<boolean>(false);
-  const [isAuthModalOpen, setAuthModalOpen] = useState<boolean>(false);
-  const [isPlayerModalOpen, setPlayerModalOpen] = useState<boolean>(false);
-  const [isRankingModalOpen, setRankingModalOpen] = useState<boolean>(false);
+  const [isAdminModalOpen, openAdminModal, closeAdminModal] = useBoolean(false);
+  const [isAuthModalOpen, openAuthModal, closeAuthModal] = useBoolean(false);
+  const [isPlayerModalOpen, openPlayerModal, closePlayerModal] = useBoolean(false);
+  const [isRankingModalOpen, openRankingModal, closeRankingModal] = useBoolean(false);
 
   const onCopy = () => {
     if (!room) return;
@@ -63,21 +63,21 @@ const SideButtons: React.FC<EmptyObject> = () => {
       <AudioControl />
       {player && player.user ? (
         <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.accountMenu' })}>
-          <UserModalButton alt="User" onClick={() => setPlayerModalOpen(true)} />
+          <UserModalButton alt="User" onClick={openPlayerModal} />
         </IconAndTooltip>
       ) : (
         <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.playerMenu' })}>
-          <PlayerModalButton alt="Player" onClick={() => setAuthModalOpen(true)} />
+          <PlayerModalButton alt="Player" onClick={openAuthModal} />
         </IconAndTooltip>
       )}
       {room && isPlayerAdmin && (
         <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.adminMenu' })}>
-          <AdminModalButton alt="Settings" onClick={() => setAdminModalOpen(true)} />
+          <AdminModalButton alt="Settings" onClick={openAdminModal} />
         </IconAndTooltip>
       )}
       {room && (
         <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.ranking' })}>
-          <RankingModalButton alt="Ranking" onClick={() => setRankingModalOpen(true)} />
+          <RankingModalButton alt="Ranking" onClick={openRankingModal} />
         </IconAndTooltip>
       )}
       {game && !viewingAsPublic && (
@@ -95,10 +95,10 @@ const SideButtons: React.FC<EmptyObject> = () => {
           <LeaveButton alt="leave game" onClick={doLeaveRoom} />
         </IconAndTooltip>
       )}
-      <AdminModal isOpen={isAdminModalOpen} onClose={() => setAdminModalOpen(false)} />
-      <AuthModal isOpen={isAuthModalOpen} onClose={() => setAuthModalOpen(false)} />
-      <PlayerModal isOpen={isPlayerModalOpen} onClose={() => setPlayerModalOpen(false)} />
-      <RankingModal isOpen={isRankingModalOpen} onClose={() => setRankingModalOpen(false)} />
+      <AdminModal isOpen={isAdminModalOpen} onClose={closeAdminModal} />
+      <AuthModal isOpen={isAuthModalOpen} onClose={closeAuthModal} />
+      <PlayerModal isOpen={isPlayerModalOpen} onClose={closePlayerModal} />
+      <RankingModal isOpen={isRankingModalOpen} onClose={closeRankingModal} />
     </SideButtonsContainer>
   );
 };
