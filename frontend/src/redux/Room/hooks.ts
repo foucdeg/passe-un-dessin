@@ -8,6 +8,7 @@ import client from 'services/networking/client';
 import { selectGame } from 'redux/Game/selectors';
 import { GamePhase } from 'redux/Game/types';
 import { useIntl } from 'react-intl';
+import { removeGame } from 'redux/Game';
 import { joinRoom, removeRoom, updateRanking, updateRoom } from './slice';
 import { Room } from './types';
 import { selectRoom } from './selectors';
@@ -78,6 +79,7 @@ export const useLeaveRoom = () => {
 
     if (isOkayToLeave || window.confirm(intl.formatMessage({ id: 'menu.confirmLeave' }))) {
       await client.put(`/room/${room.uuid}/leave`, {});
+      dispatch(removeGame());
       dispatch(removeRoom());
       history.push('/');
     }
