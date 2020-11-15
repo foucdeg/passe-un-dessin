@@ -26,7 +26,7 @@ export const useSaveStepDrawing = () => {
 export const useSaveStepSentence = () => {
   const dispatch = useDispatch();
 
-  return useTypedAsyncFn<{ step: PadStep; sentence: string }>(
+  return useTypedAsyncFn<{ step: PadStep; sentence: string | null }>(
     async ({ step, sentence }) => {
       await client.put(`/pad-step/${step.uuid}/save`, { sentence });
       dispatch(

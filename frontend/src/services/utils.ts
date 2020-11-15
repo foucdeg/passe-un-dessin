@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/browser';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useAsyncFn } from 'react-use';
 import { AsyncFnReturn } from 'react-use/lib/useAsync';
 
@@ -99,5 +99,10 @@ export const getRedoCommand = () => (isDeviceMacOs() ? '⌘ + ⇧ + Z' : 'Ctrl +
 export const useBoolean = (initialValue = false): [boolean, () => void, () => void, () => void] => {
   const [value, setter] = useState<boolean>(initialValue);
 
-  return [value, () => setter(true), () => setter(false), () => setter((value) => !value)];
+  return [
+    value,
+    useCallback(() => setter(true), [setter]),
+    useCallback(() => setter(false), [setter]),
+    useCallback(() => setter((value) => !value), [setter]),
+  ];
 };

@@ -21,7 +21,7 @@ import { StyledButton, StyledForm } from './DrawingToWordStep.style';
 
 interface Props {
   padStep: PadStep;
-  saveStep: (values: { sentence?: string; drawing?: string }) => void;
+  saveStep: (values: { sentence?: string | null; drawing?: string }) => void;
   loading: boolean;
 }
 
@@ -38,6 +38,11 @@ const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, loading }) => {
     }
   };
 
+  const onClickUpdate = () => {
+    reenableInput();
+    saveStep({ sentence: null });
+  };
+
   return (
     <LeftAndRightSide>
       <LeftSide>
@@ -51,7 +56,7 @@ const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, loading }) => {
         {isInputDisabled && !loading ? (
           <>
             <StaticInput>{padStep.sentence}</StaticInput>
-            <StyledButton type="button" onClick={reenableInput}>
+            <StyledButton type="button" onClick={onClickUpdate}>
               <FormattedMessage id="drawingToWord.update" />
             </StyledButton>
           </>

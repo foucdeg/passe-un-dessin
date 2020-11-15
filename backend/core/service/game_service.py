@@ -202,5 +202,5 @@ def assert_round(game: Game, expected_round: int):
         raise GameRoundAssertionException(expected_round, game.current_round)
 
 
-def is_player_in_game(game: Game, player: Player):
-    return player in [participant.player for participant in game.participants.all()]
+def is_valid_sentence(sentence):
+    return sentence is not None and sentence != ""
