@@ -24,8 +24,6 @@ LeftSide.displayName = 'LeftSide';
 export const RightSide = styled.div`
   flex-grow: 1;
   height: 100%;
-  display: flex;
-  flex-direction: column;
   overflow-y: scroll;
 `;
 RightSide.displayName = 'RightSide';

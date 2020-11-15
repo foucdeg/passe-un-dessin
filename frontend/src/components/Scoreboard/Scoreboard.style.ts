@@ -3,8 +3,6 @@ import { fontSize, fontWeight } from 'stylesheet';
 import Avatar from 'components/Avatar';
 
 export const InnerScoreboard = styled.div`
-  display: flex;
-  flex-direction: column;
   overflow-y: auto;
 `;
 
