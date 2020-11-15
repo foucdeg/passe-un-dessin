@@ -122,6 +122,15 @@ const gameSlice = createSlice({
     resetGameMetadata: (state) => {
       state.winners = null;
     },
+    removeGame: (state) => {
+      state.viewingAsPublic = true;
+      state.game = null;
+      state.gameStructure = null;
+      state.remainingPlayers = [];
+      state.suggestions = [];
+      state.recapViews = {};
+      state.winners = null;
+    },
   },
 });
 
@@ -137,5 +146,6 @@ export const {
   addVoteToPadStep,
   removeVoteFromPadStep,
   resetGameMetadata,
+  removeGame,
 } = gameSlice.actions;
 export default gameSlice.reducer;
