@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Player } from 'redux/Player/types';
+import { findRemainingPlayers } from 'services/game.service';
 import { Game, Pad, GamePhase, PadStep } from './types';
 
 export type GameState = Readonly<{
@@ -37,7 +38,7 @@ const gameSlice = createSlice({
 
       if (!state.game) return;
 
-      state.remainingPlayers = state.game.players;
+      state.remainingPlayers = findRemainingPlayers(state.game);
       state.recapViews = state.game.pads.reduce(
         (acc, pad) => ({ ...acc, [pad.uuid]: [] }),
         {} as { [padUuid: string]: Player[] },
