@@ -69,6 +69,13 @@ export const deleteHandlerBuilder = (deleteAction: () => void) => (event: Keyboa
   }
 };
 
+export const enterHandlerBuilder = (enterAction: () => void) => (event: KeyboardEvent) => {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    enterAction();
+  }
+};
+
 export const upAndDownHandlerBuilder = (upAction: () => void, downAction: () => void) => (
   event: KeyboardEvent,
 ) => {
