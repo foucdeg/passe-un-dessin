@@ -17,6 +17,8 @@ interface Props {
   onClose: () => void;
 }
 
+const discordLink = 'https://discord.gg/8y9s5yFgYq';
+
 const DiscordModal: React.FC<Props> = ({ isOpen, onClose }) => (
   <Modal isOpen={isOpen} onClose={onClose}>
     <Header>
@@ -26,14 +28,14 @@ const DiscordModal: React.FC<Props> = ({ isOpen, onClose }) => (
       <FormattedMessage id="home.discordText" />
     </StyledParagraph>
     <DiscordRow>
-      <BareAnchor href="https://discord.gg/Pzc9Bh6T" target="_blank" onClick={onClose}>
+      <BareAnchor href={discordLink} target="_blank" onClick={onClose}>
         <DiscordLogo />
       </BareAnchor>
       <StyledTextInput
         readOnly
-        value="https://discord.gg/Pzc9Bh6T"
+        value={discordLink}
         adornment={
-          <BareAnchor href="https://discord.gg/Pzc9Bh6T" target="_blank" onClick={onClose}>
+          <BareAnchor href={discordLink} target="_blank" onClick={onClose}>
             <DiscordLinkAdornment />
           </BareAnchor>
         }
