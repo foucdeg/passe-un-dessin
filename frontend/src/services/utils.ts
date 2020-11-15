@@ -42,17 +42,25 @@ const isCtrlOrCmdPressed = (event: KeyboardEvent) => {
   return event.ctrlKey;
 };
 
+const isZPressed = (event: KeyboardEvent) => {
+  return event.key.toLowerCase() === 'z';
+};
+
+const isYPressed = (event: KeyboardEvent) => {
+  return event.key.toLowerCase() === 'y';
+};
+
 const isRedoKeyPadTouched = (event: KeyboardEvent) => {
   if (isDeviceMacOs()) {
-    return event.key === 'Z';
+    return isZPressed(event) && event.shiftKey;
   }
-  return event.key === 'y';
+  return isYPressed(event);
 };
 
 export const undoAndRedoHandlerBuilder = (undoAction: () => void, redoAction: () => void) => (
   event: KeyboardEvent,
 ) => {
-  if (event.key === 'z' && isCtrlOrCmdPressed(event)) {
+  if (isZPressed(event) && isCtrlOrCmdPressed(event) && !event.shiftKey) {
     event.preventDefault();
     undoAction();
   }
