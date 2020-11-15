@@ -138,6 +138,11 @@ class Game(BaseModel):
 
         return all_pad_steps
 
+    def has_player(self, player: Player):
+        return player in [
+            participant.player for participant in self.participants.all()
+        ]
+
 
 class PlayerGameParticipation(BaseModel):
     player = models.ForeignKey(

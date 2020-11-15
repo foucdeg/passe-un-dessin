@@ -133,7 +133,7 @@ export const useGetVoteResults = () => {
 export const useSavePad = () => {
   const dispatch = useDispatch();
 
-  return useTypedAsyncFn<{ pad: Pad; sentence: string }>(
+  return useTypedAsyncFn<{ pad: Pad; sentence: string | null }>(
     async ({ pad, sentence }) => {
       const updatedPad = await client.put(`/pad/${pad.uuid}/save`, { sentence });
       dispatch(updatePad(updatedPad));

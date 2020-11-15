@@ -49,6 +49,12 @@ const PadInit: React.FunctionComponent = () => {
   }, [game, padId, disableInput]);
 
   if (!game) return null;
+
+  const onClickUpdate = () => {
+    reenableInput();
+    doSavePad({ pad, sentence: null });
+  };
+
   const pad = game.pads.find((pad) => pad.uuid === padId);
   if (!pad) return null;
   if (!pad.steps.length) return null;
@@ -74,7 +80,7 @@ const PadInit: React.FunctionComponent = () => {
         {isInputDisabled && !loading ? (
           <>
             <StyledStaticInput>{pad.sentence}</StyledStaticInput>
-            <StyledButton type="button" onClick={reenableInput}>
+            <StyledButton type="button" onClick={onClickUpdate}>
               <FormattedMessage id="padInit.update" />
             </StyledButton>
           </>

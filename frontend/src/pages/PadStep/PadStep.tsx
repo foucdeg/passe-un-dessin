@@ -27,13 +27,13 @@ const PadStep: React.FunctionComponent = () => {
   }, [doFetchStep, stepId]);
 
   const saveStep = useCallback(
-    (values: { sentence?: string; drawing?: string }) => {
+    (values: { sentence?: string | null; drawing?: string }) => {
       if (!step) return;
 
-      if (values.sentence && !isSaveStepSentenceLoading) {
+      if (values.sentence !== undefined && !isSaveStepSentenceLoading) {
         doSaveStepSentence({ step, sentence: values.sentence });
       }
-      if (values.drawing && !isSaveStepDrawingLoading) {
+      if (values.drawing !== undefined && !isSaveStepDrawingLoading) {
         doSaveStepDrawing({ step, drawing: values.drawing });
       }
     },

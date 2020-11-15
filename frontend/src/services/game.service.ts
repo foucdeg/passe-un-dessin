@@ -76,3 +76,32 @@ export const shouldDisplayDrawOwnWordSwitch = (playerCount: number) => {
   }
   return playerCount % 2 === 0;
 };
+
+export const findRemainingPlayers = (game: Game): Player[] => {
+  switch (game.phase) {
+    case GamePhase.INIT:
+      return game.pads.filter((pad) => !pad.sentence).map((pad) => pad.initial_player);
+    case GamePhase.ROUNDS:
+      return game.rounds
+        .filter((padStep) => padStep.round_number === game.current_round && !padStep.sentence)
+        .map((padStep) => padStep.player);
+    case GamePhase.DEBRIEF:
+      const voteCountByPlayer = game.rounds.reduce((acc, padStep) => {
+        padStep.votes.forEach((vote) => {
+          if (!acc[vote.player.uuid]) {
+            acc[vote.player.uuid] = 0;
+          }
+          acc[vote.player.uuid] = acc[vote.player.uuid] + 1;
+        });
+        return acc;
+      }, {} as Record<string, number>);
+
+      return game.players.filter(
+        (player) =>
+          !voteCountByPlayer[player.uuid] ||
+          voteCountByPlayer[player.uuid] < getAvailableVoteCount(game),
+      );
+    default:
+      return [];
+  }
+};
