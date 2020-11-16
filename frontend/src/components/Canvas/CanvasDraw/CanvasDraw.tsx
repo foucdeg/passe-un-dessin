@@ -226,13 +226,23 @@ const CanvasDraw: React.FC<Props> = ({
       undoAndRedoHandlerBuilder(handleUndo, handleRedo)(event);
       deleteHandlerBuilder(handleClear)(event);
       upAndDownHandlerBuilder(selectPreviousColor, selectNextColor)(event);
-      enterHandlerBuilder(saveDrawing)(event);
+      if (displaySaveButton) {
+        enterHandlerBuilder(saveDrawing)(event);
+      }
     };
     window.addEventListener('keydown', handler);
     return () => {
       window.removeEventListener('keydown', handler);
     };
-  }, [handleUndo, handleRedo, handleClear, selectPreviousColor, selectNextColor, saveDrawing]);
+  }, [
+    handleUndo,
+    handleRedo,
+    handleClear,
+    selectPreviousColor,
+    selectNextColor,
+    saveDrawing,
+    displaySaveButton,
+  ]);
 
   useEffect(() => {
     if (!canvasRef.current) {
