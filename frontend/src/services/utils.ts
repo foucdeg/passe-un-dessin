@@ -43,17 +43,25 @@ const isCtrlOrCmdPressed = (event: KeyboardEvent) => {
   return event.ctrlKey;
 };
 
+const isZPressed = (event: KeyboardEvent) => {
+  return event.key.toLowerCase() === 'z';
+};
+
+const isYPressed = (event: KeyboardEvent) => {
+  return event.key.toLowerCase() === 'y';
+};
+
 const isRedoKeyPadTouched = (event: KeyboardEvent) => {
   if (isDeviceMacOs()) {
-    return event.key === 'Z';
+    return isZPressed(event) && event.shiftKey;
   }
-  return event.key === 'y';
+  return isYPressed(event);
 };
 
 export const undoAndRedoHandlerBuilder = (undoAction: () => void, redoAction: () => void) => (
   event: KeyboardEvent,
 ) => {
-  if (event.key === 'z' && isCtrlOrCmdPressed(event)) {
+  if (isZPressed(event) && isCtrlOrCmdPressed(event) && !event.shiftKey) {
     event.preventDefault();
     undoAction();
   }
@@ -67,6 +75,13 @@ export const deleteHandlerBuilder = (deleteAction: () => void) => (event: Keyboa
   if (event.key === 'Backspace') {
     event.preventDefault();
     deleteAction();
+  }
+};
+
+export const enterHandlerBuilder = (enterAction: () => void) => (event: KeyboardEvent) => {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    enterAction();
   }
 };
 
