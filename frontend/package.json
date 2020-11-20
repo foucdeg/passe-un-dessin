@@ -107,7 +107,7 @@
     "eslint-plugin-risxss": "1.1.1",
     "http-proxy-middleware": "1.0.6",
     "npm-audit-resolver": "2.2.1",
-    "prettier": "2.1.2",
+    "prettier": "2.2.0",
     "react-app-rewire-webpack-bundle-analyzer": "1.1.0",
     "react-app-rewired": "2.1.6",
     "sitemap-webpack-plugin": "1.0.0",
