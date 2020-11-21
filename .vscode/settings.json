@@ -44,5 +44,24 @@
     }
   ],
   "eslint.workingDirectories": ["./frontend"],
-  "typescript.tsdk": "frontend/node_modules/typescript/lib" // until VSCode ships with TS4 by default
+  "typescript.tsdk": "frontend/node_modules/typescript/lib", // until VSCode ships with TS4 by default,
+  "yaml.customTags": [
+    "!And",
+    "!If",
+    "!Not",
+    "!Equals",
+    "!Or",
+    "!FindInMap sequence",
+    "!Base64",
+    "!Cidr",
+    "!Ref",
+    "!Sub",
+    "!GetAtt",
+    "!GetAZs",
+    "!ImportValue",
+    "!Select",
+    "!Select sequence",
+    "!Split",
+    "!Join sequence"
+],
 }
