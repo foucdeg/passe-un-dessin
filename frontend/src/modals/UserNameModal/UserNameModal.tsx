@@ -27,7 +27,7 @@ const UserNameModal: React.FC<NoProps> = () => {
             onSubmit={(e) => {
               e.preventDefault();
               if (playerName !== '') {
-                doCreatePlayer(playerName);
+                doCreatePlayer(playerName.trim());
               }
             }}
           >

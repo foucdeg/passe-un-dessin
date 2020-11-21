@@ -33,7 +33,7 @@ const PlayerForm = withFormik<OutsideProps, FormValues>({
   },
   validate: (values: FormValues) => {
     const errors: FormikErrors<FormValues> = {};
-    if (!values.name) {
+    if (!values.name.trim()) {
       errors.name = 'playerModal.errors.required';
     }
     if (!values.color) {
@@ -47,7 +47,7 @@ const PlayerForm = withFormik<OutsideProps, FormValues>({
     const { onSubmit, player } = props;
     const { user, ...playerWithoutUser } = player;
     const { name, color } = values;
-    await onSubmit({ ...playerWithoutUser, name, color });
+    await onSubmit({ ...playerWithoutUser, name: name.trim(), color });
     setSubmitting(false);
     props.setIsEditing(false);
   },
