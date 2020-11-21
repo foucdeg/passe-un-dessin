@@ -22,6 +22,11 @@ CORS_ORIGIN_WHITELIST = [
 
 INSTALLED_APPS = INSTALLED_APPS + ["storages"]
 
+CORS_ALLOWED_ORIGINS = [
+    "https://passe-un-dessin.fouc.net",
+    "https://passeundessin.com",
+]
+
 # Secure connection
 SECURE_REDIRECT_EXEMPT = [r"/?health"]
 
