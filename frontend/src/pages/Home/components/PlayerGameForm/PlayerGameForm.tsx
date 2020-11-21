@@ -18,7 +18,7 @@ export const PlayerGameForm: React.FC<NoProps> = () => {
 
   const doSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await doCreatePlayer(playerName);
+    await doCreatePlayer(playerName.trim());
     doCreateRoom();
   };
 
@@ -40,7 +40,7 @@ export const PlayerGameForm: React.FC<NoProps> = () => {
         placeholder={intl.formatMessage({ id: 'userNameModal.pickName' })}
         onChange={(e) => setPlayerName(e.target.value)}
       />
-      <Button type="submit" disabled={!playerName}>
+      <Button type="submit" disabled={!playerName.trim()}>
         <FormattedMessage id="home.startRoom" />
       </Button>
     </StyledForm>
