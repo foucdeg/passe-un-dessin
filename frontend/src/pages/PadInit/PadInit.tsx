@@ -50,11 +50,6 @@ const PadInit: React.FunctionComponent = () => {
 
   if (!game) return null;
 
-  const onClickUpdate = () => {
-    reenableInput();
-    doSavePad({ pad, sentence: null });
-  };
-
   const pad = game.pads.find((pad) => pad.uuid === padId);
   if (!pad) return null;
   if (!pad.steps.length) return null;
@@ -63,10 +58,15 @@ const PadInit: React.FunctionComponent = () => {
   const nextPlayer = pad.steps[0].player;
   const isNextPlayerMe = nextPlayer.uuid === player.uuid;
 
+  const onClickUpdate = () => {
+    reenableInput();
+    doSavePad(pad, null);
+  };
+
   const onSubmit = (event: React.MouseEvent | React.FormEvent) => {
     event.preventDefault();
     if (sentence !== '' && !loading) {
-      doSavePad({ pad, sentence });
+      doSavePad(pad, sentence);
       disableInput();
     }
   };

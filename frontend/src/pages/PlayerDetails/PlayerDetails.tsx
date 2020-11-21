@@ -57,13 +57,13 @@ const PlayerDetails: React.FC<NoProps> = () => {
 
   useEffect(() => {
     if (!displayedPlayer || displayedPlayer.uuid !== playerId) {
-      doFetchPlayer({ playerId });
+      doFetchPlayer(playerId);
     }
   }, [displayedPlayer, doFetchPlayer, playerId]);
 
   useEffect(() => {
     if (displayedPlayer) {
-      fetchPlayerTotalScore({ playerId: displayedPlayer.uuid });
+      fetchPlayerTotalScore(displayedPlayer.uuid);
     }
   }, [displayedPlayer, fetchPlayerTotalScore]);
 

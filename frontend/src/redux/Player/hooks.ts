@@ -1,8 +1,8 @@
 import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
 import { useCallback } from 'react';
-import { useTypedAsyncFn, EmptyObject } from 'services/utils';
 import { useSelector } from 'redux/useSelector';
+import { useAsyncFn } from 'react-use';
 import {
   updatePlayer,
   updatePlayerTotalScore,
@@ -40,8 +40,8 @@ export const useFetchMe = () => {
 export const useFetchPlayer = () => {
   const dispatch = useDispatch();
 
-  return useTypedAsyncFn<{ playerId: string }>(
-    async ({ playerId }) => {
+  return useAsyncFn(
+    async (playerId: string) => {
       const player = await client.get(`/player/${playerId}`);
       dispatch(updateDisplayedPlayer(player));
     },
@@ -102,8 +102,8 @@ export const useSocialLogin = () => {
 export const useLogin = () => {
   const doFetchMe = useFetchMe();
 
-  return useTypedAsyncFn<{ email: string; password: string }>(
-    async ({ email, password }) => {
+  return useAsyncFn(
+    async (email: string, password: string) => {
       window.loginLock = true;
       try {
         await client.post(`/auth/login`, { email, password });
@@ -152,8 +152,8 @@ export const useLogout = () => {
 export const useCreateAccount = () => {
   const doFetchMe = useFetchMe();
 
-  return useTypedAsyncFn<{ email: string; password: string }>(
-    async ({ email, password }) => {
+  return useAsyncFn(
+    async (email: string, password: string) => {
       window.loginLock = true;
       try {
         await client.post(`/auth/create-account`, { email, password });
@@ -178,8 +178,8 @@ export const useCreateAccount = () => {
 export const useFetchPlayerTotalScore = () => {
   const dispatch = useDispatch();
 
-  return useTypedAsyncFn<{ playerId: string }>(
-    async ({ playerId }) => {
+  return useAsyncFn(
+    async (playerId: string) => {
       const result = await client.get(`/player/${playerId}/total-score`);
       const { score, ranking } = result;
       dispatch(updateDisplayedPlayerTotalScore({ score, ranking }));
@@ -192,7 +192,7 @@ export const useFetchMyTotalScore = () => {
   const dispatch = useDispatch();
   const player = useSelector(selectPlayer);
 
-  return useTypedAsyncFn<EmptyObject>(async () => {
+  return useAsyncFn(async () => {
     if (!player) return;
     const result = await client.get(`/player/${player.uuid}/total-score`);
     const { score, ranking } = result;

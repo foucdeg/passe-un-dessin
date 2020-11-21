@@ -17,7 +17,7 @@ const Game: React.FunctionComponent = () => {
 
   useEffect(() => {
     if (!gameId) return;
-    doFetchGame({ gameId, asPublic: true });
+    doFetchGame(gameId, false, true);
   }, [doFetchGame, gameId]);
 
   if (loading) {

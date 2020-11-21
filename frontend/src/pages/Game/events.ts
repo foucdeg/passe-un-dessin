@@ -106,7 +106,7 @@ const useGameEvents = (gameId: string) => {
         return;
       }
       if (isDebriefStartsEvent(event)) {
-        doFetchGame({ gameId: gameStructure.uuid, keepStructure: true });
+        doFetchGame(gameStructure.uuid, true);
         push(`/room/${room.uuid}/game/${gameStructure.uuid}/recap`);
         return;
       }
@@ -115,7 +115,7 @@ const useGameEvents = (gameId: string) => {
         return;
       }
       if (isVoteResultsStartsEvent(event)) {
-        doFetchGame({ gameId: gameStructure.uuid, keepStructure: true });
+        doFetchGame(gameStructure.uuid, true);
         push(`/room/${room.uuid}/game/${gameStructure.uuid}/vote-results`);
         return;
       }

@@ -8,8 +8,9 @@ import { selectRoom } from 'redux/Room/selectors';
 import { useSelector } from 'redux/useSelector';
 import { getNextPhaseAndRound, getRedirectPath } from 'services/game.service';
 import client from 'services/networking/client';
-import { useTypedAsyncFn, wait, EmptyObject } from 'services/utils';
+import { wait } from 'services/utils';
 import { Room } from 'redux/Room/types';
+import { useAsyncFn } from 'react-use';
 import { DEFAULT_DRAW_OWN_WORD_BOOL, DEFAULT_ROUND_DURATION } from './constants';
 import { selectGame } from './selectors';
 import {
@@ -25,8 +26,8 @@ import { Pad, GamePhase, Game, RawGame } from './types';
 export const useFetchGame = () => {
   const dispatch = useDispatch();
 
-  return useTypedAsyncFn<{ gameId: string; keepStructure?: boolean; asPublic?: boolean }>(
-    async ({ gameId, keepStructure = false, asPublic = false }) => {
+  return useAsyncFn(
+    async (gameId: string, keepStructure = false, asPublic = false) => {
       const rawGame: RawGame = await client.get(`/game/${gameId}`);
 
       const game = {
@@ -58,7 +59,7 @@ export const useRefreshGame = () => {
   const player = useSelector(selectPlayer);
   const { push } = useHistory();
 
-  return useTypedAsyncFn<EmptyObject>(async () => {
+  return useAsyncFn(async () => {
     if (!room || !game || !player) return;
 
     const updatedGame: Game = await client.get(`/game/${game.uuid}`);
@@ -133,8 +134,8 @@ export const useGetVoteResults = () => {
 export const useSavePad = () => {
   const dispatch = useDispatch();
 
-  return useTypedAsyncFn<{ pad: Pad; sentence: string | null }>(
-    async ({ pad, sentence }) => {
+  return useAsyncFn(
+    async (pad: Pad, sentence: string | null) => {
       const updatedPad = await client.put(`/pad/${pad.uuid}/save`, { sentence });
       dispatch(updatePad(updatedPad));
     },
@@ -145,7 +146,7 @@ export const useSavePad = () => {
 export const useForceState = () => {
   const game = useSelector(selectGame);
 
-  return useTypedAsyncFn<EmptyObject>(async () => {
+  return useAsyncFn(async () => {
     if (!game) {
       return;
     }

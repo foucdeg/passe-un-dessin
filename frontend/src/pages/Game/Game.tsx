@@ -42,7 +42,7 @@ const Game: React.FunctionComponent = () => {
 
   useEffect(() => {
     if (!gameId) return;
-    doFetchGame({ gameId });
+    doFetchGame(gameId);
   }, [doFetchGame, gameId]);
 
   useEffect(() => {
