@@ -17,6 +17,11 @@ if "ALLOWED_HOST" in os.environ:
 
 INSTALLED_APPS = INSTALLED_APPS + ["storages"]
 
+CORS_ALLOWED_ORIGINS = [
+    "https://passe-un-dessin.fouc.net",
+    "https://passeundessin.com",
+]
+
 # Secure connection
 SECURE_REDIRECT_EXEMPT = [r"/?health"]
 
