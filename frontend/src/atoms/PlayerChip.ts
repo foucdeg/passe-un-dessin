@@ -12,6 +12,7 @@ const PlayerChip = styled.div<{ color?: string }>`
   line-height: 19px;
   display: flex;
   align-items: flex-end;
+  white-space: nowrap;
 
   &:last-child {
     margin-right: 0;

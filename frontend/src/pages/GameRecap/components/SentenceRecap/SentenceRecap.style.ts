@@ -18,6 +18,10 @@ export const SentenceHeader = styled.div`
   line-height: 24px;
   text-transform: uppercase;
   font-weight: bold;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
 `;
 
 SentenceHeader.displayName = 'SentenceHeader';

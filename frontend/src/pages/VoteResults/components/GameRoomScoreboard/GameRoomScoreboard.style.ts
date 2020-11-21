@@ -2,12 +2,13 @@ import styled from 'styled-components';
 import Header2 from 'atoms/Header2';
 import { colorPalette } from 'stylesheet';
 
+const PODIUM_WIDTH = 534;
+
 export const GameScoreboardContainer = styled.div`
-  max-width: 300px;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
-  margin: 0 auto;
+  width: calc(100% - ${PODIUM_WIDTH}px);
+  padding-left: 16px;
 `;
 
 GameScoreboardContainer.displayName = 'GameScoreboardContainer';

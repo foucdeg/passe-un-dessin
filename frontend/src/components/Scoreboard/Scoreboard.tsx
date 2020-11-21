@@ -1,15 +1,15 @@
 import React from 'react';
 import Spacer from 'atoms/Spacer';
 import { Player } from 'redux/Player/types';
-import BareLink from 'atoms/BareLink';
 import { PUBLIC_PATHS } from 'routes';
 import {
   InnerScoreboard,
   RankingRow,
   RankText,
+  RankingDelta,
   RankingScore,
+  StyledLink,
   StyledAvatar,
-  PlayerName,
 } from './Scoreboard.style';
 
 export type PlayerWithScore = Player & {
@@ -41,14 +41,14 @@ const Scoreboard: React.FC<Props> = ({ list, className, showRankings }) => (
       <RankingRow key={playerWithScore.uuid}>
         {showRankings && <RankText>{getRankDisplay(index)}</RankText>}
         <StyledAvatar player={playerWithScore} />
-        <BareLink
+        <StyledLink
           to={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', playerWithScore.uuid)}
           target="_blank"
         >
-          <PlayerName>{playerWithScore.name}</PlayerName>
-        </BareLink>
+          {playerWithScore.name}
+        </StyledLink>
         <Spacer />
-        {playerWithScore.delta && <span>+ {playerWithScore.delta}</span>}
+        {playerWithScore.delta && <RankingDelta>+ {playerWithScore.delta}</RankingDelta>}
         <RankingScore>{playerWithScore.score}</RankingScore>
       </RankingRow>
     ))}
