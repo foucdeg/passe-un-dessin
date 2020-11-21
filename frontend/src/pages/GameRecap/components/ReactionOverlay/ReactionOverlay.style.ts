@@ -22,7 +22,7 @@ ThumbDownButton.displayName = 'ThumbDownIcon';
 
 export const ReactionOverlayContainer = styled.div`
   width: 100%;
-  height: calc(100% - 24px);
+  height: 236px;
   position: absolute;
   bottom: 0;
   opacity: 0;
