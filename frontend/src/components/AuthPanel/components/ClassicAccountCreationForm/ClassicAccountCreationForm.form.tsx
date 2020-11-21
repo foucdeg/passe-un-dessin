@@ -2,7 +2,6 @@ import React from 'react';
 import { withFormik, FormikErrors } from 'formik';
 import { isValidEmail } from 'services/utils';
 import { AsyncFnReturn } from 'react-use/lib/useAsync';
-import { FnReturningPromise } from 'react-use/lib/util';
 import { useCreateAccount } from 'redux/Player/hooks';
 import InnerForm from './ClassicAccountCreationForm';
 
@@ -11,7 +10,7 @@ interface OutsideProps {
 }
 
 export type FormOutsideProps = OutsideProps & {
-  createAccount: AsyncFnReturn<FnReturningPromise>;
+  createAccount: AsyncFnReturn<(email: string, password: string) => Promise<void>>;
 };
 // Shape of form values
 export interface FormValues {
@@ -48,7 +47,7 @@ const ClassicAccountCreationForm = withFormik<FormOutsideProps, FormValues>({
 
   handleSubmit: async (values, { props, setSubmitting }) => {
     const [, doCreateAccount] = props.createAccount;
-    await doCreateAccount({ email: values.email, password: values.password });
+    await doCreateAccount(values.email, values.password);
     setSubmitting(false);
     if (props.onAccountCreated) {
       props.onAccountCreated();

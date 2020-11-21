@@ -2,7 +2,7 @@ import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
 import { useCallback } from 'react';
 import { PadStep } from 'redux/Game/types';
-import { useTypedAsyncFn } from 'services/utils';
+import { useAsyncFn } from 'react-use';
 import { updateStep } from './slice';
 
 export const useFetchStep = () => {
@@ -18,7 +18,7 @@ export const useFetchStep = () => {
 };
 
 export const useSaveStepDrawing = () => {
-  return useTypedAsyncFn<{ step: PadStep; drawing: string }>(async ({ step, drawing }) => {
+  return useAsyncFn(async (step: PadStep, drawing: string) => {
     await client.put(`/pad-step/${step.uuid}/save`, { drawing });
   }, []);
 };
@@ -26,8 +26,8 @@ export const useSaveStepDrawing = () => {
 export const useSaveStepSentence = () => {
   const dispatch = useDispatch();
 
-  return useTypedAsyncFn<{ step: PadStep; sentence: string | null }>(
-    async ({ step, sentence }) => {
+  return useAsyncFn(
+    async (step: PadStep, sentence: string | null) => {
       await client.put(`/pad-step/${step.uuid}/save`, { sentence });
       dispatch(
         updateStep({

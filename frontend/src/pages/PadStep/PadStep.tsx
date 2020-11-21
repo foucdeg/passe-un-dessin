@@ -31,10 +31,10 @@ const PadStep: React.FunctionComponent = () => {
       if (!step) return;
 
       if (values.sentence !== undefined && !isSaveStepSentenceLoading) {
-        doSaveStepSentence({ step, sentence: values.sentence });
+        doSaveStepSentence(step, values.sentence);
       }
       if (values.drawing !== undefined && !isSaveStepDrawingLoading) {
-        doSaveStepDrawing({ step, drawing: values.drawing });
+        doSaveStepDrawing(step, values.drawing);
       }
     },
     [

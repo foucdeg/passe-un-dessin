@@ -1,7 +1,4 @@
-import * as Sentry from '@sentry/browser';
 import { useCallback, useState } from 'react';
-import { useAsyncFn } from 'react-use';
-import { AsyncFnReturn } from 'react-use/lib/useAsync';
 
 export async function wait(ms: number): Promise<void> {
   return new Promise((resolve) => {
@@ -10,20 +7,6 @@ export async function wait(ms: number): Promise<void> {
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export function useTypedAsyncFn<T>(
-  callback: (input: T) => Promise<any>,
-  deps: any[],
-): AsyncFnReturn {
-  return useAsyncFn(async (...args: T[]) => {
-    try {
-      return await callback(args[0]);
-    } catch (err) {
-      Sentry.captureException(err);
-      throw err;
-    }
-  }, deps);
-}
-
 export type EmptyObject = Omit<Record<any, never>, keyof any>;
 /* eslint-enable @typescript-eslint/no-explicit-any */
 export type NoProps = EmptyObject;

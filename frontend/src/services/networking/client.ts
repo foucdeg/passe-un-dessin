@@ -1,4 +1,5 @@
 import request from 'superagent';
+import * as Sentry from '@sentry/browser';
 
 const backendBaseUrl = (process.env.REACT_APP_BACKEND_HOST || '') + '/api';
 
@@ -22,8 +23,13 @@ class Client {
       promise = promise.send(data);
     }
 
-    const { body } = await promise;
-    return body;
+    try {
+      const { body } = await promise;
+      return body;
+    } catch (err) {
+      Sentry.captureException(err);
+      throw err;
+    }
   }
 
   get(endpoint: string) {

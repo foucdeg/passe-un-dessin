@@ -2,7 +2,6 @@ import React from 'react';
 import { withFormik, FormikErrors } from 'formik';
 import { isValidEmail } from 'services/utils';
 import { AsyncFnReturn } from 'react-use/lib/useAsync';
-import { FnReturningPromise } from 'react-use/lib/util';
 import { useLogin } from 'redux/Player/hooks';
 import InnerForm from './ClassicLoginForm';
 
@@ -11,7 +10,7 @@ interface OutsideProps {
 }
 
 export type FormOutsideProps = OutsideProps & {
-  login: AsyncFnReturn<FnReturningPromise>;
+  login: AsyncFnReturn<(email: string, password: string) => Promise<void>>;
 };
 
 // Shape of form values
@@ -49,7 +48,7 @@ const ClassicLoginForm = withFormik<FormOutsideProps, FormValues>({
 
   handleSubmit: async (values, { props, setSubmitting }) => {
     const [, doLogin] = props.login;
-    await doLogin({ email: values.email, password: values.password });
+    await doLogin(values.email, values.password);
     setSubmitting(false);
     if (props.onLoggedIn) {
       props.onLoggedIn();
