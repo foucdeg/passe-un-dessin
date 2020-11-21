@@ -20,7 +20,7 @@ Parameters:
 
   MaxClusterSize:
     Type: Number
-    Default: 1
+    Default: 4
 
   SecurityGroup:
     Type: AWS::EC2::SecurityGroup::Id
@@ -119,9 +119,9 @@ Resources:
       MetricAggregationType: Average
       StepAdjustments:
         - MetricIntervalLowerBound: 0
-          MetricIntervalUpperBound: 50
+          MetricIntervalUpperBound: 20
           ScalingAdjustment: 1
-        - MetricIntervalLowerBound: 50
+        - MetricIntervalLowerBound: 20
           ScalingAdjustment: 2
 
   StepScalingDown:

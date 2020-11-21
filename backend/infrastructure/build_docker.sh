@@ -53,8 +53,8 @@ fi
 
 export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-ecs-repository-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
 
-$(aws ecr get-login --no-include-email --region ${REGION})
-docker build --no-cache --tag "${PasseUnDessinApiRepository}:${MY_TAG}" -f ../docker/Dockerfile.prod ../.
+aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${PasseUnDessinApiRepository}
+docker build --tag "${PasseUnDessinApiRepository}:${MY_TAG}" -f ../docker/Dockerfile.prod ../.
 docker push "${PasseUnDessinApiRepository}:${MY_TAG}"
 
 # Delete untagged images

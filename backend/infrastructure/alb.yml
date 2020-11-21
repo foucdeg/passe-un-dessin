@@ -59,9 +59,9 @@ Resources:
         - CertificateArn: !Ref CertificateArn
       DefaultActions:
         - Type: forward
-          TargetGroupArn: !Ref TargetGroup
+          TargetGroupArn: !Ref ApiTargetGroup
 
-  TargetGroup:
+  ApiTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     DependsOn: LoadBalancer
     Properties:
@@ -79,7 +79,7 @@ Resources:
         - Key: deregistration_delay.timeout_seconds
           Value: 30
 
-  ListenerRule:
+  ApiListenerRule:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
       ListenerArn: !Ref LoadBalancerListener
@@ -87,9 +87,9 @@ Resources:
       Conditions:
         - Field: path-pattern
           Values:
-            - /
+            - /api
       Actions:
-        - TargetGroupArn: !Ref TargetGroup
+        - TargetGroupArn: !Ref ApiTargetGroup
           Type: forward
 
 Outputs:
@@ -97,9 +97,9 @@ Outputs:
     Value: !Sub http://${LoadBalancer.DNSName}
   ServiceId:
     Value: !GetAtt LoadBalancer.DNSName
-  TargetGroup:
-    Value: !Ref TargetGroup
-  TargetGroupName:
-    Value: !GetAtt TargetGroup.TargetGroupFullName
+  ApiTargetGroup:
+    Value: !Ref ApiTargetGroup
+  ApiTargetGroupName:
+    Value: !GetAtt ApiTargetGroup.TargetGroupFullName
   AlbName:
     Value: !GetAtt LoadBalancer.LoadBalancerFullName

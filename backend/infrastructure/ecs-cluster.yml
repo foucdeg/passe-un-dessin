@@ -1,9 +1,9 @@
-Description: PasseUnDessin Api - ECS Clusters
+Description: PasseUnDessin - ECS Clusters
 
 Parameters:
   ClusterName:
     Type: String
-    Default: passe-un-dessin-api-cluster
+    Default: passe-un-dessin-cluster
   Env:
     Type: String
     Default: staging

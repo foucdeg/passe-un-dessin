@@ -151,7 +151,7 @@ export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-ecs
 DATABASE_URL="postgres://passe_un_dessin_user:${DB_PASSWORD}@${DatabaseHostname}:${DatabasePort}/passeundessindb"
 
 ## ECS Services
-aws cloudformation deploy --stack-name passe-un-dessin-api-ecs-services-${ENV} --template-file ecs-services.yml \
+aws cloudformation deploy --stack-name passe-un-dessin-api-ecs-service-api-${ENV} --template-file ecs-service-api.yml \
 --parameter-overrides Env=${ENV} ECSTaskRole=${PasseUnDessinApiTaskRole} ECSAutoScaleRole=${PasseUnDessinApiAutoScaleRole} \
-DockerRepository=${PasseUnDessinApiRepository} CloudwatchLogsGroup=${CloudwatchLogsGroup} TargetGroup=${TargetGroup} TargetGroupName=${TargetGroupName} \
+DockerRepository=${PasseUnDessinApiRepository} CloudwatchLogsGroup=${CloudwatchLogsGroup} ApiTargetGroup=${ApiTargetGroup} \
 ECSCluster=${ECSCluster} Tag=${MY_TAG} ECSServiceRole=${PasseUnDessinApiServiceRole} AlbName=${AlbName} DatabaseUrl=${DATABASE_URL} Secret=${SECRET} --region ${REGION} --no-fail-on-empty-changeset

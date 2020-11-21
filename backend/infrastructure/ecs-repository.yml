@@ -3,7 +3,7 @@ Description: PasseUnDessin Api - ECR Repositories
 Parameters:
   PasseUnDessinApiRepositoryName:
     Type: String
-    Default: passe-un-dessin/api
+    Default: api-passe-un-dessin
   Env:
     Type: String
     Default: staging

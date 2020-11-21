@@ -1,0 +1,100 @@
+Description: PasseUnDessin Api - ECS Services
+
+Parameters:
+  DesiredCount:
+    Type: Number
+    Default: 1
+
+  MaxCount:
+    Type: Number
+    Default: 1
+
+  ECSCluster:
+    Type: String
+
+  Tag:
+    Type: String
+
+  Env:
+    Type: String
+
+  ECSTaskRole:
+    Type: String
+
+  ECSAutoScaleRole:
+    Type: String
+
+  DockerRepository:
+    Type: String
+
+  ECSServiceRole:
+    Type: String
+
+  CloudwatchLogsGroup:
+    Type: String
+
+  TargetGroup:
+    Type: String
+
+Resources:
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      NetworkMode: bridge
+      Family: !Sub PasseUnDessinApi-TaskFamily-${Env}
+      TaskRoleArn: !Sub arn:aws:iam::${AWS::AccountId}:role/${ECSTaskRole}
+      ContainerDefinitions:
+        - Name: !Sub PasseUnDessinApiContainer-${Env}
+          Image: !Sub ${DockerRepository}:${Tag}
+          Essential: true
+          MemoryReservation: 512
+          Cpu: 256
+          PortMappings:
+            - ContainerPort: 7999
+              HostPort: 0
+              Protocol: tcp
+            - ContainerPort: 5560
+              HostPort: 0
+              Protocol: tcp
+            - ContainerPort: 5561
+              HostPort: 0
+              Protocol: tcp
+            - ContainerPort: 5562
+              HostPort: 0
+              Protocol: tcp
+            - ContainerPort: 5563
+              HostPort: 0
+              Protocol: tcp
+          Environment:
+            - Name: ENVIRONMENT
+              Value: !Ref Env
+            - Name: AWS_REGION
+              Value: !Ref AWS::Region
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref CloudwatchLogsGroup
+              awslogs-region: !Sub ${AWS::Region}
+              awslogs-stream-prefix: passe-un-dessin-apiAssiociatePublicIp
+
+  ECSService:
+    Type: AWS::ECS::Service
+    Properties:
+      Cluster: !Ref ECSCluster
+      DesiredCount: !Ref DesiredCount
+      TaskDefinition: !Ref TaskDefinition
+      ServiceName: !Sub PasseUnDessinApi-Service-${Env}
+      Role: !Ref ECSServiceRole
+      DeploymentConfiguration:
+        MaximumPercent: 200
+        MinimumHealthyPercent: 50
+      LoadBalancers:
+        - ContainerName: !Sub PasseUnDessinApiContainer-${Env}
+          ContainerPort: 80
+          TargetGroupArn: !Ref TargetGroup
+
+Outputs:
+  ServiceName:
+    Value: !GetAtt ECSService.Name
+  FamilyName:
+    Value: !Sub PasseUnDessinApi-TaskFamily-${Env}
