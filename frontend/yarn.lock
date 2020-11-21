@@ -1125,12 +1125,12 @@
     "@formatjs/ecma402-abstract" "^1.2.5"
     tslib "^2.0.1"
 
-"@formatjs/intl-pluralrules@3.5.6":
-  version "3.5.6"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-pluralrules/-/intl-pluralrules-3.5.6.tgz#b4b6e3f4bcbcfbc2b71d037970b9ddf97517825f"
-  integrity sha512-8CvrM8YGEpsdTq3po0VYrw/HiJCQhSiau1BH5J/QRm1C9RNBt3+N2TyjUrCYO+pTkDtn4cDS9MZi0ufVZLkZ9A==
+"@formatjs/intl-pluralrules@4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-pluralrules/-/intl-pluralrules-4.0.0.tgz#c5fe276d589666624ab49310714932512803cb7f"
+  integrity sha512-HWi7zEpSM46zgizvxwojDJTrh/tqxmldCHXkhR3bsbZwAlm2W8yCFLkPSMikNJp/WFvgnEjOjvGctU1A5TqStg==
   dependencies:
-    "@formatjs/ecma402-abstract" "1.4.0"
+    "@formatjs/ecma402-abstract" "1.5.0"
     tslib "^2.0.1"
 
 "@formatjs/intl-relativetimeformat@8.0.0":
