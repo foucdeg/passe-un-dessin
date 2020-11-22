@@ -5,7 +5,7 @@ import DrawOwnWordSwitch from 'pages/RoomLobby/components/DrawOwnWordSwitch';
 import Modal from 'components/Modal';
 import RoundDurationPicker from 'pages/RoomLobby/components/RoundDurationPicker';
 import SecondaryButton from 'atoms/SecondaryButton';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useDrawOwnWordSwitch, useRoundDuration, useStartGame } from 'redux/Game/hooks';
 import { selectGame } from 'redux/Game/selectors';
 import { Player } from 'redux/Player/types';
@@ -13,7 +13,16 @@ import { useRemovePlayer } from 'redux/Room/hooks';
 import { selectRoom } from 'redux/Room/selectors';
 import { useSelector } from 'redux/useSelector';
 import { shouldDisplayDrawOwnWordSwitch } from 'services/game.service';
-import { ButtonRow, StyledCrossIcon, StyledHeader, StyledPlayerChips } from './AdminModal.style';
+import HorizontalSeparator from 'atoms/HorizontalSeparator';
+import { enumerate } from 'services/utils';
+import {
+  ButtonRow,
+  StyledCrossIcon,
+  StyledHeader,
+  StyledPlayerChips,
+  Subtitle,
+  Separator,
+} from './AdminModal.style';
 
 interface Props {
   isOpen: boolean;
@@ -26,6 +35,8 @@ const AdminModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const [roundDuration, setRoundDuration] = useRoundDuration(game?.round_duration);
   const [drawOwnWord, setDrawOwnWord] = useDrawOwnWordSwitch(game?.draw_own_word);
 
+  const intl = useIntl();
+
   const doStartGame = useStartGame();
 
   const doRemovePlayer = useRemovePlayer();
@@ -37,6 +48,12 @@ const AdminModal: React.FC<Props> = ({ isOpen, onClose }) => {
   }, [game, setRoundDuration]);
 
   if (!room) return null;
+
+  const playersInGame = game?.players || [];
+
+  const playersWaiting = room.players.filter(
+    (player) => !game || !game.players.find((gamePlayer) => gamePlayer.uuid === player.uuid),
+  );
 
   const onPlayerClick = (player: Player) => {
     doRemovePlayer(room, player);
@@ -77,40 +94,80 @@ const AdminModal: React.FC<Props> = ({ isOpen, onClose }) => {
       <StyledHeader>
         <FormattedMessage id="adminModal.removePlayer" />
       </StyledHeader>
-      <p>
+      <Subtitle>
         <FormattedMessage id="adminModal.removePlayerInstruction" />
-      </p>
-
+      </Subtitle>
+      {!!playersInGame.length && (
+        <>
+          <HorizontalSeparator>
+            <FormattedMessage id="adminModal.inCurrentGame" />
+          </HorizontalSeparator>
+          <StyledPlayerChips>
+            {playersInGame.map((player) => (
+              <PlayerChip key={player.uuid} color={player.color}>
+                {player.name} <StyledCrossIcon alt="Remove" onClick={() => onPlayerClick(player)} />
+              </PlayerChip>
+            ))}
+          </StyledPlayerChips>
+          <HorizontalSeparator>
+            <FormattedMessage id="adminModal.inLobby" />
+          </HorizontalSeparator>
+        </>
+      )}
       <StyledPlayerChips>
-        {room.players.map((player) => (
+        {playersWaiting.map((player) => (
           <PlayerChip key={player.uuid} color={player.color}>
             {player.name} <StyledCrossIcon alt="Remove" onClick={() => onPlayerClick(player)} />
           </PlayerChip>
         ))}
+        {!playersWaiting.length && (
+          <p>
+            <FormattedMessage id="adminModal.nobodyWaiting" />
+          </p>
+        )}
       </StyledPlayerChips>
 
-      <hr />
+      {game && (
+        <>
+          <Separator />
+          <StyledHeader>
+            <FormattedMessage id="adminModal.restartGame" />
+          </StyledHeader>
+          <Subtitle>
+            {!!playersWaiting.length ? (
+              <FormattedMessage
+                id="adminModal.restartGameInstructions"
+                values={{
+                  names: enumerate(
+                    playersWaiting.map((player) => player.name),
+                    intl.formatMessage({ id: 'common.and' }),
+                  ),
+                }}
+              />
+            ) : (
+              <FormattedMessage id="adminModal.samePlayers" />
+            )}
+          </Subtitle>
 
-      <StyledHeader>
-        <FormattedMessage id="adminModal.title" />
-      </StyledHeader>
-      <RoundDurationPicker duration={roundDuration} onDurationChange={setRoundDuration} />
-      {shouldDisplayDrawOwnWordSwitch(room.players.length) && (
-        <DrawOwnWordSwitch drawOwnWord={drawOwnWord} setDrawOwnWord={setDrawOwnWord} />
+          <RoundDurationPicker duration={roundDuration} onDurationChange={setRoundDuration} />
+          {shouldDisplayDrawOwnWordSwitch(room.players.length) && (
+            <DrawOwnWordSwitch drawOwnWord={drawOwnWord} setDrawOwnWord={setDrawOwnWord} />
+          )}
+          <ButtonRow>
+            <SecondaryButton onClick={startRandomGame}>
+              <FormattedMessage id="adminModal.randomOrder" />
+            </SecondaryButton>
+            <SecondaryButton onClick={startSameGame}>
+              <FormattedMessage id="adminModal.sameOrder" />
+            </SecondaryButton>
+          </ButtonRow>
+          <ButtonRow>
+            <Button onClick={startReverseGame}>
+              <FormattedMessage id="adminModal.reverseOrder" />
+            </Button>
+          </ButtonRow>
+        </>
       )}
-      <ButtonRow>
-        <SecondaryButton onClick={startRandomGame}>
-          <FormattedMessage id="adminModal.randomOrder" />
-        </SecondaryButton>
-        <SecondaryButton onClick={startSameGame}>
-          <FormattedMessage id="adminModal.sameOrder" />
-        </SecondaryButton>
-      </ButtonRow>
-      <ButtonRow>
-        <Button onClick={startReverseGame}>
-          <FormattedMessage id="adminModal.reverseOrder" />
-        </Button>
-      </ButtonRow>
     </Modal>
   );
 };

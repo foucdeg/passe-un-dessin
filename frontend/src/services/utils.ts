@@ -104,3 +104,11 @@ export const useBoolean = (initialValue = false): [boolean, () => void, () => vo
     useCallback(() => setter((value) => !value), [setter]),
   ];
 };
+
+export const enumerate = (items: string[], conjunction: string): string => {
+  if (!items.length) return '';
+  if (items.length === 1) return items[0];
+
+  const last = items.pop();
+  return `${items.join(', ')} ${conjunction} ${last}`;
+};

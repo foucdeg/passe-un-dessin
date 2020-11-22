@@ -101,8 +101,13 @@
   },
   "adminModal": {
     "removePlayer": "Remove a player",
-    "removePlayerInstruction": "Click the cross next to the player you want to remove:",
-    "title": "Start a new game",
+    "removePlayerInstruction": "Click the cross next to the player you want to remove.",
+    "inCurrentGame": "In the current game",
+    "inLobby": "In the lobby",
+    "nobodyWaiting": "Nobody!",
+    "restartGame": "Start a new game",
+    "restartGameInstructions": "The next game will include {names}.",
+    "samePlayers": "With the same players.",
     "randomOrder": "Random order",
     "sameOrder": "Same order",
     "reverseOrder": "Reverse order"
@@ -222,5 +227,8 @@
   "playerDetails": {
     "joinedOn": "joined us on {dateString}.",
     "seeGame": "Review game"
+  },
+  "common": {
+    "and": "and"
   }
 }

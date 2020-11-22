@@ -15,13 +15,19 @@ ButtonRow.displayName = 'ButtonRow';
 
 export const StyledHeader = styled(Header2)`
   color: ${colorPalette.purple};
-  margin-bottom: 16px;
 `;
 
 StyledHeader.displayName = 'StyledHeader';
 
-export const StyledPlayerChips = styled(PlayerChips)`
+export const Subtitle = styled.p`
+  color: ${colorPalette.textGrey};
   margin-bottom: 16px;
+`;
+
+Subtitle.displayName = 'Subtitle';
+
+export const StyledPlayerChips = styled(PlayerChips)`
+  margin: 16px 0;
 `;
 
 StyledPlayerChips.displayName = 'StyledPlayerChips';
@@ -34,3 +40,11 @@ export const StyledCrossIcon = styled.img.attrs({ src: crossIcon })`
 `;
 
 StyledCrossIcon.displayName = 'StyledCrossIcon';
+
+export const Separator = styled.hr`
+  border: 1px solid ${colorPalette.purple};
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 16px;
+`;
+Separator.displayName = 'Separator';

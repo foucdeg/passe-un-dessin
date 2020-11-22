@@ -101,8 +101,13 @@
   },
   "adminModal": {
     "removePlayer": "Supprimer un joueur",
-    "removePlayerInstruction": "Clique sur la croix du joueur à supprimer de la partie :",
-    "title": "Relancer une partie",
+    "removePlayerInstruction": "Pour supprimer un joueur, clique sur la croix.",
+    "inCurrentGame": "Dans la partie en cours",
+    "inLobby": "Dans la salle d'attente",
+    "nobodyWaiting": "Personne !",
+    "restartGame": "Relancer une partie",
+    "restartGameInstructions": "La prochaine partie incluera {names}.",
+    "samePlayers": "Avec les mêmes joueurs.",
     "randomOrder": "Ordre aléatoire",
     "sameOrder": "Même ordre",
     "reverseOrder": "Ordre inverse"
@@ -222,5 +227,8 @@
   "playerDetails": {
     "joinedOn": "nous a rejoint le {dateString}.",
     "seeGame": "Revoir la partie"
+  },
+  "common": {
+    "and": "et"
   }
 }
