@@ -31,8 +31,7 @@
     "isEveryoneThere": "Is everyone there?",
     "play": "Play",
     "adminWillStart": "{name} will start the game when ready!",
-    "timeDuration": "Time duration: {options} seconds",
-    "drawOwnWord": "I want to draw my own word at the first step. If I choose to not draw my own word I will not see one of the words of the game."
+    "timeDuration": "<strong>Time duration:</strong> {options} seconds"
   },
   "menu": {
     "startMusic": "Resume music",
@@ -46,6 +45,10 @@
     "ranking": "Ranking",
     "leaveTeam": "Leave team",
     "confirmLeave": "Leaving mid-game forces everyone to restart the game. Are you sure?"
+  },
+  "drawOwnWordSwitch": {
+    "label": "Number of rounds:",
+    "upperRoundCount": "{roundCount}, but we begin by drawing our own word"
   },
   "padInit": {
     "chooseSentence": "Pick a word or sentence:",
@@ -101,8 +104,13 @@
   },
   "adminModal": {
     "removePlayer": "Remove a player",
-    "removePlayerInstruction": "Click the cross next to the player you want to remove:",
-    "title": "Start a new game",
+    "removePlayerInstruction": "Click the cross next to the player you want to remove.",
+    "inCurrentGame": "In the current game",
+    "inLobby": "In the lobby",
+    "nobodyWaiting": "Nobody!",
+    "restartGame": "Start a new game",
+    "restartGameInstructions": "The next game will include {names}.",
+    "samePlayers": "With the same players.",
     "randomOrder": "Random order",
     "sameOrder": "Same order",
     "reverseOrder": "Reverse order"
@@ -222,5 +230,8 @@
   "playerDetails": {
     "joinedOn": "joined us on {dateString}.",
     "seeGame": "Review game"
+  },
+  "common": {
+    "and": "and"
   }
 }

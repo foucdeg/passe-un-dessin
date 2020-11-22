@@ -31,8 +31,7 @@
     "isEveryoneThere": "Tout le monde est là ?",
     "play": "Jouer",
     "adminWillStart": "C'est à {name} de lancer la partie !",
-    "timeDuration": "Durée de dessin : {options} secondes",
-    "drawOwnWord": "Je veux dessiner mon propre mot à la première manche. Si je choisis de décocher cette option, je ne verrai pas l'un des mots proposés."
+    "timeDuration": "<strong>Durée de dessin :</strong> {options} secondes"
   },
   "menu": {
     "startMusic": "Lancer le son",
@@ -46,6 +45,10 @@
     "ranking": "Classement",
     "leaveTeam": "Quitter l'équipe",
     "confirmLeave": "Une partie est en cours, es-tu sûr•e de vouloir partir ?"
+  },
+  "drawOwnWordSwitch": {
+    "label": "Nombre de tours :",
+    "upperRoundCount": "{roundCount}, mais on commence en dessinant son propre mot"
   },
   "padInit": {
     "chooseSentence": "Choisis un mot ou une phrase :",
@@ -101,8 +104,13 @@
   },
   "adminModal": {
     "removePlayer": "Supprimer un joueur",
-    "removePlayerInstruction": "Clique sur la croix du joueur à supprimer de la partie :",
-    "title": "Relancer une partie",
+    "removePlayerInstruction": "Pour supprimer un joueur, clique sur la croix.",
+    "inCurrentGame": "Dans la partie en cours",
+    "inLobby": "Dans la salle d'attente",
+    "nobodyWaiting": "Personne !",
+    "restartGame": "Relancer une partie",
+    "restartGameInstructions": "La prochaine partie incluera {names}.",
+    "samePlayers": "Avec les mêmes joueurs.",
     "randomOrder": "Ordre aléatoire",
     "sameOrder": "Même ordre",
     "reverseOrder": "Ordre inverse"
@@ -222,5 +230,8 @@
   "playerDetails": {
     "joinedOn": "nous a rejoint le {dateString}.",
     "seeGame": "Revoir la partie"
+  },
+  "common": {
+    "and": "et"
   }
 }

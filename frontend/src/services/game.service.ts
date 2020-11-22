@@ -70,13 +70,6 @@ export const getNextPhaseAndRound = (game: Game) => {
   }
 };
 
-export const shouldDisplayDrawOwnWordSwitch = (playerCount: number) => {
-  if (playerCount <= 3) {
-    return false;
-  }
-  return playerCount % 2 === 0;
-};
-
 export const findRemainingPlayers = (game: Game): Player[] => {
   switch (game.phase) {
     case GamePhase.INIT:

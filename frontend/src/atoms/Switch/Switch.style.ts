@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { colorPalette } from 'stylesheet';
 
 export const Container = styled.button`
-  width: 40px;
+  min-width: 32px;
   height: 18px;
   border: none;
   padding: 0;
