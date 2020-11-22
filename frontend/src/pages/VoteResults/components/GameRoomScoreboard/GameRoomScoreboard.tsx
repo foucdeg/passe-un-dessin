@@ -5,7 +5,11 @@ import { selectRanking } from 'redux/Room/selectors';
 import { selectWinners } from 'redux/Game/selectors';
 import { EmptyObject } from 'services/utils';
 import Scoreboard from 'components/Scoreboard';
-import { GameScoreboardContainer, StyledHeader } from './GameRoomScoreboard.style';
+import {
+  GameScoreboardContainer,
+  InnerScoreboardContainer,
+  StyledHeader,
+} from './GameRoomScoreboard.style';
 
 const GameRoomScoreboard: React.FC<EmptyObject> = () => {
   const ranking = useSelector(selectRanking);
@@ -31,7 +35,9 @@ const GameRoomScoreboard: React.FC<EmptyObject> = () => {
       <StyledHeader>
         <FormattedMessage id="voteResults.scoreboard" />
       </StyledHeader>
-      <Scoreboard list={list} />
+      <InnerScoreboardContainer>
+        <Scoreboard list={list} />
+      </InnerScoreboardContainer>
     </GameScoreboardContainer>
   );
 };

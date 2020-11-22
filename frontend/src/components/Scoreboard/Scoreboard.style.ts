@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { fontSize, fontWeight } from 'stylesheet';
+import { fontSize, fontWeight, lineHeight } from 'stylesheet';
 import Avatar from 'components/Avatar';
 import BareLink from 'atoms/BareLink';
 
@@ -53,6 +53,7 @@ export const StyledLink = styled(BareLink)`
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: ${fontSize.header2};
+  line-height: ${lineHeight.large};
   font-weight: ${fontWeight.normal};
 `;
 StyledLink.displayName = 'StyledLink';
