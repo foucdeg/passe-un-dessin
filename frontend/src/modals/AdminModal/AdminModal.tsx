@@ -12,7 +12,6 @@ import { Player } from 'redux/Player/types';
 import { useRemovePlayer } from 'redux/Room/hooks';
 import { selectRoom } from 'redux/Room/selectors';
 import { useSelector } from 'redux/useSelector';
-import { shouldDisplayDrawOwnWordSwitch } from 'services/game.service';
 import HorizontalSeparator from 'atoms/HorizontalSeparator';
 import { enumerate } from 'services/utils';
 import {
@@ -150,9 +149,11 @@ const AdminModal: React.FC<Props> = ({ isOpen, onClose }) => {
           </Subtitle>
 
           <RoundDurationPicker duration={roundDuration} onDurationChange={setRoundDuration} />
-          {shouldDisplayDrawOwnWordSwitch(room.players.length) && (
-            <DrawOwnWordSwitch drawOwnWord={drawOwnWord} setDrawOwnWord={setDrawOwnWord} />
-          )}
+          <DrawOwnWordSwitch
+            playerCount={room.players.length}
+            drawOwnWord={drawOwnWord}
+            setDrawOwnWord={setDrawOwnWord}
+          />
           <ButtonRow>
             <SecondaryButton onClick={startRandomGame}>
               <FormattedMessage id="adminModal.randomOrder" />

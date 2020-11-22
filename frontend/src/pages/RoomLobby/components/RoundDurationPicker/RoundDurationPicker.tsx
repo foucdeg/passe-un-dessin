@@ -25,6 +25,7 @@ const RoundDurationPicker: React.FC<Props> = ({ duration, onDurationChange }) =>
         )).reduce(
           (prev: JSX.Element, current) => ([prev, ' - ', current] as unknown) as JSX.Element,
         ),
+        strong: (...chunks: string[]) => <strong>{chunks}</strong>,
       }}
     />
   </RoundDurationPickerContainer>

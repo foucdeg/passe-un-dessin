@@ -9,7 +9,6 @@ import { useDrawOwnWordSwitch, useRoundDuration, useStartGame } from 'redux/Game
 import { selectGame } from 'redux/Game/selectors';
 import { selectRoom } from 'redux/Room/selectors';
 import { useSelector } from 'redux/useSelector';
-import { shouldDisplayDrawOwnWordSwitch } from 'services/game.service';
 import { ButtonRow, StyledHeader } from './NewGameModal.style';
 
 interface Props {
@@ -58,9 +57,11 @@ const NewGameModal: React.FC<Props> = ({ isOpen, onClose }) => {
         <FormattedMessage id="newGameModal.title" />
       </StyledHeader>
       <RoundDurationPicker duration={roundDuration} onDurationChange={setRoundDuration} />
-      {shouldDisplayDrawOwnWordSwitch(room.players.length) && (
-        <DrawOwnWordSwitch drawOwnWord={drawOwnWord} setDrawOwnWord={setDrawOwnWord} />
-      )}
+      <DrawOwnWordSwitch
+        playerCount={room.players.length}
+        drawOwnWord={drawOwnWord}
+        setDrawOwnWord={setDrawOwnWord}
+      />
       <ButtonRow>
         <SecondaryButton onClick={startRandomGame}>
           <FormattedMessage id="newGameModal.randomOrder" />

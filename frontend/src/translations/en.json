@@ -31,8 +31,7 @@
     "isEveryoneThere": "Is everyone there?",
     "play": "Play",
     "adminWillStart": "{name} will start the game when ready!",
-    "timeDuration": "Time duration: {options} seconds",
-    "drawOwnWord": "I want to draw my own word at the first step. If I choose to not draw my own word I will not see one of the words of the game."
+    "timeDuration": "<strong>Time duration:</strong> {options} seconds"
   },
   "menu": {
     "startMusic": "Resume music",
@@ -46,6 +45,10 @@
     "ranking": "Ranking",
     "leaveTeam": "Leave team",
     "confirmLeave": "Leaving mid-game forces everyone to restart the game. Are you sure?"
+  },
+  "drawOwnWordSwitch": {
+    "label": "Number of rounds:",
+    "upperRoundCount": "{roundCount}, but we begin by drawing our own word"
   },
   "padInit": {
     "chooseSentence": "Pick a word or sentence:",

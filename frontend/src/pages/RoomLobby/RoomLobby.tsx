@@ -16,7 +16,6 @@ import { selectPlayer } from 'redux/Player/selectors';
 import { useJoinRoom, useLeaveRoom } from 'redux/Room/hooks';
 import { selectRoom } from 'redux/Room/selectors';
 import { useSelector } from 'redux/useSelector';
-import { shouldDisplayDrawOwnWordSwitch } from 'services/game.service';
 import { PUBLIC_PATHS } from 'routes';
 import BareLink from 'atoms/BareLink';
 import RoundDurationPicker from './components/RoundDurationPicker';
@@ -111,9 +110,11 @@ const Room: React.FunctionComponent = () => {
       {isPlayerAdmin && (
         <>
           <RoundDurationPicker duration={roundDuration} onDurationChange={setRoundDuration} />
-          {shouldDisplayDrawOwnWordSwitch(room.players.length) && (
-            <DrawOwnWordSwitch drawOwnWord={drawOwnWord} setDrawOwnWord={setDrawOwnWord} />
-          )}
+          <DrawOwnWordSwitch
+            playerCount={room.players.length}
+            drawOwnWord={drawOwnWord}
+            setDrawOwnWord={setDrawOwnWord}
+          />
         </>
       )}
       <PlayerList>

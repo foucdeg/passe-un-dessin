@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import Switch from 'atoms/Switch';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
@@ -10,10 +11,26 @@ export const Container = styled.div`
 
 Container.displayName = 'Container';
 
-export const Description = styled.div`
-  width: 320px;
+export const Label = styled.strong`
   text-align: justify;
   line-height: 18px;
+  white-space: nowrap;
+  margin-right: 16px;
 `;
 
-Container.displayName = 'Container';
+Label.displayName = 'Label';
+
+export const Value = styled.span<{ selected?: boolean }>`
+  ${(props) =>
+    props.selected &&
+    css`
+      font-weight: bold;
+    `}
+`;
+Value.displayName = 'Value';
+
+export const StyledSwitch = styled(Switch)`
+  margin: 0 16px;
+`;
+
+StyledSwitch.displayName = 'StyledSwitch';
