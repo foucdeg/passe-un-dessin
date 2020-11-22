@@ -59,7 +59,7 @@ const Legal: React.FC<NoProps> = () => (
       </LegalParagraph>
       <LegalParagraph>
         <strong>User-submitted information:</strong> When using the website, you might submit a
-        username, textual and drawn content, and cast votes. This data is collected and kept in our
+        username, text content, drawings, and cast votes. This data is collected and kept in our
         database to allow users to view history of past games. This data is <strong>not</strong>{' '}
         shared with any third party.
       </LegalParagraph>
@@ -87,23 +87,34 @@ const Legal: React.FC<NoProps> = () => (
       <LegalParagraph>
         The other information that may be provided by the social authentication provider, besides
         your email address, is immediately discarded. It is <strong>not</strong> kept in database.
-        It is not currently possible to prevent Facebook and Google from providing us this
+        It is not currently possible to prevent Facebook and Google from providing us some
         unnecessary information.
+      </LegalParagraph>
+      <LegalParagraph>
+        Draw Around's use of information received from Google APIs will adhere to the{' '}
+        <a
+          href="https://developers.google.com/terms/api-services-user-data-policy#additional_requirements_for_specific_api_scopes"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Google API Services User Data Policy
+        </a>
+        , including the Limited Use requirements.
       </LegalParagraph>
       <LegalParagraph>
         <strong>Data stored and collected for analytics purposes:</strong> This website uses Google
         Analytics to access statistical data such as number of users and countries of origin. The
         data is <strong>fully anonymized</strong> by Google before being provided to us (including
         IP addresses) and no subset of the data can be associated with a specific person. These
-        analytics function using cookies set by Google when you visit a Google-owned website. This
-        website has no control and is not responsible of managing these cookies.
+        analytics function using cookies set by Google when access a Google-owned resource online.
+        This website has no control over and is not responsible of managing these cookies.
       </LegalParagraph>
       <LegalParagraph>
         <strong>Cookies used by this website:</strong> This website uses the minimal amount of
         cookies required for its proper function, such as session cookies, and also uses a similar
         browser feature called Local Storage for convenience features such as remembering your user
         settings. This data is <strong>not</strong> stored on our side, only in your browser. You
-        can use your browser settings page to access, modify, or delete this data.
+        can use your browser settings pages to access, modify, or delete this data.
       </LegalParagraph>
       <SecondaryButton to="/">
         <ArrowLeft />
