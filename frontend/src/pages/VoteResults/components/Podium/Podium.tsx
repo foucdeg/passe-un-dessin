@@ -8,6 +8,8 @@ interface Props {
   winners: PadStep[];
 }
 
+export const PODIUM_WIDTH = 536;
+
 const Podium: React.FC<Props> = ({ winners }) => {
   return (
     <Container>

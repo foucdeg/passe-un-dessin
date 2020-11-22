@@ -3,7 +3,11 @@ import { FormattedMessage } from 'react-intl';
 import Scoreboard from 'components/Scoreboard';
 import { PlayerWithScore } from 'components/Scoreboard/Scoreboard';
 import { PadStep } from 'redux/Game/types';
-import { GameScoreboardContainer, StyledHeader } from './SingleGameScoreboard.style';
+import {
+  SingleGameScoreboardContainer,
+  InnerScoreboardContainer,
+  StyledHeader,
+} from './SingleGameScoreboard.style';
 
 interface Props {
   winners: PadStep[];
@@ -29,12 +33,14 @@ const SingleGameScoreboard: React.FC<Props> = ({ winners }) => {
   const list = winningPlayers.sort((playerA, playerB) => playerB.score - playerA.score);
 
   return (
-    <GameScoreboardContainer>
+    <SingleGameScoreboardContainer>
       <StyledHeader>
         <FormattedMessage id="voteResults.scoreboard" />
       </StyledHeader>
-      <Scoreboard list={list} />
-    </GameScoreboardContainer>
+      <InnerScoreboardContainer>
+        <Scoreboard list={list} />
+      </InnerScoreboardContainer>
+    </SingleGameScoreboardContainer>
   );
 };
 export default SingleGameScoreboard;

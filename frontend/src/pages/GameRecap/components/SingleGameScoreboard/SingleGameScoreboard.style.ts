@@ -1,16 +1,23 @@
 import styled from 'styled-components';
 import Header2 from 'atoms/Header2';
 import { colorPalette } from 'stylesheet';
+import { PODIUM_WIDTH } from 'pages/VoteResults/components/Podium/Podium';
 
-export const GameScoreboardContainer = styled.div`
-  max-width: 300px;
+export const SingleGameScoreboardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  width: calc(100% - ${PODIUM_WIDTH}px);
+`;
+
+SingleGameScoreboardContainer.displayName = 'SingleGameScoreboardContainer';
+
+export const InnerScoreboardContainer = styled.div`
+  width: 100%;
+  max-width: 500px;
   margin: 0 auto;
 `;
 
-GameScoreboardContainer.displayName = 'GameScoreboardContainer';
+InnerScoreboardContainer.displayName = 'InnerScoreboardContainer';
 
 export const StyledHeader = styled(Header2)`
   color: ${colorPalette.purple};

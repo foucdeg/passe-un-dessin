@@ -17,7 +17,7 @@ import {
   StyledHeader,
   StyledLaunchIcon,
 } from './VoteResults.style';
-import Scoreboard from './components/GameRoomScoreboard';
+import GameRoomScoreboard from './components/GameRoomScoreboard';
 
 const VoteResults: React.FunctionComponent = () => {
   const room = useSelector(selectRoom);
@@ -46,7 +46,7 @@ const VoteResults: React.FunctionComponent = () => {
         <Spacer />
         {winners && (winners.length ? <Podium winners={winners} /> : <div>No votes</div>)}
       </LeftSide>
-      <Scoreboard />
+      <GameRoomScoreboard />
       <TopRightButtons>
         <BareLink to={`/game/${game.uuid}`} target="_blank">
           <TopRightButton>

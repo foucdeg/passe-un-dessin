@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 import Header2 from 'atoms/Header2';
 import { colorPalette } from 'stylesheet';
-
-const PODIUM_WIDTH = 534;
+import { PODIUM_WIDTH } from '../Podium/Podium';
 
 export const GameScoreboardContainer = styled.div`
   display: flex;
@@ -12,6 +11,14 @@ export const GameScoreboardContainer = styled.div`
 `;
 
 GameScoreboardContainer.displayName = 'GameScoreboardContainer';
+
+export const InnerScoreboardContainer = styled.div`
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+`;
+
+InnerScoreboardContainer.displayName = 'InnerScoreboardContainer';
 
 export const StyledHeader = styled(Header2)`
   color: ${colorPalette.purple};
