@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "@sentry/node": "5.27.5",
+    "@sentry/node": "5.27.6",
     "express": "4.17.1",
     "lz-string": "1.4.4",
     "pg": "8.5.1"
