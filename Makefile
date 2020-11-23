@@ -16,7 +16,8 @@ deploy-drawing-renderer:
 deploy: deploy-back deploy-front
 
 load_prod_dump:
-	ssh vps "PGPASSWORD=$(DB_PASSWORD) pg_dump -U passe_un_dessin_user -d passe_un_dessin  -c -f /tmp/dump.pgbackup"
+	# the above is run in a cron job, uncomment if you need the freshest data
+	# ssh vps "PGPASSWORD=$(DB_PASSWORD) pg_dump -U passe_un_dessin_user -d passe_un_dessin  -c -f /tmp/dump.pgbackup"
 	scp vps:/tmp/dump.pgbackup /tmp/dump.pgbackup
 	docker cp /tmp/dump.pgbackup $(DB_CONTAINER_ID):/tmp/dump.pgbackup
 	docker-compose exec db psql -U postgres -d postgres -f /tmp/dump.pgbackup
