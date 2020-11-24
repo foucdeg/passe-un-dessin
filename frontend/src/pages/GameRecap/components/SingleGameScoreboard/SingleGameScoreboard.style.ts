@@ -7,6 +7,8 @@ export const SingleGameScoreboardContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: calc(100% - ${PODIUM_WIDTH}px);
+  max-height: 100%;
+  overflow-y: auto;
 `;
 
 SingleGameScoreboardContainer.displayName = 'SingleGameScoreboardContainer';
