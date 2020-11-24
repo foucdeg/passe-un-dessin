@@ -196,6 +196,22 @@ class Vote(BaseModel):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
 
 
+class Suggestion(BaseModel):
+    sentence = models.CharField(max_length=100)
+    language = models.CharField(max_length=10)
+    is_active = models.BooleanField()
+
+    class Meta:
+        unique_together = (
+            "sentence",
+            "language",
+        )
+
+
+class BlackList(BaseModel):
+    sentence = models.CharField(max_length=100, unique=True)
+
+
 @receiver(models.signals.pre_save, sender=Player)
 def pick_color(sender, **kwargs):
     instance = kwargs["instance"]
