@@ -8,6 +8,8 @@ export const GameScoreboardContainer = styled.div`
   flex-direction: column;
   width: calc(100% - ${PODIUM_WIDTH}px);
   padding-left: 16px;
+  max-height: 100%;
+  overflow-y: auto;
 `;
 
 GameScoreboardContainer.displayName = 'GameScoreboardContainer';

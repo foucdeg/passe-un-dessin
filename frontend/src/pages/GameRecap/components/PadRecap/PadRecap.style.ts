@@ -4,6 +4,7 @@ import fatArrow from 'assets/fat-arrow.svg';
 
 export const PadRecapRow = styled.div`
   display: flex;
+  max-height: 100%;
   flex-wrap: wrap;
 `;
 

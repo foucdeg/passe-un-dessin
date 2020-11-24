@@ -14,6 +14,7 @@ OuterRecapContainer.displayName = 'OuterRecapContainer';
 
 export const GameRecapContainer = styled.div`
   display: flex;
+  max-height: 100%;
 `;
 
 GameRecapContainer.displayName = 'GameRecapContainer';
