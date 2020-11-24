@@ -11,10 +11,11 @@ import { StyledDrawingRecap, StyledDrawing, DrawingHeader } from './DrawingRecap
 
 interface Props {
   step: PadStep;
-  publicMode?: boolean;
+  publicMode: boolean;
+  canVote: boolean;
 }
 
-const DrawingRecap: React.FC<Props> = ({ step, publicMode = false }) => {
+const DrawingRecap: React.FC<Props> = ({ step, publicMode, canVote }) => {
   const player = useSelector(selectPlayer);
   const availableVoteCount = useSelector(selectAvailableVoteCount);
   const doSaveVote = useSaveVote();
@@ -23,10 +24,9 @@ const DrawingRecap: React.FC<Props> = ({ step, publicMode = false }) => {
   if (!publicMode && !player) return null;
 
   const likeCount = step.votes.filter((vote) => player && vote.player.uuid === player.uuid).length;
-  const samePlayer = player && player.uuid === step.player.uuid;
 
-  const canLike = !samePlayer && availableVoteCount > 0;
-  const canUnlike = !samePlayer && likeCount > 0;
+  const canLike = canVote && availableVoteCount > 0;
+  const canUnlike = canVote && likeCount > 0;
 
   const doLike = () => doSaveVote(step.uuid);
   const doUnlike = () => doDeleteVote(step.uuid);
@@ -38,13 +38,15 @@ const DrawingRecap: React.FC<Props> = ({ step, publicMode = false }) => {
       {publicMode ? (
         <VotesOverlay votes={step.votes} />
       ) : (
-        <ReactionOverlay
-          canLike={canLike}
-          canUnlike={canUnlike}
-          onLike={doLike}
-          onUnlike={doUnlike}
-          likeCount={likeCount}
-        />
+        (canLike || canUnlike) && (
+          <ReactionOverlay
+            canLike={canLike}
+            canUnlike={canUnlike}
+            onLike={doLike}
+            onUnlike={doUnlike}
+            likeCount={likeCount}
+          />
+        )
       )}
     </StyledDrawingRecap>
   );

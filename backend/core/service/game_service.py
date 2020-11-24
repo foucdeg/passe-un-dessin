@@ -165,8 +165,12 @@ def start_debrief(game: Game):
     game.current_round = None
     game.pads_done = 0
     game.save()
+    message = DebriefStartsMessage(game).serialize()
     send_event(
-        "game-%s" % game.uuid.hex, "message", DebriefStartsMessage(game).serialize(),
+        "game-%s" % game.uuid.hex, "message", message,
+    )
+    send_event(
+        "room-%s" % game.room.uuid.hex, "message", message,
     )
 
 
