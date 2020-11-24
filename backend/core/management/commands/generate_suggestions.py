@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from core.models import BlackList, PadStep, StepType, Suggestion
+from core.models import BlackList, Pad, PadStep, StepType, Suggestion
 from core.service.suggestions_service import sanitize_sentence
 
 
@@ -33,9 +33,17 @@ class Command(BaseCommand):
             .exclude(sentence__exact="")
             .values_list("sentence", flat=True)
         )
-        print("{} pad steps to analyze".format(len(pad_steps_sentence_list)))
-        pad_step_suggestions = {}
-        for sentence in pad_steps_sentence_list:
+        pads_sentence_list = (
+            Pad.objects.exclude(sentence__isnull=True)
+            .exclude(sentence__exact="")
+            .values_list("sentence", flat=True)
+        )
+        sentence_list = [sentence for sentence in pad_steps_sentence_list] + [
+            sentence for sentence in pads_sentence_list
+        ]
+        print("{} suggestions to analyze".format(len(sentence_list)))
+        suggestions = {}
+        for sentence in sentence_list:
             sanitized_sentence = sanitize_sentence(sentence)
 
             if (
@@ -45,12 +53,12 @@ class Command(BaseCommand):
             ):
                 continue
 
-            if sanitized_sentence not in pad_step_suggestions:
-                pad_step_suggestions[sanitized_sentence] = []
-            pad_step_suggestions[sanitized_sentence].append(sentence)
+            if sanitized_sentence not in suggestions:
+                suggestions[sanitized_sentence] = []
+            suggestions[sanitized_sentence].append(sentence)
 
         # Add new suggestions
-        print("{} suggestions to analyze".format(len(pad_step_suggestions)))
+        print("{} suggestions to analyze".format(len(suggestions)))
         suggestions_to_create = [
             Suggestion(
                 is_active=False,
@@ -60,7 +68,7 @@ class Command(BaseCommand):
             for (
                 sanitized_sentence,
                 sentence_list,
-            ) in pad_step_suggestions.items()
+            ) in suggestions.items()
             if len(sentence_list) >= threshold
         ]
 
