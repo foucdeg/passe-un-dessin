@@ -10,6 +10,7 @@ import { useReviewPad } from 'redux/Game/hooks';
 import { selectAvailableVoteCount } from 'redux/Game/selectors';
 
 import { tabHandlerBuilder } from 'services/utils';
+import { selectPlayer } from 'redux/Player/selectors';
 import { ThumbUpButton } from './components/ReactionOverlay/ReactionOverlay.style';
 import PadTab from './components/PadTab';
 
@@ -28,9 +29,10 @@ interface Props {
   publicMode?: boolean;
 }
 
-const GameRecap: React.FunctionComponent<Props> = ({ publicMode }) => {
+const GameRecap: React.FunctionComponent<Props> = ({ publicMode = false }) => {
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
+  const player = useSelector(selectPlayer);
   const availableVoteCount = useSelector(selectAvailableVoteCount);
 
   const [displayedPadIndex, setDisplayedPadIndex] = useState<number>(0);
@@ -79,6 +81,8 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode }) => {
 
   const displayedPad: Pad | undefined = game.pads[displayedPadIndex];
   const isVoteResultsDisplayed = displayedPad === undefined;
+  const isPlayerInGame =
+    !!player && !!game.players.find((gamePlayer) => gamePlayer.uuid === player.uuid);
 
   const selectResults = () => {
     if (!publicMode) return;
@@ -104,11 +108,13 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode }) => {
           </PadTabs>
         </TopRow>
         <GameRecapContainer>
-          {displayedPad && <PadRecap pad={displayedPad} publicMode={publicMode} />}
+          {displayedPad && (
+            <PadRecap pad={displayedPad} publicMode={publicMode} isPlayerInGame={isPlayerInGame} />
+          )}
           {publicMode && isVoteResultsDisplayed && <VoteResultsTab />}
         </GameRecapContainer>
       </OuterRecapContainer>
-      {!publicMode && (
+      {!publicMode && isPlayerInGame && (
         <VoteReminder>
           {availableVoteCount ? (
             <>

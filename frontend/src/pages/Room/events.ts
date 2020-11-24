@@ -16,6 +16,7 @@ enum ROOM_EVENT_TYPE {
   PLAYER_REPLACED = 'PLAYER_REPLACED',
   NEW_ADMIN = 'NEW_ADMIN',
   GAME_STARTS = 'GAME_STARTS',
+  GAME_RECAP_STARTS = 'DEBRIEF_STARTS',
 }
 
 interface RoomEvent {
@@ -59,6 +60,13 @@ type GameStartsEvent = RoomEvent & {
 const isGameStartsEvent = (event: RoomEvent): event is GameStartsEvent =>
   event.message_type === ROOM_EVENT_TYPE.GAME_STARTS;
 
+type GameRecapStartsEvent = RoomEvent & {
+  message_type: ROOM_EVENT_TYPE.GAME_RECAP_STARTS;
+  game: Game;
+};
+const isGameRecapStartsEvent = (event: RoomEvent): event is GameRecapStartsEvent =>
+  event.message_type === ROOM_EVENT_TYPE.GAME_RECAP_STARTS;
+
 export const useRoomEvents = (
   roomId: string,
   setPlayerWhoLeft: (player: Player) => void,
@@ -96,6 +104,10 @@ export const useRoomEvents = (
       if (isGameStartsEvent(event)) {
         dispatch(resetGameMetadata());
         push(`/room/${roomId}/game/${event.game.uuid}`);
+        return;
+      }
+      if (isGameRecapStartsEvent(event)) {
+        push(`/room/${roomId}/game/${event.game.uuid}/recap`);
         return;
       }
     },
