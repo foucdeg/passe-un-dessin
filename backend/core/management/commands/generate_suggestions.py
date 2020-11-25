@@ -77,7 +77,9 @@ class Command(BaseCommand):
         print("{} suggestions will be added".format(len(suggestions_to_create)))
         Suggestion.objects.bulk_create(suggestions_to_create)
 
-        inactive_suggestions = Suggestion.objects.filter(is_active=False).all()
+        inactive_suggestions = (
+            Suggestion.objects.filter(is_active=False).order_by("sentence").all()
+        )
         if len(inactive_suggestions) > 0:
             message = "Voici les nouvelles suggestions : \n"
             for suggestion in inactive_suggestions[:100]:
