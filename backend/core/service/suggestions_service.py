@@ -1,14 +1,17 @@
 import unicodedata
 
+from django.db.models import Q
+
+from core.constants import DEFAULT_LANGUAGE, LANGUAGE_EN, LANGUAGE_FR, LANGUAGES
+from core.models import Suggestion
+
 
 def remove_articles(sentence, language):
     articles = []
-    if language == "fr":
+    if language == LANGUAGE_FR:
         articles = ["un ", "une ", "le ", "la ", "l'", "les ", "des "]
-    if language == "en":
+    if language == LANGUAGE_EN:
         articles = ["the ", "a ", "an "]
-    if language == "de":
-        articles = ["der ", "die ", "das ", "ein ", "eine "]
 
     sanitized_sentence = sentence
     for article in articles:
@@ -16,7 +19,7 @@ def remove_articles(sentence, language):
     return sanitized_sentence
 
 
-def sanitize_sentence(sentence, language="fr"):
+def sanitize_sentence(sentence, language=LANGUAGE_FR):
     if language:
         sentence = remove_articles(sentence.lower(), language)
 
@@ -26,3 +29,22 @@ def sanitize_sentence(sentence, language="fr"):
         .encode("ascii", "ignore")
         .decode("utf-8")
     )
+
+
+def get_random(requested_language: str, count: int, only_single_words=False):
+    language = (
+        requested_language if requested_language in LANGUAGES else DEFAULT_LANGUAGE
+    )
+    query = Suggestion.objects.filter(language=language)
+    if only_single_words:
+        query = query.exclude(
+            Q(sentence__contains=" ")
+            | Q(sentence__contains=".")
+            | Q(sentence__contains="'")
+            | Q(sentence__contains="-")
+        )
+
+    return [
+        sentence
+        for sentence in query.order_by("?").values_list("sentence", flat=True)[:count]
+    ]

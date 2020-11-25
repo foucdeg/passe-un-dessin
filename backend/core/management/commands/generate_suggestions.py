@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
 
+from core.constants import LANGUAGE_FR
 from core.models import BlackList, Pad, PadStep, StepType, Suggestion
 from core.service.suggestions_service import sanitize_sentence
 
@@ -63,7 +64,7 @@ class Command(BaseCommand):
             Suggestion(
                 is_active=False,
                 sentence=max(sentence_list, key=sentence_list.count),
-                language="fr",
+                language=LANGUAGE_FR,
             )
             for (
                 sanitized_sentence,
