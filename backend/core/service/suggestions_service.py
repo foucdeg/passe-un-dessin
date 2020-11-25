@@ -44,7 +44,4 @@ def get_random(requested_language: str, count: int, only_single_words=False):
             | Q(sentence__contains="-")
         )
 
-    return [
-        sentence
-        for sentence in query.order_by("?").values_list("sentence", flat=True)[:count]
-    ]
+    return list(query.order_by("?").values_list("sentence", flat=True)[:count])
