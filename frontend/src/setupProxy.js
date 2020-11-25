@@ -10,6 +10,20 @@ module.exports = function (app) {
     }),
   );
   app.use(
+    '/admin',
+    createProxyMiddleware({
+      target: 'http://localhost:8000',
+      changeOrigin: true,
+    }),
+  );
+  app.use(
+    '/djangostatic',
+    createProxyMiddleware({
+      target: 'http://localhost:8000',
+      changeOrigin: true,
+    }),
+  );
+  app.use(
     '/drawings',
     createProxyMiddleware({
       target: 'http://localhost:8888',
