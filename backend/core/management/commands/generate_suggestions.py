@@ -83,9 +83,7 @@ class Command(BaseCommand):
         if len(inactive_suggestions) > 0:
             message = "Voici les nouvelles suggestions : \n"
             for suggestion in inactive_suggestions[:100]:
-                message += '"{}", langue : {}\n'.format(
-                    suggestion.sentence, suggestion.language
-                )
+                message += "{}\n".format(suggestion.sentence)
             if len(inactive_suggestions) > 100:
                 message += "...et {} autres".format(len(inactive_suggestions) - 100)
 
