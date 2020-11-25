@@ -16,7 +16,7 @@ from core.models import Game, GamePhase, Player, Room
 from core.serializers import PlayerSerializer, RoomSerializer
 from core.service.game_service import initialize_game
 from core.service.room_service import remove_player_from_room
-from core.service.suggestions import SuggestionEngine
+from core.service.suggestions_service import get_random
 
 logger = logging.getLogger(__name__)
 
@@ -49,17 +49,11 @@ class RoomCreationView(View):
         """
         Generates a human friendly name for a room, does not enforce uniqueness
         """
-        engine = SuggestionEngine()
 
-        language = get_language_from_request(request)
-        language = language[:2].lower()
-        if language not in engine.get_supported_languages():
-            language = "en"  # defaults to en
+        language = get_language_from_request(request)[:2].lower()
+        suggestion = " ".join(get_random(language, 3, only_single_words=True))
 
-        suggestion = " ".join(engine.get_single_word_random(language, 3))
-        suggestion = suggestion[:127]
-
-        return suggestion
+        return suggestion[:127]
 
     def post(self, request):
 

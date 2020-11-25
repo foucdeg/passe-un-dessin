@@ -1,6 +1,8 @@
 from django.core.management.base import BaseCommand
 
+from core.constants import LANGUAGE_FR
 from core.models import BlackList, Pad, PadStep, StepType, Suggestion
+from core.service.mail_service import send_simple_message
 from core.service.suggestions_service import sanitize_sentence
 
 
@@ -27,20 +29,18 @@ class Command(BaseCommand):
 
         # Build suggestions dictionnary
         print("Build suggestions dictionnary")
-        pad_steps_sentence_list = (
+        pad_steps_sentences = (
             PadStep.objects.filter(step_type=StepType.WORD_TO_DRAWING.value)
             .exclude(sentence__isnull=True)
             .exclude(sentence__exact="")
             .values_list("sentence", flat=True)
         )
-        pads_sentence_list = (
+        pads_sentences = (
             Pad.objects.exclude(sentence__isnull=True)
             .exclude(sentence__exact="")
             .values_list("sentence", flat=True)
         )
-        sentence_list = [sentence for sentence in pad_steps_sentence_list] + [
-            sentence for sentence in pads_sentence_list
-        ]
+        sentence_list = list(pad_steps_sentences) + list(pads_sentences)
         print("{} suggestions to analyze".format(len(sentence_list)))
         suggestions = {}
         for sentence in sentence_list:
@@ -63,7 +63,7 @@ class Command(BaseCommand):
             Suggestion(
                 is_active=False,
                 sentence=max(sentence_list, key=sentence_list.count),
-                language="fr",
+                language=LANGUAGE_FR,
             )
             for (
                 sanitized_sentence,
@@ -74,3 +74,16 @@ class Command(BaseCommand):
 
         print("{} suggestions will be added".format(len(suggestions_to_create)))
         Suggestion.objects.bulk_create(suggestions_to_create)
+
+        inactive_suggestions = (
+            Suggestion.objects.filter(is_active=False).order_by("sentence").all()
+        )
+        if len(inactive_suggestions) > 0:
+            message = "Voici les nouvelles suggestions : \n"
+            for suggestion in inactive_suggestions[:100]:
+                message += "{}\n".format(suggestion.sentence)
+            if len(inactive_suggestions) > 100:
+                message += "...et {} autres".format(len(inactive_suggestions) - 100)
+
+            send_simple_message("Nouvelles suggestions à regarder !", message)
+            print("mail send with all suggestion")
