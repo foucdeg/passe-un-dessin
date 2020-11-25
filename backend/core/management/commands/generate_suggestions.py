@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 
 from core.constants import LANGUAGE_FR
 from core.models import BlackList, Pad, PadStep, StepType, Suggestion
+from core.service.mail_service import send_simple_message
 from core.service.suggestions_service import sanitize_sentence
 
 
@@ -75,3 +76,16 @@ class Command(BaseCommand):
 
         print("{} suggestions will be added".format(len(suggestions_to_create)))
         Suggestion.objects.bulk_create(suggestions_to_create)
+
+        inactive_suggestions = Suggestion.objects.filter(is_active=False).all()
+        if len(inactive_suggestions) > 0:
+            message = "Voici les nouvelles suggestions : \n"
+            for suggestion in inactive_suggestions[:100]:
+                message += '"{}", langue : {}\n'.format(
+                    suggestion.sentence, suggestion.language
+                )
+            if len(inactive_suggestions) > 100:
+                message += "...et {} autres".format(len(inactive_suggestions) - 100)
+
+            send_simple_message("Nouvelles suggestions à regarder !", message)
+            print("mail send with all suggestion")
