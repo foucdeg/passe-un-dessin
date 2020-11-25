@@ -1,18 +1,14 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
+from django.db import models
 
-from core.models import Game, Pad, PadStep, Player, Room, User
-
-
-class CustomUserAdmin(UserAdmin):
-    add_fieldsets = (
-        (None, {"classes": ("wide",), "fields": ("email", "password1", "password2")}),
-    )
+from core.models import Suggestion
 
 
-admin.site.register(User, CustomUserAdmin)
-admin.site.register(Room)
-admin.site.register(Game)
-admin.site.register(Player)
-admin.site.register(Pad)
-admin.site.register(PadStep)
+class SuggestionAdmin(admin.ModelAdmin):
+    fields = ("sentence", "language", "is_active")
+    list_display = ("uuid", "sentence", "language", "is_active")
+    ordering = ["language", "sentence"]
+    search_fields = ["sentence"]
+
+
+admin.site.register(Suggestion, SuggestionAdmin)
