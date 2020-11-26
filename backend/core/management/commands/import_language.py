@@ -42,7 +42,11 @@ class Command(BaseCommand):
 
                 already_existing_suggestions.add(sanitized_word)
                 suggestions_to_create.append(
-                    Suggestion(is_active=True, sentence=word, language=language)
+                    Suggestion(
+                        status=SuggestionStatus.ACTIVE.value,
+                        sentence=word,
+                        language=language,
+                    )
                 )
 
         print("{} suggestions will be added".format(len(suggestions_to_create)))

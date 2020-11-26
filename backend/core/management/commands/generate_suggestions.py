@@ -1,7 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from core.constants import LANGUAGE_FR
-from core.models import BlackList, Pad, PadStep, StepType, Suggestion
+from core.models import Language, Pad, PadStep, StepType, Suggestion, SuggestionStatus
 from core.service.mail_service import send_simple_message
 from core.service.suggestions_service import sanitize_sentence
 
@@ -16,11 +15,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         threshold = options["threshold"]
-
-        blacklisted_sentences = {
-            sanitize_sentence(blacklist.sentence)
-            for blacklist in BlackList.objects.all()
-        }
 
         already_existing_suggestions = {
             sanitize_sentence(suggestion.sentence)
@@ -49,7 +43,6 @@ class Command(BaseCommand):
             if (
                 sanitized_sentence == ""
                 or sanitized_sentence in already_existing_suggestions
-                or sanitized_sentence in blacklisted_sentences
             ):
                 continue
 
@@ -61,9 +54,9 @@ class Command(BaseCommand):
         print("{} suggestions to analyze".format(len(suggestions)))
         suggestions_to_create = [
             Suggestion(
-                is_active=False,
+                status=SuggestionStatus.INACTIVE.value,
                 sentence=max(sentence_list, key=sentence_list.count),
-                language=LANGUAGE_FR,
+                language=Language.FR.value,
             )
             for (
                 sanitized_sentence,
@@ -76,7 +69,9 @@ class Command(BaseCommand):
         Suggestion.objects.bulk_create(suggestions_to_create)
 
         inactive_suggestions = (
-            Suggestion.objects.filter(is_active=False).order_by("sentence").all()
+            Suggestion.objects.filter(status=SuggestionStatus.INACTIVE.value)
+            .order_by("sentence")
+            .all()
         )
         if len(inactive_suggestions) > 0:
             message = "Voici les nouvelles suggestions : \n"
@@ -85,5 +80,5 @@ class Command(BaseCommand):
             if len(inactive_suggestions) > 100:
                 message += "...et {} autres".format(len(inactive_suggestions) - 100)
 
-            send_simple_message("Nouvelles suggestions à regarder !", message)
+            send_simple_message("Nouvelles suggestions à évaluer !", message)
             print("mail send with all suggestion")
