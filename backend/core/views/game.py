@@ -297,6 +297,7 @@ def submit_vote(request, player, pad_step_id):
 def get_vote_results(request, game_id):
     pad_steps = (
         PadStep.objects.filter(pad__game_id=game_id)
+        .prefetch_related("player", "votes")
         .annotate(count=Count("votes"))
         .filter(count__gt=0)
         .order_by("-count")
