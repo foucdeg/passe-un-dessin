@@ -21,6 +21,17 @@ class GamePhase(Enum):
     VOTE_RESULTS = "VOTE_RESULTS"
 
 
+class SuggestionStatus(Enum):
+    INACTIVE = "INACTIVE"
+    ACTIVE = "ACTIVE"
+    BLACKLISTED = "BLACKLISTED"
+
+
+class Language(Enum):
+    FR = "fr"
+    EN = "en"
+
+
 class StepType(Enum):
     WORD_TO_DRAWING = "WORD_TO_DRAWING"
     DRAWING_TO_WORD = "DRAWING_TO_WORD"
@@ -198,18 +209,22 @@ class Vote(BaseModel):
 
 class Suggestion(BaseModel):
     sentence = models.CharField(max_length=100)
-    language = models.CharField(max_length=10)
-    is_active = models.BooleanField()
+    language = models.CharField(
+        max_length=10,
+        choices=[(language.value, language.value) for language in Language],
+        default=Language.FR.value,
+    )
+    status = models.CharField(
+        max_length=12,
+        choices=[(status.value, status.value) for status in SuggestionStatus],
+        default=SuggestionStatus.INACTIVE.value,
+    )
 
     class Meta:
         unique_together = (
             "sentence",
             "language",
         )
-
-
-class BlackList(BaseModel):
-    sentence = models.CharField(max_length=100, unique=True)
 
 
 @receiver(models.signals.pre_save, sender=Player)
