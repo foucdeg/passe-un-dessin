@@ -11,6 +11,7 @@ export interface Player {
   user?: null | User;
   avatar_url: string | null;
   avatar?: string | null;
+  total_score: number;
 }
 
 export interface GameWithParticipants {

@@ -15,6 +15,7 @@ import {
 export type PlayerWithScore = Player & {
   score: number;
   delta?: number;
+  rank?: number;
 };
 
 interface Props {
@@ -25,14 +26,14 @@ interface Props {
 }
 const getRankDisplay = (ranking: number) => {
   switch (ranking) {
-    case 0:
-      return '🏆';
     case 1:
-      return '🥈';
+      return '🏆';
     case 2:
+      return '🥈';
+    case 3:
       return '🥉';
     default:
-      return ranking + 1;
+      return ranking;
   }
 };
 
@@ -51,7 +52,7 @@ const Scoreboard: React.FC<Props> = ({ list, className, showRankings, onScrollEn
     <InnerScoreboard ref={scoreBoardRef} onScroll={onScroll} className={className}>
       {list.map((playerWithScore, index) => (
         <RankingRow key={playerWithScore.uuid}>
-          {showRankings && <RankText>{getRankDisplay(index)}</RankText>}
+          {showRankings && <RankText>{getRankDisplay(playerWithScore.rank || index + 1)}</RankText>}
           <StyledAvatar player={playerWithScore} />
           <StyledLink
             to={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', playerWithScore.uuid)}

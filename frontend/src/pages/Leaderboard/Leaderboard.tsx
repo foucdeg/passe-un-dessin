@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { NoProps } from 'services/utils';
 
 import GameContainer from 'layout/GameLayout/GameContainer';
@@ -25,24 +25,23 @@ const Leaderboard: React.FC<NoProps> = () => {
     doFetchLeaderboard(page);
   }, [doFetchLeaderboard, page]);
 
-  const fetchNextPage = () => {
-    if (leaderboard.length === page * 10) {
+  const fetchNextPage = useCallback(() => {
+    if (Object.keys(leaderboard).length === page * 10) {
       setPage(page + 1);
       doFetchLeaderboard(page + 1);
     }
-  };
+  }, [doFetchLeaderboard, leaderboard, page, setPage]);
 
-  if (!leaderboard) {
-    return (
-      <GameContainer>
-        <InnerGameContainer>
-          <Container />
-        </InnerGameContainer>
-      </GameContainer>
-    );
-  }
-
-  const formattedLeaderboard = leaderboard.map((item) => ({ ...item, score: item.vote_count }));
+  const formattedLeaderboard = useMemo(
+    () =>
+      leaderboard
+        ? Object.values(leaderboard).map((item) => ({
+            ...item,
+            score: item.total_score,
+          }))
+        : [],
+    [leaderboard],
+  );
 
   return (
     <>
@@ -55,13 +54,11 @@ const Leaderboard: React.FC<NoProps> = () => {
             <StyledHeader>
               <FormattedMessage id="leaderboard.title" />
             </StyledHeader>
-            {leaderboard && (
-              <StyledScoreboard
-                onScrollEnd={fetchNextPage}
-                list={formattedLeaderboard}
-                showRankings
-              />
-            )}
+            <StyledScoreboard
+              onScrollEnd={fetchNextPage}
+              list={formattedLeaderboard}
+              showRankings
+            />
           </Container>
         </InnerGameContainer>
       </GameContainer>

@@ -95,6 +95,7 @@ class Player(BaseModel):
     )
     color = models.CharField(max_length=10)
     avatar = models.TextField(null=True, blank=True)
+    total_score = models.IntegerField(default=0)
 
 
 class User(AbstractUser):

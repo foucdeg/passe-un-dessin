@@ -38,13 +38,13 @@ class PlayerSerializer(BaseSerializer):
 
     class Meta:
         model = Player
-        fields = ("uuid", "name", "color", "avatar_url")
+        fields = ("uuid", "name", "color", "total_score", "avatar_url")
 
 
 class PlayerWithAvatarSerializer(PlayerSerializer):
     class Meta:
         model = Player
-        fields = ("uuid", "name", "color", "avatar", "avatar_url")
+        fields = ("uuid", "name", "color", "total_score", "avatar", "avatar_url")
 
 
 class PlayerWithUserAndAvatarSerializer(PlayerWithAvatarSerializer):
@@ -52,15 +52,24 @@ class PlayerWithUserAndAvatarSerializer(PlayerWithAvatarSerializer):
 
     class Meta:
         model = Player
-        fields = ("uuid", "name", "color", "user", "avatar_url", "avatar")
+        fields = (
+            "uuid",
+            "name",
+            "color",
+            "total_score",
+            "total_score",
+            "user",
+            "avatar_url",
+            "avatar",
+        )
 
 
 class PlayerInRankingSerializer(PlayerSerializer):
-    vote_count = serializers.IntegerField()
+    rank = serializers.IntegerField()
 
     class Meta:
         model = Player
-        fields = ("uuid", "name", "color", "vote_count", "avatar_url")
+        fields = ("uuid", "name", "color", "total_score", "rank", "avatar_url")
 
 
 class RoomSerializer(BaseSerializer):
@@ -142,6 +151,7 @@ class PlayerWithHistorySerializer(PlayerSerializer):
             "uuid",
             "name",
             "color",
+            "total_score",
             "created_at",
             "avatar_url",
             "participations",

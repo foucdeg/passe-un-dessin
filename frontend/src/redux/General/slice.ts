@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Leaderboard, LeaderboardResponse } from './types';
+import { LeaderboardPlayer, LeaderboardResponse } from './types';
 
 export type GeneralState = Readonly<{
-  leaderboard: Leaderboard;
+  leaderboard: { [rank: number]: LeaderboardPlayer };
 }>;
 
 const initialState: GeneralState = { leaderboard: [] };
@@ -12,8 +12,9 @@ const generalSlice = createSlice({
   initialState,
   reducers: {
     updateLeaderboard: (state, action: PayloadAction<LeaderboardResponse>) => {
-      if (state.leaderboard.length >= action.payload.pageNumber * 10) return;
-      state.leaderboard = state.leaderboard.concat(action.payload.pageData);
+      action.payload.pageData.forEach((player, index) => {
+        state.leaderboard[(action.payload.pageNumber - 1) * 10 + index + 1] = player;
+      });
     },
   },
 });
