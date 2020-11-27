@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 import Spacer from 'atoms/Spacer';
 import { Player } from 'redux/Player/types';
 import { PUBLIC_PATHS } from 'routes';
@@ -22,7 +22,7 @@ interface Props {
   list: PlayerWithScore[];
   className?: string;
   showRankings?: boolean;
-  onScrollEnd?: () => void;
+  onScrollEnd?: (page: number) => void;
 }
 const getRankDisplay = (ranking: number) => {
   switch (ranking) {
@@ -38,14 +38,23 @@ const getRankDisplay = (ranking: number) => {
 };
 
 const Scoreboard: React.FC<Props> = ({ list, className, showRankings, onScrollEnd }) => {
+  const [page, setPage] = useState(1);
+  const fetchNextPage = useCallback(() => {
+    if (!onScrollEnd) return;
+    if (Object.keys(list).length === page * 10) {
+      setPage(page + 1);
+      onScrollEnd(page + 1);
+    }
+  }, [onScrollEnd, list, page, setPage]);
+
   const scoreBoardRef = useRef<HTMLDivElement>(null);
   const onScroll = () => {
-    if (!scoreBoardRef || !scoreBoardRef.current || !onScrollEnd) return;
+    if (!scoreBoardRef || !scoreBoardRef.current) return;
     if (
       scoreBoardRef.current.scrollTop + scoreBoardRef.current.offsetHeight >=
       scoreBoardRef.current.scrollHeight - 100
     ) {
-      onScrollEnd();
+      fetchNextPage();
     }
   };
   return (

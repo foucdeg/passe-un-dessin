@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { NoProps } from 'services/utils';
 
 import GameContainer from 'layout/GameLayout/GameContainer';
@@ -19,18 +19,10 @@ import {
 const Leaderboard: React.FC<NoProps> = () => {
   const doFetchLeaderboard = useFetchLeaderboard();
   const leaderboard = useSelector(selectLeaderboard);
-  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    doFetchLeaderboard(page);
-  }, [doFetchLeaderboard, page]);
-
-  const fetchNextPage = useCallback(() => {
-    if (Object.keys(leaderboard).length === page * 10) {
-      setPage(page + 1);
-      doFetchLeaderboard(page + 1);
-    }
-  }, [doFetchLeaderboard, leaderboard, page, setPage]);
+    doFetchLeaderboard(1);
+  }, [doFetchLeaderboard]);
 
   const formattedLeaderboard = useMemo(
     () =>
@@ -55,7 +47,7 @@ const Leaderboard: React.FC<NoProps> = () => {
               <FormattedMessage id="leaderboard.title" />
             </StyledHeader>
             <StyledScoreboard
-              onScrollEnd={fetchNextPage}
+              onScrollEnd={doFetchLeaderboard}
               list={formattedLeaderboard}
               showRankings
             />
