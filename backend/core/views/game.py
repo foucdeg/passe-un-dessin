@@ -309,13 +309,13 @@ def get_vote_results(request, game_id):
 
 @require_GET
 @requires_player
-def check_is_player_in_game(request, player, game_id):
+def player_should_join(request, player, game_id):
     try:
         game = Game.objects.get(uuid=game_id)
     except Game.DoesNotExist:
         return HttpResponseBadRequest("Game with uuid %s does not exist" % game_id)
 
-    return JsonResponse({"is_in_game": game.has_player(player)})
+    return JsonResponse({"is_in_game": game.has_player(player), "phase": game.phase})
 
 
 @require_http_methods(["PUT"])

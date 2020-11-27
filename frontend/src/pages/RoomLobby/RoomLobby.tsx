@@ -7,7 +7,7 @@ import copy from 'copy-to-clipboard';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { MAX_PLAYERS, MIN_PLAYERS } from 'redux/Game/constants';
 import {
-  useCheckIfPlayerIsInGame,
+  useCheckIfPlayerShouldJoin,
   useDrawOwnWordSwitch,
   useRoundDuration,
   useStartGame,
@@ -38,7 +38,7 @@ const Room: React.FunctionComponent = () => {
   const doJoinRoom = useJoinRoom();
   const doLeaveRoom = useLeaveRoom();
   const doStartGame = useStartGame();
-  const doCheckIfPlayerIsInGame = useCheckIfPlayerIsInGame();
+  const doCheckIfPlayerShouldJoin = useCheckIfPlayerShouldJoin();
   const room = useSelector(selectRoom);
   const player = useSelector(selectPlayer);
   const [inputText, setInputText] = useState<string>(document.location.href);
@@ -65,9 +65,9 @@ const Room: React.FunctionComponent = () => {
       room.players.some((roomPlayer) => roomPlayer.uuid === player.uuid) &&
       room.current_game_id
     ) {
-      doCheckIfPlayerIsInGame(room.current_game_id);
+      doCheckIfPlayerShouldJoin(room.current_game_id);
     }
-  }, [room, player, doCheckIfPlayerIsInGame]);
+  }, [room, player, doCheckIfPlayerShouldJoin]);
 
   if (!room) return null;
   if (!player) return null;
