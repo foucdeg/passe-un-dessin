@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'redux/useSelector';
-import { Pad } from 'redux/Game/types';
+import { GamePhase, Pad } from 'redux/Game/types';
 import { selectRoom } from 'redux/Room/selectors';
 import { selectGame } from 'redux/Game/selectors';
 import { FormattedMessage } from 'react-intl';
@@ -11,6 +11,7 @@ import { selectAvailableVoteCount } from 'redux/Game/selectors';
 
 import { tabHandlerBuilder } from 'services/utils';
 import { selectPlayer } from 'redux/Player/selectors';
+import Loader from 'atoms/Loader';
 import { ThumbUpButton } from './components/ReactionOverlay/ReactionOverlay.style';
 import PadTab from './components/PadTab';
 
@@ -75,9 +76,19 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode = false }) => {
     };
   }, [selectNextPad, selectPreviousPad]);
 
-  if (!game) return null;
+  const loadingView = (
+    <OuterRecapContainer>
+      <GameRecapContainer>
+        <Loader />
+      </GameRecapContainer>
+    </OuterRecapContainer>
+  );
 
-  if (!publicMode && !room) return null;
+  if (!game) return loadingView;
+
+  if (!publicMode && !room) return loadingView;
+
+  if (![GamePhase.DEBRIEF, GamePhase.VOTE_RESULTS].includes(game.phase)) return loadingView;
 
   const displayedPad: Pad | undefined = game.pads[displayedPadIndex];
   const isVoteResultsDisplayed = displayedPad === undefined;

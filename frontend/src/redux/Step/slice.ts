@@ -14,8 +14,11 @@ const stepSlice = createSlice({
     updateStep: (state, action: PayloadAction<PadStep | null>) => {
       state.step = action.payload;
     },
+    resetStep: (state) => {
+      state.step = null;
+    },
   },
 });
 
-export const { updateStep } = stepSlice.actions;
+export const { updateStep, resetStep } = stepSlice.actions;
 export default stepSlice.reducer;

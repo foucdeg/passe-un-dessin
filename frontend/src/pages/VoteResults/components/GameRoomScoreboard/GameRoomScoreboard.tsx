@@ -5,6 +5,7 @@ import { selectRanking } from 'redux/Room/selectors';
 import { selectWinners } from 'redux/Game/selectors';
 import { EmptyObject } from 'services/utils';
 import Scoreboard from 'components/Scoreboard';
+import Loader from 'atoms/Loader';
 import {
   GameScoreboardContainer,
   InnerScoreboardContainer,
@@ -15,7 +16,17 @@ const GameRoomScoreboard: React.FC<EmptyObject> = () => {
   const ranking = useSelector(selectRanking);
   const winners = useSelector(selectWinners);
 
-  if (!ranking || !winners) return null;
+  if (!ranking || !winners)
+    return (
+      <GameScoreboardContainer>
+        <StyledHeader>
+          <FormattedMessage id="voteResults.scoreboard" />
+        </StyledHeader>
+        <InnerScoreboardContainer>
+          <Loader />
+        </InnerScoreboardContainer>
+      </GameScoreboardContainer>
+    );
 
   const list = ranking.map((rankingItem) => {
     const winnerPadSteps = winners.filter(

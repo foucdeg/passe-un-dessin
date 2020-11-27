@@ -13,6 +13,7 @@ import { Pad } from 'redux/Game/types';
 import { selectPlayer } from 'redux/Player/selectors';
 import { Player } from 'redux/Player/types';
 import { selectRoom } from 'redux/Room/selectors';
+import { resetStep } from 'redux/Step';
 import { useSelector } from 'redux/useSelector';
 import { useServerSentEvent } from 'services/networking/server-events';
 
@@ -93,6 +94,7 @@ const useGameEvents = (gameId: string) => {
       }
       if (isRoundStartsEvent(event)) {
         dispatch(startRound({ roundNumber: event.round_number }));
+        dispatch(resetStep());
 
         const targetStep = gameStructure.rounds.find(
           (step) => step.player.uuid === player.uuid && step.round_number === event.round_number,
@@ -106,6 +108,7 @@ const useGameEvents = (gameId: string) => {
         return;
       }
       if (isDebriefStartsEvent(event)) {
+        dispatch(resetStep());
         doFetchGame(gameStructure.uuid, true);
         push(`/room/${room.uuid}/game/${gameStructure.uuid}/recap`);
         return;
@@ -115,6 +118,7 @@ const useGameEvents = (gameId: string) => {
         return;
       }
       if (isVoteResultsStartsEvent(event)) {
+        dispatch(resetStep());
         doFetchGame(gameStructure.uuid, true);
         push(`/room/${room.uuid}/game/${gameStructure.uuid}/vote-results`);
         return;

@@ -8,6 +8,7 @@ import { FormattedMessage } from 'react-intl';
 import Spacer from 'atoms/Spacer';
 import BareLink from 'atoms/BareLink';
 import { useBoolean } from 'services/utils';
+import Loader from 'atoms/Loader';
 import Podium from './components/Podium';
 import {
   Container,
@@ -44,7 +45,7 @@ const VoteResults: React.FunctionComponent = () => {
           <FormattedMessage id="voteResults.bestMoments" />
         </StyledHeader>
         <Spacer />
-        {winners && (winners.length ? <Podium winners={winners} /> : <div>No votes</div>)}
+        {winners ? winners.length ? <Podium winners={winners} /> : <div>No votes</div> : <Loader />}
       </LeftSide>
       <GameRoomScoreboard />
       <TopRightButtons>
