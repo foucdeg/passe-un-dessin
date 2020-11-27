@@ -47,9 +47,9 @@ urlpatterns = [
         "room/<str:room_id>/ranking", room_management.get_ranking, name="get_ranking",
     ),
     path(
-        "game/<str:game_id>/is-player-in-game",
-        game.check_is_player_in_game,
-        name="is_player_in_game",
+        "game/<str:game_id>/player-should-join",
+        game.player_should_join,
+        name="player_should_join",
     ),
     path(
         "game/<str:game_id>/force-state", game.force_state, name="force_game_state",

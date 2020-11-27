@@ -228,7 +228,7 @@ export const useDeleteVote = () => {
   );
 };
 
-export const useCheckIfPlayerIsInGame = () => {
+export const useCheckIfPlayerShouldJoin = () => {
   const { push } = useHistory();
   const room = useSelector(selectRoom);
 
@@ -237,8 +237,11 @@ export const useCheckIfPlayerIsInGame = () => {
       if (!room) return;
 
       try {
-        const response = await client.get(`/game/${gameId}/is-player-in-game`);
-        if (response.is_in_game) {
+        const response = await client.get(`/game/${gameId}/player-should-join`);
+        if (
+          response.is_in_game ||
+          [GamePhase.DEBRIEF, GamePhase.VOTE_RESULTS].includes(response.phase)
+        ) {
           push(`/room/${room.uuid}/game/${gameId}`);
         }
       } catch (e) {

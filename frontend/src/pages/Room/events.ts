@@ -4,6 +4,7 @@ import { useHistory } from 'react-router';
 
 import { addPlayerToRoom, removePlayerFromRoom, nameNewAdmin } from 'redux/Room';
 import { resetGameMetadata } from 'redux/Game/slice';
+import { resetStep } from 'redux/Step/slice';
 import { useSelector } from 'redux/useSelector';
 import { selectPlayer } from 'redux/Player/selectors';
 import { useServerSentEvent } from 'services/networking/server-events';
@@ -102,6 +103,7 @@ export const useRoomEvents = (
         return;
       }
       if (isGameStartsEvent(event)) {
+        dispatch(resetStep());
         dispatch(resetGameMetadata());
         push(`/room/${roomId}/game/${event.game.uuid}`);
         return;
