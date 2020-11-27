@@ -1,18 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Leaderboard } from './types';
+import { Leaderboard, LeaderboardResponse } from './types';
 
 export type GeneralState = Readonly<{
-  leaderboard: Leaderboard | null;
+  leaderboard: Leaderboard;
 }>;
 
-const initialState: GeneralState = { leaderboard: null };
+const initialState: GeneralState = { leaderboard: [] };
 
 const generalSlice = createSlice({
   name: 'General',
   initialState,
   reducers: {
-    updateLeaderboard: (state, action: PayloadAction<Leaderboard | null>) => {
-      state.leaderboard = action.payload;
+    updateLeaderboard: (state, action: PayloadAction<LeaderboardResponse>) => {
+      if (state.leaderboard.length >= action.payload.pageNumber * 10) return;
+      state.leaderboard = state.leaderboard.concat(action.payload.pageData);
     },
   },
 });

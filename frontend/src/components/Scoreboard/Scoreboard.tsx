@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Spacer from 'atoms/Spacer';
 import { Player } from 'redux/Player/types';
 import { PUBLIC_PATHS } from 'routes';
@@ -21,6 +21,7 @@ interface Props {
   list: PlayerWithScore[];
   className?: string;
   showRankings?: boolean;
+  onScrollEnd?: () => void;
 }
 const getRankDisplay = (ranking: number) => {
   switch (ranking) {
@@ -35,23 +36,35 @@ const getRankDisplay = (ranking: number) => {
   }
 };
 
-const Scoreboard: React.FC<Props> = ({ list, className, showRankings }) => (
-  <InnerScoreboard className={className}>
-    {list.map((playerWithScore, index) => (
-      <RankingRow key={playerWithScore.uuid}>
-        {showRankings && <RankText>{getRankDisplay(index)}</RankText>}
-        <StyledAvatar player={playerWithScore} />
-        <StyledLink
-          to={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', playerWithScore.uuid)}
-          target="_blank"
-        >
-          {playerWithScore.name}
-        </StyledLink>
-        <Spacer />
-        {playerWithScore.delta && <RankingDelta>+ {playerWithScore.delta}</RankingDelta>}
-        <RankingScore>{playerWithScore.score}</RankingScore>
-      </RankingRow>
-    ))}
-  </InnerScoreboard>
-);
+const Scoreboard: React.FC<Props> = ({ list, className, showRankings, onScrollEnd }) => {
+  const scoreBoardRef = useRef<HTMLDivElement>(null);
+  const onScroll = () => {
+    if (!scoreBoardRef || !scoreBoardRef.current || !onScrollEnd) return;
+    if (
+      scoreBoardRef.current.scrollTop + scoreBoardRef.current.offsetHeight >=
+      scoreBoardRef.current.scrollHeight - 100
+    ) {
+      onScrollEnd();
+    }
+  };
+  return (
+    <InnerScoreboard ref={scoreBoardRef} onScroll={onScroll} className={className}>
+      {list.map((playerWithScore, index) => (
+        <RankingRow key={playerWithScore.uuid}>
+          {showRankings && <RankText>{getRankDisplay(index)}</RankText>}
+          <StyledAvatar player={playerWithScore} />
+          <StyledLink
+            to={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', playerWithScore.uuid)}
+            target="_blank"
+          >
+            {playerWithScore.name}
+          </StyledLink>
+          <Spacer />
+          {playerWithScore.delta && <RankingDelta>+ {playerWithScore.delta}</RankingDelta>}
+          <RankingScore>{playerWithScore.score}</RankingScore>
+        </RankingRow>
+      ))}
+    </InnerScoreboard>
+  );
+};
 export default Scoreboard;

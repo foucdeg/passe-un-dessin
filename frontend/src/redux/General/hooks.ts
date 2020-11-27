@@ -6,8 +6,11 @@ import { updateLeaderboard } from './slice';
 export const useFetchLeaderboard = () => {
   const dispatch = useDispatch();
 
-  return useCallback(async () => {
-    const { pageData: leaderboard } = await client.get(`/leaderboard`);
-    dispatch(updateLeaderboard(leaderboard));
-  }, [dispatch]);
+  return useCallback(
+    async (page: number) => {
+      const response = await client.get(`/leaderboard?page=${page}`);
+      dispatch(updateLeaderboard(response));
+    },
+    [dispatch],
+  );
 };

@@ -14,7 +14,7 @@ def get_leaderboard(request):
     qs = (
         Player.objects.annotate(vote_count=Count("steps__votes"))
         .filter(vote_count__gt=0)
-        .order_by("-vote_count")
+        .order_by("-vote_count", "uuid")
     )
     paginator = Paginator(qs, 10)
     page = paginator.get_page(page_number)

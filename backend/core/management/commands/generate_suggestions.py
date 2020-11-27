@@ -77,6 +77,7 @@ class Command(BaseCommand):
                 message += "{}\n".format(suggestion.sentence)
             if len(inactive_suggestions) > 100:
                 message += "...et {} autres".format(len(inactive_suggestions) - 100)
+            message += "\n\nPour évaluer ces suggestions, cliquer sur ce lien : https://passe-un-dessin.fouc.net/admin/core/suggestion/?status__exact=INACTIVE"
 
             send_simple_message("Nouvelles suggestions à évaluer !", message)
             print("mail send with all suggestion")
