@@ -13,7 +13,7 @@ export enum StepType {
 }
 
 export interface Vote {
-  player: Player;
+  player_id: string;
 }
 
 export interface PadStep {

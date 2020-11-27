@@ -81,10 +81,10 @@ export const findRemainingPlayers = (game: Game): Player[] => {
     case GamePhase.DEBRIEF:
       const voteCountByPlayer = game.rounds.reduce((acc, padStep) => {
         padStep.votes.forEach((vote) => {
-          if (!acc[vote.player.uuid]) {
-            acc[vote.player.uuid] = 0;
+          if (!acc[vote.player_id]) {
+            acc[vote.player_id] = 0;
           }
-          acc[vote.player.uuid] = acc[vote.player.uuid] + 1;
+          acc[vote.player_id] = acc[vote.player_id] + 1;
         });
         return acc;
       }, {} as Record<string, number>);

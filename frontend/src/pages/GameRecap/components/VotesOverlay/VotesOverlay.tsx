@@ -10,7 +10,7 @@ interface Props {
 
 const VotesOverlay: React.FC<Props> = ({ votes }) =>
   votes.length ? (
-    <LikesSection title={votes.map((vote) => vote.player.name).join(', ')}>
+    <LikesSection>
       {votes.length} <ThumbUpButton />
     </LikesSection>
   ) : null;

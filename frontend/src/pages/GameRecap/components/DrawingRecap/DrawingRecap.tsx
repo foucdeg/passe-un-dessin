@@ -23,7 +23,7 @@ const DrawingRecap: React.FC<Props> = ({ step, publicMode, canVote }) => {
 
   if (!publicMode && !player) return null;
 
-  const likeCount = step.votes.filter((vote) => player && vote.player.uuid === player.uuid).length;
+  const likeCount = step.votes.filter((vote) => player && vote.player_id === player.uuid).length;
 
   const canLike = canVote && availableVoteCount > 0;
   const canUnlike = canVote && likeCount > 0;

@@ -75,11 +75,9 @@ class RoomSerializer(BaseSerializer):
 
 
 class VoteSerializer(BaseSerializer):
-    player = PlayerSerializer()
-
     class Meta:
         model = Vote
-        fields = ("player",)
+        fields = ("player_id",)
 
 
 class PadStepSerializer(BaseSerializer):
@@ -100,7 +98,7 @@ class PadStepSerializer(BaseSerializer):
             "sentence",
             "drawing_url",
             "votes",
-            "created_at"
+            "created_at",
         )
 
 
