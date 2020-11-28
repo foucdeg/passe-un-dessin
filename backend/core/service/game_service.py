@@ -153,6 +153,18 @@ def start_next_round(game: Game, new_round: int):
 def switch_to_vote_results(game: Game):
     game.phase = GamePhase.VOTE_RESULTS.value
     game.save()
+    room_players_by_id = {
+        player.uuid: player for player in game.room.players.all()
+    }
+    for pad in game.pads.all():
+        for pad_step in pad.steps.all():
+            room_players_by_id[pad_step.player.uuid].total_score += len(
+                pad_step.votes.all()
+            )
+
+    for player in room_players_by_id.values():
+        player.save()
+
     send_event(
         "game-%s" % game.uuid.hex,
         "message",

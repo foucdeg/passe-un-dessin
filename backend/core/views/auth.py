@@ -171,6 +171,6 @@ def get_total_score(request, uuid):
     ).all()
 
     for player in players:
-        if str(player.uuid) == uuid:
+        if player.uuid.hex == uuid:
             return JsonResponse({"score": player.total_score, "ranking": player.rank})
     return HttpResponseNotFound("Player not found")
