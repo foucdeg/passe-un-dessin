@@ -1,8 +1,9 @@
+from django.conf import settings
+from django.core.mail import send_mail
 from django.core.management.base import BaseCommand
 
-from core.models import Language, Pad, PadStep, StepType
-from core.service.mail_service import send_simple_message
-from suggestions.models import Suggestion, SuggestionStatus
+from core.models import Pad, PadStep, StepType
+from suggestions.models import Language, Suggestion, SuggestionStatus
 from suggestions.service import sanitize_sentence
 
 
@@ -78,5 +79,10 @@ class Command(BaseCommand):
             if len(inactive_suggestions) > 100:
                 message += "...et {} autres".format(len(inactive_suggestions) - 100)
 
-            send_simple_message("Nouvelles suggestions à évaluer !", message)
-            print("mail send with all suggestion")
+            send_mail(
+                "Nouvelles suggestions à évaluer !",
+                message,
+                from_email=None,
+                recipient_list=settings.DEV_EMAILS,
+            )
+            print("mail sent with all suggestion")

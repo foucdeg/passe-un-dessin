@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "channels",
     "django_eventstream",
+    "anymail",
     # Our apps
     "suggestions",
     "core",
@@ -140,6 +141,18 @@ STATIC_URL = "/djangostatic/"
 # Emails
 
 EMAIL_BASE_URL = os.environ.get("EMAIL_BASE_URL")
+EMAIL_BACKEND = "django_mailgun.MailgunBackend"
+MAILGUN_SERVER_NAME = "email.passeundessin.com"
+
+ANYMAIL = {
+    "MAILGUN_API_KEY": os.getenv("MAILGUN_API_KEY"),
+    "MAILGUN_SENDER_DOMAIN": MAILGUN_SERVER_NAME,
+    "MAILGUN_API_URL": "https://api.eu.mailgun.net/v3",
+}
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
+
+DEFAULT_FROM_EMAIL = "Passe un Dessin <noreply@{}>".format(MAILGUN_SERVER_NAME)
+DEV_EMAILS = ["foucdeg@gmail.com", "quentin.somerville@gmail.com"]
 
 
 # Sentry
