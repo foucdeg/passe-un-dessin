@@ -15,29 +15,23 @@ def get_leaderboard(request):
     page_number = int(request.GET.get("page", 1))
     name_filter = request.GET.get("filter", "")
 
-    players = (
-        Player.objects.annotate(
-            rank=Window(expression=Rank(), order_by=F("total_score").desc())
-        )
-        .order_by("rank", "uuid")
-        .all()
+    players = Player.objects.raw(
+        """
+        SELECT * from (
+            SELECT
+                *,
+                RANK() OVER (ORDER BY total_score DESC) AS rank
+            FROM core_player
+            ORDER BY rank, uuid
+        ) sub
+        WHERE name ILIKE %s
+        LIMIT 10
+        OFFSET %s
+    """,
+        ["%" + name_filter + "%", (page_number - 1) * 10],
     )
 
-    players_matching_filters = (
-        [
-            player
-            for player in players
-            if sanitize_sentence(name_filter) in sanitize_sentence(player.name)
-        ]
-        if name_filter
-        else players
-    )
-
-    startIndex = 10 * (page_number - 1)
-    endIndex = 10 * page_number
-    serialized_leaderboard = PlayerInRankingSerializer(
-        players_matching_filters[startIndex:endIndex], many=True
-    ).data
+    serialized_leaderboard = PlayerInRankingSerializer(players, many=True).data
 
     return JsonResponse(
         {"pageData": serialized_leaderboard, "pageNumber": page_number}

@@ -166,11 +166,27 @@ def do_logout(request):
 
 @require_GET
 def get_total_score(request, uuid):
-    players = Player.objects.annotate(
-        rank=Window(expression=Rank(), order_by=F("total_score").desc())
-    ).all()
+    players = Player.objects.raw(
+        """
+        SELECT * from (
+            SELECT
+                *,
+                RANK() OVER (ORDER BY total_score DESC) AS rank
+            FROM core_player
+            ORDER BY rank, uuid
+        ) sub
+        WHERE uuid = %s
+    """,
+        [uuid],
+    )
 
-    for player in players:
-        if player.uuid.hex == uuid:
-            return JsonResponse({"score": player.total_score, "ranking": player.rank})
-    return HttpResponseNotFound("Player not found")
+    if len(players) == 0:
+        return HttpResponseNotFound("Player not found")
+
+    if len(players) > 2:
+        return HttpResponseBadRequest(
+            "Several players found : it should never happen"
+        )
+
+    player = players[0]
+    return JsonResponse({"score": player.total_score, "ranking": player.rank})
