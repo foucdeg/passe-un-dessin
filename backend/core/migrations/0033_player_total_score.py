@@ -18,7 +18,7 @@ def migrate_total_score(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("core", "0031_refactor_suggestions"),
+        ("core", "0032_delete_suggestion"),
     ]
 
     operations = [
