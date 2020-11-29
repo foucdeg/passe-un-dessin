@@ -83,11 +83,11 @@ const Home: React.FunctionComponent = () => {
           <FormattedMessage id="home.attribution" />.{' '}
         </Attribution>
         <LegalLinks>
-          <Link to="/legal#terms-and-conditions">
+          <Link to="/terms-and-conditions">
             <FormattedMessage id="home.termsAndConditions" />
           </Link>
           &nbsp;&middot;&nbsp;
-          <Link to="/legal#privacy-policy">
+          <Link to="/privacy-policy">
             <FormattedMessage id="home.privacyPolicy" />
           </Link>
         </LegalLinks>
