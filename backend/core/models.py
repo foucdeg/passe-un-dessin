@@ -21,17 +21,6 @@ class GamePhase(Enum):
     VOTE_RESULTS = "VOTE_RESULTS"
 
 
-class SuggestionStatus(Enum):
-    INACTIVE = "INACTIVE"
-    ACTIVE = "ACTIVE"
-    BLACKLISTED = "BLACKLISTED"
-
-
-class Language(Enum):
-    FR = "fr"
-    EN = "en"
-
-
 class StepType(Enum):
     WORD_TO_DRAWING = "WORD_TO_DRAWING"
     DRAWING_TO_WORD = "DRAWING_TO_WORD"
@@ -205,26 +194,6 @@ class Vote(BaseModel):
         PadStep, on_delete=models.CASCADE, related_name="votes",
     )
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
-
-
-class Suggestion(BaseModel):
-    sentence = models.CharField(max_length=100)
-    language = models.CharField(
-        max_length=10,
-        choices=[(language.value, language.value) for language in Language],
-        default=Language.FR.value,
-    )
-    status = models.CharField(
-        max_length=12,
-        choices=[(status.value, status.value) for status in SuggestionStatus],
-        default=SuggestionStatus.INACTIVE.value,
-    )
-
-    class Meta:
-        unique_together = (
-            "sentence",
-            "language",
-        )
 
 
 @receiver(models.signals.pre_save, sender=Player)

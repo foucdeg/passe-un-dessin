@@ -2,8 +2,8 @@ import csv
 
 from django.core.management.base import BaseCommand, CommandError
 
-from core.models import Suggestion
-from core.service.suggestions_service import sanitize_sentence
+from suggestions.models import Suggestion, SuggestionStatus
+from suggestions.service import sanitize_sentence
 
 
 class Command(BaseCommand):
@@ -11,9 +11,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            "language",
-            type=str,
-            help="The language to import",
+            "language", type=str, help="The language to import",
         )
 
     def handle(self, *args, **options):
