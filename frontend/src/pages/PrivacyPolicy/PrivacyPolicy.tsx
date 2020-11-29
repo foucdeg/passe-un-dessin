@@ -12,7 +12,7 @@ import {
   Credits,
   LegalParagraph,
   ArrowLeft,
-} from './Legal.style';
+} from '../TermsAndConditions/TermsAndConditions.style';
 
 const Legal: React.FC<NoProps> = () => (
   <>
@@ -23,30 +23,7 @@ const Legal: React.FC<NoProps> = () => (
       <Subtitle>
         <FormattedMessage id="home.tagline" />
       </Subtitle>
-      <Header id="terms-and-conditions">
-        <FormattedMessage id="legal.termsAndConditionsTitle" />
-      </Header>
-      <LegalParagraph>
-        This website is provided as is, without any warranty. While the best effort has been made to
-        keep you and your device safe and secure, we decline any responsibility in case of damage to
-        yourself or your devices in the use of this website.
-      </LegalParagraph>
-      <LegalParagraph>
-        By using the website and submitting drawn or written content, you renounce any and all
-        applicable intellectual property rights on the submitted content.
-      </LegalParagraph>
-      <LegalParagraph>
-        The content submitted by users on the website is not currently moderated. Therefore, and for
-        instance, the content may be of a sexual or even illegal nature in your country. We advise
-        you to play only with friends or family, if you wish to only view safe content through the
-        website.
-      </LegalParagraph>
-      <LegalParagraph>
-        You may report any abuse in user-submitted content by email to{' '}
-        <a href="mailto:foucauld.degeorges@gmail.com">foucauld.degeorges@gmail.com</a>, and I will
-        try to take steps to remove such content.
-      </LegalParagraph>
-      <Header id="privacy-policy">
+      <Header>
         <FormattedMessage id="legal.privacyPolicyTitle" />
       </Header>
       <LegalParagraph>
@@ -76,13 +53,14 @@ const Legal: React.FC<NoProps> = () => (
       </LegalParagraph>
       <LegalParagraph>
         <strong>Information provided by social authentication providers:</strong> If you choose to
-        create an account on the website using either Facebook or Google, these providers provide us
-        with a short-lived token. We do not keep that token, we use it once to retrieve your email
-        address and basic profile information (in the case of Facebook, this also includes your name
-        and profile picture), and then discard the token. We only keep the email address, which is
-        used as an unique identifier to guarantee that only you can access your account. For that
-        purpose, we may send you occasional emails for security purposes, such as email address
-        verification or password reset. We do <strong>not</strong> send marketing emails.
+        create an account on the website using either "Sign in with Facebook" or "Sign in with
+        Google", Facebook or Google provide us with a short-lived token. We do not keep that token,
+        we use it once to retrieve your email address and basic profile information (in the case of
+        Facebook, this also includes your name and profile picture), and then discard the token.{' '}
+        <strong>We only keep your email address</strong>, which is used as an unique identifier to
+        guarantee that only you can access your account. For that purpose, we may send you
+        <strong>occasional emails for security purposes</strong>, such as email address verification
+        or password reset. We do <strong>not</strong> send marketing emails.
       </LegalParagraph>
       <LegalParagraph>
         The other information that may be provided by the social authentication provider, besides
@@ -91,7 +69,7 @@ const Legal: React.FC<NoProps> = () => (
         unnecessary information.
       </LegalParagraph>
       <LegalParagraph>
-        Draw Around's use of information received from Google APIs will adhere to the{' '}
+        Our use of information received from Google APIs will adhere to the{' '}
         <a
           href="https://developers.google.com/terms/api-services-user-data-policy#additional_requirements_for_specific_api_scopes"
           target="_blank"

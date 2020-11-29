@@ -4,7 +4,9 @@ import Loader from 'atoms/Loader';
 
 const Home = lazy(() => import('./pages/Home'));
 const Room = lazy(() => import('./pages/Room'));
-const Legal = lazy(() => import('./pages/Legal'));
+const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+
 const Leaderboard = lazy(() => import('./pages/Leaderboard'));
 const PlayerDetails = lazy(() => import('./pages/PlayerDetails'));
 const GameReview = lazy(() => import('./pages/GameReview'));
@@ -15,7 +17,8 @@ export const PLAYER_PATHS = {
 
 export const PUBLIC_PATHS = {
   HOME: '/',
-  LEGAL: '/legal',
+  TERMS_AND_CONDITIONS: '/terms-and-conditions',
+  PRIVACY_POLICY: '/privacy-policy',
   LEADERBOARD: '/leaderboard',
   PLAYER_DETAILS: '/player/:playerId',
   GAME_REVIEW: '/game/:gameId',
@@ -25,7 +28,8 @@ const routes = () => (
   <Suspense fallback={<Loader />}>
     <Route path={[PUBLIC_PATHS.HOME, PLAYER_PATHS.ROOM]} exact component={Home} />
     <Route path={PLAYER_PATHS.ROOM} component={Room} />
-    <Route path={PUBLIC_PATHS.LEGAL} component={Legal} />
+    <Route path={PUBLIC_PATHS.TERMS_AND_CONDITIONS} component={TermsAndConditions} />
+    <Route path={PUBLIC_PATHS.PRIVACY_POLICY} component={PrivacyPolicy} />
     <Route path={PUBLIC_PATHS.LEADERBOARD} component={Leaderboard} />
     <Route path={PUBLIC_PATHS.PLAYER_DETAILS} component={PlayerDetails} />
     <Route path={PUBLIC_PATHS.GAME_REVIEW} component={GameReview} />
