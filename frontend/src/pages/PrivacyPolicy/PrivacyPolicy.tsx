@@ -54,9 +54,8 @@ const Legal: React.FC<NoProps> = () => (
       <LegalParagraph>
         <strong>Information provided by social authentication providers:</strong> If you choose to
         create an account on the website using either "Sign in with Facebook" or "Sign in with
-        Google", Facebook or Google provide us with a short-lived token. We do not keep that token,
-        we use it once to retrieve your email address and basic profile information (in the case of
-        Facebook, this also includes your name and profile picture), and then discard the token.{' '}
+        Google", Facebook or Google provide us with your email address and basic profile information
+        (in the case of Facebook, this also includes your name and profile picture).{' '}
         <strong>We only keep your email address</strong>, which is used as an unique identifier to
         guarantee that only you can access your account. For that purpose, we may send you
         <strong>occasional emails for security purposes</strong>, such as email address verification
