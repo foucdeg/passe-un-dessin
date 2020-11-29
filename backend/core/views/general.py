@@ -7,7 +7,7 @@ from django.views.decorators.http import require_GET
 
 from core.models import Player
 from core.serializers import PlayerInRankingSerializer
-from core.service.suggestions_service import sanitize_sentence
+from suggestions.service import sanitize_sentence
 
 
 @require_GET
