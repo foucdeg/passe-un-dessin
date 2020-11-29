@@ -21,6 +21,8 @@ load_prod_dump:
 	scp vps:/tmp/dump.pgbackup /tmp/dump.pgbackup
 	docker cp /tmp/dump.pgbackup $(DB_CONTAINER_ID):/tmp/dump.pgbackup
 	docker-compose exec db psql -U postgres -d postgres -f /tmp/dump.pgbackup
+	docker-compose exec backend ./manage.py migrate django_eventstream zero
+	docker-compose exec backend ./manage.py migrate django_eventstream
 
 frontend/localhost-key.pem:
 	mkcert -cert-file frontend/localhost.pem -key-file frontend/localhost-key.pem localhost

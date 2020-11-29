@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 import Spacer from 'atoms/Spacer';
 import { Player } from 'redux/Player/types';
 import { PUBLIC_PATHS } from 'routes';
@@ -15,43 +15,66 @@ import {
 export type PlayerWithScore = Player & {
   score: number;
   delta?: number;
+  rank?: number;
 };
 
 interface Props {
   list: PlayerWithScore[];
   className?: string;
   showRankings?: boolean;
+  onScrollEnd?: (page: number) => void;
 }
 const getRankDisplay = (ranking: number) => {
   switch (ranking) {
-    case 0:
-      return '🏆';
     case 1:
-      return '🥈';
+      return '🏆';
     case 2:
+      return '🥈';
+    case 3:
       return '🥉';
     default:
-      return ranking + 1;
+      return ranking;
   }
 };
 
-const Scoreboard: React.FC<Props> = ({ list, className, showRankings }) => (
-  <InnerScoreboard className={className}>
-    {list.map((playerWithScore, index) => (
-      <RankingRow key={playerWithScore.uuid}>
-        {showRankings && <RankText>{getRankDisplay(index)}</RankText>}
-        <StyledAvatar player={playerWithScore} />
-        <StyledLink
-          to={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', playerWithScore.uuid)}
-          target="_blank"
-        >
-          {playerWithScore.name}
-        </StyledLink>
-        <Spacer />
-        {playerWithScore.delta && <RankingDelta>+ {playerWithScore.delta}</RankingDelta>}
-        <RankingScore>{playerWithScore.score}</RankingScore>
-      </RankingRow>
-    ))}
-  </InnerScoreboard>
-);
+const Scoreboard: React.FC<Props> = ({ list, className, showRankings, onScrollEnd }) => {
+  const [page, setPage] = useState(1);
+  const fetchNextPage = useCallback(() => {
+    if (!onScrollEnd) return;
+    if (Object.keys(list).length === page * 10) {
+      setPage(page + 1);
+      onScrollEnd(page + 1);
+    }
+  }, [onScrollEnd, list, page, setPage]);
+
+  const scoreBoardRef = useRef<HTMLDivElement>(null);
+  const onScroll = () => {
+    if (!scoreBoardRef || !scoreBoardRef.current) return;
+    if (
+      scoreBoardRef.current.scrollTop + scoreBoardRef.current.offsetHeight >=
+      scoreBoardRef.current.scrollHeight - 100
+    ) {
+      fetchNextPage();
+    }
+  };
+  return (
+    <InnerScoreboard ref={scoreBoardRef} onScroll={onScroll} className={className}>
+      {list.map((playerWithScore, index) => (
+        <RankingRow key={playerWithScore.uuid}>
+          {showRankings && <RankText>{getRankDisplay(playerWithScore.rank || index + 1)}</RankText>}
+          <StyledAvatar player={playerWithScore} />
+          <StyledLink
+            to={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', playerWithScore.uuid)}
+            target="_blank"
+          >
+            {playerWithScore.name}
+          </StyledLink>
+          <Spacer />
+          {playerWithScore.delta && <RankingDelta>+ {playerWithScore.delta}</RankingDelta>}
+          <RankingScore>{playerWithScore.score}</RankingScore>
+        </RankingRow>
+      ))}
+    </InnerScoreboard>
+  );
+};
 export default Scoreboard;

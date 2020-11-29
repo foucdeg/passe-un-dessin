@@ -5,10 +5,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.db.models import Count, Prefetch
+from django.db.models.expressions import F, Window
+from django.db.models.functions.window import Rank
 from django.http import (
     HttpResponse,
     HttpResponseBadRequest,
     HttpResponseForbidden,
+    HttpResponseNotFound,
     JsonResponse,
 )
 from django.shortcuts import get_object_or_404
@@ -163,20 +166,27 @@ def do_logout(request):
 
 @require_GET
 def get_total_score(request, uuid):
-    player = get_object_or_404(Player, pk=uuid)
-    total_score = Vote.objects.filter(pad_step__player=player).count()
-    full_ranking = (
-        Player.objects.annotate(vote_count=Count("steps__votes"))
-        .filter(vote_count__gt=0)
-        .order_by("-vote_count")
+    players = Player.objects.raw(
+        """
+        SELECT * from (
+            SELECT
+                *,
+                RANK() OVER (ORDER BY total_score DESC) AS rank
+            FROM core_player
+            ORDER BY rank, uuid
+        ) sub
+        WHERE uuid = %s
+    """,
+        [uuid],
     )
 
-    try:
-        my_ranking = [
-            index + 1
-            for index in range(len(full_ranking))
-            if full_ranking[index].name == player.name
-        ][0]
-    except IndexError:  # Player is not in ranking
-        my_ranking = None
-    return JsonResponse({"score": total_score, "ranking": my_ranking})
+    if len(players) == 0:
+        return HttpResponseNotFound("Player not found")
+
+    if len(players) > 2:
+        return HttpResponseBadRequest(
+            "Several players found : it should never happen"
+        )
+
+    player = players[0]
+    return JsonResponse({"score": player.total_score, "ranking": player.rank})

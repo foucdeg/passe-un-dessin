@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { NoProps } from 'services/utils';
 
 import GameContainer from 'layout/GameLayout/GameContainer';
@@ -21,20 +21,19 @@ const Leaderboard: React.FC<NoProps> = () => {
   const leaderboard = useSelector(selectLeaderboard);
 
   useEffect(() => {
-    doFetchLeaderboard();
+    doFetchLeaderboard(1);
   }, [doFetchLeaderboard]);
 
-  if (!leaderboard) {
-    return (
-      <GameContainer>
-        <InnerGameContainer>
-          <Container />
-        </InnerGameContainer>
-      </GameContainer>
-    );
-  }
-
-  const formattedLeaderboard = leaderboard.map((item) => ({ ...item, score: item.vote_count }));
+  const formattedLeaderboard = useMemo(
+    () =>
+      leaderboard
+        ? Object.values(leaderboard).map((item) => ({
+            ...item,
+            score: item.total_score,
+          }))
+        : [],
+    [leaderboard],
+  );
 
   return (
     <>
@@ -47,7 +46,11 @@ const Leaderboard: React.FC<NoProps> = () => {
             <StyledHeader>
               <FormattedMessage id="leaderboard.title" />
             </StyledHeader>
-            {leaderboard && <StyledScoreboard list={formattedLeaderboard} showRankings />}
+            <StyledScoreboard
+              onScrollEnd={doFetchLeaderboard}
+              list={formattedLeaderboard}
+              showRankings
+            />
           </Container>
         </InnerGameContainer>
       </GameContainer>

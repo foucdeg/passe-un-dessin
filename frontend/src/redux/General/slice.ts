@@ -1,18 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Leaderboard } from './types';
+import { LeaderboardPlayer, LeaderboardResponse } from './types';
 
 export type GeneralState = Readonly<{
-  leaderboard: Leaderboard | null;
+  leaderboard: { [rank: number]: LeaderboardPlayer };
 }>;
 
-const initialState: GeneralState = { leaderboard: null };
+const initialState: GeneralState = { leaderboard: [] };
 
 const generalSlice = createSlice({
   name: 'General',
   initialState,
   reducers: {
-    updateLeaderboard: (state, action: PayloadAction<Leaderboard | null>) => {
-      state.leaderboard = action.payload;
+    updateLeaderboard: (state, action: PayloadAction<LeaderboardResponse>) => {
+      action.payload.pageData.forEach((player, index) => {
+        state.leaderboard[(action.payload.pageNumber - 1) * 10 + index + 1] = player;
+      });
     },
   },
 });
