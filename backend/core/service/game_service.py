@@ -3,6 +3,7 @@ from math import sqrt
 from random import sample
 from typing import List
 
+from django.db.models import Count
 from django_eventstream import send_event
 
 from core.messages import (
@@ -153,16 +154,15 @@ def start_next_round(game: Game, new_round: int):
 def switch_to_vote_results(game: Game):
     game.phase = GamePhase.VOTE_RESULTS.value
     game.save()
-    room_players_by_id = {
-        player.uuid: player for player in game.room.players.all()
-    }
-    for pad in game.pads.all():
-        for pad_step in pad.steps.all():
-            room_players_by_id[pad_step.player.uuid].total_score += len(
-                pad_step.votes.all()
-            )
 
-    for player in room_players_by_id.values():
+    game_players = (
+        Player.objects.filter(steps__pad__game=game)
+        .annotate(vote_count=Count("steps__votes"))
+        .filter(vote_count__gt=0)
+    )
+
+    for player in game_players:
+        player.total_score += player.vote_count
         player.save()
 
     send_event(
