@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "channels",
     "django_eventstream",
     # Our apps
+    "suggestions",
     "core",
 ]
 

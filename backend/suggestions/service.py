@@ -2,7 +2,7 @@ import unicodedata
 
 from django.db.models import Q
 
-from core.models import Language, Suggestion, SuggestionStatus
+from suggestions.models import Language, Suggestion, SuggestionStatus
 
 
 def remove_articles(sentence, language):

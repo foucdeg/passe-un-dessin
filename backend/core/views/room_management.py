@@ -16,7 +16,7 @@ from core.models import Game, GamePhase, Player, Room
 from core.serializers import PlayerSerializer, RoomSerializer
 from core.service.game_service import initialize_game
 from core.service.room_service import remove_player_from_room
-from core.service.suggestions_service import get_random
+from suggestions.service import get_random
 
 logger = logging.getLogger(__name__)
 

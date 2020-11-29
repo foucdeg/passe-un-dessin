@@ -1,8 +1,9 @@
 from django.core.management.base import BaseCommand
 
-from core.models import Language, Pad, PadStep, StepType, Suggestion, SuggestionStatus
+from core.models import Language, Pad, PadStep, StepType
 from core.service.mail_service import send_simple_message
-from core.service.suggestions_service import sanitize_sentence
+from suggestions.models import Suggestion, SuggestionStatus
+from suggestions.service import sanitize_sentence
 
 
 class Command(BaseCommand):
@@ -58,10 +59,7 @@ class Command(BaseCommand):
                 sentence=max(sentence_list, key=sentence_list.count),
                 language=Language.FR.value,
             )
-            for (
-                sanitized_sentence,
-                sentence_list,
-            ) in suggestions.items()
+            for (sanitized_sentence, sentence_list,) in suggestions.items()
             if len(sentence_list) >= threshold
         ]
 

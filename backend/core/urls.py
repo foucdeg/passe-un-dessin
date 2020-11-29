@@ -1,13 +1,14 @@
 from django.urls import path
 
 from core.views import auth, game, general, room_management
+from suggestions.views import get_suggestions
 
 urlpatterns = [
     path("auth/social-login", auth.social_login, name="social_login"),
     path("auth/create-account", auth.create_account, name="create_account"),
     path("auth/login", auth.check_login, name="login"),
     path("auth/logout", auth.do_logout, name="logout"),
-    path("suggestions", general.get_suggestions, name="get_suggestions"),
+    path("suggestions", get_suggestions, name="get_suggestions"),
     path("leaderboard", general.get_leaderboard, name="get_leaderboard"),
     path("room", room_management.RoomCreationView.as_view(), name="room_creation"),
     path("player", room_management.PlayerView.as_view(), name="player"),

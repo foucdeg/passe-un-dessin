@@ -3,15 +3,8 @@ from django.db.models import Count
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
 
-from core.models import Player, Suggestion
+from core.models import Player
 from core.serializers import PlayerInRankingSerializer
-from core.service.suggestions_service import get_random
-
-
-@require_GET
-def get_suggestions(request):
-    language = request.GET.get("language")
-    return JsonResponse({"suggestions": get_random(language, 3)})
 
 
 @require_GET
