@@ -57,7 +57,6 @@ class PlayerWithUserAndAvatarSerializer(PlayerWithAvatarSerializer):
             "name",
             "color",
             "total_score",
-            "total_score",
             "user",
             "avatar_url",
             "avatar",

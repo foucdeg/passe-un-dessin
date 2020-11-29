@@ -24,7 +24,7 @@ def get_leaderboard(request):
             FROM core_player
             ORDER BY rank, uuid
         ) sub
-        WHERE name ILIKE %s
+        WHERE UNACCENT(name) ILIKE UNACCENT(%s)
         LIMIT 10
         OFFSET %s
     """,
