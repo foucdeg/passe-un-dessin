@@ -1,8 +1,11 @@
 import json
 import logging
 
+from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.tokens import default_token_generator
 from django.db import IntegrityError
 from django.db.models import Count, Prefetch
 from django.db.models.expressions import F, Window

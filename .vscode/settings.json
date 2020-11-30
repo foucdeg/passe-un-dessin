@@ -44,5 +44,5 @@
     }
   ],
   "eslint.workingDirectories": ["./frontend"],
-  "typescript.tsdk": "frontend/node_modules/typescript/lib" // until VSCode ships with TS4 by default
+  "typescript.tsdk": "frontend/node_modules/typescript/lib"
 }

@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "memoize",
     "rest_framework",
+    "django_rest_passwordreset",
     "channels",
     "django_eventstream",
     "anymail",
@@ -46,6 +47,7 @@ MIDDLEWARE = [
     "django.middleware.gzip.GZipMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -166,3 +168,7 @@ if "SENTRY_DSN" in os.environ:
         environment=os.environ.get("ENVIRONMENT"),
         release=os.environ.get("VERSION"),
     )
+
+DJANGO_REST_PASSWORDRESET_NO_INFORMATION_LEAKAGE = True
+DJANGO_REST_PASSWORDRESET_IP_ADDRESS_HEADER = "HTTP_X_FORWARDED_FOR"
+DJANGO_REST_MULTITOKENAUTH_REQUIRE_USABLE_PASSWORD = False
