@@ -1,12 +1,14 @@
 FROM python:3.9-alpine
 
 RUN apk add gcc==9.3.0-r2 git==2.26.2-r0 musl-dev==1.1.24-r10 postgresql-dev==12.5-r0 postgresql-client==12.5-r0 gettext==0.20.2-r0 libressl-dev==3.1.2-r0 libffi-dev==3.3-r2 make==4.3-r0 --no-cache
-RUN pip install daphne==2.5.0
-COPY ./passe_un_dessin.egg-info/requires.txt /app/requires.txt
-RUN pip install -r /app/requires.txt
+RUN pip install daphne==2.5.0 poetry==1.1.4
+RUN poetry config virtualenvs.create false
+
+COPY ./pyproject.toml ./poetry.lock /app/
+WORKDIR /app
+RUN poetry install
 
 COPY . /app
-WORKDIR /app
 
 ENV DJANGO_SETTINGS_MODULE=passe_un_dessin.settings.prod
 
