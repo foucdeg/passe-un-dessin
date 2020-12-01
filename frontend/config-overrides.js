@@ -34,7 +34,7 @@ module.exports = {
     const paths = ['/', '/leaderboard'];
     config.plugins.push(
       new SitemapPlugin({
-        base: 'https://passe-un-dessin.fouc.net',
+        base: 'https://passeundessin.com',
         paths,
         options: { lastmod: true },
       }),

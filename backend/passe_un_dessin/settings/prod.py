@@ -9,7 +9,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    "passe-un-dessin.fouc.net",
+    "passeundessin.com",
 ]
 
 if "ALLOWED_HOST" in os.environ:
@@ -20,8 +20,8 @@ INSTALLED_APPS = INSTALLED_APPS + ["storages"]
 # Secure connection
 SECURE_REDIRECT_EXEMPT = [r"/?health"]
 
-DEFAULT_FROM_EMAIL = "contact@passe-un-dessin.fouc.net"
-EVENTSTREAM_ALLOW_ORIGIN = "passe-un-dessin.fouc.net"
+DEFAULT_FROM_EMAIL = "contact@passeundessin.com"
+EVENTSTREAM_ALLOW_ORIGIN = "passeundessin.com"
 
 # Logging
 LOGGING = {
