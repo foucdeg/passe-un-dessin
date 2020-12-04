@@ -6,22 +6,32 @@ import InnerGameContainer from 'layout/GameLayout/InnerGameContainer';
 
 import { useFetchLeaderboard } from 'redux/General/hooks';
 import { useSelector } from 'redux/useSelector';
+import { useDebouncedSearch } from 'services/useDebouncedSearch';
 import { selectLeaderboard } from 'redux/General/selectors';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import {
   Container,
   StyledHeader,
   StyledScoreboard,
   HomeButton,
   StyledLink,
+  ScoreboardWithFilter,
+  FilterInput,
 } from './Leaderboard.style';
 
 const Leaderboard: React.FC<NoProps> = () => {
   const doFetchLeaderboard = useFetchLeaderboard();
   const leaderboard = useSelector(selectLeaderboard);
+  const intl = useIntl();
+
+  const useFilterLeaderboard = () =>
+    useDebouncedSearch((filter: string) => {
+      doFetchLeaderboard(1, filter, true);
+    });
+  const { inputText, setInputText } = useFilterLeaderboard();
 
   useEffect(() => {
-    doFetchLeaderboard(1);
+    doFetchLeaderboard(1, '');
   }, [doFetchLeaderboard]);
 
   const formattedLeaderboard = useMemo(
@@ -46,11 +56,20 @@ const Leaderboard: React.FC<NoProps> = () => {
             <StyledHeader>
               <FormattedMessage id="leaderboard.title" />
             </StyledHeader>
-            <StyledScoreboard
-              onScrollEnd={doFetchLeaderboard}
-              list={formattedLeaderboard}
-              showRankings
-            />
+            <ScoreboardWithFilter>
+              <StyledScoreboard
+                onScrollEnd={doFetchLeaderboard}
+                list={formattedLeaderboard}
+                showRankings
+                filter={inputText}
+              />
+              <FilterInput
+                type="text"
+                placeholder={intl.formatMessage({ id: 'leaderboard.filterInput' })}
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+              />
+            </ScoreboardWithFilter>
           </Container>
         </InnerGameContainer>
       </GameContainer>

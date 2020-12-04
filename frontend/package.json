@@ -6,6 +6,7 @@
     "@formatjs/intl-pluralrules": "4.0.0",
     "@reduxjs/toolkit": "1.5.0",
     "@sentry/browser": "5.28.0",
+    "awesome-debounce-promise": "^2.1.0",
     "babel-polyfill": "6.26.0",
     "copy-to-clipboard": "3.3.1",
     "core-js": "3.8.0",
@@ -25,7 +26,8 @@
     "redux": "4.0.5",
     "regenerator-runtime": "0.13.7",
     "styled-components": "5.2.1",
-    "superagent": "6.1.0"
+    "superagent": "6.1.0",
+    "use-constant": "^1.1.0"
   },
   "scripts": {
     "audit-dependencies": "check-audit --yarn",

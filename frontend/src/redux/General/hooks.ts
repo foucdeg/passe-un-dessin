@@ -7,9 +7,9 @@ export const useFetchLeaderboard = () => {
   const dispatch = useDispatch();
 
   return useCallback(
-    async (page: number) => {
-      const response = await client.get(`/leaderboard?page=${page}`);
-      dispatch(updateLeaderboard(response));
+    async (page: number, filter: string, shouldResetState?: boolean) => {
+      const response = await client.get(`/leaderboard?page=${page}&filter=${filter}`);
+      dispatch(updateLeaderboard({ leaderboard: response, shouldResetState }));
     },
     [dispatch],
   );
