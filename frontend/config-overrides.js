@@ -14,9 +14,9 @@ module.exports = {
     // the path to the file and an isInitial boolean.
     // We use this boolean later to only inject the initial chunks into the
     // app's HTML.
-    const ManifestPlugin = require('webpack-manifest-plugin');
+    const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
     config.plugins.push(
-      new ManifestPlugin({
+      new WebpackManifestPlugin({
         fileName: 'static-manifest.json', // manifest.json was already taken (PWA)
         publicPath: '',
         generate: (seed, files) =>
