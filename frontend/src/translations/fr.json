@@ -225,7 +225,8 @@
     "backToHome": "Retour à l'accueil"
   },
   "leaderboard": {
-    "title": "Leaderboard"
+    "title": "Leaderboard",
+    "filterInput": "Chercher un joueur"
   },
   "playerDetails": {
     "joinedOn": "nous a rejoint le {dateString}.",
