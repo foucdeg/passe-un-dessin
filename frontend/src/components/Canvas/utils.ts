@@ -92,7 +92,14 @@ const drawLineFromImage = (
         const newY1 = y1 + iy - offset;
         const newX2 = x2 + ix - offset;
         const newY2 = y2 + iy - offset;
-        drawBresenhamLine(image, newX1, newY1, newX2, newY2, color);
+
+        const scalarProduct = (x2 - x1) * (newX1 - x1) + (y2 - y1) * (newY1 - y1);
+
+        if (scalarProduct < 0) {
+          setPixel(image, newX1, newY1, color);
+        } else {
+          drawBresenhamLine(image, newX1, newY1, newX2, newY2, color);
+        }
       }
     }
   }
@@ -165,7 +172,7 @@ const generateCircleMap = (radius: number) => {
       const distanceToRadius = Math.sqrt(Math.pow(radius - x, 2) + Math.pow(radius - y, 2));
       if (distanceToRadius > radius) {
         circleData[x][y] = 0;
-      } else if (distanceToRadius < radius - 2) {
+      } else if (distanceToRadius < radius - 1) {
         //optimize for performance: fill circle only when mouse was not moved
         circleData[x][y] = 2;
       } else {
