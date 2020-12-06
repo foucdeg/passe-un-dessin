@@ -10,6 +10,9 @@ export type Paint = Step[];
 type canvasRefType = {
   readonly current: HTMLCanvasElement | null;
 };
+
+type ImageDataRefType = React.MutableRefObject<ImageData | null>;
+
 type RGBAColor = {
   r: number;
   g: number;
@@ -24,19 +27,27 @@ const resetCanvasFromImage = (image: ImageData, width: number, height: number) =
   }
 };
 
-export const resetCanvas = (canvasRef: canvasRefType) => {
+export const resetCanvas = (canvasRef: canvasRefType, imageDataRef: ImageDataRefType) => {
   if (canvasRef.current) {
     const context = canvasRef.current.getContext('2d');
     if (context) {
       context.fillStyle = '#FFFFFF';
       context.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+
+      const canvasWidth = context.canvas.width;
+      const canvasHeight = context.canvas.height;
+      imageDataRef.current = context.getImageData(0, 0, canvasWidth, canvasHeight);
     }
   }
 };
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export const initializeCanvas = async (canvasRef: canvasRefType, drawing: string) => {
+export const initializeCanvas = async (
+  canvasRef: canvasRefType,
+  imageDataRef: ImageDataRefType,
+  drawing: string | null | undefined,
+) => {
   if (!canvasRef.current) {
     return;
   }
@@ -45,11 +56,18 @@ export const initializeCanvas = async (canvasRef: canvasRefType, drawing: string
   if (!context) {
     return;
   }
-  const img = new Image();
-  img.onload = function () {
-    context.drawImage(img, 0, 0);
-  };
-  img.src = drawing;
+
+  if (drawing) {
+    const img = new Image();
+    img.onload = function () {
+      context.drawImage(img, 0, 0);
+    };
+    img.src = drawing;
+  }
+
+  const canvasWidth = context.canvas.width;
+  const canvasHeight = context.canvas.height;
+  imageDataRef.current = context.getImageData(0, 0, canvasWidth, canvasHeight);
 
   // We need await to make this function async because this operation take a few time.
   // If you do not use that, it will erase future modification of drawing appening just after
@@ -135,13 +153,14 @@ export const drawLine = (
   brushColor: string,
   brushRadius: number,
   canvasRef: canvasRefType,
+  imageDataRef: ImageDataRefType,
 ) => {
-  if (!canvasRef.current) return;
+  if (!canvasRef.current || !imageDataRef.current) return;
   const context = canvasRef.current.getContext('2d');
   if (!context) return;
   const canvasWidth = context.canvas.width;
   const canvasHeight = context.canvas.height;
-  const image = context.getImageData(0, 0, canvasWidth, canvasHeight);
+  const image = imageDataRef.current;
   drawLineFromImage(
     image,
     canvasWidth,
@@ -161,6 +180,7 @@ export const drawLine = (
     renderSquare.width,
     renderSquare.height,
   );
+  imageDataRef.current = image;
 };
 
 const drawBresenhamLine = (
@@ -239,6 +259,7 @@ const findLastClearIndex = (paint: Paint) => {
 export const drawPaint = async (
   paint: Paint,
   canvasRef: canvasRefType,
+  imageDataRef: ImageDataRefType,
   shouldResetCanvas = false,
   initialDrawing: string | null = null,
 ) => {
@@ -247,7 +268,7 @@ export const drawPaint = async (
   let startIndex = lastClearIndex === -1 ? 0 : lastClearIndex;
 
   if (shouldResetCanvas && initialDrawing && startIndex === 0) {
-    await initializeCanvas(canvasRef, initialDrawing);
+    await initializeCanvas(canvasRef, imageDataRef, initialDrawing);
   }
 
   if (!canvasRef.current) return;
@@ -255,7 +276,8 @@ export const drawPaint = async (
   if (!context) return;
   const canvasWidth = context.canvas.width;
   const canvasHeight = context.canvas.height;
-  const image = context.getImageData(0, 0, canvasWidth, canvasHeight);
+  const image = imageDataRef.current;
+  if (!image) return;
 
   if (shouldResetCanvas && !initialDrawing && startIndex === 0) {
     resetCanvasFromImage(image, canvasWidth, canvasHeight);
@@ -294,6 +316,7 @@ export const drawPaint = async (
     }
   }
   context.putImageData(image, 0, 0);
+  imageDataRef.current = image;
 };
 
 const floodfill = (
@@ -393,12 +416,20 @@ const fillContextFromImage = (image: ImageData, coordinates: Point, color: strin
   floodfill(data, xi, yi, hexToRgb(color), tolerance, width);
 };
 
-export const fillContext = (coordinates: Point, canvasRef: canvasRefType, color: string) => {
+export const fillContext = (
+  coordinates: Point,
+  canvasRef: canvasRefType,
+  imageDataRef: ImageDataRefType,
+  color: string,
+) => {
   if (!canvasRef.current) return;
   const context = canvasRef.current.getContext('2d');
   if (!context) return;
 
-  const image = context.getImageData(0, 0, context.canvas.width, context.canvas.height);
+  const image = imageDataRef.current;
+  if (!image) return;
+
   fillContextFromImage(image, coordinates, color);
   context.putImageData(image, 0, 0);
+  imageDataRef.current = image;
 };
