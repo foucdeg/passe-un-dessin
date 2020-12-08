@@ -105,6 +105,30 @@ const drawLineFromImage = (
   }
 };
 
+const getRenderSquare = (
+  startPosition: Point,
+  endPosition: Point,
+  canvasWidth: number,
+  canvasHeight: number,
+) => {
+  const pixelGap = 10;
+  const topLeftCorner: Point = {
+    x: Math.max(Math.min(startPosition.x, endPosition.x) - pixelGap, 0),
+    y: Math.max(Math.min(startPosition.y, endPosition.y) - pixelGap, 0),
+  };
+
+  const bottomRightCorner: Point = {
+    x: Math.min(Math.max(startPosition.x, endPosition.x) + pixelGap, canvasWidth),
+    y: Math.min(Math.max(startPosition.y, endPosition.y) + pixelGap, canvasHeight),
+  };
+
+  return {
+    topLeftCorner,
+    width: bottomRightCorner.x - topLeftCorner.x,
+    height: bottomRightCorner.y - topLeftCorner.y,
+  };
+};
+
 export const drawLine = (
   startPosition: Point,
   endPosition: Point,
@@ -127,7 +151,16 @@ export const drawLine = (
     brushRadius,
     brushColor,
   );
-  context.putImageData(image, 0, 0);
+  const renderSquare = getRenderSquare(startPosition, endPosition, canvasWidth, canvasHeight);
+  context.putImageData(
+    image,
+    0,
+    0,
+    renderSquare.topLeftCorner.x,
+    renderSquare.topLeftCorner.y,
+    renderSquare.width,
+    renderSquare.height,
+  );
 };
 
 const drawBresenhamLine = (
