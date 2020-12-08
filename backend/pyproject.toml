@@ -5,7 +5,7 @@ description = "A new Theodo project"
 authors = ["Theodo <contact@theodo.co.uk>"]
 
 [tool.poetry.dependencies]
-python = "3.9.0"
+python = "3.9.1"
 argon2-cffi = "20.1.0"
 asgiref = "==3.3.1"
 dj-database-url = "0.5.0"
