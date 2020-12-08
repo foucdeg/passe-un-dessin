@@ -3,7 +3,7 @@ ARG WATCHMAN_VERSION=4.9.0
 FROM jotadrilo/watchman:$WATCHMAN_VERSION AS watchman
 
 # Stage 2: Python
-FROM python:3.9.0
+FROM python:3.9.1
 ENV PYTHONPATH /code
 # This is to print directly to stdout instead of buffering output
 ENV PYTHONUNBUFFERED 1
