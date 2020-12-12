@@ -111,7 +111,7 @@
     "npm-audit-resolver": "2.2.1",
     "prettier": "2.2.1",
     "react-app-rewire-webpack-bundle-analyzer": "1.1.0",
-    "react-app-rewired": "2.1.7",
+    "react-app-rewired": "2.1.8",
     "sitemap-webpack-plugin": "1.0.0",
     "stylelint": "13.8.0",
     "stylelint-config-prettier": "8.0.2",
