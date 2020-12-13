@@ -27,6 +27,12 @@ const resetCanvasFromImage = (image: ImageData, width: number, height: number) =
   }
 };
 
+const getEmptyImageData = (width: number, height: number) => {
+  const imageData = new ImageData(width, height);
+  resetCanvasFromImage(imageData, width, height);
+  return imageData;
+};
+
 export const resetCanvas = (canvasRef: canvasRefType, imageDataRef: ImageDataRefType) => {
   if (canvasRef.current) {
     const context = canvasRef.current.getContext('2d');
@@ -36,7 +42,7 @@ export const resetCanvas = (canvasRef: canvasRefType, imageDataRef: ImageDataRef
 
       const canvasWidth = context.canvas.width;
       const canvasHeight = context.canvas.height;
-      imageDataRef.current = context.getImageData(0, 0, canvasWidth, canvasHeight);
+      imageDataRef.current = getEmptyImageData(canvasWidth, canvasHeight);
     }
   }
 };
