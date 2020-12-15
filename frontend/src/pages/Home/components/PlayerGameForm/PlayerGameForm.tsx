@@ -7,7 +7,7 @@ import { useCreatePlayer } from 'redux/Player/hooks';
 import { useSelector } from 'redux/useSelector';
 import { selectPlayer } from 'redux/Player/selectors';
 import { NoProps } from 'services/utils';
-import { StartButton, StyledForm } from './PlayerGameForm.style';
+import { StyledForm } from './PlayerGameForm.style';
 
 export const PlayerGameForm: React.FC<NoProps> = () => {
   const intl = useIntl();
@@ -24,9 +24,9 @@ export const PlayerGameForm: React.FC<NoProps> = () => {
 
   if (player) {
     return (
-      <StartButton onClick={doCreateRoom}>
+      <Button onClick={doCreateRoom}>
         <FormattedMessage id="home.startRoom" />
-      </StartButton>
+      </Button>
     );
   }
 
