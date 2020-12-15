@@ -17,8 +17,7 @@
     "privacyPolicy": "Privacy Policy",
     "leaderboard": "World leaderboard",
     "openRules": "Game rules",
-    "findPlayers": "Find players",
-    "discordText": "Join this Discord server to find people who want to play, and to share your best games!",
+    "joinDiscord": "Our Discord",
     "rulesUnderstood": "Got it!",
     "highlightedDrawingCaption": "<em>{sentence}</em>, by {name}, {year}"
   },

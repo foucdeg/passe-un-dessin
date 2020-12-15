@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import SecondaryButton from 'atoms/SecondaryButton';
 import rightSideBackground from 'assets/full-background.svg';
 
 import { fontSize, fontFamily, colorPalette } from 'stylesheet';
@@ -85,11 +86,43 @@ export const Credits = styled.p`
 `;
 Credits.displayName = 'Credits';
 
+export const DiscordLogo = styled.img`
+  height: 20px;
+  width: auto;
+  margin-right: 5px;
+`;
+
+DiscordLogo.displayName = 'DiscordLogo';
+
+export const Actions = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & > :not(:last-child) {
+    margin-bottom: 20px;
+  }
+`;
+
+Actions.displayName = 'Actions';
+
 export const Row = styled.div`
   display: flex;
-  width: 100%;
-  max-width: 400px;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: center;
+
+  & > :not(:last-child) {
+    margin-right: 20px;
+  }
 `;
 
 Row.displayName = 'Row';
+
+export const StyledSecondaryButton = styled(SecondaryButton)`
+  width: 200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+StyledSecondaryButton.displayName = 'StyledSecondaryButton';

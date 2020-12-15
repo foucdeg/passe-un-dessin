@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { useLocation } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 
+import discordLogo from 'assets/discord.webp';
 import Spacer from 'atoms/Spacer';
 import { Link } from 'react-router-dom';
-import SecondaryButton from 'atoms/SecondaryButton';
 import { useBoolean } from 'services/utils';
 import client from 'services/networking/client';
 import { PadStep } from 'redux/Game/types';
@@ -17,9 +17,12 @@ import {
   Subtitle,
   Credits,
   RightSideTitle,
-  Row,
   Attribution,
   LegalLinks,
+  DiscordLogo,
+  Actions,
+  Row,
+  StyledSecondaryButton,
 } from './Home.style';
 import PlayerGameForm from './components/PlayerGameForm';
 import RulesModal from './components/RulesModal';
@@ -61,18 +64,21 @@ const Home: React.FunctionComponent = () => {
             <Loader />
           </div>
         )}
+        <div style={{ width: '277px', height: '277px', backgroundColor: 'red' }} />
         {hightlightedPadStep && <HighlightedDrawing padStep={hightlightedPadStep} />}
         <Spacer />
-
-        <Row>
-          <SecondaryButton onClick={openRulesModal}>
-            <FormattedMessage id="home.openRules" />
-          </SecondaryButton>
-          <SecondaryButton onClick={openDiscordModal}>
-            <FormattedMessage id="home.findPlayers" />
-          </SecondaryButton>
-        </Row>
-        <PlayerGameForm />
+        <Actions>
+          <Row>
+            <StyledSecondaryButton onClick={openRulesModal}>
+              <FormattedMessage id="home.openRules" />
+            </StyledSecondaryButton>
+            <StyledSecondaryButton onClick={openDiscordModal}>
+              <DiscordLogo src={discordLogo} alt="discord logo" />
+              <FormattedMessage id="home.joinDiscord" />
+            </StyledSecondaryButton>
+          </Row>
+          <PlayerGameForm />
+        </Actions>
         <Spacer />
         <p>
           <Link to="/leaderboard" target="_blank">
