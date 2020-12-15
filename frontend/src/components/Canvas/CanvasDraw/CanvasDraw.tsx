@@ -65,9 +65,11 @@ const CanvasDraw: React.FC<Props> = ({
   const [isPainting, setIsPainting] = useState(false);
   const drawing = useRef<Paint>([]);
   const undoneDrawing = useRef<Paint>([]);
-  const [currentLine, setCurrentLine] = useState<Line | null>(null);
-  const [mousePosition, setMousePosition] = useState<Point | undefined>(undefined);
+  const mousePosition = useRef<Point | null>(null);
+  const currentLine = useRef<Line | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const imageRef = useRef<ImageData | null>(null);
+
   const [
     selectedBrushColor,
     selectedBrushRadius,
@@ -136,7 +138,7 @@ const CanvasDraw: React.FC<Props> = ({
       const coordinates = getCoordinates(event);
       if (coordinates) {
         if (isFillDrawSelected) {
-          fillContext(coordinates, canvasRef, selectedBrushColor);
+          fillContext(coordinates, canvasRef, imageRef, selectedBrushColor);
           addToDrawing({
             point: coordinates,
             color: selectedBrushColor,
@@ -146,14 +148,21 @@ const CanvasDraw: React.FC<Props> = ({
         }
 
         setIsPainting(true);
-        setMousePosition(coordinates);
-        drawLine(coordinates, coordinates, selectedBrushColor, selectedBrushRadius, canvasRef);
-        setCurrentLine({
+        mousePosition.current = coordinates;
+        drawLine(
+          coordinates,
+          coordinates,
+          selectedBrushColor,
+          selectedBrushRadius,
+          canvasRef,
+          imageRef,
+        );
+        currentLine.current = {
           points: [coordinates],
           brushColor: selectedBrushColor,
           brushRadius: selectedBrushRadius,
           type: 'line',
-        });
+        };
       }
     },
     [selectedBrushColor, selectedBrushRadius, isFillDrawSelected],
@@ -161,27 +170,34 @@ const CanvasDraw: React.FC<Props> = ({
 
   const paint = useCallback(
     (event: MouseEvent | TouchEvent) => {
-      if (isPainting && currentLine) {
+      if (isPainting && currentLine.current && mousePosition.current) {
         event.preventDefault();
         const newPosition = getCoordinates(event);
         if (mousePosition && newPosition) {
-          drawLine(mousePosition, newPosition, selectedBrushColor, selectedBrushRadius, canvasRef);
-          setMousePosition(newPosition);
-          currentLine.points.push(newPosition);
+          drawLine(
+            mousePosition.current,
+            newPosition,
+            selectedBrushColor,
+            selectedBrushRadius,
+            canvasRef,
+            imageRef,
+          );
+          mousePosition.current = newPosition;
+          currentLine.current.points.push(newPosition);
         }
       }
     },
-    [isPainting, mousePosition, selectedBrushColor, selectedBrushRadius, currentLine],
+    [isPainting, selectedBrushColor, selectedBrushRadius],
   );
 
   const exitPaint = useCallback(() => {
     if (isPainting) {
       setIsPainting(false);
-      setMousePosition(undefined);
-      if (currentLine) {
-        addToDrawing(currentLine);
+      mousePosition.current = null;
+      if (currentLine.current) {
+        addToDrawing(currentLine.current);
       }
-      setCurrentLine(null);
+      currentLine.current = null;
     }
   }, [currentLine, isPainting]);
 
@@ -191,7 +207,7 @@ const CanvasDraw: React.FC<Props> = ({
       return;
     }
     // Do not use clearRect because a cleared canvas is black transparent
-    resetCanvas(canvasRef);
+    resetCanvas(canvasRef, imageRef);
     addToDrawing({ type: 'clear' });
   }, []);
 
@@ -199,14 +215,14 @@ const CanvasDraw: React.FC<Props> = ({
     const removedStep = drawing.current.pop();
     if (removedStep) {
       undoneDrawing.current.push(removedStep);
-      drawPaint(drawing.current, canvasRef, true, decodedDrawing);
+      drawPaint(drawing.current, canvasRef, imageRef, true, decodedDrawing);
     }
   }, [decodedDrawing]);
 
   const handleRedo = useCallback(() => {
     const stepToRedraw = undoneDrawing.current.pop();
     if (stepToRedraw) {
-      drawPaint([stepToRedraw], canvasRef);
+      drawPaint([stepToRedraw], canvasRef, imageRef);
       addToDrawing(stepToRedraw, false);
     }
   }, []);
@@ -300,10 +316,8 @@ const CanvasDraw: React.FC<Props> = ({
   }, [canvasWidth, canvasHeight, saveDrawing, roundDuration, finished]);
 
   useEffect(() => {
-    resetCanvas(canvasRef);
-    if (decodedDrawing) {
-      initializeCanvas(canvasRef, decodedDrawing);
-    }
+    resetCanvas(canvasRef, imageRef);
+    initializeCanvas(canvasRef, imageRef, decodedDrawing);
   }, [initialDrawing, decodedDrawing]);
 
   return (
