@@ -78,7 +78,7 @@ class Command(BaseCommand):
                 message += "{}\n".format(suggestion.sentence)
             if len(inactive_suggestions) > 100:
                 message += "...et {} autres".format(len(inactive_suggestions) - 100)
-            message += "\n\nPour évaluer ces suggestions, cliquer sur ce lien : https://passeundessin.com/admin/core/suggestion/?status__exact=INACTIVE"
+            message += "\n\nPour évaluer ces suggestions, cliquer sur ce lien : https://passeundessin.com/admin/suggestions/suggestion/?status__exact=INACTIVE"
 
             send_mail(
                 "Nouvelles suggestions à évaluer !",
