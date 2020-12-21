@@ -17,8 +17,7 @@
     "privacyPolicy": "Politique de confidentialité",
     "leaderboard": "Classement mondial",
     "openRules": "Règles du jeu",
-    "findPlayers": "Trouver des joueurs",
-    "discordText": "Rejoins ce serveur Discord pour trouver des gens qui veulent jouer, et pour partager tes plus belles parties !",
+    "joinDiscord": "Notre Discord",
     "rulesUnderstood": "Compris !",
     "highlightedDrawingCaption": "<em>{sentence}</em>, par {name}, {year}"
   },
