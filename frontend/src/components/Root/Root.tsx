@@ -13,8 +13,6 @@ import '@formatjs/intl-pluralrules/locale-data/en';
 import '@formatjs/intl-pluralrules/locale-data/fr';
 /* End of language polyfills */
 
-import { useHistory } from 'react-router';
-import useAnchors from 'useAnchors';
 import { RootContainer } from './Root.style';
 import UserNameGate from './components/UserNameGate';
 import SideButtons from './components/SideButtons';
@@ -31,20 +29,15 @@ interface Props {
   children: ReactNode;
 }
 
-const Root: React.FunctionComponent<Props> = ({ children }) => {
-  const history = useHistory();
-  useAnchors(history, 500);
-
-  return (
-    <IntlProvider locale={userLocale} messages={locales[userLocale]}>
-      <MobileGate>
-        <RootContainer>
-          <UserNameGate>{children}</UserNameGate>
-          <SideButtons />
-        </RootContainer>
-      </MobileGate>
-    </IntlProvider>
-  );
-};
+const Root: React.FunctionComponent<Props> = ({ children }) => (
+  <IntlProvider locale={userLocale} messages={locales[userLocale]}>
+    <MobileGate>
+      <RootContainer>
+        <UserNameGate>{children}</UserNameGate>
+        <SideButtons />
+      </RootContainer>
+    </MobileGate>
+  </IntlProvider>
+);
 
 export default Root;
