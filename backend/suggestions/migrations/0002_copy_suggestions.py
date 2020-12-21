@@ -25,6 +25,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ("suggestions", "0001_initial"),
+        ("core", "0031_refactor_suggestions")
     ]
 
     operations = [
