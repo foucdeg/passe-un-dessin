@@ -1,4 +1,4 @@
-Description: PasseUnDessin Api - ECS Services
+Description: PasseUnDessin Pushpin - ECS Services
 
 Parameters:
   DesiredCount:
@@ -41,10 +41,10 @@ Resources:
     Type: AWS::ECS::TaskDefinition
     Properties:
       NetworkMode: bridge
-      Family: !Sub PasseUnDessinApi-TaskFamily-${Env}
+      Family: !Sub PasseUnDessinPushpin-TaskFamily-${Env}
       TaskRoleArn: !Sub arn:aws:iam::${AWS::AccountId}:role/${ECSTaskRole}
       ContainerDefinitions:
-        - Name: !Sub PasseUnDessinApiContainer-${Env}
+        - Name: !Sub PasseUnDessinPushpinContainer-${Env}
           Image: !Sub ${DockerRepository}:${Tag}
           Essential: true
           MemoryReservation: 512
@@ -75,7 +75,7 @@ Resources:
             Options:
               awslogs-group: !Ref CloudwatchLogsGroup
               awslogs-region: !Sub ${AWS::Region}
-              awslogs-stream-prefix: passe-un-dessin-apiAssiociatePublicIp
+              awslogs-stream-prefix: passe-un-dessin-api
 
   ECSService:
     Type: AWS::ECS::Service
@@ -83,13 +83,13 @@ Resources:
       Cluster: !Ref ECSCluster
       DesiredCount: !Ref DesiredCount
       TaskDefinition: !Ref TaskDefinition
-      ServiceName: !Sub PasseUnDessinApi-Service-${Env}
+      ServiceName: !Sub PasseUnDessinPushpin-Service-${Env}
       Role: !Ref ECSServiceRole
       DeploymentConfiguration:
         MaximumPercent: 200
         MinimumHealthyPercent: 50
       LoadBalancers:
-        - ContainerName: !Sub PasseUnDessinApiContainer-${Env}
+        - ContainerName: !Sub PasseUnDessinPushpinContainer-${Env}
           ContainerPort: 80
           TargetGroupArn: !Ref TargetGroup
 
@@ -97,4 +97,4 @@ Outputs:
   ServiceName:
     Value: !GetAtt ECSService.Name
   FamilyName:
-    Value: !Sub PasseUnDessinApi-TaskFamily-${Env}
+    Value: !Sub PasseUnDessinPushpin-TaskFamily-${Env}

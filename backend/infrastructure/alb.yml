@@ -59,9 +59,9 @@ Resources:
         - CertificateArn: !Ref CertificateArn
       DefaultActions:
         - Type: forward
-          TargetGroupArn: !Ref ApiTargetGroup
+          TargetGroupArn: !Ref BackendTargetGroup
 
-  ApiTargetGroup:
+  BackendTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     DependsOn: LoadBalancer
     Properties:
@@ -79,7 +79,7 @@ Resources:
         - Key: deregistration_delay.timeout_seconds
           Value: 30
 
-  ApiListenerRule:
+  BackendListenerRule:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
       ListenerArn: !Ref LoadBalancerListener
@@ -89,7 +89,69 @@ Resources:
           Values:
             - /api
       Actions:
-        - TargetGroupArn: !Ref ApiTargetGroup
+        - TargetGroupArn: !Ref BackendTargetGroup
+          Type: forward
+
+  DrawingRendererTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    DependsOn: LoadBalancer
+    Properties:
+      VpcId: !Ref VpcId
+      Port: 80
+      Protocol: HTTP
+      Matcher:
+        HttpCode: 200-299
+      HealthCheckIntervalSeconds: 10
+      HealthCheckPath: /health
+      HealthCheckProtocol: HTTP
+      HealthCheckTimeoutSeconds: 5
+      HealthyThresholdCount: 2
+      TargetGroupAttributes:
+        - Key: deregistration_delay.timeout_seconds
+          Value: 30
+
+  DrawingRendererListenerRule:
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      ListenerArn: !Ref LoadBalancerListener
+      Priority: 1
+      Conditions:
+        - Field: path-pattern
+          Values:
+            - /drawings
+      Actions:
+        - TargetGroupArn: !Ref DrawingRendererTargetGroup
+          Type: forward
+
+  PushpinTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    DependsOn: LoadBalancer
+    Properties:
+      VpcId: !Ref VpcId
+      Port: 7999
+      Protocol: HTTP
+      Matcher:
+        HttpCode: 200-299
+      HealthCheckIntervalSeconds: 10
+      HealthCheckPath: /
+      HealthCheckProtocol: HTTP
+      HealthCheckTimeoutSeconds: 5
+      HealthyThresholdCount: 2
+      TargetGroupAttributes:
+        - Key: deregistration_delay.timeout_seconds
+          Value: 30
+
+  PushpinListenerRule:
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      ListenerArn: !Ref LoadBalancerListener
+      Priority: 1
+      Conditions:
+        - Field: path-pattern
+          Values:
+            - /events
+      Actions:
+        - TargetGroupArn: !Ref PushpinTargetGroup
           Type: forward
 
 Outputs:
@@ -97,9 +159,17 @@ Outputs:
     Value: !Sub http://${LoadBalancer.DNSName}
   ServiceId:
     Value: !GetAtt LoadBalancer.DNSName
-  ApiTargetGroup:
-    Value: !Ref ApiTargetGroup
-  ApiTargetGroupName:
-    Value: !GetAtt ApiTargetGroup.TargetGroupFullName
+  BackendTargetGroup:
+    Value: !Ref BackendTargetGroup
+  BackendTargetGroupName:
+    Value: !GetAtt BackendTargetGroup.TargetGroupFullName
+  DrawingRendererTargetGroup:
+    Value: !Ref DrawingRendererTargetGroup
+  DrawingRendererTargetGroupName:
+    Value: !GetAtt DrawingRendererTargetGroup.TargetGroupFullName
+  PushpinTargetGroup:
+    Value: !Ref DrawingRendererTargetGroup
+  PushpinTargetGroupName:
+    Value: !GetAtt PushpinTargetGroup.TargetGroupFullName
   AlbName:
     Value: !GetAtt LoadBalancer.LoadBalancerFullName

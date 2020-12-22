@@ -40,14 +40,12 @@ services:
       ENVIRONMENT: "local"
 
   pushpin:
-    image: fanout/pushpin:1.31.0
+    build: ./pushpin
     ports:
       - "7999:7999"
       - "5560-5563:5560-5563"
     links:
       - backend
-    volumes:
-      - ./pushpin/routes:/etc/pushpin/routes
 
 networks:
   default:

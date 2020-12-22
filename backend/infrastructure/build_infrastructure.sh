@@ -142,7 +142,7 @@ export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-ecs
 
 ## ECS AutoScaling group
 aws cloudformation deploy --stack-name passe-un-dessin-api-ecs-autoscaling-${ENV} --template-file autoscaling.yml \
---parameter-overrides Env=${ENV} InstanceProfile=${PasseUnDessinApiEC2InstanceProfile} Subnets=${SUBNETS} AssiociatePublicIp=true \
+--parameter-overrides Env=${ENV} InstanceProfile=${PasseUnDessinApiEC2InstanceProfile} Subnets=${SUBNETS} AssociatePublicIp=true \
 KeyName=${PEM_KEY} SecurityGroup=${PasseUnDessinApiSg} ECSCluster=${ECSCluster} --region ${REGION} \
 --no-fail-on-empty-changeset
 
@@ -151,7 +151,17 @@ export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-ecs
 DATABASE_URL="postgres://passe_un_dessin_user:${DB_PASSWORD}@${DatabaseHostname}:${DatabasePort}/passeundessindb"
 
 ## ECS Services
-aws cloudformation deploy --stack-name passe-un-dessin-api-ecs-service-api-${ENV} --template-file ecs-service-api.yml \
+aws cloudformation deploy --stack-name passe-un-dessin-api-ecs-service-backend-${ENV} --template-file ecs-service-backend.yml \
 --parameter-overrides Env=${ENV} ECSTaskRole=${PasseUnDessinApiTaskRole} ECSAutoScaleRole=${PasseUnDessinApiAutoScaleRole} \
-DockerRepository=${PasseUnDessinApiRepository} CloudwatchLogsGroup=${CloudwatchLogsGroup} ApiTargetGroup=${ApiTargetGroup} \
+DockerRepository=${PasseUnDessinBackendRepository} CloudwatchLogsGroup=${CloudwatchLogsGroup} TargetGroup=${BackendTargetGroup} \
 ECSCluster=${ECSCluster} Tag=${MY_TAG} ECSServiceRole=${PasseUnDessinApiServiceRole} AlbName=${AlbName} DatabaseUrl=${DATABASE_URL} Secret=${SECRET} --region ${REGION} --no-fail-on-empty-changeset
+
+aws cloudformation deploy --stack-name passe-un-dessin-api-ecs-service-drawing-renderer-${ENV} --template-file ecs-service-drawing-renderer.yml \
+--parameter-overrides Env=${ENV} ECSTaskRole=${PasseUnDessinApiTaskRole} ECSAutoScaleRole=${PasseUnDessinApiAutoScaleRole} \
+DockerRepository=${PasseUnDessinDrawingRendererRepository} CloudwatchLogsGroup=${CloudwatchLogsGroup} TargetGroup=${DrawingRendererTargetGroup} \
+ECSCluster=${ECSCluster} Tag=${MY_TAG} ECSServiceRole=${PasseUnDessinApiServiceRole} AlbName=${AlbName} DatabaseUrl=${DATABASE_URL} --region ${REGION} --no-fail-on-empty-changeset
+
+aws cloudformation deploy --stack-name passe-un-dessin-api-ecs-service-pushpin-${ENV} --template-file ecs-service-pushpin.yml \
+--parameter-overrides Env=${ENV} ECSTaskRole=${PasseUnDessinApiTaskRole} ECSAutoScaleRole=${PasseUnDessinApiAutoScaleRole} \
+DockerRepository=${PasseUnDessinPushpinRepository} CloudwatchLogsGroup=${CloudwatchLogsGroup} TargetGroup=${PushpinTargetGroup} \
+ECSCluster=${ECSCluster} Tag=${MY_TAG} ECSServiceRole=${PasseUnDessinApiServiceRole} AlbName=${AlbName} --region ${REGION} --no-fail-on-empty-changeset

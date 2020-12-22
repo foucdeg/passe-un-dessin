@@ -32,7 +32,7 @@ Parameters:
   ECSCluster:
     Type: String
 
-  AssiociatePublicIp:
+  AssociatePublicIp:
     Type: String
 
 Mappings:
@@ -93,7 +93,7 @@ Resources:
   LaunchConfiguration:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
-      AssociatePublicIpAddress: !Ref AssiociatePublicIp
+      AssociatePublicIpAddress: !Ref AssociatePublicIp
       KeyName: !Ref KeyName
       ImageId: !FindInMap [AWSRegionToAMI, !Ref "AWS::Region", AMI]
       InstanceType: !Ref InstanceType

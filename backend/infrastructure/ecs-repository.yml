@@ -1,7 +1,7 @@
 Description: PasseUnDessin Api - ECR Repositories
 
 Parameters:
-  PasseUnDessinApiRepositoryName:
+  PasseUnDessinRootRepositoryName:
     Type: String
     Default: api-passe-un-dessin
   Env:
@@ -9,13 +9,29 @@ Parameters:
     Default: staging
 
 Resources:
-  PasseUnDessinApiRepository:
+  PasseUnDessinBackendRepository:
     Type: "AWS::ECR::Repository"
     Properties:
-      RepositoryName: !Sub ${PasseUnDessinApiRepositoryName}-${Env}
+      RepositoryName: !Sub ${PasseUnDessinRootRepositoryName}-API-${Env}
+  PasseUnDessinDrawingRendererRepository:
+    Type: "AWS::ECR::Repository"
+    Properties:
+      RepositoryName: !Sub ${PasseUnDessinRootRepositoryName}-DrawingRenderer-${Env}
+  PasseUnDessinPushpinRepository:
+    Type: "AWS::ECR::Repository"
+    Properties:
+      RepositoryName: !Sub ${PasseUnDessinRootRepositoryName}-Pushpin-${Env}
 
 Outputs:
-  PasseUnDessinApiRepository:
-    Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${PasseUnDessinApiRepositoryName}-${Env}
-  PasseUnDessinApiRepositoryName:
-    Value: !Sub ${PasseUnDessinApiRepositoryName}-${Env}
+  PasseUnDessinBackendRepository:
+    Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${PasseUnDessinRootRepositoryName}-API-${Env}
+  PasseUnDessinBackendRepositoryName:
+    Value: !Sub ${PasseUnDessinRootRepositoryName}-API-${Env}
+  PasseUnDessinDrawingRendererRepository:
+    Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${PasseUnDessinRootRepositoryName}-DrawingRenderer-${Env}
+  PasseUnDessinDrawingRendererRepositoryName:
+    Value: !Sub ${PasseUnDessinRootRepositoryName}-DrawingRenderer-${Env}
+  PasseUnDessinPushpinRepository:
+    Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${PasseUnDessinRootRepositoryName}-Pushpin-${Env}
+  PasseUnDessinPushpinRepositoryName:
+    Value: !Sub ${PasseUnDessinRootRepositoryName}-Pushpin-${Env}

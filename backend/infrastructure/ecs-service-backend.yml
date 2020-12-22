@@ -1,4 +1,4 @@
-Description: PasseUnDessin Api - ECS Services
+Description: PasseUnDessin Api - ECS Service
 
 Parameters:
   DesiredCount:
@@ -49,10 +49,10 @@ Resources:
     Type: AWS::ECS::TaskDefinition
     Properties:
       NetworkMode: bridge
-      Family: !Sub PasseUnDessinApi-TaskFamily-${Env}
+      Family: !Sub PasseUnDessinBackend-TaskFamily-${Env}
       TaskRoleArn: !Sub arn:aws:iam::${AWS::AccountId}:role/${ECSTaskRole}
       ContainerDefinitions:
-        - Name: !Sub PasseUnDessinApiContainer-${Env}
+        - Name: !Sub PasseUnDessinBackendContainer-${Env}
           Image: !Sub ${DockerRepository}:${Tag}
           Essential: true
           MemoryReservation: 512
@@ -67,7 +67,7 @@ Resources:
             - Name: AWS_REGION
               Value: !Ref AWS::Region
             - Name: ALLOWED_HOST
-              Value: '*'
+              Value: "*"
             - Name: SECRET_KEY
               Value: !Ref Secret
             - Name: DATABASE_URL
@@ -77,7 +77,7 @@ Resources:
             Options:
               awslogs-group: !Ref CloudwatchLogsGroup
               awslogs-region: !Sub ${AWS::Region}
-              awslogs-stream-prefix: passe-un-dessin-apiAssiociatePublicIp
+              awslogs-stream-prefix: passe-un-dessin-api
 
   ECSService:
     Type: AWS::ECS::Service
@@ -85,13 +85,13 @@ Resources:
       Cluster: !Ref ECSCluster
       DesiredCount: !Ref DesiredCount
       TaskDefinition: !Ref TaskDefinition
-      ServiceName: !Sub PasseUnDessinApi-Service-${Env}
+      ServiceName: !Sub PasseUnDessinBackend-Service-${Env}
       Role: !Ref ECSServiceRole
       DeploymentConfiguration:
         MaximumPercent: 200
         MinimumHealthyPercent: 50
       LoadBalancers:
-        - ContainerName: !Sub PasseUnDessinApiContainer-${Env}
+        - ContainerName: !Sub PasseUnDessinBackendContainer-${Env}
           ContainerPort: 80
           TargetGroupArn: !Ref TargetGroup
 
@@ -139,7 +139,7 @@ Resources:
     Properties:
       EvaluationPeriods: 3
       Statistic: Average
-      AlarmName: !Sub PasseUnDessinApiServicescalingCPUscaleUpAlarm-${Env}
+      AlarmName: !Sub PasseUnDessinBackendServicescalingCPUscaleUpAlarm-${Env}
       Threshold: 50
       AlarmDescription: Alarm if CPU is too high
       Period: 60
@@ -157,7 +157,7 @@ Resources:
     Properties:
       EvaluationPeriods: 4
       Statistic: Average
-      AlarmName: !Sub PasseUnDessinApiServicescalingCPUscaleDownAlarm-${Env}
+      AlarmName: !Sub PasseUnDessinBackendServicescalingCPUscaleDownAlarm-${Env}
       Threshold: 10
       AlarmDescription: Alarm if CPU is too low
       Period: 60
@@ -174,4 +174,4 @@ Outputs:
   ServiceName:
     Value: !GetAtt ECSService.Name
   FamilyName:
-    Value: !Sub PasseUnDessinApi-TaskFamily-${Env}
+    Value: !Sub PasseUnDessinBackend-TaskFamily-${Env}
