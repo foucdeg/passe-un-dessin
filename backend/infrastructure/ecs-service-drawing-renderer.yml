@@ -47,8 +47,8 @@ Resources:
         - Name: !Sub PasseUnDessinDrawingRendererContainer-${Env}
           Image: !Sub ${DockerRepository}:${Tag}
           Essential: true
-          MemoryReservation: 512
-          Cpu: 256
+          MemoryReservation: 333
+          Cpu: 333
           PortMappings:
             - ContainerPort: 80
               HostPort: 0

@@ -55,8 +55,8 @@ Resources:
         - Name: !Sub PasseUnDessinBackendContainer-${Env}
           Image: !Sub ${DockerRepository}:${Tag}
           Essential: true
-          MemoryReservation: 512
-          Cpu: 256
+          MemoryReservation: 333
+          Cpu: 333
           PortMappings:
             - ContainerPort: 80
               HostPort: 0
@@ -107,7 +107,7 @@ Resources:
         MetricAggregationType: Average
         StepAdjustments:
           - MetricIntervalLowerBound: 0
-            ScalingAdjustment: 2
+            ScalingAdjustment: 1
 
   scalingPolicyDown:
     Type: AWS::ApplicationAutoScaling::ScalingPolicy

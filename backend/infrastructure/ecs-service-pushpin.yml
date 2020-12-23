@@ -47,8 +47,8 @@ Resources:
         - Name: !Sub PasseUnDessinPushpinContainer-${Env}
           Image: !Sub ${DockerRepository}:${Tag}
           Essential: true
-          MemoryReservation: 512
-          Cpu: 256
+          MemoryReservation: 333
+          Cpu: 333
           PortMappings:
             - ContainerPort: 7999
               HostPort: 0
@@ -90,7 +90,7 @@ Resources:
         MinimumHealthyPercent: 50
       LoadBalancers:
         - ContainerName: !Sub PasseUnDessinPushpinContainer-${Env}
-          ContainerPort: 80
+          ContainerPort: 7999
           TargetGroupArn: !Ref TargetGroup
 
 Outputs:

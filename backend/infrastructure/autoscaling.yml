@@ -119,10 +119,7 @@ Resources:
       MetricAggregationType: Average
       StepAdjustments:
         - MetricIntervalLowerBound: 0
-          MetricIntervalUpperBound: 20
           ScalingAdjustment: 1
-        - MetricIntervalLowerBound: 20
-          ScalingAdjustment: 2
 
   StepScalingDown:
     Type: AWS::AutoScaling::ScalingPolicy
@@ -159,7 +156,7 @@ Resources:
       EvaluationPeriods: 1
       AlarmName: !Sub PasseUnDessinApiAutoscalingMemoryReservedScaleUpAlarm-${Env}
       Statistic: Average
-      Threshold: 60
+      Threshold: 70
       AlarmDescription: Alarm if memory reserved by the instances is too high
       Period: 60
       AlarmActions:
