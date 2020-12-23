@@ -9,6 +9,7 @@ import { useBoolean } from 'services/utils';
 import client from 'services/networking/client';
 import { PadStep } from 'redux/Game/types';
 import { useAsyncFn } from 'react-use';
+import BareAnchor from 'atoms/BareAnchor';
 import Loader from 'atoms/Loader';
 import {
   LeftSide,
@@ -26,15 +27,14 @@ import {
 } from './Home.style';
 import PlayerGameForm from './components/PlayerGameForm';
 import RulesModal from './components/RulesModal';
-import DiscordModal from './components/DiscordModal';
 import HighlightedDrawing from './components/HighlightedDrawing';
 
 const highlightedStepId = '68550e01-5bc9-48ed-9936-a383b736487b';
+const discordLink = 'https://discord.gg/8y9s5yFgYq';
 
 const Home: React.FunctionComponent = () => {
   const location = useLocation();
   const [isRulesModalOpen, openRulesModal, closeRulesModal] = useBoolean(false);
-  const [isDiscordModalOpen, openDiscordModal, closeDiscordModal] = useBoolean(false);
 
   const [
     { loading, value: hightlightedPadStep },
@@ -71,10 +71,12 @@ const Home: React.FunctionComponent = () => {
             <StyledSecondaryButton onClick={openRulesModal}>
               <FormattedMessage id="home.openRules" />
             </StyledSecondaryButton>
-            <StyledSecondaryButton onClick={openDiscordModal}>
-              <DiscordLogo src={discordLogo} alt="discord logo" />
-              <FormattedMessage id="home.joinDiscord" />
-            </StyledSecondaryButton>
+            <BareAnchor href={discordLink} target="_blank">
+              <StyledSecondaryButton>
+                <DiscordLogo src={discordLogo} alt="discord logo" />
+                <FormattedMessage id="home.joinDiscord" />
+              </StyledSecondaryButton>
+            </BareAnchor>
           </Row>
           <PlayerGameForm />
         </Actions>
@@ -105,7 +107,6 @@ const Home: React.FunctionComponent = () => {
         <Credits>Quentin Somerville • Léo Anesi</Credits>
       </RightSide>
       <RulesModal isOpen={isRulesModalOpen} onClose={closeRulesModal} />
-      <DiscordModal isOpen={isDiscordModalOpen} onClose={closeDiscordModal} />
     </>
   );
 };
