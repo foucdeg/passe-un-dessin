@@ -1,6 +1,10 @@
 Description: PasseUnDessin Drawing Renderer - ECS Service
 
 Parameters:
+  DesiredCount:
+    Type: Number
+    Default: 1
+
   ECSCluster:
     Type: String
 

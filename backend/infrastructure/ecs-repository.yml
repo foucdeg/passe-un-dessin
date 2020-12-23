@@ -12,26 +12,26 @@ Resources:
   PasseUnDessinBackendRepository:
     Type: "AWS::ECR::Repository"
     Properties:
-      RepositoryName: !Sub ${PasseUnDessinRootRepositoryName}-API-${Env}
+      RepositoryName: !Sub ${PasseUnDessinRootRepositoryName}-backend-${Env}
   PasseUnDessinDrawingRendererRepository:
     Type: "AWS::ECR::Repository"
     Properties:
-      RepositoryName: !Sub ${PasseUnDessinRootRepositoryName}-DrawingRenderer-${Env}
+      RepositoryName: !Sub ${PasseUnDessinRootRepositoryName}-drawing-renderer-${Env}
   PasseUnDessinPushpinRepository:
     Type: "AWS::ECR::Repository"
     Properties:
-      RepositoryName: !Sub ${PasseUnDessinRootRepositoryName}-Pushpin-${Env}
+      RepositoryName: !Sub ${PasseUnDessinRootRepositoryName}-pushpin-${Env}
 
 Outputs:
   PasseUnDessinBackendRepository:
-    Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${PasseUnDessinRootRepositoryName}-API-${Env}
+    Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${PasseUnDessinRootRepositoryName}-backend-${Env}
   PasseUnDessinBackendRepositoryName:
-    Value: !Sub ${PasseUnDessinRootRepositoryName}-API-${Env}
+    Value: !Sub ${PasseUnDessinRootRepositoryName}-backend-${Env}
   PasseUnDessinDrawingRendererRepository:
-    Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${PasseUnDessinRootRepositoryName}-DrawingRenderer-${Env}
+    Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${PasseUnDessinRootRepositoryName}-drawing-renderer-${Env}
   PasseUnDessinDrawingRendererRepositoryName:
-    Value: !Sub ${PasseUnDessinRootRepositoryName}-DrawingRenderer-${Env}
+    Value: !Sub ${PasseUnDessinRootRepositoryName}-drawing-renderer-${Env}
   PasseUnDessinPushpinRepository:
-    Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${PasseUnDessinRootRepositoryName}-Pushpin-${Env}
+    Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${PasseUnDessinRootRepositoryName}-pushpin-${Env}
   PasseUnDessinPushpinRepositoryName:
-    Value: !Sub ${PasseUnDessinRootRepositoryName}-Pushpin-${Env}
+    Value: !Sub ${PasseUnDessinRootRepositoryName}-pushpin-${Env}
