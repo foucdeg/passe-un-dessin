@@ -54,7 +54,7 @@ fi
 export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-ecs-repository-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
 
 aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${PasseUnDessinBackendRepository}
-docker build --tag "${PasseUnDessinBackendRepository}:${MY_TAG}" -f ../docker/Dockerfile.prod ../.
+docker build --tag "${PasseUnDessinBackendRepository}:${MY_TAG}" -f ../backend/docker/Dockerfile.prod ../backend/
 docker push "${PasseUnDessinBackendRepository}:${MY_TAG}"
 
 # Delete untagged images
@@ -62,7 +62,7 @@ IMAGES_TO_DELETE=$(aws ecr list-images --region ${REGION} --repository-name ${Pa
 aws ecr batch-delete-image --region ${REGION} --repository-name ${PasseUnDessinBackendRepositoryName} --image-ids "$IMAGES_TO_DELETE" || true
 
 aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${PasseUnDessinDrawingRendererRepository}
-docker build --tag "${PasseUnDessinDrawingRendererRepository}:${MY_TAG}" -f ../../drawing-renderer/Dockerfile.prod ../../drawing-renderer/
+docker build --tag "${PasseUnDessinDrawingRendererRepository}:${MY_TAG}" -f ../drawing-renderer/Dockerfile.prod ../drawing-renderer/
 docker push "${PasseUnDessinDrawingRendererRepository}:${MY_TAG}"
 
 # Delete untagged images
@@ -70,7 +70,7 @@ IMAGES_TO_DELETE=$(aws ecr list-images --region ${REGION} --repository-name ${Pa
 aws ecr batch-delete-image --region ${REGION} --repository-name ${PasseUnDessinDrawingRendererRepositoryName} --image-ids "$IMAGES_TO_DELETE" || true
 
 aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${PasseUnDessinPushpinRepository}
-docker build --tag "${PasseUnDessinPushpinRepository}:${MY_TAG}" -f ../../pushpin/Dockerfile ../../pushpin/
+docker build --tag "${PasseUnDessinPushpinRepository}:${MY_TAG}" -f ../pushpin/Dockerfile ../pushpin/
 docker push "${PasseUnDessinPushpinRepository}:${MY_TAG}"
 
 # Delete untagged images

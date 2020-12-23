@@ -113,6 +113,17 @@ aws cloudformation deploy --stack-name passe-un-dessin-api-alb-${ENV} --template
 
 export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-alb-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
 
+## S3
+aws cloudformation deploy --stack-name passe-un-dessin-front-s3-${ENV} --template-file s3.yml --parameter-overrides Env=${ENV} --region ${REGION} --no-fail-on-empty-changeset
+
+export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-front-s3-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
+
+## Cloudfront - Front
+aws cloudformation deploy --stack-name passe-un-dessin-front-cloudfront-${ENV} --template-file cloudfront-front.yml \
+--parameter-overrides Env=${ENV} S3Bucket=${FrontS3Bucket} --region ${REGION} CertificateArn=${ACM_ARN} PublicAlias=${DOMAIN} --no-fail-on-empty-changeset
+
+export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-front-cloudfront-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
+
 ## Cloudfront
 aws cloudformation deploy --stack-name passe-un-dessin-api-cloudfront-${ENV} --template-file cloudfront.yml \
 --parameter-overrides Env=${ENV} AlbDNS=${ServiceId} CertificateArn=${ACM_ARN} PublicAlias=${PUBLIC_URL} --region ${REGION} --no-fail-on-empty-changeset

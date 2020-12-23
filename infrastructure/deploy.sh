@@ -65,7 +65,14 @@ export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-ecs
 export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-ecs-cluster-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
 export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-ecs-service-api-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
 export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-postgres-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
+export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-front-s3-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
 AccountId=$(aws sts get-caller-identity --output text --query Account)
+
+cd frontend && REACT_APP_ENV=production yarn build
+
+aws s3 cp ../frontend/build s3://${FrontS3Bucket} --recursive
+
+rm -rf ../frontend/build
 
 aws ecs register-task-definition --task-role-arn arn:aws:iam::${AccountId}:role/${PasseUnDessinApiTaskRole} --family ${FamilyName} --container-definitions "[{\"name\":\"PasseUnDessinBackendContainer-${ENV}\",\"image\":\"${PasseUnDessinBackendRepository}:${MY_TAG}\",\"essential\":true,\"memoryReservation\":512,\"cpu\":256,\"portMappings\":[{\"containerPort\":80,\"hostPort\":0, \"protocol\":\"tcp\"}],\"environment\":[{\"name\":\"ENV\",\"value\":\"${ENV}\"}, {\"name\":\"AWS_REGION\",\"value\":\"${REGION}\"}, {\"name\":\"ALLOWED_HOST\",\"value\":\"*\"}, {\"name\":\"SECRET_KEY\",\"value\":\"${SECRET_KEY}\"}, {\"name\":\"DATABASE_URL\",\"value\":\"postgres://passe_un_dessin_user:${DB_PASSWORD}@${DatabaseHostname}:${DatabasePort}/passeundessindb\"}],\"logConfiguration\":{\"logDriver\":\"awslogs\",\"options\":{\"awslogs-group\":\"${CloudwatchLogsGroup}\",\"awslogs-region\":\"${REGION}\",\"awslogs-stream-prefix\":\"passe-un-dessin-api\"}}}]" --region ${REGION}
 
