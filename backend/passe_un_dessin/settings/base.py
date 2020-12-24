@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "corsheaders",
     # Our apps
     "suggestions",
+    "twitch",
     "core",
 ]
 
@@ -157,6 +158,12 @@ EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 
 DEFAULT_FROM_EMAIL = "Passe un Dessin <noreply@{}>".format(MAILGUN_SERVER_NAME)
 DEV_EMAILS = ["foucdeg@gmail.com", "quentin.somerville@gmail.com"]
+
+TWITCH_CONFIG = {
+    "CLIENT_ID": os.getenv("CLIENT_ID"),
+    "SECRET_KEY": os.getenv("SECRET_KEY"),
+    "GAME_ID": 32982,
+}
 
 
 # Sentry
