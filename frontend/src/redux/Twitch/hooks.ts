@@ -7,8 +7,8 @@ export const useFetchCurrentStreamsCount = () => {
   const dispatch = useDispatch();
 
   return useCallback(async () => {
-    const response = await client.get(`/current-streams/count`);
-    dispatch(updateCurrentStreamsCount(response['current_streams_count']));
+    const currentStreamsCount = await client.get(`/current-streams/count`);
+    dispatch(updateCurrentStreamsCount(currentStreamsCount));
   }, [dispatch]);
 };
 
@@ -16,7 +16,7 @@ export const useFetchCurrentStreams = () => {
   const dispatch = useDispatch();
 
   return useCallback(async () => {
-    const response = await client.get(`/current-streams`);
-    dispatch(updateCurrentStreams(response['streams']));
+    const streams = await client.get(`/current-streams`);
+    dispatch(updateCurrentStreams(streams));
   }, [dispatch]);
 };
