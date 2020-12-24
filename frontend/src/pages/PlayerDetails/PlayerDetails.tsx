@@ -143,7 +143,11 @@ const PlayerDetails: React.FC<NoProps> = () => {
                           </BareLink>
                         </PlayerChip>
                       ))}
-                    <BareLink to={`/game/${participation.game.uuid}`} target="_blank">
+                    <BareLink
+                      to={`/game/${participation.game.uuid}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       <ChipButton>
                         <FormattedMessage id="playerDetails.seeGame" />
                         <NextStepIcon />

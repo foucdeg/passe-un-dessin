@@ -65,7 +65,7 @@ const VoteResults: React.FunctionComponent = () => {
         </Donate>
       </RightSide>
       <TopRightButtons>
-        <BareLink to={`/game/${game.uuid}`} target="_blank">
+        <BareLink to={`/game/${game.uuid}`} target="_blank" rel="noreferrer">
           <TopRightButton>
             <FormattedMessage id="voteResults.reviewGame" />
             <StyledLaunchIcon />

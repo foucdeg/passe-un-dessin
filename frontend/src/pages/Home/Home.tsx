@@ -82,7 +82,7 @@ const Home: React.FunctionComponent = () => {
             <StyledSecondaryButton onClick={openRulesModal}>
               <FormattedMessage id="home.openRules" />
             </StyledSecondaryButton>
-            <BareAnchor href={discordLink} target="_blank">
+            <BareAnchor href={discordLink} target="_blank" rel="noreferrer">
               <StyledSecondaryButton>
                 <DiscordLogo src={discordLogo} alt="discord logo" />
                 <FormattedMessage id="home.joinDiscord" />
@@ -98,7 +98,7 @@ const Home: React.FunctionComponent = () => {
         </Actions>
         <Spacer />
         <p>
-          <Link to="/leaderboard" target="_blank">
+          <Link to="/leaderboard" target="_blank" rel="noreferrer">
             <FormattedMessage id="home.leaderboard" />
           </Link>
         </p>

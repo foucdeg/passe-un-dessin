@@ -74,6 +74,7 @@ const Scoreboard: React.FC<Props> = ({ list, className, showRankings, onScrollEn
           <StyledLink
             to={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', playerWithScore.uuid)}
             target="_blank"
+            rel="noreferrer"
           >
             {playerWithScore.name}
           </StyledLink>
