@@ -13,11 +13,16 @@
       "3": "<strong>Dessine</strong> le mot proposé ou <strong>devine</strong> ce que la personne avant toi a dessiné. Puis, ton dessin ou idée est passé au joueur suivant, et ainsi de suite.",
       "4": "Quand tout le monde a pu dessiner chacun des mots, on passe aux carnets de résultats ! <strong>Regarde ce que sont devenus les mots choisis</strong> et vote pour tes dessins ou idées préférées."
     },
+    "twitchModal": {
+      "title": "Streams en cours",
+      "noStreams": "Il n'y a pas de streams en cours"
+    },
     "termsAndConditions": "Conditions d'utilisation",
     "privacyPolicy": "Politique de confidentialité",
     "leaderboard": "Classement mondial",
     "openRules": "Règles du jeu",
     "joinDiscord": "Notre Discord",
+    "twitchStreams": "{currentStreamsCount} chaînes live",
     "rulesUnderstood": "Compris !",
     "highlightedDrawingCaption": "<em>{sentence}</em>, par {name}, {year}"
   },
