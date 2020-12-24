@@ -23,9 +23,6 @@ Parameters:
   DockerRepository:
     Type: String
 
-  ECSServiceRole:
-    Type: String
-
   CloudwatchLogsGroup:
     Type: String
 
@@ -35,6 +32,9 @@ Parameters:
   DatabaseUrl:
     Type: String
     NoEcho: True
+
+  ServiceDiscoveryNamespace:
+    Type: String
 
 Resources:
   TaskDefinition:
@@ -47,7 +47,7 @@ Resources:
         - Name: !Sub PasseUnDessinDrawingRendererContainer-${Env}
           Image: !Sub ${DockerRepository}:${Tag}
           Essential: true
-          MemoryReservation: 333
+          MemoryReservation: 300
           Cpu: 333
           PortMappings:
             - ContainerPort: 80
@@ -67,6 +67,20 @@ Resources:
               awslogs-region: !Sub ${AWS::Region}
               awslogs-stream-prefix: passe-un-dessin-api
 
+  DiscoveryService:
+    Type: AWS::ServiceDiscovery::Service
+    Properties:
+      Description: Discovery Service for Passe un Dessin Drawing Renderer
+      DnsConfig:
+        RoutingPolicy: MULTIVALUE
+        DnsRecords:
+          - TTL: 60
+            Type: SRV
+      HealthCheckCustomConfig:
+        FailureThreshold: 1
+      Name: !Sub PasseUnDessin-DrawingRendererDiscoveryService-${Env}
+      NamespaceId: !Ref ServiceDiscoveryNamespace
+
   ECSService:
     Type: AWS::ECS::Service
     Properties:
@@ -74,7 +88,6 @@ Resources:
       DesiredCount: !Ref DesiredCount
       TaskDefinition: !Ref TaskDefinition
       ServiceName: !Sub PasseUnDessinDrawingRenderer-Service-${Env}
-      Role: !Ref ECSServiceRole
       DeploymentConfiguration:
         MaximumPercent: 200
         MinimumHealthyPercent: 50
@@ -82,6 +95,10 @@ Resources:
         - ContainerName: !Sub PasseUnDessinDrawingRendererContainer-${Env}
           ContainerPort: 80
           TargetGroupArn: !Ref TargetGroup
+      ServiceRegistries:
+        - ContainerName: !Sub PasseUnDessinDrawingRendererContainer-${Env}
+          ContainerPort: 80
+          RegistryArn: !GetAtt DiscoveryService.Arn
 
 Outputs:
   ServiceName:

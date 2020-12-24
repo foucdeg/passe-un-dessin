@@ -1,0 +1,22 @@
+Description: PasseUnDessin service discovery namespace
+
+Parameters:
+  Env:
+    Type: String
+
+  Domain:
+    Type: String
+
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+
+Resources:
+  PrivateNamespace:
+      Type: AWS::ServiceDiscovery::PrivateDnsNamespace
+      Properties:
+          Name: !Sub private.${Domain}
+          Vpc: !Ref VpcId
+
+Outputs:
+  ServiceDiscoveryNamespace:
+    Value: !Ref PrivateNamespace

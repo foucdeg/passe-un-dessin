@@ -143,7 +143,13 @@ aws cloudformation deploy --stack-name passe-un-dessin-api-ecs-repository-${ENV}
 export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-ecs-repository-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
 
 ## Build Docker Image and push it to the ECS Repository
-./build_docker.sh -r ${REGION} -t $MY_TAG -e ${ENV} -p ${PROFILE}
+## ./build_docker.sh -r ${REGION} -t $MY_TAG -e ${ENV} -p ${PROFILE}
+
+## Service discovery namespace
+aws cloudformation deploy --stack-name passe-un-dessin-api-sd-namespace-${ENV} --template-file service-discovery-namespace.yml \
+--parameter-overrides Env=${ENV} Domain=${DOMAIN} VpcId=${VPC_ID} --region ${REGION} --no-fail-on-empty-changeset
+
+export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-service-discovery-namespace-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
 
 ## ECS Cluster
 aws cloudformation deploy --stack-name passe-un-dessin-api-ecs-cluster-${ENV} --template-file ecs-cluster.yml \
@@ -161,18 +167,26 @@ export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-ecs
 
 DATABASE_URL="postgres://passe_un_dessin_user:${DB_PASSWORD}@${DatabaseHostname}:${DatabasePort}/passeundessindb"
 
+
 ## ECS Services
+
+### Backend - Service
 aws cloudformation deploy --stack-name passe-un-dessin-api-ecs-service-backend-${ENV} --template-file ecs-service-backend.yml \
 --parameter-overrides Env=${ENV} ECSTaskRole=${PasseUnDessinApiTaskRole} ECSAutoScaleRole=${PasseUnDessinApiAutoScaleRole} \
 DockerRepository=${PasseUnDessinBackendRepository} CloudwatchLogsGroup=${CloudwatchLogsGroup} TargetGroup=${BackendTargetGroup} \
-ECSCluster=${ECSCluster} Tag=${MY_TAG} ECSServiceRole=${PasseUnDessinApiServiceRole} AlbName=${AlbName} DatabaseUrl=${DATABASE_URL} Secret=${SECRET} --region ${REGION} --no-fail-on-empty-changeset
+ECSCluster=${ECSCluster} Tag=${MY_TAG} AlbName=${AlbName} DatabaseUrl=${DATABASE_URL} \
+Secret=${SECRET} ServiceDiscoveryNamespace=${ServiceDiscoveryNamespace} --region ${REGION} --no-fail-on-empty-changeset
 
+### Drawing renderer - Service
 aws cloudformation deploy --stack-name passe-un-dessin-api-ecs-service-drawing-renderer-${ENV} --template-file ecs-service-drawing-renderer.yml \
 --parameter-overrides Env=${ENV} ECSTaskRole=${PasseUnDessinApiTaskRole} ECSAutoScaleRole=${PasseUnDessinApiAutoScaleRole} \
 DockerRepository=${PasseUnDessinDrawingRendererRepository} CloudwatchLogsGroup=${CloudwatchLogsGroup} TargetGroup=${DrawingRendererTargetGroup} \
-ECSCluster=${ECSCluster} Tag=${MY_TAG} ECSServiceRole=${PasseUnDessinApiServiceRole} AlbName=${AlbName} DatabaseUrl=${DATABASE_URL} --region ${REGION} --no-fail-on-empty-changeset
+ECSCluster=${ECSCluster} Tag=${MY_TAG} AlbName=${AlbName} DatabaseUrl=${DATABASE_URL} ServiceDiscoveryNamespace=${ServiceDiscoveryNamespace} \
+--region ${REGION} --no-fail-on-empty-changeset
 
+### Pushpin - Service
 aws cloudformation deploy --stack-name passe-un-dessin-api-ecs-service-pushpin-${ENV} --template-file ecs-service-pushpin.yml \
 --parameter-overrides Env=${ENV} ECSTaskRole=${PasseUnDessinApiTaskRole} ECSAutoScaleRole=${PasseUnDessinApiAutoScaleRole} \
 DockerRepository=${PasseUnDessinPushpinRepository} CloudwatchLogsGroup=${CloudwatchLogsGroup} TargetGroup=${PushpinTargetGroup} \
-ECSCluster=${ECSCluster} Tag=${MY_TAG} ECSServiceRole=${PasseUnDessinApiServiceRole} AlbName=${AlbName} --region ${REGION} --no-fail-on-empty-changeset
+ECSCluster=${ECSCluster} Tag=${MY_TAG} AlbName=${AlbName} ServiceDiscoveryNamespace=${ServiceDiscoveryNamespace} \
+--region ${REGION} --no-fail-on-empty-changeset

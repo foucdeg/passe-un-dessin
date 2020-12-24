@@ -33,23 +33,6 @@ Resources:
       Roles:
         - !Ref PasseUnDessinApiEC2Role
 
-  PasseUnDessinApiServiceRole:
-    Type: AWS::IAM::Role
-    Properties:
-      RoleName: !Sub passe-un-dessin-api-service-role-${Env}
-      Path: /
-      AssumeRolePolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Effect: "Allow"
-            Principal:
-              Service:
-                - "ecs.amazonaws.com"
-            Action:
-              - "sts:AssumeRole"
-      ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole
-
   PasseUnDessinApiAutoScaleRole:
     Type: AWS::IAM::Role
     Properties:
@@ -107,8 +90,6 @@ Outputs:
     Value: !Ref PasseUnDessinApiEC2Role
   PasseUnDessinApiEC2InstanceProfile:
     Value: !Ref PasseUnDessinApiEC2InstanceProfile
-  PasseUnDessinApiServiceRole:
-    Value: !Ref PasseUnDessinApiServiceRole
   PasseUnDessinApiAutoScaleRole:
     Value: !Ref PasseUnDessinApiAutoScaleRole
   PasseUnDessinApiTaskRole:

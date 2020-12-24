@@ -27,13 +27,13 @@ Parameters:
   DockerRepository:
     Type: String
 
-  ECSServiceRole:
-    Type: String
-
   CloudwatchLogsGroup:
     Type: String
 
   TargetGroup:
+    Type: String
+
+  ServiceDiscoveryNamespace:
     Type: String
 
 Resources:
@@ -47,7 +47,7 @@ Resources:
         - Name: !Sub PasseUnDessinPushpinContainer-${Env}
           Image: !Sub ${DockerRepository}:${Tag}
           Essential: true
-          MemoryReservation: 333
+          MemoryReservation: 300
           Cpu: 333
           PortMappings:
             - ContainerPort: 7999
@@ -77,6 +77,20 @@ Resources:
               awslogs-region: !Sub ${AWS::Region}
               awslogs-stream-prefix: passe-un-dessin-api
 
+  DiscoveryService:
+    Type: AWS::ServiceDiscovery::Service
+    Properties:
+      Description: Discovery Service for Passe un Dessin Pushpin
+      DnsConfig:
+        RoutingPolicy: MULTIVALUE
+        DnsRecords:
+          - TTL: 60
+            Type: SRV
+      HealthCheckCustomConfig:
+        FailureThreshold: 1
+      Name: !Sub PasseUnDessin-PushpinDiscoveryService-${Env}
+      NamespaceId: !Ref ServiceDiscoveryNamespace
+
   ECSService:
     Type: AWS::ECS::Service
     Properties:
@@ -84,7 +98,6 @@ Resources:
       DesiredCount: !Ref DesiredCount
       TaskDefinition: !Ref TaskDefinition
       ServiceName: !Sub PasseUnDessinPushpin-Service-${Env}
-      Role: !Ref ECSServiceRole
       DeploymentConfiguration:
         MaximumPercent: 200
         MinimumHealthyPercent: 50
@@ -92,6 +105,10 @@ Resources:
         - ContainerName: !Sub PasseUnDessinPushpinContainer-${Env}
           ContainerPort: 7999
           TargetGroupArn: !Ref TargetGroup
+      ServiceRegistries:
+        - ContainerName: !Sub PasseUnDessinPushpinContainer-${Env}
+          ContainerPort: 5561
+          RegistryArn: !GetAtt DiscoveryService.Arn
 
 Outputs:
   ServiceName:
