@@ -143,13 +143,13 @@ aws cloudformation deploy --stack-name passe-un-dessin-api-ecs-repository-${ENV}
 export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-ecs-repository-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
 
 ## Build Docker Image and push it to the ECS Repository
-## ./build_docker.sh -r ${REGION} -t $MY_TAG -e ${ENV} -p ${PROFILE}
+./build_docker.sh -r ${REGION} -t $MY_TAG -e ${ENV} -p ${PROFILE}
 
 ## Service discovery namespace
 aws cloudformation deploy --stack-name passe-un-dessin-api-sd-namespace-${ENV} --template-file service-discovery-namespace.yml \
 --parameter-overrides Env=${ENV} Domain=${DOMAIN} VpcId=${VPC_ID} --region ${REGION} --no-fail-on-empty-changeset
 
-export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-service-discovery-namespace-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
+export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-sd-namespace-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
 
 ## ECS Cluster
 aws cloudformation deploy --stack-name passe-un-dessin-api-ecs-cluster-${ENV} --template-file ecs-cluster.yml \

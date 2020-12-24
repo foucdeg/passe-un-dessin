@@ -70,7 +70,7 @@ IMAGES_TO_DELETE=$(aws ecr list-images --region ${REGION} --repository-name ${Pa
 aws ecr batch-delete-image --region ${REGION} --repository-name ${PasseUnDessinDrawingRendererRepositoryName} --image-ids "$IMAGES_TO_DELETE" || true
 
 aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${PasseUnDessinPushpinRepository}
-docker build --tag "${PasseUnDessinPushpinRepository}:${MY_TAG}" -f ../pushpin/Dockerfile ../pushpin/
+docker build --tag "${PasseUnDessinPushpinRepository}:${MY_TAG}" -f ../pushpin/Dockerfile.prod ../pushpin/
 docker push "${PasseUnDessinPushpinRepository}:${MY_TAG}"
 
 # Delete untagged images

@@ -44,6 +44,10 @@ Parameters:
   ServiceDiscoveryNamespace:
     Type: String
 
+  PushpinHost:
+    Type: String
+    Default: passeundessin-pushpindiscoveryservice-production.private.passeundessin.fouc.net
+
 Resources:
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
@@ -72,6 +76,8 @@ Resources:
               Value: !Ref Secret
             - Name: DATABASE_URL
               Value: !Ref DatabaseUrl
+            - Name: PUSHPIN_HOST
+              Value: !Ref PushpinHost
           LogConfiguration:
             LogDriver: awslogs
             Options:
@@ -151,14 +157,14 @@ Resources:
       ScalableDimension: ecs:service:DesiredCount
       ServiceNamespace: ecs
 
-  ServiceCPUAlarmScaleUp:
+  ServiceMemoryAlarmScaleUp:
     Type: AWS::CloudWatch::Alarm
     Properties:
       EvaluationPeriods: 3
       Statistic: Average
-      AlarmName: !Sub PasseUnDessinBackendServicescalingCPUscaleUpAlarm-${Env}
+      AlarmName: !Sub PasseUnDessinBackendServicescalingMemoryscaleUpAlarm-${Env}
       Threshold: 50
-      AlarmDescription: Alarm if CPU is too high
+      AlarmDescription: Alarm if Memory is too high
       Period: 60
       AlarmActions:
         - !Ref scalingPolicyUp
@@ -167,16 +173,16 @@ Resources:
         - Name: ClusterName
           Value: !Ref ECSCluster
       ComparisonOperator: GreaterThanThreshold
-      MetricName: CPUUtilization
+      MetricName: MemoryUtilization
 
-  ServiceCPUAlarmScaleDown:
+  ServiceMemoryAlarmScaleDown:
     Type: AWS::CloudWatch::Alarm
     Properties:
       EvaluationPeriods: 4
       Statistic: Average
-      AlarmName: !Sub PasseUnDessinBackendServicescalingCPUscaleDownAlarm-${Env}
+      AlarmName: !Sub PasseUnDessinBackendServicescalingMemoryscaleDownAlarm-${Env}
       Threshold: 10
-      AlarmDescription: Alarm if CPU is too low
+      AlarmDescription: Alarm if Memory is too low
       Period: 60
       AlarmActions:
         - !Ref scalingPolicyDown
@@ -185,7 +191,7 @@ Resources:
         - Name: ClusterName
           Value: !Ref ECSCluster
       ComparisonOperator: LessThanThreshold
-      MetricName: CPUUtilization
+      MetricName: MemoryUtilization
 
 Outputs:
   ServiceName:

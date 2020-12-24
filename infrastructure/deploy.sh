@@ -63,9 +63,12 @@ export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-mon
 export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-iam-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
 export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-ecs-repository-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
 export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-ecs-cluster-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
-export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-ecs-service-api-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
+export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-ecs-service-backend-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
+export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-ecs-service-drawing-renderer-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
+export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-api-ecs-service-pushpin-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
 export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-postgres-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
 export $(aws cloudformation describe-stacks --stack-name passe-un-dessin-front-s3-${ENV} --region ${REGION} --output text --query 'Stacks[].Outputs[]' | tr '\t' '=')
+
 AccountId=$(aws sts get-caller-identity --output text --query Account)
 
 cd frontend && REACT_APP_ENV=production yarn build

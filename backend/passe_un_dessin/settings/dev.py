@@ -34,8 +34,6 @@ CORS_ALLOWED_ORIGINS = [
     "https://localhost:3000",
 ]
 
-GRIP_URL = "http://pushpin:5561"
-
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 EVENTSTREAM_ALLOW_ORIGIN = "*"
 
