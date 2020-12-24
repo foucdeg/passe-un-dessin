@@ -38,11 +38,10 @@ def get_streams():
     while True:
         response = get_streams_from_twitch(after, access_token)
         data = response["data"]
-
-        if len(data) == 0:
-            break
-
         streams.extend(data)
-        after = response["pagination"]["cursor"]
+        after = response.get("pagination", {}).get("cursor")
+
+        if len(data) == 0 or after is None:
+            break
 
     return streams
