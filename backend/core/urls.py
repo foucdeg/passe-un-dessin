@@ -2,6 +2,7 @@ from django.urls import include, path
 
 from core.views import auth, game, general, room_management
 from suggestions.views import get_suggestions
+from twitch.views import get_current_streams, get_current_streams_count
 
 urlpatterns = [
     path("auth/social-login", auth.social_login, name="social_login"),
@@ -18,6 +19,12 @@ urlpatterns = [
         include("django_rest_passwordreset.urls", namespace="password_reset"),
     ),
     path("suggestions", get_suggestions, name="get_suggestions"),
+    path("current-streams", get_current_streams, name="get_current_streams"),
+    path(
+        "current-streams/count",
+        get_current_streams_count,
+        name="get_current_streams_count",
+    ),
     path("leaderboard", general.get_leaderboard, name="get_leaderboard"),
     path(
         "featured-pad-steps",
