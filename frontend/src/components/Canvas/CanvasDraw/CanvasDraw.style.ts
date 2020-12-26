@@ -18,14 +18,10 @@ export const PadStepDone = styled.div`
   z-index: 28;
 `;
 
-PadStepDone.displayName = 'PadStepDone';
-
 export const CanvasContainer = styled.div`
   display: flex;
   align-items: center;
 `;
-
-CanvasContainer.displayName = 'CanvasContainer';
 
 export const Canvas = styled.canvas<{
   pointCursor?: string;
@@ -44,28 +40,20 @@ export const Canvas = styled.canvas<{
     `cursor: url(${pointCursor}) ${cursorPosition} ${cursorPosition}, auto`};
 `;
 
-Canvas.displayName = 'Canvas';
-
 export const StyledTimerIcon = styled.img.attrs({ src: timerIcon })`
   width: 80px;
   height: 80px;
   margin: 180px 0 32px 0;
 `;
 
-StyledTimerIcon.displayName = 'StyledTimerIcon';
-
 export const WhiteHeader = styled(Header2)`
   color: ${colorPalette.white};
 `;
-
-WhiteHeader.displayName = 'WhiteHeader';
 
 export const CanvasButtons = styled.div`
   display: flex;
   height: 400px;
 `;
-
-CanvasButtons.displayName = 'CanvasButtons';
 
 export const RightButtons = styled.div`
   display: flex;
@@ -73,8 +61,6 @@ export const RightButtons = styled.div`
   flex-direction: column;
   justify-content: space-between;
 `;
-
-RightButtons.displayName = 'RightButtons';
 
 export const StyledCheckIcon = styled(CheckIcon)`
   cursor: pointer;
@@ -85,10 +71,8 @@ export const StyledCheckIcon = styled(CheckIcon)`
     fill: ${colorPalette.purple};
   }
 `;
-StyledCheckIcon.displayName = 'StyledCheckIcon';
 
 export const CanvasAndSaveContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
-CanvasAndSaveContainer.displayName = 'CanvasAndSaveContainer';

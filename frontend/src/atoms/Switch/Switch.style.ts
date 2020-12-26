@@ -11,7 +11,6 @@ export const Container = styled.button`
   position: relative;
   background-color: inherit;
 `;
-Container.displayName = 'Container';
 
 export const Rod = styled.div<{ selected: boolean }>`
   width: 100%;
@@ -20,7 +19,6 @@ export const Rod = styled.div<{ selected: boolean }>`
     selected ? colorPalette.lightPurple : colorPalette.textGrey};
   border-radius: 15px;
 `;
-Rod.displayName = 'Rod';
 
 export const Circle = styled.div<{ selected: boolean }>`
   border-radius: 50%;
@@ -33,4 +31,3 @@ export const Circle = styled.div<{ selected: boolean }>`
   ${({ selected }) => selected && 'right: 0;'}
   transition: right 0.2s;
 `;
-Circle.displayName = 'Circle';

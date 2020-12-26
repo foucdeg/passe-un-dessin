@@ -12,20 +12,14 @@ export const GameScoreboardContainer = styled.div`
   overflow-y: auto;
 `;
 
-GameScoreboardContainer.displayName = 'GameScoreboardContainer';
-
 export const InnerScoreboardContainer = styled.div`
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
 `;
 
-InnerScoreboardContainer.displayName = 'InnerScoreboardContainer';
-
 export const StyledHeader = styled(Header2)`
   color: ${colorPalette.purple};
   margin-bottom: 32px;
   text-align: center;
 `;
-
-StyledHeader.displayName = 'StyledHeader';

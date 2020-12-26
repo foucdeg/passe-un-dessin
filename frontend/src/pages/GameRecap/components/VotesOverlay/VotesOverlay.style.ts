@@ -11,5 +11,3 @@ export const LikesSection = styled.div`
   align-items: flex-end;
   cursor: help;
 `;
-
-LikesSection.displayName = 'LikesSection';

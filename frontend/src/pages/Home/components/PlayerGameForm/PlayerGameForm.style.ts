@@ -8,5 +8,3 @@ export const StyledForm = styled.form`
     margin-right: 20px;
   }
 `;
-
-StyledForm.displayName = 'StyledForm';

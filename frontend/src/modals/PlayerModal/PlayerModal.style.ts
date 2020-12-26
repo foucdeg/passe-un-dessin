@@ -9,25 +9,18 @@ export const StyledModal = styled(Modal)`
   margin-top: 80px;
 `;
 
-StyledModal.displayName = 'StyledModal';
-
 export const StyledHeader = styled(Header2)`
   color: ${colorPalette.purple};
 `;
-
-StyledHeader.displayName = 'StyledHeader';
 
 export const HeaderSection = styled.div`
   text-align: center;
   margin-bottom: 24px;
 `;
 
-HeaderSection.displayName = 'HeaderSection';
-
 export const StyledSeparator = styled(HorizontalSeparator)`
   margin-bottom: 16px;
 `;
-StyledSeparator.displayName = 'StyledSeparator';
 
 export const ScoreCardRow = styled.div`
   display: flex;
@@ -35,15 +28,11 @@ export const ScoreCardRow = styled.div`
   margin-bottom: 24px;
 `;
 
-ScoreCardRow.displayName = 'ScoreCardRow';
-
 export const ButtonRow = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 `;
-
-ButtonRow.displayName = 'ButtonRow';
 
 export const UndoAction = styled(UndoIcon)`
   width: 24px;
@@ -56,4 +45,3 @@ export const UndoAction = styled(UndoIcon)`
     fill: ${colorPalette.purple};
   }
 `;
-UndoAction.displayName = 'UndoAction';

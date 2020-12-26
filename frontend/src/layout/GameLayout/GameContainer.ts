@@ -11,6 +11,5 @@ const GameContainer = styled.div`
   flex-direction: column;
   justify-content: space-around;
 `;
-GameContainer.displayName = 'GameContainer';
 
 export default GameContainer;

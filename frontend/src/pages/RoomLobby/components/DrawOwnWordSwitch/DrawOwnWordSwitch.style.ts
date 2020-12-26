@@ -9,16 +9,12 @@ export const Container = styled.div`
   justify-content: space-between;
 `;
 
-Container.displayName = 'Container';
-
 export const Label = styled.strong`
   text-align: justify;
   line-height: 18px;
   white-space: nowrap;
   margin-right: 16px;
 `;
-
-Label.displayName = 'Label';
 
 export const Value = styled.span<{ selected?: boolean }>`
   ${(props) =>
@@ -27,10 +23,7 @@ export const Value = styled.span<{ selected?: boolean }>`
       font-weight: bold;
     `}
 `;
-Value.displayName = 'Value';
 
 export const StyledSwitch = styled(Switch)`
   margin: 0 16px;
 `;
-
-StyledSwitch.displayName = 'StyledSwitch';

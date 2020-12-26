@@ -14,8 +14,6 @@ export const StyledStaticInput = styled.div<{ hasAdornment: boolean }>`
     `}
 `;
 
-StyledStaticInput.displayName = 'StyledStaticInput';
-
 export const AdornmentLocation = styled.div`
   margin-right: 16px;
 `;

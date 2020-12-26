@@ -6,7 +6,6 @@ export const StyledDrawing = styled(Drawing)`
   width: 250px;
   height: 250px;
 `;
-StyledDrawing.displayName = 'StyledDrawing';
 
 export const Frame = styled.div`
   position: relative;
@@ -52,4 +51,3 @@ export const Caption = styled.p`
   font-size: ${fontSize.small};
   margin-top: 8px;
 `;
-Caption.displayName = 'Caption';

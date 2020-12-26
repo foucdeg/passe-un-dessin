@@ -8,6 +8,4 @@ const Header2 = styled.h2`
   line-height: 28px;
 `;
 
-Header2.displayName = 'Header2';
-
 export default Header2;

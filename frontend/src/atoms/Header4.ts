@@ -9,6 +9,4 @@ const Header4 = styled.h4`
   font-variant: small-caps;
 `;
 
-Header4.displayName = 'Header4';
-
 export default Header4;

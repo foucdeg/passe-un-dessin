@@ -7,9 +7,7 @@ export const InlineSwitch = styled.div`
   align-items: center;
   margin-bottom: 8px;
 `;
-InlineSwitch.displayName = 'InlineSwitch';
 
 export const StyledSwitch = styled(Switch)`
   margin: 0 16px;
 `;
-StyledSwitch.displayName = 'StyledSwitch';

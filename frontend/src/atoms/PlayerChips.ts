@@ -5,6 +5,4 @@ const PlayerChips = styled.div`
   flex-wrap: wrap;
 `;
 
-PlayerChips.displayName = 'PlayerChips';
-
 export default PlayerChips;

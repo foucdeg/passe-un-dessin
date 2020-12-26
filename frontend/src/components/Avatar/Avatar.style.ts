@@ -10,7 +10,6 @@ export const StyledEditIcon = styled(EditIcon)`
   right: 0;
   display: none;
 `;
-StyledEditIcon.displayName = 'StyledEditIcon';
 
 export const Container = styled.div`
   height: ${SQUARE_SIDE}px;
@@ -22,10 +21,8 @@ export const Container = styled.div`
     display: block;
   }
 `;
-Container.displayName = 'Container';
 
 export const StyledDrawing = styled(Drawing)`
   height: 100%;
   width: 100%;
 `;
-StyledDrawing.displayName = 'StyledDrawing';

@@ -6,6 +6,5 @@ const BareLink = styled(Link)`
   color: inherit;
   display: block;
 `;
-BareLink.displayName = 'BareLink';
 
 export default BareLink;

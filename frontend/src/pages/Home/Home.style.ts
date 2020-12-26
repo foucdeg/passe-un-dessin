@@ -14,7 +14,6 @@ export const LeftSide = styled.div`
   align-items: center;
   padding: 48px;
 `;
-LeftSide.displayName = 'LeftSide';
 
 export const LeftSideTitle = styled.h1`
   font-family: ${fontFamily.titles};
@@ -24,20 +23,14 @@ export const LeftSideTitle = styled.h1`
   margin-bottom: 16px;
 `;
 
-LeftSideTitle.displayName = 'LeftSideTitle';
-
 export const Subtitle = styled(Header4)`
   color: ${colorPalette.orange};
   margin-bottom: 42px;
 `;
 
-Subtitle.displayName = 'Subtitle';
-
 export const Attribution = styled.p`
   margin-top: 16px;
 `;
-
-Attribution.displayName = 'Attribution';
 
 export const LegalLinks = styled.p`
   text-align: center;
@@ -53,8 +46,6 @@ export const LegalLinks = styled.p`
   }
 `;
 
-LegalLinks.displayName = 'LegalLinks';
-
 export const RightSide = styled.div`
   display: flex;
   height: 100%;
@@ -66,7 +57,6 @@ export const RightSide = styled.div`
   position: relative;
   padding: 48px;
 `;
-RightSide.displayName = 'RightSide';
 
 export const RightSideTitle = styled.h1`
   font-family: ${fontFamily.titles};
@@ -77,22 +67,17 @@ export const RightSideTitle = styled.h1`
   margin: auto;
 `;
 
-RightSideTitle.displayName = 'RightSideTitle';
-
 export const Credits = styled.p`
   color: ${colorPalette.white};
   font-variant: small-caps;
   text-transform: uppercase;
 `;
-Credits.displayName = 'Credits';
 
 export const DiscordLogo = styled.img`
   height: 20px;
   width: auto;
   margin-right: 5px;
 `;
-
-DiscordLogo.displayName = 'DiscordLogo';
 
 export const Actions = styled.div`
   display: flex;
@@ -104,8 +89,6 @@ export const Actions = styled.div`
   }
 `;
 
-Actions.displayName = 'Actions';
-
 export const Row = styled.div`
   display: flex;
   flex-direction: row;
@@ -116,13 +99,9 @@ export const Row = styled.div`
   }
 `;
 
-Row.displayName = 'Row';
-
 export const StyledSecondaryButton = styled(SecondaryButton)`
   width: 200px;
   display: flex;
   flex-direction: row;
   justify-content: center;
 `;
-
-StyledSecondaryButton.displayName = 'StyledSecondaryButton';

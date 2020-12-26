@@ -9,9 +9,7 @@ export const RecapRemainingPlayersContainer = styled.div`
   margin-bottom: 8px;
   margin-left: 28px;
 `;
-RecapRemainingPlayersContainer.displayName = 'RecapRemainingPlayersContainer';
 
 export const StyledHeader = styled.em`
   line-height: 24px;
 `;
-StyledHeader.displayName = 'StyledHeader';

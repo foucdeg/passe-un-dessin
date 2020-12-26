@@ -6,11 +6,7 @@ export const StyledForm = styled.form`
   flex-direction: column;
 `;
 
-StyledForm.displayName = 'StyledForm';
-
 export const StyledButton = styled(Button)`
   align-self: center;
   margin-top: 16px;
 `;
-
-StyledButton.displayName = 'StyledButton';

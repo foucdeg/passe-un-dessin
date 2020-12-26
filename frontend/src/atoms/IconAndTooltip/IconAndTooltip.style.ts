@@ -5,13 +5,9 @@ export const IconContainer = styled.span`
   position: relative;
 `;
 
-IconContainer.displayName = 'IconContainer';
-
 export const StyledIcon = styled.img`
   cursor: pointer;
 `;
-
-StyledIcon.displayName = 'StyledIcon';
 
 export const StyledTooltip = styled.span<{ isRight: boolean | undefined }>`
   visibility: hidden;
@@ -30,5 +26,3 @@ export const StyledTooltip = styled.span<{ isRight: boolean | undefined }>`
     visibility: visible;
   }
 `;
-
-StyledTooltip.displayName = 'StyledTooltip';

@@ -9,7 +9,6 @@ export const CanvasActionsContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
 `;
-CanvasActionsContainer.displayName = 'CanvasActionsContainer';
 
 const actionDefaultStyle = `
   width: 24px;
@@ -24,9 +23,7 @@ export const UndoAction = styled.img.attrs({ src: undoIcon })`
 export const RedoAction = styled.img.attrs({ src: redoIcon })`
   ${actionDefaultStyle}
 `;
-RedoAction.displayName = 'RedoAction';
 
 export const ClearAction = styled.img.attrs({ src: deleteIcon })`
   ${actionDefaultStyle}
 `;
-ClearAction.displayName = 'ClearAction';

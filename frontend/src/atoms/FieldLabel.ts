@@ -5,6 +5,4 @@ const FieldLabel = styled.label`
   letter-spacing: 0.05em;
 `;
 
-FieldLabel.displayName = 'FieldLabel';
-
 export default FieldLabel;

@@ -9,8 +9,6 @@ export const FacebookLogo = styled.img.attrs({ src: facebookLogo })`
   margin-left: 9px;
 `;
 
-FacebookLogo.displayName = 'FacebookLogo';
-
 export const StyledFacebookButton = styled.button`
   outline: none;
   border: none;
@@ -31,11 +29,7 @@ export const StyledFacebookButton = styled.button`
   }
 `;
 
-StyledFacebookButton.displayName = 'StyledFacebookButton';
-
 export const TextContent = styled.span`
   flex-grow: 1;
   font-size: ${fontSize.header4};
 `;
-
-TextContent.displayName = 'TextContent';

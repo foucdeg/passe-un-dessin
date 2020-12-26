@@ -23,8 +23,6 @@ export const PadTabContainer = styled.div<{ isActive: boolean }>`
     `}
 `;
 
-PadTabContainer.displayName = 'PadTabContainer';
-
 export const ViewersContainer = styled.div`
   position: absolute;
   bottom: 40px;
@@ -47,5 +45,3 @@ export const ViewerEye = styled(EyeIcon)<{ color: string }>`
     fill: ${(props) => props.color};
   }
 `;
-
-ViewerEye.displayName = 'ViewerEye';

@@ -37,10 +37,8 @@ export const BaseStyledButton = styled.button`
       box-shadow: none;
     `}
 `;
-BaseStyledButton.displayName = 'BaseStyledButton';
 
 export const BaseStyledLink = styled(Link)`
   ${commonStyles}
   text-decoration: none;
 `;
-BaseStyledLink.displayName = 'BaseStyledLink';
