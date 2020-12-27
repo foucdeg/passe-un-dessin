@@ -15,8 +15,6 @@ ALLOWED_HOSTS = [
 if "ALLOWED_HOST" in os.environ:
     ALLOWED_HOSTS.append(os.environ.get("ALLOWED_HOST"))
 
-INSTALLED_APPS = INSTALLED_APPS + ["storages"]
-
 # Secure connection
 SECURE_REDIRECT_EXEMPT = [r"/?health"]
 
