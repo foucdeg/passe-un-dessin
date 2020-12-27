@@ -8,12 +8,8 @@ export const PadRecapRow = styled.div`
   flex-wrap: wrap;
 `;
 
-PadRecapRow.displayName = 'PadRecapRow';
-
 export const ArrowSpacer = styled.img.attrs({ src: fatArrow })`
   height: 240px;
   margin-top: 20px;
   width: 28px;
 `;
-
-ArrowSpacer.displayName = 'ArrowSpacer';

@@ -15,6 +15,5 @@ const InnerGameContainer = styled.div<{ hasTabs?: boolean }>`
       border-radius: 0 16px 16px 16px;
     `}
 `;
-InnerGameContainer.displayName = 'InnerGameContainer';
 
 export default InnerGameContainer;

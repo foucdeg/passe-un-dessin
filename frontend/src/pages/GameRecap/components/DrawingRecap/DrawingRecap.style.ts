@@ -14,13 +14,9 @@ export const StyledDrawingRecap = styled.div`
   position: relative;
 `;
 
-StyledDrawingRecap.displayName = 'StyledDrawingRecap';
-
 export const StyledDrawing = styled(Drawing)`
   width: 100%;
 `;
-
-StyledDrawing.displayName = 'StyledDrawing';
 
 export const DrawingHeader = styled.div`
   text-transform: uppercase;
@@ -29,5 +25,3 @@ export const DrawingHeader = styled.div`
   max-width: 100%;
   overflow: hidden;
 `;
-
-DrawingHeader.displayName = 'DrawingHeader';

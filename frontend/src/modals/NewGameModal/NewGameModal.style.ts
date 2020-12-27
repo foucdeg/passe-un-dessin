@@ -8,10 +8,6 @@ export const ButtonRow = styled.div`
   margin-top: 16px;
 `;
 
-ButtonRow.displayName = 'ButtonRow';
-
 export const StyledHeader = styled(Header2)`
   margin-bottom: 16px;
 `;
-
-StyledHeader.displayName = 'StyledHeader';

@@ -5,6 +5,5 @@ const BareAnchor = styled.a`
   color: inherit;
   display: block;
 `;
-BareAnchor.displayName = 'BareAnchor';
 
 export default BareAnchor;

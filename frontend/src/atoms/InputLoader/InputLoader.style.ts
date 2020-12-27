@@ -7,7 +7,6 @@ export const OuterLoader = styled.div`
   overflow: hidden;
   background: none;
 `;
-OuterLoader.displayName = 'OuterLoader';
 
 export const InnerLoader = styled.div`
   @keyframes ldio-j6l2lofzo7 {

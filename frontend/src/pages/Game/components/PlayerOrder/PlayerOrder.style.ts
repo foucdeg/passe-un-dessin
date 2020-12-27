@@ -23,7 +23,6 @@ export const PlayerOrderContainer = styled.div`
   top: -45px;
   left: 0;
 `;
-PlayerOrderContainer.displayName = 'PlayerOrderContainer';
 
 export const StyledPlayerChip = styled(PlayerChip)<{ variant: Variant }>`
   color: ${colorPalette.black};
@@ -33,10 +32,6 @@ export const StyledPlayerChip = styled(PlayerChip)<{ variant: Variant }>`
   margin-right: 4px;
 `;
 
-StyledPlayerChip.displayName = 'StyledPlayerChip';
-
 export const ArrowSpacer = styled.img.attrs({ src: fatArrow })`
   margin-right: 4px;
 `;
-
-ArrowSpacer.displayName = 'ArrowSpacer';

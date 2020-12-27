@@ -8,14 +8,10 @@ export const Container = styled.div`
   margin-bottom: 16px;
 `;
 
-Container.displayName = 'Container';
-
 export const GoogleLogo = styled.img.attrs({ src: googleLogo })`
   height: 24px;
   margin-left: 9px;
 `;
-
-GoogleLogo.displayName = 'GoogleLogo';
 
 export const StyledGoogleButton = styled.button`
   outline: none;
@@ -32,11 +28,7 @@ export const StyledGoogleButton = styled.button`
   align-items: center;
 `;
 
-StyledGoogleButton.displayName = 'StyledGoogleButton';
-
 export const TextContent = styled.span`
   flex-grow: 1;
   font-size: ${fontSize.header4};
 `;
-
-TextContent.displayName = 'TextContent';

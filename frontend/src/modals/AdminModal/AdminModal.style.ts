@@ -11,26 +11,18 @@ export const ButtonRow = styled.div`
   margin-top: 16px;
 `;
 
-ButtonRow.displayName = 'ButtonRow';
-
 export const StyledHeader = styled(Header2)`
   color: ${colorPalette.purple};
 `;
-
-StyledHeader.displayName = 'StyledHeader';
 
 export const Subtitle = styled.p`
   color: ${colorPalette.textGrey};
   margin-bottom: 16px;
 `;
 
-Subtitle.displayName = 'Subtitle';
-
 export const StyledPlayerChips = styled(PlayerChips)`
   margin: 16px 0;
 `;
-
-StyledPlayerChips.displayName = 'StyledPlayerChips';
 
 export const StyledCrossIcon = styled.img.attrs({ src: crossIcon })`
   margin-left: 8px;
@@ -39,12 +31,9 @@ export const StyledCrossIcon = styled.img.attrs({ src: crossIcon })`
   top: -1px;
 `;
 
-StyledCrossIcon.displayName = 'StyledCrossIcon';
-
 export const Separator = styled.hr`
   border: 1px solid ${colorPalette.purple};
   width: 100%;
   margin-top: 0;
   margin-bottom: 16px;
 `;
-Separator.displayName = 'Separator';

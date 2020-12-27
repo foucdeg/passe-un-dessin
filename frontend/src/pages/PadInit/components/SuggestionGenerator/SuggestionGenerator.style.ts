@@ -9,20 +9,14 @@ export const SuggestionGeneratorContainer = styled.div`
   margin-top: 24px;
 `;
 
-SuggestionGeneratorContainer.displayName = 'SuggestionGeneratorContainer';
-
 export const Suggestions = styled.div`
   display: flex;
 `;
-
-Suggestions.displayName = 'Suggestions';
 
 export const SuggestionChip = styled(PlayerChip)`
   cursor: pointer;
   margin-bottom: 0;
 `;
-
-SuggestionChip.displayName = 'SuggestionChip';
 
 export const Dice = styled.img.attrs({ src: diceImage })`
   width: 200px;
@@ -49,10 +43,6 @@ export const Dice = styled.img.attrs({ src: diceImage })`
   }
 `;
 
-SuggestionChip.displayName = 'SuggestionChip';
-
 export const Subheader = styled.strong`
   line-height: 36px;
 `;
-
-Subheader.displayName = 'Subheader';

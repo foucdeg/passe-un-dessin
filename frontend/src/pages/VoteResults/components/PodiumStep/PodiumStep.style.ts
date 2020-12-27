@@ -10,13 +10,11 @@ export const Container = styled.div<{ width: number }>`
   width: ${(props) => props.width}px;
   justify-content: flex-end;
 `;
-Container.displayName = 'Container';
 
 export const StyledDrawing = styled(Drawing)`
   border: 0;
   max-width: 100%;
 `;
-StyledDrawing.displayName = 'StyledDrawing';
 
 export const Sentence = styled.div<{ highlighted?: boolean }>`
   letter-spacing: 0.1em;
@@ -30,7 +28,6 @@ export const Sentence = styled.div<{ highlighted?: boolean }>`
       color: ${colorPalette.orange};
     `};
 `;
-Sentence.displayName = 'Sentence';
 
 export const PlayerName = styled.div`
   position: absolute;
@@ -45,7 +42,6 @@ export const PlayerName = styled.div`
   max-width: 100%;
   padding: 0 16px;
 `;
-PlayerName.displayName = 'PlayerName';
 
 export const VoteCount = styled.div`
   color: ${colorPalette.white};
@@ -55,8 +51,6 @@ export const VoteCount = styled.div`
   bottom: -66px;
 `;
 
-VoteCount.displayName = 'VoteCount';
-
 export const WinnerSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -65,12 +59,9 @@ export const WinnerSection = styled.div`
   align-items: center;
 `;
 
-WinnerSection.displayName = 'WinnerSection';
-
 export const PodiumStepImage = styled.img.attrs({ alt: 'podium' })<{ width: number }>`
   width: ${(props) => props.width}px;
 `;
-PodiumStepImage.displayName = 'PodiumStepImage';
 
 export const ArrowSpacer = styled(FatArrowDown)<{ highlighted?: boolean }>`
   .main {
@@ -82,5 +73,3 @@ export const ArrowSpacer = styled(FatArrowDown)<{ highlighted?: boolean }>`
       `};
   }
 `;
-
-ArrowSpacer.displayName = 'ArrowSpacer';

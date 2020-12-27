@@ -4,4 +4,3 @@ export const Container = styled.div`
   display: flex;
   align-self: flex-end;
 `;
-Container.displayName = 'Container';

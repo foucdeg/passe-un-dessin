@@ -11,4 +11,3 @@ export const RootContainer = styled.div`
   font-family: ${fontFamily.main};
   color: ${colorPalette.black};
 `;
-RootContainer.displayName = 'RootContainer';

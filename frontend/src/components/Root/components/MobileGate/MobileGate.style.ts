@@ -19,8 +19,6 @@ export const MobileGateBackground = styled.div`
   color: ${colorPalette.black};
 `;
 
-MobileGateBackground.displayName = 'MobileGateBackground';
-
 export const StyledHeader = styled.h1`
   font-family: ${fontFamily.titles};
   font-size: ${fontSize.XXLarge};
@@ -29,11 +27,7 @@ export const StyledHeader = styled.h1`
   margin-bottom: 32px;
 `;
 
-StyledHeader.displayName = 'StyledHeader';
-
 export const LaptopTablet = styled.img.attrs({ src: laptopAndTablet })``;
-
-LaptopTablet.displayName = 'LaptopTablet';
 
 export const StyledForm = styled.form`
   width: 100%;
@@ -41,10 +35,6 @@ export const StyledForm = styled.form`
   flex-direction: column;
 `;
 
-StyledForm.displayName = 'StyledForm';
-
 export const InputArrow = styled.img.attrs({ src: arrowRight })`
   cursor: pointer;
 `;
-
-InputArrow.displayName = 'InputArrow';

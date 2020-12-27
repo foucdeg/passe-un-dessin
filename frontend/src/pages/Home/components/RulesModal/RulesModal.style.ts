@@ -9,8 +9,6 @@ export const Header = styled(Header3)`
   align-self: flex-start;
 `;
 
-Header.displayName = 'Header';
-
 export const RuleSection = styled.section`
   display: flex;
   flex-direction: column;
@@ -18,15 +16,12 @@ export const RuleSection = styled.section`
   margin-bottom: 16px;
 `;
 
-RuleSection.displayName = 'RuleSection';
-
 export const Rule = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
   margin-bottom: 16px;
 `;
-Rule.displayName = 'Rule';
 
 export const RuleNumberBackground = styled.div<{ background: string }>`
   background: url(${(props) => props.background});
@@ -41,8 +36,6 @@ export const RuleNumberBackground = styled.div<{ background: string }>`
   position: relative;
 `;
 
-RuleNumberBackground.displayName = 'RuleNumberBackground';
-
 export const RuleNumber = styled(Header2)`
   position: absolute;
   color: ${colorPalette.white};
@@ -50,16 +43,11 @@ export const RuleNumber = styled(Header2)`
   bottom: 7px;
 `;
 
-RuleNumber.displayName = 'RuleNumber';
-
 export const RuleParagraph = styled.p`
   flex-grow: 1;
 `;
-
-RuleParagraph.displayName = 'RuleParagraph';
 
 export const ButtonRow = styled.div`
   display: flex;
   justify-content: space-around;
 `;
-ButtonRow.displayName = 'ButtonRow';

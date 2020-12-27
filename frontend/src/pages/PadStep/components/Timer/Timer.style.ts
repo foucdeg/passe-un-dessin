@@ -10,8 +10,6 @@ export const OuterTimerBar = styled.div`
   justify-self: flex-end;
 `;
 
-OuterTimerBar.displayName = 'OuterTimerBar';
-
 export const InnerTimerBar = styled.div<{ duration: number }>`
   height: 8px;
   border-radius: 4px;
@@ -24,5 +22,3 @@ export const InnerTimerBar = styled.div<{ duration: number }>`
     width: 0%;
   }
 `;
-
-OuterTimerBar.displayName = 'OuterTimerBar';

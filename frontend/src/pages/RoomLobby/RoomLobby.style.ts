@@ -11,13 +11,9 @@ export const Info = styled.span`
   color: ${colorPalette.textGrey};
 `;
 
-Info.displayName = 'Info';
-
 export const StyledField = styled(TextInput)`
   margin-bottom: 16px;
 `;
-
-StyledField.displayName = 'StyledField';
 
 export const ButtonRow = styled.div`
   display: flex;
@@ -25,14 +21,10 @@ export const ButtonRow = styled.div`
   align-items: center;
 `;
 
-ButtonRow.displayName = 'ButtonRow';
-
 export const HelpText = styled.span`
   font-style: italic;
   margin-right: 16px;
 `;
-
-HelpText.displayName = 'HelpText';
 
 export const StyledHeader = styled(Header2)`
   color: ${colorPalette.purple};
@@ -44,16 +36,12 @@ export const CopyLinkAdornment = styled.img.attrs({ src: linkIcon })`
   cursor: pointer;
 `;
 
-CopyLinkAdornment.displayName = 'CopyLinkAdornment';
-
 export const CloseButton = styled.img.attrs({ src: crossIcon })`
   cursor: pointer;
   position: absolute;
   right: 24px;
   top: 24px;
 `;
-
-CloseButton.displayName = 'CloseButton';
 
 export const StyledRoomName = styled(Header4)`
   color: ${colorPalette.textGrey};
@@ -65,16 +53,13 @@ export const PlayerName = styled.div`
   font-size: ${fontSize.medium};
   text-align: center;
 `;
-PlayerName.displayName = 'PlayerName';
 
 export const PlayerList = styled.div`
   margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
 `;
-PlayerList.displayName = 'PlayerList';
 
 export const AvatarWithName = styled.div`
   margin: 0 16px 5px 0;
 `;
-AvatarWithName.displayName = 'AvatarWithName';

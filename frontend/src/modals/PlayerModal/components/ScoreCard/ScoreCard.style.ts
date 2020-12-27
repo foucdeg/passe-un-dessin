@@ -13,22 +13,18 @@ export const Container = styled.div<{ color?: string }>`
   flex-direction: column;
   text-align: center;
 `;
-Container.displayName = 'Container';
 
 export const Label = styled.span<{ color?: string }>`
   font-size: ${fontSize.medium};
   font-weight: bold;
 `;
-Label.displayName = 'Label';
 
 export const Value = styled.span<{ color?: string }>`
   font-size: ${fontSize.XXLarge};
   font-weight: bold;
   margin: auto 0;
 `;
-Value.displayName = 'Value';
 
 export const StyledLink = styled(Link)<{ color?: string }>`
   color: ${(props) => props.color || colorPalette.orange};
 `;
-StyledLink.displayName = 'StyledLink';

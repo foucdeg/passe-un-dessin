@@ -24,12 +24,8 @@ export const ChipButton = styled.button`
   }
 `;
 
-ChipButton.displayName = 'ChipButton';
-
 export default ChipButton;
 
 export const NextStepIcon = styled.img.attrs({ src: fastForwardIcon })`
   margin-left: 8px;
 `;
-
-NextStepIcon.displayName = 'NextStepIcon';

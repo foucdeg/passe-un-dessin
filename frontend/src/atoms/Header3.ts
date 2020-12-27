@@ -8,6 +8,4 @@ const Header3 = styled.h3`
   text-transform: uppercase;
 `;
 
-Header3.displayName = 'Header3';
-
 export default Header3;

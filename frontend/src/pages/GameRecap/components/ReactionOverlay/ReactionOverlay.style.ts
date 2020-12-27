@@ -10,15 +10,11 @@ export const ThumbUpButton = styled(ThumbUpIcon)<{ primary?: boolean }>`
   }
 `;
 
-ThumbUpButton.displayName = 'ThumbUpIcon';
-
 export const ThumbDownButton = styled(ThumbDownIcon)<{ primary?: boolean }>`
   .main {
     fill: ${({ primary }) => (primary ? colorPalette.orange : colorPalette.purple)};
   }
 `;
-
-ThumbDownButton.displayName = 'ThumbDownIcon';
 
 export const ReactionOverlayContainer = styled.div`
   width: 100%;
@@ -36,8 +32,6 @@ export const ReactionOverlayContainer = styled.div`
   }
 `;
 
-ReactionOverlayContainer.displayName = 'ReactionOverlayContainer';
-
 export const ReactionOverlayTouchContainer = styled.div`
   width: calc(100% + 24px);
   height: 24px;
@@ -47,8 +41,6 @@ export const ReactionOverlayTouchContainer = styled.div`
   justify-content: space-between;
   display: flex;
 `;
-
-ReactionOverlayTouchContainer.displayName = 'ReactionOverlayTouchContainer';
 
 export const LikeClickArea = styled.div`
   flex: 1;
@@ -65,8 +57,6 @@ export const LikeClickArea = styled.div`
   }
 `;
 
-LikeClickArea.displayName = 'LikeClickArea';
-
 export const TouchLikeClickArea = styled(LikeClickArea)`
   flex: 0;
 
@@ -74,7 +64,6 @@ export const TouchLikeClickArea = styled(LikeClickArea)`
     transform: scale(1.2, 1.2);
   }
 `;
-TouchLikeClickArea.displayName = 'TouchLikeClickArea';
 
 export const LikesSection = styled.div`
   display: flex;
@@ -85,11 +74,7 @@ export const LikesSection = styled.div`
   right: 8px;
 `;
 
-LikesSection.displayName = 'LikesSection';
-
 export const TouchLikesSection = styled(LikesSection)`
   width: calc(100% - 16px);
   justify-content: center;
 `;
-
-TouchLikesSection.displayName = 'TouchLikesSection';

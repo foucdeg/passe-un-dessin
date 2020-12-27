@@ -16,7 +16,6 @@ export const LeftSide = styled.div`
   padding: 48px;
   overflow-y: auto;
 `;
-LeftSide.displayName = 'LeftSide';
 
 export const LeftSideTitle = styled.h1`
   font-family: ${fontFamily.titles};
@@ -26,22 +25,16 @@ export const LeftSideTitle = styled.h1`
   margin-bottom: 16px;
 `;
 
-LeftSideTitle.displayName = 'LeftSideTitle';
-
 export const Subtitle = styled(Header4)`
   color: ${colorPalette.orange};
   margin-bottom: 42px;
 `;
-
-Subtitle.displayName = 'Subtitle';
 
 export const Header = styled(Header3)`
   color: ${colorPalette.orange};
   margin: 32px 0;
   align-self: flex-start;
 `;
-
-Header.displayName = 'Header';
 
 export const RightSide = styled.div`
   display: flex;
@@ -54,7 +47,6 @@ export const RightSide = styled.div`
   position: relative;
   padding: 48px;
 `;
-RightSide.displayName = 'RightSide';
 
 export const RightSideTitle = styled.h1`
   font-family: ${fontFamily.titles};
@@ -65,20 +57,16 @@ export const RightSideTitle = styled.h1`
   margin: auto;
 `;
 
-RightSideTitle.displayName = 'RightSideTitle';
-
 export const Credits = styled.p`
   color: ${colorPalette.white};
   font-variant: small-caps;
   text-transform: uppercase;
 `;
-Credits.displayName = 'Credits';
 
 export const LegalParagraph = styled.p`
   align-self: flex-start;
   margin-bottom: 24px;
 `;
-LegalParagraph.displayName = 'LegalParagraph';
 
 export const ArrowLeft = styled(arrowLeft)`
   cursor: pointer;
@@ -89,4 +77,3 @@ export const ArrowLeft = styled(arrowLeft)`
     fill: ${colorPalette.orange};
   }
 `;
-ArrowLeft.displayName = 'ArrowLeft';

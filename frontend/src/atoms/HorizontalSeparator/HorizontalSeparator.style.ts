@@ -7,20 +7,14 @@ export const SeparatorRow = styled.div`
   align-items: center;
 `;
 
-SeparatorRow.displayName = 'SeparatorRow';
-
 export const Line = styled.div`
   border-top: 1px solid ${colorPalette.textGrey};
   flex-grow: 1;
   height: 1px;
 `;
 
-Line.displayName = 'Line';
-
 export const SeparatorText = styled(Header4)`
   color: ${colorPalette.textGrey};
   flex-grow: 0;
   margin: 0 16px;
 `;
-
-SeparatorText.displayName = 'SeparatorText';

@@ -6,4 +6,3 @@ export const StyledLink = styled(Link)`
   left: 24px;
   top: 24px;
 `;
-StyledLink.displayName = 'StyledLink';

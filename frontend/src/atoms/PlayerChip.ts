@@ -19,6 +19,4 @@ const PlayerChip = styled.div<{ color?: string }>`
   }
 `;
 
-PlayerChip.displayName = 'PlayerChip';
-
 export default PlayerChip;

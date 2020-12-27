@@ -14,22 +14,16 @@ export const PadInitContainer = styled.div`
   height: 100%;
 `;
 
-PadInitContainer.displayName = 'PadInitContainer';
-
 export const StyledForm = styled.form`
   width: 400px;
   margin-bottom: 8px;
   display: flex;
 `;
 
-StyledForm.displayName = 'StyledForm';
-
 export const StyledTextInput = styled(TextInput)`
   border-color: ${colorPalette.orange};
   flex-grow: 1;
 `;
-
-StyledTextInput.displayName = 'StyledTextInput';
 
 export const StyledStaticInput = styled(StaticInput)`
   border-color: ${colorPalette.orange};
@@ -37,23 +31,15 @@ export const StyledStaticInput = styled(StaticInput)`
   flex-grow: 1;
 `;
 
-StyledStaticInput.displayName = 'StyledStaticInput';
-
 export const StyledHeader = styled(Header2)`
   color: ${colorPalette.purple};
   margin-bottom: 8px;
 `;
 
-StyledHeader.displayName = 'StyledHeader';
-
 export const InputArrow = styled.img.attrs({ src: arrowRight })`
   cursor: pointer;
 `;
 
-InputArrow.displayName = 'InputArrow';
-
 export const StyledButton = styled(Button)`
   align-self: center;
 `;
-
-StyledButton.displayName = 'StyledButton';

@@ -6,5 +6,3 @@ export const AudioControlButton = styled.div`
   margin-bottom: 24px;
   cursor: pointer;
 `;
-
-AudioControlButton.displayName = 'AudioControlButton';

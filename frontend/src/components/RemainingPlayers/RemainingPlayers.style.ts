@@ -5,5 +5,3 @@ export const StyledPlayerChips = styled(PlayerChips)`
   margin-top: 8px;
   justify-content: center;
 `;
-
-StyledPlayerChips.displayName = 'StyledPlayerChips';

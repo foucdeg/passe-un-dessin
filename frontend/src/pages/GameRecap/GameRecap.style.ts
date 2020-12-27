@@ -10,14 +10,10 @@ export const OuterRecapContainer = styled.div`
   width: 100%;
 `;
 
-OuterRecapContainer.displayName = 'OuterRecapContainer';
-
 export const GameRecapContainer = styled.div`
   display: flex;
   max-height: 100%;
 `;
-
-GameRecapContainer.displayName = 'GameRecapContainer';
 
 export const TopRow = styled.div`
   display: flex;
@@ -28,14 +24,10 @@ export const TopRow = styled.div`
   height: 40px;
 `;
 
-TopRow.displayName = 'TopRow';
-
 export const PadTabs = styled.div`
   display: flex;
   flex-wrap: wrap-reverse;
 `;
-
-PadTabs.displayName = 'PadTabs';
 
 export const VoteReminder = styled.div`
   color: ${colorPalette.white};

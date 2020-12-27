@@ -11,8 +11,6 @@ export const StyledSentenceRecap = styled.div`
   position: relative;
 `;
 
-StyledSentenceRecap.displayName = 'StyledSentenceRecap';
-
 export const SentenceHeader = styled.div`
   letter-spacing: 0.1em;
   line-height: 24px;
@@ -23,8 +21,6 @@ export const SentenceHeader = styled.div`
   max-width: 100%;
   overflow: hidden;
 `;
-
-SentenceHeader.displayName = 'SentenceHeader';
 
 export const Sentence = styled.div<{ color: string }>`
   flex-grow: 1;
@@ -37,5 +33,3 @@ export const Sentence = styled.div<{ color: string }>`
   border-radius: 16px;
   text-align: center;
 `;
-
-Sentence.displayName = 'Sentence';
