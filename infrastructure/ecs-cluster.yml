@@ -1,0 +1,19 @@
+Description: PasseUnDessin - ECS Clusters
+
+Parameters:
+  ClusterName:
+    Type: String
+    Default: passe-un-dessin-cluster
+  Env:
+    Type: String
+    Default: staging
+
+Resources:
+  Cluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: !Sub ${ClusterName}-${Env}
+
+Outputs:
+  ECSCluster:
+    Value: !Ref Cluster

@@ -1,0 +1,81 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: PasseUnDessin Api - Creation of all SecurityGroups
+
+Parameters:
+  VpcId:
+    Description: VPC ID
+    Type: AWS::EC2::VPC::Id
+
+  Env:
+    Description: The environment name deployed
+    Type: String
+    Default: staging
+
+Resources:
+  PasseUnDessinApiSg:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub passe-un-dessin-api-sg-${Env}
+      GroupDescription: passe-un-dessin-api-sg
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 0
+          ToPort: 65535
+          SourceSecurityGroupId: !Ref PasseUnDessinApiAlbSg
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: passe-un-dessin-api-sg
+      VpcId: !Ref VpcId
+  PasseUnDessinApiAlbSg:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub passe-un-dessin-api-alb-sg-${Env}
+      GroupDescription: passe-un-dessin-api-alb-sg
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIpv6: ::/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIpv6: ::/0
+      Tags:
+        - Key: Name
+          Value: passe-un-dessin-api-alb-sg
+      VpcId: !Ref VpcId
+  PasseUnDessinDatabaseSg:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub passe-un-dessin-database-sg-${Env}
+      GroupDescription: passe-un-dessin-database-sg
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 5432
+          ToPort: 5432
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: passe-un-dessin-database-sg
+      VpcId: !Ref VpcId
+
+Outputs:
+  PasseUnDessinApiSg:
+    Value: !Ref PasseUnDessinApiSg
+  PasseUnDessinApiAlbSg:
+    Value: !Ref PasseUnDessinApiAlbSg
+  PasseUnDessinDatabaseSg:
+    Value: !Ref PasseUnDessinDatabaseSg

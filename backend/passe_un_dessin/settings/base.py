@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "channels",
     "django_eventstream",
     "anymail",
+    "corsheaders",
     # Our apps
     "suggestions",
     "core",
@@ -46,6 +47,7 @@ MIDDLEWARE = [
     "django.middleware.gzip.GZipMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -76,7 +78,7 @@ WSGI_APPLICATION = "passe_un_dessin.wsgi.application"
 ASGI_APPLICATION = "passe_un_dessin.routing.application"
 
 EVENTSTREAM_STORAGE_CLASS = "django_eventstream.storage.DjangoModelStorage"
-
+GRIP_URL = "http://{}:5561".format(os.environ.get("PUSHPIN_HOST"))
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases

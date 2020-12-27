@@ -1,0 +1,117 @@
+Description: PasseUnDessin Pushpin - ECS Services
+
+Parameters:
+  DesiredCount:
+    Type: Number
+    Default: 1
+
+  MaxCount:
+    Type: Number
+    Default: 1
+
+  ECSCluster:
+    Type: String
+
+  Tag:
+    Type: String
+
+  Env:
+    Type: String
+
+  ECSTaskRole:
+    Type: String
+
+  ECSAutoScaleRole:
+    Type: String
+
+  DockerRepository:
+    Type: String
+
+  CloudwatchLogsGroup:
+    Type: String
+
+  TargetGroup:
+    Type: String
+
+  ServiceDiscoveryNamespace:
+    Type: String
+
+Resources:
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      NetworkMode: bridge
+      Family: !Sub PasseUnDessinPushpin-TaskFamily-${Env}
+      TaskRoleArn: !Sub arn:aws:iam::${AWS::AccountId}:role/${ECSTaskRole}
+      ContainerDefinitions:
+        - Name: !Sub PasseUnDessinPushpinContainer-${Env}
+          Image: !Sub ${DockerRepository}:${Tag}
+          Essential: true
+          MemoryReservation: 300
+          Cpu: 333
+          PortMappings:
+            - ContainerPort: 7999
+              HostPort: 0
+              Protocol: tcp
+            - ContainerPort: 5560
+              HostPort: 0
+              Protocol: tcp
+            - ContainerPort: 5561
+              HostPort: 0
+              Protocol: tcp
+            - ContainerPort: 5562
+              HostPort: 0
+              Protocol: tcp
+            - ContainerPort: 5563
+              HostPort: 0
+              Protocol: tcp
+          Environment:
+            - Name: ENVIRONMENT
+              Value: !Ref Env
+            - Name: AWS_REGION
+              Value: !Ref AWS::Region
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref CloudwatchLogsGroup
+              awslogs-region: !Sub ${AWS::Region}
+              awslogs-stream-prefix: passe-un-dessin-api
+
+  DiscoveryService:
+    Type: AWS::ServiceDiscovery::Service
+    Properties:
+      Description: Discovery Service for Passe un Dessin Pushpin
+      DnsConfig:
+        RoutingPolicy: MULTIVALUE
+        DnsRecords:
+          - TTL: 60
+            Type: SRV
+      HealthCheckCustomConfig:
+        FailureThreshold: 1
+      Name: !Sub PasseUnDessin-PushpinDiscoveryService-${Env}
+      NamespaceId: !Ref ServiceDiscoveryNamespace
+
+  ECSService:
+    Type: AWS::ECS::Service
+    Properties:
+      Cluster: !Ref ECSCluster
+      DesiredCount: !Ref DesiredCount
+      TaskDefinition: !Ref TaskDefinition
+      ServiceName: !Sub PasseUnDessinPushpin-Service-${Env}
+      DeploymentConfiguration:
+        MaximumPercent: 200
+        MinimumHealthyPercent: 50
+      LoadBalancers:
+        - ContainerName: !Sub PasseUnDessinPushpinContainer-${Env}
+          ContainerPort: 7999
+          TargetGroupArn: !Ref TargetGroup
+      ServiceRegistries:
+        - ContainerName: !Sub PasseUnDessinPushpinContainer-${Env}
+          ContainerPort: 5561
+          RegistryArn: !GetAtt DiscoveryService.Arn
+
+Outputs:
+  ServiceName:
+    Value: !GetAtt ECSService.Name
+  FamilyName:
+    Value: !Sub PasseUnDessinPushpin-TaskFamily-${Env}

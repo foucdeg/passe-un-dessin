@@ -23,11 +23,18 @@ CACHES = {
 }
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "[::1]", "192.168.1.72"]
+CORS_ORIGIN_WHITELIST = ["http://localhost:3000"]
+
 DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TOOLBAR_CALLBACK": lambda request: request.META["SERVER_NAME"]
     != "testserver"
 }
 
+CORS_ALLOWED_ORIGINS = [
+    "https://localhost:3000",
+]
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 EVENTSTREAM_ALLOW_ORIGIN = "*"
 
 LOGGING = {
@@ -48,6 +55,10 @@ LOGGING = {
             "level": os.getenv("DJANGO_LOG_LEVEL", "DEBUG"),
         },
         "core.views.room_management": {
+            "handlers": ["console"],
+            "level": os.getenv("DJANGO_LOG_LEVEL", "DEBUG"),
+        },
+        "core.service.room_service": {
             "handlers": ["console"],
             "level": os.getenv("DJANGO_LOG_LEVEL", "DEBUG"),
         },

@@ -1,0 +1,42 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: PasseUnDessin database - PostgreSQL
+Parameters:
+  Env:
+    Description: The environment name deployed
+    Type: String
+    Default: staging
+  DBInstanceClass:
+    Type: String
+    Default: db.t2.micro
+  DBPassword:
+    Type: String
+    NoEcho: True
+  SecurityGroup:
+    Description: Select the Security Group to apply to the Database
+    Type: AWS::EC2::SecurityGroup::Id
+
+Resources:
+  MasterInstance:
+    Properties:
+      AllocatedStorage: 20 # In Gigabytes
+      DBInstanceIdentifier: !Sub postgres-${Env}
+      DBName: passeundessindb
+      DBInstanceClass:
+        Ref: DBInstanceClass
+      StorageType: "gp2"
+      Engine: "postgres"
+      EngineVersion: "11.5"
+      MasterUsername: "passe_un_dessin_user"
+      MasterUserPassword:
+        Ref: DBPassword
+      PubliclyAccessible: true
+      DeletionProtection: true
+      VPCSecurityGroups:
+        - !Ref SecurityGroup
+    Type: AWS::RDS::DBInstance
+
+Outputs:
+  DatabaseHostname:
+    Value: !GetAtt MasterInstance.Endpoint.Address
+  DatabasePort:
+    Value: !GetAtt MasterInstance.Endpoint.Port

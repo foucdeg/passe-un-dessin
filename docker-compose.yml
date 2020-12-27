@@ -2,7 +2,7 @@ version: "3.1"
 
 services:
   db:
-    image: postgres:10
+    image: postgres:11.5-alpine
     ports:
       - "5432:5432"
     environment:
@@ -24,6 +24,7 @@ services:
     environment:
       DATABASE_URL: "postgres://postgres@db:5432/postgres"
       ENVIRONMENT: "local"
+      PUSHPIN_HOST: pushpin
 
   drawing-renderer:
     build: ./drawing-renderer
@@ -38,6 +39,14 @@ services:
     environment:
       DATABASE_URL: "postgres://postgres@db:5432/postgres"
       ENVIRONMENT: "local"
+
+  pushpin:
+    build: ./pushpin
+    ports:
+      - "7999:7999"
+      - "5560-5563:5560-5563"
+    links:
+      - backend
 
 networks:
   default:

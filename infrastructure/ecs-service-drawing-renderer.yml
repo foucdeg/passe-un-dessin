@@ -1,0 +1,107 @@
+Description: PasseUnDessin Drawing Renderer - ECS Service
+
+Parameters:
+  DesiredCount:
+    Type: Number
+    Default: 1
+
+  ECSCluster:
+    Type: String
+
+  Tag:
+    Type: String
+
+  Env:
+    Type: String
+
+  ECSTaskRole:
+    Type: String
+
+  ECSAutoScaleRole:
+    Type: String
+
+  DockerRepository:
+    Type: String
+
+  CloudwatchLogsGroup:
+    Type: String
+
+  TargetGroup:
+    Type: String
+
+  DatabaseUrl:
+    Type: String
+    NoEcho: True
+
+  ServiceDiscoveryNamespace:
+    Type: String
+
+Resources:
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      NetworkMode: bridge
+      Family: !Sub PasseUnDessinDrawingRenderer-TaskFamily-${Env}
+      TaskRoleArn: !Sub arn:aws:iam::${AWS::AccountId}:role/${ECSTaskRole}
+      ContainerDefinitions:
+        - Name: !Sub PasseUnDessinDrawingRendererContainer-${Env}
+          Image: !Sub ${DockerRepository}:${Tag}
+          Essential: true
+          MemoryReservation: 300
+          Cpu: 333
+          PortMappings:
+            - ContainerPort: 80
+              HostPort: 0
+              Protocol: tcp
+          Environment:
+            - Name: ENVIRONMENT
+              Value: !Ref Env
+            - Name: AWS_REGION
+              Value: !Ref AWS::Region
+            - Name: DATABASE_URL
+              Value: !Ref DatabaseUrl
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref CloudwatchLogsGroup
+              awslogs-region: !Sub ${AWS::Region}
+              awslogs-stream-prefix: passe-un-dessin-api
+
+  DiscoveryService:
+    Type: AWS::ServiceDiscovery::Service
+    Properties:
+      Description: Discovery Service for Passe un Dessin Drawing Renderer
+      DnsConfig:
+        RoutingPolicy: MULTIVALUE
+        DnsRecords:
+          - TTL: 60
+            Type: SRV
+      HealthCheckCustomConfig:
+        FailureThreshold: 1
+      Name: !Sub PasseUnDessin-DrawingRendererDiscoveryService-${Env}
+      NamespaceId: !Ref ServiceDiscoveryNamespace
+
+  ECSService:
+    Type: AWS::ECS::Service
+    Properties:
+      Cluster: !Ref ECSCluster
+      DesiredCount: !Ref DesiredCount
+      TaskDefinition: !Ref TaskDefinition
+      ServiceName: !Sub PasseUnDessinDrawingRenderer-Service-${Env}
+      DeploymentConfiguration:
+        MaximumPercent: 200
+        MinimumHealthyPercent: 50
+      LoadBalancers:
+        - ContainerName: !Sub PasseUnDessinDrawingRendererContainer-${Env}
+          ContainerPort: 80
+          TargetGroupArn: !Ref TargetGroup
+      ServiceRegistries:
+        - ContainerName: !Sub PasseUnDessinDrawingRendererContainer-${Env}
+          ContainerPort: 80
+          RegistryArn: !GetAtt DiscoveryService.Arn
+
+Outputs:
+  ServiceName:
+    Value: !GetAtt ECSService.Name
+  FamilyName:
+    Value: !Sub PasseUnDessinDrawingRenderer-TaskFamily-${Env}
