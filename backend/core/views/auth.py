@@ -100,10 +100,10 @@ def social_login(request):
         return HttpResponseForbidden()
 
     try:
-        user = User.objects.get(email=email)
+        user = User.objects.get(email=email.lower())
         created = False
     except User.DoesNotExist:
-        user = User.objects.create_user(email)
+        user = User.objects.create_user(email.lower())
         created = True
 
     # If there is already a player in the session, set it on the user
@@ -127,7 +127,7 @@ def create_account(request):
         return HttpResponseBadRequest("Missing email or password")
 
     try:
-        user = User.objects.create_user(email, password)
+        user = User.objects.create_user(email.lower(), password)
         login(request, user)
         do_user_player_coherence(request, user)
 
@@ -146,7 +146,7 @@ def check_login(request):
     except KeyError:
         return HttpResponseBadRequest("Missing email or password")
 
-    user = authenticate(request, username=email, password=password)
+    user = authenticate(request, username=email.lower(), password=password)
     if user is not None:
         login(request, user)
         do_user_player_coherence(request, user)
