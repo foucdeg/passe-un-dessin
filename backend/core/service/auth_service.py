@@ -4,6 +4,7 @@ from random import randrange
 from time import time
 
 from django.conf import settings
+from django.db.utils import IntegrityError
 from django_eventstream import send_event
 from google.auth.transport import requests
 from google.oauth2 import id_token
@@ -108,11 +109,26 @@ def do_user_player_coherence(request, user: User):
     request.session["player_id"] = user.player.uuid.__str__()
 
 
+def merge_users(from_user: User, into_user: User):
+    if from_user.player is not None:
+        if into_user.player is not None:
+            merge_players(from_player=from_user.player, into_player=into_user.player)
+        else:
+            into_user.player = from_user.player
+            into_user.save()
+
+    from_user.delete()
+
+
 def merge_players(from_player: Player, into_player: Player):
     Room.objects.filter(admin=from_player).update(admin=into_player)
-    PlayerGameParticipation.objects.filter(player=from_player).update(
-        player=into_player
-    )
+    for pgp in PlayerGameParticipation.objects.filter(player=from_player):
+        try:
+            pgp.player = into_player
+            pgp.save()
+        except IntegrityError:
+            # already a PGP with this player
+            pass
     Pad.objects.filter(initial_player=from_player).update(initial_player=into_player)
     PadStep.objects.filter(player=from_player).update(player=into_player)
     Vote.objects.filter(player=from_player).update(player=into_player)
@@ -126,6 +142,12 @@ def merge_players(from_player: Player, into_player: Player):
             PlayerReplacedMessage(from_player, into_player).serialize(),
         )
     from_player.delete()
+
+    # Recompute total score
+    into_player.total_score = Vote.objects.filter(
+        pad_step__player=into_player
+    ).count()
+    into_player.save()
 
 
 def reset_creation_dates(player: Player):
