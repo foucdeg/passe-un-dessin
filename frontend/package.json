@@ -94,7 +94,7 @@
     "@types/webpack-env": "1.16.0",
     "@typescript-eslint/eslint-plugin": "4.11.1",
     "@typescript-eslint/parser": "4.11.1",
-    "@welldone-software/why-did-you-render": "6.0.4",
+    "@welldone-software/why-did-you-render": "6.0.5",
     "babel-plugin-styled-components": "1.12.0",
     "bundlesize": "0.18.0",
     "customize-cra": "1.0.0",
