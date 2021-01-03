@@ -91,7 +91,8 @@
     "bestMoments": "Meilleurs moments",
     "voteCount": "{voteCount} point{ voteCount, plural, one {} other {s}}",
     "scoreboard": "Tableau des scores",
-    "reviewGame": "Revoir la partie"
+    "reviewGame": "Revoir la partie",
+    "donate": "Si la partie vous a plu, vous pouvez <a>faire un don</a> pour nous aider à financer les serveurs."
   },
   "newGameModal": {
     "title": "Relancer une partie",
