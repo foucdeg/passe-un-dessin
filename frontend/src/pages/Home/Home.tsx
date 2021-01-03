@@ -18,7 +18,7 @@ import {
   Subtitle,
   Credits,
   RightSideTitle,
-  Attribution,
+  Donate,
   LegalLinks,
   DiscordLogo,
   Actions,
@@ -86,9 +86,18 @@ const Home: React.FunctionComponent = () => {
             <FormattedMessage id="home.leaderboard" />
           </Link>
         </p>
-        <Attribution>
-          <FormattedMessage id="home.attribution" />.{' '}
-        </Attribution>
+        <Donate>
+          <FormattedMessage
+            id="home.donate"
+            values={{
+              a: (...chunks: string[]) => (
+                <a href="https://utip.io/passeundessin" target="_blank" rel="noreferrer">
+                  {chunks}
+                </a>
+              ),
+            }}
+          />
+        </Donate>
         <LegalLinks>
           <Link to="/terms-and-conditions">
             <FormattedMessage id="home.termsAndConditions" />

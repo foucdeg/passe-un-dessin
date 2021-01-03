@@ -5,7 +5,7 @@
     "welcome": "Welcome",
     "howToPlay": "How to play",
     "startRoom": "Create a game",
-    "attribution": "Freely inspired by the board game Telestrations",
+    "donate": "To help us cover server costs, you can donate <a>here</a>.",
     "rules": {
       "0": "Make sure you have a <strong>stable Internet connection</strong> and <strong>enough battery left</strong> on your device.",
       "1": "You should be at least 4 people to play. One of you is named <strong>Game Master</strong> and creates the game. The Game Master sends the link to the game to the other players.",
@@ -33,8 +33,6 @@
     "timeDuration": "<strong>Time duration:</strong> {options} seconds"
   },
   "menu": {
-    "startMusic": "Resume music",
-    "stopMusic": "Stop music",
     "accountMenu": "Account",
     "playerMenu": "Player",
     "adminMenu": "Admin window",
