@@ -4,7 +4,6 @@ import copy from 'copy-to-clipboard';
 import { useSelector } from 'redux/useSelector';
 import { selectPlayerIsAdmin, selectRoom } from 'redux/Room/selectors';
 import { selectGame, selectViewingAsPublic } from 'redux/Game/selectors';
-import AudioControl from 'components/Root/components/AudioControl';
 import AdminModal from 'modals/AdminModal';
 import { useRefreshGame } from 'redux/Game/hooks';
 import IconAndTooltip from 'atoms/IconAndTooltip';
@@ -60,7 +59,6 @@ const SideButtons: React.FC<EmptyObject> = () => {
 
   return (
     <SideButtonsContainer>
-      <AudioControl />
       {player && player.user ? (
         <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.accountMenu' })}>
           <UserModalButton alt="User" onClick={openPlayerModal} />
