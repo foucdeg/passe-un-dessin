@@ -17,6 +17,8 @@ import {
   LeftSide,
   StyledHeader,
   StyledLaunchIcon,
+  RightSide,
+  Donate,
 } from './VoteResults.style';
 import GameRoomScoreboard from './components/GameRoomScoreboard';
 
@@ -47,7 +49,21 @@ const VoteResults: React.FunctionComponent = () => {
         <Spacer />
         {winners ? winners.length ? <Podium winners={winners} /> : <div>No votes</div> : <Loader />}
       </LeftSide>
-      <GameRoomScoreboard />
+      <RightSide>
+        <GameRoomScoreboard />
+        <Donate>
+          <FormattedMessage
+            id="voteResults.donate"
+            values={{
+              a: (...chunks: string[]) => (
+                <a href="https://utip.io/passeundessin" target="_blank" rel="noreferrer">
+                  {chunks}
+                </a>
+              ),
+            }}
+          />
+        </Donate>
+      </RightSide>
       <TopRightButtons>
         <BareLink to={`/game/${game.uuid}`} target="_blank">
           <TopRightButton>

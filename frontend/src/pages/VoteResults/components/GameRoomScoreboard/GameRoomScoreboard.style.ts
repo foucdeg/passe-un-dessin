@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 import Header2 from 'atoms/Header2';
 import { colorPalette } from 'stylesheet';
-import { PODIUM_WIDTH } from '../Podium/Podium';
 
 export const GameScoreboardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: calc(100% - ${PODIUM_WIDTH}px);
+  width: 100%;
   padding-left: 16px;
   max-height: 100%;
   overflow-y: auto;
+  flex-grow: 1;
 `;
 
 export const InnerScoreboardContainer = styled.div`

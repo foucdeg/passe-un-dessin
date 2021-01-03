@@ -28,8 +28,9 @@ export const Subtitle = styled(Header4)`
   margin-bottom: 42px;
 `;
 
-export const Attribution = styled.p`
+export const Donate = styled.p`
   margin-top: 16px;
+  font-size: ${fontSize.small};
 `;
 
 export const LegalLinks = styled.p`

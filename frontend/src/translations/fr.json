@@ -5,7 +5,7 @@
     "welcome": "Bienvenue",
     "howToPlay": "Comment jouer ?",
     "startRoom": "Lancer une partie",
-    "attribution": "Librement inspiré du jeu de société Esquissé",
+    "donate": "Pour nous aider à financer les serveurs, vous pouvez <a>faire un don</a>.",
     "rules": {
       "0": "Assure-toi d'avoir une <strong>connexion Internet stable</strong> et <strong>suffisament de batterie</strong> sur ton appareil.",
       "1": "Pour jouer, vous devez être à partir de 4 joueurs. L'un ou l'une d'entre vous se proclame <strong>Maître du Jeu</strong> et crée la partie. Le Maître du Jeu envoie le lien de la partie aux autres joueurs.",
@@ -33,8 +33,6 @@
     "timeDuration": "<strong>Durée de dessin :</strong> {options} secondes"
   },
   "menu": {
-    "startMusic": "Lancer le son",
-    "stopMusic": "Couper le son",
     "accountMenu": "Compte",
     "playerMenu": "Joueur",
     "adminMenu": "Actions d'administration",
@@ -93,7 +91,8 @@
     "bestMoments": "Meilleurs moments",
     "voteCount": "{voteCount} point{ voteCount, plural, one {} other {s}}",
     "scoreboard": "Tableau des scores",
-    "reviewGame": "Revoir la partie"
+    "reviewGame": "Revoir la partie",
+    "donate": "Si la partie vous a plu, vous pouvez <a>faire un don</a> pour nous aider à financer les serveurs."
   },
   "newGameModal": {
     "title": "Relancer une partie",
