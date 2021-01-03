@@ -133,6 +133,9 @@ def merge_players(from_player: Player, into_player: Player):
     PadStep.objects.filter(player=from_player).update(player=into_player)
     Vote.objects.filter(player=from_player).update(player=into_player)
 
+    from_avatar = from_player.avatar
+    into_avatar = into_player.avatar
+
     if from_player.room is not None:
         into_player.room = from_player.room
         into_player.save()
@@ -147,6 +150,13 @@ def merge_players(from_player: Player, into_player: Player):
     into_player.total_score = Vote.objects.filter(
         pad_step__player=into_player
     ).count()
+
+    # apply latest avatar
+    if from_avatar and (
+        not into_avatar or into_player.created_at <= from_player.created_at
+    ):
+        into_player.avatar = from_avatar
+
     into_player.save()
 
 
