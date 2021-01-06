@@ -19,7 +19,6 @@ import {
   StyledForm,
   InputArrow,
   StyledButton,
-  StyledStaticInput,
 } from './PadInit.style';
 
 interface RouteParams {
@@ -79,7 +78,7 @@ const PadInit: React.FunctionComponent = () => {
       <StyledForm onSubmit={onSubmit}>
         {isInputDisabled && !loading ? (
           <>
-            <StyledStaticInput>{pad.sentence}</StyledStaticInput>
+            <StyledTextInput readOnly value={pad.sentence || ''} />
             <StyledButton type="button" onClick={onClickUpdate}>
               <FormattedMessage id="padInit.update" />
             </StyledButton>

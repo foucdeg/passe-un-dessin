@@ -129,6 +129,7 @@
     "emailExample": "myemail@aol.com",
     "createAccount": "Create an account",
     "logIn": "Log in",
+    "forgotPassword": "I forgot my password 😢",
     "errors": {
       "required": "This field is required",
       "invalidEmail": "This email address is not valid",
@@ -232,5 +233,16 @@
   },
   "common": {
     "and": "and"
+  },
+  "passwordReset": {
+    "title": "Password reset",
+    "email": "Account email address",
+    "label": "New password",
+    "submit": "Reset password",
+    "submitRequest": "Reset password",
+    "invalidToken": "This link is no longer valid.",
+    "requestNewToken": "Need a new one?",
+    "success": "Your password has been reset successfully. We're taking you back to the homepage, where you'll be able to log in again.",
+    "requestSuccess": "If this account exists, you will receive an email with a password reset link."
   }
 }

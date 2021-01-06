@@ -2,7 +2,7 @@ import React from 'react';
 
 import { InputAndAdornment, AdornmentLocation, StyledStaticInput } from './StaticInput.style';
 
-type Props = React.HTMLAttributes<HTMLDivElement> & {
+type Props = React.InputHTMLAttributes<HTMLInputElement> & {
   adornment?: React.ReactNode;
 };
 

@@ -9,6 +9,11 @@ urlpatterns = [
     path("auth/login", auth.check_login, name="login"),
     path("auth/logout", auth.do_logout, name="logout"),
     path(
+        "auth/password-reset/validate_token/",
+        auth.ResetPasswordTokenDetails.as_view(),
+        name="reset_password_validate_details",
+    ),
+    path(
         "auth/password-reset/",
         include("django_rest_passwordreset.urls", namespace="password_reset"),
     ),
