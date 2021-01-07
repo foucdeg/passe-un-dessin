@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import include, path
 
 from core.views import auth, game, general, room_management
 from suggestions.views import get_suggestions
@@ -8,6 +8,15 @@ urlpatterns = [
     path("auth/create-account", auth.create_account, name="create_account"),
     path("auth/login", auth.check_login, name="login"),
     path("auth/logout", auth.do_logout, name="logout"),
+    path(
+        "auth/password-reset/validate_token/",
+        auth.ResetPasswordTokenDetails.as_view(),
+        name="reset_password_validate_details",
+    ),
+    path(
+        "auth/password-reset/",
+        include("django_rest_passwordreset.urls", namespace="password_reset"),
+    ),
     path("suggestions", get_suggestions, name="get_suggestions"),
     path("leaderboard", general.get_leaderboard, name="get_leaderboard"),
     path("room", room_management.RoomCreationView.as_view(), name="room_creation"),

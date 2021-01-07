@@ -129,6 +129,7 @@
     "emailExample": "monadresse@wanadoo.fr",
     "createAccount": "Créer un compte",
     "logIn": "Se connecter",
+    "forgotPassword": "J'ai oublié mon mot de passe 😢",
     "errors": {
       "required": "Ce champ est nécessaire",
       "invalidEmail": "Cette adresse email n'est pas valide",
@@ -232,5 +233,16 @@
   },
   "common": {
     "and": "et"
+  },
+  "passwordReset": {
+    "title": "Réinitialisation du mot de passe",
+    "email": "Adresse mail du compte",
+    "label": "Nouveau mot de passe",
+    "submit": "Réinitialiser le mot de passe",
+    "submitRequest": "Réinitialiser le mot de passe",
+    "invalidToken": "Ce lien n'est plus valide.",
+    "requestNewToken": "Il t'en faut un autre ?",
+    "success": "Ton mot de passe a été réinitialisé. On te ramène à la page d'accueil, d'où tu pourras te connecter.",
+    "requestSuccess": "Si ce compte existe, tu vas recevoir un mail avec un lien de réinitialisation de ton mot de passe."
   }
 }

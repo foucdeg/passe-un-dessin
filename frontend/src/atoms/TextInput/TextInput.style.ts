@@ -26,6 +26,7 @@ export const InputAndAdornment = styled.div<{ hasError?: boolean }>`
   position: relative;
   display: flex;
   align-items: center;
+  background-color: ${colorPalette.white};
   ${(props) =>
     props.hasError &&
     css`

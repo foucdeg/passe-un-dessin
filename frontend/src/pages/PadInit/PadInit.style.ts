@@ -4,7 +4,6 @@ import { colorPalette } from 'stylesheet';
 import Header2 from 'atoms/Header2';
 import arrowRight from 'assets/arrow-right.svg';
 import Button from 'atoms/Button';
-import StaticInput from 'atoms/StaticInput';
 
 export const PadInitContainer = styled.div`
   display: flex;
@@ -23,12 +22,7 @@ export const StyledForm = styled.form`
 export const StyledTextInput = styled(TextInput)`
   border-color: ${colorPalette.orange};
   flex-grow: 1;
-`;
-
-export const StyledStaticInput = styled(StaticInput)`
-  border-color: ${colorPalette.orange};
   margin-right: 16px;
-  flex-grow: 1;
 `;
 
 export const StyledHeader = styled(Header2)`

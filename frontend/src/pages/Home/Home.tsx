@@ -11,13 +11,10 @@ import { PadStep } from 'redux/Game/types';
 import { useAsyncFn } from 'react-use';
 import BareAnchor from 'atoms/BareAnchor';
 import Loader from 'atoms/Loader';
+import HomeLayout from 'layout/HomeLayout';
 import {
-  LeftSide,
-  RightSide,
   LeftSideTitle,
   Subtitle,
-  Credits,
-  RightSideTitle,
   Donate,
   LegalLinks,
   DiscordLogo,
@@ -51,7 +48,7 @@ const Home: React.FunctionComponent = () => {
 
   return (
     <>
-      <LeftSide>
+      <HomeLayout>
         <LeftSideTitle>
           <FormattedMessage id="home.title" />
         </LeftSideTitle>
@@ -107,14 +104,7 @@ const Home: React.FunctionComponent = () => {
             <FormattedMessage id="home.privacyPolicy" />
           </Link>
         </LegalLinks>
-      </LeftSide>
-      <RightSide>
-        <RightSideTitle>
-          <FormattedMessage id="home.title" />
-        </RightSideTitle>
-        <Credits>Foucauld Degeorges • Michèle Ruaud</Credits>
-        <Credits>Quentin Somerville • Léo Anesi</Credits>
-      </RightSide>
+      </HomeLayout>
       <RulesModal isOpen={isRulesModalOpen} onClose={closeRulesModal} />
     </>
   );

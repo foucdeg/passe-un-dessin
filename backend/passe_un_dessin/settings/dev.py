@@ -9,6 +9,8 @@ INSTALLED_APPS = INSTALLED_APPS + ["debug_toolbar", "django_extensions"]
 
 MIDDLEWARE = MIDDLEWARE + ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 
+MAIN_FRONTEND = "https://localhost:3000"
+
 # Uploaded files storage
 MEDIA_ROOT = "/uploads/"
 MEDIA_URL_PATH = "uploads/"

@@ -1,12 +1,14 @@
 import styled, { css } from 'styled-components';
-import { colorPalette } from 'stylesheet';
+import { colorPalette, fontFamily, fontSize } from 'stylesheet';
 
-export const StyledStaticInput = styled.div<{ hasAdornment: boolean }>`
+export const StyledStaticInput = styled.input<{ hasAdornment: boolean }>`
   background: none;
   padding: 0 24px;
   line-height: 19px;
+  font-family: ${fontFamily.main};
+  font-size: ${fontSize.medium};
   width: 100%;
-  text-align: left;
+  color: ${colorPalette.textGrey};
   ${(props) =>
     props.hasAdornment &&
     css`

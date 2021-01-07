@@ -8,6 +8,8 @@ from .base import *
 SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = False
 
+MAIN_FRONTEND = "https://passeundessin.com"
+
 ALLOWED_HOSTS = [
     "passeundessin.com",
 ]

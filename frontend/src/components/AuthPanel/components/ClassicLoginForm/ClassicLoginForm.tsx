@@ -4,7 +4,8 @@ import { FormikProps, Field } from 'formik';
 import TextInput from 'atoms/TextInput';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { AUTH_ERROR_INVALID_USERNAME_PASSWORD } from 'redux/Player/hooks';
-import { StyledLabel, StyledForm, StyledButton } from './ClassicLoginForm.style';
+import { PUBLIC_PATHS } from 'routes';
+import { StyledLabel, StyledForm, StyledButton, StyledLink } from './ClassicLoginForm.style';
 import { FormValues, FormOutsideProps } from './ClassicLoginForm.form';
 
 const ClassicLoginFormView: React.FC<FormOutsideProps & FormikProps<FormValues>> = ({
@@ -14,6 +15,7 @@ const ClassicLoginFormView: React.FC<FormOutsideProps & FormikProps<FormValues>>
   isSubmitting,
   setErrors,
   login,
+  onLoggedIn,
 }) => {
   const intl = useIntl();
   const [{ loading, error: outsideError }] = login;
@@ -52,6 +54,9 @@ const ClassicLoginFormView: React.FC<FormOutsideProps & FormikProps<FormValues>>
         maxLength={254}
         hasError={touched.password && errors.password}
       />
+      <StyledLink to={PUBLIC_PATHS.PASSWORD_RESET_REQUEST} onClick={onLoggedIn}>
+        <FormattedMessage id="auth.forgotPassword" />
+      </StyledLink>
       <StyledButton type="submit" disabled={isSubmitting || loading || !isValid}>
         <FormattedMessage id="auth.logIn" />
       </StyledButton>

@@ -1,8 +1,11 @@
 import json
 import logging
 
+from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.tokens import default_token_generator
 from django.db import IntegrityError
 from django.db.models import Count, Prefetch
 from django.db.models.expressions import F, Window
@@ -16,7 +19,10 @@ from django.http import (
 )
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_GET, require_POST
+from django_rest_passwordreset.models import ResetPasswordToken
+from django_rest_passwordreset.views import ResetPasswordValidateToken
 from rest_framework.generics import RetrieveUpdateAPIView
+from rest_framework.response import Response
 
 from core.decorators import check_player_color, check_player_id, requires_player
 from core.models import Game, GamePhase, Player, PlayerGameParticipation, User, Vote
@@ -190,3 +196,18 @@ def get_total_score(request, uuid):
 
     player = players[0]
     return JsonResponse({"score": player.total_score, "ranking": player.rank})
+
+
+class ResetPasswordTokenDetails(ResetPasswordValidateToken):
+    """
+    Verify that a token is valid and return its details.
+    """
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        print()
+        token = get_object_or_404(
+            ResetPasswordToken, key=serializer.data.get("token")
+        )
+        return Response({"status": "OK", "email": token.user.email})

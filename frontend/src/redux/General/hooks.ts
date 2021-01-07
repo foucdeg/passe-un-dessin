@@ -1,6 +1,7 @@
 import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import { updateLeaderboard } from './slice';
 
 export const useFetchLeaderboard = () => {
@@ -13,4 +14,28 @@ export const useFetchLeaderboard = () => {
     },
     [dispatch],
   );
+};
+
+export const useUnauthenticatedGuard = () => {
+  const { push } = useHistory();
+
+  useEffect(() => {
+    async function checkMe() {
+      try {
+        const me = await client.get(`/player/me`);
+        if (me.user) {
+          console.warn(
+            'Redirecting to homepage as this page should not be accessed by an authenticated user',
+          );
+          push('/');
+        }
+      } catch (e) {
+        if (e.status === 401) {
+          return;
+        }
+        throw e;
+      }
+    }
+    checkMe();
+  }, [push]);
 };
