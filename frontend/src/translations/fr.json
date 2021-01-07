@@ -242,7 +242,7 @@
     "submitRequest": "Réinitialiser le mot de passe",
     "invalidToken": "Ce lien n'est plus valide.",
     "requestNewToken": "Il t'en faut un autre ?",
-    "success": "Ton mot de passe à été réinitialisé. On te ramène à la page d'accueil, d'où tu pourras te connecter.",
+    "success": "Ton mot de passe a été réinitialisé. On te ramène à la page d'accueil, d'où tu pourras te connecter.",
     "requestSuccess": "Si ce compte existe, tu vas recevoir un mail avec un lien de réinitialisation de ton mot de passe."
   }
 }
