@@ -17,7 +17,6 @@ import {
   setSuggestions,
   setWinners,
   updateGame,
-  updatePad,
   addVoteToPadStep,
   removeVoteFromPadStep,
 } from './slice';
@@ -128,18 +127,6 @@ export const useGetVoteResults = () => {
       }
     },
     [dispatch, doGetRanking],
-  );
-};
-
-export const useSavePad = () => {
-  const dispatch = useDispatch();
-
-  return useAsyncFn(
-    async (pad: Pad, sentence: string | null) => {
-      const updatedPad = await client.put(`/pad/${pad.uuid}/save`, { sentence });
-      dispatch(updatePad(updatedPad));
-    },
-    [dispatch],
   );
 };
 

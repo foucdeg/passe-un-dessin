@@ -129,7 +129,6 @@ def merge_players(from_player: Player, into_player: Player):
         except IntegrityError:
             # already a PGP with this player
             pass
-    Pad.objects.filter(initial_player=from_player).update(initial_player=into_player)
     PadStep.objects.filter(player=from_player).update(player=into_player)
     Vote.objects.filter(player=from_player).update(player=into_player)
 

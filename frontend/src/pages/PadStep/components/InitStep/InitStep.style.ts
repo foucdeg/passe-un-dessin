@@ -5,7 +5,7 @@ import Header2 from 'atoms/Header2';
 import arrowRight from 'assets/arrow-right.svg';
 import Button from 'atoms/Button';
 
-export const PadInitContainer = styled.div`
+export const InitStepContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

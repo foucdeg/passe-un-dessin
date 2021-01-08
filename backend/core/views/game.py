@@ -31,7 +31,6 @@ from core.service.game_service import (
     is_valid_sentence,
     start_debrief,
     start_next_round,
-    switch_to_rounds,
     switch_to_vote_results,
 )
 
@@ -47,7 +46,7 @@ class GameRetrieveAPIView(RetrieveAPIView):
                 "player"
             ).order_by("order"),
         ),
-        Prefetch("pads", queryset=Pad.objects.select_related("initial_player")),
+        "pads",
         Prefetch("pads__steps", queryset=PadStep.objects.select_related("player")),
         "pads__steps__votes",
     ).all()
@@ -56,9 +55,7 @@ class GameRetrieveAPIView(RetrieveAPIView):
 
 class PadRetrieveAPIView(RetrieveAPIView):
     lookup_field = "uuid"
-    queryset = Pad.objects.prefetch_related(
-        "initial_player", "steps", "steps__player"
-    ).all()
+    queryset = Pad.objects.prefetch_related("steps", "steps__player").all()
     serializer_class = PadSerializer
 
 
@@ -71,64 +68,6 @@ class PadStepRetrieveAPIView(RetrieveAPIView):
         .all()
     )
     serializer_class = PadStepSerializer
-
-
-@require_http_methods(["PUT"])
-@requires_player
-def save_pad(request, player, uuid):
-    json_body = json.loads(request.body)
-
-    try:
-        sentence = json_body["sentence"]
-    except KeyError:
-        return HttpResponseBadRequest("Provide sentence!")
-
-    try:
-        pad = Pad.objects.get(uuid=uuid)
-    except Pad.DoesNotExist:
-        return HttpResponseBadRequest("Pad with uuid %s does not exist" % uuid)
-
-    assert_phase(pad.game, GamePhase.INIT)
-
-    is_done = not is_valid_sentence(pad.sentence) and is_valid_sentence(sentence)
-    is_no_longer_done = is_valid_sentence(pad.sentence) and not is_valid_sentence(
-        sentence
-    )
-
-    pad.sentence = sentence
-    pad.save()
-
-    game = pad.game
-
-    if is_done:
-        send_event(
-            "game-%s" % game.uuid.hex,
-            "message",
-            PlayerFinishedMessage(pad.initial_player).serialize(),
-        )
-        with transaction.atomic():
-            game = Game.objects.select_for_update().get(uuid=game.uuid)
-            game.pads_done = game.pads_done + 1
-            game.save()
-
-        if game.pads_done == game.participants.count():
-            logger.debug(
-                "All pads have their initial sentence for game %s" % game.uuid.hex[:8]
-            )
-            switch_to_rounds(game)
-
-    if is_no_longer_done:
-        send_event(
-            "game-%s" % game.uuid.hex,
-            "message",
-            PlayerNotFinishedMessage(pad.initial_player).serialize(),
-        )
-        with transaction.atomic():
-            game = Game.objects.select_for_update().get(uuid=game.uuid)
-            game.pads_done = game.pads_done - 1
-            game.save()
-
-    return JsonResponse(PadSerializer(pad).data)
 
 
 @require_http_methods(["PUT"])
@@ -341,12 +280,6 @@ def force_state(request, player, game_id):
     try:
         # Requested phase is a Round
         if next_phase == GamePhase.ROUNDS.value:
-            if next_round == 0:  # switching from init
-                assert_phase(game, GamePhase.INIT)
-                switch_to_rounds(game)
-                return HttpResponse(status=204)
-
-            # switching from previous round
             assert_phase(game, GamePhase.ROUNDS)
             assert_round(game, next_round - 1)
             start_next_round(game, next_round)
@@ -356,7 +289,7 @@ def force_state(request, player, game_id):
         if next_phase == GamePhase.DEBRIEF.value:
             assert_phase(game, GamePhase.ROUNDS)
             game_round_count = get_round_count(game)
-            assert_round(game, game_round_count - 1)
+            assert_round(game, game_round_count)
 
             start_debrief(game)
             return HttpResponse(status=204)

@@ -22,7 +22,7 @@ const PadTab: React.FC<Props> = ({ pad, isActive, onClick, publicMode }) => {
 
   return (
     <PadTabContainer isActive={isActive} onClick={onClick}>
-      {pad.initial_player.name}
+      {pad.steps[0].player.name}
       {!publicMode && (
         <ViewersContainer onClick={(e) => e.preventDefault()}>
           {padViewers

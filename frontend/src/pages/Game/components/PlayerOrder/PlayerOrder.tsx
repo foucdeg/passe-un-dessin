@@ -3,7 +3,6 @@ import { useSelector } from 'redux/useSelector';
 import { selectGame } from 'redux/Game/selectors';
 import { selectPlayer } from 'redux/Player/selectors';
 import { getReorderedPlayers } from 'services/game.service';
-import { GamePhase } from 'redux/Game/types';
 import { EmptyObject } from 'services/utils';
 import { PlayerOrderContainer, StyledPlayerChip, ArrowSpacer, Variant } from './PlayerOrder.style';
 
@@ -15,13 +14,7 @@ const PlayerOrder: React.FC<EmptyObject> = () => {
 
   const [padOwner, ...orderedPlayers] = getReorderedPlayers(game, player);
 
-  const getChipVariant = (roundIndex: number | null) => {
-    if (roundIndex === null) {
-      return game.phase === GamePhase.INIT ? Variant.CURRENT : Variant.PAST;
-    }
-    if (game.current_round === null) {
-      return Variant.FUTURE;
-    }
+  const getChipVariant = (roundIndex: number) => {
     if (roundIndex < game.current_round) return Variant.PAST;
     if (roundIndex === game.current_round) return Variant.CURRENT;
     return Variant.FUTURE;
@@ -29,12 +22,12 @@ const PlayerOrder: React.FC<EmptyObject> = () => {
 
   return (
     <PlayerOrderContainer>
-      <StyledPlayerChip variant={getChipVariant(null)}>🗒&nbsp;{padOwner.name}</StyledPlayerChip>
+      <StyledPlayerChip variant={getChipVariant(0)}>🗒&nbsp;{padOwner.name}</StyledPlayerChip>
       {orderedPlayers.map((orderedPlayer, index) => (
         <React.Fragment key={orderedPlayer.uuid}>
           <ArrowSpacer />
-          <StyledPlayerChip variant={getChipVariant(index)} key={orderedPlayer.uuid}>
-            {index % 2 === 0 ? '🎨' : '🤔'}&nbsp;
+          <StyledPlayerChip variant={getChipVariant(index + 1)} key={orderedPlayer.uuid}>
+            {index % 2 === 0 ? '🤔' : '🎨'}&nbsp;
             {orderedPlayer.name}
           </StyledPlayerChip>
         </React.Fragment>

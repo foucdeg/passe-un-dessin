@@ -15,13 +15,14 @@ def random_color():
 
 
 class GamePhase(Enum):
-    INIT = "INIT"
+    INIT = "INIT"  # deprecated
     ROUNDS = "ROUNDS"
     DEBRIEF = "DEBRIEF"
     VOTE_RESULTS = "VOTE_RESULTS"
 
 
 class StepType(Enum):
+    INITIAL = "INITIAL"
     WORD_TO_DRAWING = "WORD_TO_DRAWING"
     DRAWING_TO_WORD = "DRAWING_TO_WORD"
 
@@ -121,10 +122,10 @@ class Game(BaseModel):
     phase = models.CharField(
         max_length=12,
         choices=[(phase.value, phase.value) for phase in GamePhase],
-        default="INIT",
+        default="ROUNDS",
     )
     round_duration = models.IntegerField(default=60)
-    current_round = models.IntegerField(null=True)
+    current_round = models.IntegerField(default=0)
     pads_done = models.IntegerField(default=0)
     draw_own_word = models.BooleanField(default=True)
 
@@ -164,11 +165,7 @@ class PlayerGameParticipation(BaseModel):
 
 class Pad(BaseModel):
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="pads")
-    initial_player = models.ForeignKey(
-        Player, on_delete=models.CASCADE, related_name="pads"
-    )
     order = models.IntegerField()
-    sentence = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
         ordering = ("order",)
@@ -187,6 +184,7 @@ class PadStep(BaseModel):
     drawing = models.TextField(null=True, blank=True)
 
     class Meta:
+        unique_together = ("pad", "round_number")
         ordering = ("round_number",)
 
 
