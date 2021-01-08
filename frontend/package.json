@@ -22,7 +22,7 @@
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
     "react-scripts": "4.0.1",
-    "react-use": "15.3.6",
+    "react-use": "15.3.7",
     "redux": "4.0.5",
     "regenerator-runtime": "0.13.7",
     "styled-components": "5.2.1",
