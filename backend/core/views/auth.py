@@ -66,7 +66,9 @@ class PlayerAPIView(RetrieveUpdateAPIView):
                 ),
                 Prefetch(
                     "participations__game",
-                    queryset=Game.objects.exclude(phase=GamePhase.INIT.value),
+                    queryset=Game.objects.exclude(phase=GamePhase.INIT.value).exclude(
+                        phase=GamePhase.ROUNDS.value, current_round=0
+                    ),
                 ),
                 "participations__game",
                 "participations__game__participants",

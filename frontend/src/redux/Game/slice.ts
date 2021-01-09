@@ -49,15 +49,6 @@ const gameSlice = createSlice({
       state.suggestions = [];
       state.viewingAsPublic = action.payload.asPublic;
     },
-    updatePad: (state, action: PayloadAction<Pad>) => {
-      if (!state.game) return;
-
-      const matchingPadIndex = state.game?.pads.findIndex(
-        (pad) => pad.uuid === action.payload.uuid,
-      );
-
-      state.game.pads[matchingPadIndex] = action.payload;
-    },
     addVoteToPadStep: (state, action: PayloadAction<{ padStepId: string; player: Player }>) => {
       if (!state.game) return;
       const { player, padStepId } = action.payload;
@@ -136,7 +127,6 @@ const gameSlice = createSlice({
 
 export const {
   updateGame,
-  updatePad,
   startRound,
   markPlayerFinished,
   markPlayerNotFinished,

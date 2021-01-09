@@ -51,7 +51,6 @@
     "chooseSentence": "Pick a word or sentence:",
     "placeholder": "A giraffe?",
     "youDraw": "Choose wisely, <strong>you</strong>'ll have to draw this!",
-    "nextPlayer": "Let's just hope <strong>{name}</strong> can draw...",
     "getSuggestions": "Lacking imagination? Roll the dice!",
     "update": "Edit"
   },

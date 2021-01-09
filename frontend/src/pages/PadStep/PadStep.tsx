@@ -7,6 +7,7 @@ import { selectGame } from 'redux/Game/selectors';
 import { selectStep } from 'redux/Step/selectors';
 import WordToDrawingStep from './components/WordToDrawingStep';
 import DrawingToWordStep from './components/DrawingToWordStep';
+import InitStep from './components/InitStep/InitStep';
 
 interface RouteParams {
   stepId: string;
@@ -49,11 +50,25 @@ const PadStep: React.FunctionComponent = () => {
   if (!game) return null;
   if (!step) return null;
 
-  return step.step_type === StepType.DRAWING_TO_WORD ? (
-    <DrawingToWordStep padStep={step} loading={isSaveStepSentenceLoading} saveStep={saveStep} />
-  ) : (
-    <WordToDrawingStep padStep={step} loading={isSaveStepDrawingLoading} saveStep={saveStep} />
-  );
+  switch (step.step_type) {
+    case StepType.DRAWING_TO_WORD:
+      return (
+        <DrawingToWordStep padStep={step} loading={isSaveStepSentenceLoading} saveStep={saveStep} />
+      );
+    case StepType.WORD_TO_DRAWING:
+      return (
+        <WordToDrawingStep padStep={step} loading={isSaveStepDrawingLoading} saveStep={saveStep} />
+      );
+    case StepType.INITIAL:
+      return (
+        <InitStep
+          padStep={step}
+          loading={isSaveStepDrawingLoading}
+          saveStep={saveStep}
+          drawOwnWord={game.draw_own_word}
+        />
+      );
+  }
 };
 
 export default PadStep;

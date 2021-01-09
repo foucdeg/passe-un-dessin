@@ -164,12 +164,11 @@ class PadIdSerializer(BaseSerializer):
 
 
 class PadSerializer(BaseSerializer):
-    initial_player = PlayerSerializer()
     steps = PadStepSerializer(many=True)
 
     class Meta:
         model = Pad
-        fields = ("uuid", "initial_player", "steps", "order", "sentence")
+        fields = ("uuid", "steps", "order")
 
 
 class GameSerializer(BaseSerializer):

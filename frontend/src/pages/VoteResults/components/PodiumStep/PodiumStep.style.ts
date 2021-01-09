@@ -73,3 +73,7 @@ export const ArrowSpacer = styled(FatArrowDown)<{ highlighted?: boolean }>`
       `};
   }
 `;
+
+export const LightBulb = styled.span`
+  font-size: ${fontSize.XXLarge};
+`;

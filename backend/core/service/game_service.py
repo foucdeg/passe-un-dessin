@@ -84,21 +84,29 @@ def initialize_pad(game: Game, index: int, players: List[Player]):
     logger.debug(
         "Initializing pad for player %s (index %d)" % (players[index].name, index)
     )
-    pad = Pad.objects.create(game=game, initial_player=players[index], order=index)
+    pad = Pad.objects.create(game=game, order=index)
     player_count = len(players)
 
     step_count = get_round_count(game)
 
-    for round_number in range(step_count):
+    logger.debug(
+        "Initializing pad step for pad %s, round %d, with player %s and mode %s"
+        % (pad.uuid.hex[:8], 0, players[index], "INITIAL")
+    )
+    PadStep.objects.create(
+        pad=pad, player=players[index], round_number=0, step_type="INITIAL",
+    )
+
+    for round_number in range(1, step_count + 1):
         step_player = (
             players[(index + round_number) % player_count]
             if game.draw_own_word
             else players[(index + round_number + 1) % player_count]
         )
         step_type = (
-            StepType.WORD_TO_DRAWING
+            StepType.DRAWING_TO_WORD
             if round_number % 2 == 0
-            else StepType.DRAWING_TO_WORD
+            else StepType.WORD_TO_DRAWING
         )
         logger.debug(
             "Initializing pad step for pad %s, round %d, with player %s and mode %s"
@@ -113,24 +121,9 @@ def initialize_pad(game: Game, index: int, players: List[Player]):
         )
 
 
-def switch_to_rounds(game: Game):
-    game.phase = GamePhase.ROUNDS.value
-    game.current_round = 0
-    game.pads_done = 0
-    game.save()
-    for pad in game.pads.all():
-        step = pad.steps.get(round_number=game.current_round)
-        step.sentence = pad.sentence
-        step.save()
-
-    send_event(
-        "game-%s" % game.uuid.hex, "message", RoundStartsMessage(game, 0).serialize(),
-    )
-
-
 def start_next_round(game: Game, new_round: int):
     round_count = get_round_count(game)
-    if new_round >= round_count:
+    if new_round > round_count:
         return start_debrief(game)
     game.current_round = new_round
     game.pads_done = 0
@@ -139,9 +132,9 @@ def start_next_round(game: Game, new_round: int):
         previous_step = pad.steps.get(round_number=new_round - 1)
         step = pad.steps.get(round_number=new_round)
         if new_round % 2 == 0:
-            step.sentence = previous_step.sentence
-        else:
             step.drawing = previous_step.drawing
+        else:
+            step.sentence = previous_step.sentence
         step.save()
 
     send_event(
@@ -174,7 +167,7 @@ def switch_to_vote_results(game: Game):
 
 def start_debrief(game: Game):
     game.phase = GamePhase.DEBRIEF.value
-    game.current_round = None
+    game.current_round = 0
     game.pads_done = 0
     game.save()
     message = DebriefStartsMessage(game).serialize()

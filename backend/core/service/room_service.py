@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django_eventstream import send_event
 
 from core.messages import GameStartsMessage, NewAdminMessage, PlayerLeftMessage
-from core.models import GamePhase, Player, Room
+from core.models import GamePhase, PadStep, Player, Room
 from core.service.game_service import initialize_game
 
 logger = logging.getLogger(__name__)
@@ -61,10 +61,11 @@ def remove_player_from_room(room_id: str, player_id: str):
                     NewAdminMessage(new_admin).serialize(),
                 )
 
-        # If at init state, restart game while reusing preexisting initial sentences
+        # If at first round, restart game while reusing preexisting initial sentences
         if (
             room.current_game is not None
-            and room.current_game.phase == GamePhase.INIT.value
+            and room.current_game.phase == GamePhase.ROUNDS.value
+            and room.current_game.current_round == 0
             and initial_room_number_of_players > 2
         ):
             # Create new game with same params
@@ -76,16 +77,14 @@ def remove_player_from_room(room_id: str, player_id: str):
             )
 
             # Apply any existing sentences on pads to new pad
-            existing_sentences = [
-                (pad.initial_player.uuid, pad.sentence)
-                for pad in room.current_game.pads.all()
-                if pad.sentence is not None
-            ]
-            for player_id, existing_sentence in existing_sentences:
-                for new_pad in new_game.pads.all():
-                    if new_pad.initial_player.uuid == player_id:
-                        new_pad.sentence = existing_sentence
-                        new_pad.save()
+            existing_sentences = PadStep.objects.filter(
+                pad__game=room.current_game, round_number=0, sentence__isnull=None
+            ).values_list("player", "sentence")
+
+            for player, existing_sentence in existing_sentences:
+                PadStep.objects.filter(
+                    pad__game=new_game, round_number=0, player=player
+                ).update(sentence=existing_sentence)
 
             # Switch to new game
             room.current_game = new_game

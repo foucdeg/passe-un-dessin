@@ -18,7 +18,6 @@ import Loader from 'atoms/Loader';
 import PlayerOrder from './components/PlayerOrder';
 import useGameEvents from './events';
 
-const PadInit = React.lazy(() => import('../PadInit'));
 const PadStep = React.lazy(() => import('../PadStep'));
 const GameRecap = React.lazy(() => import('../GameRecap'));
 const VoteResults = React.lazy(() => import('../VoteResults'));
@@ -59,7 +58,7 @@ const Game: React.FunctionComponent = () => {
     if (!game) return;
 
     const listener = (event: BeforeUnloadEvent) => {
-      if ([GamePhase.INIT, GamePhase.ROUNDS].includes(game.phase)) {
+      if (game.phase === GamePhase.ROUNDS) {
         event.returnValue = 'prevent'; // Chrome doesn't display this message anyway
       }
     };
@@ -87,9 +86,8 @@ const Game: React.FunctionComponent = () => {
     <GameContainer>
       <HomeButton onClick={doLeaveRoom} />
       <InnerGameContainer hasTabs={!!window.location.pathname.match(/\/recap$/)}>
-        {[GamePhase.INIT, GamePhase.ROUNDS].includes(game.phase) && <PlayerOrder />}
+        {game.phase === GamePhase.ROUNDS && <PlayerOrder />}
         <Switch>
-          <Route path={`${path}/pad/:padId/init`} component={PadInit} />
           <Route path={`${path}/step/:stepId`} component={PadStep} />
           <Route path={`${path}/recap`} component={GameRecap} />
           <Route path={`${path}/vote-results`} component={VoteResults} />

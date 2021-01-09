@@ -12,6 +12,7 @@ import {
   VoteCount,
   WinnerSection,
   ArrowSpacer,
+  LightBulb,
 } from './PodiumStep.style';
 import { StyledDrawing } from './PodiumStep.style';
 
@@ -21,24 +22,41 @@ interface Props {
   ranking: number;
 }
 
+const WordToDrawingStepWinner: React.FC<{ step: PadStep }> = ({ step }) => (
+  <>
+    <Sentence>{step.sentence}</Sentence>
+    <ArrowSpacer />
+    <StyledDrawing src={step.drawing_url} />
+  </>
+);
+
+const DrawingToWordStepWinner: React.FC<{ step: PadStep }> = ({ step }) => (
+  <>
+    <StyledDrawing src={step.drawing_url} />
+    <ArrowSpacer highlighted />
+    <Sentence highlighted>{step.sentence}</Sentence>
+  </>
+);
+
+const InitialStepWinner: React.FC<{ step: PadStep }> = ({ step }) => (
+  <>
+    <LightBulb>💡</LightBulb>
+    <Sentence highlighted>{step.sentence}</Sentence>
+  </>
+);
+
 const PodiumStep: React.FC<Props> = ({ winner, width, ranking }) => {
   return (
     <Container width={width}>
       {winner && (
         <WinnerSection>
           {winner.step_type === StepType.WORD_TO_DRAWING && (
-            <>
-              <Sentence>{winner.sentence}</Sentence>
-              <ArrowSpacer />
-            </>
+            <WordToDrawingStepWinner step={winner} />
           )}
-          <StyledDrawing src={winner?.drawing_url} />
           {winner.step_type === StepType.DRAWING_TO_WORD && (
-            <>
-              <ArrowSpacer highlighted />
-              <Sentence highlighted>{winner.sentence}</Sentence>
-            </>
+            <DrawingToWordStepWinner step={winner} />
           )}
+          {winner.step_type === StepType.INITIAL && <InitialStepWinner step={winner} />}
           <PlayerName>{winner.player.name}</PlayerName>
           <VoteCount>
             <FormattedMessage

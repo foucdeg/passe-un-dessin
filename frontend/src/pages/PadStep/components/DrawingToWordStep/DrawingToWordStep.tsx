@@ -4,7 +4,6 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import Spacer from 'atoms/Spacer';
 import InputLoader from 'atoms/InputLoader';
 import { InputArrow } from 'modals/PlayerModal/components/PlayerForm/PlayerForm.style';
-import StaticInput from 'atoms/StaticInput';
 import TextInput from 'atoms/TextInput';
 import {
   Gutter,
@@ -55,7 +54,7 @@ const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, loading }) => {
         </StyledHeader>
         {isInputDisabled && !loading ? (
           <>
-            <StaticInput>{padStep.sentence}</StaticInput>
+            <TextInput readOnly value={padStep.sentence || ''} />
             <StyledButton type="button" onClick={onClickUpdate}>
               <FormattedMessage id="drawingToWord.update" />
             </StyledButton>
