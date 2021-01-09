@@ -182,10 +182,14 @@ class PadStep(BaseModel):
 
     sentence = models.CharField(max_length=100, blank=True, null=True)
     drawing = models.TextField(null=True, blank=True)
+    is_featured = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ("pad", "round_number")
         ordering = ("round_number",)
+        indexes = [
+            models.Index(name="padstep_is_featured_idx", fields=["is_featured"],)
+        ]
 
 
 class Vote(BaseModel):
