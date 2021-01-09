@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "passe_un_dessin"
 version = "0.0.1"
-description = "A new Theodo project"
-authors = ["Theodo <contact@theodo.co.uk>"]
+description = "Online drawing game"
+authors = ["Foucauld Degeorges <foucauld.degeorges@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "3.9.1"
@@ -23,6 +23,7 @@ django-eventstream = "3.1.0"
 google-auth = "==1.24.0"
 django-anymail = {extras = ["mailgun"], version = "^8.1"}
 django-rest-passwordreset = "==1.1.0"
+django-cors-headers = "^3.6.0"
 
 [tool.poetry.dev-dependencies]
 ptvsd = "4.3.2"
