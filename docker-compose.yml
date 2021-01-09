@@ -24,6 +24,7 @@ services:
     environment:
       DATABASE_URL: "postgres://postgres@db:5432/postgres"
       ENVIRONMENT: "local"
+      PUSHPIN_HOST: pushpin
 
   drawing-renderer:
     build: ./drawing-renderer
@@ -39,6 +40,13 @@ services:
       DATABASE_URL: "postgres://postgres@db:5432/postgres"
       ENVIRONMENT: "local"
 
+  pushpin:
+    build: ./pushpin
+    ports:
+      - "7999:7999"
+      - "5560-5563:5560-5563"
+    links:
+      - backend
 networks:
   default:
     ipam:

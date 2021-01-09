@@ -15,6 +15,7 @@ jobs:
           name: Run linter
           command: yarn lint
           working_directory: frontend
+
   tsc:
     executor:
       name: node/default
@@ -28,6 +29,7 @@ jobs:
           name: Run TypeScript check
           command: yarn tsc
           working_directory: frontend
+
   build-front:
     executor:
       name: node/default
@@ -45,6 +47,7 @@ jobs:
           working_directory: frontend
       - store_artifacts:
           path: frontend/build
+
   build-back:
     docker:
       - image: cimg/base:2020.12
@@ -66,6 +69,7 @@ jobs:
               docker tag foucdeg/passe-un-dessin:$CIRCLE_SHA1 foucdeg/passe-un-dessin:latest
               docker push foucdeg/passe-un-dessin:latest
             fi
+
   build-drawing-renderer:
     docker:
       - image: cimg/base:2020.12
@@ -88,6 +92,28 @@ jobs:
               docker push foucdeg/passe-un-dessin-drawing-renderer:latest
             fi
 
+  build-pushpin:
+    docker:
+      - image: cimg/base:2020.12
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - run:
+          name: Build pushpin
+          command: docker build -f ./Dockerfile.prod . -t foucdeg/passe-un-dessin-pushpin:$CIRCLE_SHA1
+          working_directory: pushpin
+      - run:
+          name: Login to Docker Hub
+          command: echo "$DOCKERHUB_PASSWORD" | docker login --username foucdeg --password-stdin
+      - run:
+          name: If on master, push pushpin Docker image
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              docker tag foucdeg/passe-un-dessin-pushpin:$CIRCLE_SHA1 foucdeg/passe-un-dessin-pushpin:latest
+              docker push foucdeg/passe-un-dessin-pushpin:latest
+            fi
+
 workflows:
   build-lint-tsc:
     jobs:
@@ -95,6 +121,7 @@ workflows:
       - tsc
       - build-back
       - build-drawing-renderer
+      - build-pushpin
       - build-front:
           requires:
             - lint
