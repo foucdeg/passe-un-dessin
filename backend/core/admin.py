@@ -14,7 +14,14 @@ class FeaturedPadStepAdmin(admin.ModelAdmin):
         "sentence",
         "drawing",
     )
-    list_display = ("sentence", "image_tag", "votes", "is_featured")
+    list_display = (
+        "sentence",
+        "image_tag",
+        "author",
+        "creation_date",
+        "votes",
+        "is_featured",
+    )
     list_editable = ("is_featured",)
     list_display_links = ("sentence",)
     list_filter = ["is_featured", "created_at"]
@@ -29,13 +36,19 @@ class FeaturedPadStepAdmin(admin.ModelAdmin):
     def votes(self, obj):
         return obj.votes.count()
 
+    def author(self, obj):
+        return obj.player.name
+
+    def creation_date(self, obj):
+        return obj.created_at.strftime("%d %b %Y")
+
     def get_queryset(self, request):
         return (
             super()
             .get_queryset(request)
             .annotate(count=Count("votes"))
             .filter(step_type=StepType.WORD_TO_DRAWING.value)
-            .prefetch_related("votes")
+            .prefetch_related("votes", "player")
             .order_by("-count")
         )
 
