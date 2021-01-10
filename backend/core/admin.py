@@ -8,9 +8,6 @@ from core.models import PadStep, StepType
 class FeaturedPadStepAdmin(admin.ModelAdmin):
     fields = (
         "is_featured",
-        "votes",
-        "created_at",
-        "image_tag",
         "sentence",
         "drawing",
     )
