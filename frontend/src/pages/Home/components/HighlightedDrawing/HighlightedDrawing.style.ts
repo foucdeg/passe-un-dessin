@@ -1,6 +1,7 @@
 import Drawing from 'components/Canvas/Drawing';
 import styled from 'styled-components';
 import { fontSize } from 'stylesheet';
+import fatArrow from 'assets/fat-arrow.svg';
 
 export const StyledDrawing = styled(Drawing)`
   width: 250px;
@@ -50,4 +51,39 @@ export const Caption = styled.p`
   text-align: center;
   font-size: ${fontSize.small};
   margin-top: 8px;
+`;
+
+const IconStyle = `
+  position: absolute;
+  cursor: pointer;
+  top: calc(50% - 12px);
+`;
+
+export const PreviousIcon = styled.img.attrs({ src: fatArrow })`
+  ${IconStyle}
+  left: -35px;
+  transform: rotate(180deg);
+`;
+
+export const NextIcon = styled.img.attrs({ src: fatArrow })`
+  ${IconStyle}
+  right: -35px;
+`;
+
+export const AllSteps = styled.div`
+  position: absolute;
+  width: 80%;
+  margin-left: 10%;
+  height: 35px;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const Step = styled.div<{ isCurrent: boolean }>`
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5) inset;
+  width: ${({ isCurrent }) => (isCurrent ? '12' : '7')}px;
+  height: ${({ isCurrent }) => (isCurrent ? '12' : '7')}px;
+  border-radius: 50%;
 `;

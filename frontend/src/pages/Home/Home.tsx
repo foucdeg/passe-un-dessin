@@ -26,7 +26,6 @@ import PlayerGameForm from './components/PlayerGameForm';
 import RulesModal from './components/RulesModal';
 import HighlightedDrawing from './components/HighlightedDrawing';
 
-const highlightedStepId = '68550e01-5bc9-48ed-9936-a383b736487b';
 const discordLink = 'https://discord.gg/8y9s5yFgYq';
 
 const Home: React.FunctionComponent = () => {
@@ -34,15 +33,15 @@ const Home: React.FunctionComponent = () => {
   const [isRulesModalOpen, openRulesModal, closeRulesModal] = useBoolean(false);
 
   const [
-    { loading, value: hightlightedPadStep },
-    doFetchHighlightedStep,
-  ] = useAsyncFn(async (): Promise<PadStep> => {
-    return (await client.get(`/pad-step/${highlightedStepId}`)) as PadStep;
+    { loading, value: hightlightedPadSteps },
+    doFetchHighlightedSteps,
+  ] = useAsyncFn(async (): Promise<PadStep[]> => {
+    return (await client.get(`/featured-pad-steps`)) as PadStep[];
   }, []);
 
   useEffect(() => {
-    doFetchHighlightedStep();
-  }, [doFetchHighlightedStep]);
+    doFetchHighlightedSteps();
+  }, [doFetchHighlightedSteps]);
 
   if (!location.pathname.match(/\/(room\/[^/]+)?$/)) return null;
 
@@ -61,7 +60,9 @@ const Home: React.FunctionComponent = () => {
             <Loader />
           </div>
         )}
-        {hightlightedPadStep && <HighlightedDrawing padStep={hightlightedPadStep} />}
+        {hightlightedPadSteps && hightlightedPadSteps.length > 0 && (
+          <HighlightedDrawing padSteps={hightlightedPadSteps} />
+        )}
         <Spacer />
         <Actions>
           <Row>
