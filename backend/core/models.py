@@ -17,6 +17,7 @@ def random_color():
 class GamePhase(Enum):
     INIT = "INIT"  # deprecated
     ROUNDS = "ROUNDS"
+    REVEAL = "REVEAL"
     DEBRIEF = "DEBRIEF"
     VOTE_RESULTS = "VOTE_RESULTS"
 
