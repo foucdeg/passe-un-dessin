@@ -5,8 +5,8 @@ from django.db.models.functions.window import Rank
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
 
-from core.models import Player
-from core.serializers import PlayerInRankingSerializer
+from core.models import PadStep, Player
+from core.serializers import PadStepSerializer, PlayerInRankingSerializer
 from suggestions.service import sanitize_sentence
 
 
@@ -36,3 +36,10 @@ def get_leaderboard(request):
     return JsonResponse(
         {"pageData": serialized_leaderboard, "pageNumber": page_number}
     )
+
+
+@require_GET
+def get_featured_pad_steps(request):
+    pad_steps = PadStep.objects.filter(is_featured=True).all()
+    data = PadStepSerializer(pad_steps, many=True).data
+    return JsonResponse(data, safe=False)

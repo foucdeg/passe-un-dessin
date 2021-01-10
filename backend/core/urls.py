@@ -19,6 +19,11 @@ urlpatterns = [
     ),
     path("suggestions", get_suggestions, name="get_suggestions"),
     path("leaderboard", general.get_leaderboard, name="get_leaderboard"),
+    path(
+        "featured-pad-steps",
+        general.get_featured_pad_steps,
+        name="get_featured_pad_steps",
+    ),
     path("room", room_management.RoomCreationView.as_view(), name="room_creation"),
     path("player", room_management.PlayerView.as_view(), name="player"),
     path("player/me", auth.get_me, name="me"),
