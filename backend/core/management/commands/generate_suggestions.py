@@ -25,18 +25,13 @@ class Command(BaseCommand):
 
         # Build suggestions dictionnary
         print("Build suggestions dictionnary")
-        pad_steps_sentences = (
-            PadStep.objects.filter(step_type=StepType.WORD_TO_DRAWING.value)
+        sentence_list = (
+            PadStep.objects.exclude(step_type=StepType.WORD_TO_DRAWING.value)
             .exclude(sentence__isnull=True)
             .exclude(sentence__exact="")
             .values_list("sentence", flat=True)
         )
-        pads_sentences = (
-            Pad.objects.exclude(sentence__isnull=True)
-            .exclude(sentence__exact="")
-            .values_list("sentence", flat=True)
-        )
-        sentence_list = list(pad_steps_sentences) + list(pads_sentences)
+
         print("{} suggestions to analyze".format(len(sentence_list)))
         suggestions = {}
         for sentence in sentence_list:
