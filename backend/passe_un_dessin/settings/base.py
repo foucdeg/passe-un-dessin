@@ -162,7 +162,7 @@ DEV_EMAILS = ["foucdeg@gmail.com", "quentin.somerville@gmail.com"]
 TWITCH_CONFIG = {
     "CLIENT_ID": os.getenv("CLIENT_ID"),
     "SECRET_KEY": os.getenv("SECRET_KEY"),
-    "GAME_ID": 32982,
+    "GAME_ID": 2094895819,
 }
 
 
