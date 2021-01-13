@@ -5,7 +5,7 @@
   "dependencies": {
     "@formatjs/intl-pluralrules": "4.0.5",
     "@reduxjs/toolkit": "1.5.0",
-    "@sentry/browser": "5.29.2",
+    "@sentry/browser": "5.30.0",
     "awesome-debounce-promise": "2.1.0",
     "babel-polyfill": "6.26.0",
     "copy-to-clipboard": "3.3.1",
