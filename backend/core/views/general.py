@@ -1,13 +1,8 @@
-from django.core.paginator import Paginator
-from django.db.models import Count
-from django.db.models.expressions import F, Window
-from django.db.models.functions.window import Rank
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
 
 from core.models import PadStep, Player
 from core.serializers import PadStepSerializer, PlayerInRankingSerializer
-from suggestions.service import sanitize_sentence
 
 
 @require_GET

@@ -11,6 +11,21 @@ def remove_articles(sentence, language):
         articles = ["un ", "une ", "le ", "la ", "l'", "les ", "des "]
     if language == Language.EN.value:
         articles = ["the ", "a ", "an "]
+    if language == Language.DE.value:
+        articles = [
+            "der ",
+            "die ",
+            "das ",
+            "den ",
+            "dem ",
+            "des ",
+            "ein ",
+            "eine ",
+            "einen ",
+            "einem ",
+            "einer ",
+            "eines "
+        ]
 
     sanitized_sentence = sentence
     for article in articles:

@@ -21,9 +21,11 @@ import MobileGate from './components/MobileGate';
 const locales = {
   fr: flattenMessages(frMessages),
   en: flattenMessages(enMessages),
+  de: flattenMessages(enMessages),
 };
 
-const userLocale = navigator.language.includes('fr') ? 'fr' : 'en';
+const language = navigator.language;
+const userLocale = language.includes('fr') ? 'fr' : language.includes('de') ? 'de' : 'en';
 
 interface Props {
   children: ReactNode;
