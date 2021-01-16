@@ -11,6 +11,8 @@ export const selectSuggestions = (state: RootState) => state.game.suggestions;
 
 export const selectPadViewers = (state: RootState) => state.game.recapViews;
 
+export const selectSelectedPadUuid = (state: RootState) => state.game.selectedPadUuid;
+
 export const selectWinners = (state: RootState) => state.game.winners;
 
 export const selectAvailableVoteCount = (state: RootState) => {

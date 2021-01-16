@@ -5,10 +5,16 @@ import Modal from 'components/Modal';
 import RoundDurationPicker from 'pages/RoomLobby/components/RoundDurationPicker';
 import SecondaryButton from 'atoms/SecondaryButton';
 import { FormattedMessage } from 'react-intl';
-import { useDrawOwnWordSwitch, useRoundDuration, useStartGame } from 'redux/Game/hooks';
+import {
+  useControlledRevealSwitch,
+  useDrawOwnWordSwitch,
+  useRoundDuration,
+  useStartGame,
+} from 'redux/Game/hooks';
 import { selectGame } from 'redux/Game/selectors';
 import { selectRoom } from 'redux/Room/selectors';
 import { useSelector } from 'redux/useSelector';
+import ControlledRevealSwitch from 'pages/RoomLobby/components/ControlledRevealSwitch';
 import { ButtonRow, StyledHeader } from './NewGameModal.style';
 
 interface Props {
@@ -21,6 +27,9 @@ const NewGameModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const game = useSelector(selectGame);
   const [roundDuration, setRoundDuration] = useRoundDuration(game?.round_duration);
   const [drawOwnWord, setDrawOwnWord] = useDrawOwnWordSwitch(game?.draw_own_word);
+  const [controlledReveal, setControlledReveal] = useControlledRevealSwitch(
+    game?.controlled_reveal,
+  );
 
   const doStartGame = useStartGame();
 
@@ -31,6 +40,7 @@ const NewGameModal: React.FC<Props> = ({ isOpen, onClose }) => {
       room.uuid,
       roundDuration,
       drawOwnWord,
+      controlledReveal,
       game.players.map((player) => player.uuid),
     );
     onClose();
@@ -41,13 +51,14 @@ const NewGameModal: React.FC<Props> = ({ isOpen, onClose }) => {
       room.uuid,
       roundDuration,
       drawOwnWord,
+      controlledReveal,
       game.players.map((player) => player.uuid).reverse(),
     );
     onClose();
   };
 
   const startRandomGame = () => {
-    doStartGame(room.uuid, roundDuration, drawOwnWord);
+    doStartGame(room.uuid, roundDuration, drawOwnWord, controlledReveal);
     onClose();
   };
 
@@ -61,6 +72,10 @@ const NewGameModal: React.FC<Props> = ({ isOpen, onClose }) => {
         playerCount={room.players.length}
         drawOwnWord={drawOwnWord}
         setDrawOwnWord={setDrawOwnWord}
+      />
+      <ControlledRevealSwitch
+        controlledReveal={controlledReveal}
+        setControlledReveal={setControlledReveal}
       />
       <ButtonRow>
         <SecondaryButton onClick={startRandomGame}>

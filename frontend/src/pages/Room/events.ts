@@ -17,7 +17,8 @@ enum ROOM_EVENT_TYPE {
   PLAYER_REPLACED = 'PLAYER_REPLACED',
   NEW_ADMIN = 'NEW_ADMIN',
   GAME_STARTS = 'GAME_STARTS',
-  GAME_RECAP_STARTS = 'DEBRIEF_STARTS',
+  REVEAL_STARTS = 'REVEAL_STARTS',
+  DEBRIEF_STARTS = 'DEBRIEF_STARTS',
 }
 
 interface RoomEvent {
@@ -62,11 +63,18 @@ const isGameStartsEvent = (event: RoomEvent): event is GameStartsEvent =>
   event.message_type === ROOM_EVENT_TYPE.GAME_STARTS;
 
 type GameRecapStartsEvent = RoomEvent & {
-  message_type: ROOM_EVENT_TYPE.GAME_RECAP_STARTS;
+  message_type: ROOM_EVENT_TYPE.DEBRIEF_STARTS;
   game: Game;
 };
 const isGameRecapStartsEvent = (event: RoomEvent): event is GameRecapStartsEvent =>
-  event.message_type === ROOM_EVENT_TYPE.GAME_RECAP_STARTS;
+  event.message_type === ROOM_EVENT_TYPE.DEBRIEF_STARTS;
+
+type RevealStartsEvent = RoomEvent & {
+  message_type: ROOM_EVENT_TYPE.REVEAL_STARTS;
+  game: Game;
+};
+const isRevealStartsEvent = (event: RoomEvent): event is RevealStartsEvent =>
+  event.message_type === ROOM_EVENT_TYPE.DEBRIEF_STARTS;
 
 export const useRoomEvents = (
   roomId: string,
@@ -108,7 +116,7 @@ export const useRoomEvents = (
         push(`/room/${roomId}/game/${event.game.uuid}`);
         return;
       }
-      if (isGameRecapStartsEvent(event)) {
+      if (isGameRecapStartsEvent(event) || isRevealStartsEvent(event)) {
         push(`/room/${roomId}/game/${event.game.uuid}/recap`);
         return;
       }

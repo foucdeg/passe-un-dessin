@@ -11,9 +11,10 @@ interface Props {
   pad: Pad;
   publicMode: boolean;
   isPlayerInGame: boolean;
+  isDebriefPhase: boolean;
 }
 
-const PadRecap: React.FC<Props> = ({ pad, publicMode, isPlayerInGame }) => {
+const PadRecap: React.FC<Props> = ({ pad, publicMode, isPlayerInGame, isDebriefPhase }) => {
   const player = useSelector(selectPlayer);
 
   return (
@@ -25,18 +26,22 @@ const PadRecap: React.FC<Props> = ({ pad, publicMode, isPlayerInGame }) => {
             <DrawingRecap
               step={step}
               publicMode={publicMode}
-              canVote={isPlayerInGame && !!player && player.uuid !== step.player.uuid}
+              canVote={
+                isPlayerInGame && !!player && player.uuid !== step.player.uuid && isDebriefPhase
+              }
             />
           ) : (
             <SentenceRecap
               step={step}
               publicMode={publicMode}
-              canVote={isPlayerInGame && !!player && player.uuid !== step.player.uuid}
+              canVote={
+                isPlayerInGame && !!player && player.uuid !== step.player.uuid && isDebriefPhase
+              }
             />
           )}
         </React.Fragment>
       ))}
-      {!publicMode && <RecapRemainingPlayers />}
+      {!publicMode && isDebriefPhase && <RecapRemainingPlayers />}
     </PadRecapRow>
   );
 };

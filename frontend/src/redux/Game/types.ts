@@ -2,6 +2,7 @@ import { Player } from 'redux/Player/types';
 
 export enum GamePhase {
   ROUNDS = 'ROUNDS',
+  REVEAL = 'REVEAL',
   DEBRIEF = 'DEBRIEF',
   VOTE_RESULTS = 'VOTE_RESULTS',
 }
@@ -48,6 +49,7 @@ export interface RawGame {
   current_round: number;
   round_duration: number;
   draw_own_word: boolean;
+  controlled_reveal: boolean;
 }
 
 export type Game = RawGame & {

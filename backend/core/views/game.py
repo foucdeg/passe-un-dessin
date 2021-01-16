@@ -31,6 +31,7 @@ from core.service.game_service import (
     is_valid_sentence,
     start_debrief,
     start_next_round,
+    start_reveal,
     switch_to_vote_results,
 )
 
@@ -285,11 +286,25 @@ def force_state(request, player, game_id):
             start_next_round(game, next_round)
             return HttpResponse(status=204)
 
-        # Requested phase is Debrief - switching from last round
-        if next_phase == GamePhase.DEBRIEF.value:
+        # Requested phase is Reveal - switching from last round
+        if next_phase == GamePhase.REVEAL.value:
+            if not game.controlled_reveal:
+                raise ValueError()
             assert_phase(game, GamePhase.ROUNDS)
             game_round_count = get_round_count(game)
             assert_round(game, game_round_count)
+
+            start_reveal(game)
+            return HttpResponse(status=204)
+
+        # Requested phase is Debrief - switching from last round
+        if next_phase == GamePhase.DEBRIEF.value:
+            if game.controlled_reveal:
+                assert_phase(game, GamePhase.REVEAL)
+            else:
+                assert_phase(game, GamePhase.ROUNDS)
+                game_round_count = get_round_count(game)
+                assert_round(game, game_round_count)
 
             start_debrief(game)
             return HttpResponse(status=204)

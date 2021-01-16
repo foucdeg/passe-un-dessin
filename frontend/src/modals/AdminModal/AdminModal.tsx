@@ -6,7 +6,12 @@ import Modal from 'components/Modal';
 import RoundDurationPicker from 'pages/RoomLobby/components/RoundDurationPicker';
 import SecondaryButton from 'atoms/SecondaryButton';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useDrawOwnWordSwitch, useRoundDuration, useStartGame } from 'redux/Game/hooks';
+import {
+  useDrawOwnWordSwitch,
+  useRoundDuration,
+  useStartGame,
+  useControlledRevealSwitch,
+} from 'redux/Game/hooks';
 import { selectGame } from 'redux/Game/selectors';
 import { Player } from 'redux/Player/types';
 import { useRemovePlayer } from 'redux/Room/hooks';
@@ -14,6 +19,7 @@ import { selectRoom } from 'redux/Room/selectors';
 import { useSelector } from 'redux/useSelector';
 import HorizontalSeparator from 'atoms/HorizontalSeparator';
 import { enumerate } from 'services/utils';
+import ControlledRevealSwitch from 'pages/RoomLobby/components/ControlledRevealSwitch';
 import {
   ButtonRow,
   StyledCrossIcon,
@@ -33,6 +39,9 @@ const AdminModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const game = useSelector(selectGame);
   const [roundDuration, setRoundDuration] = useRoundDuration(game?.round_duration);
   const [drawOwnWord, setDrawOwnWord] = useDrawOwnWordSwitch(game?.draw_own_word);
+  const [controlledReveal, setControlledReveal] = useControlledRevealSwitch(
+    game?.controlled_reveal,
+  );
 
   const intl = useIntl();
 
@@ -66,6 +75,7 @@ const AdminModal: React.FC<Props> = ({ isOpen, onClose }) => {
       room.uuid,
       roundDuration,
       drawOwnWord,
+      controlledReveal,
       game.players.map((player) => player.uuid),
     );
     onClose();
@@ -78,13 +88,14 @@ const AdminModal: React.FC<Props> = ({ isOpen, onClose }) => {
       room.uuid,
       roundDuration,
       drawOwnWord,
+      controlledReveal,
       game.players.map((player) => player.uuid).reverse(),
     );
     onClose();
   };
 
   const startRandomGame = () => {
-    doStartGame(room.uuid, roundDuration, drawOwnWord);
+    doStartGame(room.uuid, roundDuration, drawOwnWord, controlledReveal);
     onClose();
   };
 
@@ -153,6 +164,10 @@ const AdminModal: React.FC<Props> = ({ isOpen, onClose }) => {
             playerCount={room.players.length}
             drawOwnWord={drawOwnWord}
             setDrawOwnWord={setDrawOwnWord}
+          />
+          <ControlledRevealSwitch
+            controlledReveal={controlledReveal}
+            setControlledReveal={setControlledReveal}
           />
           <ButtonRow>
             <SecondaryButton onClick={startRandomGame}>

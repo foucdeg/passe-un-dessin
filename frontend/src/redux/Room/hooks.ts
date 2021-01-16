@@ -75,7 +75,8 @@ export const useLeaveRoom = () => {
 
   return useCallback(async () => {
     if (!room) return;
-    const isOkayToLeave = !game || [GamePhase.DEBRIEF, GamePhase.VOTE_RESULTS].includes(game.phase);
+    const isOkayToLeave =
+      !game || [GamePhase.REVEAL, GamePhase.DEBRIEF, GamePhase.VOTE_RESULTS].includes(game.phase);
 
     if (isOkayToLeave || window.confirm(intl.formatMessage({ id: 'menu.confirmLeave' }))) {
       await client.put(`/room/${room.uuid}/leave`, {});

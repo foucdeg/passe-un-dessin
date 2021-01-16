@@ -124,6 +124,19 @@ class DebriefStartsMessage:
         return DebriefStartsMessageSerializer(self).data
 
 
+class RevealStartsMessage:
+    message_type = "REVEAL_STARTS"
+    game = None
+
+    def __init__(self, game: Game):
+        self.game = game
+
+    def serialize(self):
+        from core.serializers import RevealStartsMessageSerializer
+
+        return RevealStartsMessageSerializer(self).data
+
+
 class PlayerViewingPadMessage:
     message_type = "PLAYER_VIEWING_PAD"
     pad = None

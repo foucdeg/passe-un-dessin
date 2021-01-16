@@ -87,7 +87,10 @@ class Room(BaseModel):
         blank=True,
     )
 
-    friendly_name = models.CharField(max_length=128, default="",)
+    friendly_name = models.CharField(
+        max_length=128,
+        default="",
+    )
 
 
 class Player(BaseModel):
@@ -190,13 +193,18 @@ class PadStep(BaseModel):
         unique_together = ("pad", "round_number")
         ordering = ("round_number",)
         indexes = [
-            models.Index(name="padstep_is_featured_idx", fields=["is_featured"],)
+            models.Index(
+                name="padstep_is_featured_idx",
+                fields=["is_featured"],
+            )
         ]
 
 
 class Vote(BaseModel):
     pad_step = models.ForeignKey(
-        PadStep, on_delete=models.CASCADE, related_name="votes",
+        PadStep,
+        on_delete=models.CASCADE,
+        related_name="votes",
     )
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
 

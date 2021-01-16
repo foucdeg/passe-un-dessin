@@ -8,6 +8,7 @@ from django_eventstream import send_event
 
 from core.messages import (
     DebriefStartsMessage,
+    RevealStartsMessage,
     RoundStartsMessage,
     VoteResultsStartsMessage,
 )
@@ -56,6 +57,7 @@ def initialize_game(
     requested_players_order: List[str],
     round_duration: int,
     draw_own_word: bool,
+    controlled_reveal: bool,
 ):
     logger.debug("Initializing game for room %s" % room.uuid)
 
@@ -67,6 +69,7 @@ def initialize_game(
         room=room,
         round_duration=round_duration,
         draw_own_word=(player_count == 2 or (even_players and draw_own_word)),
+        controlled_reveal=controlled_reveal,
     )
 
     ordered_players = order_players(players, requested_players_order)
@@ -94,7 +97,10 @@ def initialize_pad(game: Game, index: int, players: List[Player]):
         % (pad.uuid.hex[:8], 0, players[index], "INITIAL")
     )
     PadStep.objects.create(
-        pad=pad, player=players[index], round_number=0, step_type="INITIAL",
+        pad=pad,
+        player=players[index],
+        round_number=0,
+        step_type="INITIAL",
     )
 
     for round_number in range(1, step_count + 1):
@@ -124,7 +130,7 @@ def initialize_pad(game: Game, index: int, players: List[Player]):
 def start_next_round(game: Game, new_round: int):
     round_count = get_round_count(game)
     if new_round > round_count:
-        return start_debrief(game)
+        return start_reveal(game) if game.controlled_reveal else start_debrief(game)
     game.current_round = new_round
     game.pads_done = 0
     game.save()
@@ -165,17 +171,41 @@ def switch_to_vote_results(game: Game):
     )
 
 
-def start_debrief(game: Game):
-    game.phase = GamePhase.DEBRIEF.value
+def start_reveal(game: Game):
     game.current_round = 0
     game.pads_done = 0
+    game.phase = GamePhase.REVEAL.value
+    message = RevealStartsMessage(game).serialize()
+
     game.save()
-    message = DebriefStartsMessage(game).serialize()
     send_event(
-        "game-%s" % game.uuid.hex, "message", message,
+        "game-%s" % game.uuid.hex,
+        "message",
+        message,
     )
     send_event(
-        "room-%s" % game.room.uuid.hex, "message", message,
+        "room-%s" % game.room.uuid.hex,
+        "message",
+        message,
+    )
+
+
+def start_debrief(game: Game):
+    game.current_round = 0
+    game.pads_done = 0
+    game.phase = GamePhase.DEBRIEF.value
+    message = DebriefStartsMessage(game).serialize()
+
+    game.save()
+    send_event(
+        "game-%s" % game.uuid.hex,
+        "message",
+        message,
+    )
+    send_event(
+        "room-%s" % game.room.uuid.hex,
+        "message",
+        message,
     )
 
 

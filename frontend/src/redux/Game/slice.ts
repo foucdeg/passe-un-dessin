@@ -10,6 +10,7 @@ export type GameState = Readonly<{
   remainingPlayers: Player[];
   suggestions: string[];
   recapViews: { [padUuid: string]: Player[] };
+  selectedPadUuid: string | null;
   winners: PadStep[] | null;
 }>;
 
@@ -20,6 +21,7 @@ const initialState: GameState = {
   remainingPlayers: [],
   suggestions: [],
   recapViews: {},
+  selectedPadUuid: null,
   winners: null,
 } as GameState;
 
@@ -46,6 +48,7 @@ const gameSlice = createSlice({
 
       const firstPadUUID = state.game.pads[0].uuid;
       state.recapViews[firstPadUUID] = [...state.game.players];
+      state.selectedPadUuid = firstPadUUID;
       state.suggestions = [];
       state.viewingAsPublic = action.payload.asPublic;
     },
@@ -107,6 +110,14 @@ const gameSlice = createSlice({
       }
       state.recapViews[action.payload.pad.uuid].push(action.payload.player);
     },
+    setSelectedPadUuid: (state, action: PayloadAction<string>) => {
+      state.selectedPadUuid = action.payload;
+    },
+    setSelectedPadFromEvents: (state, action: PayloadAction<{ pad: Pad }>) => {
+      if (state.game?.phase === GamePhase.REVEAL) {
+        state.selectedPadUuid = action.payload.pad.uuid;
+      }
+    },
     setWinners: (state, action: PayloadAction<PadStep[]>) => {
       state.winners = action.payload;
     },
@@ -120,6 +131,7 @@ const gameSlice = createSlice({
       state.remainingPlayers = [];
       state.suggestions = [];
       state.recapViews = {};
+      state.selectedPadUuid = null;
       state.winners = null;
     },
   },
@@ -132,6 +144,8 @@ export const {
   markPlayerNotFinished,
   setSuggestions,
   setPlayerViewingPad,
+  setSelectedPadUuid,
+  setSelectedPadFromEvents,
   setWinners,
   addVoteToPadStep,
   removeVoteFromPadStep,

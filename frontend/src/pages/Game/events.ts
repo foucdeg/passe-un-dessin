@@ -5,6 +5,7 @@ import {
   markPlayerFinished,
   markPlayerNotFinished,
   setPlayerViewingPad,
+  setSelectedPadFromEvents,
   startRound,
 } from 'redux/Game';
 import { useFetchGame } from 'redux/Game/hooks';
@@ -21,6 +22,7 @@ enum GAME_EVENT_TYPE {
   PLAYER_FINISHED = 'PLAYER_FINISHED',
   PLAYER_NOT_FINISHED = 'PLAYER_NOT_FINISHED',
   ROUND_STARTS = 'ROUND_STARTS',
+  REVEAL_STARTS = 'REVEAL_STARTS',
   DEBRIEF_STARTS = 'DEBRIEF_STARTS',
   PLAYER_VIEWING_PAD = 'PLAYER_VIEWING_PAD',
   VOTE_RESULTS_STARTS = 'VOTE_RESULTS_STARTS',
@@ -50,6 +52,12 @@ type RoundStartsEvent = GameEvent & {
 };
 const isRoundStartsEvent = (event: GameEvent): event is RoundStartsEvent =>
   event.message_type === GAME_EVENT_TYPE.ROUND_STARTS;
+
+type RevealStartsEvent = GameEvent & {
+  message_type: GAME_EVENT_TYPE.REVEAL_STARTS;
+};
+const isRevealStartsEvent = (event: GameEvent): event is RevealStartsEvent =>
+  event.message_type === GAME_EVENT_TYPE.REVEAL_STARTS;
 
 type DebriefStartsEvent = GameEvent & {
   message_type: GAME_EVENT_TYPE.DEBRIEF_STARTS;
@@ -107,13 +115,14 @@ const useGameEvents = (gameId: string) => {
         push(`/room/${room.uuid}/game/${gameStructure.uuid}/step/${targetStep.uuid}`);
         return;
       }
-      if (isDebriefStartsEvent(event)) {
+      if (isDebriefStartsEvent(event) || isRevealStartsEvent(event)) {
         dispatch(resetStep());
         doFetchGame(gameStructure.uuid, true);
         push(`/room/${room.uuid}/game/${gameStructure.uuid}/recap`);
         return;
       }
       if (isPlayerViewingPadEvent(event)) {
+        dispatch(setSelectedPadFromEvents({ pad: event.pad }));
         dispatch(setPlayerViewingPad({ player: event.player, pad: event.pad }));
         return;
       }

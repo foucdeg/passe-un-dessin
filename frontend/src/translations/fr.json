@@ -47,6 +47,9 @@
     "label": "Nombre de tours :",
     "upperRoundCount": "{roundCount}, mais on commence en dessinant son propre mot"
   },
+  "controlledRevealSwitch": {
+    "label": "Révélation synchronisée:"
+  },
   "padInit": {
     "chooseSentence": "Choisis un mot ou une phrase :",
     "placeholder": "Une girafe ?",
@@ -83,7 +86,8 @@
     "confirmForceNextStep": "Es-tu sûr.e de vouloir passer à l'étape suivante ? Nous n'avons pas reçu tous les votes de tout le monde.",
     "availableVotes": "Votes restants :",
     "noMoreVotes": "Plus de votes restants",
-    "voteResults": "🏆 Résultats du vote"
+    "voteResults": "🏆 Résultats du vote",
+    "startVotingPhase": "Commencer le vote"
   },
   "voteResults": {
     "newGame": "Nouvelle partie ?",

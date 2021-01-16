@@ -11,9 +11,10 @@ interface Props {
   isActive: boolean;
   onClick: () => void;
   publicMode?: boolean;
+  isDebriefPhase: boolean;
 }
 
-const PadTab: React.FC<Props> = ({ pad, isActive, onClick, publicMode }) => {
+const PadTab: React.FC<Props> = ({ pad, isActive, onClick, publicMode, isDebriefPhase }) => {
   const allViewers = useSelector(selectPadViewers);
   const player = useSelector(selectPlayer);
   const padViewers = allViewers[pad.uuid];
@@ -23,7 +24,7 @@ const PadTab: React.FC<Props> = ({ pad, isActive, onClick, publicMode }) => {
   return (
     <PadTabContainer isActive={isActive} onClick={onClick}>
       {pad.steps[0].player.name}
-      {!publicMode && (
+      {!publicMode && isDebriefPhase && (
         <ViewersContainer onClick={(e) => e.preventDefault()}>
           {padViewers
             .filter((viewer) => player && viewer.uuid !== player.uuid)
