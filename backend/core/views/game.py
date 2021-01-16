@@ -297,7 +297,7 @@ def force_state(request, player, game_id):
             start_reveal(game)
             return HttpResponse(status=204)
 
-        # Requested phase is Debrief - switching from last round
+        # Requested phase is Debrief - switching from last round or from Reveal
         if next_phase == GamePhase.DEBRIEF.value:
             if game.controlled_reveal:
                 assert_phase(game, GamePhase.REVEAL)
