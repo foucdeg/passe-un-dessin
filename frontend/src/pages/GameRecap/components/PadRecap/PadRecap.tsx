@@ -11,32 +11,30 @@ interface Props {
   pad: Pad;
   publicMode: boolean;
   isPlayerInGame: boolean;
+  isDebriefPhase: boolean;
 }
 
-const PadRecap: React.FC<Props> = ({ pad, publicMode, isPlayerInGame }) => {
+const PadRecap: React.FC<Props> = ({ pad, publicMode, isPlayerInGame, isDebriefPhase }) => {
   const player = useSelector(selectPlayer);
 
   return (
     <PadRecapRow>
-      {pad.steps.map((step, index) => (
-        <React.Fragment key={step.uuid}>
-          {index > 0 && <ArrowSpacer />}
-          {step.step_type === StepType.WORD_TO_DRAWING ? (
-            <DrawingRecap
-              step={step}
-              publicMode={publicMode}
-              canVote={isPlayerInGame && !!player && player.uuid !== step.player.uuid}
-            />
-          ) : (
-            <SentenceRecap
-              step={step}
-              publicMode={publicMode}
-              canVote={isPlayerInGame && !!player && player.uuid !== step.player.uuid}
-            />
-          )}
-        </React.Fragment>
-      ))}
-      {!publicMode && <RecapRemainingPlayers />}
+      {pad.steps.map((step, index) => {
+        const canVote =
+          isPlayerInGame && !!player && player.uuid !== step.player.uuid && isDebriefPhase;
+
+        return (
+          <React.Fragment key={step.uuid}>
+            {index > 0 && <ArrowSpacer />}
+            {step.step_type === StepType.WORD_TO_DRAWING ? (
+              <DrawingRecap step={step} publicMode={publicMode} canVote={canVote} />
+            ) : (
+              <SentenceRecap step={step} publicMode={publicMode} canVote={canVote} />
+            )}
+          </React.Fragment>
+        );
+      })}
+      {!publicMode && isDebriefPhase && <RecapRemainingPlayers />}
     </PadRecapRow>
   );
 };

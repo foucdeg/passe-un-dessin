@@ -183,6 +183,7 @@ class GameSerializer(BaseSerializer):
             "participants",
             "round_duration",
             "draw_own_word",
+            "controlled_reveal",
             "phase",
             "current_round",
             "pads",
@@ -236,6 +237,10 @@ class RoundStartsMessageSerializer(MessageSerializer):
 
 
 class DebriefStartsMessageSerializer(MessageSerializer):
+    game = GameIdSerializer()
+
+
+class RevealStartsMessageSerializer(MessageSerializer):
     game = GameIdSerializer()
 
 

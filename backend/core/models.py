@@ -17,6 +17,7 @@ def random_color():
 class GamePhase(Enum):
     INIT = "INIT"  # deprecated
     ROUNDS = "ROUNDS"
+    REVEAL = "REVEAL"
     DEBRIEF = "DEBRIEF"
     VOTE_RESULTS = "VOTE_RESULTS"
 
@@ -128,6 +129,7 @@ class Game(BaseModel):
     current_round = models.IntegerField(default=0)
     pads_done = models.IntegerField(default=0)
     draw_own_word = models.BooleanField(default=True)
+    controlled_reveal = models.BooleanField(default=False)
 
     def rounds(self):
         def sort_fn(step: PadStep):

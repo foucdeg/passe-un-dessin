@@ -1,17 +1,19 @@
 /* eslint-disable react/no-array-index-key */
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useSelector } from 'redux/useSelector';
-import { GamePhase, Pad } from 'redux/Game/types';
-import { selectRoom } from 'redux/Room/selectors';
-import { selectGame } from 'redux/Game/selectors';
+import { Game, GamePhase, Pad } from 'redux/Game/types';
+import { selectPlayerIsAdmin, selectRoom } from 'redux/Room/selectors';
+import { selectGame, selectSelectedPadUuid } from 'redux/Game/selectors';
 import { FormattedMessage } from 'react-intl';
-import { useReviewPad } from 'redux/Game/hooks';
+import { useForceState, useReviewPad } from 'redux/Game/hooks';
 import { selectAvailableVoteCount } from 'redux/Game/selectors';
 
 import { tabHandlerBuilder } from 'services/utils';
 import { selectPlayer } from 'redux/Player/selectors';
 import Loader from 'atoms/Loader';
+import { useDispatch } from 'react-redux';
+import { setSelectedPadUuid } from 'redux/Game';
 import { ThumbUpButton } from './components/ReactionOverlay/ReactionOverlay.style';
 import PadTab from './components/PadTab';
 
@@ -21,6 +23,7 @@ import {
   TopRow,
   PadTabs,
   VoteReminder,
+  StartVotingPhase,
 } from './GameRecap.style';
 import PadRecap from './components/PadRecap';
 import RecapTab from './components/RecapTab';
@@ -30,41 +33,48 @@ interface Props {
   publicMode?: boolean;
 }
 
+const getSelectedPadIndex = (game: Game, selectedPadUuid: string | null): number =>
+  game.pads.findIndex(({ uuid }) => uuid === selectedPadUuid);
+
 const GameRecap: React.FunctionComponent<Props> = ({ publicMode = false }) => {
+  const dispatch = useDispatch();
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
+  const [, doForceState] = useForceState();
   const player = useSelector(selectPlayer);
   const availableVoteCount = useSelector(selectAvailableVoteCount);
-
-  const [displayedPadIndex, setDisplayedPadIndex] = useState<number>(0);
+  const isAdmin = useSelector(selectPlayerIsAdmin);
+  const selectedPadUuid = useSelector(selectSelectedPadUuid);
 
   const doReviewPad = useReviewPad();
 
-  const selectPad = useCallback(
-    (index: number) => {
+  const setSelectedPad = useCallback(
+    (padUuid: string) => {
       if (!game) return;
       if (!publicMode) {
-        doReviewPad(game.pads[index]);
+        doReviewPad(game.pads.find(({ uuid }) => uuid === padUuid) as Pad);
       }
-      setDisplayedPadIndex(index);
+      dispatch(setSelectedPadUuid(padUuid));
     },
-    [setDisplayedPadIndex, doReviewPad, game, publicMode],
+    [dispatch, doReviewPad, game, publicMode],
   );
 
   const selectNextPad = useCallback(() => {
     if (!game) return;
     const maxPadIndex = publicMode ? game.pads.length : game.pads.length - 1;
+    const displayedPadIndex = getSelectedPadIndex(game, selectedPadUuid);
     if (displayedPadIndex + 1 <= maxPadIndex) {
-      selectPad(displayedPadIndex + 1);
+      setSelectedPad(game.pads[displayedPadIndex + 1].uuid);
     }
-  }, [game, publicMode, displayedPadIndex, selectPad]);
+  }, [game, publicMode, setSelectedPad, selectedPadUuid]);
 
   const selectPreviousPad = useCallback(() => {
     if (!game) return;
+    const displayedPadIndex = getSelectedPadIndex(game, selectedPadUuid);
     if (displayedPadIndex - 1 >= 0) {
-      selectPad(displayedPadIndex - 1);
+      setSelectedPad(game.pads[displayedPadIndex + 1].uuid);
     }
-  }, [game, displayedPadIndex, selectPad]);
+  }, [game, setSelectedPad, selectedPadUuid]);
 
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
@@ -88,9 +98,10 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode = false }) => {
 
   if (!publicMode && !room) return loadingView;
 
-  if (![GamePhase.DEBRIEF, GamePhase.VOTE_RESULTS].includes(game.phase)) return loadingView;
+  if (![GamePhase.REVEAL, GamePhase.DEBRIEF, GamePhase.VOTE_RESULTS].includes(game.phase))
+    return loadingView;
 
-  const displayedPad: Pad | undefined = game.pads[displayedPadIndex];
+  const displayedPad: Pad | undefined = game.pads.find(({ uuid }) => uuid === selectedPadUuid);
   const isVoteResultsDisplayed = displayedPad === undefined;
   const isPlayerInGame =
     !!player && !!game.players.find((gamePlayer) => gamePlayer.uuid === player.uuid);
@@ -98,8 +109,11 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode = false }) => {
   const selectResults = () => {
     if (!publicMode) return;
 
-    setDisplayedPadIndex(game.pads.length);
+    setSelectedPad('');
   };
+
+  const isDebriefPhase = game.phase === GamePhase.DEBRIEF;
+  const canChangeTabs = isAdmin || isDebriefPhase || publicMode;
 
   return (
     <>
@@ -110,22 +124,39 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode = false }) => {
               <PadTab
                 publicMode={publicMode}
                 key={pad.uuid}
-                isActive={index === displayedPadIndex}
-                onClick={() => selectPad(index)}
+                isActive={pad.uuid === selectedPadUuid}
+                onClick={() => canChangeTabs && setSelectedPad(pad.uuid)}
                 pad={pad}
+                isDebriefPhase={isDebriefPhase}
               />
             ))}
             {publicMode && <RecapTab isActive={isVoteResultsDisplayed} onClick={selectResults} />}
           </PadTabs>
+          <div>
+            {isAdmin && !isDebriefPhase && (
+              <StartVotingPhase
+                onClick={() => {
+                  doForceState();
+                }}
+              >
+                <FormattedMessage id="recap.startVotingPhase" />
+              </StartVotingPhase>
+            )}
+          </div>
         </TopRow>
         <GameRecapContainer>
           {displayedPad && (
-            <PadRecap pad={displayedPad} publicMode={publicMode} isPlayerInGame={isPlayerInGame} />
+            <PadRecap
+              pad={displayedPad}
+              publicMode={publicMode}
+              isPlayerInGame={isPlayerInGame}
+              isDebriefPhase={isDebriefPhase}
+            />
           )}
           {publicMode && isVoteResultsDisplayed && <VoteResultsTab />}
         </GameRecapContainer>
       </OuterRecapContainer>
-      {!publicMode && isPlayerInGame && (
+      {!publicMode && isPlayerInGame && isDebriefPhase && (
         <VoteReminder>
           {availableVoteCount ? (
             <>

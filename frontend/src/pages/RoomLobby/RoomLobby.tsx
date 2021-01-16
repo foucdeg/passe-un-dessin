@@ -8,6 +8,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { MAX_PLAYERS, MIN_PLAYERS } from 'redux/Game/constants';
 import {
   useCheckIfPlayerShouldJoin,
+  useControlledRevealSwitch,
   useDrawOwnWordSwitch,
   useRoundDuration,
   useStartGame,
@@ -33,6 +34,7 @@ import {
   PlayerList,
   AvatarWithName,
 } from './RoomLobby.style';
+import ControlledRevealSwitch from './components/ControlledRevealSwitch';
 
 const Room: React.FunctionComponent = () => {
   const doJoinRoom = useJoinRoom();
@@ -44,6 +46,7 @@ const Room: React.FunctionComponent = () => {
   const [inputText, setInputText] = useState<string>(document.location.href);
   const [roundDuration, setRoundDuration] = useRoundDuration();
   const [drawOwnWord, setDrawOwnWord] = useDrawOwnWordSwitch();
+  const [controlledReveal, setControlledReveal] = useControlledRevealSwitch();
 
   const intl = useIntl();
 
@@ -115,6 +118,10 @@ const Room: React.FunctionComponent = () => {
             drawOwnWord={drawOwnWord}
             setDrawOwnWord={setDrawOwnWord}
           />
+          <ControlledRevealSwitch
+            controlledReveal={controlledReveal}
+            setControlledReveal={setControlledReveal}
+          />
         </>
       )}
       <PlayerList>
@@ -152,7 +159,9 @@ const Room: React.FunctionComponent = () => {
               <HelpText>
                 <FormattedMessage id="roomLobby.isEveryoneThere" />
               </HelpText>
-              <Button onClick={() => doStartGame(room.uuid, roundDuration, drawOwnWord)}>
+              <Button
+                onClick={() => doStartGame(room.uuid, roundDuration, drawOwnWord, controlledReveal)}
+              >
                 <FormattedMessage id="roomLobby.play" />
               </Button>
             </>

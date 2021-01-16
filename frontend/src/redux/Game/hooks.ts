@@ -11,7 +11,11 @@ import client from 'services/networking/client';
 import { wait } from 'services/utils';
 import { Room } from 'redux/Room/types';
 import { useAsyncFn } from 'react-use';
-import { DEFAULT_DRAW_OWN_WORD_BOOL, DEFAULT_ROUND_DURATION } from './constants';
+import {
+  DEFAULT_CONTROLLED_REVEAL_BOOL,
+  DEFAULT_DRAW_OWN_WORD_BOOL,
+  DEFAULT_ROUND_DURATION,
+} from './constants';
 import { selectGame } from './selectors';
 import {
   setSuggestions,
@@ -63,7 +67,7 @@ export const useRefreshGame = () => {
 
     const updatedGame: Game = await client.get(`/game/${game.uuid}`);
 
-    if ([GamePhase.DEBRIEF, GamePhase.VOTE_RESULTS].includes(updatedGame.phase)) {
+    if ([GamePhase.REVEAL, GamePhase.DEBRIEF, GamePhase.VOTE_RESULTS].includes(updatedGame.phase)) {
       const updatedRoom: Room = await client.get(`/room/${room.uuid}`);
 
       if (updatedRoom.current_game_id !== updatedGame.uuid) {
@@ -85,6 +89,7 @@ export const useStartGame = () => {
       roomId: string,
       roundDuration: number,
       drawOwnWord: boolean,
+      controlledReveal: boolean,
       playersOrder?: string[] | null,
     ) => {
       try {
@@ -92,6 +97,7 @@ export const useStartGame = () => {
           roundDuration,
           playersOrder,
           drawOwnWord,
+          controlledReveal,
         });
         const gtag = (window as any).gtag; // eslint-disable-line @typescript-eslint/no-explicit-any
         gtag('event', 'start_game', {
@@ -99,6 +105,7 @@ export const useStartGame = () => {
         });
         localStorage.setItem('preferredRoundDuration', roundDuration.toString());
         localStorage.setItem('prefferedDrawOwnWord', drawOwnWord.toString());
+        localStorage.setItem('controlledReveal', controlledReveal.toString());
         history.push(`/room/${roomId}/game/${gameId}`);
       } catch (e) {
         alert('Error - see console');
@@ -175,6 +182,18 @@ export const useDrawOwnWordSwitch = (initialValue?: boolean) => {
   );
 };
 
+export const useControlledRevealSwitch = (initialValue?: boolean) => {
+  const useControlledRevealStr = localStorage.getItem('controlledReveal');
+
+  return useState<boolean>(
+    initialValue !== undefined
+      ? initialValue
+      : useControlledRevealStr !== null
+      ? useControlledRevealStr === 'true'
+      : DEFAULT_CONTROLLED_REVEAL_BOOL,
+  );
+};
+
 export const useSaveVote = () => {
   const dispatch = useDispatch();
   const player = useSelector(selectPlayer);
@@ -227,7 +246,7 @@ export const useCheckIfPlayerShouldJoin = () => {
         const response = await client.get(`/game/${gameId}/player-should-join`);
         if (
           response.is_in_game ||
-          [GamePhase.DEBRIEF, GamePhase.VOTE_RESULTS].includes(response.phase)
+          [GamePhase.REVEAL, GamePhase.DEBRIEF, GamePhase.VOTE_RESULTS].includes(response.phase)
         ) {
           push(`/room/${room.uuid}/game/${gameId}`);
         }

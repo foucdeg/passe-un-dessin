@@ -127,6 +127,7 @@ def start_game(request, room_id):
     players_order = json_body.get("playersOrder", None)
     round_duration = json_body.get("roundDuration")
     draw_own_word = json_body.get("drawOwnWord")
+    controlled_reveal = json_body.get("controlledReveal")
 
     try:
         room = Room.objects.get(uuid=room_id)
@@ -137,12 +138,20 @@ def start_game(request, room_id):
             game.phase = GamePhase.VOTE_RESULTS.value
             game.save()
 
-        game = initialize_game(room, players_order, round_duration, draw_own_word)
+        game = initialize_game(
+            room,
+            players_order,
+            round_duration,
+            draw_own_word,
+            controlled_reveal,
+        )
         room.current_game = game
         room.save()
 
         send_event(
-            "room-%s" % room.uuid.hex, "message", GameStartsMessage(game).serialize(),
+            "room-%s" % room.uuid.hex,
+            "message",
+            GameStartsMessage(game).serialize(),
         )
 
         return JsonResponse({"game_id": game.uuid.hex})

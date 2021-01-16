@@ -2,7 +2,7 @@ import { Game, GamePhase } from 'redux/Game/types';
 import { Player } from 'redux/Player/types';
 import { Room } from 'redux/Room/types';
 
-export const getRedirectPath = (room: Room, game: Game, player: Player) => {
+export const getRedirectPath = (room: Room, game: Game, player: Player): string => {
   switch (game.phase) {
     case GamePhase.ROUNDS:
       const playerStep = game.rounds.find(
@@ -14,6 +14,8 @@ export const getRedirectPath = (room: Room, game: Game, player: Player) => {
         );
       }
       return `/room/${room.uuid}/game/${game.uuid}/step/${playerStep.uuid}`;
+    case GamePhase.REVEAL:
+      return `/room/${room.uuid}/game/${game.uuid}/recap`;
     case GamePhase.DEBRIEF:
       return `/room/${room.uuid}/game/${game.uuid}/recap`;
     case GamePhase.VOTE_RESULTS:
@@ -43,7 +45,7 @@ export const getReorderedPlayers = (game: Game, player: Player): Player[] => {
   return currentPlayerPad.steps.map((step) => step.player);
 };
 
-export const getNextPhaseAndRound = (game: Game) => {
+export const getNextPhaseAndRound = (game: Game): [GamePhase, number] => {
   switch (game.phase) {
     case GamePhase.ROUNDS: {
       const nextRoundNumber = (game.current_round || 0) + 1;
@@ -54,6 +56,8 @@ export const getNextPhaseAndRound = (game: Game) => {
       }
       return [GamePhase.ROUNDS, nextRoundNumber];
     }
+    case GamePhase.REVEAL:
+      return [GamePhase.DEBRIEF, 0];
     case GamePhase.DEBRIEF:
     case GamePhase.VOTE_RESULTS:
       return [GamePhase.VOTE_RESULTS, 0];

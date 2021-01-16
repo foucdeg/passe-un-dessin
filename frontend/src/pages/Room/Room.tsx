@@ -57,7 +57,7 @@ const Room: React.FunctionComponent = () => {
   const shouldShowPlayerLeftModal =
     playerWhoLeft &&
     game &&
-    ![GamePhase.DEBRIEF, GamePhase.VOTE_RESULTS].includes(game.phase) &&
+    ![GamePhase.REVEAL, GamePhase.DEBRIEF, GamePhase.VOTE_RESULTS].includes(game.phase) &&
     game.players.map((gamePlayer) => gamePlayer.uuid).includes(playerWhoLeft.uuid);
 
   return (

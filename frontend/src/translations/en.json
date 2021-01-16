@@ -47,6 +47,9 @@
     "label": "Number of rounds:",
     "upperRoundCount": "{roundCount}, but we begin by drawing our own word"
   },
+  "controlledRevealSwitch": {
+    "label": "Synced revelation:"
+  },
   "padInit": {
     "chooseSentence": "Pick a word or sentence:",
     "placeholder": "A giraffe?",
@@ -83,7 +86,8 @@
     "confirmForceNextStep": "Are you sure you want to skip to next step? We didn't get everybody's votes.",
     "availableVotes": "Remaining votes:",
     "noMoreVotes": "No remaining votes",
-    "voteResults": "🏆 Résultats du vote"
+    "voteResults": "🏆 Vote results",
+    "startVotingPhase": "Start Voting"
   },
   "voteResults": {
     "newGame": "New game?",
