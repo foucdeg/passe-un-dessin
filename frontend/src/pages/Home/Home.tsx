@@ -88,7 +88,7 @@ const Home: React.FunctionComponent = () => {
                 <FormattedMessage id="home.joinDiscord" />
               </StyledSecondaryButton>
             </BareAnchor>
-            {currentStreamsCount && (
+            {!!currentStreamsCount && (
               <StyledSecondaryButton onClick={openTwitchModal}>
                 <FormattedMessage id="home.twitchStreams" values={{ currentStreamsCount }} />
               </StyledSecondaryButton>
