@@ -113,7 +113,7 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode = false }) => {
   };
 
   const isDebriefPhase = game.phase === GamePhase.DEBRIEF;
-  const canChangeTabs = isAdmin || isDebriefPhase;
+  const canChangeTabs = isAdmin || isDebriefPhase || publicMode;
 
   return (
     <>
