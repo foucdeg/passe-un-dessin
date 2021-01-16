@@ -26,7 +26,7 @@ const ScoreCard: React.FC<Props> = ({
     <Label color={color}>{label}</Label>
     {loading ? <Loader /> : <Value color={color}>{value}</Value>}
     {linkTo && linkToLabelId && (
-      <StyledLink to={linkTo} color={color} target="_blank">
+      <StyledLink to={linkTo} color={color} target="_blank" rel="noreferrer">
         <FormattedMessage id={linkToLabelId} />
       </StyledLink>
     )}

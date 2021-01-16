@@ -130,6 +130,7 @@ const Room: React.FunctionComponent = () => {
             <BareLink
               to={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', player.uuid)}
               target="_blank"
+              rel="noreferrer"
             >
               <Avatar player={player} />
               <PlayerName color={player.color}>{player.name}</PlayerName>

@@ -10,15 +10,7 @@ from google.auth.transport import requests
 from google.oauth2 import id_token
 
 from core.messages import PlayerReplacedMessage
-from core.models import (
-    Pad,
-    PadStep,
-    Player,
-    PlayerGameParticipation,
-    Room,
-    User,
-    Vote,
-)
+from core.models import Pad, PadStep, Player, PlayerGameParticipation, Room, User, Vote
 
 from .facebook_client import get_user_email, verify_token
 
@@ -137,6 +129,7 @@ def merge_players(from_player: Player, into_player: Player):
 
     if from_player.room is not None:
         into_player.room = from_player.room
+        into_player.total_score += from_player.total_score
         into_player.save()
         send_event(
             "room-%s" % from_player.room.uuid.hex,
