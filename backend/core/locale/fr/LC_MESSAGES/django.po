@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-04 22:00+0000\n"
+"POT-Creation-Date: 2021-01-17 16:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: core/models.py:102
+#: core/models.py:104
 msgid "email address"
 msgstr "adresse mail"
 
+#: core/templates/general/desktop_access_body.txt:1
+msgid "email.desktop_access.headline"
+msgstr "Bonjour,"
+
+#: core/templates/general/desktop_access_body.txt:3
+msgid "email.desktop_access.requested"
+msgstr ""
+"Tu as demandé (a priori) un lien pour accéder à Passe un Dessin sur ton "
+"ordinateur ou tablette."
+
+#: core/templates/general/desktop_access_body.txt:5
+#, python-format
+msgid "email.desktop_access.click_link %(url)s"
+msgstr "Clique sur ce lien pour accéder au jeu : %(url)s"
+
+#: core/templates/general/desktop_access_body.txt:7
+msgid "email.desktop_access.bye"
+msgstr "À bientôt !"
+
+#: core/templates/general/desktop_access_subj.txt:1
+msgid "email.desktop_access.subject"
+msgstr "Lien vers Passe un Dessin"
+
 #: core/templates/registration/password_reset_body.txt:1
+#, python-format
 msgid "email.password_reset.headline %(player)s"
 msgstr "Salut %(player)s,"
 
@@ -33,8 +57,11 @@ msgstr ""
 "Dessin."
 
 #: core/templates/registration/password_reset_body.txt:5
+#, python-format
 msgid "email.password_reset.click_link %(reset_password_url)s"
-msgstr "Clique sur ce lien pour choisir ton nouveau mot de passe : %(reset_password_url)s"
+msgstr ""
+"Clique sur ce lien pour choisir ton nouveau mot de passe : "
+"%(reset_password_url)s"
 
 #: core/templates/registration/password_reset_body.txt:7
 msgid "email.password_reset.nicer_email"

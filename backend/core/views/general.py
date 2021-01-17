@@ -1,5 +1,10 @@
-from django.http import JsonResponse
-from django.views.decorators.http import require_GET
+import json
+
+from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.template.loader import render_to_string
+from django.views.decorators.http import require_GET, require_POST
 
 from core.models import PadStep, Player
 from core.serializers import PadStepSerializer, PlayerSerializer
@@ -38,3 +43,27 @@ def get_featured_pad_steps(request):
     pad_steps = PadStep.objects.filter(is_featured=True).all()
     data = PadStepSerializer(pad_steps, many=True).data
     return JsonResponse(data, safe=False)
+
+
+@require_POST
+def send_email_for_desktop_access(request):
+    json_body = json.loads(request.body)
+
+    try:
+        email = json_body["email"]
+    except KeyError:
+        return HttpResponseBadRequest("Email not provided")
+
+    context = {
+        "url": settings.MAIN_FRONTEND,
+    }
+
+    email_subject = render_to_string("general/desktop_access_subj.txt")
+    email_body = render_to_string("general/desktop_access_body.txt", context)
+
+    msg = EmailMultiAlternatives(
+        email_subject, email_body, settings.DEFAULT_FROM_EMAIL, [email],
+    )
+    msg.send()
+
+    return HttpResponse(status=201)
