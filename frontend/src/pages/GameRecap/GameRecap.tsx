@@ -72,7 +72,7 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode = false }) => {
     if (!game) return;
     const displayedPadIndex = getSelectedPadIndex(game, selectedPadUuid);
     if (displayedPadIndex - 1 >= 0) {
-      setSelectedPad(game.pads[displayedPadIndex + 1].uuid);
+      setSelectedPad(game.pads[displayedPadIndex - 1].uuid);
     }
   }, [game, setSelectedPad, selectedPadUuid]);
 
