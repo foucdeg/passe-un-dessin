@@ -24,7 +24,7 @@ export const getRedirectPath = (room: Room, game: Game, player: Player): string 
 };
 
 export const getAvailableVoteCount = (game: Game): number => {
-  const stepCount = game.pads[0].steps.length;
+  const stepCount = game.pads[0].steps.length - 1;
   const playerCount = game.players.length;
   const choiceCount = stepCount * (playerCount - 1);
   return Math.max(1, Math.round(Math.sqrt(0.6 * choiceCount - 1)));
