@@ -31,18 +31,18 @@ export const getAvailableVoteCount = (game: Game): number => {
 };
 
 export const getReorderedPlayers = (game: Game, player: Player): Player[] => {
-  const currentPlayerPad = game.pads.find((pad) =>
+  const currentPad = game.pads.find((pad) =>
     pad.steps.some(
       (step) => step.round_number === game.current_round && step.player.uuid === player.uuid,
     ),
   );
-  if (!currentPlayerPad) {
+  if (!currentPad) {
     throw new Error(
       `Step for player ${player.uuid} and round ${game.current_round} not found in game ${game.uuid}`,
     );
   }
 
-  return currentPlayerPad.steps.map((step) => step.player);
+  return currentPad.steps.map((step) => step.player);
 };
 
 export const getNextPhaseAndRound = (game: Game): [GamePhase, number] => {
