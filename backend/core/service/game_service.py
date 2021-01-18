@@ -102,9 +102,9 @@ def initialize_pad(game: Game, index: int, players: List[Player]):
 
     for round_number in range(1, step_count + 1):
         step_player = (
-            players[(index + round_number) % player_count]
+            players[(index + round_number - 1) % player_count]
             if game.draw_own_word
-            else players[(index + round_number + 1) % player_count]
+            else players[(index + round_number) % player_count]
         )
         step_type = (
             StepType.DRAWING_TO_WORD
