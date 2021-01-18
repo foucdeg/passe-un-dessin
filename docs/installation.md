@@ -2,8 +2,8 @@
 
 ## Prerequisites
 
-- Node 12.19.0 (see frontend/.nvmrc)
-- python (see exact version in `backend/pyproject.toml`)
+- Node 12.19.0 (requires approx. version specified in `frontend/.nvmrc`, but LTS is fine)
+- python 3 (requires exact version in `backend/pyproject.toml`)
 - [yarn v1](https://classic.yarnpkg.com/en/docs/install/)
 - docker
 - docker-compose
@@ -15,15 +15,13 @@
 
 ```
 make certs
-cd frontend
-yarn # install dependencies
+cd frontend && yarn
 ```
 
 **Install drawing-renderer dependencies locally:**
 
 ```
-cd drawing-renderer
-yarn # install dependencies
+cd drawing-renderer && yarn
 ```
 
 **Install backend dependencies locally:**
@@ -32,7 +30,7 @@ This is optional, but recommended for VSCode to be able to help with Python modu
 
 ```
 cd backend
-poetry env use 3.9 # the right version
+poetry env use <python executable with the right version>
 poetry install
 ```
 
