@@ -12,9 +12,13 @@ const ControlledRevealSwitch: React.FC<Props> = ({ controlledReveal, setControll
     <Label>
       <FormattedMessage id="controlledRevealSwitch.label" />
     </Label>
-    <Value selected={!controlledReveal}>No</Value>
+    <Value selected={!controlledReveal}>
+      <FormattedMessage id="common.no" />
+    </Value>
     <StyledSwitch setSelected={setControlledReveal} selected={controlledReveal} />
-    <Value selected={controlledReveal}>Yes</Value>
+    <Value selected={controlledReveal}>
+      <FormattedMessage id="common.yes" />
+    </Value>
   </Container>
 );
 

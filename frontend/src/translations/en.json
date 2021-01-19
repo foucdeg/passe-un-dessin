@@ -240,7 +240,9 @@
     "seeGame": "Review game"
   },
   "common": {
-    "and": "and"
+    "and": "and",
+    "yes": "Yes",
+    "no": "No"
   },
   "passwordReset": {
     "title": "Password reset",

@@ -240,7 +240,9 @@
     "seeGame": "Revoir la partie"
   },
   "common": {
-    "and": "et"
+    "and": "et",
+    "yes": "Oui",
+    "no": "Non"
   },
   "passwordReset": {
     "title": "Réinitialisation du mot de passe",
