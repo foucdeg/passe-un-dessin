@@ -48,7 +48,11 @@ const ClassicLoginForm = withFormik<FormOutsideProps, FormValues>({
 
   handleSubmit: async (values, { props, setSubmitting }) => {
     const [, doLogin] = props.login;
-    await doLogin(values.email, values.password);
+    const result = await doLogin(values.email, values.password);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if ((result as any) instanceof Error) {
+      return;
+    }
     setSubmitting(false);
     if (props.onLoggedIn) {
       props.onLoggedIn();

@@ -14,5 +14,6 @@ export const StyledInput = styled(TextInput)`
 `;
 
 export const StyledButton = styled(Button)`
+  margin-top: 16px;
   justify-content: center;
 `;

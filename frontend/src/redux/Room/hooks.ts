@@ -43,10 +43,11 @@ export const useCreateRoom = () => {
 
   return useCallback(async () => {
     const room = await client.post('/room', {});
-    const gtag = (window as any).gtag; // eslint-disable-line @typescript-eslint/no-explicit-any
-    gtag('event', 'create_room', {
-      event_category: 'engagement',
-    });
+    if (window.gtag) {
+      window.gtag('event', 'create_room', {
+        event_category: 'engagement',
+      });
+    }
     history.push(`/room/${room.uuid}`);
   }, [history]);
 };

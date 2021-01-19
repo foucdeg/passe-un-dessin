@@ -80,16 +80,17 @@ export const useSocialLogin = () => {
     async (token: string, provider: AuthProvider) => {
       window.loginLock = true;
       const player = await client.post(`/auth/social-login`, { token, provider });
-      const gtag = (window as any).gtag; // eslint-disable-line @typescript-eslint/no-explicit-any
 
-      if (player._created) {
-        gtag('event', 'sign_up', {
-          method: provider,
-        });
-      } else {
-        gtag('event', 'login', {
-          method: provider,
-        });
+      if (window.gtag) {
+        if (player._created) {
+          window.gtag('event', 'sign_up', {
+            method: provider,
+          });
+        } else {
+          window.gtag('event', 'login', {
+            method: provider,
+          });
+        }
       }
 
       await doFetchMe();
@@ -107,10 +108,11 @@ export const useLogin = () => {
       window.loginLock = true;
       try {
         await client.post(`/auth/login`, { email, password });
-        const gtag = (window as any).gtag; // eslint-disable-line @typescript-eslint/no-explicit-any
-        gtag('event', 'login', {
-          method: 'form',
-        });
+        if (window.gtag) {
+          window.gtag('event', 'login', {
+            method: 'form',
+          });
+        }
         await doFetchMe();
       } catch (e) {
         if (e.status === 403) {
@@ -125,21 +127,21 @@ export const useLogin = () => {
   );
 };
 
-/*  eslint-disable @typescript-eslint/no-explicit-any */
 export const useLogout = () => {
   const doFetchMe = useFetchMe();
 
   return useCallback(async () => {
     await client.post(`/auth/logout`);
 
-    const FB = (window as any).FB;
-    FB.getLoginStatus((response: any) => {
+    const FB = window.FB;
+    if (!FB) return;
+    FB.getLoginStatus((response) => {
       if (response.status === 'connected') {
         FB.logout();
       }
     });
 
-    const authInstance = (window as any).authInstance;
+    const authInstance = window.authInstance;
     if (authInstance) {
       authInstance.signOut();
     }
@@ -147,7 +149,6 @@ export const useLogout = () => {
     await doFetchMe();
   }, [doFetchMe]);
 };
-/*  eslint-enable @typescript-eslint/no-explicit-any */
 
 export const useCreateAccount = () => {
   const doFetchMe = useFetchMe();
@@ -157,10 +158,11 @@ export const useCreateAccount = () => {
       window.loginLock = true;
       try {
         await client.post(`/auth/create-account`, { email, password });
-        const gtag = (window as any).gtag; // eslint-disable-line @typescript-eslint/no-explicit-any
-        gtag('event', 'sign_up', {
-          method: 'form',
-        });
+        if (window.gtag) {
+          window.gtag('event', 'sign_up', {
+            method: 'form',
+          });
+        }
         await doFetchMe();
       } catch (e) {
         if (e.status === 400) {

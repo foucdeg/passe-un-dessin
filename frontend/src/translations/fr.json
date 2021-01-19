@@ -139,10 +139,10 @@
     "logIn": "Se connecter",
     "forgotPassword": "J'ai oublié mon mot de passe 😢",
     "errors": {
-      "required": "Ce champ est nécessaire",
-      "invalidEmail": "Cette adresse email n'est pas valide",
-      "emailInUse": "Cette adresse email est déjà utilisée. Se connecter à ce compte ?",
-      "incorrectEmailPassword": "Mauvaise combinaison d'adresse email et mot de passe"
+      "required": "Ce champ est nécessaire.",
+      "invalidEmail": "Cette adresse email n'est pas valide.",
+      "emailInUse": "Cette adresse email est déjà utilisée.",
+      "incorrectEmailPassword": "Mauvaise combinaison d'adresse email et mot de passe."
     }
   },
   "lostPlayerModal": {
