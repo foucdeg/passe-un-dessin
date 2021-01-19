@@ -5,6 +5,7 @@ import TextInput from 'atoms/TextInput';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { AUTH_ERROR_INVALID_USERNAME_PASSWORD } from 'redux/Player/hooks';
 import { PUBLIC_PATHS } from 'routes';
+import FieldError from 'atoms/FieldError';
 import { StyledLabel, StyledForm, StyledButton, StyledLink } from './ClassicLoginForm.style';
 import { FormValues, FormOutsideProps } from './ClassicLoginForm.form';
 
@@ -43,6 +44,7 @@ const ClassicLoginFormView: React.FC<FormOutsideProps & FormikProps<FormValues>>
         hasError={touched.email && errors.email}
         placeholder={intl.formatMessage({ id: 'auth.emailExample' })}
       />
+      <FieldError name="email" />
       <StyledLabel htmlFor="password">
         <FormattedMessage id="auth.password" />
       </StyledLabel>
@@ -54,6 +56,7 @@ const ClassicLoginFormView: React.FC<FormOutsideProps & FormikProps<FormValues>>
         maxLength={254}
         hasError={touched.password && errors.password}
       />
+      <FieldError name="password" />
       <StyledLink to={PUBLIC_PATHS.PASSWORD_RESET_REQUEST} onClick={onLoggedIn}>
         <FormattedMessage id="auth.forgotPassword" />
       </StyledLink>

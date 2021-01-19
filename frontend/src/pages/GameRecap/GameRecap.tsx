@@ -51,12 +51,13 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode = false }) => {
   const setSelectedPad = useCallback(
     (padUuid: string) => {
       if (!game) return;
+      if (game.phase === GamePhase.REVEAL && !isAdmin) return;
       if (!publicMode) {
         doReviewPad(game.pads.find(({ uuid }) => uuid === padUuid) as Pad);
       }
       dispatch(setSelectedPadUuid(padUuid));
     },
-    [dispatch, doReviewPad, game, publicMode],
+    [dispatch, doReviewPad, game, publicMode, isAdmin],
   );
 
   const selectNextPad = useCallback(() => {
@@ -72,7 +73,7 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode = false }) => {
     if (!game) return;
     const displayedPadIndex = getSelectedPadIndex(game, selectedPadUuid);
     if (displayedPadIndex - 1 >= 0) {
-      setSelectedPad(game.pads[displayedPadIndex + 1].uuid);
+      setSelectedPad(game.pads[displayedPadIndex - 1].uuid);
     }
   }, [game, setSelectedPad, selectedPadUuid]);
 

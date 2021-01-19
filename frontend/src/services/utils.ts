@@ -6,9 +6,8 @@ export async function wait(ms: number): Promise<void> {
   });
 }
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 export type EmptyObject = Omit<Record<any, never>, keyof any>;
-/* eslint-enable @typescript-eslint/no-explicit-any */
 export type NoProps = EmptyObject;
 
 const emailRegexp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;

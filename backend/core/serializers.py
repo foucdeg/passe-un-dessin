@@ -83,6 +83,8 @@ class RoomSerializer(BaseSerializer):
 
 
 class VoteSerializer(BaseSerializer):
+    player_id = serializers.UUIDField(format="hex")
+
     class Meta:
         model = Vote
         fields = ("player_id",)

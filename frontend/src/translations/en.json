@@ -139,9 +139,9 @@
     "logIn": "Log in",
     "forgotPassword": "I forgot my password 😢",
     "errors": {
-      "required": "This field is required",
-      "invalidEmail": "This email address is not valid",
-      "emailInUse": "This email address is already in use. Need to log in?",
+      "required": "This field is required.",
+      "invalidEmail": "This email address is not valid.",
+      "emailInUse": "This email address is already in use.",
       "incorrectEmailPassword": "Incorrect username or password combination."
     }
   },
@@ -240,7 +240,9 @@
     "seeGame": "Review game"
   },
   "common": {
-    "and": "and"
+    "and": "and",
+    "yes": "Yes",
+    "no": "No"
   },
   "passwordReset": {
     "title": "Password reset",

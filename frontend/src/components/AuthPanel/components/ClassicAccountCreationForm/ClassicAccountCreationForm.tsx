@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 
 import { FormikProps, Field } from 'formik';
 import TextInput from 'atoms/TextInput';
+import FieldError from 'atoms/FieldError';
+
 import { useIntl, FormattedMessage } from 'react-intl';
 import { AUTH_ERROR_EMAIL_IN_USE } from 'redux/Player/hooks';
 import { StyledLabel, StyledForm, StyledButton } from './ClassicAccountCreationForm.style';
@@ -38,6 +40,7 @@ const ClassicAccountCreationFormView: React.FC<FormOutsideProps & FormikProps<Fo
         hasError={touched.email && errors.email}
         placeholder={intl.formatMessage({ id: 'mobileGate.emailExample' })}
       />
+      <FieldError name="email" />
       <StyledLabel htmlFor="password">
         <FormattedMessage id="auth.pickPassword" />
       </StyledLabel>
@@ -49,6 +52,7 @@ const ClassicAccountCreationFormView: React.FC<FormOutsideProps & FormikProps<Fo
         maxLength={254}
         hasError={touched.password && errors.password}
       />
+      <FieldError name="password" />
       <StyledButton type="submit" disabled={isSubmitting || loading || !isValid}>
         <FormattedMessage id="auth.createAccount" />
       </StyledButton>

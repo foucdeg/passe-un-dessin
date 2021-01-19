@@ -47,7 +47,11 @@ const ClassicAccountCreationForm = withFormik<FormOutsideProps, FormValues>({
 
   handleSubmit: async (values, { props, setSubmitting }) => {
     const [, doCreateAccount] = props.createAccount;
-    await doCreateAccount(values.email, values.password);
+    const result = await doCreateAccount(values.email, values.password);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if ((result as any) instanceof Error) {
+      return;
+    }
     setSubmitting(false);
     if (props.onAccountCreated) {
       props.onAccountCreated();

@@ -9,6 +9,7 @@ declare global {
         config: Record<string, string>,
       ) => void;
       getLoginStatus: (callback: (response: FacebookAuthStatusResponse) => void) => void;
+      logout: () => void;
     };
     /** Google login API - may be blocked or fail to load */
     authInstance?: {
@@ -17,8 +18,10 @@ declare global {
         config: Record<string, string>,
         callback: (googleUser: GoogleUser) => void,
       ) => void;
+      signOut: () => void;
     };
     loginLock?: boolean;
+    gtag?: (method: string, name: string, props: Record<string, string>) => void;
   }
 }
 

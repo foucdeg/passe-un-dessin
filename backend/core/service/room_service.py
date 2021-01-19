@@ -74,6 +74,7 @@ def remove_player_from_room(room_id: str, player_id: str):
                 [player.uuid.hex for player in room.players.all()],
                 room.current_game.round_duration,
                 room.current_game.draw_own_word,
+                room.current_game.controlled_reveal,
             )
 
             # Apply any existing sentences on pads to new pad

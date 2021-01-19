@@ -24,25 +24,25 @@ export const getRedirectPath = (room: Room, game: Game, player: Player): string 
 };
 
 export const getAvailableVoteCount = (game: Game): number => {
-  const stepCount = game.pads[0].steps.length;
+  const stepCount = game.pads[0].steps.length - 1;
   const playerCount = game.players.length;
   const choiceCount = stepCount * (playerCount - 1);
   return Math.max(1, Math.round(Math.sqrt(0.6 * choiceCount - 1)));
 };
 
 export const getReorderedPlayers = (game: Game, player: Player): Player[] => {
-  const currentPlayerPad = game.pads.find((pad) =>
+  const currentPad = game.pads.find((pad) =>
     pad.steps.some(
       (step) => step.round_number === game.current_round && step.player.uuid === player.uuid,
     ),
   );
-  if (!currentPlayerPad) {
+  if (!currentPad) {
     throw new Error(
       `Step for player ${player.uuid} and round ${game.current_round} not found in game ${game.uuid}`,
     );
   }
 
-  return currentPlayerPad.steps.map((step) => step.player);
+  return currentPad.steps.map((step) => step.player);
 };
 
 export const getNextPhaseAndRound = (game: Game): [GamePhase, number] => {
