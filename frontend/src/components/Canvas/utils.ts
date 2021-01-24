@@ -58,7 +58,8 @@ export const initializeCanvas = async (
     return;
   }
   const canvas: HTMLCanvasElement = canvasRef.current;
-  const context = canvas.getContext('2d');
+  // Turn off transparency for perf, see: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Optimizing_canvas#turn_off_transparency
+  const context = canvas.getContext('2d', { alpha: false });
   if (!context) {
     return;
   }
