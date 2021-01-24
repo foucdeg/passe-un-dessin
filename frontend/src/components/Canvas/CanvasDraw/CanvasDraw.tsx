@@ -106,9 +106,10 @@ const CanvasDraw: React.FC<Props> = ({
       };
     }
 
+    // We round cordinates to avoid float when drawing on canvas, see: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Optimizing_canvas#avoid_floating-point_coordinates_and_use_integers_instead
     return {
-      x: event.pageX - rect.left - window.scrollX,
-      y: event.pageY - rect.top - window.scrollY,
+      x: Math.round(event.pageX - rect.left - window.scrollX),
+      y: Math.round(event.pageY - rect.top - window.scrollY),
     };
   };
 
