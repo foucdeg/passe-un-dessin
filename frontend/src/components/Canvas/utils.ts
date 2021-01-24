@@ -135,8 +135,9 @@ const getRenderSquare = (
   endPosition: Point,
   canvasWidth: number,
   canvasHeight: number,
+  brushRadius: number,
 ) => {
-  const pixelGap = 10;
+  const pixelGap = brushRadius;
   const topLeftCorner: Point = {
     x: Math.max(Math.min(startPosition.x, endPosition.x) - pixelGap, 0),
     y: Math.max(Math.min(startPosition.y, endPosition.y) - pixelGap, 0),
@@ -177,7 +178,13 @@ export const drawLine = (
     brushRadius,
     brushColor,
   );
-  const renderSquare = getRenderSquare(startPosition, endPosition, canvasWidth, canvasHeight);
+  const renderSquare = getRenderSquare(
+    startPosition,
+    endPosition,
+    canvasWidth,
+    canvasHeight,
+    brushRadius,
+  );
   context.putImageData(
     image,
     0,
