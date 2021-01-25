@@ -62,7 +62,7 @@ const CanvasDraw: React.FC<Props> = ({
 }) => {
   const [color, setColor] = useState<DrawingColor>(DrawingColor.BLACK);
   const [brushType, setBrushType] = useState<BrushType>(BrushType.THIN);
-  const [isPainting, setIsPainting] = useState(false);
+  const isPaintingRef = useRef<boolean>(false);
   const drawing = useRef<Paint>([]);
   const undoneDrawing = useRef<Paint>([]);
   const mousePosition = useRef<Point | null>(null);
@@ -106,9 +106,10 @@ const CanvasDraw: React.FC<Props> = ({
       };
     }
 
+    // We round cordinates to avoid float when drawing on canvas, see: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Optimizing_canvas#avoid_floating-point_coordinates_and_use_integers_instead
     return {
-      x: event.pageX - rect.left - window.scrollX,
-      y: event.pageY - rect.top - window.scrollY,
+      x: Math.round(event.pageX - rect.left - window.scrollX),
+      y: Math.round(event.pageY - rect.top - window.scrollY),
     };
   };
 
@@ -147,7 +148,7 @@ const CanvasDraw: React.FC<Props> = ({
           return;
         }
 
-        setIsPainting(true);
+        isPaintingRef.current = true;
         mousePosition.current = coordinates;
         drawLine(
           coordinates,
@@ -170,7 +171,7 @@ const CanvasDraw: React.FC<Props> = ({
 
   const paint = useCallback(
     (event: MouseEvent | TouchEvent) => {
-      if (isPainting && currentLine.current && mousePosition.current) {
+      if (isPaintingRef.current && currentLine.current && mousePosition.current) {
         event.preventDefault();
         const newPosition = getCoordinates(event);
         if (mousePosition && newPosition) {
@@ -187,19 +188,19 @@ const CanvasDraw: React.FC<Props> = ({
         }
       }
     },
-    [isPainting, selectedBrushColor, selectedBrushRadius],
+    [selectedBrushColor, selectedBrushRadius],
   );
 
   const exitPaint = useCallback(() => {
-    if (isPainting) {
-      setIsPainting(false);
+    if (isPaintingRef.current) {
+      isPaintingRef.current = false;
       mousePosition.current = null;
       if (currentLine.current) {
         addToDrawing(currentLine.current);
       }
       currentLine.current = null;
     }
-  }, [currentLine, isPainting]);
+  }, [currentLine]);
 
   const handleClear = useCallback(() => {
     const lastDrawingStep = drawing.current[drawing.current.length - 1];

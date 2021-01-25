@@ -16,6 +16,9 @@ export const InnerTimerBar = styled.div<{ duration: number }>`
   padding: 4px;
   width: 100%;
   background: ${colorPalette.red};
+
+  /* Added for performance reasons, see MDN article : https://developer.mozilla.org/en-US/docs/Web/CSS/will-change */
+  will-change: transform;
   transition: width ${(props) => props.duration}s linear;
 
   &.started {
