@@ -21,19 +21,12 @@ export const useUnauthenticatedGuard = () => {
 
   useEffect(() => {
     async function checkMe() {
-      try {
-        const me = await client.get(`/player/me`);
-        if (me.user) {
-          console.warn(
-            'Redirecting to homepage as this page should not be accessed by an authenticated user',
-          );
-          push('/');
-        }
-      } catch (e) {
-        if (e.status === 401) {
-          return;
-        }
-        throw e;
+      const me = await client.get(`/player/me`);
+      if (me && me.user) {
+        console.warn(
+          'Redirecting to homepage as this page should not be accessed by an authenticated user',
+        );
+        push('/');
       }
     }
     checkMe();

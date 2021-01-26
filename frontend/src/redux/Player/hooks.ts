@@ -25,15 +25,8 @@ export const useFetchMe = () => {
   const dispatch = useDispatch();
 
   return useCallback(async () => {
-    try {
-      const player = await client.get(`/player/me`);
-      dispatch(updatePlayer(player));
-    } catch (e) {
-      if (e.status === 401) {
-        return dispatch(updatePlayer(false));
-      }
-      throw e;
-    }
+    const player = await client.get(`/player/me`);
+    dispatch(updatePlayer(player || false));
   }, [dispatch]);
 };
 
