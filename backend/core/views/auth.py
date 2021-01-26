@@ -43,8 +43,13 @@ logger = logging.getLogger(__name__)
 
 
 @require_GET
-@requires_player
-def get_me(request, player):
+def get_me(request):
+    try:
+        player_id = request.session["player_id"]
+        player = Player.objects.get(uuid=player_id)
+    except (KeyError, Player.DoesNotExist):
+        return JsonResponse(None, safe=False)
+
     if request.user.is_authenticated:
         return JsonResponse(PlayerWithUserAndAvatarSerializer(player).data)
 
