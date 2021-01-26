@@ -29,16 +29,16 @@ msgstr "Hallo %(player)s,"
 
 #: core/templates/registration/password_reset_body.txt:3
 msgid "email.password_reset.requested"
-msgstr "Du hast nach einer Passwort zurücksetzen auf Draw Around / Passe un Dessin."
+msgstr "Du hast auf Passe un Dessin ein Zurücksetzen des Passworts angefordert."
 
 #: core/templates/registration/password_reset_body.txt:5
 #, python-format
 msgid "email.password_reset.click_link %(reset_password_url)s"
-msgstr "Click auf diesen Link, um deine Passwort zurückzusetzen: %(reset_password_url)s"
+msgstr "Klick auf diesen Link, um dein Passwort zurückzusetzen: %(reset_password_url)s"
 
 #: core/templates/registration/password_reset_body.txt:7
 msgid "email.password_reset.nicer_email"
-msgstr "Wir versprechen, dass wir später eine gut aussehende E-Mail schreiben werden."
+msgstr "Wir versprechen, dass wir eines Tages eine schönere E-Mail schreiben werden."
 
 #: core/templates/registration/password_reset_body.txt:9
 msgid "email.password_reset.bye"
@@ -46,4 +46,4 @@ msgstr "Bis bald!"
 
 #: core/templates/registration/password_reset_subj.txt:1
 msgid "email.password_reset.subject"
-msgstr "Passwort zurücksetzen für Draw Around / Passe un Dessin"
+msgstr "Passwortzurücksetzung für Passe un Dessin"

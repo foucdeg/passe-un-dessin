@@ -64,28 +64,18 @@
   },
   "wordToDrawing": {
     "sentenceToDraw": "Sentence to draw:",
-    "previousPlayer": "({name}'s idea. Typical.)",
     "duration": "You have {duration} seconds!",
     "noSentence": "Something went wrong, we didn't get that sentence 😞",
     "timesUp": "Time's up, drop that pencil!"
   },
   "drawingToWord": {
     "drawingToGuess": "Guess this sketch:",
-    "previousPlayer": "(Who knew {name} had such talent.)",
-    "nextPlayer": "Let's just hope {next} can draw better than {previous} ...",
     "placeholder": "A sheep?",
     "noSentence": "Something went wrong, we didn't get that drawing 😞",
     "submit": "Submit",
     "update": "Edit"
   },
-  "finishedModal": {
-    "title": "It's over!",
-    "description": "You can now see all of the pads, and finally understand the drawings you had to guess.",
-    "navigate": "Navigate between drawing pads using the tabs above. Don't forget to cast your votes on other players' drawings and guesses!",
-    "seeResults": "See results"
-  },
   "recap": {
-    "initialWord": "Initial word",
     "waitingFor": "Aren't done voting yet:",
     "forceNextStep": "Go to results",
     "confirmForceNextStep": "Are you sure you want to skip to next step? We didn't get everybody's votes.",
@@ -191,13 +181,13 @@
     "myStats": "My stats",
     "totalScore": "Total score",
     "ranking": "World ranking",
-    "changePassword": "Changer password",
+    "changePassword": "Change password",
     "logOut": "Log out",
     "history": "Game history",
     "leaderboard": "Leaderboard"
   },
   "rankingModal": {
-    "title": "Score",
+    "title": "Scores",
     "noRanking": "No ranking yet"
   },
   "remainingPlayers": {
@@ -236,7 +226,6 @@
     "filterInput": "Search a player"
   },
   "playerDetails": {
-    "joinedOn": "joined us on {dateString}.",
     "seeGame": "Review game"
   },
   "common": {

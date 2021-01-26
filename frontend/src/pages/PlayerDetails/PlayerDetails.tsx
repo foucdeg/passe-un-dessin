@@ -11,7 +11,7 @@ import {
 
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
-import { enUS, fr } from 'date-fns/locale';
+import { enUS, fr, de } from 'date-fns/locale';
 
 import GameContainer from 'layout/GameLayout/GameContainer';
 import Loader from 'atoms/Loader';
@@ -53,7 +53,7 @@ const PlayerDetails: React.FC<NoProps> = () => {
   const totalScore = useSelector(selectDisplayedPlayerTotalScore);
   const ranking = useSelector(selectDisplayedPlayerRanking);
   const { locale } = useIntl();
-  const dateLocale = locale === 'fr' ? fr : enUS;
+  const dateLocale = locale === 'fr' ? fr : locale === 'en' ? enUS : de;
 
   useEffect(() => {
     if (!displayedPlayer || displayedPlayer.uuid !== playerId) {

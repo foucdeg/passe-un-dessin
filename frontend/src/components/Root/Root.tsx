@@ -4,6 +4,7 @@ import { IntlProvider } from 'react-intl';
 import { flattenMessages } from 'services/i18n/intl';
 import enMessages from 'translations/en.json';
 import frMessages from 'translations/fr.json';
+import deMessages from 'translations/de.json';
 
 /* Language polyfills needed for IE11, Edge, Safari 12 & 13 support
 https://github.com/formatjs/react-intl/blob/master/docs/Upgrade-Guide.md#migrate-to-using-native-intl-apis
@@ -21,7 +22,7 @@ import MobileGate from './components/MobileGate';
 const locales = {
   fr: flattenMessages(frMessages),
   en: flattenMessages(enMessages),
-  de: flattenMessages(enMessages),
+  de: flattenMessages(deMessages),
 };
 
 const language = navigator.language;
