@@ -1,0 +1,247 @@
+{
+  "home": {
+    "title": "Passe un Dessin",
+    "tagline": "Kannst du zeichnen? Das macht nichts.",
+    "welcome": "Wilkommen",
+    "howToPlay": "Spielregeln und Spieltips",
+    "startRoom": "Spiel erstellen",
+    "donate": "Um uns bei der Bezahlung der Server zu helfen, kannst du <a>hier</a> spenden.",
+    "rules": {
+      "0": "Hab eine <strong>stabile Internetverbindung</strong> und <strong>ausreichend Batteriereserve</strong> auf deinem Gerat.",
+      "1": "Ihr braucht mindestens vier, um zu spielen. Einer von euch wird zum  <strong>Game Master</strong> ernannt und erstellt das Spiel. Der Game Master sendet dann den Link des Spiels an die anderen Spieler.",
+      "2": "Wähl ein Wort oder eine Phrase, die der nächste Spieler zeichnen soll.",
+      "3": "<strong>Zeichne das Wort oder Phrase</strong>, oder <strong>versuche zu erraten,</strong> was des vorherige Spieler gezeichnet hat. Dann wird deine Zeichnung oder Idee an den nächsten Spieler weitergegeben, und so weiter.",
+      "4": "Wenn alle alle Wörter gezeichnet haben, schauen wir uns die Skizzenbücher an! <strong>Seh mal, was mit den ersten Wörtern oder Phrasen passiert ist</strong> und stimme für deine Lieblingsskizzen ab."
+    },
+    "twitchModal": {
+      "title": "Live-Streams",
+      "noStreams": "Derzeit gibt es keine Live-Streams"
+    },
+    "termsAndConditions": "Nutzungsbedingungen",
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "leaderboard": "Bestenliste",
+    "openRules": "Spielregeln",
+    "joinDiscord": "Unser Discord",
+    "twitchStreams": "{currentStreamsCount} Live-Streams",
+    "rulesUnderstood": "Verstanden!",
+    "highlightedDrawingCaption": "<em>{sentence}</em>, von {name}, {year}"
+  },
+  "roomLobby": {
+    "title": "Lobby",
+    "sendLink": "Sende diesen Link an andere Spieler <info>({min} bis {max} Spieler)</info>",
+    "copiedLink": "Link kopiert!",
+    "inGame": "Ein Spiel ist im Gange. Wir lassen dich ein, sobald das Spiel beendet ist!",
+    "needMore": "Wir brauchen noch {count} {count, plural, one {Spieler} many {Spieler}}",
+    "isEveryoneThere": "Sind alle da?",
+    "play": "Spielen",
+    "adminWillStart": "{name} wird das Spiel starten!",
+    "timeDuration": "<strong>Zeichnenzeit:</strong> {options} Sekunden"
+  },
+  "menu": {
+    "accountMenu": "Konto",
+    "playerMenu": "Spieler",
+    "adminMenu": "Adminfenster",
+    "addPlayer": "Spieler einladen",
+    "addPlayerLinkCopied": "Link kopiert!",
+    "refresh": "Wiedersynchronisieren",
+    "ranking": "Rangliste",
+    "leaveTeam": "Team verlassen",
+    "confirmLeave": "Wenn man mitten ins Spiel geht, muss jeder das Spiel von vorne beginnen. Bist du sicher?"
+  },
+  "drawOwnWordSwitch": {
+    "label": "Spielrunden",
+    "upperRoundCount": "{roundCount}, aber wir beginnen damit, unser eigenes Wort zu zeichnen"
+  },
+  "controlledRevealSwitch": {
+    "label": "Synchronisierte Offenbarung:"
+  },
+  "padInit": {
+    "chooseSentence": "Wähl ein Wort oder eine Phrase:",
+    "placeholder": "Eine Giraffe?",
+    "youDraw": "Wählt mit Bedacht, <strong>du</strong> wirst es zeichnen!",
+    "getSuggestions": "Keine Ahnung ? Wirf den Würfel!",
+    "update": "Bearbeiten"
+  },
+  "wordToDrawing": {
+    "sentenceToDraw": "Phrase zu zeichnen:",
+    "duration": "Du hast {duration} Sekunden!",
+    "noSentence": "Es gab ein Problem, wir haben diese Phrase nicht erhalten. 😞",
+    "timesUp": "Die Zeit ist um!"
+  },
+  "drawingToWord": {
+    "drawingToGuess": "Errate diese Zeichnung",
+    "placeholder": "Ein Schaaf?",
+    "noSentence": "Es gab ein Problem, wir haben diese Zeichnung nicht erhalten. 😞",
+    "submit": "Bestätigen",
+    "update": "Bearbeiten"
+  },
+  "recap": {
+    "waitingFor": "Haben noch nicht abgestimmt:",
+    "forceNextStep": "Zu den Ergebnisse",
+    "confirmForceNextStep": "Möchtest du wirklich mit die nächste Stufe fortfahren? Wir haben nicht alle Stimmen bekommen.",
+    "availableVotes": "Verbleibende Stimmen:",
+    "noMoreVotes": "Keine verbleibende Stimmen",
+    "voteResults": "🏆 Abstimmungsergebnisse",
+    "startVotingPhase": "Abstimmung starten"
+  },
+  "voteResults": {
+    "newGame": "Neues Spiel?",
+    "bestMoments": "Beste Momente",
+    "voteCount": "{voteCount} {voteCount, plural, one {Punkt} other {Punkte}}",
+    "scoreboard": "Anzeigetafel",
+    "reviewGame": "Spiel wiedersehen",
+    "donate": "Wenn dir das Spiel gefallen hat, kannst du <a>hier</a> spenden, um uns bei der Bezahlung der Server zu helfen."
+  },
+  "newGameModal": {
+    "title": "Neues Spiel starten",
+    "randomOrder": "Zufällige Reihenfolge",
+    "sameOrder": "Selbe Reihenfolge",
+    "reverseOrder": "Umgekehrte Reihenfolge"
+  },
+  "adminModal": {
+    "removePlayer": "Spieler entfernen",
+    "removePlayerInstruction": "Klick auf das Kreuz neben dem Player, dass du entfernen möchtest.",
+    "inCurrentGame": "Im aktuellen Spiel",
+    "inLobby": "In der Lobby",
+    "nobodyWaiting": "Niemand!",
+    "restartGame": "Neues Spiel starten",
+    "restartGameInstructions": "Das nächste Spiel wird {names} beinhalten.",
+    "samePlayers": "Mit die selben Spieler.",
+    "randomOrder": "Zufällige Reihenfolge",
+    "sameOrder": "Selbe Reihenfolge",
+    "reverseOrder": "Umgekehrte Reihenfolge"
+  },
+  "userNameModal": {
+    "title": "Hallo! Wie heißt du?",
+    "pickName": "Wähle einen Spitznamen:",
+    "placeholder": "M4sterSk3tcher_69",
+    "iHaveAnAccount": "Ich habe ein Konto oder möchte ein Konto erstellen →"
+  },
+  "auth": {
+    "facebookLogin": "Mit Facebook anmelden",
+    "googleLogin": "Mit Google anmelden",
+    "oldStyle": "Oder wie gewohnt:",
+    "email": "E-Mail-Adresse",
+    "password": "Passwort",
+    "pickPassword": "Wähle ein Passwort",
+    "emailExample": "myemail@aol.com",
+    "createAccount": "Konto erstellen",
+    "logIn": "Einloggen",
+    "forgotPassword": "Ich habe mein Passwort vergessen 😢",
+    "errors": {
+      "required": "Dieses Feld wird benötigt.",
+      "invalidEmail": "Diese E-Mail-Adresse ist ungültig.",
+      "emailInUse": "Diese E-Mail-Adresse wird schon verwendet.",
+      "incorrectEmailPassword": "Falsche Email oder Passwort."
+    }
+  },
+  "lostPlayerModal": {
+    "title": "Wir haben jemanden verloren!",
+    "whoLeft": "{name} hat mitten im Spiel verlassen 😢 Wir müssen von vorne anfangen.",
+    "newAdminMe": "👑 Du bist jetzt das Game Master!",
+    "newAdminGoToSettings": "Über das Admin-Menü (Zahnradsymbol ☸️ oben rechts) kannst du ein neues Spiel starten.",
+    "newAdminNotMe": "{name} ist jetzt das Game Master",
+    "newAdminRestarts": "{name} kann ein neues Spiel starten.",
+    "goToSettings": "Öffne das Admin-Menü (oben rechts).",
+    "adminRestarts": "{name} kann ein neues Spiel starten."
+  },
+  "createAccountModal": {
+    "niceGame": "Schönes Spiel, {name}!",
+    "keepHistory": "Lass nicht deine Kunst vergessen werden! Um weiterhin Zugriff auf deine Meisterwerke zu erhalten, empfehlen wir dir, ein Konto zu erstellen.",
+    "features": "Mit einem Konto hast du die folgenden Funktionen:",
+    "history": "Historie all deiner Spiele",
+    "leaderboard": "Weltweite Rangliste mit den besten Passe un Dessin-Spielern",
+    "safeNickname": "Dein Spitzname ist dir vorbehalten",
+    "andMore": "...und noch mehr!",
+    "later": "Später"
+  },
+  "mobileGate": {
+    "bigFingers": "Große Finger, kleiner Bildschirm",
+    "laptopOrTablet": "Passe un Dessin ist praktischer auf einem Computer oder Tablet.",
+    "sendEmail": "Link per E-Mail senden",
+    "emailExample": "myemail@aol.com",
+    "emailSubject": "Mein Link zu Passe un Dessin",
+    "emailBody": "Link: {link}\n\nBis bald!"
+  },
+  "playerModal": {
+    "title": "Mein Konto",
+    "myInfos": "Meine Infos",
+    "playerName": "Spielername",
+    "playerColor": "Spielerfarbe",
+    "colors": {
+      "purple": "Lila",
+      "lightBlue": "Hellblau",
+      "lightGreen": "Hellgrün",
+      "mauve": "Mauve",
+      "orange": "Orange",
+      "bloodOrange": "Blutorange",
+      "yellow": "Gelb",
+      "fuschia": "Fuschia"
+    },
+    "myStats": "Meine Statistiken",
+    "totalScore": "Gesamtpunktzahl",
+    "ranking": "Weltrang",
+    "changePassword": "Passwort ändern",
+    "logOut": "Ausloggen",
+    "history": "Spielhistorie",
+    "leaderboard": "Weltrangliste"
+  },
+  "rankingModal": {
+    "title": "Rangliste",
+    "noRanking": "Noch keine Rangliste"
+  },
+  "remainingPlayers": {
+    "waitingFor": "Wir warten auf:",
+    "forceNextStep": "Spiel zum nächsten Stufe erzwingen",
+    "confirmForceNextStep": "Möchtest du wirklich mit die nächste Stufe fortfahren? Wir haben nicht alle Phrasen oder Zeichnen bekommen."
+  },
+  "color": {
+    "pink": "pink",
+    "purple": "Lila",
+    "blue": "Blau",
+    "skyblue": "Hellblau",
+    "green": "Grün",
+    "lime": "Hellgrün",
+    "beige": "Beige",
+    "yellow": "Gelb",
+    "orange": "Orange",
+    "red": "Rot",
+    "brown": "Braun",
+    "black": "Schwarz",
+    "grey": "Grau",
+    "white": "Weiß"
+  },
+  "action": {
+    "undo": "Rückgang {command}",
+    "redo": "Wiederherstellen {command}",
+    "clear": "Löschen ⌫"
+  },
+  "legal": {
+    "termsAndConditionsTitle": "Nutzungsbedingungen",
+    "privacyPolicyTitle": "Datenschutzrichtlinie",
+    "backToHome": "Zurück zur Startseite"
+  },
+  "leaderboard": {
+    "title": "Bestenliste",
+    "filterInput": "Spieler suchen"
+  },
+  "playerDetails": {
+    "seeGame": "Spiel sehen"
+  },
+  "common": {
+    "and": "und",
+    "yes": "Ja",
+    "no": "Nein"
+  },
+  "passwordReset": {
+    "title": "Zurücksetzen des Passworts",
+    "email": "E-Mail-Adresse des Kontos",
+    "label": "Neues Passwort",
+    "submit": "Passwortzurücksetzung anfordern",
+    "submitRequest": "Passwort zurücksetzen",
+    "invalidToken": "Dieser Link ist nicht mehr gültig.",
+    "requestNewToken": "Benötigst du einen neuen Link?",
+    "success": "Dein Passwort wurde erfolgreich zurückgesetzt. Wir bringen dich zurück zur Homepage, wo du dich erneut einloggen kannst.",
+    "requestSuccess": "Wenn dieses Konto vorhanden ist, wirts du eine E-Mail mit einem Link zum Zurücksetzen des Passworts erhalten."
+  }
+}

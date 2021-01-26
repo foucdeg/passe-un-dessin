@@ -7,7 +7,7 @@
     "startRoom": "Lancer une partie",
     "donate": "Pour nous aider à financer les serveurs, vous pouvez <a>faire un don</a>.",
     "rules": {
-      "0": "Assure-toi d'avoir une <strong>connexion Internet stable</strong> et <strong>suffisament de batterie</strong> sur ton appareil.",
+      "0": "Assure-toi d'avoir une <strong>connexion Internet stable</strong> et <strong>suffisamment de batterie</strong> sur ton appareil.",
       "1": "Pour jouer, vous devez être à partir de 4 joueurs. L'un ou l'une d'entre vous se proclame <strong>Maître du Jeu</strong> et crée la partie. Le Maître du Jeu envoie le lien de la partie aux autres joueurs.",
       "2": "Choisis un mot ou une expression que la personne après toi devra dessiner.",
       "3": "<strong>Dessine</strong> le mot proposé ou <strong>devine</strong> ce que la personne avant toi a dessiné. Puis, ton dessin ou idée est passé au joueur suivant, et ainsi de suite.",
@@ -64,28 +64,18 @@
   },
   "wordToDrawing": {
     "sentenceToDraw": "Phrase à dessiner :",
-    "previousPlayer": "(sortie du cerveau malade de {name})",
     "duration": "Tu as {duration} secondes !",
     "noSentence": "Il y a eu un problème, on n'a pas reçu cette phrase 😞",
     "timesUp": "On lève les stylos !"
   },
   "drawingToWord": {
     "drawingToGuess": "Devine ce dessin :",
-    "previousPlayer": "(Un indéniable talent chez {name})",
-    "nextPlayer": "En espérant que {next} sache mieux dessiner que {previous} ...",
     "placeholder": "Un mouton ?",
     "noDrawing": "Il y a eu un problème, on n'a pas reçu ce dessin 😞",
     "submit": "Valider",
     "update": "Modifier"
   },
-  "finishedModal": {
-    "title": "C'est fini !",
-    "description": "Tu peux désormais voir l'ensemble des carnets pour comprendre tous les dessins que tu as eus à deviner.",
-    "navigate": "Navigue d'un carnet à l'autre avec les onglets en haut.  N'oublie pas de voter pour les dessins et idées des autres !",
-    "seeResults": "Voir les résultats"
-  },
   "recap": {
-    "initialWord": "Mot initial",
     "waitingFor": "N'ont pas fini de voter :",
     "forceNextStep": "Aller aux résultats",
     "confirmForceNextStep": "Es-tu sûr.e de vouloir passer à l'étape suivante ? Nous n'avons pas reçu tous les votes de tout le monde.",
@@ -236,7 +226,6 @@
     "filterInput": "Chercher un joueur"
   },
   "playerDetails": {
-    "joinedOn": "nous a rejoint le {dateString}.",
     "seeGame": "Revoir la partie"
   },
   "common": {

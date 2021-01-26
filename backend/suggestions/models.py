@@ -8,6 +8,7 @@ from core.models import BaseModel
 class Language(Enum):
     FR = "fr"
     EN = "en"
+    DE = "de"
 
 
 class SuggestionStatus(Enum):
