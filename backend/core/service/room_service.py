@@ -79,7 +79,7 @@ def remove_player_from_room(room_id: str, player_id: str):
 
             # Apply any existing sentences on pads to new pad
             existing_sentences = PadStep.objects.filter(
-                pad__game=room.current_game, round_number=0, sentence__isnull=None
+                pad__game=room.current_game, round_number=0, sentence__isnull=False
             ).values_list("player", "sentence")
 
             for player, existing_sentence in existing_sentences:
