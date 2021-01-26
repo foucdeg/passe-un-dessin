@@ -17,7 +17,13 @@ class Client {
 
   async request(method: Method, endpoint: string, data: Record<string, unknown> | null = null) {
     const url = /^https?:\/\//.test(endpoint) ? endpoint : `${this.baseUrl}${endpoint}`;
-    let promise = this.agent[method](url);
+    // generate unique transactionId and set as Sentry tag
+    const requestId = Math.random().toString(36).substr(2, 9);
+    Sentry.configureScope((scope) => {
+      scope.setTag('transaction_id', requestId);
+    });
+
+    let promise = this.agent[method](url).set('X-Request-Id', requestId);
 
     if (['post', 'put', 'patch'].includes(method) && data) {
       promise = promise.send(data);

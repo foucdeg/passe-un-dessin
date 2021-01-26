@@ -55,6 +55,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "passe_un_dessin.sentry.RequestIdMiddleware",
 ]
 
 ROOT_URLCONF = "passe_un_dessin.urls"
