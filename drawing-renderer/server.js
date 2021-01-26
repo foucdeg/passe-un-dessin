@@ -27,6 +27,16 @@ const app = express();
 
 app.use(Sentry.Handlers.requestHandler());
 
+app.use((req, res, next) => {
+  let requestId = req.headers["x-request-id"];
+  if (requestId) {
+    Sentry.configureScope(function(scope) {
+      scope.setTag("request_id", requestId);
+    });
+  }
+  next();
+});
+
 app.get("/health", (req, res) => {
   res.send("I'm up!");
 });
@@ -71,14 +81,14 @@ app.get("/drawings/avatar/:playerId/:firstCharacters.png", async function (req, 
 
 app.use(Sentry.Handlers.errorHandler());
 
-app.listen(APP_PORT, () => {
+const server = app.listen(APP_PORT, () => {
   console.log(`Drawing renderer listening at http://localhost:${APP_PORT}`);
 });
 
 process.on("SIGTERM", () => {
   console.log("SIGTERM signal received");
 
-  app.close(() => {
+  server.close(() => {
     console.log("HTTP server closed");
     pool.end();
   });
