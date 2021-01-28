@@ -168,12 +168,12 @@ TWITCH_CONFIG = {
 
 
 # Sentry
-if "SENTRY_DSN" in os.environ:
+if "SENTRY_BACKEND_DSN" in os.environ:
     import sentry_sdk
     from sentry_sdk.integrations.django import DjangoIntegration
 
     sentry_sdk.init(
-        dsn=os.environ.get("SENTRY_DSN"),
+        dsn=os.environ.get("SENTRY_BACKEND_DSN"),
         integrations=[DjangoIntegration()],
         environment=os.environ.get("ENVIRONMENT"),
         release=os.environ.get("VERSION"),

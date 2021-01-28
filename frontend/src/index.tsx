@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
+import { Integrations } from '@sentry/tracing';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import React from 'react';
@@ -13,7 +14,6 @@ declare global {
     config: {
       sentry: {
         dsn: string;
-        release: string;
         environment: string;
       };
     };
@@ -23,8 +23,13 @@ declare global {
 if (window.config && window.config.sentry && window.config.sentry.dsn) {
   Sentry.init({
     dsn: window.config.sentry.dsn,
-    release: window.config.sentry.release,
+    release: process.env.REACT_APP_SENTRY_RELEASE,
     environment: window.config.sentry.environment,
+    integrations: [new Integrations.BrowserTracing()],
+
+    // We recommend adjusting this value in production, or using tracesSampler
+    // for finer control
+    tracesSampleRate: parseInt(process.env.REACT_APP_SENTRY_TRACING || '0'),
   });
 }
 
