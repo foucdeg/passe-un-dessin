@@ -105,13 +105,15 @@ jobs:
       - run:
           name: Login to Docker Hub
           command: echo "$DOCKERHUB_PASSWORD" | docker login --username foucdeg --password-stdin
+      - run: |
+          if [ ! "${CIRCLE_BRANCH}" == "master" ]; then
+            circleci-agent step halt
+          fi
       - run:
-          name: If on master, push backend docker image
+          name: Push backend docker image
           command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              docker tag foucdeg/passe-un-dessin:$CIRCLE_SHA1 foucdeg/passe-un-dessin:latest
-              docker push foucdeg/passe-un-dessin:latest
-            fi
+            docker tag foucdeg/passe-un-dessin:$CIRCLE_SHA1 foucdeg/passe-un-dessin:latest
+            docker push foucdeg/passe-un-dessin:latest
 
   build-drawing-renderer:
     docker:
@@ -127,13 +129,15 @@ jobs:
       - run:
           name: Login to Docker Hub
           command: echo "$DOCKERHUB_PASSWORD" | docker login --username foucdeg --password-stdin
+      - run: |
+          if [ ! "${CIRCLE_BRANCH}" == "master" ]; then
+            circleci-agent step halt
+          fi
       - run:
-          name: If on master, push drawing-renderer Docker image
+          name: Push drawing-renderer Docker image
           command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              docker tag foucdeg/passe-un-dessin-drawing-renderer:$CIRCLE_SHA1 foucdeg/passe-un-dessin-drawing-renderer:latest
-              docker push foucdeg/passe-un-dessin-drawing-renderer:latest
-            fi
+            docker tag foucdeg/passe-un-dessin-drawing-renderer:$CIRCLE_SHA1 foucdeg/passe-un-dessin-drawing-renderer:latest
+            docker push foucdeg/passe-un-dessin-drawing-renderer:latest
 
   build-pushpin:
     docker:
@@ -149,13 +153,15 @@ jobs:
       - run:
           name: Login to Docker Hub
           command: echo "$DOCKERHUB_PASSWORD" | docker login --username foucdeg --password-stdin
+      - run: |
+          if [ ! "${CIRCLE_BRANCH}" == "master" ]; then
+            circleci-agent step halt
+          fi
       - run:
-          name: If on master, push pushpin Docker image
+          name: Push pushpin Docker image
           command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              docker tag foucdeg/passe-un-dessin-pushpin:$CIRCLE_SHA1 foucdeg/passe-un-dessin-pushpin:latest
-              docker push foucdeg/passe-un-dessin-pushpin:latest
-            fi
+            docker tag foucdeg/passe-un-dessin-pushpin:$CIRCLE_SHA1 foucdeg/passe-un-dessin-pushpin:latest
+            docker push foucdeg/passe-un-dessin-pushpin:latest
 
 workflows:
   build-lint-tsc:
