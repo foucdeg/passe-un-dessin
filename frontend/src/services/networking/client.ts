@@ -1,60 +1,74 @@
-import request from 'superagent';
 import * as Sentry from '@sentry/react';
 
 const backendBaseUrl = (process.env.REACT_APP_BACKEND_HOST || '') + '/api';
 
 type Method = 'get' | 'post' | 'put' | 'patch' | 'delete';
 
-class Client {
-  baseUrl: string;
-  agent: request.SuperAgentStatic & request.Request;
+async function request(
+  method: Method,
+  endpoint: string,
+  data: Record<string, unknown> | null = null,
+) {
+  const url = /^https?:\/\//.test(endpoint) ? endpoint : `${backendBaseUrl}${endpoint}`;
 
-  constructor(baseUrl: string) {
-    this.baseUrl = baseUrl;
-    this.agent = request.agent();
-    this.agent.accept('application/json');
+  // generate unique transactionId and set as Sentry tag
+  const requestId = Math.random().toString(36).substr(2, 9);
+  Sentry.configureScope((scope) => {
+    scope.setTag('request_id', requestId);
+  });
+  const headers = new Headers({
+    'X-Request-Id': requestId,
+    Accept: 'application/json',
+  });
+
+  const config: RequestInit = {
+    method,
+    headers,
+  };
+
+  if (['post', 'put', 'patch'].includes(method) && data) {
+    config.body = JSON.stringify(data);
   }
 
-  async request(method: Method, endpoint: string, data: Record<string, unknown> | null = null) {
-    const url = /^https?:\/\//.test(endpoint) ? endpoint : `${this.baseUrl}${endpoint}`;
-    // generate unique transactionId and set as Sentry tag
-    const requestId = Math.random().toString(36).substr(2, 9);
-    Sentry.configureScope((scope) => {
-      scope.setTag('request_id', requestId);
-    });
+  try {
+    const response = await fetch(url, { method, headers });
 
-    let promise = this.agent[method](url).set('X-Request-Id', requestId);
-
-    if (['post', 'put', 'patch'].includes(method) && data) {
-      promise = promise.send(data);
+    if (!response.ok) {
+      return response
+        .json()
+        .catch(() => {
+          throw new Error(response.statusText);
+        })
+        .then(({ message }) => {
+          throw new Error(message || response.statusText);
+        });
     }
 
-    try {
-      const { body } = await promise;
-      return body;
-    } catch (err) {
-      Sentry.captureException(err);
-      throw err;
-    }
-  }
-
-  get(endpoint: string) {
-    return this.request('get', endpoint);
-  }
-
-  post(endpoint: string, data?: Record<string, unknown>) {
-    return this.request('post', endpoint, data);
-  }
-
-  put(endpoint: string, data?: Record<string, unknown>) {
-    return this.request('put', endpoint, data);
-  }
-
-  delete(endpoint: string) {
-    return this.request('delete', endpoint);
+    return await response.json();
+  } catch (err) {
+    Sentry.captureException(err);
+    throw err;
   }
 }
 
-const client = new Client(backendBaseUrl);
+async function get(endpoint: string) {
+  return await request('get', endpoint);
+}
+
+async function post(endpoint: string, data?: Record<string, unknown>) {
+  return await request('post', endpoint, data);
+}
+
+async function put(endpoint: string, data?: Record<string, unknown>) {
+  return await request('put', endpoint, data);
+}
+
+const client = {
+  request,
+  get,
+  post,
+  put,
+  delete: async (endpoint: string) => await request('delete', endpoint),
+};
 
 export default client;
