@@ -86,6 +86,7 @@ jobs:
           name: Deploy to release
           command: |
             export REACT_APP_SENTRY_RELEASE=$(cat .sentry-release)
+            apt-get install -y rsync
             rsync -avz ./build/ deploy@vps388600.ovh.net:/home/fouc/passe-un-dessin/releases/$REACT_APP_SENTRY_RELEASE
           working_directory: frontend
       - store_artifacts:
