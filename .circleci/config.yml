@@ -56,9 +56,6 @@ jobs:
       REACT_APP_ENV: production
       SENTRY_ORG: passe-un-dessin
       SENTRY_PROJECT: frontend
-    branches:
-      only:
-        - master
     steps:
       - checkout
       - node/install-packages:
