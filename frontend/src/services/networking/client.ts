@@ -1,5 +1,5 @@
 import request from 'superagent';
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
 
 const backendBaseUrl = (process.env.REACT_APP_BACKEND_HOST || '') + '/api';
 
