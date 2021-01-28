@@ -68,6 +68,7 @@ jobs:
           name: Generate a release name with sentry-cli
           command: |
             export REACT_APP_SENTRY_RELEASE=$(sentry-cli releases propose-version)
+            echo $REACT_APP_SENTRY_RELEASE > frontend/.sentry-release
             sentry-cli releases new $REACT_APP_SENTRY_RELEASE
             sentry-cli releases set-commits --auto $REACT_APP_SENTRY_RELEASE
       - run:
@@ -77,12 +78,14 @@ jobs:
       - run:
           name: Upload sourcemaps to Sentry and finalize release
           command: |
+            export REACT_APP_SENTRY_RELEASE=$(cat .sentry-release)
             sentry-cli releases files $REACT_APP_SENTRY_RELEASE upload-sourcemaps --url-prefix "~/static/js" --validate build/static/js
             sentry-cli releases finalize $REACT_APP_SENTRY_RELEASE
           working_directory: frontend
       - run:
           name: Deploy to release
           command: |
+            export REACT_APP_SENTRY_RELEASE=$(cat .sentry-release)
             rsync -avz ./build/ deploy@vps388600.ovh.net:/home/fouc/passe-un-dessin/releases/$REACT_APP_SENTRY_RELEASE
           working_directory: frontend
       - store_artifacts:
