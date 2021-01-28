@@ -73,8 +73,11 @@ jobs:
             sentry-cli releases new $REACT_APP_SENTRY_RELEASE
             sentry-cli releases set-commits --auto $REACT_APP_SENTRY_RELEASE
       - run:
+
           name: Build app
-          command: yarn build
+          command: |
+            export REACT_APP_SENTRY_RELEASE=$(cat .sentry-release)
+            yarn build
           working_directory: frontend
       - run:
           name: Upload sourcemaps to Sentry and finalize release
