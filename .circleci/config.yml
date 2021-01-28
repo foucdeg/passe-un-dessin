@@ -68,29 +68,26 @@ jobs:
       - run:
           name: Generate a release name with sentry-cli
           command: |
-            export REACT_APP_SENTRY_RELEASE=$(sentry-cli releases propose-version)
-            echo $REACT_APP_SENTRY_RELEASE > frontend/.sentry-release
-            sentry-cli releases new $REACT_APP_SENTRY_RELEASE
-            sentry-cli releases set-commits --auto $REACT_APP_SENTRY_RELEASE
+            export SENTRY_RELEASE=$(sentry-cli releases propose-version)
+            echo $SENTRY_RELEASE > frontend/.sentry-release
+            sentry-cli releases new $SENTRY_RELEASE
+            sentry-cli releases set-commits --auto $SENTRY_RELEASE
       - run:
-
           name: Build app
-          command: |
-            export REACT_APP_SENTRY_RELEASE=$(cat .sentry-release)
-            yarn build
+          command: REACT_APP_SENTRY_RELEASE=$(cat .sentry-release) yarn build
           working_directory: frontend
       - run:
           name: Upload sourcemaps to Sentry and finalize release
           command: |
-            export REACT_APP_SENTRY_RELEASE=$(cat .sentry-release)
-            sentry-cli releases files $REACT_APP_SENTRY_RELEASE upload-sourcemaps --url-prefix "~/static/js" --validate build/static/js
-            sentry-cli releases finalize $REACT_APP_SENTRY_RELEASE
+            export SENTRY_RELEASE=$(cat .sentry-release)
+            sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps --url-prefix "~/static/js" --validate build/static/js
+            sentry-cli releases finalize $SENTRY_RELEASE
           working_directory: frontend
       - run:
           name: Deploy to release
           command: |
-            export REACT_APP_SENTRY_RELEASE=$(cat .sentry-release)
-            scp -r ./build/ deploy@vps388600.ovh.net:/home/fouc/passe-un-dessin/releases/$REACT_APP_SENTRY_RELEASE
+            export SENTRY_RELEASE=$(cat .sentry-release)
+            scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./build/ deploy@vps388600.ovh.net:/home/fouc/passe-un-dessin/releases/$SENTRY_RELEASE
           working_directory: frontend
       - store_artifacts:
           path: frontend/build
