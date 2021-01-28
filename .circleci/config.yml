@@ -48,6 +48,49 @@ jobs:
       - store_artifacts:
           path: frontend/build
 
+  build-deploy-front:
+    executor:
+      name: node/default
+      tag: "12.19"
+    environment:
+      REACT_APP_ENV: production
+      SENTRY_ORG: passe-un-dessin
+      SENTRY_PROJECT: frontend
+    branches:
+      only:
+        - master
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+          app-dir: frontend
+      - run:
+          name: Install sentry-cli and create a version
+          command: curl -sL https://sentry.io/get-cli/ | bash
+      - run:
+          name: Generate a release name with sentry-cli
+          command: |
+            export REACT_APP_SENTRY_RELEASE=$(sentry-cli releases propose-version)
+            sentry-cli releases new $REACT_APP_SENTRY_RELEASE
+            sentry-cli releases set-commits --auto $REACT_APP_SENTRY_RELEASE
+      - run:
+          name: Build app
+          command: yarn build
+          working_directory: frontend
+      - run:
+          name: Upload sourcemaps to Sentry and finalize release
+          command: |
+            sentry-cli releases files $(REACT_APP_SENTRY_RELEASE) upload-sourcemaps --url-prefix "~/static/js" --validate build/static/js
+            sentry-cli releases finalize $REACT_APP_SENTRY_RELEASE
+          working_directory: frontend
+      - run:
+          name: Deploy to release
+          command: |
+            rsync -avz ./build/ deploy@vps388600.ovh.net:/home/fouc/passe-un-dessin/releases/$REACT_APP_SENTRY_RELEASE
+          working_directory: frontend
+      - store_artifacts:
+          path: frontend/build
+
   build-back:
     docker:
       - image: cimg/base:2020.12
@@ -126,3 +169,13 @@ workflows:
           requires:
             - lint
             - tsc
+          filters:
+            branches:
+              ignore: master
+      - build-deploy-front:
+          requires:
+            - lint
+            - tsc
+          filters:
+            branches:
+              only: master

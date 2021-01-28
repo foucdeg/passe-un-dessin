@@ -3,7 +3,7 @@ const lzString = require("lz-string");
 const { Pool: PGPool } = require("pg");
 const Sentry = require('@sentry/node');
 
-Sentry.init({ dsn: process.env.SENTRY_DSN, environment: process.env.ENVIRONMENT });
+Sentry.init({ dsn: process.env.SENTRY_BACKEND_DSN, environment: process.env.ENVIRONMENT });
 
 const APP_PORT = 80;
 const DATABASE_URL = process.env.DATABASE_URL;
