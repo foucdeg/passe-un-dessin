@@ -20,7 +20,7 @@ class Client {
     // generate unique transactionId and set as Sentry tag
     const requestId = Math.random().toString(36).substr(2, 9);
     Sentry.configureScope((scope) => {
-      scope.setTag('transaction_id', requestId);
+      scope.setTag('request_id', requestId);
     });
 
     let promise = this.agent[method](url).set('X-Request-Id', requestId);
