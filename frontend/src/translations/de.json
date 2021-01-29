@@ -82,7 +82,8 @@
     "availableVotes": "Verbleibende Stimmen:",
     "noMoreVotes": "Keine verbleibende Stimmen",
     "voteResults": "🏆 Abstimmungsergebnisse",
-    "startVotingPhase": "Abstimmung starten"
+    "startVotingPhase": "Abstimmung starten",
+    "lockedReveal": "Skizzenbücheroffenbarung (vom Game Master gesteuert): {current} / {total}"
   },
   "voteResults": {
     "newGame": "Neues Spiel?",

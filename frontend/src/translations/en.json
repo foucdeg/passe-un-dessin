@@ -82,7 +82,8 @@
     "availableVotes": "Remaining votes:",
     "noMoreVotes": "No remaining votes",
     "voteResults": "🏆 Vote results",
-    "startVotingPhase": "Start Voting"
+    "startVotingPhase": "Start Voting",
+    "lockedReveal": "Drawing pad reveal (controlled by the admin): {current} / {total}"
   },
   "voteResults": {
     "newGame": "New game?",

@@ -82,7 +82,8 @@
     "availableVotes": "Votes restants :",
     "noMoreVotes": "Plus de votes restants",
     "voteResults": "🏆 Résultats du vote",
-    "startVotingPhase": "Commencer le vote"
+    "startVotingPhase": "Commencer le vote",
+    "lockedReveal": "Révélation des carnets (contrôlé par l'admin) : {current} / {total}"
   },
   "voteResults": {
     "newGame": "Nouvelle partie ?",

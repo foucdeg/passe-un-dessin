@@ -55,3 +55,15 @@ export const VoteReminder = styled.div`
     margin-left: 8px;
   }
 `;
+
+export const StaticTab = styled.div`
+  position: relative;
+  height: 40px;
+  padding: 12px 24px;
+  font-weight: bold;
+  line-height: 19px;
+  border-radius: 8px 8px 0 0;
+  margin-top: -6px;
+  background: ${colorPalette.white};
+  color: ${colorPalette.purple};
+`;
