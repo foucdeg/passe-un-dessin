@@ -4,6 +4,15 @@ const backendBaseUrl = (process.env.REACT_APP_BACKEND_HOST || '') + '/api';
 
 type Method = 'get' | 'post' | 'put' | 'patch' | 'delete';
 
+class HTTPError extends Error {
+  status: number;
+
+  constructor(status: number, message: string) {
+    super(message);
+    this.status = status;
+  }
+}
+
 async function request(
   method: Method,
   endpoint: string,
@@ -19,6 +28,7 @@ async function request(
   const headers = new Headers({
     'X-Request-Id': requestId,
     Accept: 'application/json',
+    'Content-Type': 'application/json',
   });
 
   const config: RequestInit = {
@@ -31,20 +41,17 @@ async function request(
   }
 
   try {
-    const response = await fetch(url, { method, headers });
+    const response = await fetch(url, config);
+    const responseText = await response.text();
 
     if (!response.ok) {
-      return response
-        .json()
-        .catch(() => {
-          throw new Error(response.statusText);
-        })
-        .then(({ message }) => {
-          throw new Error(message || response.statusText);
-        });
+      throw new HTTPError(response.status, responseText || response.statusText);
     }
-
-    return await response.json();
+    try {
+      return JSON.parse(responseText);
+    } catch (e) {
+      return responseText;
+    }
   } catch (err) {
     Sentry.captureException(err);
     throw err;
