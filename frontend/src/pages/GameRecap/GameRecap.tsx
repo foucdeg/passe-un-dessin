@@ -24,6 +24,7 @@ import {
   PadTabs,
   VoteReminder,
   StartVotingPhase,
+  StaticTab,
 } from './GameRecap.style';
 import PadRecap from './components/PadRecap';
 import RecapTab from './components/RecapTab';
@@ -103,6 +104,7 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode = false }) => {
     return loadingView;
 
   const displayedPad: Pad | undefined = game.pads.find(({ uuid }) => uuid === selectedPadUuid);
+  const padIndex = getSelectedPadIndex(game, selectedPadUuid);
   const isVoteResultsDisplayed = displayedPad === undefined;
   const isPlayerInGame =
     !!player && !!game.players.find((gamePlayer) => gamePlayer.uuid === player.uuid);
@@ -121,17 +123,26 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode = false }) => {
       <OuterRecapContainer>
         <TopRow>
           <PadTabs>
-            {game.pads.map((pad, index) => (
-              <PadTab
-                publicMode={publicMode}
-                key={pad.uuid}
-                isActive={pad.uuid === selectedPadUuid}
-                onClick={() => canChangeTabs && setSelectedPad(pad.uuid)}
-                pad={pad}
-                isDebriefPhase={isDebriefPhase}
-              />
-            ))}
+            {canChangeTabs &&
+              game.pads.map((pad) => (
+                <PadTab
+                  publicMode={publicMode}
+                  key={pad.uuid}
+                  isActive={pad.uuid === selectedPadUuid}
+                  onClick={() => canChangeTabs && setSelectedPad(pad.uuid)}
+                  pad={pad}
+                  isDebriefPhase={isDebriefPhase}
+                />
+              ))}
             {publicMode && <RecapTab isActive={isVoteResultsDisplayed} onClick={selectResults} />}
+            {!canChangeTabs && (
+              <StaticTab>
+                <FormattedMessage
+                  id="recap.lockedReveal"
+                  values={{ total: game.pads.length, current: padIndex + 1 }}
+                />
+              </StaticTab>
+            )}
           </PadTabs>
           <div>
             {isAdmin && !isDebriefPhase && (
