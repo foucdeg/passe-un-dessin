@@ -3,7 +3,6 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import Spacer from 'atoms/Spacer';
 import InputLoader from 'atoms/InputLoader';
-import { InputArrow } from 'modals/PlayerModal/components/PlayerForm/PlayerForm.style';
 import TextInput from 'atoms/TextInput';
 import {
   Gutter,
@@ -16,6 +15,7 @@ import { PadStep } from 'redux/Game/types';
 import RemainingPlayers from 'components/RemainingPlayers';
 import Drawing from 'components/Canvas/Drawing';
 import { useBoolean } from 'services/utils';
+import InputArrow from 'atoms/InputArrow';
 import { StyledButton, StyledForm } from './DrawingToWordStep.style';
 
 interface Props {

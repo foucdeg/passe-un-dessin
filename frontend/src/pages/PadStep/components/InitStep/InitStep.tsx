@@ -5,6 +5,7 @@ import { PadStep } from 'redux/Game/types';
 import RemainingPlayers from 'components/RemainingPlayers';
 import { useBoolean } from 'services/utils';
 import InputLoader from 'atoms/InputLoader';
+import InputArrow from 'atoms/InputArrow';
 import SuggestionGenerator from '../SuggestionGenerator';
 import {
   InitStepContainer,
@@ -12,7 +13,6 @@ import {
   StyledTextInput,
   StyledButton,
   StyledHeader,
-  InputArrow,
 } from './InitStep.style';
 
 interface Props {

@@ -12,15 +12,14 @@ import { useFetchCurrentStreamsCount } from 'redux/Twitch/hooks';
 import { useSelector } from 'redux/useSelector';
 import { PadStep } from 'redux/Game/types';
 import { useAsyncFn } from 'react-use';
-import BareAnchor from 'atoms/BareAnchor';
 import Loader from 'atoms/Loader';
 import HomeLayout from 'layout/HomeLayout';
+import { PUBLIC_PATHS } from 'routes';
 import {
   LeftSideTitle,
   Subtitle,
   Donate,
   LegalLinks,
-  DiscordLogo,
   Actions,
   Row,
   StyledSecondaryButton,
@@ -79,28 +78,25 @@ const Home: React.FunctionComponent = () => {
         <Spacer />
         <Actions>
           <Row>
+            <PlayerGameForm />
             <StyledSecondaryButton onClick={openRulesModal}>
               <FormattedMessage id="home.openRules" />
             </StyledSecondaryButton>
-            <BareAnchor href={discordLink} target="_blank" rel="noreferrer">
-              <StyledSecondaryButton>
-                <DiscordLogo src={discordLogo} alt="discord logo" />
-                <FormattedMessage id="home.joinDiscord" />
-              </StyledSecondaryButton>
-            </BareAnchor>
+          </Row>
+          <Row>
+            <StyledSecondaryButton to={PUBLIC_PATHS.LEADERBOARD} target="_blank">
+              <FormattedMessage id="home.leaderboard" />
+            </StyledSecondaryButton>
             {!!currentStreamsCount && (
               <StyledSecondaryButton onClick={openTwitchModal}>
                 <FormattedMessage id="home.twitchStreams" values={{ currentStreamsCount }} />
               </StyledSecondaryButton>
             )}
           </Row>
-          <PlayerGameForm />
         </Actions>
         <Spacer />
         <p>
-          <Link to="/leaderboard" target="_blank" rel="noreferrer">
-            <FormattedMessage id="home.leaderboard" />
-          </Link>
+          <Link to="/leaderboard" target="_blank" rel="noreferrer"></Link>
         </p>
         <Donate>
           <FormattedMessage

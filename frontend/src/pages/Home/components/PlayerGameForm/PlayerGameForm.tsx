@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useCreateRoom } from 'redux/Room/hooks';
-import Button from 'atoms/Button';
 import TextInput from 'atoms/TextInput';
 import { useCreatePlayer } from 'redux/Player/hooks';
 import { useSelector } from 'redux/useSelector';
 import { selectPlayer } from 'redux/Player/selectors';
-import { NoProps } from 'services/utils';
-import { StyledForm } from './PlayerGameForm.style';
+import { NoProps, useBoolean } from 'services/utils';
+import InputArrow from 'atoms/InputArrow';
+import { StyledForm, StyledButton } from './PlayerGameForm.style';
 
 export const PlayerGameForm: React.FC<NoProps> = () => {
   const intl = useIntl();
@@ -15,8 +15,11 @@ export const PlayerGameForm: React.FC<NoProps> = () => {
   const [playerName, setPlayerName] = useState<string>('');
   const doCreateRoom = useCreateRoom();
   const doCreatePlayer = useCreatePlayer();
+  const [isCreatingPlayer, activatePlayerCreation] = useBoolean(false);
 
-  const doSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const doSubmit = async (
+    e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLImageElement>,
+  ) => {
     e.preventDefault();
     await doCreatePlayer(playerName.trim());
     doCreateRoom();
@@ -24,9 +27,17 @@ export const PlayerGameForm: React.FC<NoProps> = () => {
 
   if (player) {
     return (
-      <Button onClick={doCreateRoom}>
+      <StyledButton onClick={doCreateRoom}>
         <FormattedMessage id="home.startRoom" />
-      </Button>
+      </StyledButton>
+    );
+  }
+
+  if (!isCreatingPlayer) {
+    return (
+      <StyledButton onClick={activatePlayerCreation}>
+        <FormattedMessage id="home.startRoom" />
+      </StyledButton>
     );
   }
 
@@ -39,10 +50,8 @@ export const PlayerGameForm: React.FC<NoProps> = () => {
         autoFocus
         placeholder={intl.formatMessage({ id: 'userNameModal.pickName' })}
         onChange={(e) => setPlayerName(e.target.value)}
+        adornment={!!playerName.trim() && <InputArrow alt="Valider" onClick={doSubmit} />}
       />
-      <Button type="submit" disabled={!playerName.trim()}>
-        <FormattedMessage id="home.startRoom" />
-      </Button>
     </StyledForm>
   );
 };

@@ -114,7 +114,7 @@
   },
   "userNameModal": {
     "title": "Salut toi ! Comment tu t'appelles ?",
-    "pickName": "Choisis un nom :",
+    "pickName": "Choisis un nom",
     "placeholder": "XXBogossDu62",
     "iHaveAnAccount": "J'ai déjà un compte ou je souhaite en créer un →"
   },

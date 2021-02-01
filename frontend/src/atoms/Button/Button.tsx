@@ -8,6 +8,7 @@ interface Props {
   disabled?: boolean;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset' | undefined;
+  target?: string;
 }
 
 const Button: React.FC<Props> = ({ to, children, ...otherProps }) => {
