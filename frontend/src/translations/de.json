@@ -5,7 +5,8 @@
     "welcome": "Wilkommen",
     "howToPlay": "Spielregeln und Spieltips",
     "startRoom": "Spiel erstellen",
-    "donate": "Um uns bei der Bezahlung der Server zu helfen, kannst du <a>hier</a> spenden.",
+    "donateTitle": "Spenden",
+    "donateDescription": "um uns bei der Bezahlung der Server zu helfen",
     "rules": {
       "0": "Hab eine <strong>stabile Internetverbindung</strong> und <strong>ausreichend Batteriereserve</strong> auf deinem Gerat.",
       "1": "Ihr braucht mindestens vier, um zu spielen. Einer von euch wird zum  <strong>Game Master</strong> ernannt und erstellt das Spiel. Der Game Master sendet dann den Link des Spiels an die anderen Spieler.",
