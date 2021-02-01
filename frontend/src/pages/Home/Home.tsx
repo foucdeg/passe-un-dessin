@@ -22,10 +22,11 @@ import {
   Actions,
   Row,
   StyledSecondaryButton,
+  DonateTitle,
 } from './Home.style';
 import PlayerGameForm from './components/PlayerGameForm';
 import RulesModal from './components/RulesModal';
-import HighlightedDrawing from './components/FeaturedDrawing';
+import FeaturedDrawing from './components/FeaturedDrawing';
 
 const TwitchModal = lazy(() => import('./components/TwitchModal'));
 
@@ -65,12 +66,12 @@ const Home: React.FunctionComponent = () => {
         </Subtitle>
 
         {loading && (
-          <div style={{ height: '278px' }}>
+          <div style={{ height: '192px' }}>
             <Loader />
           </div>
         )}
         {hightlightedPadSteps && hightlightedPadSteps.length > 0 && (
-          <HighlightedDrawing padSteps={hightlightedPadSteps} />
+          <FeaturedDrawing padSteps={hightlightedPadSteps} />
         )}
         <Spacer />
         <Actions>
@@ -92,20 +93,13 @@ const Home: React.FunctionComponent = () => {
           </Row>
         </Actions>
         <Spacer />
-        <p>
-          <Link to="/leaderboard" target="_blank" rel="noreferrer"></Link>
-        </p>
-        <Donate>
-          <FormattedMessage
-            id="home.donate"
-            values={{
-              a: (...chunks: string[]) => (
-                <a href="https://utip.io/passeundessin" target="_blank" rel="noreferrer">
-                  {chunks}
-                </a>
-              ),
-            }}
-          />
+        <Donate href="https://utip.io/passeundessin" target="_blank">
+          <DonateTitle>
+            <FormattedMessage id="home.donateTitle" />
+          </DonateTitle>
+          <p>
+            <FormattedMessage id="home.donateDescription" />
+          </p>
         </Donate>
         <LegalLinks>
           <Link to="/terms-and-conditions">

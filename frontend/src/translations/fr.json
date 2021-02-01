@@ -5,7 +5,8 @@
     "welcome": "Bienvenue",
     "howToPlay": "Comment jouer ?",
     "startRoom": "Lancer une partie",
-    "donate": "Pour nous aider à financer les serveurs, vous pouvez <a>faire un don</a>.",
+    "donateTitle": "Faire un don",
+    "donateDescription": "pour nous aider à financer les serveurs",
     "rules": {
       "0": "Assure-toi d'avoir une <strong>connexion Internet stable</strong> et <strong>suffisamment de batterie</strong> sur ton appareil.",
       "1": "Pour jouer, vous devez être à partir de 4 joueurs. L'un ou l'une d'entre vous se proclame <strong>Maître du Jeu</strong> et crée la partie. Le Maître du Jeu envoie le lien de la partie aux autres joueurs.",

@@ -5,7 +5,8 @@
     "welcome": "Welcome",
     "howToPlay": "How to play",
     "startRoom": "Create a game",
-    "donate": "To help us cover server costs, you can donate <a>here</a>.",
+    "donateTitle": "Donate",
+    "donateDescription": "to help us cover server costs",
     "rules": {
       "0": "Make sure you have a <strong>stable Internet connection</strong> and <strong>enough battery left</strong> on your device.",
       "1": "You should be at least 4 people to play. One of you is named <strong>Game Master</strong> and creates the game. The Game Master sends the link to the game to the other players.",

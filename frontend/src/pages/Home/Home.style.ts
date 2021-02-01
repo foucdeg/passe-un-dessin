@@ -4,6 +4,8 @@ import SecondaryButton from 'atoms/SecondaryButton';
 
 import { fontSize, fontFamily, colorPalette } from 'stylesheet';
 import Header4 from 'atoms/Header4';
+import BareAnchor from 'atoms/BareAnchor';
+import Header3 from 'atoms/Header3';
 
 export const LeftSideTitle = styled.h1`
   font-family: ${fontFamily.titles};
@@ -18,14 +20,24 @@ export const Subtitle = styled(Header4)`
   margin-bottom: 42px;
 `;
 
-export const Donate = styled.p`
-  margin-top: 16px;
-  font-size: ${fontSize.small};
+export const Donate = styled(BareAnchor)`
+  width: calc(100% + 96px);
+  text-align: center;
+  background-color: ${colorPalette.backgroundGrey};
+  margin: 0 -48px;
+  padding: 16px 48px;
+  margin-bottom: 16px;
+`;
+
+export const DonateTitle = styled(Header3)`
+  color: ${colorPalette.purple};
+  font-size: ${fontSize.medium};
+  font-weight: bold;
+  margin-bottom: 8px;
 `;
 
 export const LegalLinks = styled.p`
   text-align: center;
-  margin-top: 8px;
   font-size: ${fontSize.small};
   a {
     color: ${colorPalette.textGrey};
