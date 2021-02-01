@@ -2,7 +2,6 @@ import React, { useEffect, lazy } from 'react';
 import { useLocation } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 
-import discordLogo from 'assets/discord.webp';
 import Spacer from 'atoms/Spacer';
 import { Link } from 'react-router-dom';
 import { useBoolean } from 'services/utils';
@@ -29,8 +28,6 @@ import RulesModal from './components/RulesModal';
 import HighlightedDrawing from './components/FeaturedDrawing';
 
 const TwitchModal = lazy(() => import('./components/TwitchModal'));
-
-const discordLink = 'https://discord.gg/8y9s5yFgYq';
 
 const Home: React.FunctionComponent = () => {
   const location = useLocation();

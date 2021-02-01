@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import SocialButtons from './components/SocialButtons';
 
 import { LeftSide, RightSide, RightSideTitle, Credits } from './HomeLayout.style';
 
@@ -16,6 +17,7 @@ const HomeLayout: React.FC<Props> = ({ children }) => (
       </RightSideTitle>
       <Credits>Foucauld Degeorges • Michèle Ruaud</Credits>
       <Credits>Quentin Somerville • Léo Anesi</Credits>
+      <SocialButtons />
     </RightSide>
   </>
 );
