@@ -24,7 +24,7 @@
     "joinDiscord": "Unser Discord",
     "twitchStreams": "{currentStreamsCount} Live-Streams",
     "rulesUnderstood": "Verstanden!",
-    "highlightedDrawingCaption": "<em>{sentence}</em>, von {name}, {year}"
+    "featuredDrawingAuthor": "von {name}"
   },
   "roomLobby": {
     "title": "Lobby",
@@ -114,7 +114,7 @@
   },
   "userNameModal": {
     "title": "Hallo! Wie heißt du?",
-    "pickName": "Wähle einen Spitznamen:",
+    "pickName": "Wähle einen Spitznamen",
     "placeholder": "M4sterSk3tcher_69",
     "iHaveAnAccount": "Ich habe ein Konto oder möchte ein Konto erstellen →"
   },

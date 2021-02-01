@@ -1,10 +1,10 @@
+import Button from 'atoms/Button';
 import styled from 'styled-components';
 
 export const StyledForm = styled.form`
-  display: flex;
-  flex-direction: row;
+  min-width: 200px;
+`;
 
-  & > :not(:last-child) {
-    margin-right: 20px;
-  }
+export const StyledButton = styled(Button)`
+  min-width: 200px;
 `;

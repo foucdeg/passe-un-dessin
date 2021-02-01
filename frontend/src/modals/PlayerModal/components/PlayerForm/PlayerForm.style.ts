@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import arrowRight from 'assets/arrow-right.svg';
 import { ReactComponent as EditIcon } from 'assets/edit.svg';
 import { ReactComponent as CheckIcon } from 'assets/check.svg';
 import TextInput from 'atoms/TextInput';
@@ -17,10 +16,6 @@ export const PLAYER_COLORS = {
   '#FDC737': 'yellow',
   '#FF0080': 'fuschia',
 };
-
-export const InputArrow = styled.img.attrs({ src: arrowRight })`
-  cursor: pointer;
-`;
 
 export const Row = styled.div`
   display: flex;

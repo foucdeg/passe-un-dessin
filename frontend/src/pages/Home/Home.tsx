@@ -2,7 +2,6 @@ import React, { useEffect, lazy } from 'react';
 import { useLocation } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 
-import discordLogo from 'assets/discord.webp';
 import Spacer from 'atoms/Spacer';
 import { Link } from 'react-router-dom';
 import { useBoolean } from 'services/utils';
@@ -12,26 +11,23 @@ import { useFetchCurrentStreamsCount } from 'redux/Twitch/hooks';
 import { useSelector } from 'redux/useSelector';
 import { PadStep } from 'redux/Game/types';
 import { useAsyncFn } from 'react-use';
-import BareAnchor from 'atoms/BareAnchor';
 import Loader from 'atoms/Loader';
 import HomeLayout from 'layout/HomeLayout';
+import { PUBLIC_PATHS } from 'routes';
 import {
   LeftSideTitle,
   Subtitle,
   Donate,
   LegalLinks,
-  DiscordLogo,
   Actions,
   Row,
   StyledSecondaryButton,
 } from './Home.style';
 import PlayerGameForm from './components/PlayerGameForm';
 import RulesModal from './components/RulesModal';
-import HighlightedDrawing from './components/HighlightedDrawing';
+import HighlightedDrawing from './components/FeaturedDrawing';
 
 const TwitchModal = lazy(() => import('./components/TwitchModal'));
-
-const discordLink = 'https://discord.gg/8y9s5yFgYq';
 
 const Home: React.FunctionComponent = () => {
   const location = useLocation();
@@ -79,28 +75,25 @@ const Home: React.FunctionComponent = () => {
         <Spacer />
         <Actions>
           <Row>
+            <PlayerGameForm />
             <StyledSecondaryButton onClick={openRulesModal}>
               <FormattedMessage id="home.openRules" />
             </StyledSecondaryButton>
-            <BareAnchor href={discordLink} target="_blank" rel="noreferrer">
-              <StyledSecondaryButton>
-                <DiscordLogo src={discordLogo} alt="discord logo" />
-                <FormattedMessage id="home.joinDiscord" />
-              </StyledSecondaryButton>
-            </BareAnchor>
+          </Row>
+          <Row>
+            <StyledSecondaryButton to={PUBLIC_PATHS.LEADERBOARD} target="_blank">
+              <FormattedMessage id="home.leaderboard" />
+            </StyledSecondaryButton>
             {!!currentStreamsCount && (
               <StyledSecondaryButton onClick={openTwitchModal}>
                 <FormattedMessage id="home.twitchStreams" values={{ currentStreamsCount }} />
               </StyledSecondaryButton>
             )}
           </Row>
-          <PlayerGameForm />
         </Actions>
         <Spacer />
         <p>
-          <Link to="/leaderboard" target="_blank" rel="noreferrer">
-            <FormattedMessage id="home.leaderboard" />
-          </Link>
+          <Link to="/leaderboard" target="_blank" rel="noreferrer"></Link>
         </p>
         <Donate>
           <FormattedMessage

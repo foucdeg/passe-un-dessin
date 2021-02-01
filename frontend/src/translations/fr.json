@@ -24,7 +24,7 @@
     "joinDiscord": "Notre Discord",
     "twitchStreams": "{currentStreamsCount} chaînes live",
     "rulesUnderstood": "Compris !",
-    "highlightedDrawingCaption": "<em>{sentence}</em>, par {name}, {year}"
+    "featuredDrawingAuthor": "par {name}"
   },
   "roomLobby": {
     "title": "Salle d'attente",
@@ -114,7 +114,7 @@
   },
   "userNameModal": {
     "title": "Salut toi ! Comment tu t'appelles ?",
-    "pickName": "Choisis un nom :",
+    "pickName": "Choisis un nom",
     "placeholder": "XXBogossDu62",
     "iHaveAnAccount": "J'ai déjà un compte ou je souhaite en créer un →"
   },

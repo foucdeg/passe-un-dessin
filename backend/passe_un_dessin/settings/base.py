@@ -146,7 +146,6 @@ STATIC_URL = "/djangostatic/"
 
 # Emails
 
-EMAIL_BASE_URL = os.environ.get("EMAIL_BASE_URL")
 EMAIL_BACKEND = "django_mailgun.MailgunBackend"
 MAILGUN_SERVER_NAME = "email.passeundessin.com"
 

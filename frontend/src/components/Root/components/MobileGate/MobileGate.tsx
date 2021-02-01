@@ -4,13 +4,8 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import FieldLabel from 'atoms/FieldLabel';
 import TextInput from 'atoms/TextInput';
 import Spacer from 'atoms/Spacer';
-import {
-  MobileGateBackground,
-  LaptopTablet,
-  StyledForm,
-  InputArrow,
-  StyledHeader,
-} from './MobileGate.style';
+import InputArrow from 'atoms/InputArrow';
+import { MobileGateBackground, LaptopTablet, StyledForm, StyledHeader } from './MobileGate.style';
 
 interface Props {
   children: React.ReactNode;

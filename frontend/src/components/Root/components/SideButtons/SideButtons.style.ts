@@ -20,36 +20,43 @@ export const SideButtonsContainer = styled.div`
 
 export const PlayerModalButton = styled.img.attrs({ src: playerIcon })`
   cursor: pointer;
+  width: 32px;
   margin-bottom: 24px;
 `;
 
 export const UserModalButton = styled.img.attrs({ src: userIcon })`
   cursor: pointer;
+  width: 32px;
   margin-bottom: 24px;
 `;
 
 export const AdminModalButton = styled.img.attrs({ src: cogIcon })`
   cursor: pointer;
+  width: 32px;
   margin-bottom: 24px;
 `;
 
 export const PlayerAddButton = styled.img.attrs({ src: playerAddIcon })`
   cursor: pointer;
+  width: 32px;
   margin-bottom: 24px;
 `;
 
 export const LeaveButton = styled.img.attrs({ src: leaveIcon })`
   cursor: pointer;
+  width: 32px;
   margin-bottom: 24px;
 `;
 
 export const RankingModalButton = styled.img.attrs({ src: rankingIcon })`
   cursor: pointer;
+  width: 32px;
   margin-bottom: 24px;
 `;
 
 export const RefreshButton = styled.img.attrs({ src: refreshIcon })<{ isLoading: boolean }>`
   cursor: pointer;
+  width: 32px;
   margin-bottom: 24px;
   ${(props) =>
     props.isLoading &&

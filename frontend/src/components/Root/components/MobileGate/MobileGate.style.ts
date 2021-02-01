@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 import { fontFamily, colorPalette, fontSize } from 'stylesheet';
 import rightSideBackground from 'assets/full-background.svg';
-import arrowRight from 'assets/arrow-right.svg';
 import laptopAndTablet from 'assets/laptop-tablet.svg';
 
 export const MobileGateBackground = styled.div`
@@ -33,8 +32,4 @@ export const StyledForm = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;
-`;
-
-export const InputArrow = styled.img.attrs({ src: arrowRight })`
-  cursor: pointer;
 `;
