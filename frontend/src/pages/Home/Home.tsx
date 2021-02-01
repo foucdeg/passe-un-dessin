@@ -27,7 +27,7 @@ import {
 } from './Home.style';
 import PlayerGameForm from './components/PlayerGameForm';
 import RulesModal from './components/RulesModal';
-import HighlightedDrawing from './components/HighlightedDrawing';
+import HighlightedDrawing from './components/FeaturedDrawing';
 
 const TwitchModal = lazy(() => import('./components/TwitchModal'));
 

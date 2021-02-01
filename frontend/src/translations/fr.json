@@ -24,7 +24,7 @@
     "joinDiscord": "Notre Discord",
     "twitchStreams": "{currentStreamsCount} chaînes live",
     "rulesUnderstood": "Compris !",
-    "highlightedDrawingCaption": "<em>{sentence}</em>, par {name}, {year}"
+    "featuredDrawingAuthor": "par {name}"
   },
   "roomLobby": {
     "title": "Salle d'attente",

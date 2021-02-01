@@ -24,7 +24,7 @@
     "joinDiscord": "Unser Discord",
     "twitchStreams": "{currentStreamsCount} Live-Streams",
     "rulesUnderstood": "Verstanden!",
-    "highlightedDrawingCaption": "<em>{sentence}</em>, von {name}, {year}"
+    "featuredDrawingAuthor": "von {name}"
   },
   "roomLobby": {
     "title": "Lobby",
