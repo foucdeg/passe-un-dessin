@@ -15,6 +15,7 @@ from core.messages import GameStartsMessage, PlayerConnectedMessage
 from core.models import Game, GamePhase, Player, Room
 from core.serializers import PlayerSerializer, RoomSerializer
 from core.service.game_service import initialize_game
+from core.service.room_service import join_room as do_join_room
 from core.service.room_service import remove_player_from_room
 from suggestions.service import get_random
 
@@ -82,24 +83,10 @@ class RoomRetrieveAPIView(RetrieveAPIView):
 def join_room(request, player, room_id):
     try:
         room = Room.objects.get(uuid=room_id)
-        if room == player.room:
-            return HttpResponse(status=200)
-
-        with transaction.atomic():
-            player.room = room
-            player.save()
-            logger.debug(
-                "Sending message for player %s joining room %s"
-                % (player.name, room.uuid.hex[:8])
-            )
-            send_event(
-                "room-%s" % room.uuid.hex,
-                "message",
-                PlayerConnectedMessage(player).serialize(),
-            )
     except Room.DoesNotExist:
         return HttpResponseBadRequest("Room does not exist")
 
+    do_join_room(room, player)
     return HttpResponse(status=200)
 
 
@@ -139,19 +126,13 @@ def start_game(request, room_id):
             game.save()
 
         game = initialize_game(
-            room,
-            players_order,
-            round_duration,
-            draw_own_word,
-            controlled_reveal,
+            room, players_order, round_duration, draw_own_word, controlled_reveal,
         )
         room.current_game = game
         room.save()
 
         send_event(
-            "room-%s" % room.uuid.hex,
-            "message",
-            GameStartsMessage(game).serialize(),
+            "room-%s" % room.uuid.hex, "message", GameStartsMessage(game).serialize(),
         )
 
         return JsonResponse({"game_id": game.uuid.hex})

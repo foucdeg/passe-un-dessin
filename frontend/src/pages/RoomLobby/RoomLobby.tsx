@@ -126,7 +126,7 @@ const Room: React.FunctionComponent = () => {
       )}
       <PlayerList>
         {room.players.map((roomPlayer) => (
-          <AvatarWithName key={roomPlayer.uuid}>
+          <AvatarWithName key={roomPlayer.uuid} data-test="avatar">
             <BareLink
               to={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', roomPlayer.uuid)}
               target="_blank"

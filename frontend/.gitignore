@@ -19,3 +19,6 @@ yarn-error.log*
 localhost.pem
 localhost-key.pem
 .eslintcache
+
+cypress/videos/*
+!cypress/videos/.gitkeep
