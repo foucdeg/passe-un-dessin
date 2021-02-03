@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 
 import dj_database_url
+import sentry_sdk
+from django.core.exceptions import ImproperlyConfigured
+from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(
@@ -165,18 +168,16 @@ TWITCH_CONFIG = {
     "GAME_ID": 2094895819,
 }
 
-
 # Sentry
-if "SENTRY_BACKEND_DSN" in os.environ:
-    import sentry_sdk
-    from sentry_sdk.integrations.django import DjangoIntegration
+if not "SENTRY_BACKEND_DSN" in os.environ:
+    raise ImproperlyConfigured("Missing SENTRY_BACKEND_DSN in environment")
 
-    sentry_sdk.init(
-        dsn=os.environ.get("SENTRY_BACKEND_DSN"),
-        integrations=[DjangoIntegration()],
-        environment=os.environ.get("ENVIRONMENT"),
-        release=os.environ.get("VERSION"),
-    )
+sentry_sdk.init(
+    dsn=os.environ.get("SENTRY_BACKEND_DSN"),
+    integrations=[DjangoIntegration()],
+    environment=os.environ.get("ENVIRONMENT"),
+    release=os.environ.get("VERSION"),
+)
 
 DJANGO_REST_PASSWORDRESET_NO_INFORMATION_LEAKAGE = True
 DJANGO_REST_PASSWORDRESET_IP_ADDRESS_HEADER = "HTTP_X_FORWARDED_FOR"

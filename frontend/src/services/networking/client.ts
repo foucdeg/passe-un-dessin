@@ -20,13 +20,7 @@ async function request(
 ) {
   const url = /^https?:\/\//.test(endpoint) ? endpoint : `${backendBaseUrl}${endpoint}`;
 
-  // generate unique transactionId and set as Sentry tag
-  const requestId = Math.random().toString(36).substr(2, 9);
-  Sentry.configureScope((scope) => {
-    scope.setTag('request_id', requestId);
-  });
   const headers = new Headers({
-    'X-Request-Id': requestId,
     Accept: 'application/json',
     'Content-Type': 'application/json',
   });
@@ -42,6 +36,13 @@ async function request(
 
   try {
     const response = await fetch(url, config);
+
+    if (response.headers.has('X-Request-ID')) {
+      Sentry.configureScope((scope) => {
+        scope.setTag('request_id', response.headers.get('X-Request-ID'));
+      });
+    }
+
     const responseText = await response.text();
 
     if (!response.ok) {

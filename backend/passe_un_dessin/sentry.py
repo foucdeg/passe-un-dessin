@@ -12,4 +12,9 @@ class RequestIdMiddleware:
         if request_id:
             with sentry_sdk.configure_scope() as scope:
                 scope.set_tag("request_id", request_id)
-        return self.get_response(request)
+
+        response = self.get_response(request)
+        if request_id:
+            response["X-Request-ID"] = request_id
+
+        return response
