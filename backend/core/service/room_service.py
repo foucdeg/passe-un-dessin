@@ -19,12 +19,15 @@ def remove_player_from_room(room_id: str, player_id: str):
 
     try:
         room = Room.objects.get(uuid=room_id)
-        if room != player.room:
-            return HttpResponseBadRequest(
-                "Player %s was not room %s" % (player_id, room_id)
-            )
     except Room.DoesNotExist:
         return HttpResponseBadRequest("Room %s does not exist" % room_id)
+
+    if room != player.room:
+        logger.warning(
+            "remove_player_from_room: Player %s was not in room %s"
+            % (player_id, room_id)
+        )
+        return HttpResponse(status=200)
 
     initial_room_number_of_players = room.players.count()
 
