@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Spacer from 'atoms/Spacer';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { PadStep } from 'redux/Game/types';
@@ -27,6 +27,8 @@ const InitStep: React.FC<Props> = ({ padStep, saveStep, loading, drawOwnWord }) 
   const [isInputDisabled, disableInput, reenableInput] = useBoolean(!!padStep.sentence);
   const intl = useIntl();
 
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
   const onSubmit = (event: React.MouseEvent | React.FormEvent) => {
     event.preventDefault();
     if (sentence !== '') {
@@ -38,6 +40,11 @@ const InitStep: React.FC<Props> = ({ padStep, saveStep, loading, drawOwnWord }) 
   const onClickUpdate = () => {
     reenableInput();
     saveStep({ sentence: null });
+  };
+
+  const onSuggestionClick = (suggestionText: string) => {
+    setSentence(suggestionText);
+    inputRef.current?.focus();
   };
 
   return (
@@ -57,6 +64,8 @@ const InitStep: React.FC<Props> = ({ padStep, saveStep, loading, drawOwnWord }) 
           <StyledTextInput
             autoFocus
             type="text"
+            ref={inputRef}
+            data-test="sentence-input"
             placeholder={intl.formatMessage({ id: 'padInit.placeholder' })}
             maxLength={100}
             value={sentence}
@@ -73,7 +82,7 @@ const InitStep: React.FC<Props> = ({ padStep, saveStep, loading, drawOwnWord }) 
           />
         </p>
       )}
-      <SuggestionGenerator onSuggestionClick={setSentence} />
+      <SuggestionGenerator onSuggestionClick={onSuggestionClick} />
       <Spacer />
       <RemainingPlayers />
     </InitStepContainer>

@@ -12,7 +12,6 @@
 Cypress.Commands.add('runBackendCommand', (command) => {
   cy.exec(`docker ps -aqf "name=${Cypress.env('BACKEND_CONTAINER_NAME')}"`)
     .then(({ stdout }) => {
-      console.log(stdout);
       return stdout.trim();
     })
     .then((backendContainer) => {

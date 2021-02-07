@@ -33,7 +33,11 @@ const SuggestionGenerator: React.FC<Props> = ({ onSuggestionClick }) => {
       {suggestions.length ? (
         <Suggestions>
           {suggestions.map((suggestion) => (
-            <SuggestionChip key={suggestion} onClick={() => onSuggestionClick(suggestion)}>
+            <SuggestionChip
+              data-test="suggestion"
+              key={suggestion}
+              onClick={() => onSuggestionClick(suggestion)}
+            >
               {suggestion}
             </SuggestionChip>
           ))}
@@ -43,7 +47,7 @@ const SuggestionGenerator: React.FC<Props> = ({ onSuggestionClick }) => {
           <FormattedMessage id="padInit.getSuggestions" />
         </Subheader>
       )}
-      <Dice onClick={onDiceRoll} className={diceClassName} />
+      <Dice data-test="suggestion-dice" onClick={onDiceRoll} className={diceClassName} />
     </SuggestionGeneratorContainer>
   );
 };

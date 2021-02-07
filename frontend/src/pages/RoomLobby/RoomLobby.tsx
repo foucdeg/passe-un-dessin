@@ -161,6 +161,7 @@ const Room: React.FunctionComponent = () => {
                 <FormattedMessage id="roomLobby.isEveryoneThere" />
               </HelpText>
               <Button
+                data-test="start-game"
                 onClick={() => doStartGame(room.uuid, roundDuration, drawOwnWord, controlledReveal)}
               >
                 <FormattedMessage id="roomLobby.play" />
