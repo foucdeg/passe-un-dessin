@@ -10,13 +10,13 @@
 //
 // -- This will overwrite an existing command --
 Cypress.Commands.add('runBackendCommand', (command) => {
-  cy.exec(`docker ps -aqf "name=${Cypress.env('BACKEND_CONTAINER_NAME')}"`)
-    .then(({ stdout }) => {
-      return stdout.trim();
-    })
-    .then((backendContainer) => {
-      return cy.exec(`docker exec ${backendContainer} python manage.py ${command}`);
-    });
+  cy.log(`Running command \`${command}\` against the backend`);
+  cy.exec(`docker ps -aqf "name=${Cypress.env('BACKEND_CONTAINER_NAME')}"`, { log: false }).then(
+    ({ stdout }) => {
+      const backendContainer = stdout.trim();
+      return cy.exec(`docker exec ${backendContainer} python manage.py ${command}`, { log: false });
+    },
+  );
 });
 
 Cypress.Commands.add('playerJoins', (roomId, playerName) => {

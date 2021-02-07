@@ -4,6 +4,9 @@ describe('Full game', () => {
     let gameId = null;
 
     cy.visit('/');
+
+    cy.log('Creating a room...');
+
     cy.get('[data-test=start-room]').click();
     cy.focused().type('Boss{enter}');
     cy.location('pathname').should('match', /^\/room\/[0-9a-f]+$/);
@@ -15,12 +18,14 @@ describe('Full game', () => {
       cy.playerJoins(roomId, 'Ben');
     });
 
+    cy.log('Checking that everybody joined...');
     cy.get('[data-test=avatar]').contains('Bill').should('exist');
     cy.get('[data-test=avatar]').contains('Bob').should('exist');
     cy.get('[data-test=avatar]').contains('Ben').should('exist');
 
     cy.get('[data-test=controlled-reveal]').click();
 
+    cy.log('Starting game...');
     cy.get('[data-test=start-game]').click();
 
     cy.location('pathname').should(
@@ -35,12 +40,14 @@ describe('Full game', () => {
       cy.log('gameId', gameId);
     });
 
+    cy.log('Assert step ordering');
     cy.get('[data-test=player-order]').first().should('contain', 'Boss');
     cy.get('[data-test=player-order]').eq(1).should('contain', 'Boss');
     cy.get('[data-test=player-order]').eq(2).should('not.contain', 'Boss');
     cy.get('[data-test=player-order]').eq(3).should('not.contain', 'Boss');
     cy.get('[data-test=player-order]').eq(4).should('not.contain', 'Boss');
 
+    cy.log('Test typing and using suggestions');
     cy.get('[data-test=suggestion-dice]').click();
     cy.get('[data-test=suggestion]').eq(1).click();
     cy.focused().invoke('val').should('not.be.empty');
