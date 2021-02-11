@@ -1,6 +1,6 @@
 FROM python:3.9.1-alpine
 
-RUN apk add --no-cache gcc==10.2.1_pre1-r3 git==2.30.0-r0 musl-dev==1.2.2-r0 postgresql-dev==13.1-r2 postgresql-client==13.1-r2 gettext==0.20.2-r2 libressl-dev==3.1.5-r0 libffi-dev==3.3-r2 make==4.3-r0 cargo==1.47.0-r2
+RUN apk add --no-cache gcc==10.2.1_pre1-r3 git==2.30.1-r0 musl-dev==1.2.2-r0 postgresql-dev==13.1-r2 postgresql-client==13.1-r2 gettext==0.20.2-r2 libressl-dev==3.1.5-r0 libffi-dev==3.3-r2 make==4.3-r0 cargo==1.47.0-r2
 RUN pip install daphne==2.5.0 poetry==1.1.4
 RUN poetry config virtualenvs.create false
 
