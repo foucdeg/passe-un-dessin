@@ -113,7 +113,7 @@
     "prettier": "2.2.1",
     "react-app-rewire-webpack-bundle-analyzer": "1.1.0",
     "react-app-rewired": "2.1.8",
-    "sitemap-webpack-plugin": "1.0.0",
+    "sitemap-webpack-plugin": "1.1.0",
     "stylelint": "13.10.0",
     "stylelint-config-prettier": "8.0.2",
     "stylelint-config-standard": "20.0.0",

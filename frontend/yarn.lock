@@ -12205,10 +12205,10 @@ sisteransi@^1.0.4, sisteransi@^1.0.5:
   resolved "https://registry.yarnpkg.com/sisteransi/-/sisteransi-1.0.5.tgz#134d681297756437cc05ca01370d3a7a571075ed"
   integrity sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==
 
-sitemap-webpack-plugin@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/sitemap-webpack-plugin/-/sitemap-webpack-plugin-1.0.0.tgz#81638042e3a81c98ebb37e5190385533503fb25c"
-  integrity sha512-vDehaYTCgIe/KFeJhxySMoT1g9gXPYdDHpUM26Gc7ANlcF/qsW8GgiLKSGmz8L647xi3NJp0zkibWkgg+y/JlA==
+sitemap-webpack-plugin@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/sitemap-webpack-plugin/-/sitemap-webpack-plugin-1.1.0.tgz#66e6326a363418af2e1346706c689fe622222c47"
+  integrity sha512-grxE9s76zDJvlQS64SzFxiWz0F3pw7BqXgneR2oPw/bB+7KlgWKwK61asfaDrWTqyVW6O7KTT3QkG7gtmgIb6Q==
   dependencies:
     schema-utils "^3.0.0"
     sitemap "^6.0.0"
