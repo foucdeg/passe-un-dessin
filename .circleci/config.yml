@@ -1,8 +1,9 @@
 version: 2.1
 orbs:
   node: circleci/node@4.1.1
+  python: circleci/python@1.3.2
 jobs:
-  lint:
+  lint-front:
     executor:
       name: node/default
       tag: "12.19"
@@ -92,6 +93,19 @@ jobs:
       - store_artifacts:
           path: frontend/build
 
+  lint-back:
+    docker:
+      - image: circleci/python:3.9.1
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: poetry
+          app-dir: backend
+      - run:
+          command: poetry run flake8 ./
+          working_directory: backend
+          name: Run linter
+
   build-back:
     docker:
       - image: cimg/base:2020.12
@@ -173,22 +187,28 @@ jobs:
 workflows:
   build-lint-tsc:
     jobs:
-      - lint
+      - lint-front
       - tsc
-      - build-back
-      - build-drawing-renderer
-      - build-pushpin
       - build-front:
           requires:
-            - lint
+            - lint-front
             - tsc
           filters:
             branches:
               ignore: master
       - build-deploy-front:
           requires:
-            - lint
+            - lint-front
             - tsc
           filters:
             branches:
               only: master
+
+      - lint-back
+      - build-back:
+          requires:
+            - lint-back
+
+      - build-drawing-renderer
+
+      - build-pushpin

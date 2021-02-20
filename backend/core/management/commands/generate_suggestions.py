@@ -2,7 +2,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.core.management.base import BaseCommand
 
-from core.models import Pad, PadStep, StepType
+from core.models import PadStep, StepType
 from suggestions.models import Language, Suggestion, SuggestionStatus
 from suggestions.service import sanitize_sentence
 
@@ -73,7 +73,10 @@ class Command(BaseCommand):
                 message += "{}\n".format(suggestion.sentence)
             if len(inactive_suggestions) > 100:
                 message += "...et {} autres".format(len(inactive_suggestions) - 100)
-            message += "\n\nPour évaluer ces suggestions, cliquer sur ce lien : https://passeundessin.com/admin/suggestions/suggestion/?status__exact=INACTIVE"
+            message += (
+                "\n\nPour évaluer ces suggestions, cliquer sur ce lien :"
+                + " https://passeundessin.com/admin/suggestions/suggestion/?status__exact=INACTIVE"
+            )
 
             send_mail(
                 "Nouvelles suggestions à évaluer !",

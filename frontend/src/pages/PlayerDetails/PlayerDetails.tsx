@@ -2,12 +2,8 @@ import React, { useEffect } from 'react';
 import { NoProps } from 'services/utils';
 import { useSelector } from 'redux/useSelector';
 import { useParams } from 'react-router';
-import { useFetchPlayer, useFetchPlayerTotalScore } from 'redux/Player/hooks';
-import {
-  selectDisplayedPlayer,
-  selectDisplayedPlayerTotalScore,
-  selectDisplayedPlayerRanking,
-} from 'redux/Player/selectors';
+import { useFetchPlayer } from 'redux/Player/hooks';
+import { selectDisplayedPlayer } from 'redux/Player/selectors';
 
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
@@ -49,23 +45,14 @@ const PlayerDetails: React.FC<NoProps> = () => {
   const displayedPlayer = useSelector(selectDisplayedPlayer);
   const { playerId } = useParams<RouteParams>();
   const [{ loading }, doFetchPlayer] = useFetchPlayer();
-  const [{ loading: scoreLoading }, fetchPlayerTotalScore] = useFetchPlayerTotalScore();
-  const totalScore = useSelector(selectDisplayedPlayerTotalScore);
-  const ranking = useSelector(selectDisplayedPlayerRanking);
   const { locale } = useIntl();
   const dateLocale = locale === 'fr' ? fr : locale === 'en' ? enUS : de;
 
   useEffect(() => {
     if (!displayedPlayer || displayedPlayer.uuid !== playerId) {
-      doFetchPlayer(playerId);
+      doFetchPlayer(playerId, { withRank: true });
     }
   }, [displayedPlayer, doFetchPlayer, playerId]);
-
-  useEffect(() => {
-    if (displayedPlayer) {
-      fetchPlayerTotalScore(displayedPlayer.uuid);
-    }
-  }, [displayedPlayer, fetchPlayerTotalScore]);
 
   if (loading) {
     return (
@@ -91,17 +78,15 @@ const PlayerDetails: React.FC<NoProps> = () => {
           <StyledHeader>{displayedPlayer.name}</StyledHeader>
 
           <StyledScoreCard
-            loading={scoreLoading}
             label={<FormattedMessage id="playerModal.totalScore" />}
-            value={totalScore}
+            value={displayedPlayer.total_score}
           />
           <StyledScoreCard
             linkTo="/leaderboard"
             linkToLabelId="playerModal.leaderboard"
             color={colorPalette.purple}
-            loading={scoreLoading}
             label={<FormattedMessage id="playerModal.ranking" />}
-            value={ranking ? '#' + ranking : 'N/A'}
+            value={displayedPlayer.rank ? '#' + displayedPlayer.rank : 'N/A'}
           />
         </LeftSide>
 

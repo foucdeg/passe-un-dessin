@@ -198,7 +198,11 @@ def start_debrief(game: Game):
     )
 
 
-class GamePhaseAssertionException(Exception):
+class GameStateException(Exception):
+    pass
+
+
+class GamePhaseAssertionException(GameStateException):
     def __init__(self, expected, actual):
         message = "Expected game to be at phase %s, actual phase %s" % (
             expected,
@@ -209,7 +213,7 @@ class GamePhaseAssertionException(Exception):
         self.actual = actual
 
 
-class GameRoundAssertionException(Exception):
+class GameRoundAssertionException(GameStateException):
     def __init__(self, expected, actual):
         message = "Expected game to be at round %d, actual round %d" % (
             expected,

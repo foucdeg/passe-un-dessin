@@ -9,7 +9,7 @@ import InnerForm from './PlayerForm';
 
 export interface OutsideProps {
   player: Player;
-  onSubmit: (player: Player) => Promise<void>;
+  onSubmit: (player: Partial<Player>) => Promise<void>;
   isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
   openAvatarDrawing: () => void;
@@ -45,9 +45,8 @@ const PlayerForm = withFormik<OutsideProps, FormValues>({
 
   handleSubmit: async (values, { props, setSubmitting }) => {
     const { onSubmit, player } = props;
-    const { user, ...playerWithoutUser } = player;
     const { name, color } = values;
-    await onSubmit({ ...playerWithoutUser, name: name.trim(), color });
+    await onSubmit({ uuid: player.uuid, name: name.trim(), color });
     setSubmitting(false);
     props.setIsEditing(false);
   },

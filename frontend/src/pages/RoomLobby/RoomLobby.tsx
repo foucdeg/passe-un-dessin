@@ -13,7 +13,7 @@ import {
   useRoundDuration,
   useStartGame,
 } from 'redux/Game/hooks';
-import { selectPlayer } from 'redux/Player/selectors';
+import { selectPlayerId } from 'redux/Player/selectors';
 import { useJoinRoom, useLeaveRoom } from 'redux/Room/hooks';
 import { selectRoom } from 'redux/Room/selectors';
 import { useSelector } from 'redux/useSelector';
@@ -42,7 +42,7 @@ const Room: React.FunctionComponent = () => {
   const doStartGame = useStartGame();
   const doCheckIfPlayerShouldJoin = useCheckIfPlayerShouldJoin();
   const room = useSelector(selectRoom);
-  const player = useSelector(selectPlayer);
+  const playerId = useSelector(selectPlayerId);
   const [inputText, setInputText] = useState<string>(document.location.href);
   const [roundDuration, setRoundDuration] = useRoundDuration();
   const [drawOwnWord, setDrawOwnWord] = useDrawOwnWordSwitch();
@@ -53,32 +53,32 @@ const Room: React.FunctionComponent = () => {
   useEffect(() => {
     if (
       room &&
-      player &&
-      !room.players.some((roomPlayer) => roomPlayer.uuid === player.uuid) &&
+      playerId &&
+      !room.players.some((roomPlayer) => roomPlayer.uuid === playerId) &&
       !window.loginLock
     ) {
       doJoinRoom(room.uuid);
     }
-  }, [room, player, doJoinRoom]);
+  }, [room, playerId, doJoinRoom]);
 
   useEffect(() => {
     if (
       room &&
-      player &&
-      room.players.some((roomPlayer) => roomPlayer.uuid === player.uuid) &&
+      playerId &&
+      room.players.some((roomPlayer) => roomPlayer.uuid === playerId) &&
       room.current_game_id
     ) {
       doCheckIfPlayerShouldJoin(room.current_game_id);
     }
-  }, [room, player, doCheckIfPlayerShouldJoin]);
+  }, [room, playerId, doCheckIfPlayerShouldJoin]);
 
   if (!room) return null;
-  if (!player) return null;
+  if (!playerId) return null;
 
   const goodNumberOfPlayers =
     room.players.length >= MIN_PLAYERS && room.players.length <= MAX_PLAYERS;
 
-  const isPlayerAdmin = player.uuid === room.admin.uuid;
+  const isPlayerAdmin = playerId === room.admin.uuid;
 
   const onCopy = () => {
     copy(document.location.href);
@@ -125,15 +125,15 @@ const Room: React.FunctionComponent = () => {
         </>
       )}
       <PlayerList>
-        {room.players.map((player) => (
-          <AvatarWithName key={player.uuid}>
+        {room.players.map((roomPlayer) => (
+          <AvatarWithName key={roomPlayer.uuid}>
             <BareLink
-              to={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', player.uuid)}
+              to={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', roomPlayer.uuid)}
               target="_blank"
               rel="noreferrer"
             >
-              <Avatar player={player} />
-              <PlayerName color={player.color}>{player.name}</PlayerName>
+              <Avatar player={roomPlayer} />
+              <PlayerName color={roomPlayer.color}>{roomPlayer.name}</PlayerName>
             </BareLink>
           </AvatarWithName>
         ))}

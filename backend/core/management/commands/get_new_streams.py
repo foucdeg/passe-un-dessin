@@ -4,8 +4,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.core.management.base import BaseCommand
 
-from twitch.client import get_streams
-from twitch.models import Polling, PollingStatus, Stream, Streamer
+from twitch.models import Polling, PollingStatus
 from twitch.service import fetch_and_handle_streams
 
 
@@ -17,7 +16,7 @@ class Command(BaseCommand):
         try:
             polling = fetch_and_handle_streams(polling)
             polling.status = PollingStatus.SUCCESS.value
-        except Exception as e:
+        except Exception:
             stacktrace = traceback.format_exc()
             polling.status = PollingStatus.ERROR.value
             polling.stacktrace = stacktrace

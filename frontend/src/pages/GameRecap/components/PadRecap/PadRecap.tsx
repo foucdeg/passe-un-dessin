@@ -4,7 +4,7 @@ import SentenceRecap from 'pages/GameRecap/components/SentenceRecap';
 import DrawingRecap from 'pages/GameRecap/components/DrawingRecap';
 import RecapRemainingPlayers from 'pages/GameRecap/components/RecapRemainingPlayers';
 import { useSelector } from 'redux/useSelector';
-import { selectPlayer } from 'redux/Player/selectors';
+import { selectPlayerId } from 'redux/Player/selectors';
 import { PadRecapRow, ArrowSpacer } from './PadRecap.style';
 
 interface Props {
@@ -15,13 +15,13 @@ interface Props {
 }
 
 const PadRecap: React.FC<Props> = ({ pad, publicMode, isPlayerInGame, isDebriefPhase }) => {
-  const player = useSelector(selectPlayer);
+  const playerId = useSelector(selectPlayerId);
 
   return (
     <PadRecapRow>
       {pad.steps.map((step, index) => {
         const canVote =
-          isPlayerInGame && !!player && player.uuid !== step.player.uuid && isDebriefPhase;
+          isPlayerInGame && !!playerId && playerId !== step.player.uuid && isDebriefPhase;
 
         return (
           <React.Fragment key={step.uuid}>

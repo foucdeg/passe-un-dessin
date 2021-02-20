@@ -12,6 +12,7 @@ import {
   VoteCount,
   WinnerSection,
   ArrowSpacer,
+  HighlightedArrowSpacer,
   LightBulb,
 } from './PodiumStep.style';
 import { StyledDrawing } from './PodiumStep.style';
@@ -33,7 +34,7 @@ const WordToDrawingStepWinner: React.FC<{ step: PadStep }> = ({ step }) => (
 const DrawingToWordStepWinner: React.FC<{ step: PadStep }> = ({ step }) => (
   <>
     <StyledDrawing src={step.drawing_url} />
-    <ArrowSpacer highlighted />
+    <HighlightedArrowSpacer />
     <Sentence highlighted>{step.sentence}</Sentence>
   </>
 );

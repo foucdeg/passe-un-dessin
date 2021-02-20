@@ -2,15 +2,15 @@ import { Game, GamePhase } from 'redux/Game/types';
 import { Player } from 'redux/Player/types';
 import { Room } from 'redux/Room/types';
 
-export const getRedirectPath = (room: Room, game: Game, player: Player): string => {
+export const getRedirectPath = (room: Room, game: Game, playerId: string): string => {
   switch (game.phase) {
     case GamePhase.ROUNDS:
       const playerStep = game.rounds.find(
-        (step) => step.player.uuid === player.uuid && step.round_number === game.current_round,
+        (step) => step.player.uuid === playerId && step.round_number === game.current_round,
       );
       if (!playerStep) {
         throw new Error(
-          `Step for player ${player.uuid} and round ${game.current_round} not found in game ${game.uuid}`,
+          `Step for player ${playerId} and round ${game.current_round} not found in game ${game.uuid}`,
         );
       }
       return `/room/${room.uuid}/game/${game.uuid}/step/${playerStep.uuid}`;
@@ -30,15 +30,15 @@ export const getAvailableVoteCount = (game: Game): number => {
   return Math.max(1, Math.round(Math.sqrt(0.6 * choiceCount - 1)));
 };
 
-export const getReorderedPlayers = (game: Game, player: Player): Player[] => {
+export const getReorderedPlayers = (game: Game, playerId: string): Player[] => {
   const currentPad = game.pads.find((pad) =>
     pad.steps.some(
-      (step) => step.round_number === game.current_round && step.player.uuid === player.uuid,
+      (step) => step.round_number === game.current_round && step.player.uuid === playerId,
     ),
   );
   if (!currentPad) {
     throw new Error(
-      `Step for player ${player.uuid} and round ${game.current_round} not found in game ${game.uuid}`,
+      `Step for player ${playerId} and round ${game.current_round} not found in game ${game.uuid}`,
     );
   }
 

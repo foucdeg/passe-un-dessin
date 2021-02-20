@@ -1,6 +1,5 @@
 # Register your models here.
 from django.contrib import admin
-from django.db import models
 
 from suggestions.models import Suggestion, SuggestionStatus
 

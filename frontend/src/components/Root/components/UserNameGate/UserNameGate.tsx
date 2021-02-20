@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import { useSelector } from 'redux/useSelector';
 import { useFetchMe } from 'redux/Player/hooks';
-import { selectPlayer } from 'redux/Player/selectors';
+import { selectPlayerId } from 'redux/Player/selectors';
 import UserNameModal from 'modals/UserNameModal';
 import { useRouteMatch } from 'react-router';
 import { PLAYER_PATHS } from 'routes';
@@ -12,20 +12,20 @@ interface Props {
 }
 
 const UserNameGate: React.FC<Props> = ({ children }) => {
-  const player = useSelector(selectPlayer);
-  const doFetchMe = useFetchMe();
+  const playerId = useSelector(selectPlayerId);
+  const [, doFetchMe] = useFetchMe();
   const match = useRouteMatch(PLAYER_PATHS.ROOM);
 
   useEffect(() => {
-    if (!player) {
+    if (!playerId) {
       doFetchMe();
     }
-  }, [player, doFetchMe]);
+  }, [playerId, doFetchMe]);
 
   return (
     <>
       {children}
-      {player === false && match && <UserNameModal />}
+      {playerId === false && match && <UserNameModal />}
     </>
   );
 };

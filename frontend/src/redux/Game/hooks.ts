@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
-import { selectPlayer } from 'redux/Player/selectors';
+import { selectPlayerId } from 'redux/Player/selectors';
 import { useGetRanking } from 'redux/Room/hooks';
 import { selectRoom } from 'redux/Room/selectors';
 import { useSelector } from 'redux/useSelector';
@@ -59,11 +59,11 @@ export const useGetSuggestions = () => {
 export const useRefreshGame = () => {
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
-  const player = useSelector(selectPlayer);
+  const playerId = useSelector(selectPlayerId);
   const { push } = useHistory();
 
   return useAsyncFn(async () => {
-    if (!room || !game || !player) return;
+    if (!room || !game || !playerId) return;
 
     const updatedGame: Game = await client.get(`/game/${game.uuid}`);
 
@@ -76,9 +76,9 @@ export const useRefreshGame = () => {
       }
     }
 
-    const path = getRedirectPath(room, updatedGame, player);
+    const path = getRedirectPath(room, updatedGame, playerId);
     push(path);
-  }, [room, game, player]);
+  }, [room, game, playerId]);
 };
 
 export const useStartGame = () => {
@@ -197,13 +197,13 @@ export const useControlledRevealSwitch = (initialValue?: boolean) => {
 
 export const useSaveVote = () => {
   const dispatch = useDispatch();
-  const player = useSelector(selectPlayer);
+  const playerId = useSelector(selectPlayerId);
 
   return useCallback(
     async (padStepId: string) => {
-      if (!player) return;
+      if (!playerId) return;
 
-      dispatch(addVoteToPadStep({ padStepId, player }));
+      dispatch(addVoteToPadStep({ padStepId, playerId }));
       try {
         await client.post(`/step/${padStepId}/vote`);
       } catch (e) {
@@ -211,19 +211,19 @@ export const useSaveVote = () => {
         console.error(e);
       }
     },
-    [dispatch, player],
+    [dispatch, playerId],
   );
 };
 
 export const useDeleteVote = () => {
   const dispatch = useDispatch();
-  const player = useSelector(selectPlayer);
+  const playerId = useSelector(selectPlayerId);
 
   return useCallback(
     async (padStepId: string) => {
-      if (!player) return;
+      if (!playerId) return;
 
-      dispatch(removeVoteFromPadStep({ padStepId, player }));
+      dispatch(removeVoteFromPadStep({ padStepId, playerId }));
       try {
         await client.delete(`/step/${padStepId}/vote`);
       } catch (e) {
@@ -231,7 +231,7 @@ export const useDeleteVote = () => {
         console.error(e);
       }
     },
-    [dispatch, player],
+    [dispatch, playerId],
   );
 };
 

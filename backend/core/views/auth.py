@@ -1,20 +1,14 @@
 import json
 import logging
 
-from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordResetForm
-from django.contrib.auth.tokens import default_token_generator
 from django.db import IntegrityError
-from django.db.models import Count, Prefetch
-from django.db.models.expressions import F, Window
-from django.db.models.functions.window import Rank
+from django.db.models import Prefetch
 from django.http import (
     HttpResponse,
     HttpResponseBadRequest,
     HttpResponseForbidden,
-    HttpResponseNotFound,
     JsonResponse,
 )
 from django.shortcuts import get_object_or_404
@@ -24,10 +18,9 @@ from django_rest_passwordreset.views import ResetPasswordValidateToken
 from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.response import Response
 
-from core.decorators import check_player_color, check_player_id, requires_player
-from core.models import Game, GamePhase, Player, PlayerGameParticipation, User, Vote
+from core.decorators import check_player_color, check_player_id
+from core.models import Game, GamePhase, Player, PlayerGameParticipation, User
 from core.serializers import (
-    PlayerSerializer,
     PlayerWithAvatarSerializer,
     PlayerWithHistorySerializer,
     PlayerWithUserAndAvatarSerializer,
@@ -36,6 +29,7 @@ from core.serializers import (
 from core.service.auth_service import (
     SocialAuthInvalidTokenException,
     do_user_player_coherence,
+    get_player_rank,
     verify_user,
 )
 
@@ -47,6 +41,10 @@ def get_me(request):
     try:
         player_id = request.session["player_id"]
         player = Player.objects.get(uuid=player_id)
+
+        if request.GET.get("withRank") == "true":
+            player.rank = get_player_rank(player)
+
     except (KeyError, Player.DoesNotExist):
         return JsonResponse(None, safe=False)
 
@@ -62,7 +60,7 @@ class PlayerAPIView(RetrieveUpdateAPIView):
     serializer_class = PlayerWithAvatarSerializer
 
     def retrieve(self, request, uuid):
-        queryset = (
+        player = (
             self.get_queryset()
             .prefetch_related(
                 Prefetch(
@@ -81,7 +79,9 @@ class PlayerAPIView(RetrieveUpdateAPIView):
             )
             .get(uuid=uuid)
         )
-        serializer = PlayerWithHistorySerializer(queryset)
+        if request.GET.get("withRank") == "true":
+            player.rank = get_player_rank(player)
+        serializer = PlayerWithHistorySerializer(player)
         return JsonResponse(serializer.data)
 
     @check_player_id
@@ -175,34 +175,6 @@ def do_logout(request):
     logout(request)
 
     return HttpResponse("Logout successful")
-
-
-@require_GET
-def get_total_score(request, uuid):
-    players = Player.objects.raw(
-        """
-        SELECT * from (
-            SELECT
-                *,
-                RANK() OVER (ORDER BY total_score DESC) AS rank
-            FROM core_player
-            ORDER BY rank, uuid
-        ) sub
-        WHERE uuid = %s
-    """,
-        [uuid],
-    )
-
-    if len(players) == 0:
-        return HttpResponseNotFound("Player not found")
-
-    if len(players) > 2:
-        return HttpResponseBadRequest(
-            "Several players found : it should never happen"
-        )
-
-    player = players[0]
-    return JsonResponse({"score": player.total_score, "ranking": player.rank})
 
 
 class ResetPasswordTokenDetails(ResetPasswordValidateToken):

@@ -63,14 +63,15 @@ export const PodiumStepImage = styled.img.attrs({ alt: 'podium' })<{ width: numb
   width: ${(props) => props.width}px;
 `;
 
-export const ArrowSpacer = styled(FatArrowDown)<{ highlighted?: boolean }>`
+export const ArrowSpacer = styled(FatArrowDown)`
   .main {
     fill: ${colorPalette.textGrey};
-    ${(props) =>
-      props.highlighted &&
-      css`
-        fill: ${colorPalette.orange};
-      `};
+  }
+`;
+
+export const HighlightedArrowSpacer = styled(ArrowSpacer)`
+  .main {
+    fill: ${colorPalette.orange};
   }
 `;
 

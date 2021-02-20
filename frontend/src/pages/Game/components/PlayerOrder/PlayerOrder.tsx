@@ -1,18 +1,18 @@
 import React from 'react';
 import { useSelector } from 'redux/useSelector';
 import { selectGame } from 'redux/Game/selectors';
-import { selectPlayer } from 'redux/Player/selectors';
+import { selectPlayerId } from 'redux/Player/selectors';
 import { getReorderedPlayers } from 'services/game.service';
 import { EmptyObject } from 'services/utils';
 import { PlayerOrderContainer, StyledPlayerChip, ArrowSpacer, Variant } from './PlayerOrder.style';
 
 const PlayerOrder: React.FC<EmptyObject> = () => {
   const game = useSelector(selectGame);
-  const player = useSelector(selectPlayer);
+  const playerId = useSelector(selectPlayerId);
 
-  if (!game || !player) return null;
+  if (!game || !playerId) return null;
 
-  const [padOwner, ...orderedPlayers] = getReorderedPlayers(game, player);
+  const [padOwner, ...orderedPlayers] = getReorderedPlayers(game, playerId);
 
   const getChipVariant = (roundIndex: number) => {
     if (roundIndex < game.current_round) return Variant.PAST;

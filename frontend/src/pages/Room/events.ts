@@ -6,7 +6,7 @@ import { addPlayerToRoom, removePlayerFromRoom, nameNewAdmin } from 'redux/Room'
 import { resetGameMetadata } from 'redux/Game/slice';
 import { resetStep } from 'redux/Step/slice';
 import { useSelector } from 'redux/useSelector';
-import { selectPlayer } from 'redux/Player/selectors';
+import { selectPlayerId } from 'redux/Player/selectors';
 import { useServerSentEvent } from 'services/networking/server-events';
 import { Player } from 'redux/Player/types';
 import { Game } from 'redux/Game/types';
@@ -83,7 +83,7 @@ export const useRoomEvents = (
 ) => {
   const dispatch = useDispatch();
   const { push } = useHistory();
-  const player = useSelector(selectPlayer);
+  const playerId = useSelector(selectPlayerId);
 
   const onRoomEvent = useCallback(
     (event: RoomEvent) => {
@@ -92,7 +92,7 @@ export const useRoomEvents = (
         return;
       }
       if (isPlayerLeftEvent(event)) {
-        if (player && event.player.uuid === player.uuid) {
+        if (playerId && event.player.uuid === playerId) {
           push('/');
           return;
         }
@@ -121,7 +121,7 @@ export const useRoomEvents = (
         return;
       }
     },
-    [dispatch, push, player, roomId, setPlayerWhoLeft, setAdminChanged],
+    [dispatch, push, playerId, roomId, setPlayerWhoLeft, setAdminChanged],
   );
 
   useServerSentEvent<RoomEvent>(`room-${roomId}`, onRoomEvent);

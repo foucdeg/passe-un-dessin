@@ -30,6 +30,10 @@ def get_generic_avatar_url(player):
 
 class PlayerSerializer(BaseSerializer):
     avatar_url = serializers.SerializerMethodField()
+    rank = serializers.SerializerMethodField()
+
+    def get_rank(self, obj):
+        return obj.rank if hasattr(obj, "rank") else None
 
     def get_avatar_url(self, obj):
         if not obj.avatar:
@@ -38,13 +42,13 @@ class PlayerSerializer(BaseSerializer):
 
     class Meta:
         model = Player
-        fields = ("uuid", "name", "color", "total_score", "avatar_url")
+        fields = ("uuid", "name", "color", "total_score", "rank", "avatar_url")
 
 
 class PlayerWithAvatarSerializer(PlayerSerializer):
     class Meta:
         model = Player
-        fields = ("uuid", "name", "color", "total_score", "avatar", "avatar_url")
+        fields = PlayerSerializer.Meta.fields + ("avatar",)
 
 
 class PlayerWithUserAndAvatarSerializer(PlayerWithAvatarSerializer):
@@ -52,23 +56,7 @@ class PlayerWithUserAndAvatarSerializer(PlayerWithAvatarSerializer):
 
     class Meta:
         model = Player
-        fields = (
-            "uuid",
-            "name",
-            "color",
-            "total_score",
-            "user",
-            "avatar_url",
-            "avatar",
-        )
-
-
-class PlayerInRankingSerializer(PlayerSerializer):
-    rank = serializers.IntegerField()
-
-    class Meta:
-        model = Player
-        fields = ("uuid", "name", "color", "total_score", "rank", "avatar_url")
+        fields = fields = PlayerWithAvatarSerializer.Meta.fields + ("user",)
 
 
 class RoomSerializer(BaseSerializer):

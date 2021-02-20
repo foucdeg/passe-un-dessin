@@ -22,8 +22,8 @@ from core.messages import (
 from core.models import Game, GamePhase, Pad, PadStep, PlayerGameParticipation, Vote
 from core.serializers import GameSerializer, PadSerializer, PadStepSerializer
 from core.service.game_service import (
-    GamePhaseAssertionException,
     GameRoundAssertionException,
+    GameStateException,
     assert_phase,
     assert_round,
     get_available_vote_count,
@@ -81,7 +81,12 @@ def save_step(request, player, uuid):
     except PadStep.DoesNotExist:
         return HttpResponseBadRequest("Pad step with uuid %s does not exist" % uuid)
 
-    assert_round(step.pad.game, step.round_number)
+    try:
+        assert_round(step.pad.game, step.round_number)
+    except GameRoundAssertionException as e:
+        if step.pad.game.round_number == step.round_number + 1:
+            logger.exception(e)
+            return HttpResponse("Silently failing, the game has moved on", status=204)
 
     try:
         sentence = json_body["sentence"]
@@ -317,11 +322,7 @@ def force_state(request, player, game_id):
 
         # Requested phase was invalid
         return HttpResponseBadRequest("Invalid requested phase %s" % next_phase)
-    except GamePhaseAssertionException as e:
+    except GameStateException as e:
         return HttpResponseBadRequest(
-            "Unfufilled game phase assertion when forcing game state: %s" % str(e)
-        )
-    except GameRoundAssertionException as e:
-        return HttpResponseBadRequest(
-            "Unfufilled game round assertion when forcing game state: %s" % str(e)
+            "Unfufilled game state assertion when forcing game state: %s" % str(e)
         )
