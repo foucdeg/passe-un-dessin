@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_GET
 
 from core.models import PadStep, Player
-from core.serializers import PadStepSerializer, PlayerInRankingSerializer
+from core.serializers import PadStepSerializer, PlayerSerializer
 
 
 @require_GET
@@ -22,11 +22,11 @@ def get_leaderboard(request):
         WHERE UNACCENT(name) ILIKE UNACCENT(%s)
         LIMIT 10
         OFFSET %s
-    """,
+        """,
         ["%" + name_filter + "%", (page_number - 1) * 10],
     )
 
-    serialized_leaderboard = PlayerInRankingSerializer(players, many=True).data
+    serialized_leaderboard = PlayerSerializer(players, many=True).data
 
     return JsonResponse(
         {"pageData": serialized_leaderboard, "pageNumber": page_number}

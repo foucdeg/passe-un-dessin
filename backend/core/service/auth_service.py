@@ -4,13 +4,14 @@ from random import randrange
 from time import time
 
 from django.conf import settings
+from django.db import connection
 from django.db.utils import IntegrityError
 from django_eventstream import send_event
 from google.auth.transport import requests
 from google.oauth2 import id_token
 
 from core.messages import PlayerReplacedMessage
-from core.models import Pad, PadStep, Player, PlayerGameParticipation, Room, User, Vote
+from core.models import PadStep, Player, PlayerGameParticipation, Room, User, Vote
 
 from .facebook_client import get_user_email, verify_token
 
@@ -163,3 +164,22 @@ def reset_creation_dates(player: Player):
             % (player.name, str(first_game_created_at))
         )
         player.created_at = first_game_created_at
+
+
+def get_player_rank(player):
+    with connection.cursor() as cursor:
+        cursor.execute(
+            """
+                SELECT rank from (
+                    SELECT
+                        uuid,
+                        RANK() OVER (ORDER BY total_score DESC) AS rank
+                    FROM core_player
+                    ORDER BY rank, uuid
+                ) sub
+                WHERE uuid = %s
+                """,
+            [player.uuid],
+        )
+        row = cursor.fetchone()
+        return row[0]

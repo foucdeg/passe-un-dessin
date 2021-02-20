@@ -4,14 +4,14 @@ import { useCreateRoom } from 'redux/Room/hooks';
 import TextInput from 'atoms/TextInput';
 import { useCreatePlayer } from 'redux/Player/hooks';
 import { useSelector } from 'redux/useSelector';
-import { selectPlayer } from 'redux/Player/selectors';
+import { selectPlayerId } from 'redux/Player/selectors';
 import { NoProps, useBoolean } from 'services/utils';
 import InputArrow from 'atoms/InputArrow';
 import { StyledForm, StyledButton } from './PlayerGameForm.style';
 
 export const PlayerGameForm: React.FC<NoProps> = () => {
   const intl = useIntl();
-  const player = useSelector(selectPlayer);
+  const playerId = useSelector(selectPlayerId);
   const [playerName, setPlayerName] = useState<string>('');
   const doCreateRoom = useCreateRoom();
   const doCreatePlayer = useCreatePlayer();
@@ -25,7 +25,7 @@ export const PlayerGameForm: React.FC<NoProps> = () => {
     doCreateRoom();
   };
 
-  if (player) {
+  if (playerId) {
     return (
       <StyledButton onClick={doCreateRoom}>
         <FormattedMessage id="home.startRoom" />

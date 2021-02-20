@@ -52,30 +52,28 @@ const gameSlice = createSlice({
       state.suggestions = [];
       state.viewingAsPublic = action.payload.asPublic;
     },
-    addVoteToPadStep: (state, action: PayloadAction<{ padStepId: string; player: Player }>) => {
+    addVoteToPadStep: (state, action: PayloadAction<{ padStepId: string; playerId: string }>) => {
       if (!state.game) return;
-      const { player, padStepId } = action.payload;
+      const { playerId, padStepId } = action.payload;
 
       state.game.pads.forEach((pad) =>
         pad.steps
           .filter((step) => step.uuid === padStepId)
-          .forEach((padStep) => padStep.votes.push({ player_id: player.uuid })),
+          .forEach((padStep) => padStep.votes.push({ player_id: playerId })),
       );
     },
     removeVoteFromPadStep: (
       state,
-      action: PayloadAction<{ padStepId: string; player: Player }>,
+      action: PayloadAction<{ padStepId: string; playerId: string }>,
     ) => {
       if (!state.game) return;
-      const { player, padStepId } = action.payload;
+      const { playerId, padStepId } = action.payload;
 
       state.game.pads.forEach((pad) =>
         pad.steps
           .filter((step) => step.uuid === padStepId)
           .forEach((padStep) => {
-            const firstVoteIndex = padStep.votes.findIndex(
-              (vote) => vote.player_id === player.uuid,
-            );
+            const firstVoteIndex = padStep.votes.findIndex((vote) => vote.player_id === playerId);
             if (firstVoteIndex === -1) return;
 
             padStep.votes.splice(firstVoteIndex, 1);

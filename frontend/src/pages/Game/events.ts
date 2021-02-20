@@ -11,7 +11,7 @@ import {
 import { useFetchGame } from 'redux/Game/hooks';
 import { selectGameStructure } from 'redux/Game/selectors';
 import { Pad } from 'redux/Game/types';
-import { selectPlayer } from 'redux/Player/selectors';
+import { selectPlayerId } from 'redux/Player/selectors';
 import { Player } from 'redux/Player/types';
 import { selectRoom } from 'redux/Room/selectors';
 import { resetStep } from 'redux/Step';
@@ -85,11 +85,11 @@ const useGameEvents = (gameId: string) => {
   const { push } = useHistory();
   const gameStructure = useSelector(selectGameStructure);
   const room = useSelector(selectRoom);
-  const player = useSelector(selectPlayer);
+  const playerId = useSelector(selectPlayerId);
 
   const eventCallback = useCallback(
     (event: GameEvent) => {
-      if (!room || !gameStructure || !player || !gameId) return;
+      if (!room || !gameStructure || !playerId || !gameId) return;
       if (gameStructure.uuid !== gameId) return;
 
       if (isPlayerFinishedEvent(event)) {
@@ -105,10 +105,10 @@ const useGameEvents = (gameId: string) => {
         dispatch(resetStep());
 
         const targetStep = gameStructure.rounds.find(
-          (step) => step.player.uuid === player.uuid && step.round_number === event.round_number,
+          (step) => step.player.uuid === playerId && step.round_number === event.round_number,
         );
         if (!targetStep) {
-          console.error(`No step found for player ${player.uuid} and round ${event.round_number}`);
+          console.error(`No step found for player ${playerId} and round ${event.round_number}`);
           return;
         }
 
@@ -133,7 +133,7 @@ const useGameEvents = (gameId: string) => {
         return;
       }
     },
-    [dispatch, doFetchGame, gameId, gameStructure, player, push, room],
+    [dispatch, doFetchGame, gameId, gameStructure, playerId, push, room],
   );
 
   useServerSentEvent(`game-${gameId}`, eventCallback);

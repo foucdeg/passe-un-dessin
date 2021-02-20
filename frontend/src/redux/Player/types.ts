@@ -12,6 +12,7 @@ export interface Player {
   avatar_url: string | null;
   avatar?: string | null;
   total_score: number;
+  rank?: number;
 }
 
 export interface GameWithParticipants {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'redux/useSelector';
-import { selectPlayer } from 'redux/Player/selectors';
+import { selectPlayerId } from 'redux/Player/selectors';
 import { useSaveVote, useDeleteVote } from 'redux/Game/hooks';
 import { selectAvailableVoteCount, selectViewingAsPublic } from 'redux/Game/selectors';
 import { PadStep } from 'redux/Game/types';
@@ -15,18 +15,18 @@ interface Props {
 }
 
 const SentenceRecap: React.FC<Props> = ({ step, publicMode, canVote }) => {
-  const player = useSelector(selectPlayer);
+  const playerId = useSelector(selectPlayerId);
   const viewingAsPublic = useSelector(selectViewingAsPublic);
   const availableVoteCount = useSelector(selectAvailableVoteCount);
 
   const doSaveVote = useSaveVote();
   const doDeleteVote = useDeleteVote();
 
-  if (!publicMode && !player) return null;
+  if (!publicMode && !playerId) return null;
 
   if (publicMode !== viewingAsPublic) return null;
 
-  const likeCount = step.votes.filter((vote) => player && vote.player_id === player.uuid).length;
+  const likeCount = step.votes.filter((vote) => playerId && vote.player_id === playerId).length;
 
   const canLike = canVote && availableVoteCount > 0;
   const canUnlike = canVote && likeCount > 0;

@@ -12,7 +12,7 @@ import { getRedirectPath } from 'services/game.service';
 import { GamePhase } from 'redux/Game/types';
 import { selectRoom } from 'redux/Room/selectors';
 import { selectGame } from 'redux/Game/selectors';
-import { selectPlayer } from 'redux/Player/selectors';
+import { selectPlayerId } from 'redux/Player/selectors';
 import { useLeaveRoom } from 'redux/Room/hooks';
 import Loader from 'atoms/Loader';
 import PlayerOrder from './components/PlayerOrder';
@@ -31,7 +31,7 @@ const Game: React.FunctionComponent = () => {
   const [{ loading }, doFetchGame] = useFetchGame();
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
-  const player = useSelector(selectPlayer);
+  const playerId = useSelector(selectPlayerId);
   const { push } = useHistory();
   const location = useLocation();
   const { path } = useRouteMatch();
@@ -45,14 +45,14 @@ const Game: React.FunctionComponent = () => {
   }, [doFetchGame, gameId]);
 
   useEffect(() => {
-    if (!room || !game || !player) {
+    if (!room || !game || !playerId) {
       return;
     }
     if (location.pathname !== `/room/${room.uuid}/game/${game.uuid}`) {
       return;
     }
-    push(getRedirectPath(room, game, player));
-  }, [game, player, push, location.pathname, room]);
+    push(getRedirectPath(room, game, playerId));
+  }, [game, playerId, push, location.pathname, room]);
 
   useEffect(() => {
     if (!game) return;
@@ -80,7 +80,7 @@ const Game: React.FunctionComponent = () => {
     );
   }
 
-  if (!room || !game || !player) return null;
+  if (!room || !game || !playerId) return null;
 
   return (
     <GameContainer>

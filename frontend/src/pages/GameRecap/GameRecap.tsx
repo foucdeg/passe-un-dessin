@@ -10,7 +10,7 @@ import { useForceState, useReviewPad } from 'redux/Game/hooks';
 import { selectAvailableVoteCount } from 'redux/Game/selectors';
 
 import { tabHandlerBuilder } from 'services/utils';
-import { selectPlayer } from 'redux/Player/selectors';
+import { selectPlayerId } from 'redux/Player/selectors';
 import Loader from 'atoms/Loader';
 import { useDispatch } from 'react-redux';
 import { setSelectedPadUuid } from 'redux/Game';
@@ -42,7 +42,7 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode = false }) => {
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
   const [, doForceState] = useForceState();
-  const player = useSelector(selectPlayer);
+  const playerId = useSelector(selectPlayerId);
   const availableVoteCount = useSelector(selectAvailableVoteCount);
   const isAdmin = useSelector(selectPlayerIsAdmin);
   const selectedPadUuid = useSelector(selectSelectedPadUuid);
@@ -107,7 +107,7 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode = false }) => {
   const padIndex = getSelectedPadIndex(game, selectedPadUuid);
   const isVoteResultsDisplayed = displayedPad === undefined;
   const isPlayerInGame =
-    !!player && !!game.players.find((gamePlayer) => gamePlayer.uuid === player.uuid);
+    !!playerId && !!game.players.find((gamePlayer) => gamePlayer.uuid === playerId);
 
   const selectResults = () => {
     if (!publicMode) return;

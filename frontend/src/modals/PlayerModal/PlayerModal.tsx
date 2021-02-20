@@ -1,8 +1,8 @@
 import React, { useEffect, useCallback } from 'react';
 import { useSelector } from 'redux/useSelector';
 import { FormattedMessage } from 'react-intl';
-import { selectPlayer, selectPlayerTotalScore, selectPlayerRanking } from 'redux/Player/selectors';
-import { useLogout, useFetchMyTotalScore, useEditPlayer } from 'redux/Player/hooks';
+import { selectPlayer, selectPlayerId } from 'redux/Player/selectors';
+import { useLogout, useFetchMe, useEditPlayer } from 'redux/Player/hooks';
 import Header4 from 'atoms/Header4';
 import CanvasDraw from 'components/Canvas/CanvasDraw';
 import SecondaryButton from 'atoms/SecondaryButton';
@@ -28,27 +28,26 @@ interface Props {
 
 const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const player = useSelector(selectPlayer);
+  const playerId = useSelector(selectPlayerId);
   const doLogout = useLogout();
-  const [{ loading: scoreLoading }, fetchMyTotalScore] = useFetchMyTotalScore();
-  const totalScore = useSelector(selectPlayerTotalScore);
-  const ranking = useSelector(selectPlayerRanking);
+  const [{ loading }, doFetchMe] = useFetchMe();
   const [isAvatarDrawing, openAvatarDrawing, closeAvatarDrawing] = useBoolean(false);
   const doEditPlayer = useEditPlayer();
 
   const doSaveAvatar = useCallback(
     async (values: { drawing: string }) => {
-      if (!player) return;
-      await doEditPlayer({ uuid: player.uuid, avatar: values.drawing });
+      if (!playerId) return;
+      await doEditPlayer({ uuid: playerId, avatar: values.drawing });
       closeAvatarDrawing();
     },
-    [closeAvatarDrawing, doEditPlayer, player],
+    [closeAvatarDrawing, doEditPlayer, playerId],
   );
 
   useEffect(() => {
     if (isOpen) {
-      fetchMyTotalScore();
+      doFetchMe({ withRank: true });
     }
-  }, [fetchMyTotalScore, isOpen]);
+  }, [doFetchMe, isOpen]);
 
   const logoutAndClose = () => {
     onClose();
@@ -90,17 +89,17 @@ const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
             <ScoreCard
               linkTo={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', player.uuid)}
               linkToLabelId="playerModal.history"
-              loading={scoreLoading}
+              loading={loading}
               label={<FormattedMessage id="playerModal.totalScore" />}
-              value={totalScore}
+              value={player.total_score}
             />
             <ScoreCard
               linkTo="/leaderboard"
               linkToLabelId="playerModal.leaderboard"
               color={colorPalette.purple}
-              loading={scoreLoading}
+              loading={loading}
               label={<FormattedMessage id="playerModal.ranking" />}
-              value={ranking ? '#' + ranking : 'N/A'}
+              value={player.rank ? '#' + player.rank : 'N/A'}
             />
           </ScoreCardRow>
           <ButtonRow>

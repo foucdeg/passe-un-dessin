@@ -1,16 +1,9 @@
 import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
 import { useCallback } from 'react';
-import { useSelector } from 'redux/useSelector';
 import { useAsyncFn } from 'react-use';
-import {
-  updatePlayer,
-  updatePlayerTotalScore,
-  updateDisplayedPlayer,
-  updateDisplayedPlayerTotalScore,
-} from './slice';
+import { updatePlayer, updateDisplayedPlayer } from './slice';
 import { Player } from './types';
-import { selectPlayer } from './selectors';
 
 export const AUTH_ERROR_EMAIL_IN_USE = 'AUTH_ERROR_EMAIL_IN_USE';
 export const AUTH_ERROR_INVALID_USERNAME_PASSWORD = 'AUTH_ERROR_INVALID_USERNAME_PASSWORD';
@@ -21,21 +14,30 @@ export enum AuthProvider {
   CLASSIC = 'CLASSIC',
 }
 
+interface FetchPlayerOptions {
+  withRank: boolean;
+}
+
 export const useFetchMe = () => {
   const dispatch = useDispatch();
 
-  return useCallback(async () => {
-    const player = await client.get(`/player/me`);
-    dispatch(updatePlayer(player || false));
-  }, [dispatch]);
+  return useAsyncFn(
+    async (options?: Partial<FetchPlayerOptions>) => {
+      const url = options?.withRank ? '/player/me?withRank=true' : '/player/me';
+      const player = await client.get(url);
+      dispatch(updatePlayer(player || false));
+    },
+    [dispatch],
+  );
 };
 
 export const useFetchPlayer = () => {
   const dispatch = useDispatch();
 
   return useAsyncFn(
-    async (playerId: string) => {
-      const player = await client.get(`/player/${playerId}`);
+    async (playerId: string, options?: Partial<FetchPlayerOptions>) => {
+      const url = options?.withRank ? `/player/${playerId}?withRank=true` : `/player/${playerId}`;
+      const player = await client.get(url);
       dispatch(updateDisplayedPlayer(player));
     },
     [dispatch],
@@ -55,7 +57,7 @@ export const useCreatePlayer = () => {
 };
 
 export const useEditPlayer = () => {
-  const doFetchMe = useFetchMe();
+  const [, doFetchMe] = useFetchMe();
 
   return useCallback(
     async (player: Partial<Player>) => {
@@ -67,7 +69,7 @@ export const useEditPlayer = () => {
 };
 
 export const useSocialLogin = () => {
-  const doFetchMe = useFetchMe();
+  const [, doFetchMe] = useFetchMe();
 
   return useCallback(
     async (token: string, provider: AuthProvider) => {
@@ -94,7 +96,7 @@ export const useSocialLogin = () => {
 };
 
 export const useLogin = () => {
-  const doFetchMe = useFetchMe();
+  const [, doFetchMe] = useFetchMe();
 
   return useAsyncFn(
     async (email: string, password: string) => {
@@ -121,7 +123,7 @@ export const useLogin = () => {
 };
 
 export const useLogout = () => {
-  const doFetchMe = useFetchMe();
+  const [, doFetchMe] = useFetchMe();
 
   return useCallback(async () => {
     await client.post(`/auth/logout`);
@@ -144,7 +146,7 @@ export const useLogout = () => {
 };
 
 export const useCreateAccount = () => {
-  const doFetchMe = useFetchMe();
+  const [, doFetchMe] = useFetchMe();
 
   return useAsyncFn(
     async (email: string, password: string) => {
@@ -168,29 +170,4 @@ export const useCreateAccount = () => {
     },
     [doFetchMe],
   );
-};
-
-export const useFetchPlayerTotalScore = () => {
-  const dispatch = useDispatch();
-
-  return useAsyncFn(
-    async (playerId: string) => {
-      const result = await client.get(`/player/${playerId}/total-score`);
-      const { score, ranking } = result;
-      dispatch(updateDisplayedPlayerTotalScore({ score, ranking }));
-    },
-    [dispatch],
-  );
-};
-
-export const useFetchMyTotalScore = () => {
-  const dispatch = useDispatch();
-  const player = useSelector(selectPlayer);
-
-  return useAsyncFn(async () => {
-    if (!player) return;
-    const result = await client.get(`/player/${player.uuid}/total-score`);
-    const { score, ranking } = result;
-    dispatch(updatePlayerTotalScore({ score, ranking }));
-  }, [dispatch, player]);
 };
