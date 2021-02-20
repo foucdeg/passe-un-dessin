@@ -274,14 +274,14 @@ Django = ">=2.2"
 
 [[package]]
 name = "django-debug-toolbar"
-version = "2.2"
+version = "3.2"
 description = "A configurable set of panels that display various debug information about the current request/response."
 category = "dev"
 optional = false
-python-versions = ">=3.5"
+python-versions = ">=3.6"
 
 [package.dependencies]
-Django = ">=1.11"
+Django = ">=2.2"
 sqlparse = ">=0.2.0"
 
 [[package]]
@@ -841,7 +841,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.9.1"
-content-hash = "42581317b8cf0e268f8f1c0e851aa2ca7b9a5e6982bc6d61b97195c8b995cf32"
+content-hash = "01c669538807498c59b815cbc58c39b13a0f977d66bb93936a3b209310ca97da"
 
 [metadata.files]
 appdirs = [
@@ -1039,8 +1039,8 @@ django-cors-headers = [
     {file = "django_cors_headers-3.7.0-py3-none-any.whl", hash = "sha256:1ac2b1213de75a251e2ba04448da15f99bcfcbe164288ae6b5ff929dc49b372f"},
 ]
 django-debug-toolbar = [
-    {file = "django-debug-toolbar-2.2.tar.gz", hash = "sha256:eabbefe89881bbe4ca7c980ff102e3c35c8e8ad6eb725041f538988f2f39a943"},
-    {file = "django_debug_toolbar-2.2-py3-none-any.whl", hash = "sha256:ff94725e7aae74b133d0599b9bf89bd4eb8f5d2c964106e61d11750228c8774c"},
+    {file = "django-debug-toolbar-3.2.tar.gz", hash = "sha256:84e2607d900dbd571df0a2acf380b47c088efb787dce9805aefeb407341961d2"},
+    {file = "django_debug_toolbar-3.2-py3-none-any.whl", hash = "sha256:9e5a25d0c965f7e686f6a8ba23613ca9ca30184daa26487706d4829f5cfb697a"},
 ]
 django-eventstream = [
     {file = "django-eventstream-3.1.0.tar.gz", hash = "sha256:6e6a600e69d38b5d8d18bf4f474d58f410c74ec233295bb3aae36151ee7da333"},
