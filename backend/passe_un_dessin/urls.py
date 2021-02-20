@@ -13,7 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import django_eventstream
 from django.conf import settings
+from django.conf.urls import url
 from django.contrib import admin
 from django.urls import include, path
 
@@ -23,6 +25,7 @@ admin.site.site_title = "Passe Un Dessin Site Admin"
 admin.site.site_header = "Passe Un Dessin Administration"
 
 urlpatterns = [
+    url(r"^events/", include(django_eventstream.urls)),
     path("admin/", admin.site.urls),
     path("api/", include("core.urls")),
     path("health", health, name="health"),
