@@ -47,11 +47,15 @@ describe('Full game', () => {
     cy.get('[data-test=player-order]').eq(3).should('not.contain', 'Boss');
     cy.get('[data-test=player-order]').eq(4).should('not.contain', 'Boss');
 
+    // First step: dice use
     cy.log('Test typing and using suggestions');
     cy.get('[data-test=suggestion-dice]').click();
     cy.get('[data-test=suggestion]').eq(1).click();
     cy.focused().invoke('val').should('not.be.empty');
     cy.focused().clear();
+    // First step: manual entry
     cy.focused().type('A monkey{enter}');
+    cy.get('[data-test=remaining-players]').should('have.length', 3);
+    cy.get('[data-test=remaining-players]').should('not.contain', 'Boss');
   });
 });
