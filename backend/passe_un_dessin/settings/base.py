@@ -169,7 +169,7 @@ TWITCH_CONFIG = {
 }
 
 # Sentry
-if not "SENTRY_BACKEND_DSN" in os.environ:
+if "SENTRY_BACKEND_DSN" not in os.environ:
     raise ImproperlyConfigured("Missing SENTRY_BACKEND_DSN in environment")
 
 sentry_sdk.init(
