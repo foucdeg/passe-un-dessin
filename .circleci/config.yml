@@ -1,8 +1,9 @@
 version: 2.1
 orbs:
   node: circleci/node@4.1.1
+  poetry: frameio/poetry@0.18.4
 jobs:
-  lint:
+  lint-front:
     executor:
       name: node/default
       tag: "12.19"
@@ -92,6 +93,17 @@ jobs:
       - store_artifacts:
           path: frontend/build
 
+  lint-back:
+    docker:
+      - image: circleci/python:3.9.1
+    steps:
+      - checkout
+      - poetry/install:
+          workspace_root: backend
+      - poetry/shell:
+          workspace_root: backend
+          args: flake8 ./
+
   build-back:
     docker:
       - image: cimg/base:2020.12
@@ -173,11 +185,8 @@ jobs:
 workflows:
   build-lint-tsc:
     jobs:
-      - lint
+      - lint-front
       - tsc
-      - build-back
-      - build-drawing-renderer
-      - build-pushpin
       - build-front:
           requires:
             - lint
@@ -187,8 +196,17 @@ workflows:
               ignore: master
       - build-deploy-front:
           requires:
-            - lint
+            - lint-front
             - tsc
           filters:
             branches:
               only: master
+
+      - lint-back
+      - build-back:
+          requires:
+            - lint-back
+
+      - build-drawing-renderer
+
+      - build-pushpin
