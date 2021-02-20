@@ -38,7 +38,7 @@ const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const doSaveAvatar = useCallback(
     async (values: { drawing: string }) => {
       if (!player) return;
-      await doEditPlayer({ ...player, avatar: values.drawing });
+      await doEditPlayer({ uuid: player.uuid, avatar: values.drawing });
       closeAvatarDrawing();
     },
     [closeAvatarDrawing, doEditPlayer, player],
