@@ -1,9 +1,8 @@
 import React from 'react';
-import { EmptyObject } from 'services/utils';
 import { OuterLoader, InnerLoader } from './InputLoader.style';
 
-const InputLoader: React.FC<EmptyObject> = () => (
-  <OuterLoader>
+const InputLoader: React.FC<React.HTMLAttributes<HTMLDivElement>> = (attrs) => (
+  <OuterLoader {...attrs}>
     <InnerLoader>
       <div>
         <div></div>

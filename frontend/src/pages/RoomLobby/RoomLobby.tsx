@@ -106,6 +106,7 @@ const Room: React.FunctionComponent = () => {
         />
       </FieldLabel>
       <StyledField
+        data-test="room-link"
         readOnly
         value={inputText}
         adornment={<CopyLinkAdornment onClick={onCopy} alt="Click to copy" />}

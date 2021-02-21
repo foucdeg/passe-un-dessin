@@ -8,7 +8,10 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 //
-// -- This will overwrite an existing command --
+Cypress.Commands.add('getBySel', (selector, ...args) => {
+  return cy.get(`[data-test=${selector}]`, ...args);
+});
+
 Cypress.Commands.add('runBackendCommand', (command) => {
   cy.log(`Running command \`${command}\` against the backend`);
   cy.exec(`docker ps -aqf "name=${Cypress.env('BACKEND_CONTAINER_NAME')}"`, { log: false }).then(
@@ -21,4 +24,44 @@ Cypress.Commands.add('runBackendCommand', (command) => {
 
 Cypress.Commands.add('playerJoins', (roomId, playerName) => {
   cy.runBackendCommand(`mock_player_joins ${roomId} ${playerName}`);
+});
+
+Cypress.Commands.add('playerSubmitsStep', (gameId, playerName, roundNumber) => {
+  cy.runBackendCommand(`mock_player_submits_step ${gameId} ${playerName} ${roundNumber}`);
+});
+
+Cypress.Commands.add('drawLine', { prevSubject: true }, (subject, coords) => {
+  const elt = subject.get(0);
+  const box = elt.getBoundingClientRect();
+  elt.dispatchEvent(
+    new MouseEvent('mousedown', {
+      clientX: box.x + coords[0][0],
+      clientY: box.y + coords[0][1],
+    }),
+  );
+  elt.dispatchEvent(
+    new MouseEvent('mousemove', {
+      clientX: box.x + coords[0][0],
+      clientY: box.y + coords[0][1],
+    }),
+  );
+  coords.slice(1).forEach((coordSet, index) => {
+    setTimeout(() => {
+      elt.dispatchEvent(
+        new MouseEvent('mousemove', {
+          clientX: box.x + coordSet[0],
+          clientY: box.y + coordSet[1],
+        }),
+      );
+    }, (index + 1) * 50);
+  });
+
+  setTimeout(() => {
+    elt.dispatchEvent(
+      new MouseEvent('mouseup', {
+        clientX: box.x + coords[coords.length - 1][0],
+        clientY: box.y + coords[coords.length - 1][1],
+      }),
+    );
+  }, coords.length * 50);
 });

@@ -15,7 +15,7 @@ const Drawing: React.FC<Props> = ({ src, className }) => {
       </div>
     );
 
-  return <StyledDrawing src={src} className={className} />;
+  return <StyledDrawing src={src} className={className} data-test="drawing" />;
 };
 
 export default Drawing;

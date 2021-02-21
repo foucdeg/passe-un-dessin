@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import Spacer from 'atoms/Spacer';
@@ -28,6 +28,7 @@ const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, loading }) => {
   const [sentence, setSentence] = useState<string>(padStep.sentence || '');
   const [isInputDisabled, disableInput, reenableInput] = useBoolean(!!padStep.sentence);
   const intl = useIntl();
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const onSubmit = (event: React.MouseEvent | React.FormEvent) => {
     event.preventDefault();
@@ -42,6 +43,12 @@ const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, loading }) => {
     saveStep({ sentence: null });
   };
 
+  useEffect(() => {
+    if (!isInputDisabled && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isInputDisabled]);
+
   return (
     <LeftAndRightSide>
       <LeftSide>
@@ -55,7 +62,7 @@ const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, loading }) => {
         {isInputDisabled && !loading ? (
           <>
             <TextInput readOnly value={padStep.sentence || ''} />
-            <StyledButton type="button" onClick={onClickUpdate}>
+            <StyledButton type="button" data-test="update-sentence" onClick={onClickUpdate}>
               <FormattedMessage id="drawingToWord.update" />
             </StyledButton>
           </>
@@ -63,13 +70,18 @@ const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, loading }) => {
           <StyledForm onSubmit={onSubmit}>
             <TextInput
               type="text"
+              ref={inputRef}
               autoFocus
               placeholder={intl.formatMessage({ id: 'drawingToWord.placeholder' })}
               value={sentence}
               maxLength={100}
               onChange={(e) => setSentence(e.target.value)}
               adornment={
-                loading ? <InputLoader /> : <InputArrow alt="Valider" onClick={onSubmit} />
+                loading ? (
+                  <InputLoader data-test="input-loader" />
+                ) : (
+                  <InputArrow alt="Valider" onClick={onSubmit} />
+                )
               }
             />
             <StyledButton type="submit">

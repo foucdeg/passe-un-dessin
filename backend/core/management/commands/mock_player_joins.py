@@ -1,7 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 
 from core.models import Player, Room
-from core.service.auth_service import merge_players, reset_creation_dates
 from core.service.room_service import join_room
 
 

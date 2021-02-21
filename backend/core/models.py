@@ -131,6 +131,7 @@ class Game(BaseModel):
     draw_own_word = models.BooleanField(default=True)
     controlled_reveal = models.BooleanField(default=False)
 
+    @property
     def rounds(self):
         def sort_fn(step: PadStep):
             return step.round_number

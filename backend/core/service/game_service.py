@@ -3,11 +3,14 @@ from math import sqrt
 from random import sample
 from typing import List
 
+from django.db import transaction
 from django.db.models import Count
 from django_eventstream import send_event
 
 from core.messages import (
     DebriefStartsMessage,
+    PlayerFinishedMessage,
+    PlayerNotFinishedMessage,
     RevealStartsMessage,
     RoundStartsMessage,
     VoteResultsStartsMessage,
@@ -122,6 +125,56 @@ def initialize_pad(game: Game, index: int, players: List[Player]):
             round_number=round_number,
             step_type=step_type.value,
         )
+
+
+def handle_done(step):
+    send_event(
+        "game-%s" % step.pad.game.uuid.hex,
+        "message",
+        PlayerFinishedMessage(step.player).serialize(),
+    )
+
+    with transaction.atomic():
+        game = Game.objects.select_for_update().get(uuid=step.pad.game.uuid)
+        game.pads_done = game.pads_done + 1
+        game.save()
+
+    if game.pads_done == game.participants.count():
+        start_next_round(game, game.current_round + 1)
+
+
+def handle_undone(step):
+    send_event(
+        "game-%s" % step.pad.game.uuid.hex,
+        "message",
+        PlayerNotFinishedMessage(step.player).serialize(),
+    )
+    with transaction.atomic():
+        game = Game.objects.select_for_update().get(uuid=step.pad.game.uuid)
+        game.pads_done = game.pads_done - 1
+        game.save()
+
+
+def save_sentence_step(step, sentence):
+    is_done = not is_valid_sentence(step.sentence) and is_valid_sentence(sentence)
+    is_no_longer_done = is_valid_sentence(step.sentence) and not is_valid_sentence(
+        sentence
+    )
+    step.sentence = sentence
+    step.save()
+
+    if is_done:
+        handle_done(step)
+
+    if is_no_longer_done:
+        handle_undone(step)
+
+
+def save_drawing_step(step, drawing):
+    step.drawing = drawing
+    step.save()
+
+    handle_done(step)
 
 
 def start_next_round(game: Game, new_round: int):

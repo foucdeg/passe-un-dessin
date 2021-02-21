@@ -52,7 +52,7 @@ urlpatterns = [
         game.PadStepRetrieveAPIView.as_view(),
         name="get_pad_step",
     ),
-    path("pad-step/<str:uuid>/save", game.save_step, name="save_step"),
+    path("pad-step/<str:uuid>/save", game.submit_step, name="save_step"),
     path("step/<str:pad_step_id>/vote", game.submit_vote, name="submit_vote"),
     path(
         "game/<str:game_id>/vote-results",
