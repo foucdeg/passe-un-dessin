@@ -1,7 +1,6 @@
 import json
 import logging
 
-from django.db import transaction
 from django.db.models import Count, Prefetch
 from django.http import (
     HttpResponse,
@@ -14,25 +13,24 @@ from django_eventstream import send_event
 from rest_framework.generics import RetrieveAPIView
 
 from core.decorators import requires_player
-from core.messages import (
-    PlayerFinishedMessage,
-    PlayerNotFinishedMessage,
-    PlayerViewingPadMessage,
-)
-from core.models import Game, GamePhase, Pad, PadStep, PlayerGameParticipation, Vote
+from core.messages import PlayerViewingPadMessage
+from core.models import Game, GamePhase, Pad, PadStep, PlayerGameParticipation
 from core.serializers import GameSerializer, PadSerializer, PadStepSerializer
 from core.service.game_service import (
     GameRoundAssertionException,
     GameStateException,
+    VoteException,
     assert_phase,
     assert_round,
-    get_available_vote_count,
+    devote,
     get_round_count,
-    is_valid_sentence,
+    save_drawing_step,
+    save_sentence_step,
     start_debrief,
     start_next_round,
     start_reveal,
     switch_to_vote_results,
+    vote,
 )
 
 logger = logging.getLogger(__name__)
@@ -73,7 +71,7 @@ class PadStepRetrieveAPIView(RetrieveAPIView):
 
 @require_http_methods(["PUT"])
 @requires_player
-def save_step(request, player, uuid):
+def submit_step(request, player, uuid):
     json_body = json.loads(request.body)
 
     try:
@@ -88,61 +86,20 @@ def save_step(request, player, uuid):
             logger.exception(e)
             return HttpResponse("Silently failing, the game has moved on", status=204)
 
-    try:
-        sentence = json_body["sentence"]
+    if "sentence" in json_body:
+        save_sentence_step(step, json_body["sentence"])
+    elif "drawing" in json_body:
+        drawing = json_body["drawing"]
+        if drawing is None or drawing == "":
+            return HttpResponseBadRequest("Drawing should not be empty")
 
-        is_done = not is_valid_sentence(step.sentence) and is_valid_sentence(sentence)
-        is_no_longer_done = is_valid_sentence(
-            step.sentence
-        ) and not is_valid_sentence(sentence)
-
-        step.sentence = sentence
-    except KeyError:
-        try:
-            drawing = json_body["drawing"]
-            if drawing is None or drawing == "":
-                return HttpResponseBadRequest("Drawing should not be empty")
-
-            if step.drawing is not None:
-                return HttpResponseBadRequest(
-                    "Step with uuid %s already has a drawing" % uuid
-                )
-
-            step.drawing = drawing
-            is_done = True
-            is_no_longer_done = False
-        except KeyError:
-            return HttpResponseBadRequest("Provide either sentence or drawing!")
-
-    step.save()
-
-    game = step.pad.game
-
-    if is_done:
-        send_event(
-            "game-%s" % game.uuid.hex,
-            "message",
-            PlayerFinishedMessage(step.player).serialize(),
-        )
-
-        with transaction.atomic():
-            game = Game.objects.select_for_update().get(uuid=game.uuid)
-            game.pads_done = game.pads_done + 1
-            game.save()
-
-        if game.pads_done == game.participants.count():
-            start_next_round(game, game.current_round + 1)
-
-    if is_no_longer_done:
-        send_event(
-            "game-%s" % game.uuid.hex,
-            "message",
-            PlayerNotFinishedMessage(step.player).serialize(),
-        )
-        with transaction.atomic():
-            game = Game.objects.select_for_update().get(uuid=game.uuid)
-            game.pads_done = game.pads_done - 1
-            game.save()
+        if step.drawing is not None:
+            return HttpResponseBadRequest(
+                "Step with uuid %s already has a drawing" % uuid
+            )
+        save_drawing_step(step, drawing)
+    else:
+        return HttpResponseBadRequest("Provide either sentence or drawing!")
 
     data = PadStepSerializer(step).data
     return JsonResponse(data)
@@ -169,73 +126,33 @@ def review_pad(request, player, uuid):
 @requires_player
 def submit_vote(request, player, pad_step_id):
     try:
-        pad_step = PadStep.objects.get(uuid=pad_step_id)
-    except PadStep.DoesNotExist:
-        return HttpResponseBadRequest(
-            "Pad step with uuid %s does not exist" % pad_step_id
-        )
+        try:
+            pad_step = PadStep.objects.get(uuid=pad_step_id)
+        except PadStep.DoesNotExist:
+            raise VoteException("Pad step with uuid %s does not exist" % pad_step_id)
 
-    game = pad_step.pad.game
+        game = pad_step.pad.game
 
-    if not game.has_player(player) or game.phase != GamePhase.DEBRIEF.value:
-        return HttpResponseBadRequest("You cannot vote for this game")
+        assert_phase(game, GamePhase.DEBRIEF)
 
-    if pad_step.player == player:
-        return HttpResponseBadRequest("You cannot vote for your own drawing")
+        if not game.has_player(player):
+            raise VoteException("You cannot vote for this game")
 
-    existing_player_vote_count = Vote.objects.filter(
-        player=player, pad_step__pad__game=game
-    ).count()
-    available_vote_count = get_available_vote_count(game)
+        if pad_step.player == player:
+            raise VoteException("You cannot vote for your own round")
 
-    if request.method == "POST":
-        if existing_player_vote_count >= available_vote_count:
-            return HttpResponseBadRequest(
-                "You already reached the maximal number of vote for this game : %s"
-                % available_vote_count
-            )
+        if request.method == "POST":
+            vote(player, pad_step)
 
-        Vote.objects.create(player=player, pad_step=pad_step)
+            return HttpResponse(status=201)
 
-        if existing_player_vote_count + 1 == available_vote_count:
-            send_event(
-                "game-%s" % game.uuid.hex,
-                "message",
-                PlayerFinishedMessage(player).serialize(),
-            )
+        if request.method == "DELETE":
+            devote(player, pad_step)
 
-            with transaction.atomic():
-                game = Game.objects.select_for_update().get(uuid=game.uuid)
-                game.pads_done = game.pads_done + 1
-                game.save()
+            return HttpResponse(status=204)
 
-            if game.pads_done == game.participants.count():
-                switch_to_vote_results(game)
-
-        return HttpResponse(status=201)
-
-    elif request.method == "DELETE":
-        vote = Vote.objects.filter(player=player, pad_step=pad_step).first()
-        if vote is None:
-            return HttpResponseBadRequest(
-                "You didn't vote for pad_step %s" % pad_step_id
-            )
-        vote.delete()
-
-        if existing_player_vote_count == available_vote_count:
-            # Player was done but is not anymore
-            send_event(
-                "game-%s" % game.uuid.hex,
-                "message",
-                PlayerNotFinishedMessage(player).serialize(),
-            )
-
-            with transaction.atomic():
-                game = Game.objects.select_for_update().get(uuid=game.uuid)
-                game.pads_done = game.pads_done - 1
-                game.save()
-
-        return HttpResponse(status=204)
+    except VoteException as e:
+        return HttpResponseBadRequest(e.message)
 
 
 @require_GET

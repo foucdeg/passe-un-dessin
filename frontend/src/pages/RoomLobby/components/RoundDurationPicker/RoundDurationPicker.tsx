@@ -19,6 +19,7 @@ const RoundDurationPicker: React.FC<Props> = ({ duration, onDurationChange }) =>
             key={option}
             selected={option === duration}
             onClick={() => onDurationChange(option)}
+            data-test="duration-option"
           >
             {option}
           </DurationOption>

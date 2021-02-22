@@ -106,6 +106,7 @@ const Room: React.FunctionComponent = () => {
         />
       </FieldLabel>
       <StyledField
+        data-test="room-link"
         readOnly
         value={inputText}
         adornment={<CopyLinkAdornment onClick={onCopy} alt="Click to copy" />}
@@ -126,7 +127,7 @@ const Room: React.FunctionComponent = () => {
       )}
       <PlayerList>
         {room.players.map((roomPlayer) => (
-          <AvatarWithName key={roomPlayer.uuid}>
+          <AvatarWithName key={roomPlayer.uuid} data-test="avatar">
             <BareLink
               to={PUBLIC_PATHS.PLAYER_DETAILS.replace(':playerId', roomPlayer.uuid)}
               target="_blank"
@@ -161,6 +162,7 @@ const Room: React.FunctionComponent = () => {
                 <FormattedMessage id="roomLobby.isEveryoneThere" />
               </HelpText>
               <Button
+                data-test="start-game"
                 onClick={() => doStartGame(room.uuid, roundDuration, drawOwnWord, controlledReveal)}
               >
                 <FormattedMessage id="roomLobby.play" />

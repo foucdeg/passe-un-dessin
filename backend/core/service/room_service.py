@@ -4,11 +4,33 @@ from django.db import transaction
 from django.http import HttpResponse, HttpResponseBadRequest
 from django_eventstream import send_event
 
-from core.messages import GameStartsMessage, NewAdminMessage, PlayerLeftMessage
+from core.messages import (
+    GameStartsMessage,
+    NewAdminMessage,
+    PlayerConnectedMessage,
+    PlayerLeftMessage,
+)
 from core.models import GamePhase, PadStep, Player, Room
 from core.service.game_service import initialize_game
 
 logger = logging.getLogger(__name__)
+
+
+def join_room(room: Room, player: Player):
+    with transaction.atomic():
+        if room == player.room:
+            return
+        player.room = room
+        player.save()
+        logger.debug(
+            "Sending message for player %s joining room %s"
+            % (player.name, room.uuid.hex[:8])
+        )
+        send_event(
+            "room-%s" % room.uuid.hex,
+            "message",
+            PlayerConnectedMessage(player).serialize(),
+        )
 
 
 def remove_player_from_room(room_id: str, player_id: str):

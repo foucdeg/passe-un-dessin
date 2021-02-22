@@ -325,6 +325,7 @@ const CanvasDraw: React.FC<Props> = ({
     <CanvasContainer>
       <CanvasAndSaveContainer>
         <Canvas
+          data-test="canvas"
           pointCursor={pointCursor}
           cursorPosition={cursorPosition}
           ref={canvasRef}

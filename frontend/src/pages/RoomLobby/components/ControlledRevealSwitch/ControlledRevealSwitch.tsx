@@ -15,7 +15,11 @@ const ControlledRevealSwitch: React.FC<Props> = ({ controlledReveal, setControll
     <Value selected={!controlledReveal}>
       <FormattedMessage id="common.no" />
     </Value>
-    <StyledSwitch setSelected={setControlledReveal} selected={controlledReveal} />
+    <StyledSwitch
+      setSelected={setControlledReveal}
+      selected={controlledReveal}
+      data-test="controlled-reveal"
+    />
     <Value selected={controlledReveal}>
       <FormattedMessage id="common.yes" />
     </Value>

@@ -28,14 +28,14 @@ export const PlayerGameForm: React.FC<NoProps> = () => {
   if (playerId) {
     return (
       <StyledButton onClick={doCreateRoom}>
-        <FormattedMessage id="home.startRoom" />
+        <FormattedMessage id="home.startRoom" data-test="start-room" />
       </StyledButton>
     );
   }
 
   if (!isCreatingPlayer) {
     return (
-      <StyledButton onClick={activatePlayerCreation}>
+      <StyledButton onClick={activatePlayerCreation} data-test="start-room">
         <FormattedMessage id="home.startRoom" />
       </StyledButton>
     );

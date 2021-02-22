@@ -3,11 +3,14 @@ from math import sqrt
 from random import sample
 from typing import List
 
+from django.db import transaction
 from django.db.models import Count
 from django_eventstream import send_event
 
 from core.messages import (
     DebriefStartsMessage,
+    PlayerFinishedMessage,
+    PlayerNotFinishedMessage,
     RevealStartsMessage,
     RoundStartsMessage,
     VoteResultsStartsMessage,
@@ -21,9 +24,14 @@ from core.models import (
     PlayerGameParticipation,
     Room,
     StepType,
+    Vote,
 )
 
 logger = logging.getLogger(__name__)
+
+
+class VoteException(Exception):
+    pass
 
 
 def get_round_count(game: Game):
@@ -122,6 +130,106 @@ def initialize_pad(game: Game, index: int, players: List[Player]):
             round_number=round_number,
             step_type=step_type.value,
         )
+
+
+def handle_player_done(game, player, callback):
+    send_event(
+        "game-%s" % game.uuid.hex,
+        "message",
+        PlayerFinishedMessage(player).serialize(),
+    )
+
+    with transaction.atomic():
+        game = Game.objects.select_for_update().get(uuid=game.uuid)
+        game.pads_done = game.pads_done + 1
+        game.save()
+
+    if game.pads_done == game.participants.count():
+        callback()
+        # start_next_round(game, game.current_round + 1)
+
+
+def handle_player_no_longer_done(game, player):
+    send_event(
+        "game-%s" % game.uuid.hex,
+        "message",
+        PlayerNotFinishedMessage(player).serialize(),
+    )
+    with transaction.atomic():
+        game = Game.objects.select_for_update().get(uuid=game.uuid)
+        game.pads_done = game.pads_done - 1
+        game.save()
+
+
+def save_sentence_step(step, sentence):
+    is_done = not is_valid_sentence(step.sentence) and is_valid_sentence(sentence)
+    is_no_longer_done = is_valid_sentence(step.sentence) and not is_valid_sentence(
+        sentence
+    )
+    step.sentence = sentence
+    step.save()
+
+    game = step.pad.game
+
+    def on_finished():
+        start_next_round(game, game.current_round + 1)
+
+    if is_done:
+        handle_player_done(game, step.player, on_finished)
+
+    if is_no_longer_done:
+        handle_player_no_longer_done(game, step.player)
+
+
+def save_drawing_step(step, drawing):
+    step.drawing = drawing
+    step.save()
+
+    game = step.pad.game
+
+    def on_finished():
+        start_next_round(game, game.current_round + 1)
+
+    handle_player_done(step.pad.game, step.player, on_finished)
+
+
+def vote(player, step):
+    game = step.pad.game
+    existing_player_vote_count = Vote.objects.filter(
+        player=player, pad_step__pad__game=game
+    ).count()
+    available_vote_count = get_available_vote_count(game)
+
+    if existing_player_vote_count >= available_vote_count:
+        raise VoteException(
+            "You already reached the maximal number of vote for this game : %s"
+            % available_vote_count
+        )
+
+    Vote.objects.create(player=player, pad_step=step)
+
+    def on_finished():
+        switch_to_vote_results(game)
+
+    if existing_player_vote_count + 1 == available_vote_count:
+        handle_player_done(game, player, on_finished)
+
+
+def devote(player, step):
+    game = step.pad.game
+    existing_player_vote_count = Vote.objects.filter(
+        player=player, pad_step__pad__game=game
+    ).count()
+    available_vote_count = get_available_vote_count(game)
+
+    vote = Vote.objects.filter(player=player, pad_step=step).first()
+    if vote is None:
+        raise VoteException("You didn't vote for pad_step %s" % step.uuid.hex)
+
+    vote.delete()
+
+    if existing_player_vote_count == available_vote_count:
+        handle_player_no_longer_done(game, player)
 
 
 def start_next_round(game: Game, new_round: int):

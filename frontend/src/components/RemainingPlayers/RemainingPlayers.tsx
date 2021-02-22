@@ -28,7 +28,7 @@ const RemainingPlayers: React.FC<EmptyObject> = () => {
       </em>
       <StyledPlayerChips>
         {remainingPlayers.map((player) => (
-          <PlayerChip key={player.uuid} color={player.color}>
+          <PlayerChip key={player.uuid} color={player.color} data-test="remaining-players">
             {player.name}
           </PlayerChip>
         ))}

@@ -22,11 +22,17 @@ const PlayerOrder: React.FC<EmptyObject> = () => {
 
   return (
     <PlayerOrderContainer>
-      <StyledPlayerChip variant={getChipVariant(0)}>🗒&nbsp;{padOwner.name}</StyledPlayerChip>
+      <StyledPlayerChip variant={getChipVariant(0)} data-test="player-order">
+        🗒&nbsp;{padOwner.name}
+      </StyledPlayerChip>
       {orderedPlayers.map((orderedPlayer, index) => (
         <React.Fragment key={orderedPlayer.uuid}>
           <ArrowSpacer />
-          <StyledPlayerChip variant={getChipVariant(index + 1)} key={orderedPlayer.uuid}>
+          <StyledPlayerChip
+            variant={getChipVariant(index + 1)}
+            key={orderedPlayer.uuid}
+            data-test="player-order"
+          >
             {index % 2 === 0 ? '🎨' : '🤔'}&nbsp;
             {orderedPlayer.name}
           </StyledPlayerChip>
