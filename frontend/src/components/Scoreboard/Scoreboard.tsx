@@ -66,9 +66,14 @@ const Scoreboard: React.FC<Props> = ({ list, className, showRankings, onScrollEn
     }
   };
   return (
-    <InnerScoreboard ref={scoreBoardRef} onScroll={onScroll} className={className}>
+    <InnerScoreboard
+      ref={scoreBoardRef}
+      onScroll={onScroll}
+      className={className}
+      data-test="scoreboard"
+    >
       {list.map((playerWithScore, index) => (
-        <RankingRow key={playerWithScore.uuid}>
+        <RankingRow key={playerWithScore.uuid} data-test="ranking-row">
           {showRankings && <RankText>{getRankDisplay(playerWithScore.rank || index + 1)}</RankText>}
           <StyledAvatar player={playerWithScore} />
           <StyledLink

@@ -30,6 +30,10 @@ Cypress.Commands.add('playerSubmitsStep', (gameId, playerName, roundNumber) => {
   cy.runBackendCommand(`mock_player_submits_step ${gameId} ${playerName} ${roundNumber}`);
 });
 
+Cypress.Commands.add('playerVotes', (gameId, playerName) => {
+  cy.runBackendCommand(`mock_player_votes ${gameId} ${playerName}`);
+});
+
 Cypress.Commands.add('drawLine', { prevSubject: true }, (subject, coords) => {
   const elt = subject.get(0);
   const box = elt.getBoundingClientRect();
@@ -64,4 +68,21 @@ Cypress.Commands.add('drawLine', { prevSubject: true }, (subject, coords) => {
       }),
     );
   }, coords.length * 50);
+});
+
+Cypress.Commands.add('clickCanvas', { prevSubject: true }, (subject, coords) => {
+  const elt = subject.get(0);
+  const box = elt.getBoundingClientRect();
+  elt.dispatchEvent(
+    new MouseEvent('mousedown', {
+      clientX: box.x + coords[0],
+      clientY: box.y + coords[1],
+    }),
+  );
+  elt.dispatchEvent(
+    new MouseEvent('mouseup', {
+      clientX: box.x + coords[0],
+      clientY: box.y + coords[1],
+    }),
+  );
 });

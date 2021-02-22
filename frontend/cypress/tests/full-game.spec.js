@@ -2,8 +2,7 @@ describe('Full game', function () {
   it('should run a full game', function () {
     cy.visit('/');
 
-    cy.log('Creating a room...');
-
+    // Create a room
     cy.getBySel('start-room').click();
     cy.focused().type('Boss{enter}');
     cy.location('pathname').should('match', /^\/room\/[0-9a-f]+$/);
@@ -29,7 +28,7 @@ describe('Full game', function () {
     cy.getBySel('duration-option').contains('45').click();
     cy.getBySel('controlled-reveal').click();
 
-    cy.log('Starting game...');
+    // Start the game
     cy.getBySel('start-game').click();
 
     cy.location('pathname').should(
@@ -47,7 +46,6 @@ describe('Full game', function () {
       })
       .as('gameId');
 
-    cy.log('Assert step ordering');
     cy.getBySel('player-order').first().should('contain', 'Boss');
     cy.getBySel('player-order').eq(1).should('contain', 'Boss');
     cy.getBySel('player-order').eq(2).should('not.contain', 'Boss');
@@ -55,7 +53,6 @@ describe('Full game', function () {
     cy.getBySel('player-order').eq(4).should('not.contain', 'Boss');
 
     // First step: dice use
-    cy.log('Test typing and using suggestions');
     cy.getBySel('suggestion-dice').click();
     cy.getBySel('suggestion').eq(1).click();
     cy.focused().invoke('val').should('not.be.empty');
@@ -81,26 +78,32 @@ describe('Full game', function () {
       })
       .as('stepId');
 
-    cy.getBySel('canvas').drawLine([
-      [150, 150],
-      [150, 300],
-    ]);
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000).then(() => {
-      cy.getBySel('canvas').drawLine([
-        [350, 150],
-        [350, 300],
-      ]);
-    });
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000).then(() => {
-      cy.getBySel('canvas').drawLine([
-        [100, 400],
-        [200, 450],
-        [300, 450],
-        [400, 400],
-      ]);
-    });
+    cy.getBySel('canvas')
+      .as('canvas')
+      .then(() => {
+        cy.get('@canvas').drawLine([
+          [150, 150],
+          [150, 300],
+        ]);
+
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(1000).then(() => {
+          cy.get('@canvas').drawLine([
+            [350, 150],
+            [350, 300],
+          ]);
+        });
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(1000).then(() => {
+          cy.get('@canvas').drawLine([
+            [100, 400],
+            [200, 450],
+            [300, 450],
+            [400, 400],
+          ]);
+        });
+      });
+
     cy.get('@gameId').then((gameId) => {
       cy.playerSubmitsStep(gameId, 'Bill', 1);
       cy.playerSubmitsStep(gameId, 'Ben', 1);
@@ -132,5 +135,140 @@ describe('Full game', function () {
     cy.getBySel('input-loader').should('exist');
     cy.getBySel('input-loader').should('not.exist');
     cy.getBySel('remaining-players').should('not.contain', 'Boss');
+
+    cy.get('@gameId').then((gameId) => {
+      cy.playerSubmitsStep(gameId, 'Bill', 2);
+      cy.playerSubmitsStep(gameId, 'Ben', 2);
+      cy.playerSubmitsStep(gameId, 'Bob', 2);
+    });
+
+    // Fourth step: drawing
+    cy.location('pathname')
+      .then((pathname) => {
+        const matches = pathname.match(
+          /^\/room\/([0-9a-f]+)\/game\/([0-9a-f]+)\/step\/([0-9a-f]+)$/,
+        );
+        return matches[3];
+      })
+      .as('stepId');
+
+    cy.getBySel('canvas')
+      .as('canvas')
+      .then(() => {
+        cy.get('@canvas').drawLine([
+          [150, 150],
+          [150, 300],
+        ]);
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(1000).then(() => {
+          cy.get('@canvas').drawLine([
+            [350, 150],
+            [350, 300],
+          ]);
+        });
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(1000).then(() => {
+          cy.get('@canvas').drawLine([
+            [100, 400],
+            [200, 450],
+            [300, 450],
+            [400, 400],
+            [100, 400],
+          ]);
+        });
+
+        // try filling the mouth
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(1000).then(() => {
+          cy.getBySel('brush-type-FILL').click();
+          cy.getBySel('brush-color-PINK').click();
+          cy.get('@canvas').clickCanvas([250, 425]);
+        });
+      });
+
+    cy.get('@gameId').then((gameId) => {
+      cy.playerSubmitsStep(gameId, 'Bill', 3);
+      cy.playerSubmitsStep(gameId, 'Ben', 3);
+      cy.playerSubmitsStep(gameId, 'Bob', 3);
+    });
+
+    // Fifth step: sentence
+    cy.location('pathname')
+      .then((pathname) => {
+        const matches = pathname.match(
+          /^\/room\/([0-9a-f]+)\/game\/([0-9a-f]+)\/step\/([0-9a-f]+)$/,
+        );
+        return matches[3];
+      })
+      .as('stepId');
+
+    cy.getBySel('drawing', { timeout: 45000 }).should('be.visible');
+
+    cy.focused().type('Still Mr Burns{enter}');
+    cy.getBySel('remaining-players').should('not.contain', 'Boss');
+
+    cy.get('@gameId').then((gameId) => {
+      cy.playerSubmitsStep(gameId, 'Bill', 4);
+      cy.playerSubmitsStep(gameId, 'Ben', 4);
+      cy.playerSubmitsStep(gameId, 'Bob', 4);
+    });
+
+    // Controlled recap
+    cy.location('pathname').should('match', /^\/room\/([0-9a-f]+)\/game\/([0-9a-f]+)\/recap$/);
+    cy.getBySel('pad-tab').contains('Boss').click();
+    cy.getBySel('drawing').should('have.length', 2).should('be.visible');
+    cy.getBySel('pad-tab').contains('Bob').click();
+    cy.getBySel('drawing').should('have.length', 2).should('be.visible');
+    cy.getBySel('pad-tab').contains('Bill').click();
+    cy.getBySel('drawing').should('have.length', 2).should('be.visible');
+    cy.getBySel('pad-tab').contains('Ben').click();
+    cy.getBySel('drawing').should('have.length', 2).should('be.visible');
+    cy.getBySel('start-voting').click();
+
+    // Voting phase
+    cy.getBySel('remaining-votes').should('have.length', 2);
+    cy.getBySel('upvote').eq(0).click();
+    cy.getBySel('remaining-votes').should('have.length', 1);
+    cy.getBySel('pad-tab').eq(1).click();
+    cy.getBySel('upvote').eq(0).click();
+    cy.getBySel('remaining-votes').should('not.exist');
+    cy.getBySel('remaining-players').should('not.contain', 'Boss');
+
+    // Downvote to no longer be done and then upvote
+    cy.getBySel('downvote').eq(0).click();
+    cy.getBySel('remaining-votes').should('have.length', 1);
+    cy.getBySel('remaining-players').should('contain', 'Boss');
+
+    // Vote again
+    cy.getBySel('upvote').eq(0).click();
+    cy.getBySel('remaining-votes').should('not.exist');
+    cy.getBySel('remaining-players').should('not.contain', 'Boss');
+
+    cy.get('@gameId').then((gameId) => {
+      cy.playerVotes(gameId, 'Bill');
+      cy.playerVotes(gameId, 'Ben');
+      cy.playerVotes(gameId, 'Bob');
+      cy.playerVotes(gameId, 'Bill');
+      cy.playerVotes(gameId, 'Ben');
+      cy.playerVotes(gameId, 'Bob');
+    });
+
+    // Results
+    cy.location('pathname').should(
+      'match',
+      /^\/room\/([0-9a-f]+)\/game\/([0-9a-f]+)\/vote-results$/,
+    );
+    cy.getBySel('podium').should('be.visible');
+    cy.getBySel('scoreboard').should('be.visible');
+    cy.getBySel('ranking-row').should('have.length', 4);
+
+    // Start new game
+    cy.getBySel('new-game').click();
+    cy.getBySel('new-game-modal').should('be.visible');
+    cy.getBySel('start-random').click();
+    cy.location('pathname').should(
+      'match',
+      /^\/room\/([0-9a-f]+)\/game\/([0-9a-f]+)\/step\/([0-9a-f]+)$/,
+    );
   });
 });

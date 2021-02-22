@@ -63,7 +63,7 @@ const NewGameModal: React.FC<Props> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} data-test="new-game-modal">
       <StyledHeader>
         <FormattedMessage id="newGameModal.title" />
       </StyledHeader>
@@ -78,16 +78,16 @@ const NewGameModal: React.FC<Props> = ({ isOpen, onClose }) => {
         setControlledReveal={setControlledReveal}
       />
       <ButtonRow>
-        <SecondaryButton onClick={startRandomGame}>
-          <FormattedMessage id="newGameModal.randomOrder" />
-        </SecondaryButton>
         <SecondaryButton onClick={startSameGame}>
           <FormattedMessage id="newGameModal.sameOrder" />
         </SecondaryButton>
+        <SecondaryButton onClick={startReverseGame}>
+          <FormattedMessage id="newGameModal.reverseOrder" />
+        </SecondaryButton>
       </ButtonRow>
       <ButtonRow>
-        <Button onClick={startReverseGame}>
-          <FormattedMessage id="newGameModal.reverseOrder" />
+        <Button onClick={startRandomGame} data-test="start-random">
+          <FormattedMessage id="newGameModal.randomOrder" />
         </Button>
       </ButtonRow>
     </Modal>

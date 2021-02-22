@@ -41,6 +41,7 @@ const BrushColorPicker: React.FC<Props> = ({ color, setColor }) => {
             color={colorOption}
             selected={colorOption === color}
             withBorder={colorOption === DrawingColor.WHITE}
+            data-test={`brush-color-${colorKey}`}
           />
         </IconAndTooltip>
       ))}

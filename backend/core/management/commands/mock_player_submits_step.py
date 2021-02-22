@@ -45,8 +45,8 @@ class Command(BaseCommand):
             )
 
         if step.step_type in [StepType.INITIAL.value, StepType.DRAWING_TO_WORD.value]:
-            sentence = get_random("en", 1)
-            save_sentence_step(step, sentence)
+            sentences = get_random("en", 1)
+            save_sentence_step(step, sentences[0])
         else:
             with open(DRAWING_PATH, "r") as reader:
                 drawing = reader.readline()

@@ -150,6 +150,7 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode = false }) => {
                 onClick={() => {
                   doForceState();
                 }}
+                data-test="start-voting"
               >
                 <FormattedMessage id="recap.startVotingPhase" />
               </StartVotingPhase>
@@ -176,7 +177,7 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode = false }) => {
               {Array(availableVoteCount)
                 .fill('')
                 .map((_, index) => (
-                  <ThumbUpButton primary key={index} />
+                  <ThumbUpButton primary key={index} data-test="remaining-votes" />
                 ))}
             </>
           ) : (

@@ -72,7 +72,7 @@ const VoteResults: React.FunctionComponent = () => {
           </TopRightButton>
         </BareLink>
         {isPlayerAdmin && (
-          <TopRightButton onClick={openModal}>
+          <TopRightButton onClick={openModal} data-test="new-game">
             <FormattedMessage id="voteResults.newGame" />
           </TopRightButton>
         )}

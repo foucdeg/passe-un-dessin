@@ -22,7 +22,7 @@ const PadTab: React.FC<Props> = ({ pad, isActive, onClick, publicMode, isDebrief
   if (!publicMode && !playerId) return null;
 
   return (
-    <PadTabContainer isActive={isActive} onClick={onClick}>
+    <PadTabContainer isActive={isActive} onClick={onClick} data-test="pad-tab">
       {pad.steps[0].player.name}
       {!publicMode && isDebriefPhase && (
         <ViewersContainer onClick={(e) => e.preventDefault()}>

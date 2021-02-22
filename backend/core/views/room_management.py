@@ -1,7 +1,6 @@
 import json
 import logging
 
-from django.db import transaction
 from django.db.models import Count
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.utils.translation import get_language_from_request
@@ -11,7 +10,7 @@ from django_eventstream import send_event
 from rest_framework.generics import RetrieveAPIView
 
 from core.decorators import requires_player
-from core.messages import GameStartsMessage, PlayerConnectedMessage
+from core.messages import GameStartsMessage
 from core.models import Game, GamePhase, Player, Room
 from core.serializers import PlayerSerializer, RoomSerializer
 from core.service.game_service import initialize_game

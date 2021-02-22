@@ -59,12 +59,12 @@ const ReactionOverlay: React.FC<Props> = ({
     <>
       <ReactionOverlayContainer className={className}>
         {canUnlike && (
-          <LikeClickArea onClick={onUnlike}>
+          <LikeClickArea onClick={onUnlike} data-test="downvote">
             <ThumbDownButton primary />
           </LikeClickArea>
         )}
         {canLike && (
-          <LikeClickArea onClick={onLike}>
+          <LikeClickArea onClick={onLike} data-test="upvote">
             <ThumbUpButton primary />
           </LikeClickArea>
         )}

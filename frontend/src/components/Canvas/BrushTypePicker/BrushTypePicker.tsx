@@ -35,6 +35,7 @@ const BrushColorPicker: React.FC<Props> = ({ brushType, setBrushType }) => (
         key={brushOption}
         onClick={() => setBrushType(brushOption)}
         selected={brushOption === brushType}
+        data-test={`brush-type-${brushOption}`}
       />
     ))}
   </BrushPickerContainer>
