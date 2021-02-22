@@ -6,7 +6,7 @@ jobs:
   lint-front:
     executor:
       name: node/default
-      tag: "12.19"
+      tag: "14.15"
     steps:
       - checkout
       - node/install-packages:
@@ -20,7 +20,7 @@ jobs:
   tsc:
     executor:
       name: node/default
-      tag: "12.19"
+      tag: "14.15"
     steps:
       - checkout
       - node/install-packages:
@@ -34,7 +34,7 @@ jobs:
   build-front:
     executor:
       name: node/default
-      tag: "12.19"
+      tag: "14.15"
     environment:
       REACT_APP_ENV: production
     steps:
@@ -52,7 +52,7 @@ jobs:
   build-deploy-front:
     executor:
       name: node/default
-      tag: "12.19"
+      tag: "14.15"
     environment:
       REACT_APP_ENV: production
       SENTRY_ORG: passe-un-dessin
