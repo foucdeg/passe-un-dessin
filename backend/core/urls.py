@@ -70,4 +70,7 @@ urlpatterns = [
     path(
         "game/<str:game_id>/force-state", game.force_state, name="force_game_state",
     ),
+    path(
+        "desktop-email", general.send_email_for_desktop_access, name="desktop_email"
+    ),
 ]

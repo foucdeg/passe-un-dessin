@@ -162,6 +162,7 @@
     "laptopOrTablet": "Passe un Dessin se joue mieux sur ordinateur ou tablette.",
     "sendEmail": "Envoyer le lien par mail",
     "emailExample": "monadresse@wanadoo.fr",
+    "emailSent": "Un mail t'a été envoyé !",
     "emailSubject": "Mon lien vers Passe un Dessin",
     "emailBody": "Lien : {link}\n\nÀ tout de suite !"
   },

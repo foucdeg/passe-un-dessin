@@ -5,6 +5,8 @@ import FieldLabel from 'atoms/FieldLabel';
 import TextInput from 'atoms/TextInput';
 import Spacer from 'atoms/Spacer';
 import InputArrow from 'atoms/InputArrow';
+import InputLoader from 'atoms/InputLoader';
+import { useSendDesktopEmail } from 'redux/General/hooks';
 import { MobileGateBackground, LaptopTablet, StyledForm, StyledHeader } from './MobileGate.style';
 
 interface Props {
@@ -31,20 +33,11 @@ const mobileCheck = () => {
 const MobileGate: React.FC<Props> = ({ children }) => {
   const intl = useIntl();
   const [email, setEmail] = useState<string>('');
+  const [{ loading, value }, doSendEmail] = useSendDesktopEmail();
+  const hasSent = !!value;
+  console.log(value);
 
   const isMobile = mobileCheck();
-
-  const sendEmail = () => {
-    if (email) {
-      const emailSubject = encodeURIComponent(
-        intl.formatMessage({ id: 'mobileGate.emailSubject' }),
-      );
-      const emailBody = encodeURIComponent(
-        intl.formatMessage({ id: 'mobileGate.emailBody' }, { link: window.location.href }),
-      );
-      window.open(`mailto:${email}?subject=${emailSubject}&body=${emailBody}`);
-    }
-  };
 
   return (
     <>
@@ -62,21 +55,27 @@ const MobileGate: React.FC<Props> = ({ children }) => {
           <StyledForm
             onSubmit={(e) => {
               e.preventDefault();
-              sendEmail();
+              doSendEmail(email);
             }}
             action="#"
           >
             <FieldLabel>
               <FormattedMessage id="mobileGate.sendEmail" />
             </FieldLabel>
-            <TextInput
-              type="email"
-              placeholder={intl.formatMessage({ id: 'mobileGate.emailExample' })}
-              value={email}
-              maxLength={254}
-              onChange={(e) => setEmail(e.target.value)}
-              adornment={<InputArrow onClick={sendEmail} />}
-            />
+            {hasSent ? (
+              <TextInput readOnly value={intl.formatMessage({ id: 'mobileGate.emailSent' })} />
+            ) : (
+              <TextInput
+                type="email"
+                placeholder={intl.formatMessage({ id: 'mobileGate.emailExample' })}
+                value={email}
+                maxLength={254}
+                onChange={(e) => setEmail(e.target.value)}
+                adornment={
+                  loading ? <InputLoader /> : <InputArrow onClick={() => doSendEmail(email)} />
+                }
+              />
+            )}
           </StyledForm>
         </MobileGateBackground>
       ) : (

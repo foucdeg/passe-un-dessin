@@ -1,0 +1,7 @@
+{% load i18n %}{% trans "email.desktop_access.headline" %}
+
+{% trans "email.desktop_access.requested" %}
+
+{% blocktrans %}email.desktop_access.click_link {{url}}{% endblocktrans %}
+
+{% trans "email.desktop_access.bye" %}

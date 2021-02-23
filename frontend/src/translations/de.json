@@ -162,6 +162,7 @@
     "laptopOrTablet": "Passe un Dessin ist praktischer auf einem Computer oder Tablet.",
     "sendEmail": "Link per E-Mail senden",
     "emailExample": "myemail@aol.com",
+    "emailSent": "Ein Email wurde dir gesendet!",
     "emailSubject": "Mein Link zu Passe un Dessin",
     "emailBody": "Link: {link}\n\nBis bald!"
   },
