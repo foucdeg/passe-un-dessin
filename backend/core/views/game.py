@@ -82,9 +82,10 @@ def submit_step(request, player, uuid):
     try:
         assert_round(step.pad.game, step.round_number)
     except GameRoundAssertionException as e:
-        if step.pad.game.round_number == step.round_number + 1:
+        if step.pad.game.current_round == step.round_number + 1:
             logger.exception(e)
             return HttpResponse("Silently failing, the game has moved on", status=204)
+        raise e
 
     if "sentence" in json_body:
         save_sentence_step(step, json_body["sentence"])
