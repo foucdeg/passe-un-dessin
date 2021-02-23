@@ -2,7 +2,7 @@ import json
 
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.http import HttpResponseBadRequest, JsonResponse
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_GET, require_POST
 
@@ -66,4 +66,4 @@ def send_email_for_desktop_access(request):
     )
     msg.send()
 
-    return HttpResponse(status=201)
+    return JsonResponse({"status": "ok"})

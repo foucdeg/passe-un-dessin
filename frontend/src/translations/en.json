@@ -162,6 +162,7 @@
     "laptopOrTablet": "Draw Around is more practical on a computer or tablet.",
     "sendEmail": "Send link by email",
     "emailExample": "myemail@aol.com",
+    "emailSent": "An email was sent to you!",
     "emailSubject": "My link to Draw Around",
     "emailBody": "Link: {link}\n\nSee you soon!"
   },

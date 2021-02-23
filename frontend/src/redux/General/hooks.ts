@@ -2,6 +2,7 @@ import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
 import { useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router';
+import { useAsyncFn } from 'react-use';
 import { updateLeaderboard } from './slice';
 
 export const useFetchLeaderboard = () => {
@@ -31,4 +32,10 @@ export const useUnauthenticatedGuard = () => {
     }
     checkMe();
   }, [push]);
+};
+
+export const useSendDesktopEmail = () => {
+  return useAsyncFn(async (email: string) => {
+    return await client.post('/desktop-email', { email });
+  });
 };

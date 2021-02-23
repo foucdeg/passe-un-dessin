@@ -11,7 +11,7 @@ services:
 
   backend:
     build: ./backend
-    command: python /code/manage.py rundebugserver 0.0.0.0:80
+    entrypoint: /code/entrypoint.sh
     volumes:
       - ./backend:/code:delegated
     ports:
