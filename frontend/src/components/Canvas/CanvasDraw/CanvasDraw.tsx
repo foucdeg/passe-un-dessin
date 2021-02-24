@@ -44,7 +44,7 @@ interface Props {
   canvasWidth: number;
   canvasHeight: number;
   roundDuration?: number;
-  saveStep: (values: { drawing: string }) => void;
+  saveStep: (drawing: string) => void;
   displaySaveButton?: boolean;
   initialDrawing?: string | null;
 }
@@ -235,7 +235,7 @@ const CanvasDraw: React.FC<Props> = ({
     const saveData = canvas.toDataURL('image/png');
     const compressed = lzString.compressToBase64(saveData);
 
-    saveStep({ drawing: compressed });
+    saveStep(compressed);
   }, [saveStep]);
 
   useEffect(() => {

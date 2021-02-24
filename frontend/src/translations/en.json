@@ -61,6 +61,7 @@
     "placeholder": "A giraffe?",
     "youDraw": "Choose wisely, <strong>you</strong>'ll have to draw this!",
     "getSuggestions": "Lacking imagination? Roll the dice!",
+    "submit": "Submit",
     "update": "Edit"
   },
   "wordToDrawing": {

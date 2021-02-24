@@ -15,39 +15,38 @@ import { PadStep } from 'redux/Game/types';
 import RemainingPlayers from 'components/RemainingPlayers';
 import Drawing from 'components/Canvas/Drawing';
 import { useBoolean } from 'services/utils';
-import InputArrow from 'atoms/InputArrow';
 import { StyledButton, StyledForm } from './DrawingToWordStep.style';
 
 interface Props {
   padStep: PadStep;
-  saveStep: (values: { sentence?: string | null; drawing?: string }) => void;
+  saveStep: (sentence: string | null) => void;
   loading: boolean;
 }
 
 const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, loading }) => {
   const [sentence, setSentence] = useState<string>(padStep.sentence || '');
-  const [isInputDisabled, disableInput, reenableInput] = useBoolean(!!padStep.sentence);
+  const [isEditing, activateEditing, deactivateEditing] = useBoolean(!padStep.sentence);
   const intl = useIntl();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const onSubmit = (event: React.MouseEvent | React.FormEvent) => {
+  const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (sentence !== '') {
-      saveStep({ sentence });
-      disableInput();
+      saveStep(sentence);
+      deactivateEditing();
     }
   };
 
   const onClickUpdate = () => {
-    reenableInput();
-    saveStep({ sentence: null });
+    activateEditing();
+    saveStep(null);
   };
 
   useEffect(() => {
-    if (!isInputDisabled && inputRef.current) {
+    if (isEditing && inputRef.current) {
       inputRef.current.focus();
     }
-  }, [isInputDisabled]);
+  }, [isEditing]);
 
   return (
     <LeftAndRightSide>
@@ -59,36 +58,34 @@ const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, loading }) => {
         <StyledHeader>
           <FormattedMessage id="drawingToWord.drawingToGuess" />
         </StyledHeader>
-        {isInputDisabled && !loading ? (
-          <>
-            <TextInput readOnly value={padStep.sentence || ''} />
-            <StyledButton type="button" data-test="update-sentence" onClick={onClickUpdate}>
-              <FormattedMessage id="drawingToWord.update" />
-            </StyledButton>
-          </>
-        ) : (
-          <StyledForm onSubmit={onSubmit}>
-            <TextInput
-              type="text"
-              ref={inputRef}
-              autoFocus
-              placeholder={intl.formatMessage({ id: 'drawingToWord.placeholder' })}
-              value={sentence}
-              maxLength={100}
-              onChange={(e) => setSentence(e.target.value)}
-              adornment={
-                loading ? (
-                  <InputLoader data-test="input-loader" />
-                ) : (
-                  <InputArrow alt="Valider" onClick={onSubmit} />
-                )
-              }
-            />
-            <StyledButton type="submit">
+        <StyledForm onSubmit={onSubmit}>
+          <TextInput
+            autoFocus={isEditing}
+            readOnly={!isEditing}
+            type="text"
+            ref={inputRef}
+            data-test="sentence-input"
+            placeholder={intl.formatMessage({ id: 'padInit.placeholder' })}
+            maxLength={100}
+            value={sentence}
+            onChange={(e) => setSentence(e.target.value)}
+            adornment={loading && <InputLoader />}
+          />
+          {isEditing ? (
+            <StyledButton type="submit" disabled={loading}>
               <FormattedMessage id="drawingToWord.submit" />
             </StyledButton>
-          </StyledForm>
-        )}
+          ) : (
+            <StyledButton
+              type="button"
+              data-test="update-sentence"
+              onClick={onClickUpdate}
+              disabled={loading}
+            >
+              <FormattedMessage id="drawingToWord.update" />
+            </StyledButton>
+          )}
+        </StyledForm>
 
         <Spacer />
         <RemainingPlayers />

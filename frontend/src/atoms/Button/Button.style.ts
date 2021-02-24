@@ -16,8 +16,6 @@ const commonStyles = css`
   border-radius: 28px;
   color: ${colorPalette.white};
   outline: none;
-  display: flex;
-  align-items: center;
 
   &:active {
     box-shadow: inset -4px -2px 10px 2px rgba(0, 0, 0, 0.15);
@@ -35,6 +33,7 @@ export const BaseStyledButton = styled.button`
       background: ${colorPalette.backgroundGrey};
       border: 2px solid ${colorPalette.textGrey};
       box-shadow: none;
+      padding: 14px 30px;
     `}
 `;
 
