@@ -19,7 +19,7 @@ import {
 
 interface Props {
   padStep: PadStep;
-  saveStep: (values: { sentence?: string; drawing?: string }) => void;
+  saveStep: (drawing: string) => void;
   loading: boolean;
 }
 
@@ -28,8 +28,8 @@ const WordToDrawingStep: React.FC<Props> = ({ padStep, saveStep, loading }) => {
   const [finished, setFinished] = useBoolean(false);
 
   const doSaveStep = useCallback(
-    async (values: { sentence?: string; drawing?: string }) => {
-      await saveStep(values);
+    async (drawing: string) => {
+      await saveStep(drawing);
       setFinished();
     },
     [setFinished, saveStep],

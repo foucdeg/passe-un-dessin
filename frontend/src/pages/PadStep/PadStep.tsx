@@ -27,24 +27,20 @@ const PadStep: React.FunctionComponent = () => {
     }
   }, [doFetchStep, stepId]);
 
-  const saveStep = useCallback(
-    (values: { sentence?: string | null; drawing?: string }) => {
+  const saveSentenceStep = useCallback(
+    (sentence: string | null) => {
       if (!step) return;
-
-      if (values.sentence !== undefined && !isSaveStepSentenceLoading) {
-        doSaveStepSentence(step, values.sentence);
-      }
-      if (values.drawing !== undefined && !isSaveStepDrawingLoading) {
-        doSaveStepDrawing(step, values.drawing);
-      }
+      return doSaveStepSentence(step, sentence);
     },
-    [
-      doSaveStepDrawing,
-      doSaveStepSentence,
-      isSaveStepDrawingLoading,
-      isSaveStepSentenceLoading,
-      step,
-    ],
+    [doSaveStepSentence, step],
+  );
+
+  const saveDrawingStep = useCallback(
+    (drawing: string) => {
+      if (!step) return;
+      return doSaveStepDrawing(step, drawing);
+    },
+    [doSaveStepDrawing, step],
   );
 
   if (!game) return null;
@@ -53,18 +49,26 @@ const PadStep: React.FunctionComponent = () => {
   switch (step.step_type) {
     case StepType.DRAWING_TO_WORD:
       return (
-        <DrawingToWordStep padStep={step} loading={isSaveStepSentenceLoading} saveStep={saveStep} />
+        <DrawingToWordStep
+          padStep={step}
+          loading={isSaveStepSentenceLoading}
+          saveStep={saveSentenceStep}
+        />
       );
     case StepType.WORD_TO_DRAWING:
       return (
-        <WordToDrawingStep padStep={step} loading={isSaveStepDrawingLoading} saveStep={saveStep} />
+        <WordToDrawingStep
+          padStep={step}
+          loading={isSaveStepDrawingLoading}
+          saveStep={saveDrawingStep}
+        />
       );
     case StepType.INITIAL:
       return (
         <InitStep
           padStep={step}
-          loading={isSaveStepDrawingLoading}
-          saveStep={saveStep}
+          loading={isSaveStepSentenceLoading}
+          saveStep={saveSentenceStep}
           drawOwnWord={game.draw_own_word}
         />
       );

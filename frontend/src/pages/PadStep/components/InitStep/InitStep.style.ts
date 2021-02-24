@@ -30,5 +30,7 @@ export const StyledHeader = styled(Header2)`
 `;
 
 export const StyledButton = styled(Button)`
+  width: 140px;
+  text-align: center;
   align-self: center;
 `;

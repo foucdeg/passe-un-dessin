@@ -1,11 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Spacer from 'atoms/Spacer';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { PadStep } from 'redux/Game/types';
 import RemainingPlayers from 'components/RemainingPlayers';
 import { useBoolean } from 'services/utils';
 import InputLoader from 'atoms/InputLoader';
-import InputArrow from 'atoms/InputArrow';
 import SuggestionGenerator from '../SuggestionGenerator';
 import {
   InitStepContainer,
@@ -17,30 +16,36 @@ import {
 
 interface Props {
   padStep: PadStep;
-  saveStep: (values: { sentence?: string | null; drawing?: string }) => void;
+  saveStep: (sentence: string | null) => void;
   loading: boolean;
   drawOwnWord: boolean;
 }
 
 const InitStep: React.FC<Props> = ({ padStep, saveStep, loading, drawOwnWord }) => {
   const [sentence, setSentence] = useState<string>(padStep.sentence || '');
-  const [isInputDisabled, disableInput, reenableInput] = useBoolean(!!padStep.sentence);
+  const [isEditing, activateEditing, deactivateEditing] = useBoolean(!padStep.sentence);
   const intl = useIntl();
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const onSubmit = (event: React.MouseEvent | React.FormEvent) => {
+  const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (sentence !== '') {
-      saveStep({ sentence });
-      disableInput();
+      saveStep(sentence);
+      deactivateEditing();
     }
   };
 
   const onClickUpdate = () => {
-    reenableInput();
-    saveStep({ sentence: null });
+    activateEditing();
+    saveStep(null);
   };
+
+  useEffect(() => {
+    if (isEditing && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isEditing]);
 
   const onSuggestionClick = (suggestionText: string) => {
     setSentence(suggestionText);
@@ -53,25 +58,26 @@ const InitStep: React.FC<Props> = ({ padStep, saveStep, loading, drawOwnWord }) 
         <FormattedMessage id="padInit.chooseSentence" />
       </StyledHeader>
       <StyledForm onSubmit={onSubmit}>
-        {isInputDisabled && !loading ? (
-          <>
-            <StyledTextInput readOnly value={padStep.sentence || ''} />
-            <StyledButton type="button" onClick={onClickUpdate}>
-              <FormattedMessage id="padInit.update" />
-            </StyledButton>
-          </>
+        <StyledTextInput
+          autoFocus={isEditing}
+          readOnly={!isEditing}
+          type="text"
+          ref={inputRef}
+          data-test="sentence-input"
+          placeholder={intl.formatMessage({ id: 'padInit.placeholder' })}
+          maxLength={100}
+          value={sentence}
+          onChange={(e) => setSentence(e.target.value)}
+          adornment={loading && <InputLoader />}
+        />
+        {isEditing ? (
+          <StyledButton type="submit" disabled={loading}>
+            <FormattedMessage id="padInit.submit" />
+          </StyledButton>
         ) : (
-          <StyledTextInput
-            autoFocus
-            type="text"
-            ref={inputRef}
-            data-test="sentence-input"
-            placeholder={intl.formatMessage({ id: 'padInit.placeholder' })}
-            maxLength={100}
-            value={sentence}
-            onChange={(e) => setSentence(e.target.value)}
-            adornment={loading ? <InputLoader /> : <InputArrow alt="Valider" onClick={onSubmit} />}
-          />
+          <StyledButton type="button" onClick={onClickUpdate} disabled={loading}>
+            <FormattedMessage id="padInit.update" />
+          </StyledButton>
         )}
       </StyledForm>
       {drawOwnWord && (

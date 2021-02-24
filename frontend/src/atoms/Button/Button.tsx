@@ -6,7 +6,7 @@ interface Props {
   to?: string;
   className?: string;
   disabled?: boolean;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
   type?: 'button' | 'submit' | 'reset' | undefined;
   target?: string;
 }

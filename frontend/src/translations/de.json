@@ -61,6 +61,7 @@
     "placeholder": "Eine Giraffe?",
     "youDraw": "Wählt mit Bedacht, <strong>du</strong> wirst es zeichnen!",
     "getSuggestions": "Keine Ahnung ? Wirf den Würfel!",
+    "submit": "Bestätigen",
     "update": "Bearbeiten"
   },
   "wordToDrawing": {
