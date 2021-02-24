@@ -7,13 +7,13 @@ class Command(runserver.Command):
     def handle(self, *args, **options):
         # Try to enable vscode debugger
         try:
-            import ptvsd
+            import debugpy
 
-            # We only run the ptvsd server once, on PID 1
+            # We only run the ptvsd server once, not on PID 1
             # Otherwise django attempts to start the server on every refresh.
-            if os.getpid() != 1 and not ptvsd.is_attached():
-                ptvsd.enable_attach(address=("0.0.0.0", 9000), redirect_output=True)
+            if os.getpid() != 1:
+                debugpy.listen(("0.0.0.0", 9000))
                 print("🖥  Remote debugger running.")
-        except (ImportError, OSError) as e:
+        except (ImportError, RuntimeError) as e:
             print("⚠️  Couldn't start remote debugger:", e)
         super(Command, self).handle(*args, **options)
