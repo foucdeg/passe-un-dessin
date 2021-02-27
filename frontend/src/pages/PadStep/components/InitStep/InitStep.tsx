@@ -60,7 +60,7 @@ const InitStep: React.FC<Props> = ({ padStep, saveStep, loading, drawOwnWord }) 
       <StyledForm onSubmit={onSubmit}>
         <StyledTextInput
           autoFocus={isEditing}
-          readOnly={!isEditing}
+          readOnly={!isEditing || loading}
           type="text"
           ref={inputRef}
           data-test="sentence-input"

@@ -34,6 +34,12 @@ Cypress.Commands.add('playerVotes', (gameId, playerName) => {
   cy.runBackendCommand(`mock_player_votes ${gameId} ${playerName}`);
 });
 
+Cypress.Commands.add('setupDb', () => {
+  cy.runBackendCommand(`import_language fr`);
+  cy.runBackendCommand(`import_language en`);
+  cy.runBackendCommand(`import_language de`);
+});
+
 Cypress.Commands.add('drawLine', { prevSubject: true }, (subject, coords) => {
   const elt = subject.get(0);
   const box = elt.getBoundingClientRect();

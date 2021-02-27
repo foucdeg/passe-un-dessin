@@ -61,7 +61,7 @@ const DrawingToWordStep: React.FC<Props> = ({ padStep, saveStep, loading }) => {
         <StyledForm onSubmit={onSubmit}>
           <TextInput
             autoFocus={isEditing}
-            readOnly={!isEditing}
+            readOnly={!isEditing || loading}
             type="text"
             ref={inputRef}
             data-test="sentence-input"
