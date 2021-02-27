@@ -34,7 +34,7 @@ class Command(BaseCommand):
         suggestions_to_create = []
         for row in reader:
             for word in row:
-                sanitized_word = sanitize_sentence(word)
+                sanitized_word = sanitize_sentence(word, language)
                 if not word or sanitized_word in already_existing_suggestions:
                     continue
 

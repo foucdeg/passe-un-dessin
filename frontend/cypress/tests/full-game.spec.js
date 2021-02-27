@@ -1,4 +1,8 @@
 describe('Full game', function () {
+  before(() => {
+    cy.setupDb();
+  });
+
   it('should run a full game', function () {
     cy.visit('/');
 
@@ -124,16 +128,10 @@ describe('Full game', function () {
 
     // Try changing our mind
     cy.focused().type('Mr Simpson{enter}');
-    cy.getBySel('input-loader').should('exist');
-    cy.getBySel('input-loader').should('not.exist');
     cy.getBySel('remaining-players').should('not.contain', 'Boss');
     cy.getBySel('update-sentence').click();
-    cy.getBySel('input-loader').should('exist');
-    cy.getBySel('input-loader').should('not.exist');
     cy.getBySel('remaining-players').should('contain', 'Boss');
     cy.focused().clear().type('Mr Burns{enter}');
-    cy.getBySel('input-loader').should('exist');
-    cy.getBySel('input-loader').should('not.exist');
     cy.getBySel('remaining-players').should('not.contain', 'Boss');
 
     cy.get('@gameId').then((gameId) => {
@@ -226,7 +224,7 @@ describe('Full game', function () {
     cy.getBySel('start-voting').click();
 
     // Voting phase
-    cy.getBySel('remaining-votes').should('have.length', 2);
+    cy.getBySel('remaining-votes', { timeout: 15000 }).should('have.length', 2); // no idea why so slow
     cy.getBySel('upvote').eq(0).click();
     cy.getBySel('remaining-votes').should('have.length', 1);
     cy.getBySel('pad-tab').eq(1).click();
