@@ -4,6 +4,7 @@ import { ReactComponent as UndoIcon } from 'assets/undo.svg';
 import { colorPalette } from 'stylesheet';
 import Modal from 'components/Modal';
 import HorizontalSeparator from 'atoms/HorizontalSeparator';
+import CanvasDraw from 'components/Canvas/CanvasDraw';
 
 export const StyledModal = styled(Modal)`
   margin-top: 80px;
@@ -44,4 +45,8 @@ export const UndoAction = styled(UndoIcon)`
   .main {
     fill: ${colorPalette.purple};
   }
+`;
+
+export const StyledCanvasDraw = styled(CanvasDraw)`
+  margin-right: 50px;
 `;

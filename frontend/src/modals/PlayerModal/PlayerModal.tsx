@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import { selectPlayer, selectPlayerId } from 'redux/Player/selectors';
 import { useLogout, useFetchMe, useEditPlayer } from 'redux/Player/hooks';
 import Header4 from 'atoms/Header4';
-import CanvasDraw from 'components/Canvas/CanvasDraw';
 import SecondaryButton from 'atoms/SecondaryButton';
 import { colorPalette } from 'stylesheet';
 import { PUBLIC_PATHS } from 'routes';
@@ -19,6 +18,7 @@ import {
   StyledSeparator,
   UndoAction,
   StyledModal,
+  StyledCanvasDraw,
 } from './PlayerModal.style';
 
 interface Props {
@@ -72,7 +72,7 @@ const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
         <FormattedMessage id="playerModal.myInfos" />
       </StyledSeparator>
       {isAvatarDrawing ? (
-        <CanvasDraw
+        <StyledCanvasDraw
           canvasWidth={350}
           canvasHeight={350}
           saveStep={doSaveAvatar}

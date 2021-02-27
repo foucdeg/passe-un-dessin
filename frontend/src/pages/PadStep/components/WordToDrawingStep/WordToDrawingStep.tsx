@@ -8,14 +8,7 @@ import { PadStep } from 'redux/Game/types';
 import { useSelector } from 'redux/useSelector';
 import RemainingPlayers from 'components/RemainingPlayers';
 import { useBoolean } from 'services/utils';
-import {
-  Gutter,
-  LeftAndRightSide,
-  LeftSide,
-  RightSide,
-  Sentence,
-  StyledHeader,
-} from './WordToDrawingStep.style';
+import { Gutter, LeftAndRightSide, LeftSide, RightSide, Sentence } from './WordToDrawingStep.style';
 
 interface Props {
   padStep: PadStep;
@@ -41,8 +34,8 @@ const WordToDrawingStep: React.FC<Props> = ({ padStep, saveStep, loading }) => {
     <LeftAndRightSide>
       <LeftSide>
         <CanvasDraw
-          canvasWidth={538}
-          canvasHeight={538}
+          canvasWidth={608}
+          canvasHeight={608}
           saveStep={doSaveStep}
           finished={loading || finished}
           roundDuration={game.round_duration}
@@ -50,9 +43,6 @@ const WordToDrawingStep: React.FC<Props> = ({ padStep, saveStep, loading }) => {
       </LeftSide>
       <Gutter />
       <RightSide>
-        <StyledHeader>
-          <FormattedMessage id="wordToDrawing.sentenceToDraw" />
-        </StyledHeader>
         <Sentence>
           {padStep.sentence || <FormattedMessage id="wordToDrawing.noSentence" />}
         </Sentence>
