@@ -136,15 +136,7 @@ class PlayerWithHistorySerializer(PlayerSerializer):
 
     class Meta:
         model = Player
-        fields = (
-            "uuid",
-            "name",
-            "color",
-            "total_score",
-            "created_at",
-            "avatar_url",
-            "participations",
-        )
+        fields = PlayerSerializer.Meta.fields + ("created_at", "participations",)
 
 
 class PadIdSerializer(BaseSerializer):
