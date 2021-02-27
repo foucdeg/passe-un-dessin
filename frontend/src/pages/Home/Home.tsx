@@ -1,5 +1,4 @@
 import React, { useEffect, lazy } from 'react';
-import { useLocation } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 
 import Spacer from 'atoms/Spacer';
@@ -31,7 +30,6 @@ import FeaturedDrawing from './components/FeaturedDrawing';
 const TwitchModal = lazy(() => import('./components/TwitchModal'));
 
 const Home: React.FunctionComponent = () => {
-  const location = useLocation();
   const [isRulesModalOpen, openRulesModal, closeRulesModal] = useBoolean(false);
   const [isTwitchModalOpen, openTwitchModal, closeTwitchModal] = useBoolean(false);
 
@@ -52,10 +50,6 @@ const Home: React.FunctionComponent = () => {
   useEffect(() => {
     doFetchHighlightedSteps();
   }, [doFetchHighlightedSteps]);
-
-  if (!location.pathname.match(/\/(room\/[^/]+)?$/)) {
-    return null;
-  }
 
   return (
     <>

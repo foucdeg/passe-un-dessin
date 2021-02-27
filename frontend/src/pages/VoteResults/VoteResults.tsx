@@ -38,7 +38,13 @@ const VoteResults: React.FunctionComponent = () => {
     }
   }, [doGetVoteResults, game, room]);
 
-  if (!room || !game) return null;
+  if (!room || !game) {
+    return (
+      <Container>
+        <Loader />
+      </Container>
+    );
+  }
 
   return (
     <Container>

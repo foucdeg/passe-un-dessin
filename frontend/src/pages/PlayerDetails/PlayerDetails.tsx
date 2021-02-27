@@ -54,7 +54,7 @@ const PlayerDetails: React.FC<NoProps> = () => {
     }
   }, [displayedPlayer, doFetchPlayer, playerId]);
 
-  if (loading) {
+  if (loading || !displayedPlayer) {
     return (
       <GameContainer>
         <StyledInnerContainer>
@@ -63,8 +63,6 @@ const PlayerDetails: React.FC<NoProps> = () => {
       </GameContainer>
     );
   }
-
-  if (!displayedPlayer) return null;
 
   const filteredParticipations: ValidParticipation[] = displayedPlayer.participations.filter(
     isValidParticipation,
