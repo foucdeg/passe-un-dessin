@@ -7,6 +7,7 @@ import { useSelector } from 'redux/useSelector';
 import { NoProps } from 'services/utils';
 import Loader from 'atoms/Loader';
 import SingleGameScoreboard from '../SingleGameScoreboard';
+import { VoteResultsTabContainer } from './VoteResultsTab.style';
 
 const VoteResultsTab: React.FC<NoProps> = () => {
   const game = useSelector(selectGame);
@@ -25,10 +26,10 @@ const VoteResultsTab: React.FC<NoProps> = () => {
   }
 
   return (
-    <>
+    <VoteResultsTabContainer>
       {winners.length ? <Podium winners={winners} /> : <div>No votes</div>}
       <SingleGameScoreboard winners={winners} />
-    </>
+    </VoteResultsTabContainer>
   );
 };
 

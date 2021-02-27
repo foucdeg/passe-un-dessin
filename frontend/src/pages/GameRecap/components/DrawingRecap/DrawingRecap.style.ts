@@ -6,6 +6,7 @@ export const StyledDrawingRecap = styled.div`
   flex-direction: column;
   align-items: center;
   width: 236px;
+  height: 260px;
   justify-content: space-between;
   margin-bottom: 8px;
   letter-spacing: 0.1em;

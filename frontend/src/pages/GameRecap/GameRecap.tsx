@@ -19,7 +19,6 @@ import PadTab from './components/PadTab';
 
 import {
   OuterRecapContainer,
-  GameRecapContainer,
   TopRow,
   PadTabs,
   VoteReminder,
@@ -90,9 +89,7 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode = false }) => {
 
   const loadingView = (
     <OuterRecapContainer>
-      <GameRecapContainer>
-        <Loader />
-      </GameRecapContainer>
+      <Loader />
     </OuterRecapContainer>
   );
 
@@ -157,17 +154,15 @@ const GameRecap: React.FunctionComponent<Props> = ({ publicMode = false }) => {
             )}
           </div>
         </TopRow>
-        <GameRecapContainer>
-          {displayedPad && (
-            <PadRecap
-              pad={displayedPad}
-              publicMode={publicMode}
-              isPlayerInGame={isPlayerInGame}
-              isDebriefPhase={isDebriefPhase}
-            />
-          )}
-          {publicMode && isVoteResultsDisplayed && <VoteResultsTab />}
-        </GameRecapContainer>
+        {displayedPad && (
+          <PadRecap
+            pad={displayedPad}
+            publicMode={publicMode}
+            isPlayerInGame={isPlayerInGame}
+            isDebriefPhase={isDebriefPhase}
+          />
+        )}
+        {publicMode && isVoteResultsDisplayed && <VoteResultsTab />}
       </OuterRecapContainer>
       {!publicMode && isPlayerInGame && isDebriefPhase && (
         <VoteReminder>
