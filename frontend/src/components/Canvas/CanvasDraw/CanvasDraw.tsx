@@ -47,6 +47,7 @@ interface Props {
   saveStep: (drawing: string) => void;
   displaySaveButton?: boolean;
   initialDrawing?: string | null;
+  className?: string;
 }
 
 const DRAWING_COLOR_VALUES = Object.values(DrawingColor);
@@ -59,6 +60,7 @@ const CanvasDraw: React.FC<Props> = ({
   roundDuration,
   displaySaveButton,
   initialDrawing,
+  className,
 }) => {
   const [color, setColor] = useState<DrawingColor>(DrawingColor.BLACK);
   const [brushType, setBrushType] = useState<BrushType>(BrushType.THIN);
@@ -322,7 +324,7 @@ const CanvasDraw: React.FC<Props> = ({
   }, [initialDrawing, decodedDrawing]);
 
   return (
-    <CanvasContainer>
+    <CanvasContainer className={className}>
       <CanvasAndSaveContainer>
         <Canvas
           data-test="canvas"
@@ -333,15 +335,16 @@ const CanvasDraw: React.FC<Props> = ({
           width={canvasWidth}
         />
         {displaySaveButton && <StyledCheckIcon onClick={saveDrawing} />}
+        {finished && (
+          <PadStepDone height={canvasHeight} width={canvasWidth}>
+            <StyledTimerIcon />
+            <WhiteHeader>
+              <FormattedMessage id="wordToDrawing.timesUp" />
+            </WhiteHeader>
+          </PadStepDone>
+        )}
       </CanvasAndSaveContainer>
-      {finished ? (
-        <PadStepDone>
-          <StyledTimerIcon />
-          <WhiteHeader>
-            <FormattedMessage id="wordToDrawing.timesUp" />
-          </WhiteHeader>
-        </PadStepDone>
-      ) : (
+      {!finished && (
         <CanvasButtons>
           <BrushColorPicker color={color} setColor={setBrushColor} />
           <RightButtons>

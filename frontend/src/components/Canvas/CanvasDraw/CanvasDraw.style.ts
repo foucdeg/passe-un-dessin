@@ -4,12 +4,12 @@ import styled from 'styled-components';
 import { colorPalette } from 'stylesheet';
 import { ReactComponent as CheckIcon } from 'assets/check.svg';
 
-export const PadStepDone = styled.div`
+export const PadStepDone = styled.div<{ height: number; width: number }>`
   position: absolute;
   left: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
+  width: ${(props) => props.width}px;
+  height: ${(props) => props.height}px;
   background-color: ${colorPalette.redTransparent};
   display: flex;
   flex-direction: column;
@@ -21,6 +21,7 @@ export const PadStepDone = styled.div`
 export const CanvasContainer = styled.div`
   display: flex;
   align-items: center;
+  position: relative;
 `;
 
 export const Canvas = styled.canvas<{
@@ -53,6 +54,8 @@ export const WhiteHeader = styled(Header2)`
 export const CanvasButtons = styled.div`
   display: flex;
   height: 400px;
+  position: absolute;
+  left: calc(100% + 16px);
 `;
 
 export const RightButtons = styled.div`

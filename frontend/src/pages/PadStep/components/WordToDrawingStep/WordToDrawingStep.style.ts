@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Header2 from 'atoms/Header2';
 import { colorPalette } from 'stylesheet';
+import Header3 from 'atoms/Header3';
 
 export const LeftAndRightSide = styled.div`
   width: 100%;
@@ -33,6 +34,7 @@ export const StyledHeader = styled(Header2)`
   margin-bottom: 8px;
 `;
 
-export const Sentence = styled.strong`
+export const Sentence = styled(Header3)`
   margin-bottom: 8px;
+  text-transform: none;
 `;

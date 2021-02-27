@@ -11,11 +11,6 @@ export const OuterRecapContainer = styled.div`
   width: 100%;
 `;
 
-export const GameRecapContainer = styled.div`
-  display: flex;
-  max-height: 100%;
-`;
-
 export const TopRow = styled.div`
   display: flex;
   flex-direction: row;
