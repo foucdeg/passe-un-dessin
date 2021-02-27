@@ -13,6 +13,7 @@ module.exports = function (app) {
   app.use('/api', createProxyMiddleware(proxyConfig));
   app.use('/admin', createProxyMiddleware(proxyConfig));
   app.use('/djangostatic', createProxyMiddleware(proxyConfig));
+  app.use('/__debug__', createProxyMiddleware(proxyConfig));
   app.use(
     '/drawings',
     createProxyMiddleware({

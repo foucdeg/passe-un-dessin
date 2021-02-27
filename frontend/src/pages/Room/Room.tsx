@@ -52,8 +52,6 @@ const Room: React.FunctionComponent = () => {
     }
   }, [doGetRanking, room, gameId]);
 
-  if (!room) return null;
-
   const shouldShowPlayerLeftModal =
     playerWhoLeft &&
     game &&

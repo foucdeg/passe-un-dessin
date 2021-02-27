@@ -70,7 +70,7 @@ const Game: React.FunctionComponent = () => {
     };
   }, [game]);
 
-  if (loading) {
+  if (loading || !game) {
     return (
       <GameContainer>
         <InnerGameContainer>
@@ -80,7 +80,9 @@ const Game: React.FunctionComponent = () => {
     );
   }
 
-  if (!room || !game || !playerId) return null;
+  if (!room || !playerId) {
+    return null;
+  }
 
   return (
     <GameContainer>

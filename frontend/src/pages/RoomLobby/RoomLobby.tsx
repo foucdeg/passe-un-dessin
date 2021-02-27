@@ -19,6 +19,7 @@ import { selectRoom } from 'redux/Room/selectors';
 import { useSelector } from 'redux/useSelector';
 import { PUBLIC_PATHS } from 'routes';
 import BareLink from 'atoms/BareLink';
+import Loader from 'atoms/Loader';
 import RoundDurationPicker from './components/RoundDurationPicker';
 import DrawOwnWordSwitch from './components/DrawOwnWordSwitch';
 import {
@@ -72,7 +73,16 @@ const Room: React.FunctionComponent = () => {
     }
   }, [room, playerId, doCheckIfPlayerShouldJoin]);
 
-  if (!room) return null;
+  if (!room) {
+    return (
+      <Modal isOpen>
+        <StyledHeader>
+          <FormattedMessage id="roomLobby.title" />
+        </StyledHeader>
+        <Loader />
+      </Modal>
+    );
+  }
   if (!playerId) return null;
 
   const goodNumberOfPlayers =

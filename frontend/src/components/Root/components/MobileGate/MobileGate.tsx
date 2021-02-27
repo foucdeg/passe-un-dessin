@@ -35,7 +35,6 @@ const MobileGate: React.FC<Props> = ({ children }) => {
   const [email, setEmail] = useState<string>('');
   const [{ loading, value }, doSendEmail] = useSendDesktopEmail();
   const hasSent = !!value;
-  console.log(value);
 
   const isMobile = mobileCheck();
 
