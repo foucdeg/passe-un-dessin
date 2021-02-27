@@ -5,6 +5,7 @@ import { StepType } from 'redux/Game/types';
 import { useFetchStep, useSaveStepDrawing, useSaveStepSentence } from 'redux/Step/hooks';
 import { selectGame } from 'redux/Game/selectors';
 import { selectStep } from 'redux/Step/selectors';
+import Loader from 'atoms/Loader';
 import WordToDrawingStep from './components/WordToDrawingStep';
 import DrawingToWordStep from './components/DrawingToWordStep';
 import InitStep from './components/InitStep/InitStep';
@@ -43,8 +44,9 @@ const PadStep: React.FunctionComponent = () => {
     [doSaveStepDrawing, step],
   );
 
-  if (!game) return null;
-  if (!step) return null;
+  if (!game || !step) {
+    return <Loader />;
+  }
 
   switch (step.step_type) {
     case StepType.DRAWING_TO_WORD:

@@ -53,7 +53,9 @@ const Home: React.FunctionComponent = () => {
     doFetchHighlightedSteps();
   }, [doFetchHighlightedSteps]);
 
-  if (!location.pathname.match(/\/(room\/[^/]+)?$/)) return null;
+  if (!location.pathname.match(/\/(room\/[^/]+)?$/)) {
+    return null;
+  }
 
   return (
     <>

@@ -4,7 +4,7 @@ import { colorPalette } from 'stylesheet';
 
 const InnerGameContainer = styled.div<{ hasTabs?: boolean }>`
   width: 100%;
-  height: 570px;
+  height: 100%;
   background: ${colorPalette.white};
   border-radius: 16px;
   padding: 16px;
