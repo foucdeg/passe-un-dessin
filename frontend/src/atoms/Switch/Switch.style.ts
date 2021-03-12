@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { colorPalette } from 'stylesheet';
 
 export const Container = styled.button`
@@ -15,9 +15,13 @@ export const Container = styled.button`
 export const Rod = styled.div<{ selected: boolean }>`
   width: 100%;
   height: 100%;
-  background-color: ${({ selected }) =>
-    selected ? colorPalette.lightPurple : colorPalette.textGrey};
+  background-color: ${colorPalette.textGrey};
   border-radius: 15px;
+  ${(props) =>
+    props.selected &&
+    css`
+      background-color: ${colorPalette.lightPurple};
+    `}
 `;
 
 export const Circle = styled.div<{ selected: boolean }>`

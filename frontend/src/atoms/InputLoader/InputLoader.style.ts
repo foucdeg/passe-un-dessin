@@ -1,3 +1,4 @@
+/* stylelint-disable selector-max-type */
 import styled from 'styled-components';
 
 export const OuterLoader = styled.div`

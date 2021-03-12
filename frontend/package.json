@@ -42,7 +42,7 @@
     "generate": "plop --plopfile scripts/generators/index.js",
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --max-warnings 0",
     "lint:fix": "eslint 'src/**/*.{js,ts,tsx}' --fix",
-    "lint-style": "stylelint 'src/**/*.style.{ts,tsx}' 'src/**/style.{ts,tsx}'",
+    "stylelint": "stylelint 'src/**/*.style.{ts,tsx}' 'src/**/style.{ts,tsx}'",
     "type-check": "tsc"
   },
   "browserslist": [
