@@ -21,7 +21,7 @@ module.exports = {
     // https://github.com/theodo/theodo-code-principles/blob/master/css.md#no-more-than-two-classes-in-selectors
     'selector-max-class': 2,
     // https://github.com/theodo/theodo-code-principles/blob/master/css.md#no-html-tags-in-selectors
-    'selector-max-type': 0,
+    'selector-max-type': 1,
     // https://github.com/theodo/theodo-code-principles/blob/master/css.md#no-hardcoded-values
     'scale-unlimited/declaration-strict-value': [
       [
