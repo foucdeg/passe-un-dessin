@@ -3,6 +3,8 @@ from math import sqrt
 from random import sample
 from typing import List
 
+import requests
+from django.conf import settings
 from django.db import transaction
 from django.db.models import Count
 from django_eventstream import send_event
@@ -181,8 +183,19 @@ def save_sentence_step(step, sentence):
         handle_player_no_longer_done(game, step.player)
 
 
+def save_drawing(step, drawing):
+    base_api = settings.DRAWING_RENDERER_HOST
+    url = base_api + "drawings/" + str(step.uuid)
+
+    r = requests.post(url, json={"drawing": drawing})
+    r.raise_for_status()
+
+    return r.json()["publicPath"]
+
+
 def save_drawing_step(step, drawing):
-    step.drawing = drawing
+    drawing_url = save_drawing(step.uuid, drawing)
+    step.drawing_url = drawing_url
     step.save()
 
     game = step.pad.game

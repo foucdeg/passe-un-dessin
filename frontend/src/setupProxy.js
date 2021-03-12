@@ -1,5 +1,6 @@
 /* eslint @typescript-eslint/no-var-requires: 0 */
 const { createProxyMiddleware } = require('http-proxy-middleware');
+const { static } = require('express');
 
 const proxyConfig = {
   target: 'http://localhost:8000',
@@ -14,11 +15,5 @@ module.exports = function (app) {
   app.use('/admin', createProxyMiddleware(proxyConfig));
   app.use('/djangostatic', createProxyMiddleware(proxyConfig));
   app.use('/__debug__', createProxyMiddleware(proxyConfig));
-  app.use(
-    '/drawings',
-    createProxyMiddleware({
-      target: 'http://localhost:8888',
-      changeOrigin: true,
-    }),
-  );
+  app.use('/drawings', static(__dirname + '/../../drawings'));
 };

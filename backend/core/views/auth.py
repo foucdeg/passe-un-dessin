@@ -21,15 +21,17 @@ from rest_framework.response import Response
 from core.decorators import check_player_color, check_player_id
 from core.models import Game, GamePhase, Player, PlayerGameParticipation, User
 from core.serializers import (
+    PlayerSerializer,
     PlayerWithAvatarSerializer,
     PlayerWithHistorySerializer,
-    PlayerWithUserAndAvatarSerializer,
+    PlayerWithUserSerializer,
     UserSerializer,
 )
 from core.service.auth_service import (
     SocialAuthInvalidTokenException,
     do_user_player_coherence,
     get_player_rank,
+    save_avatar,
     verify_user,
 )
 
@@ -49,15 +51,15 @@ def get_me(request):
         return JsonResponse(None, safe=False)
 
     if request.user.is_authenticated:
-        return JsonResponse(PlayerWithUserAndAvatarSerializer(player).data)
+        return JsonResponse(PlayerWithUserSerializer(player).data)
 
-    return JsonResponse(PlayerWithAvatarSerializer(player).data)
+    return JsonResponse(PlayerSerializer(player).data)
 
 
 class PlayerAPIView(RetrieveUpdateAPIView):
     lookup_field = "uuid"
     queryset = Player.objects.all()
-    serializer_class = PlayerWithAvatarSerializer
+    serializer_class = PlayerWithAvatarSerializer  # only used in updates
 
     def retrieve(self, request, uuid):
         player = (
@@ -87,7 +89,18 @@ class PlayerAPIView(RetrieveUpdateAPIView):
     @check_player_id
     @check_player_color
     def update(self, request, *args, **kwargs):
-        return super().update(request, *args, **kwargs)
+        partial = kwargs.pop("partial", False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+
+        avatar = serializer.validated_data.get("avatar")
+        if avatar:
+            instance.avatar_url = save_avatar(instance, avatar)
+
+        self.perform_update(serializer)
+
+        return Response(serializer.data)
 
     @check_player_id
     @check_player_color
