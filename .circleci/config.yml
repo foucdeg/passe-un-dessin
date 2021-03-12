@@ -16,30 +16,10 @@ jobs:
           name: Run linter
           command: yarn lint
           working_directory: frontend
-
-  tsc:
-    executor:
-      name: node/default
-      tag: "14.15"
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn
-          app-dir: frontend
       - run:
           name: Run TypeScript check
           command: yarn tsc
           working_directory: frontend
-
-  stylelint:
-    executor:
-      name: node/default
-      tag: "14.15"
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn
-          app-dir: frontend
       - run:
           name: Run stylelint check
           command: yarn stylelint
@@ -202,8 +182,6 @@ workflows:
   build-lint-tsc:
     jobs:
       - lint-front
-      - tsc
-      - stylelint
       - build-front:
           filters:
             branches:
@@ -211,8 +189,6 @@ workflows:
       - build-deploy-front:
           requires:
             - lint-front
-            - tsc
-            - stylelint
             - lint-back
           filters:
             branches:
@@ -222,8 +198,6 @@ workflows:
       - build-back:
           requires:
             - lint-front
-            - tsc
-            - stylelint
             - lint-back
 
       - build-drawing-renderer
