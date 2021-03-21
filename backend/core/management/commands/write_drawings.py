@@ -19,6 +19,7 @@ class Command(BaseCommand):
         step_ids = (
             PadStep.objects.values_list("pk", flat=True)
             .filter(step_type=StepType.WORD_TO_DRAWING.value)
+            .filter(drawing_url__isnull=True)
             .exclude(drawing__isnull=True)
             .exclude(drawing="")
         )
