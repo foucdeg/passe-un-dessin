@@ -9,7 +9,6 @@ class FeaturedPadStepAdmin(admin.ModelAdmin):
     fields = (
         "is_featured",
         "sentence",
-        "drawing",
     )
     list_display = (
         "sentence",
@@ -25,7 +24,7 @@ class FeaturedPadStepAdmin(admin.ModelAdmin):
 
     def image_tag(self, obj):
         return mark_safe(
-            '<img src="/drawings/%s.png" width="100" height="100" />' % (obj.uuid)
+            '<img src="%s" width="100" height="100" />' % (obj.drawing_url)
         )
 
     image_tag.short_description = "Drawing"
