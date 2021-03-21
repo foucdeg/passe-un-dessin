@@ -7,7 +7,9 @@ import { selectDisplayedPlayer } from 'redux/Player/selectors';
 
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
-import { enUS, fr, de } from 'date-fns/locale';
+import enUS from 'date-fns/locale/en-US';
+import fr from 'date-fns/locale/fr';
+import de from 'date-fns/locale/de';
 
 import GameContainer from 'layout/GameLayout/GameContainer';
 import Loader from 'atoms/Loader';
