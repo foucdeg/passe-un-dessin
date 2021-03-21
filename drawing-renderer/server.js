@@ -136,7 +136,8 @@ app.post(
   '/drawings/:padStepId',
   asyncHandler(async (req, res) => {
     const drawing = lzString.decompressFromBase64(req.body.drawing);
-    const path = `${req.params.padStepId}.png`;
+    const subdir = req.params.padStepId.substring(0, 4);
+    const path = `${subdir}/${req.params.padStepId}.png`;
 
     const publicPath = await writePng(path, drawing);
 
@@ -149,7 +150,8 @@ app.post(
   asyncHandler(async (req, res) => {
     const drawing = lzString.decompressFromBase64(req.body.drawing);
     const hash = sh.unique(drawing);
-    const path = `${req.params.playerId}/${hash}.png`;
+    const subdir = req.params.playerId.substring(0, 4);
+    const path = `${subdir}/${req.params.playerId}/${hash}.png`;
 
     const publicPath = await writePng(path, drawing);
 
