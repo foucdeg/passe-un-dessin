@@ -22,23 +22,11 @@ class UserSerializer(BaseSerializer):
         fields = ("email",)
 
 
-def get_generic_avatar_url(player):
-    if not player.avatar:
-        return None
-    return "/drawings/avatar/%s/%s.png" % (player.uuid, player.avatar[-10:])
-
-
 class PlayerSerializer(BaseSerializer):
-    avatar_url = serializers.SerializerMethodField()
     rank = serializers.SerializerMethodField()
 
     def get_rank(self, obj):
         return obj.rank if hasattr(obj, "rank") else None
-
-    def get_avatar_url(self, obj):
-        if not obj.avatar:
-            return None
-        return "/drawings/avatar/%s/%s.png" % (obj.uuid, obj.avatar[-10:])
 
     class Meta:
         model = Player
@@ -51,12 +39,12 @@ class PlayerWithAvatarSerializer(PlayerSerializer):
         fields = PlayerSerializer.Meta.fields + ("avatar",)
 
 
-class PlayerWithUserAndAvatarSerializer(PlayerWithAvatarSerializer):
+class PlayerWithUserSerializer(PlayerSerializer):
     user = UserSerializer()
 
     class Meta:
         model = Player
-        fields = fields = PlayerWithAvatarSerializer.Meta.fields + ("user",)
+        fields = fields = PlayerSerializer.Meta.fields + ("user",)
 
 
 class RoomSerializer(BaseSerializer):
@@ -81,10 +69,6 @@ class VoteSerializer(BaseSerializer):
 class PadStepSerializer(BaseSerializer):
     player = PlayerSerializer()
     votes = VoteSerializer(many=True)
-    drawing_url = serializers.SerializerMethodField()
-
-    def get_drawing_url(self, obj):
-        return "/drawings/%s.png" % obj.uuid
 
     class Meta:
         model = PadStep

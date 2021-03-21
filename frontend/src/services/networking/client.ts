@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/react';
 
 const backendBaseUrl = (process.env.REACT_APP_BACKEND_HOST || '') + '/api';
 
-type Method = 'get' | 'post' | 'put' | 'patch' | 'delete';
+type Method = 'get' | 'post' | 'put' | 'PATCH' | 'delete';
 
 class HTTPError extends Error {
   status: number;
@@ -30,7 +30,7 @@ async function request(
     headers,
   };
 
-  if (['post', 'put', 'patch'].includes(method) && data) {
+  if (['post', 'put', 'PATCH'].includes(method) && data) {
     config.body = JSON.stringify(data);
   }
 
@@ -71,12 +71,21 @@ async function put(endpoint: string, data?: Record<string, unknown>) {
   return await request('put', endpoint, data);
 }
 
+async function patch(endpoint: string, data?: Record<string, unknown>) {
+  return await request('PATCH', endpoint, data);
+}
+
+async function doDelete(endpoint: string) {
+  return await request('delete', endpoint);
+}
+
 const client = {
   request,
   get,
   post,
   put,
-  delete: async (endpoint: string) => await request('delete', endpoint),
+  patch,
+  delete: doDelete,
 };
 
 export default client;

@@ -4,8 +4,8 @@ export type Point = { x: number; y: number };
 export type Line = { points: Point[]; brushColor: string; brushRadius: number; type: 'line' };
 export type Fill = { point: Point; color: string; type: 'fill' };
 export type Clear = { type: 'clear' };
-export type Step = Line | Fill | Clear;
-export type Paint = Step[];
+export type DrawingStep = Line | Fill | Clear;
+export type DrawingHistory = DrawingStep[];
 
 type canvasRefType = {
   readonly current: HTMLCanvasElement | null;
@@ -47,12 +47,10 @@ export const resetCanvas = (canvasRef: canvasRefType, imageDataRef: ImageDataRef
   }
 };
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
 export const initializeCanvas = async (
   canvasRef: canvasRefType,
   imageDataRef: ImageDataRefType,
-  drawing: string | null | undefined,
+  initialUrl?: string | null,
 ) => {
   if (!canvasRef.current) {
     return;
@@ -64,21 +62,27 @@ export const initializeCanvas = async (
     return;
   }
 
-  if (drawing) {
+  if (!initialUrl) {
+    const canvasWidth = context.canvas.width;
+    const canvasHeight = context.canvas.height;
+    imageDataRef.current = context.getImageData(0, 0, canvasWidth, canvasHeight);
+
+    return;
+  }
+
+  const imgLoadPromise = new Promise<void>((resolve, reject) => {
     const img = new Image();
     img.onload = function () {
       context.drawImage(img, 0, 0);
+      const canvasWidth = context.canvas.width;
+      const canvasHeight = context.canvas.height;
+      imageDataRef.current = context.getImageData(0, 0, canvasWidth, canvasHeight);
+      resolve();
     };
-    img.src = drawing;
-  }
+    img.src = initialUrl;
+  });
 
-  const canvasWidth = context.canvas.width;
-  const canvasHeight = context.canvas.height;
-  imageDataRef.current = context.getImageData(0, 0, canvasWidth, canvasHeight);
-
-  // We need await to make this function async because this operation take a few time.
-  // If you do not use that, it will erase future modification of drawing appening just after
-  await sleep(1);
+  await imgLoadPromise;
 };
 
 const drawLineFromImage = (
@@ -259,30 +263,30 @@ const setPixel = (imageData: ImageData, x: number, y: number, color: RGBAColor) 
   imageData.data[offset + 3] = 255;
 };
 
-const findLastClearIndex = (paint: Paint) => {
+const findLastClearIndex = (paint: DrawingHistory) => {
   const firstReversedClearIndex = paint
     .slice()
     .reverse()
-    .findIndex((step: Step) => step.type === 'clear');
+    .findIndex((step: DrawingStep) => step.type === 'clear');
   if (firstReversedClearIndex === -1) {
     return -1;
   }
   return paint.length - firstReversedClearIndex - 1;
 };
 
-export const drawPaint = async (
-  paint: Paint,
+export const drawWholePainting = async (
+  drawingHistory: DrawingHistory,
   canvasRef: canvasRefType,
   imageDataRef: ImageDataRefType,
   shouldResetCanvas = false,
-  initialDrawing: string | null = null,
+  initialUrl: string | null = null,
 ) => {
   // Do not use foreach because initializeCanvas need to use async
-  const lastClearIndex = findLastClearIndex(paint);
+  const lastClearIndex = findLastClearIndex(drawingHistory);
   let startIndex = lastClearIndex === -1 ? 0 : lastClearIndex;
 
-  if (shouldResetCanvas && initialDrawing && startIndex === 0) {
-    await initializeCanvas(canvasRef, imageDataRef, initialDrawing);
+  if (shouldResetCanvas && initialUrl && startIndex === 0) {
+    await initializeCanvas(canvasRef, imageDataRef, initialUrl);
   }
 
   if (!canvasRef.current) return;
@@ -293,7 +297,7 @@ export const drawPaint = async (
   const image = imageDataRef.current;
   if (!image) return;
 
-  if (shouldResetCanvas && !initialDrawing && startIndex === 0) {
+  if (shouldResetCanvas && !initialUrl && startIndex === 0) {
     resetCanvasFromImage(image, canvasWidth, canvasHeight);
   }
 
@@ -302,12 +306,13 @@ export const drawPaint = async (
     startIndex++;
   }
 
-  for (let i = startIndex; i < paint.length; i++) {
-    const paintStep = paint[i];
+  for (let i = startIndex; i < drawingHistory.length; i++) {
+    const paintStep = drawingHistory[i];
     switch (paintStep.type) {
       case 'line':
         paintStep.points.forEach((point: Point, index: number) => {
-          const nextPoint = paintStep.points[index + 1] || point;
+          const nextPoint = paintStep.points[index + 1];
+          if (!nextPoint) return;
           drawLineFromImage(
             image,
             canvasWidth,

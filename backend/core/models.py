@@ -97,6 +97,8 @@ class Player(BaseModel):
     )
     color = models.CharField(max_length=10)
     avatar = models.TextField(null=True, blank=True)
+    avatar_url = models.CharField(max_length=500, blank=True, null=True)
+
     total_score = models.IntegerField(default=0)
 
 
@@ -157,6 +159,7 @@ class PlayerGameParticipation(BaseModel):
         Game, on_delete=models.CASCADE, related_name="participants"
     )
     order = models.IntegerField()
+    vote_count = models.IntegerField(default=0)
 
     class Meta:
         unique_together = (
@@ -185,6 +188,8 @@ class PadStep(BaseModel):
 
     sentence = models.CharField(max_length=100, blank=True, null=True)
     drawing = models.TextField(null=True, blank=True)
+    drawing_url = models.CharField(max_length=500, blank=True, null=True)
+
     is_featured = models.BooleanField(default=False)
 
     class Meta:

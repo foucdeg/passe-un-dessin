@@ -26,6 +26,7 @@ services:
       DATABASE_URL: "postgres://postgres@db:5432/postgres"
       ENVIRONMENT: "local"
       PUSHPIN_HOST: pushpin
+      DRAWING_RENDERER_HOST: drawing-renderer
 
   drawing-renderer:
     build: ./drawing-renderer
@@ -34,12 +35,15 @@ services:
       - "8888:80"
     volumes:
       - ./drawing-renderer:/code:delegated
+      - ./drawings:/data:delegated
     working_dir: "/code"
     env_file:
       - .env
     environment:
       DATABASE_URL: "postgres://postgres@db:5432/postgres"
       ENVIRONMENT: "local"
+      DRAWING_RENDERER_STORAGE_PATH: "/data/"
+      DRAWING_RENDERER_PUBLIC_PATH: "https://localhost:3000/drawings/"
 
   pushpin:
     build: ./pushpin

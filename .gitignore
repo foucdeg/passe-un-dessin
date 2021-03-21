@@ -1,3 +1,5 @@
 /.env
 .idea
 kube/*-secret.yaml
+drawings/**
+!drawings/.gitkeep

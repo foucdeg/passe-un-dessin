@@ -61,7 +61,7 @@ export const useEditPlayer = () => {
 
   return useCallback(
     async (player: Partial<Player>) => {
-      await client.put(`/player/${player.uuid}`, { ...player });
+      await client.patch(`/player/${player.uuid}`, { ...player });
       await doFetchMe();
     },
     [doFetchMe],

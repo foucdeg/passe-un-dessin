@@ -17,11 +17,11 @@ import {
 } from 'services/utils';
 import {
   drawLine,
-  drawPaint,
+  drawWholePainting,
   fillContext,
   Line,
-  Step,
-  Paint,
+  DrawingStep,
+  DrawingHistory,
   Point,
   resetCanvas,
   initializeCanvas,
@@ -46,7 +46,7 @@ interface Props {
   roundDuration?: number;
   saveStep: (drawing: string) => void;
   displaySaveButton?: boolean;
-  initialDrawing?: string | null;
+  initialUrl?: string | null;
   className?: string;
 }
 
@@ -59,14 +59,14 @@ const CanvasDraw: React.FC<Props> = ({
   saveStep,
   roundDuration,
   displaySaveButton,
-  initialDrawing,
+  initialUrl,
   className,
 }) => {
   const [color, setColor] = useState<DrawingColor>(DrawingColor.BLACK);
   const [brushType, setBrushType] = useState<BrushType>(BrushType.THIN);
   const isPaintingRef = useRef<boolean>(false);
-  const drawing = useRef<Paint>([]);
-  const undoneDrawing = useRef<Paint>([]);
+  const drawing = useRef<DrawingHistory>([]);
+  const undoHistory = useRef<DrawingHistory>([]);
   const mousePosition = useRef<Point | null>(null);
   const currentLine = useRef<Line | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -81,7 +81,7 @@ const CanvasDraw: React.FC<Props> = ({
   const currentColorIndex = DRAWING_COLOR_VALUES.indexOf(selectedBrushColor);
   const cursorPosition =
     brushType === BrushType.FILL ? 17 : Math.round(selectedBrushRadius * Math.sqrt(2));
-  const decodedDrawing = initialDrawing && lzString.decompressFromBase64(initialDrawing);
+  // const decodedDrawing = initialDrawing && lzString.decompressFromBase64(initialDrawing);
 
   const setBrushColor = useCallback(
     (newColor: DrawingColor) => {
@@ -115,10 +115,10 @@ const CanvasDraw: React.FC<Props> = ({
     };
   };
 
-  const addToDrawing = (step: Step, resetUndoneDrawing = true) => {
+  const addToDrawing = (step: DrawingStep, resetUndoneDrawing = true) => {
     drawing.current.push(step);
     if (resetUndoneDrawing) {
-      undoneDrawing.current = [];
+      undoHistory.current = [];
     }
   };
 
@@ -217,15 +217,15 @@ const CanvasDraw: React.FC<Props> = ({
   const handleUndo = useCallback(() => {
     const removedStep = drawing.current.pop();
     if (removedStep) {
-      undoneDrawing.current.push(removedStep);
-      drawPaint(drawing.current, canvasRef, imageRef, true, decodedDrawing);
+      undoHistory.current.push(removedStep);
+      drawWholePainting(drawing.current, canvasRef, imageRef, true, initialUrl);
     }
-  }, [decodedDrawing]);
+  }, [initialUrl]);
 
   const handleRedo = useCallback(() => {
-    const stepToRedraw = undoneDrawing.current.pop();
+    const stepToRedraw = undoHistory.current.pop();
     if (stepToRedraw) {
-      drawPaint([stepToRedraw], canvasRef, imageRef);
+      drawWholePainting([stepToRedraw], canvasRef, imageRef);
       addToDrawing(stepToRedraw, false);
     }
   }, []);
@@ -320,8 +320,8 @@ const CanvasDraw: React.FC<Props> = ({
 
   useEffect(() => {
     resetCanvas(canvasRef, imageRef);
-    initializeCanvas(canvasRef, imageRef, decodedDrawing);
-  }, [initialDrawing, decodedDrawing]);
+    initializeCanvas(canvasRef, imageRef, initialUrl);
+  }, [initialUrl]);
 
   return (
     <CanvasContainer className={className}>

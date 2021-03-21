@@ -3,11 +3,12 @@ from enum import Enum
 from random import randrange
 from time import time
 
+import requests
 from django.conf import settings
 from django.db import connection
 from django.db.utils import IntegrityError
 from django_eventstream import send_event
-from google.auth.transport import requests
+from google.auth.transport import requests as gauth_requests
 from google.oauth2 import id_token
 
 from core.messages import PlayerReplacedMessage
@@ -48,7 +49,7 @@ def verify_user(auth_token: str, provider: SocialAuthProvider):
     if provider == SocialAuthProvider.GOOGLE.value:
         try:
             idinfo = id_token.verify_oauth2_token(
-                auth_token, requests.Request(), settings.AUTH_GOOGLE_CLIENT_ID
+                auth_token, gauth_requests.Request(), settings.AUTH_GOOGLE_CLIENT_ID
             )
 
             return idinfo["email"]
@@ -149,6 +150,7 @@ def merge_players(from_player: Player, into_player: Player):
         not into_avatar or into_player.created_at <= from_player.created_at
     ):
         into_player.avatar = from_avatar
+        into_player.avatar_url = from_player.avatar_url
 
     into_player.save()
 
@@ -183,3 +185,13 @@ def get_player_rank(player):
         )
         row = cursor.fetchone()
         return row[0]
+
+
+def save_avatar(player, drawing):
+    base_api = settings.DRAWING_RENDERER_HOST
+    url = base_api + "drawings/avatar/" + str(player.uuid)
+
+    r = requests.post(url, json={"drawing": drawing})
+    r.raise_for_status()
+
+    return r.json()["publicPath"]

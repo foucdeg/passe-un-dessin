@@ -3,6 +3,8 @@ from math import sqrt
 from random import sample
 from typing import List
 
+import requests
+from django.conf import settings
 from django.db import transaction
 from django.db.models import Count
 from django_eventstream import send_event
@@ -181,8 +183,19 @@ def save_sentence_step(step, sentence):
         handle_player_no_longer_done(game, step.player)
 
 
+def save_drawing(step, drawing):
+    base_api = settings.DRAWING_RENDERER_HOST
+    url = base_api + "drawings/" + str(step.uuid)
+
+    r = requests.post(url, json={"drawing": drawing})
+    r.raise_for_status()
+
+    return r.json()["publicPath"]
+
+
 def save_drawing_step(step, drawing):
-    step.drawing = drawing
+    drawing_url = save_drawing(step, drawing)
+    step.drawing_url = drawing_url
     step.save()
 
     game = step.pad.game
@@ -195,32 +208,39 @@ def save_drawing_step(step, drawing):
 
 def vote(player, step):
     game = step.pad.game
-    existing_player_vote_count = Vote.objects.filter(
-        player=player, pad_step__pad__game=game
-    ).count()
     available_vote_count = get_available_vote_count(game)
 
-    if existing_player_vote_count >= available_vote_count:
-        raise VoteException(
-            "You already reached the maximal number of vote for this game : %s"
-            % available_vote_count
-        )
+    with transaction.atomic():
+        participation = PlayerGameParticipation.objects.get(player=player, game=game)
+        existing_vote_count = participation.vote_count
+
+        if existing_vote_count >= available_vote_count:
+            raise VoteException(
+                "You already reached the maximal number of vote for this game : %s"
+                % available_vote_count
+            )
+
+        participation.vote_count = existing_vote_count + 1
+        participation.save()
 
     Vote.objects.create(player=player, pad_step=step)
 
     def on_finished():
         switch_to_vote_results(game)
 
-    if existing_player_vote_count + 1 == available_vote_count:
+    if existing_vote_count + 1 == available_vote_count:
         handle_player_done(game, player, on_finished)
 
 
 def devote(player, step):
     game = step.pad.game
-    existing_player_vote_count = Vote.objects.filter(
-        player=player, pad_step__pad__game=game
-    ).count()
     available_vote_count = get_available_vote_count(game)
+
+    with transaction.atomic():
+        participation = PlayerGameParticipation.objects.get(player=player, game=game)
+        existing_vote_count = participation.vote_count
+        participation.vote_count = existing_vote_count - 1
+        participation.save()
 
     vote = Vote.objects.filter(player=player, pad_step=step).first()
     if vote is None:
@@ -228,7 +248,7 @@ def devote(player, step):
 
     vote.delete()
 
-    if existing_player_vote_count == available_vote_count:
+    if existing_vote_count == available_vote_count:
         handle_player_no_longer_done(game, player)
 
 
@@ -243,7 +263,7 @@ def start_next_round(game: Game, new_round: int):
         previous_step = pad.steps.get(round_number=new_round - 1)
         step = pad.steps.get(round_number=new_round)
         if new_round % 2 == 0:
-            step.drawing = previous_step.drawing
+            step.drawing_url = previous_step.drawing_url
         else:
             step.sentence = previous_step.sentence
         step.save()
