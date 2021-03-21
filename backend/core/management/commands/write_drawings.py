@@ -16,27 +16,29 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         game_id = options["game"]
 
-        steps = (
-            PadStep.objects.filter(step_type=StepType.WORD_TO_DRAWING.value)
+        step_ids = (
+            PadStep.objects.values_list("pk", flat=True)
+            .filter(step_type=StepType.WORD_TO_DRAWING.value)
             .exclude(drawing__isnull=True)
             .exclude(drawing="")
         )
         if game_id:
-            steps = steps.filter(pad__game=game_id)
+            step_ids = step_ids.filter(pad__game=game_id)
 
-        paged_steps = Paginator(steps, 100)
+        paged_step_ids = Paginator(step_ids, 100)
 
-        self.stdout.write("%d steps to process" % paged_steps.count)
+        self.stdout.write("%d steps to process" % paged_step_ids.count)
 
         i = 0
 
-        for page_number in paged_steps.page_range:
-            page = paged_steps.page(page_number)
+        for page_number in paged_step_ids.page_range:
+            page = paged_step_ids.page(page_number)
 
             self.stdout.write("Processing steps %d-%d" % (i, i + 99))
             i += 100
 
-            for step in page.object_list:
+            for step_id in page.object_list:
+                step = PadStep.objects.get(pk=step_id)
                 try:
                     drawing_url = save_drawing(step, step.drawing)
                 except Exception as e:
@@ -44,10 +46,10 @@ class Command(BaseCommand):
                     continue
 
                 step.drawing_url = drawing_url
-                step.save()
+                step.save(update_fields=["drawing_url"])
 
                 next_step = PadStep.objects.get(
                     pad=step.pad, round_number=step.round_number + 1
                 )
                 next_step.drawing_url = drawing_url
-                next_step.save()
+                next_step.save(update_fields=["drawing_url"])
