@@ -77,7 +77,7 @@ const PlayerModal: React.FC<Props> = ({ isOpen, onClose }) => {
           canvasHeight={350}
           saveStep={doSaveAvatar}
           displaySaveButton
-          initialDrawing={player.avatar}
+          initialUrl={player.avatar_url}
         />
       ) : (
         <>

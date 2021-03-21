@@ -194,6 +194,4 @@ def save_avatar(player, drawing):
     r = requests.post(url, json={"drawing": drawing})
     r.raise_for_status()
 
-    print(r.json())
-
     return r.json()["publicPath"]
