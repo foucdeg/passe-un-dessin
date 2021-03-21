@@ -1,0 +1,48 @@
+from django.core.management.base import BaseCommand
+
+from core.models import PadStep, StepType
+from core.service.game_service import save_drawing
+
+
+class Command(BaseCommand):
+    help = "Writes drawings into PNG files."
+
+    def add_arguments(self, parser):
+        parser.add_argument(
+            "--game", type=str, default=None, help="A game ID to restrict execution.",
+        )
+
+    def handle(self, *args, **options):
+        game_id = options["game"]
+
+        steps = (
+            PadStep.objects.filter(step_type=StepType.WORD_TO_DRAWING.value)
+            .exclude(drawing__isnull=True)
+            .exclude(drawing="")
+        )
+        if game_id:
+            steps = steps.filter(pad__game=game_id)
+
+        self.stdout.write("%d steps to process" % steps.count())
+        i = 0
+
+        for step in steps:
+            i += 1
+
+            if i % 100 == 0:
+                self.stdout.write("Processing step %d" % i)
+
+            try:
+                drawing_url = save_drawing(step, step.drawing)
+            except Exception as e:
+                self.stdout.write(self.style.WARNING(str(e)))
+                continue
+
+            step.drawing_url = drawing_url
+            step.save()
+
+            next_step = PadStep.objects.get(
+                pad=step.pad, round_number=step.round_number + 1
+            )
+            next_step.drawing_url = drawing_url
+            next_step.save()
