@@ -159,6 +159,7 @@ class PlayerGameParticipation(BaseModel):
         Game, on_delete=models.CASCADE, related_name="participants"
     )
     order = models.IntegerField()
+    vote_count = models.IntegerField(default=0)
 
     class Meta:
         unique_together = (

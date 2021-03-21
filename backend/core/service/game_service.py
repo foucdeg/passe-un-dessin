@@ -208,32 +208,39 @@ def save_drawing_step(step, drawing):
 
 def vote(player, step):
     game = step.pad.game
-    existing_player_vote_count = Vote.objects.filter(
-        player=player, pad_step__pad__game=game
-    ).count()
     available_vote_count = get_available_vote_count(game)
 
-    if existing_player_vote_count >= available_vote_count:
-        raise VoteException(
-            "You already reached the maximal number of vote for this game : %s"
-            % available_vote_count
-        )
+    with transaction.atomic():
+        participation = PlayerGameParticipation.objects.get(player=player, game=game)
+        existing_vote_count = participation.vote_count
+
+        if existing_vote_count >= available_vote_count:
+            raise VoteException(
+                "You already reached the maximal number of vote for this game : %s"
+                % available_vote_count
+            )
+
+        participation.vote_count = existing_vote_count + 1
+        participation.save()
 
     Vote.objects.create(player=player, pad_step=step)
 
     def on_finished():
         switch_to_vote_results(game)
 
-    if existing_player_vote_count + 1 == available_vote_count:
+    if existing_vote_count + 1 == available_vote_count:
         handle_player_done(game, player, on_finished)
 
 
 def devote(player, step):
     game = step.pad.game
-    existing_player_vote_count = Vote.objects.filter(
-        player=player, pad_step__pad__game=game
-    ).count()
     available_vote_count = get_available_vote_count(game)
+
+    with transaction.atomic():
+        participation = PlayerGameParticipation.objects.get(player=player, game=game)
+        existing_vote_count = participation.vote_count
+        participation.vote_count = existing_vote_count - 1
+        participation.save()
 
     vote = Vote.objects.filter(player=player, pad_step=step).first()
     if vote is None:
@@ -241,7 +248,7 @@ def devote(player, step):
 
     vote.delete()
 
-    if existing_player_vote_count == available_vote_count:
+    if existing_vote_count == available_vote_count:
         handle_player_no_longer_done(game, player)
 
 
