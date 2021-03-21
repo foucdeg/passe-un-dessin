@@ -194,7 +194,7 @@ def save_drawing(step, drawing):
 
 
 def save_drawing_step(step, drawing):
-    drawing_url = save_drawing(step.uuid, drawing)
+    drawing_url = save_drawing(step, drawing)
     step.drawing_url = drawing_url
     step.save()
 
@@ -256,7 +256,7 @@ def start_next_round(game: Game, new_round: int):
         previous_step = pad.steps.get(round_number=new_round - 1)
         step = pad.steps.get(round_number=new_round)
         if new_round % 2 == 0:
-            step.drawing = previous_step.drawing
+            step.drawing_url = previous_step.drawing_url
         else:
             step.sentence = previous_step.sentence
         step.save()
