@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand
+from django.core.paginator import Paginator
 
 from core.models import PadStep, StepType
 from core.service.game_service import save_drawing
@@ -23,26 +24,30 @@ class Command(BaseCommand):
         if game_id:
             steps = steps.filter(pad__game=game_id)
 
-        self.stdout.write("%d steps to process" % steps.count())
+        paged_steps = Paginator(steps, 100)
+
+        self.stdout.write("%d steps to process" % paged_steps.count)
+
         i = 0
 
-        for step in steps:
-            i += 1
+        for page_number in paged_steps.page_range:
+            page = paged_steps.page(page_number)
 
-            if i % 100 == 0:
-                self.stdout.write("Processing step %d" % i)
+            self.stdout.write("Processing steps %d-%d" % (i, i + 99))
+            i += 100
 
-            try:
-                drawing_url = save_drawing(step, step.drawing)
-            except Exception as e:
-                self.stdout.write(self.style.WARNING(str(e)))
-                continue
+            for step in page.object_list:
+                try:
+                    drawing_url = save_drawing(step, step.drawing)
+                except Exception as e:
+                    self.stdout.write(self.style.WARNING(str(e)))
+                    continue
 
-            step.drawing_url = drawing_url
-            step.save()
+                step.drawing_url = drawing_url
+                step.save()
 
-            next_step = PadStep.objects.get(
-                pad=step.pad, round_number=step.round_number + 1
-            )
-            next_step.drawing_url = drawing_url
-            next_step.save()
+                next_step = PadStep.objects.get(
+                    pad=step.pad, round_number=step.round_number + 1
+                )
+                next_step.drawing_url = drawing_url
+                next_step.save()
