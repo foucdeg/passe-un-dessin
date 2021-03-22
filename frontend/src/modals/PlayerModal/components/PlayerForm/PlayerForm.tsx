@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormikProps, Field } from 'formik';
+import InputLoader from 'atoms/InputLoader';
 import { FormValues, OutsideProps } from './PlayerForm.form';
 import {
   Square,
@@ -21,6 +22,7 @@ const InnerPlayerForm: React.FC<OutsideProps & FormikProps<FormValues>> = ({
   isEditing,
   setIsEditing,
   openAvatarDrawing,
+  isSubmitting,
 }) => {
   if (!isEditing)
     return (
@@ -43,6 +45,7 @@ const InnerPlayerForm: React.FC<OutsideProps & FormikProps<FormValues>> = ({
         name="name"
         hasError={touched.name && errors.name}
         autoFocus
+        adornment={isSubmitting && <InputLoader />}
       />
       <AirButton type="submit">
         <StyledCheckIcon />

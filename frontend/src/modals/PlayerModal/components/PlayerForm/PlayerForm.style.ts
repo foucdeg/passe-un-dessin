@@ -27,6 +27,7 @@ export const Square = styled.div<{ color: string }>`
   width: 48px;
   height: 48px;
   border-radius: 4px;
+  flex-shrink: 0;
   background-color: ${(props) => props.color};
 `;
 
@@ -44,7 +45,7 @@ export const StyledForm = styled(Form)`
 
 export const StyledTextInput = styled(TextInput)`
   margin: 0 16px;
-  flex-grow: 1;
+  flex-grow: 0;
 `;
 
 export const StyledEditIcon = styled(EditIcon)`
@@ -69,5 +70,6 @@ export const AirButton = styled.button`
 
 export const StyledAvatar = styled(Avatar)`
   margin-right: 16px;
+  flex-shrink: 0;
   cursor: pointer;
 `;

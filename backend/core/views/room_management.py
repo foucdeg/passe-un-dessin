@@ -147,7 +147,7 @@ def get_ranking(request, room_id):
         return HttpResponseBadRequest("Room does not exist")
 
     ranking = (
-        Player.objects.values("uuid", "name", "color", "avatar")
+        Player.objects.values("uuid", "name", "color", "avatar_url")
         .filter(
             steps__pad__game__room_id=room_id,
             steps__pad__game__phase=GamePhase.VOTE_RESULTS.value,
@@ -163,7 +163,7 @@ def get_ranking(request, room_id):
                     uuid=rank["uuid"],
                     color=rank["color"],
                     name=rank["name"],
-                    avatar=rank["avatar"],
+                    avatar_url=rank["avatar_url"],
                 )
             ).data,
             "vote_count": rank["count"],

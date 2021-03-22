@@ -21,6 +21,7 @@ const PadStep: React.FunctionComponent = () => {
   const [{ loading: isSaveStepDrawingLoading }, doSaveStepDrawing] = useSaveStepDrawing();
   const [{ loading: isSaveStepSentenceLoading }, doSaveStepSentence] = useSaveStepSentence();
   const { stepId } = useParams<RouteParams>();
+  console.log('in PAdStep', stepId);
 
   useEffect(() => {
     if (stepId) {

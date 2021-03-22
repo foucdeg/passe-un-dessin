@@ -22,6 +22,7 @@ interface Props {
 }
 
 const InitStep: React.FC<Props> = ({ padStep, saveStep, loading, drawOwnWord }) => {
+  console.log('in InitStep', padStep.uuid);
   const [sentence, setSentence] = useState<string>(padStep.sentence || '');
   const [isEditing, activateEditing, deactivateEditing] = useBoolean(!padStep.sentence);
   const intl = useIntl();

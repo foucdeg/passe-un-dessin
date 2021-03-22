@@ -94,7 +94,7 @@ def submit_step(request, player, uuid):
         if drawing is None or drawing == "":
             return HttpResponseBadRequest("Drawing should not be empty")
 
-        if step.drawing is not None:
+        if step.drawing_url is not None:
             return HttpResponseBadRequest(
                 "Step with uuid %s already has a drawing" % uuid
             )
