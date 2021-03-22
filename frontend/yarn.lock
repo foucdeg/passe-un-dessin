@@ -6206,10 +6206,10 @@ eslint-plugin-react@^7.21.5:
     resolve "^1.18.1"
     string.prototype.matchall "^4.0.2"
 
-eslint-plugin-risxss@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-risxss/-/eslint-plugin-risxss-2.0.0.tgz#383506ea4b22657aad1e3a7197d88669d9935b71"
-  integrity sha512-UdYl5qWxrJzRKsqexE//iSqu3Ti/I4Aljk5zA+Fr9sCfww3vQblf8kjjOBa4oY8P2eXyGLR7vWX/93ZBJMj/dg==
+eslint-plugin-risxss@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-risxss/-/eslint-plugin-risxss-2.1.0.tgz#29c555e84abde9a64713404237da1281c86daef1"
+  integrity sha512-r28MzBnC/Rk/jv/P42d4GS516yMi9Ev22VAZc25YVM21izAvzGQriDOewqTsSeZlBZGxP2ebEGolp2cosz67Yg==
   dependencies:
     import-modules "^1.1.0"
     lodash.clonedeep "^4.5.0"
