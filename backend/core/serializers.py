@@ -33,12 +33,6 @@ class PlayerSerializer(BaseSerializer):
         fields = ("uuid", "name", "color", "total_score", "rank", "avatar_url")
 
 
-class PlayerWithAvatarSerializer(PlayerSerializer):
-    class Meta:
-        model = Player
-        fields = PlayerSerializer.Meta.fields + ("avatar",)
-
-
 class PlayerWithUserSerializer(PlayerSerializer):
     user = UserSerializer()
 

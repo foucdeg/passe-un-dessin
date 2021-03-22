@@ -2,9 +2,11 @@ import React from 'react';
 import { LoaderContainer, LoaderWrapper } from './Loader.style';
 
 // Loader from https://loading.io/css/
-
-const Loader = () => (
-  <LoaderWrapper>
+interface Props {
+  className?: string;
+}
+const Loader: React.FC<Props> = ({ className }) => (
+  <LoaderWrapper className={className}>
     <LoaderContainer>
       <div />
       <div />

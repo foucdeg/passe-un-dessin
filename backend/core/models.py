@@ -96,7 +96,6 @@ class Player(BaseModel):
         Room, on_delete=models.SET_NULL, related_name="players", null=True, blank=True
     )
     color = models.CharField(max_length=10)
-    avatar = models.TextField(null=True, blank=True)
     avatar_url = models.CharField(max_length=500, blank=True, null=True)
 
     total_score = models.IntegerField(default=0)
@@ -187,7 +186,6 @@ class PadStep(BaseModel):
     player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name="steps")
 
     sentence = models.CharField(max_length=100, blank=True, null=True)
-    drawing = models.TextField(null=True, blank=True)
     drawing_url = models.CharField(max_length=500, blank=True, null=True)
 
     is_featured = models.BooleanField(default=False)

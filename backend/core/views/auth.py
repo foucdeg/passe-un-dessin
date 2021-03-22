@@ -22,7 +22,6 @@ from core.decorators import check_player_color, check_player_id
 from core.models import Game, GamePhase, Player, PlayerGameParticipation, User
 from core.serializers import (
     PlayerSerializer,
-    PlayerWithAvatarSerializer,
     PlayerWithHistorySerializer,
     PlayerWithUserSerializer,
     UserSerializer,
@@ -59,7 +58,7 @@ def get_me(request):
 class PlayerAPIView(RetrieveUpdateAPIView):
     lookup_field = "uuid"
     queryset = Player.objects.all()
-    serializer_class = PlayerWithAvatarSerializer  # only used in updates
+    serializer_class = PlayerSerializer
 
     def retrieve(self, request, uuid):
         player = (
@@ -94,7 +93,7 @@ class PlayerAPIView(RetrieveUpdateAPIView):
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
 
-        avatar = serializer.validated_data.get("avatar")
+        avatar = request.data.get("avatar")
         if avatar:
             instance.avatar_url = save_avatar(instance, avatar)
 
