@@ -42,7 +42,8 @@
     "mysticatea/no-useless-rest-spread": "error",
     "prefer-object-spread/prefer-object-spread": "error",
     "react/destructuring-assignment": "off",
-    "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
+    "react/jsx-filename-extension": ["warn", { "extensions": [".ts", ".tsx"] }],
+    "react/jsx-props-no-spreading": "off",
     "react/no-array-index-key": "error",
     "react/jsx-key": "error",
     "react/prefer-stateless-function": "off",
@@ -54,9 +55,12 @@
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/interface-name-prefix": "off",
+    "prefer-template": "off",
     "complexity": "off",
     "max-lines": ["error", 300],
     "max-depth": ["error", 4],
-    "max-params": ["error", 10]
+    "max-params": ["error", 10],
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": "error"
   }
 }

@@ -1,21 +1,50 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NativeRouter, Route } from 'react-router-native';
+/* eslint-disable camelcase */
+import { Raleway_900Black } from '@expo-google-fonts/raleway';
+import {
+  RobotoCondensed_300Light,
+  RobotoCondensed_400Regular,
+  RobotoCondensed_700Bold,
+} from '@expo-google-fonts/roboto-condensed';
+/* eslint-enable camelcase */
+import { useFonts } from 'expo-font';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+import { Text } from 'react-native';
+import { NoProps } from './utils/types';
+import Home from './Home';
+import Leaderboard from './Leaderboard';
+import Root from './Root';
 
-export default function App() {
+export type RootStackParamList = {
+  Home: undefined;
+  Leaderboard: undefined;
+};
+
+const App: React.FC<NoProps> = () => {
+  const [fontsLoaded] = useFonts({
+    Raleway_900Black,
+    RobotoCondensed_300Light,
+    RobotoCondensed_400Regular,
+    RobotoCondensed_700Bold,
+  });
+
+  if (!fontsLoaded) {
+    return (
+      <Root>
+        <Text>Loading</Text>
+      </Root>
+    );
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Root>
+      <NativeRouter>
+        <Route exact path="/" component={Home} />
+        <Route path="/leaderboard" component={Leaderboard} />
+      </NativeRouter>
+    </Root>
   );
-}
+};
+
+export default App;
