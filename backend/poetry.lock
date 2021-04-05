@@ -210,11 +210,14 @@ Werkzeug = ">=0.12,<1"
 
 [[package]]
 name = "django-extensions"
-version = "3.1.1"
+version = "3.1.2"
 description = "Extensions for Django"
 category = "dev"
 optional = false
 python-versions = ">=3.6"
+
+[package.dependencies]
+Django = ">=2.2"
 
 [[package]]
 name = "django-grip"
@@ -618,7 +621,7 @@ watchdog = ["watchdog"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.9.2"
-content-hash = "23479fd3d8fe0c7c2d415da99bcb21d3915d153439da88f9c2fc5d28663900de"
+content-hash = "ca8d973dfd585a843704290528725080bfad2879b60ec295f4e8f2b51a867ace"
 
 [metadata.files]
 appdirs = [
@@ -846,8 +849,8 @@ django-eventstream = [
     {file = "django-eventstream-4.0.0.tar.gz", hash = "sha256:8ed10048371af607b352db77630b58481fa779d1bf8f41bfc060783eefc4cfe5"},
 ]
 django-extensions = [
-    {file = "django-extensions-3.1.1.tar.gz", hash = "sha256:674ad4c3b1587a884881824f40212d51829e662e52f85b012cd83d83fe1271d9"},
-    {file = "django_extensions-3.1.1-py3-none-any.whl", hash = "sha256:9507f8761ee760748938fd8af766d0608fb2738cf368adfa1b2451f61c15ae35"},
+    {file = "django-extensions-3.1.2.tar.gz", hash = "sha256:081828e985485662f62a22340c1506e37989d14b927652079a5b7cd84a82368b"},
+    {file = "django_extensions-3.1.2-py3-none-any.whl", hash = "sha256:17f85f4dcdd5eea09b8c4f0bad8f0370bf2db6d03e61b431fa7103fee29888de"},
 ]
 django-grip = [
     {file = "django-grip-3.0.0.tar.gz", hash = "sha256:8cb5a3cd7a02e35f9b1e0debf631c98119a955ae05d14ffcf162ebe6060291ee"},
