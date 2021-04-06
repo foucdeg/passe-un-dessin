@@ -25,7 +25,7 @@ tests = ["coverage[toml] (>=5.0.2)", "hypothesis", "pytest"]
 
 [[package]]
 name = "asgiref"
-version = "3.3.2"
+version = "3.3.3"
 description = "ASGI specs, helper code, and adapters"
 category = "main"
 optional = false
@@ -621,7 +621,7 @@ watchdog = ["watchdog"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.9.2"
-content-hash = "64a134b0fcd6e46c6c0ac2f1f2dce4c0cf914b9fe2a2f6f0152842763d6b9209"
+content-hash = "c9b0db5d3a7e1f9b4e821f1b356b8f2d91511055fc3ec0c1a2c16884cb573cf6"
 
 [metadata.files]
 appdirs = [
@@ -649,8 +649,8 @@ argon2-cffi = [
     {file = "argon2_cffi-20.1.0-cp39-cp39-win_amd64.whl", hash = "sha256:8a84934bd818e14a17943de8099d41160da4a336bcc699bb4c394bbb9b94bd32"},
 ]
 asgiref = [
-    {file = "asgiref-3.3.2-py3-none-any.whl", hash = "sha256:34103fa20270d8843a66e5df18547d2e8139534d23e3beffe96647c65ddffd4d"},
-    {file = "asgiref-3.3.2.tar.gz", hash = "sha256:c62b616b226d6c2e927b0225f8101f9e2cca08112cff98839ca6726c129ff9e0"},
+    {file = "asgiref-3.3.3-py3-none-any.whl", hash = "sha256:b58af092ac5987e245bba2d1472a09ca02fb402b782379c9c3e65555807c0631"},
+    {file = "asgiref-3.3.3.tar.gz", hash = "sha256:00a4fdc99c50e5b2b308ff270afdd1a6b265fba6d2c87ea7b98fc0f25f7f5b07"},
 ]
 attrs = [
     {file = "attrs-20.3.0-py2.py3-none-any.whl", hash = "sha256:31b2eced602aa8423c2aea9c76a724617ed67cf9513173fd3a4f03e3a929c7e6"},
