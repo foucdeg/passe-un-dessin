@@ -18,7 +18,7 @@ pytz = "==2021.1"
 requests = "==2.25.1"
 sentry-sdk = "==1.0.0"
 sqlparse = "0.4.1"
-django-eventstream = "==4.0.0"
+django-eventstream = "==4.1.0"
 google-auth = "==1.29.0"
 django-anymail = {extras = ["mailgun"], version = "8.2"}
 django-rest-passwordreset = "==1.1.0"
