@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   node: circleci/node@4.2.1
-  python: circleci/python@1.3.5
+  python: circleci/python@1.4.0
 jobs:
   lint-front:
     executor:
