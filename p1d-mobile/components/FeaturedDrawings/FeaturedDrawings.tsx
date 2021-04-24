@@ -66,7 +66,7 @@ const FeaturedDrawings: React.FC<NoProps> = () => {
       <Image source={{ uri: step.drawing_url }} style={styles.drawing} />
       <View style={styles.caption}>
         <Text style={styles.sentence}>{step.sentence}</Text>
-        <Text style={styles.author}>by {step.player.name}</Text>
+        <Text style={styles.author}>par {step.player.name}</Text>
       </View>
     </View>
   );

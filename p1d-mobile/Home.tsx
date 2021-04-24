@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Link } from 'react-router-native';
+import PrimaryButton from './atoms/PrimaryButton';
 import FeaturedDrawings from './components/FeaturedDrawings';
 import { NoProps } from './utils/types';
 
@@ -18,9 +18,7 @@ const Home: React.FC<NoProps> = () => (
   <View style={styles.container}>
     <Text style={styles.title}>Passe un Dessin</Text>
     <FeaturedDrawings />
-    <Link to="/leaderboard">
-      <Text>Go to Leaderboard</Text>
-    </Link>
+    <PrimaryButton>Lancer une partie</PrimaryButton>
   </View>
 );
 
