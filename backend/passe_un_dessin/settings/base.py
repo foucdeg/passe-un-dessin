@@ -146,6 +146,8 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, "djangostatic")
 STATIC_URL = "/djangostatic/"
 
+# Base primary key field type
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 # Emails
 

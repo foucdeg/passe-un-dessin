@@ -89,7 +89,7 @@ jobs:
 
   lint-back:
     docker:
-      - image: circleci/python:3.9.2
+      - image: circleci/python:3.9.4
     steps:
       - checkout
       - python/install-packages:
