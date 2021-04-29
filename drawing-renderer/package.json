@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "@sentry/node": "6.3.3",
+    "@sentry/node": "6.3.4",
     "express": "4.17.1",
     "express-async-handler": "1.1.4",
     "lz-string": "1.4.4",
