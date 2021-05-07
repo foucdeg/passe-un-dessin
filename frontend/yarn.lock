@@ -5703,6 +5703,13 @@ djv@^2.1.2:
   optionalDependencies:
     "@korzio/djv-draft-04" "^2.0.1"
 
+djv@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/djv/-/djv-2.1.4.tgz#a6bde1a87184be4f10640184de76079c1423023f"
+  integrity sha512-giDn+BVbtLlwtkvtcsZjbjzpALHB77skiv3FIu6Wp8b5j8BunDcVJYH0cGUaexp6s0Sb7IkquXXjsLBJhXwQpA==
+  optionalDependencies:
+    "@korzio/djv-draft-04" "^2.0.1"
+
 dns-equal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/dns-equal/-/dns-equal-1.0.0.tgz#b39e7f1da6eb0a75ba9c17324b34753c47e0654d"
@@ -10126,19 +10133,19 @@ normalize-url@^3.0.0:
   resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-3.3.0.tgz#b2e1c4dc4f7c6d57743df733a4f5978d18650559"
   integrity sha512-U+JJi7duF1o+u2pynbp2zXDW2/PADgC30f0GsHZtRh+HOcXHnw137TrNlyxxRvWW5fjKd3bcLHPxofWuCjaeZg==
 
-npm-audit-resolver@2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/npm-audit-resolver/-/npm-audit-resolver-2.2.1.tgz#e9a42c171d26b01d7aa75b38b404b9bcc8163f9b"
-  integrity sha512-9Jo5EdxREaXRrFm7eiuT1qu7fXKDfO+oiu+EgvJ/JCd2PIAgzVGF+xFoNK9AnyUsMFvSTdJM6+YlgUgF/N86GA==
+npm-audit-resolver@2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/npm-audit-resolver/-/npm-audit-resolver-2.3.0.tgz#49fcbe2cfbcd7629a28797ca9c42b52c3d6a3e9e"
+  integrity sha512-yG7Hnbo6GbmokmsVoQgrK7hVtn0SW6zhkDUldDTNaz+3/q7jWf127tBX2Sd73P/Qml1Wd7MfTuAbEXshyNZxjQ==
   dependencies:
     audit-resolve-core "^1.1.8"
     chalk "^2.4.2"
-    djv "^2.1.2"
+    djv "^2.1.4"
     jsonlines "^0.1.1"
     read "^1.0.7"
     spawn-shell "^2.1.0"
     yargs-parser "^18.1.3"
-    yargs-unparser "^1.6.3"
+    yargs-unparser "^1.6.4"
 
 npm-run-path@^2.0.0, npm-run-path@^2.0.2:
   version "2.0.2"
@@ -15155,7 +15162,7 @@ yargs-parser@^20.2.3:
   resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-20.2.4.tgz#b42890f14566796f85ae8e3a25290d205f154a54"
   integrity sha512-WOkpgNhPTlE73h4VFAFsOnomJVaovO8VqLDzy5saChRBFQFBoMYirowyW+Q9HB4HFF4Z7VZTiG3iSzJJA29yRA==
 
-yargs-unparser@^1.6.3:
+yargs-unparser@^1.6.4:
   version "1.6.4"
   resolved "https://registry.yarnpkg.com/yargs-unparser/-/yargs-unparser-1.6.4.tgz#38e62a38354bf8d24dc9c171cc4926526e71b7bf"
   integrity sha512-QxEx9+qEr7jwVM4ngnk95+sKZ5QXm5gx0cL97LDby0SiC8HHoUK0LPBg475JwQcRCqIVfMD8SubCWp1dEgKuwQ==
