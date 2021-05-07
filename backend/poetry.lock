@@ -195,7 +195,7 @@ sqlparse = ">=0.2.0"
 
 [[package]]
 name = "django-eventstream"
-version = "4.1.0"
+version = "4.2.0"
 description = "Server-Sent Events for Django"
 category = "main"
 optional = false
@@ -204,7 +204,7 @@ python-versions = "*"
 [package.dependencies]
 django_grip = ">=3.0,<4"
 gripcontrol = ">=4.0,<5"
-PyJWT = ">=1.5,<2"
+PyJWT = ">=1.5,<3"
 six = ">=1.10,<2"
 Werkzeug = ">=0.12,<1"
 
@@ -622,7 +622,7 @@ watchdog = ["watchdog"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.9.4"
-content-hash = "2be6c3434686299ae5eb6c93fee9f8021f1cffd8590ca799c7a6469fb31c7e45"
+content-hash = "499d41fc259c32bcfabe1209d3429921092715442f37fde47572db7d67b05d47"
 
 [metadata.files]
 appdirs = [
@@ -849,7 +849,7 @@ django-debug-toolbar = [
     {file = "django_debug_toolbar-3.2.1-py3-none-any.whl", hash = "sha256:e759e63e3fe2d3110e0e519639c166816368701eab4a47fed75d7de7018467b9"},
 ]
 django-eventstream = [
-    {file = "django-eventstream-4.1.0.tar.gz", hash = "sha256:9a7e445bb17469c99b95bb1bd7f44b1608560faf07c6700af9690f58783cf929"},
+    {file = "django-eventstream-4.2.0.tar.gz", hash = "sha256:27c2e1a799ef215ed3677c71da8b6bb28463426553b548b0745ebdc56df8c1aa"},
 ]
 django-extensions = [
     {file = "django-extensions-3.1.3.tar.gz", hash = "sha256:5f0fea7bf131ca303090352577a9e7f8bfbf5489bd9d9c8aea9401db28db34a0"},
