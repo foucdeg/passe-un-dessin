@@ -10,7 +10,8 @@ export async function wait(ms: number): Promise<void> {
 export type EmptyObject = Omit<Record<any, never>, keyof any>;
 export type NoProps = EmptyObject;
 
-const emailRegexp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+const emailRegexp =
+  /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
 
 export const isValidEmail = (input: string) => !!input.match(emailRegexp);
 
@@ -40,18 +41,17 @@ const isRedoKeyPadTouched = (event: KeyboardEvent) => {
   return isYPressed(event);
 };
 
-export const undoAndRedoHandlerBuilder = (undoAction: () => void, redoAction: () => void) => (
-  event: KeyboardEvent,
-) => {
-  if (isZPressed(event) && isCtrlOrCmdPressed(event) && !event.shiftKey) {
-    event.preventDefault();
-    undoAction();
-  }
-  if (isRedoKeyPadTouched(event) && isCtrlOrCmdPressed(event)) {
-    event.preventDefault();
-    redoAction();
-  }
-};
+export const undoAndRedoHandlerBuilder =
+  (undoAction: () => void, redoAction: () => void) => (event: KeyboardEvent) => {
+    if (isZPressed(event) && isCtrlOrCmdPressed(event) && !event.shiftKey) {
+      event.preventDefault();
+      undoAction();
+    }
+    if (isRedoKeyPadTouched(event) && isCtrlOrCmdPressed(event)) {
+      event.preventDefault();
+      redoAction();
+    }
+  };
 
 export const deleteHandlerBuilder = (deleteAction: () => void) => (event: KeyboardEvent) => {
   if (event.key === 'Backspace') {
@@ -67,27 +67,25 @@ export const enterHandlerBuilder = (enterAction: () => void) => (event: Keyboard
   }
 };
 
-export const upAndDownHandlerBuilder = (upAction: () => void, downAction: () => void) => (
-  event: KeyboardEvent,
-) => {
-  if (event.key === 'ArrowUp') {
-    event.preventDefault();
-    upAction();
-  }
-  if (event.key === 'ArrowDown') {
-    event.preventDefault();
-    downAction();
-  }
-};
+export const upAndDownHandlerBuilder =
+  (upAction: () => void, downAction: () => void) => (event: KeyboardEvent) => {
+    if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      upAction();
+    }
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      downAction();
+    }
+  };
 
-export const tabHandlerBuilder = (tabAction: () => void, unTabAction: () => void) => (
-  event: KeyboardEvent,
-) => {
-  if (event.key === 'Tab') {
-    event.preventDefault();
-    event.shiftKey ? unTabAction() : tabAction();
-  }
-};
+export const tabHandlerBuilder =
+  (tabAction: () => void, unTabAction: () => void) => (event: KeyboardEvent) => {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      event.shiftKey ? unTabAction() : tabAction();
+    }
+  };
 
 export const getUndoCommand = () => (isDeviceMacOs() ? '⌘ + Z' : 'Ctrl + Z');
 

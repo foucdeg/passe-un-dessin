@@ -66,9 +66,8 @@ const PlayerDetails: React.FC<NoProps> = () => {
     );
   }
 
-  const filteredParticipations: ValidParticipation[] = displayedPlayer.participations.filter(
-    isValidParticipation,
-  );
+  const filteredParticipations: ValidParticipation[] =
+    displayedPlayer.participations.filter(isValidParticipation);
 
   return (
     <GameContainer>
