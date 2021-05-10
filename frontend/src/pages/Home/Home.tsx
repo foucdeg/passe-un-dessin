@@ -40,12 +40,10 @@ const Home: React.FunctionComponent = () => {
     doFetchCurrentStreamsCount();
   }, [doFetchCurrentStreamsCount]);
 
-  const [
-    { loading, value: hightlightedPadSteps },
-    doFetchHighlightedSteps,
-  ] = useAsyncFn(async (): Promise<PadStep[]> => {
-    return (await client.get(`/featured-pad-steps`)) as PadStep[];
-  }, []);
+  const [{ loading, value: hightlightedPadSteps }, doFetchHighlightedSteps] =
+    useAsyncFn(async (): Promise<PadStep[]> => {
+      return (await client.get(`/featured-pad-steps`)) as PadStep[];
+    }, []);
 
   useEffect(() => {
     doFetchHighlightedSteps();

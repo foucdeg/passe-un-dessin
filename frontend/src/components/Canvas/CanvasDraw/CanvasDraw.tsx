@@ -72,12 +72,8 @@ const CanvasDraw: React.FC<Props> = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imageRef = useRef<ImageData | null>(null);
 
-  const [
-    selectedBrushColor,
-    selectedBrushRadius,
-    isFillDrawSelected,
-    pointCursor,
-  ] = getBrushAttributes(color, brushType);
+  const [selectedBrushColor, selectedBrushRadius, isFillDrawSelected, pointCursor] =
+    getBrushAttributes(color, brushType);
   const currentColorIndex = DRAWING_COLOR_VALUES.indexOf(selectedBrushColor);
   const cursorPosition =
     brushType === BrushType.FILL ? 17 : Math.round(selectedBrushRadius * Math.sqrt(2));
