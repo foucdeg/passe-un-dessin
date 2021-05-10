@@ -9,7 +9,7 @@ ENV PYTHONPATH /code
 ENV PYTHONUNBUFFERED 1
 
 RUN apk add --no-cache gcc==10.2.1_pre1-r3 musl-dev==1.2.2-r0 postgresql-dev==13.2-r0 postgresql-client==13.2-r0 libressl-dev==3.1.5-r0 libffi-dev==3.3-r2 gettext==0.20.2-r2 cargo==1.47.0-r2
-RUN python -m pip install --no-cache-dir --upgrade pip
+RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir poetry==1.1.4 pywatchman==1.4.1
 
 # Install Watchman
