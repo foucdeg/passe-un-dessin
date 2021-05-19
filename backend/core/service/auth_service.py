@@ -126,8 +126,8 @@ def merge_players(from_player: Player, into_player: Player):
     PadStep.objects.filter(player=from_player).update(player=into_player)
     Vote.objects.filter(player=from_player).update(player=into_player)
 
-    from_avatar = from_player.avatar
-    into_avatar = into_player.avatar
+    from_avatar = from_player.avatar_url
+    into_avatar = into_player.avatar_url
 
     if from_player.room is not None:
         into_player.room = from_player.room
@@ -149,8 +149,7 @@ def merge_players(from_player: Player, into_player: Player):
     if from_avatar and (
         not into_avatar or into_player.created_at <= from_player.created_at
     ):
-        into_player.avatar = from_avatar
-        into_player.avatar_url = from_player.avatar_url
+        into_player.avatar_url = from_avatar
 
     into_player.save()
 
