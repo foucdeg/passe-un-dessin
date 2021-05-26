@@ -10,7 +10,7 @@
     "awesome-debounce-promise": "2.1.0",
     "babel-polyfill": "6.26.0",
     "copy-to-clipboard": "3.3.1",
-    "core-js": "3.12.1",
+    "core-js": "3.13.0",
     "date-fns": "2.21.3",
     "env-cmd": "10.1.0",
     "formik": "2.2.8",
