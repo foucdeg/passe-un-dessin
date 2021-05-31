@@ -10231,10 +10231,10 @@ normalize-url@^3.0.0:
   resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-3.3.0.tgz#b2e1c4dc4f7c6d57743df733a4f5978d18650559"
   integrity sha512-U+JJi7duF1o+u2pynbp2zXDW2/PADgC30f0GsHZtRh+HOcXHnw137TrNlyxxRvWW5fjKd3bcLHPxofWuCjaeZg==
 
-npm-audit-resolver@2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/npm-audit-resolver/-/npm-audit-resolver-2.3.0.tgz#49fcbe2cfbcd7629a28797ca9c42b52c3d6a3e9e"
-  integrity sha512-yG7Hnbo6GbmokmsVoQgrK7hVtn0SW6zhkDUldDTNaz+3/q7jWf127tBX2Sd73P/Qml1Wd7MfTuAbEXshyNZxjQ==
+npm-audit-resolver@2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/npm-audit-resolver/-/npm-audit-resolver-2.3.1.tgz#300156c5773a92dedac842e0732482ef8405a1c6"
+  integrity sha512-vJF4v4UxMKGFdbGRl2II6oJ8dCpBFfhD1oONZMAfept4RM0AyHVBEjZgDrpfEJ4EjNiO9NZLxon5Fl8bM2s6dQ==
   dependencies:
     audit-resolve-core "^1.1.8"
     chalk "^2.4.2"
