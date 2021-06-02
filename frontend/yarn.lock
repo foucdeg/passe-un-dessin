@@ -1925,10 +1925,10 @@
     "@formatjs/ecma402-abstract" "^1.2.5"
     tslib "^2.0.1"
 
-"@formatjs/intl-pluralrules@4.0.23":
-  version "4.0.23"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-pluralrules/-/intl-pluralrules-4.0.23.tgz#6139537214aa87776f2611df42acef67be6f9351"
-  integrity sha512-c/X9E7NPfXsbBlMp0SDYTY8V86CGczFtS5rIVfEAjRuTwFShHYmZ6oVituvDfl+5wdVwVmiOOeinISaDJJHBTA==
+"@formatjs/intl-pluralrules@4.0.24":
+  version "4.0.24"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-pluralrules/-/intl-pluralrules-4.0.24.tgz#c79ec3869b70d281f8f9d13b0bad580ce5d97a8f"
+  integrity sha512-IcCzjuKMBCd3fCcvoQJBsVrfFFcyNgyihS0wdZip9Cv8r41eOGS6oT0haQvbWoAI9ANRh/q3MtqG3Qh9QT1RGw==
   dependencies:
     "@formatjs/ecma402-abstract" "1.9.2"
     tslib "^2.1.0"
@@ -12073,10 +12073,10 @@ react-intl@*:
     shallow-equal "^1.2.1"
     tslib "^2.0.1"
 
-react-intl@5.18.2:
-  version "5.18.2"
-  resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-5.18.2.tgz#3a35eeb936e975450b843f66420ed3f9d197d8d2"
-  integrity sha512-IhJbnqa2baKAgicpusukBqVK7MZpb8Z82AG3CwDxH0jTvNjOc+EXCehWjp9+TsjprIdTpFZdf/b8A2BaLX9icg==
+react-intl@5.18.3:
+  version "5.18.3"
+  resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-5.18.3.tgz#1ab9baa5e03fb7345e6c902cd7b4f6eee605e7aa"
+  integrity sha512-B6XaDMS6gW3cEDqzFkh4ETYsSM5XPEvlo+guNi9beS0tPa9iUC2waCZ/1atAwJ1kGbNfRoK5B7d32DZ5V1XqiA==
   dependencies:
     "@formatjs/ecma402-abstract" "1.9.2"
     "@formatjs/icu-messageformat-parser" "2.0.5"
