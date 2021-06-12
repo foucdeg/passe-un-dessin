@@ -249,7 +249,7 @@ django = "*"
 
 [[package]]
 name = "django-rest-passwordreset"
-version = "1.1.0"
+version = "1.2.0"
 description = "An extension of django rest framework, providing a configurable password reset strategy"
 category = "main"
 optional = false
@@ -624,7 +624,7 @@ watchdog = ["watchdog"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.9.4"
-content-hash = "42c180a99bc7c2b0b8c26009b666245dbd0fb04b08e1d3c51f5c0e7a5bae7bfd"
+content-hash = "ae29a615facd36f6116eaef6af8c0ebec368ab3dcccfb1a42c056901b9e03638"
 
 [metadata.files]
 appdirs = [
@@ -880,8 +880,8 @@ django-memoize = [
     {file = "django-memoize-2.3.1.tar.gz", hash = "sha256:62ac4807710ecf22a7397d008d64d0f798e7230482d4b6072d916cac852a47cd"},
 ]
 django-rest-passwordreset = [
-    {file = "django-rest-passwordreset-1.1.0.tar.gz", hash = "sha256:3c97b25d35fb1f05d5b87596eb0c0f7cfce39e1803c9f4045ec42d567b03c85f"},
-    {file = "django_rest_passwordreset-1.1.0-py2.py3-none-any.whl", hash = "sha256:d1c8a97d5b4d35320bf2c6109f464500809705c5a4a4b182bbeeb3e57adf6e72"},
+    {file = "django-rest-passwordreset-1.2.0.tar.gz", hash = "sha256:4dc915d7afe417b18a7ae15380a794f2be7a3a3f32907d023b17d51895fd9121"},
+    {file = "django_rest_passwordreset-1.2.0-py3-none-any.whl", hash = "sha256:0fb2c86f5edcfa8c16564744b0782a73221bee7ceb934cd7c7934b0f0e549c0d"},
 ]
 djangorestframework = [
     {file = "djangorestframework-3.12.4-py3-none-any.whl", hash = "sha256:6d1d59f623a5ad0509fe0d6bfe93cbdfe17b8116ebc8eda86d45f6e16e819aaf"},
