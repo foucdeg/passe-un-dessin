@@ -11,7 +11,7 @@ ENV PYTHONUNBUFFERED 1
 RUN apt-get update && apt-get -y --no-install-recommends install lsb-release && apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
 RUN sh -c 'wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -'
-RUN apt-get update && apt-get -y --no-install-recommends install postgresql-client-13=13.3-1.pgdg100+1 gettext=0.19.8.1-9 && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get -y --no-install-recommends install postgresql-client-13 gettext && apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN pip install --no-cache-dir poetry==1.1.4 pywatchman==1.4.1
 
 # Install Watchman
