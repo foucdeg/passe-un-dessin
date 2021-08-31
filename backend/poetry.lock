@@ -331,7 +331,7 @@ pyflakes = ">=2.3.0,<2.4.0"
 
 [[package]]
 name = "google-auth"
-version = "2.0.1"
+version = "2.0.2"
 description = "Google Authentication Library"
 category = "main"
 optional = false
@@ -628,7 +628,7 @@ watchdog = ["watchdog"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.9.4"
-content-hash = "f38e3be55c993fcef2c515ebc432ff8cfc5e646546e45b6571a0d55fdfdd448b"
+content-hash = "4d4fd2b8b2be6067d94deb3ae6cf69dd7c5e43dd5719f6a27e62547fbde5a0d9"
 
 [metadata.files]
 appdirs = [
@@ -908,8 +908,8 @@ flake8 = [
     {file = "flake8-3.9.2.tar.gz", hash = "sha256:07528381786f2a6237b061f6e96610a4167b226cb926e2aa2b6b1d78057c576b"},
 ]
 google-auth = [
-    {file = "google-auth-2.0.1.tar.gz", hash = "sha256:ea1af050b3e06eb73e4470f704d23007307bc0e87c13e015f6b90460f1407bd3"},
-    {file = "google_auth-2.0.1-py2.py3-none-any.whl", hash = "sha256:c012c8be7c442c8309ca8fa0876fef33f5fd977c467be1e1c1c2f721e8ebd73c"},
+    {file = "google-auth-2.0.2.tar.gz", hash = "sha256:104475dc4d57bbae49017aea16fffbb763204fa2d6a70f1f3cc79962c1a383a4"},
+    {file = "google_auth-2.0.2-py2.py3-none-any.whl", hash = "sha256:cde472372e030e1e0bc64dac00fb53e6c095d7ab641f4281e2c995e85e205d8b"},
 ]
 gripcontrol = [
     {file = "gripcontrol-4.1.0.tar.gz", hash = "sha256:7df509d456f2230420352e88f3c699a9806ceaaaca99f9f2886921c3e58c0ced"},
