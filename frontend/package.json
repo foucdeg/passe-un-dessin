@@ -90,7 +90,7 @@
     "@types/react-intl": "3.0.0",
     "@types/react-redux": "7.1.18",
     "@types/react-router": "5.1.16",
-    "@types/react-router-dom": "5.1.8",
+    "@types/react-router-dom": "5.1.9",
     "@types/styled-components": "5.1.14",
     "@types/superagent": "4.1.12",
     "@types/webpack-env": "1.16.2",
