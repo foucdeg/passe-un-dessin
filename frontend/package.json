@@ -92,7 +92,7 @@
     "@types/react-router": "5.1.16",
     "@types/react-router-dom": "5.1.9",
     "@types/styled-components": "5.1.14",
-    "@types/superagent": "4.1.12",
+    "@types/superagent": "4.1.13",
     "@types/webpack-env": "1.16.2",
     "@typescript-eslint/eslint-plugin": "4.31.1",
     "@typescript-eslint/parser": "4.31.1",
