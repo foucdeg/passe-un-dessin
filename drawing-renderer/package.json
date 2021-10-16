@@ -10,7 +10,7 @@
   "dependencies": {
     "@sentry/node": "6.13.3",
     "express": "4.17.1",
-    "express-async-handler": "1.1.4",
+    "express-async-handler": "1.2.0",
     "lz-string": "1.4.4",
     "morgan": "1.10.0",
     "pg": "8.7.1",
