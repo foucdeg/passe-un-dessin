@@ -97,7 +97,7 @@
     "@typescript-eslint/eslint-plugin": "4.33.0",
     "@typescript-eslint/parser": "4.33.0",
     "@welldone-software/why-did-you-render": "6.2.1",
-    "babel-plugin-styled-components": "1.13.2",
+    "babel-plugin-styled-components": "1.13.3",
     "bundlesize": "0.18.1",
     "customize-cra": "1.0.0",
     "cypress": "8.6.0",
