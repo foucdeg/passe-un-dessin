@@ -100,7 +100,7 @@
     "babel-plugin-styled-components": "1.13.3",
     "bundlesize": "0.18.1",
     "customize-cra": "1.0.0",
-    "cypress": "8.6.0",
+    "cypress": "8.7.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-config-react-app": "6.0.0",
     "eslint-plugin-chai-friendly": "0.7.2",
