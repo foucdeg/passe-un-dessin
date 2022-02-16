@@ -13,7 +13,7 @@ export const ModalContainer = styled.div<ModalContainerProps>`
   width: 100vw;
   height: 100vh;
   overflow: auto;
-  background: rgba(155, 81, 224, 0.6);
+  background: rgba(155 81 224 60%);
   display: ${(props) => (props.isOpen ? 'block' : 'none')};
 `;
 

@@ -10,7 +10,7 @@ const commonStyles = css`
   letter-spacing: 0.05em;
   background: linear-gradient(90deg, #ff9314 0%, #ff0080 100%);
   font-size: ${fontSize.medium};
-  box-shadow: 4px 2px 10px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: 4px 2px 10px 2px rgba(0 0 0 15%);
   cursor: pointer;
   border: none;
   border-radius: 28px;
@@ -18,7 +18,7 @@ const commonStyles = css`
   outline: none;
 
   &:active {
-    box-shadow: inset -4px -2px 10px 2px rgba(0, 0, 0, 0.15);
+    box-shadow: inset -4px -2px 10px 2px rgba(0 0 0 15%);
   }
 `;
 

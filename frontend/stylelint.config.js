@@ -6,6 +6,7 @@ module.exports = {
     'stylelint-config-styled-components',
     'stylelint-config-prettier',
   ],
+  customSyntax: 'postcss-scss',
   rules: {
     /*
      * These rules are here to prevent CSS bad practices.

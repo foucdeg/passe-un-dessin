@@ -23,7 +23,7 @@ export const ReactionOverlayContainer = styled.div`
   bottom: 0;
   opacity: 0;
   z-index: 25;
-  background-color: rgb(155, 81, 224, 0.4);
+  background-color: rgb(155 81 224 40%);
   border-radius: 16px;
   display: flex;
 
@@ -48,9 +48,12 @@ export const LikeClickArea = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  ${ThumbDownButton}, ${ThumbUpButton} {
+
+  /* stylelint-disable rule-empty-line-before */
+  ${ThumbDownButton},${ThumbUpButton} {
     transition: transform 0.1s linear;
   }
+  /* stylelint-enable rule-empty-line-before */
 
   :hover ${/* sc-selector */ ThumbDownButton}, :hover ${ThumbUpButton} {
     transform: scale(1.2, 1.2);

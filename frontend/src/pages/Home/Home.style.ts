@@ -39,6 +39,7 @@ export const DonateTitle = styled(Header3)`
 export const LegalLinks = styled.p`
   text-align: center;
   font-size: ${fontSize.small};
+
   a {
     color: ${colorPalette.textGrey};
     text-decoration: none;

@@ -44,6 +44,7 @@ export const StyledHeader = styled(Header2)`
 
 export const StyledLaunchIcon = styled(LaunchIcon)`
   margin-left: 8px;
+
   .main {
     fill: ${(props) => props.color || colorPalette.orange};
   }
