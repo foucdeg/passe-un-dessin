@@ -32,7 +32,7 @@
     "sendLink": "Sende diesen Link an andere Spieler <info>({min} bis {max} Spieler)</info>",
     "copiedLink": "Link kopiert!",
     "inGame": "Ein Spiel ist im Gange. Wir lassen dich ein, sobald das Spiel beendet ist!",
-    "needMore": "Wir brauchen noch {count} {count, plural, one {Spieler} many {Spieler}}",
+    "needMore": "Wir brauchen noch {count} {count, plural, one {Spieler} other {Spieler}}",
     "isEveryoneThere": "Sind alle da?",
     "play": "Spielen",
     "adminWillStart": "{name} wird das Spiel starten!",

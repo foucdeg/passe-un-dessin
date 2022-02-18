@@ -59,5 +59,8 @@
     }
   ],
   "eslint.workingDirectories": ["./frontend"],
-  "typescript.tsdk": "frontend/node_modules/typescript/lib"
+  "typescript.tsdk": "frontend/node_modules/typescript/lib",
+  "python.analysis.extraPaths": [
+    "./backend"
+  ]
 }

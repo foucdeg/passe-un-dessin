@@ -32,7 +32,7 @@
     "sendLink": "Envoie ce lien aux autres participants <info>({min} à {max} joueurs)</info>",
     "copiedLink": "Lien copié !",
     "inGame": "Une partie est en cours. Dès qu'elle se termine, on te fait rentrer !",
-    "needMore": "Il manque encore {count} {count, plural, one {joueur} many {joueurs}}",
+    "needMore": "Il manque encore {count} {count, plural, one {joueur} other {joueurs}}",
     "isEveryoneThere": "Tout le monde est là ?",
     "play": "Jouer",
     "adminWillStart": "C'est à {name} de lancer la partie !",

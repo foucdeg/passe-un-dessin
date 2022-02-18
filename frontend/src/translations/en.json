@@ -32,7 +32,7 @@
     "sendLink": "Send this link to other players <info>({min} to {max} players)</info>",
     "copiedLink": "Copied link!",
     "inGame": "A game is underway. We'll let you in as soon as it finishes!",
-    "needMore": "We still need {count} {count, plural, one {player} many {players}}",
+    "needMore": "We still need {count} {count, plural, one {player} other {players}}",
     "isEveryoneThere": "Is everyone there?",
     "play": "Play",
     "adminWillStart": "{name} will start the game when ready!",

@@ -8,8 +8,13 @@
 - docker
 - docker-compose
 - [mkcert](https://github.com/FiloSottile/mkcert)
+- [poetry](https://python-poetry.org/)
 
 ## Installation
+
+**Setup variables**
+
+Copy `.env.example` into `.env` and fill in the real values.
 
 **Install the frontend:**
 
