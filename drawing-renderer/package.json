@@ -13,7 +13,7 @@
     "express-async-handler": "1.2.0",
     "lz-string": "1.4.4",
     "morgan": "1.10.0",
-    "pg": "8.7.1",
+    "pg": "8.7.3",
     "shorthash": "0.0.2"
   },
   "scripts": {
