@@ -2,3 +2,4 @@ __pycache__
 *.pyc
 passe_un_dessin.egg-info
 *.mo
+djangostatic
