@@ -7,12 +7,10 @@
   ],
   "plugins": [
     "import",
-    "jest",
     "jsx-a11y",
     "mysticatea",
     "prefer-object-spread",
     "prettier",
-    "react",
     "@typescript-eslint",
     "risxss"
   ],
@@ -20,7 +18,6 @@
     "browser": true,
     "es6": true,
     "jest": true,
-    "jest/globals": true,
     "mocha": true,
     "node": true
   },
