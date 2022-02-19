@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { useAsyncFn } from 'react-use';
 import client from 'services/networking/client';
 
@@ -9,11 +9,11 @@ export const useCheckToken = () => {
 };
 
 export const useSubmitNewPassword = () => {
-  const { push } = useHistory();
+  const navigate = useNavigate();
   return useAsyncFn(async ({ token, password }: { token: string; password: string }) => {
     const data = await client.post(`/auth/password-reset/confirm/`, { token, password });
 
-    setTimeout(() => push('/'), 3000);
+    setTimeout(() => navigate('/'), 3000);
     return data;
   }, []);
 };

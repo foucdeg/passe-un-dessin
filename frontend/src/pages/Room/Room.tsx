@@ -1,5 +1,5 @@
 import React, { useEffect, lazy, useState } from 'react';
-import { useParams, Switch, Route, useRouteMatch } from 'react-router';
+import { useParams, Routes, Route } from 'react-router';
 
 import { useSelector } from 'redux/useSelector';
 import { selectRoom } from 'redux/Room/selectors';
@@ -13,14 +13,13 @@ import LostPlayerModal from 'modals/LostPlayerModal';
 import { useRoomEvents } from './events';
 
 const Game = lazy(() => import('pages/Game'));
-const RoomLobby = lazy(() => import('pages/RoomLobby'));
 
 interface RouteParams {
   roomId: string;
 }
 
 const Room: React.FunctionComponent = () => {
-  const { roomId } = useParams<RouteParams>();
+  const { roomId } = useParams<keyof RouteParams>() as RouteParams;
   const doFetchRoom = useFetchRoom();
   const [playerWhoLeft, setPlayerWhoLeft] = useState<Player | null>(null);
   const [adminChanged, setAdminChanged] = useState<boolean>(false);
@@ -28,8 +27,6 @@ const Room: React.FunctionComponent = () => {
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
   const doGetRanking = useGetRanking();
-
-  const { path } = useRouteMatch();
 
   useEffect(() => {
     if (roomId) {
@@ -58,12 +55,15 @@ const Room: React.FunctionComponent = () => {
     ![GamePhase.REVEAL, GamePhase.DEBRIEF, GamePhase.VOTE_RESULTS].includes(game.phase) &&
     game.players.map((gamePlayer) => gamePlayer.uuid).includes(playerWhoLeft.uuid);
 
+  if (!room) {
+    return null;
+  }
+
   return (
     <>
-      <Switch>
-        <Route path={`${path}/game/:gameId`} component={Game} />
-        <Route path={`${path}`} exact component={RoomLobby} />
-      </Switch>
+      <Routes>
+        <Route path="game/:gameId/*" element={<Game room={room} />} />
+      </Routes>
       {shouldShowPlayerLeftModal && playerWhoLeft && (
         <LostPlayerModal adminChanged={adminChanged} playerWhoLeft={playerWhoLeft} />
       )}

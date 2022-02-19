@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import { addPlayerToRoom, removePlayerFromRoom, nameNewAdmin } from 'redux/Room';
 import { resetGameMetadata } from 'redux/Game/slice';
@@ -82,7 +82,7 @@ export const useRoomEvents = (
   setAdminChanged: (adminChanged: boolean) => void,
 ) => {
   const dispatch = useDispatch();
-  const { push } = useHistory();
+  const navigate = useNavigate();
   const playerId = useSelector(selectPlayerId);
 
   const onRoomEvent = useCallback(
@@ -93,7 +93,7 @@ export const useRoomEvents = (
       }
       if (isPlayerLeftEvent(event)) {
         if (playerId && event.player.uuid === playerId) {
-          push('/');
+          navigate('/');
           return;
         }
         setPlayerWhoLeft(event.player);
@@ -113,15 +113,15 @@ export const useRoomEvents = (
       if (isGameStartsEvent(event)) {
         dispatch(resetStep());
         dispatch(resetGameMetadata());
-        push(`/room/${roomId}/game/${event.game.uuid}`);
+        navigate(`/room/${roomId}/game/${event.game.uuid}`);
         return;
       }
       if (isGameRecapStartsEvent(event) || isRevealStartsEvent(event)) {
-        push(`/room/${roomId}/game/${event.game.uuid}/recap`);
+        navigate(`/room/${roomId}/game/${event.game.uuid}/recap`);
         return;
       }
     },
-    [dispatch, push, playerId, roomId, setPlayerWhoLeft, setAdminChanged],
+    [dispatch, navigate, playerId, roomId, setPlayerWhoLeft, setAdminChanged],
   );
 
   useServerSentEvent<RoomEvent>(`room-${roomId}`, onRoomEvent);

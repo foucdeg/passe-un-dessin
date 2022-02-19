@@ -1,26 +1,28 @@
 import React, { useEffect, useCallback } from 'react';
 import { useSelector } from 'redux/useSelector';
 import { useParams } from 'react-router';
-import { StepType } from 'redux/Game/types';
+import { Game, StepType } from 'redux/Game/types';
 import { useFetchStep, useSaveStepDrawing, useSaveStepSentence } from 'redux/Step/hooks';
-import { selectGame } from 'redux/Game/selectors';
 import { selectStep } from 'redux/Step/selectors';
 import Loader from 'atoms/Loader';
 import WordToDrawingStep from './components/WordToDrawingStep';
 import DrawingToWordStep from './components/DrawingToWordStep';
 import InitStep from './components/InitStep/InitStep';
 
+interface Props {
+  game: Game;
+}
+
 interface RouteParams {
   stepId: string;
 }
 
-const PadStep: React.FunctionComponent = () => {
-  const game = useSelector(selectGame);
+const PadStep: React.FunctionComponent<Props> = ({ game }) => {
   const step = useSelector(selectStep);
   const doFetchStep = useFetchStep();
   const [{ loading: isSaveStepDrawingLoading }, doSaveStepDrawing] = useSaveStepDrawing();
   const [{ loading: isSaveStepSentenceLoading }, doSaveStepSentence] = useSaveStepSentence();
-  const { stepId } = useParams<RouteParams>();
+  const { stepId } = useParams<keyof RouteParams>() as RouteParams;
   console.log('in PAdStep', stepId);
 
   useEffect(() => {

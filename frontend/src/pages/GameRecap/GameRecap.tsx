@@ -3,8 +3,8 @@
 import React, { useEffect, useCallback } from 'react';
 import { useSelector } from 'redux/useSelector';
 import { Game, GamePhase, Pad } from 'redux/Game/types';
-import { selectPlayerIsAdmin, selectRoom } from 'redux/Room/selectors';
-import { selectGame, selectSelectedPadUuid } from 'redux/Game/selectors';
+import { selectPlayerIsAdmin } from 'redux/Room/selectors';
+import { selectSelectedPadUuid } from 'redux/Game/selectors';
 import { FormattedMessage } from 'react-intl';
 import { useForceState, useReviewPad } from 'redux/Game/hooks';
 import { selectAvailableVoteCount } from 'redux/Game/selectors';
@@ -14,6 +14,7 @@ import { selectPlayerId } from 'redux/Player/selectors';
 import Loader from 'atoms/Loader';
 import { useDispatch } from 'react-redux';
 import { setSelectedPadUuid } from 'redux/Game';
+import { Room } from 'redux/Room/types';
 import { ThumbUpButton } from './components/ReactionOverlay/ReactionOverlay.style';
 import PadTab from './components/PadTab';
 
@@ -30,16 +31,16 @@ import RecapTab from './components/RecapTab';
 import VoteResultsTab from './components/VoteResultsTab';
 
 interface Props {
+  room?: Room;
+  game: Game;
   publicMode?: boolean;
 }
 
 const getSelectedPadIndex = (game: Game, selectedPadUuid: string | null): number =>
   game.pads.findIndex(({ uuid }) => uuid === selectedPadUuid);
 
-const GameRecap: React.FunctionComponent<Props> = ({ publicMode = false }) => {
+const GameRecap: React.FunctionComponent<Props> = ({ room = null, game, publicMode = false }) => {
   const dispatch = useDispatch();
-  const room = useSelector(selectRoom);
-  const game = useSelector(selectGame);
   const [, doForceState] = useForceState();
   const playerId = useSelector(selectPlayerId);
   const availableVoteCount = useSelector(selectAvailableVoteCount);
