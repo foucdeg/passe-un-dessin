@@ -202,11 +202,11 @@ postal = ["cryptography"]
 
 [[package]]
 name = "django-cors-headers"
-version = "3.10.0"
+version = "3.11.0"
 description = "django-cors-headers is a Django application for handling the server headers required for Cross-Origin Resource Sharing (CORS)."
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 
 [package.dependencies]
 Django = ">=2.2"
@@ -652,7 +652,7 @@ watchdog = ["watchdog"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.10.1"
-content-hash = "10e2773a37f877b3ec30c711c29ad0d65979c1bc5afdf48f3250093c418e4961"
+content-hash = "d3ee42a0d18008af4f022ca999fa82aabbeb7995f79d7348ad9d99d961342035"
 
 [metadata.files]
 appdirs = [
@@ -849,8 +849,8 @@ django-anymail = [
     {file = "django_anymail-8.4-py3-none-any.whl", hash = "sha256:2e8307e84f0a12f9283469017094a8246db9a0fc608ac17dd1027ee011ece986"},
 ]
 django-cors-headers = [
-    {file = "django-cors-headers-3.10.0.tar.gz", hash = "sha256:cd6f4360f5246569c149dc1c40c907c191f1ec45551e10d2a2e2e68512652f78"},
-    {file = "django_cors_headers-3.10.0-py3-none-any.whl", hash = "sha256:cba6e99659abb0e47cc4aaabb8fcde03f193e6bb3b92ba47c5185ec4cedc5d9e"},
+    {file = "django-cors-headers-3.11.0.tar.gz", hash = "sha256:eb98389bf7a2afc5d374806af4a9149697e3a6955b5a2dc2bf049f7d33647456"},
+    {file = "django_cors_headers-3.11.0-py3-none-any.whl", hash = "sha256:a22be2befd4069c4fc174f11cf067351df5c061a3a5f94a01650b4e928b0372b"},
 ]
 django-debug-toolbar = [
     {file = "django-debug-toolbar-3.2.4.tar.gz", hash = "sha256:644bbd5c428d3283aa9115722471769cac1bec189edf3a0c855fd8ff870375a9"},
