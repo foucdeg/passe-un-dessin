@@ -109,7 +109,8 @@ export const useLogin = () => {
           });
         }
         await doFetchMe();
-      } catch (e) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
         if (e.status === 403) {
           throw new Error(AUTH_ERROR_INVALID_USERNAME_PASSWORD);
         }
@@ -159,7 +160,8 @@ export const useCreateAccount = () => {
           });
         }
         await doFetchMe();
-      } catch (e) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
         if (e.status === 400) {
           throw new Error(AUTH_ERROR_EMAIL_IN_USE);
         }
