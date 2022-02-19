@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react';
-import { Route } from 'react-router';
+import { Route, Routes } from 'react-router';
 import Loader from 'atoms/Loader';
 
 const Home = lazy(() => import('./pages/Home'));
@@ -14,7 +14,8 @@ const PlayerDetails = lazy(() => import('./pages/PlayerDetails'));
 const GameReview = lazy(() => import('./pages/GameReview'));
 
 export const PLAYER_PATHS = {
-  ROOM: '/room/:roomId',
+  ROOM_LOBBY: '/room/:roomId',
+  ROOM: '/room/:roomId/*',
 };
 
 export const PUBLIC_PATHS = {
@@ -30,15 +31,18 @@ export const PUBLIC_PATHS = {
 
 const routes = () => (
   <Suspense fallback={<Loader />}>
-    <Route path={[PUBLIC_PATHS.HOME, PLAYER_PATHS.ROOM]} exact component={Home} />
-    <Route path={PLAYER_PATHS.ROOM} component={Room} />
-    <Route path={PUBLIC_PATHS.TERMS_AND_CONDITIONS} component={TermsAndConditions} />
-    <Route path={PUBLIC_PATHS.PRIVACY_POLICY} component={PrivacyPolicy} />
-    <Route path={PUBLIC_PATHS.PASSWORD_RESET} exact component={PasswordReset} />
-    <Route path={PUBLIC_PATHS.PASSWORD_RESET_REQUEST} exact component={PasswordResetRequest} />
-    <Route path={PUBLIC_PATHS.LEADERBOARD} component={Leaderboard} />
-    <Route path={PUBLIC_PATHS.PLAYER_DETAILS} component={PlayerDetails} />
-    <Route path={PUBLIC_PATHS.GAME_REVIEW} component={GameReview} />
+    <Routes>
+      <Route path={PUBLIC_PATHS.HOME} element={<Home />} />
+      <Route path={PLAYER_PATHS.ROOM_LOBBY} element={<Home />} />
+      <Route path={PLAYER_PATHS.ROOM} element={<Room />} />
+      <Route path={PUBLIC_PATHS.TERMS_AND_CONDITIONS} element={<TermsAndConditions />} />
+      <Route path={PUBLIC_PATHS.PRIVACY_POLICY} element={<PrivacyPolicy />} />
+      <Route path={PUBLIC_PATHS.PASSWORD_RESET} element={<PasswordReset />} />
+      <Route path={PUBLIC_PATHS.PASSWORD_RESET_REQUEST} element={<PasswordResetRequest />} />
+      <Route path={PUBLIC_PATHS.LEADERBOARD} element={<Leaderboard />} />
+      <Route path={PUBLIC_PATHS.PLAYER_DETAILS} element={<PlayerDetails />} />
+      <Route path={PUBLIC_PATHS.GAME_REVIEW} element={<GameReview />} />
+    </Routes>
   </Suspense>
 );
 

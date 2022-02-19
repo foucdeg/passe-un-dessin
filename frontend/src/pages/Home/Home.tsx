@@ -11,8 +11,9 @@ import { useSelector } from 'redux/useSelector';
 import { PadStep } from 'redux/Game/types';
 import { useAsyncFn } from 'react-use';
 import Loader from 'atoms/Loader';
+import { useMatch } from 'react-router';
 import HomeLayout from 'layout/HomeLayout';
-import { PUBLIC_PATHS } from 'routes';
+import { PLAYER_PATHS, PUBLIC_PATHS } from 'routes';
 import {
   LeftSideTitle,
   Subtitle,
@@ -28,10 +29,12 @@ import RulesModal from './components/RulesModal';
 import FeaturedDrawing from './components/FeaturedDrawing';
 
 const TwitchModal = lazy(() => import('./components/TwitchModal'));
+const RoomLobby = lazy(() => import('pages/RoomLobby'));
 
 const Home: React.FunctionComponent = () => {
   const [isRulesModalOpen, openRulesModal, closeRulesModal] = useBoolean(false);
   const [isTwitchModalOpen, openTwitchModal, closeTwitchModal] = useBoolean(false);
+  const match = useMatch(PLAYER_PATHS.ROOM_LOBBY);
 
   const currentStreamsCount = useSelector(selectCurrentStreamsCount);
   const doFetchCurrentStreamsCount = useFetchCurrentStreamsCount();
@@ -107,6 +110,7 @@ const Home: React.FunctionComponent = () => {
       </HomeLayout>
       <RulesModal isOpen={isRulesModalOpen} onClose={closeRulesModal} />
       {isTwitchModalOpen && <TwitchModal isOpen={isTwitchModalOpen} onClose={closeTwitchModal} />}
+      {match && <RoomLobby />}
     </>
   );
 };

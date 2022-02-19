@@ -14,12 +14,14 @@ import {
   useStartGame,
 } from 'redux/Game/hooks';
 import { selectPlayerId } from 'redux/Player/selectors';
-import { useJoinRoom, useLeaveRoom } from 'redux/Room/hooks';
+import { useFetchRoom, useJoinRoom, useLeaveRoom } from 'redux/Room/hooks';
 import { selectRoom } from 'redux/Room/selectors';
 import { useSelector } from 'redux/useSelector';
 import { PUBLIC_PATHS } from 'routes';
 import BareLink from 'atoms/BareLink';
 import Loader from 'atoms/Loader';
+import { useParams } from 'react-router';
+import { useRoomEvents } from 'pages/Room/events';
 import RoundDurationPicker from './components/RoundDurationPicker';
 import DrawOwnWordSwitch from './components/DrawOwnWordSwitch';
 import {
@@ -37,7 +39,15 @@ import {
 } from './RoomLobby.style';
 import ControlledRevealSwitch from './components/ControlledRevealSwitch';
 
-const Room: React.FunctionComponent = () => {
+const noop = () => {
+  /* noop */
+};
+
+interface RouteParams {
+  roomId: string;
+}
+
+const RoomLobby: React.FunctionComponent = () => {
   const doJoinRoom = useJoinRoom();
   const doLeaveRoom = useLeaveRoom();
   const doStartGame = useStartGame();
@@ -48,8 +58,18 @@ const Room: React.FunctionComponent = () => {
   const [roundDuration, setRoundDuration] = useRoundDuration();
   const [drawOwnWord, setDrawOwnWord] = useDrawOwnWordSwitch();
   const [controlledReveal, setControlledReveal] = useControlledRevealSwitch();
+  const doFetchRoom = useFetchRoom();
+
+  const { roomId } = useParams<keyof RouteParams>() as RouteParams;
+  useRoomEvents(roomId, noop, noop);
 
   const intl = useIntl();
+
+  useEffect(() => {
+    if (roomId) {
+      doFetchRoom(roomId);
+    }
+  }, [doFetchRoom, roomId]);
 
   useEffect(() => {
     if (
@@ -188,4 +208,4 @@ const Room: React.FunctionComponent = () => {
   );
 };
 
-export default Room;
+export default RoomLobby;

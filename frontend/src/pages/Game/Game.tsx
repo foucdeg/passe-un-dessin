@@ -5,16 +5,16 @@ import HomeButton from 'atoms/HomeButton';
 
 import { useSelector } from 'redux/useSelector';
 
-import { useParams, useHistory, Switch, Route, useRouteMatch, useLocation } from 'react-router';
+import { useParams, useNavigate, Routes, Route, useLocation } from 'react-router';
 import { useFetchGame } from 'redux/Game/hooks';
 
 import { getRedirectPath } from 'services/game.service';
 import { GamePhase } from 'redux/Game/types';
-import { selectRoom } from 'redux/Room/selectors';
 import { selectGame } from 'redux/Game/selectors';
 import { selectPlayerId } from 'redux/Player/selectors';
 import { useLeaveRoom } from 'redux/Room/hooks';
 import Loader from 'atoms/Loader';
+import { Room } from 'redux/Room/types';
 import PlayerOrder from './components/PlayerOrder';
 import useGameEvents from './events';
 
@@ -22,19 +22,21 @@ const PadStep = React.lazy(() => import('../PadStep'));
 const GameRecap = React.lazy(() => import('../GameRecap'));
 const VoteResults = React.lazy(() => import('../VoteResults'));
 
+interface Props {
+  room: Room;
+}
+
 interface RouteParams {
   gameId: string;
 }
 
-const Game: React.FunctionComponent = () => {
-  const { gameId } = useParams<RouteParams>();
+const Game: React.FunctionComponent<Props> = ({ room }) => {
+  const { gameId } = useParams<keyof RouteParams>() as RouteParams;
   const [{ loading }, doFetchGame] = useFetchGame();
-  const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
   const playerId = useSelector(selectPlayerId);
-  const { push } = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
-  const { path } = useRouteMatch();
   const doLeaveRoom = useLeaveRoom();
 
   useGameEvents(gameId);
@@ -51,8 +53,8 @@ const Game: React.FunctionComponent = () => {
     if (location.pathname !== `/room/${room.uuid}/game/${game.uuid}`) {
       return;
     }
-    push(getRedirectPath(room, game, playerId));
-  }, [game, playerId, push, location.pathname, room]);
+    navigate(getRedirectPath(room, game, playerId));
+  }, [game, playerId, navigate, location.pathname, room]);
 
   useEffect(() => {
     if (!game) return;
@@ -89,11 +91,11 @@ const Game: React.FunctionComponent = () => {
       <HomeButton onClick={doLeaveRoom} />
       <InnerGameContainer hasTabs={!!window.location.pathname.match(/\/recap$/)}>
         {game.phase === GamePhase.ROUNDS && <PlayerOrder />}
-        <Switch>
-          <Route path={`${path}/step/:stepId`} component={PadStep} />
-          <Route path={`${path}/recap`} component={GameRecap} />
-          <Route path={`${path}/vote-results`} component={VoteResults} />
-        </Switch>
+        <Routes>
+          <Route path="step/:stepId" element={<PadStep game={game} />} />
+          <Route path="recap" element={<GameRecap room={room} game={game} />} />
+          <Route path="vote-results" element={<VoteResults room={room} game={game} />} />
+        </Routes>
       </InnerGameContainer>
     </GameContainer>
   );

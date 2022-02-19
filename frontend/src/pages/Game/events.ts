@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import {
   markPlayerFinished,
   markPlayerNotFinished,
@@ -82,7 +82,7 @@ const isVoteResultsStartsEvent = (event: GameEvent): event is VoteResultsStartsE
 const useGameEvents = (gameId: string) => {
   const [, doFetchGame] = useFetchGame();
   const dispatch = useDispatch();
-  const { push } = useHistory();
+  const navigate = useNavigate();
   const gameStructure = useSelector(selectGameStructure);
   const room = useSelector(selectRoom);
   const playerId = useSelector(selectPlayerId);
@@ -112,13 +112,13 @@ const useGameEvents = (gameId: string) => {
           return;
         }
 
-        push(`/room/${room.uuid}/game/${gameStructure.uuid}/step/${targetStep.uuid}`);
+        navigate(`/room/${room.uuid}/game/${gameStructure.uuid}/step/${targetStep.uuid}`);
         return;
       }
       if (isDebriefStartsEvent(event) || isRevealStartsEvent(event)) {
         dispatch(resetStep());
         doFetchGame(gameStructure.uuid, true);
-        push(`/room/${room.uuid}/game/${gameStructure.uuid}/recap`);
+        navigate(`/room/${room.uuid}/game/${gameStructure.uuid}/recap`);
         return;
       }
       if (isPlayerViewingPadEvent(event)) {
@@ -129,11 +129,11 @@ const useGameEvents = (gameId: string) => {
       if (isVoteResultsStartsEvent(event)) {
         dispatch(resetStep());
         doFetchGame(gameStructure.uuid, true);
-        push(`/room/${room.uuid}/game/${gameStructure.uuid}/vote-results`);
+        navigate(`/room/${room.uuid}/game/${gameStructure.uuid}/vote-results`);
         return;
       }
     },
-    [dispatch, doFetchGame, gameId, gameStructure, playerId, push, room],
+    [dispatch, doFetchGame, gameId, gameStructure, playerId, navigate, room],
   );
 
   useServerSentEvent(`game-${gameId}`, eventCallback);

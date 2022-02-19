@@ -1,7 +1,7 @@
 import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
 import { useCallback, useEffect } from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { useAsyncFn } from 'react-use';
 import { updateLeaderboard } from './slice';
 
@@ -18,7 +18,7 @@ export const useFetchLeaderboard = () => {
 };
 
 export const useUnauthenticatedGuard = () => {
-  const { push } = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function checkMe() {
@@ -27,11 +27,11 @@ export const useUnauthenticatedGuard = () => {
         console.warn(
           'Redirecting to homepage as this page should not be accessed by an authenticated user',
         );
-        push('/');
+        navigate('/');
       }
     }
     checkMe();
-  }, [push]);
+  }, [navigate]);
 };
 
 export const useSendDesktopEmail = () => {

@@ -45,7 +45,7 @@ const isValidParticipation = (participation: Participation): participation is Va
 
 const PlayerDetails: React.FC<NoProps> = () => {
   const displayedPlayer = useSelector(selectDisplayedPlayer);
-  const { playerId } = useParams<RouteParams>();
+  const { playerId } = useParams<keyof RouteParams>() as RouteParams;
   const [{ loading }, doFetchPlayer] = useFetchPlayer();
   const { locale } = useIntl();
   const dateLocale = locale === 'fr' ? fr : locale === 'en' ? enUS : de;

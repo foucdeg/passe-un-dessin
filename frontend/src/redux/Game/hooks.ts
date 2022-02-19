@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { selectPlayerId } from 'redux/Player/selectors';
 import { useGetRanking } from 'redux/Room/hooks';
 import { selectRoom } from 'redux/Room/selectors';
@@ -60,7 +60,7 @@ export const useRefreshGame = () => {
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
   const playerId = useSelector(selectPlayerId);
-  const { push } = useHistory();
+  const navigate = useNavigate();
 
   return useAsyncFn(async () => {
     if (!room || !game || !playerId) return;
@@ -72,17 +72,17 @@ export const useRefreshGame = () => {
 
       if (updatedRoom.current_game_id !== updatedGame.uuid) {
         const path = `/room/${updatedRoom.uuid}/game/${updatedRoom.current_game_id}`;
-        return push(path);
+        return navigate(path);
       }
     }
 
     const path = getRedirectPath(room, updatedGame, playerId);
-    push(path);
+    navigate(path);
   }, [room, game, playerId]);
 };
 
 export const useStartGame = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return useCallback(
     async (
@@ -107,13 +107,13 @@ export const useStartGame = () => {
         localStorage.setItem('preferredRoundDuration', roundDuration.toString());
         localStorage.setItem('prefferedDrawOwnWord', drawOwnWord.toString());
         localStorage.setItem('controlledReveal', controlledReveal.toString());
-        history.push(`/room/${roomId}/game/${gameId}`);
+        navigate(`/room/${roomId}/game/${gameId}`);
       } catch (e) {
         alert('Error - see console');
         console.error(e);
       }
     },
-    [history],
+    [navigate],
   );
 };
 
@@ -236,7 +236,7 @@ export const useDeleteVote = () => {
 };
 
 export const useCheckIfPlayerShouldJoin = () => {
-  const { push } = useHistory();
+  const navigate = useNavigate();
   const room = useSelector(selectRoom);
 
   return useCallback(
@@ -249,13 +249,13 @@ export const useCheckIfPlayerShouldJoin = () => {
           response.is_in_game ||
           [GamePhase.REVEAL, GamePhase.DEBRIEF, GamePhase.VOTE_RESULTS].includes(response.phase)
         ) {
-          push(`/room/${room.uuid}/game/${gameId}`);
+          navigate(`/room/${room.uuid}/game/${gameId}`);
         }
       } catch (e) {
         alert('Error - see console');
         console.error(e);
       }
     },
-    [push, room],
+    [navigate, room],
   );
 };

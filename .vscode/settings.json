@@ -11,6 +11,7 @@
   "python.formatting.blackArgs": ["-l", "86"],
   "python.linting.enabled": true,
   "python.linting.flake8Enabled": true,
+  "python.linting.flake8Args": ["--ignore=E203,E501,W503", "--exclude=**/migrations/*"],
   "python.linting.pylintEnabled": false,
   "python.autoComplete.extraPaths": ["./backend"],
 

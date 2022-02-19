@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { selectPlayer } from 'redux/Player/selectors';
 import { Player } from 'redux/Player/types';
 import { useSelector } from 'redux/useSelector';
@@ -39,7 +39,7 @@ export const useGetRanking = () => {
 };
 
 export const useCreateRoom = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return useCallback(async () => {
     const room = await client.post('/room', {});
@@ -48,8 +48,8 @@ export const useCreateRoom = () => {
         event_category: 'engagement',
       });
     }
-    history.push(`/room/${room.uuid}`);
-  }, [history]);
+    navigate(`/room/${room.uuid}`);
+  }, [navigate]);
 };
 
 export const useJoinRoom = () => {
@@ -72,7 +72,7 @@ export const useLeaveRoom = () => {
   const room = useSelector(selectRoom);
   const game = useSelector(selectGame);
   const intl = useIntl();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return useCallback(async () => {
     if (!room) return;
@@ -83,9 +83,9 @@ export const useLeaveRoom = () => {
       await client.put(`/room/${room.uuid}/leave`, {});
       dispatch(removeGame());
       dispatch(removeRoom());
-      history.push('/');
+      navigate('/');
     }
-  }, [dispatch, game, history, intl, room]);
+  }, [dispatch, game, navigate, intl, room]);
 };
 
 export const useRemovePlayer = () => {

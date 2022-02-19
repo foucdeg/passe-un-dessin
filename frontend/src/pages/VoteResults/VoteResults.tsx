@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'redux/useSelector';
 import { useGetVoteResults } from 'redux/Game/hooks';
-import { selectRoom, selectPlayerIsAdmin } from 'redux/Room/selectors';
-import { selectGame, selectWinners } from 'redux/Game/selectors';
+import { selectPlayerIsAdmin } from 'redux/Room/selectors';
+import { selectWinners } from 'redux/Game/selectors';
 import NewGameModal from 'modals/NewGameModal';
 import { FormattedMessage } from 'react-intl';
 import Spacer from 'atoms/Spacer';
 import BareLink from 'atoms/BareLink';
 import { useBoolean } from 'services/utils';
 import Loader from 'atoms/Loader';
+import { Room } from 'redux/Room/types';
+import { Game } from 'redux/Game/types';
 import Podium from './components/Podium';
 import {
   Container,
@@ -22,9 +24,12 @@ import {
 } from './VoteResults.style';
 import GameRoomScoreboard from './components/GameRoomScoreboard';
 
-const VoteResults: React.FunctionComponent = () => {
-  const room = useSelector(selectRoom);
-  const game = useSelector(selectGame);
+interface Props {
+  room: Room;
+  game: Game;
+}
+
+const VoteResults: React.FunctionComponent<Props> = ({ room, game }) => {
   const isPlayerAdmin = useSelector(selectPlayerIsAdmin);
   const winners = useSelector(selectWinners);
 
