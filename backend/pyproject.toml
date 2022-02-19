@@ -22,7 +22,7 @@ django-eventstream = "==4.3.1"
 google-auth = "==2.3.3"
 django-anymail = {extras = ["mailgun"], version = "==8.4"}
 django-rest-passwordreset = "==1.2.1"
-django-cors-headers = "==3.10.0"
+django-cors-headers = "==3.11.0"
 
 [tool.poetry.dev-dependencies]
 debugpy = "==1.5.1"
