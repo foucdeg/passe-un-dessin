@@ -13,7 +13,7 @@ export const colorPalette = {
   black: '#44374E',
   purple: '#9B37A9',
   lightPurple: '#cc99ff',
-  textGrey: 'rgba(68, 55, 78, 0.4)',
+  textGrey: 'rgba(68 55 78 / 40%)',
   backgroundGrey: '#f1f1f1',
   amberLight: '#FFD54F',
   amber: '#FFC107',
@@ -22,9 +22,9 @@ export const colorPalette = {
   blueLight: '#F4F9FB',
   white: '#FFFFFF',
   red: '#FF7373',
-  redTransparent: 'rgba(255, 115, 115, 0.6)',
-  blackTransparent: 'rgba(0, 0, 0, 0.24)',
-  whiteTransparent: 'rgba(255, 255, 255, 0.8)',
+  redTransparent: 'rgba(255 115 115 / 60%)',
+  blackTransparent: 'rgba(0 0 0 / 24%)',
+  whiteTransparent: 'rgba(255 255 255 / 80%)',
   discord: '#7289DA',
 };
 
