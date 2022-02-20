@@ -17,10 +17,10 @@ export const ChipButton = styled.button`
   display: flex;
   align-items: center;
   cursor: pointer;
-  box-shadow: 4px 2px 10px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: 4px 2px 10px 2px rgba(0 0 0 / 15%);
 
   &:active {
-    box-shadow: inset -4px -2px 10px 2px rgba(0, 0, 0, 0.15);
+    box-shadow: inset -4px -2px 10px 2px rgba(0 0 0 / 15%);
   }
 `;
 
