@@ -63,5 +63,6 @@
   "typescript.tsdk": "frontend/node_modules/typescript/lib",
   "python.analysis.extraPaths": [
     "./backend"
-  ]
+  ],
+  "stylelint.stylelintPath": "frontend/node_modules/stylelint"
 }

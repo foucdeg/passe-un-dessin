@@ -31,7 +31,7 @@ export const StyledPic = styled.div`
     right: 0;
     width: 100%;
     height: 100%;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.5) inset;
+    box-shadow: 0 0 20px 0 rgba(0 0 0 50%) inset;
   }
 `;
 
@@ -42,7 +42,7 @@ export const Caption = styled.div`
   font-size: ${fontSize.small};
   padding: 8px;
   border-radius: 4px;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255 255 255 90%);
   white-space: nowrap;
   line-height: 18px;
 `;

@@ -44,7 +44,7 @@ export const Canvas = styled.canvas<{
 export const StyledTimerIcon = styled.img.attrs({ src: timerIcon })`
   width: 80px;
   height: 80px;
-  margin: 180px 0 32px 0;
+  margin: 180px 0 32px;
 `;
 
 export const WhiteHeader = styled(Header2)`

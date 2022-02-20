@@ -17,7 +17,7 @@ export const StyledFacebookButton = styled.button`
   height: 48px;
   color: ${colorPalette.white};
   padding: 0;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 4px 0 rgba(0 0 0 25%);
   cursor: pointer;
   margin-bottom: 16px;
   display: flex;
