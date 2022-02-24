@@ -17,6 +17,12 @@ ALLOWED_HOSTS = [
 if "ALLOWED_HOST" in os.environ:
     ALLOWED_HOSTS.append(os.environ.get("ALLOWED_HOST"))
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://passe-un-dessin.fouc.net",
+    "https://passeundessin.com",
+    "https://passeundessin.fouc.net",
+]
+
 
 CORS_ALLOWED_ORIGINS = [
     "https://passe-un-dessin.fouc.net",

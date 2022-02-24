@@ -37,6 +37,8 @@ DEBUG_TOOLBAR_CONFIG = {
     != "testserver"
 }
 
+CSRF_TRUSTED_ORIGINS = ["https://localhost:3000"]
+
 CORS_ALLOWED_ORIGINS = [
     "https://localhost:3000",
 ]
