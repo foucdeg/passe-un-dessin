@@ -15,12 +15,12 @@ import { selectPlayerId } from 'redux/Player/selectors';
 import { useLeaveRoom } from 'redux/Room/hooks';
 import Loader from 'atoms/Loader';
 import { Room } from 'redux/Room/types';
-import PlayerOrder from './components/PlayerOrder';
-import useGameEvents from './events';
 
-const PadStep = React.lazy(() => import('../PadStep'));
-const GameRecap = React.lazy(() => import('../GameRecap'));
-const VoteResults = React.lazy(() => import('../VoteResults'));
+import PadStep from '../PadStep';
+import GameRecap from '../GameRecap';
+import VoteResults from '../VoteResults';
+import useGameEvents from './events';
+import PlayerOrder from './components/PlayerOrder';
 
 interface Props {
   room: Room;
