@@ -1,4 +1,4 @@
-import React, { useEffect, lazy } from 'react';
+import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import Spacer from 'atoms/Spacer';
@@ -14,6 +14,7 @@ import Loader from 'atoms/Loader';
 import { useMatch } from 'react-router';
 import HomeLayout from 'layout/HomeLayout';
 import { PLAYER_PATHS, PUBLIC_PATHS } from 'routes';
+import RoomLobby from 'pages/RoomLobby';
 import {
   LeftSideTitle,
   Subtitle,
@@ -28,8 +29,7 @@ import PlayerGameForm from './components/PlayerGameForm';
 import RulesModal from './components/RulesModal';
 import FeaturedDrawing from './components/FeaturedDrawing';
 
-const TwitchModal = lazy(() => import('./components/TwitchModal'));
-const RoomLobby = lazy(() => import('pages/RoomLobby'));
+import TwitchModal from './components/TwitchModal';
 
 const Home: React.FunctionComponent = () => {
   const [isRulesModalOpen, openRulesModal, closeRulesModal] = useBoolean(false);
