@@ -2,6 +2,8 @@ import json
 
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
+from django.core.validators import validate_email
+from django.forms import ValidationError
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_GET, require_POST
@@ -51,8 +53,11 @@ def send_email_for_desktop_access(request):
 
     try:
         email = json_body["email"]
+        validate_email(email)
     except KeyError:
         return HttpResponseBadRequest("Email not provided")
+    except ValidationError:
+        return HttpResponseBadRequest("Invalid email")
 
     context = {
         "url": settings.MAIN_FRONTEND,
