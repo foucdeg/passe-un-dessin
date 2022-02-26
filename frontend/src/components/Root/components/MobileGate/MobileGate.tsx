@@ -6,12 +6,18 @@ import TextInput from 'atoms/TextInput';
 import Spacer from 'atoms/Spacer';
 import InputArrow from 'atoms/InputArrow';
 import InputLoader from 'atoms/InputLoader';
+
 import { useSendDesktopEmail } from 'redux/General/hooks';
 import { MobileGateBackground, LaptopTablet, StyledForm, StyledHeader } from './MobileGate.style';
 
 interface Props {
   children: React.ReactNode;
 }
+
+const validateEmail = (input: string) => {
+  const emailRegexp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+  return !!emailRegexp.test(input);
+};
 
 const mobileCheck = () => {
   let check = false;
@@ -36,7 +42,16 @@ const MobileGate: React.FC<Props> = ({ children }) => {
   const [{ loading, value }, doSendEmail] = useSendDesktopEmail();
   const hasSent = !!value;
 
+  const emailError = !validateEmail(email);
+
   const isMobile = mobileCheck();
+
+  const submitForm = (e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLImageElement>) => {
+    e.preventDefault();
+    if (!emailError) {
+      doSendEmail(email);
+    }
+  };
 
   return (
     <>
@@ -51,13 +66,7 @@ const MobileGate: React.FC<Props> = ({ children }) => {
           <Spacer />
           <LaptopTablet />
           <Spacer />
-          <StyledForm
-            onSubmit={(e) => {
-              e.preventDefault();
-              doSendEmail(email);
-            }}
-            action="#"
-          >
+          <StyledForm onSubmit={submitForm}>
             <FieldLabel>
               <FormattedMessage id="mobileGate.sendEmail" />
             </FieldLabel>
@@ -66,12 +75,13 @@ const MobileGate: React.FC<Props> = ({ children }) => {
             ) : (
               <TextInput
                 type="email"
+                hasError={!!emailError}
                 placeholder={intl.formatMessage({ id: 'mobileGate.emailExample' })}
                 value={email}
                 maxLength={254}
                 onChange={(e) => setEmail(e.target.value)}
                 adornment={
-                  loading ? <InputLoader /> : <InputArrow onClick={() => doSendEmail(email)} />
+                  loading ? <InputLoader /> : !emailError && <InputArrow onClick={submitForm} />
                 }
               />
             )}
