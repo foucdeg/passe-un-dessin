@@ -24,6 +24,7 @@ const RoundDurationPicker: React.FC<Props> = ({ duration, onDurationChange }) =>
             {option}
           </DurationOption>
         )).reduce((prev: JSX.Element, current) => [prev, ' - ', current] as unknown as JSX.Element),
+        // @ts-expect-error https://github.com/formatjs/formatjs/issues/3550
         strong: (...chunks: string[]) => <strong>{chunks}</strong>,
       }}
     />
