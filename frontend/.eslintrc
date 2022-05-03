@@ -6,7 +6,6 @@
     "plugin:prettier/recommended"
   ],
   "plugins": [
-    "import",
     "jsx-a11y",
     "mysticatea",
     "prefer-object-spread",
