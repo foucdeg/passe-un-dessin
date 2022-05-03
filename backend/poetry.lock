@@ -221,7 +221,7 @@ python-versions = "*"
 
 [[package]]
 name = "django-debug-toolbar"
-version = "3.3.0"
+version = "3.4.0"
 description = "A configurable set of panels that display various debug information about the current request/response."
 category = "dev"
 optional = false
@@ -662,7 +662,7 @@ watchdog = ["watchdog"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.10.1"
-content-hash = "4f06809b835b3063754e2effb93837c89241e7adcd0c756d3b8d1507af51e46c"
+content-hash = "18d3eab16c9f390e97af5128af814529535d7320f2bd60a6303b238605ea6e0d"
 
 [metadata.files]
 appdirs = [
@@ -863,8 +863,8 @@ django-cprofile-middleware = [
     {file = "django-cprofile-middleware-1.0.5.tar.gz", hash = "sha256:b942185a38f3b582935a55c768f126ce9a6f0cefceee3b5d19e6b307ad129889"},
 ]
 django-debug-toolbar = [
-    {file = "django-debug-toolbar-3.3.0.tar.gz", hash = "sha256:74151c292db9455fa5127d64a4414faee8ee3b1cddfb17f0e93cf3f13cd84bc1"},
-    {file = "django_debug_toolbar-3.3.0-py3-none-any.whl", hash = "sha256:85015fedbf937a6f3526617546fefaf21859eb1f9bbbc82a2fcba313d7c15917"},
+    {file = "django-debug-toolbar-3.4.0.tar.gz", hash = "sha256:ae6bec2c1ce0e6900b0ab0443e1427eb233d8e6f57a84a0b2705eeecb8874e22"},
+    {file = "django_debug_toolbar-3.4.0-py3-none-any.whl", hash = "sha256:42c1c2e9dc05bb57b53d641e3a6d131fc031b92377b34ae32e604a1fe439bb83"},
 ]
 django-eventstream = [
     {file = "django-eventstream-4.4.1.tar.gz", hash = "sha256:332d6a4f378af28b4bda3de35c17e33d0eeb2cb7b4feab39b50eaa7a3a7119b6"},
