@@ -34,6 +34,7 @@ const RulesModal: React.FC<Props> = ({ isOpen, onClose }) => (
           <RuleParagraph>
             <FormattedMessage
               id={`home.rules.${index}`}
+              // @ts-expect-error https://github.com/formatjs/formatjs/issues/3550
               values={{ strong: (...chunks: string[]) => <strong>{chunks}</strong> }}
             />
           </RuleParagraph>
