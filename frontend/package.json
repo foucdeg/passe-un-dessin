@@ -52,30 +52,6 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.js",
-      "!src/**/*.test.js",
-      "!src/**/actions.js",
-      "!src/**/index.js",
-      "!src/**/serviceWorker.js",
-      "!src/**/*.wrap.js",
-      "!src/index.js",
-      "!src/tempPolyfills.js",
-      "!src/setupTests.js",
-      "!src/redux/reducers.js",
-      "!src/redux/sagas.js",
-      "!src/redux/store.js"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "statements": 0,
-        "branches": 0,
-        "functions": 0,
-        "lines": 0
-      }
-    }
-  },
   "bundlesize": [
     {
       "path": "./build/static/js/*.js",
@@ -83,7 +59,6 @@
     }
   ],
   "devDependencies": {
-    "@types/jest": "27.5.2",
     "@types/lz-string": "1.3.34",
     "@types/node": "16.11.41",
     "@types/react": "18.0.14",
