@@ -85,7 +85,6 @@
     "postcss-scss": "4.0.4",
     "postcss-syntax": "0.36.2",
     "prettier": "2.7.1",
-    "react-app-rewire-webpack-bundle-analyzer": "1.1.0",
     "react-app-rewired": "2.2.1",
     "sitemap-webpack-plugin": "1.1.1",
     "source-map-explorer": "2.5.2",
@@ -97,6 +96,7 @@
     "stylelint-declaration-strict-value": "1.8.0",
     "stylelint-processor-styled-components": "1.10.0",
     "typescript": "4.7.4",
-    "webpack-manifest-plugin": "5.0.0"
+    "webpack-manifest-plugin": "5.0.0",
+    "webpack-bundle-analyzer": "4.5.0"
   }
 }
