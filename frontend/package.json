@@ -35,7 +35,7 @@
     "start": "REACT_APP_ENV=local react-app-rewired start --host 0.0.0.0",
     "build": "env-cmd -f .env.${REACT_APP_ENV} react-app-rewired build",
     "test": "react-app-rewired test --maxWorkers=4",
-    "e2e:open": "cypress open",
+    "e2e:open": "cypress open --e2e --browser=chrome",
     "e2e": "cypress run",
     "eject": "react-app-rewired eject",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
