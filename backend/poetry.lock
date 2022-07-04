@@ -168,7 +168,7 @@ python-versions = "*"
 
 [[package]]
 name = "django"
-version = "4.0.5"
+version = "4.0.6"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
 category = "main"
 optional = false
@@ -663,7 +663,7 @@ watchdog = ["watchdog"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.10.1"
-content-hash = "2ea3eefac4c3d87c231ed028e1086580b6ceb49b4739d2a3e422d3ef441b7542"
+content-hash = "3fd5ecdecc6bfee6efd5869ab79c1ff8c0dbfaa6d1f398dc4a21b4301f3bffef"
 
 [metadata.files]
 appdirs = [
@@ -849,8 +849,8 @@ dj-database-url = [
     {file = "dj_database_url-0.5.0-py2.py3-none-any.whl", hash = "sha256:851785365761ebe4994a921b433062309eb882fedd318e1b0fcecc607ed02da9"},
 ]
 django = [
-    {file = "Django-4.0.5-py3-none-any.whl", hash = "sha256:502ae42b6ab1b612c933fb50d5ff850facf858a4c212f76946ecd8ea5b3bf2d9"},
-    {file = "Django-4.0.5.tar.gz", hash = "sha256:f7431a5de7277966f3785557c3928433347d998c1e6459324501378a291e5aab"},
+    {file = "Django-4.0.6-py3-none-any.whl", hash = "sha256:ca54ebedfcbc60d191391efbf02ba68fb52165b8bf6ccd6fe71f098cac1fe59e"},
+    {file = "Django-4.0.6.tar.gz", hash = "sha256:a67a793ff6827fd373555537dca0da293a63a316fe34cb7f367f898ccca3c3ae"},
 ]
 django-anymail = [
     {file = "django-anymail-8.6.tar.gz", hash = "sha256:783342d49dd07d68778b81dd12a94c86e1d217463a68a85450a0513fabe31345"},
