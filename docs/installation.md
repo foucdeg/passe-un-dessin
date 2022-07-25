@@ -6,7 +6,6 @@
 - python 3 (requires exact version in `backend/pyproject.toml`)
 - [yarn v1](https://classic.yarnpkg.com/en/docs/install/)
 - docker
-- docker-compose
 - [mkcert](https://github.com/FiloSottile/mkcert)
 - [poetry](https://python-poetry.org/)
 
@@ -45,16 +44,16 @@ Copy `.env.example` into `.env` and fill in the real values.
 
 **Run all backend services:**
 
-Start services using docker-compose:
+Start services using docker compose:
 
 ```
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
 Unless you start with a database dump, the first time, the database will need to be initialized:
 
 ```
-docker-compose exec backend python manage.py migrate
+docker compose exec backend python manage.py migrate
 ```
 
 **Run the frontend:**

@@ -1,5 +1,5 @@
 include .env
-DB_CONTAINER_ID := $(shell docker-compose ps -q db)
+DB_CONTAINER_ID := $(shell docker compose ps -q db)
 
 deploy-front:
 	cd frontend && REACT_APP_ENV=production yarn build
@@ -20,9 +20,9 @@ load_prod_dump:
 	# ssh vps "PGPASSWORD=$(DB_PASSWORD) pg_dump -U passe_un_dessin_user -d passe_un_dessin  -c -f /tmp/dump.pgbackup"
 	scp vps:/tmp/dump.pgbackup /tmp/dump.pgbackup
 	docker cp /tmp/dump.pgbackup $(DB_CONTAINER_ID):/tmp/dump.pgbackup
-	docker-compose exec db psql -U postgres -d postgres -f /tmp/dump.pgbackup
-	docker-compose exec backend ./manage.py migrate django_eventstream zero
-	docker-compose exec backend ./manage.py migrate django_eventstream
+	docker compose exec db psql -U postgres -d postgres -f /tmp/dump.pgbackup
+	docker compose exec backend ./manage.py migrate django_eventstream zero
+	docker compose exec backend ./manage.py migrate django_eventstream
 
 frontend/localhost-key.pem:
 	mkcert -cert-file frontend/localhost.pem -key-file frontend/localhost-key.pem localhost
