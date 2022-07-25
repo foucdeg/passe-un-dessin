@@ -74,7 +74,6 @@
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-chai-friendly": "0.7.2",
     "eslint-plugin-cypress": "2.12.1",
-    "eslint-plugin-jsx-a11y": "6.5.1",
     "eslint-plugin-mysticatea": "4.2.4",
     "eslint-plugin-prefer-object-spread": "1.2.1",
     "eslint-plugin-prettier": "4.2.1",
@@ -96,7 +95,7 @@
     "stylelint-declaration-strict-value": "1.9.0",
     "stylelint-processor-styled-components": "1.10.0",
     "typescript": "4.7.4",
-    "webpack-manifest-plugin": "5.0.0",
-    "webpack-bundle-analyzer": "4.5.0"
+    "webpack-bundle-analyzer": "4.5.0",
+    "webpack-manifest-plugin": "5.0.0"
   }
 }

@@ -1,18 +1,7 @@
 {
   "parser": "@typescript-eslint/parser",
-  "extends": [
-    "plugin:@typescript-eslint/recommended",
-    "react-app",
-    "plugin:prettier/recommended"
-  ],
-  "plugins": [
-    "jsx-a11y",
-    "mysticatea",
-    "prefer-object-spread",
-    "prettier",
-    "@typescript-eslint",
-    "risxss"
-  ],
+  "extends": ["plugin:@typescript-eslint/recommended", "react-app", "plugin:prettier/recommended"],
+  "plugins": ["mysticatea", "prefer-object-spread", "prettier", "@typescript-eslint", "risxss"],
   "env": {
     "browser": true,
     "es6": true,
