@@ -131,7 +131,6 @@ const RoomLobby: React.FunctionComponent = () => {
           values={{
             min: MIN_PLAYERS,
             max: MAX_PLAYERS,
-            // @ts-expect-error https://github.com/formatjs/formatjs/issues/3550
             info: (...chunks: string[]) => <Info>{chunks}</Info>,
           }}
         />

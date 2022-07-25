@@ -85,7 +85,6 @@ const InitStep: React.FC<Props> = ({ padStep, saveStep, loading, drawOwnWord }) 
         <p>
           <FormattedMessage
             id="padInit.youDraw"
-            // @ts-expect-error https://github.com/formatjs/formatjs/issues/3550
             values={{ strong: (...chunks: string[]) => <strong>{chunks}</strong> }}
           />
         </p>

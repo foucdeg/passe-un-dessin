@@ -66,7 +66,6 @@ const VoteResults: React.FunctionComponent<Props> = ({ room, game }) => {
           <FormattedMessage
             id="voteResults.donate"
             values={{
-              // @ts-expect-error https://github.com/formatjs/formatjs/issues/3550
               a: (...chunks: string[]) => (
                 <a href="https://utip.io/passeundessin" target="_blank" rel="noreferrer">
                   {chunks}
