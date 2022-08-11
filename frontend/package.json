@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@formatjs/intl-pluralrules": "5.0.3",
-    "@reduxjs/toolkit": "1.8.3",
+    "@reduxjs/toolkit": "1.8.4",
     "@sentry/react": "7.10.0",
     "@sentry/tracing": "7.10.0",
     "awesome-debounce-promise": "2.1.0",
