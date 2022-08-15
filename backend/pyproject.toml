@@ -23,7 +23,7 @@ django-rest-passwordreset = "==1.2.1"
 django-cors-headers = "==3.13.0"
 
 [tool.poetry.dev-dependencies]
-debugpy = "==1.6.2"
+debugpy = "==1.6.3"
 flake8 = "==5.0.4"
 factory-boy = "==3.2.1"
 coverage = "==6.4.3"
