@@ -9,7 +9,6 @@ import { reducer as room } from './Room';
 import { reducer as game } from './Game';
 import { reducer as player } from './Player';
 import { reducer as step } from './Step';
-import { reducer as twitch } from './Twitch';
 
 import { RootState } from './types';
 
@@ -18,7 +17,6 @@ const rootReducer = combineReducers<RootState>({
   game,
   player,
   step,
-  twitch,
 });
 
 export default rootReducer;

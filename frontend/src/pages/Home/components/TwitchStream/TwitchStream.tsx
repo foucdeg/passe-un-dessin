@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stream } from 'redux/Twitch/types';
+import { Stream } from '../TwitchModal/types';
 
 import {
   StreamImage,

@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { selectCurrentStreams } from 'redux/Twitch/selectors';
-import { useFetchCurrentStreams } from 'redux/Twitch/hooks';
-import { useSelector } from 'redux/useSelector';
 import Loader from 'atoms/Loader';
 
 import TwitchStream from '../TwitchStream';
+import { useCurrentStreams } from './hooks';
 
 import { Header, StyledModal, Content } from './TwitchModal.style';
 
@@ -16,8 +14,7 @@ interface Props {
 }
 
 const TwitchModal: React.FC<Props> = ({ isOpen, onClose }) => {
-  const currentStreams = useSelector(selectCurrentStreams);
-  const doFetchCurrentStreams = useFetchCurrentStreams();
+  const [{ value: currentStreams }, doFetchCurrentStreams] = useCurrentStreams();
 
   useEffect(() => {
     doFetchCurrentStreams();
@@ -29,7 +26,7 @@ const TwitchModal: React.FC<Props> = ({ isOpen, onClose }) => {
         <FormattedMessage id="home.twitchModal.title" />
       </Header>
       <Content>
-        {currentStreams === null ? (
+        {currentStreams === undefined ? (
           <Loader />
         ) : currentStreams.length === 0 ? (
           <FormattedMessage id="home.twitchModal.noStreams" />
