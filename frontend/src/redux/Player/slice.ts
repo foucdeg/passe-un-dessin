@@ -1,22 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Player, PlayerWithParticipations } from './types';
+import { Player } from './types';
 
 export type PlayerState = Readonly<{
-  current: {
-    player: Player | null | false;
-  };
-  displayed: {
-    player: null | PlayerWithParticipations;
-  };
+  player: Player | null | false;
 }>;
 
 const initialState: PlayerState = {
-  current: {
-    player: null,
-  },
-  displayed: {
-    player: null,
-  },
+  player: null,
 } as PlayerState;
 
 const playerSlice = createSlice({
@@ -24,13 +14,10 @@ const playerSlice = createSlice({
   initialState,
   reducers: {
     updatePlayer: (state, action: PayloadAction<Player | null | false>) => {
-      state.current.player = action.payload;
-    },
-    updateDisplayedPlayer: (state, action: PayloadAction<PlayerWithParticipations | null>) => {
-      state.displayed.player = action.payload;
+      state.player = action.payload;
     },
   },
 });
 
-export const { updatePlayer, updateDisplayedPlayer } = playerSlice.actions;
+export const { updatePlayer } = playerSlice.actions;
 export default playerSlice.reducer;

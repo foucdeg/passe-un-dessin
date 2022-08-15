@@ -1,27 +1,20 @@
 import React, { useEffect } from 'react';
 
 import Podium from 'pages/VoteResults/components/Podium';
-import { useGetVoteResults } from 'redux/Game/hooks';
-import { selectGame, selectWinners } from 'redux/Game/selectors';
-import { useSelector } from 'redux/useSelector';
-import { NoProps } from 'services/utils';
+import { usePublicVoteResults } from 'redux/Game/hooks';
 import Loader from 'atoms/Loader';
+import { Game } from 'redux/Game/types';
 import SingleGameScoreboard from '../SingleGameScoreboard';
 import { VoteResultsTabContainer } from './VoteResultsTab.style';
 
-const VoteResultsTab: React.FC<NoProps> = () => {
-  const game = useSelector(selectGame);
-  const winners = useSelector(selectWinners);
-
-  const doGetVoteResults = useGetVoteResults();
+const VoteResultsTab: React.FC<{ game: Game }> = ({ game }) => {
+  const [{ value: winners, loading }, doGetVoteResults] = usePublicVoteResults(game.uuid);
 
   useEffect(() => {
-    if (game) {
-      doGetVoteResults(game.uuid);
-    }
+    doGetVoteResults();
   }, [doGetVoteResults, game]);
 
-  if (!game || !winners) {
+  if (loading || !winners) {
     return <Loader />;
   }
 

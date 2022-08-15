@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 import { NoProps } from 'services/utils';
-import { useSelector } from 'redux/useSelector';
 import { useParams } from 'react-router';
 import { useFetchPlayer } from 'redux/Player/hooks';
-import { selectDisplayedPlayer } from 'redux/Player/selectors';
 
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
@@ -43,18 +41,14 @@ type ValidParticipation = Participation & {
 const isValidParticipation = (participation: Participation): participation is ValidParticipation =>
   !!participation.game;
 
-const PlayerDetails: React.FC<NoProps> = () => {
-  const displayedPlayer = useSelector(selectDisplayedPlayer);
-  const { playerId } = useParams<keyof RouteParams>() as RouteParams;
-  const [{ loading }, doFetchPlayer] = useFetchPlayer();
+const InnerPlayerDetails: React.FC<{ playerId: string }> = ({ playerId }) => {
+  const [{ loading, value: displayedPlayer }, doFetchPlayer] = useFetchPlayer();
   const { locale } = useIntl();
   const dateLocale = locale === 'fr' ? fr : locale === 'en' ? enUS : de;
 
   useEffect(() => {
-    if (!displayedPlayer || displayedPlayer.uuid !== playerId) {
-      doFetchPlayer(playerId, { withRank: true });
-    }
-  }, [displayedPlayer, doFetchPlayer, playerId]);
+    doFetchPlayer(playerId);
+  }, [doFetchPlayer, playerId]);
 
   if (loading || !displayedPlayer) {
     return (
@@ -146,6 +140,13 @@ const PlayerDetails: React.FC<NoProps> = () => {
       </StyledInnerContainer>
     </GameContainer>
   );
+};
+
+const PlayerDetails: React.FC<NoProps> = () => {
+  const { playerId } = useParams<keyof RouteParams>() as RouteParams;
+
+  // key={playerId} creates a new component if playerId changes
+  return <InnerPlayerDetails key={playerId} playerId={playerId} />;
 };
 
 export default PlayerDetails;

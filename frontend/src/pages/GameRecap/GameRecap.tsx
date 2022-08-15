@@ -163,7 +163,7 @@ const GameRecap: React.FunctionComponent<Props> = ({ room = null, game, publicMo
             isDebriefPhase={isDebriefPhase}
           />
         )}
-        {publicMode && isVoteResultsDisplayed && <VoteResultsTab />}
+        {publicMode && isVoteResultsDisplayed && <VoteResultsTab game={game} />}
       </OuterRecapContainer>
       {!publicMode && isPlayerInGame && isDebriefPhase && (
         <VoteReminder>
