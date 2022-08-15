@@ -1,12 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
-import { NoProps } from 'services/utils';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { NoProps, useDebouncedState } from 'services/utils';
 
-import { useFetchLeaderboard } from 'redux/General/hooks';
-import { useSelector } from 'redux/useSelector';
-import { useDebouncedSearch } from 'services/useDebouncedSearch';
-import { selectLeaderboard } from 'redux/General/selectors';
 import { FormattedMessage, useIntl } from 'react-intl';
 import HomeLayout from 'layout/HomeLayout';
+import { useFetchLeaderboard } from './hooks';
 import {
   StyledHeader,
   StyledScoreboard,
@@ -15,19 +12,20 @@ import {
 } from './Leaderboard.style';
 
 const Leaderboard: React.FC<NoProps> = () => {
-  const doFetchLeaderboard = useFetchLeaderboard();
-  const leaderboard = useSelector(selectLeaderboard);
+  const [liveFilter, debouncedFilter, setFilter] = useDebouncedState<string>('', 500);
+  const [{ value: leaderboard }, doFetchLeaderboard] = useFetchLeaderboard(debouncedFilter);
   const intl = useIntl();
-
-  const useFilterLeaderboard = () =>
-    useDebouncedSearch((filter: string) => {
-      doFetchLeaderboard(1, filter, true);
-    });
-  const { inputText, setInputText } = useFilterLeaderboard();
+  const [page, setPage] = useState<number>(1);
 
   useEffect(() => {
-    doFetchLeaderboard(1, '');
-  }, [doFetchLeaderboard]);
+    doFetchLeaderboard(page);
+  }, [doFetchLeaderboard, page]);
+
+  const fetchNextPage = useCallback(() => {
+    if (leaderboard && leaderboard.length === page * 10) {
+      setPage(page + 1);
+    }
+  }, [leaderboard, page]);
 
   const formattedLeaderboard = useMemo(
     () =>
@@ -47,16 +45,16 @@ const Leaderboard: React.FC<NoProps> = () => {
       </StyledHeader>
       <ScoreboardWithFilter>
         <StyledScoreboard
-          onScrollEnd={doFetchLeaderboard}
+          onScrollEnd={fetchNextPage}
           list={formattedLeaderboard}
           showRankings
-          filter={inputText}
+          filter={debouncedFilter}
         />
         <FilterInput
           type="text"
           placeholder={intl.formatMessage({ id: 'leaderboard.filterInput' })}
-          value={inputText}
-          onChange={(e) => setInputText(e.target.value)}
+          value={liveFilter}
+          onChange={(e) => setFilter(e.target.value)}
         />
       </ScoreboardWithFilter>
     </HomeLayout>

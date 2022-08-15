@@ -24,7 +24,7 @@ import {
   addVoteToPadStep,
   removeVoteFromPadStep,
 } from './slice';
-import { Pad, GamePhase, Game, RawGame } from './types';
+import { Pad, GamePhase, Game, RawGame, PadStep } from './types';
 
 export const useFetchGame = () => {
   const dispatch = useDispatch();
@@ -33,11 +33,14 @@ export const useFetchGame = () => {
     async (gameId: string, keepStructure = false, asPublic = false) => {
       const rawGame: RawGame = await client.get(`/game/${gameId}`);
 
-      const game = {
+      const game: Game = {
         ...rawGame,
         players: rawGame.participants.map((participant) => participant.player),
       };
-      dispatch(updateGame({ game, keepStructure, asPublic }));
+      if (!asPublic) {
+        dispatch(updateGame({ game, keepStructure }));
+      }
+      return game;
     },
     [dispatch],
   );
@@ -136,6 +139,13 @@ export const useGetVoteResults = () => {
     },
     [dispatch, doGetRanking],
   );
+};
+
+export const usePublicVoteResults = (gameId: string) => {
+  return useAsyncFn(async () => {
+    const response: { winners: PadStep[] } = await client.get(`/game/${gameId}/vote-results`);
+    return response.winners;
+  }, [gameId]);
 };
 
 export const useForceState = () => {

@@ -6,20 +6,16 @@ import GameRecap from 'pages/GameRecap';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { useFetchGame } from 'redux/Game/hooks';
-import { selectGame } from 'redux/Game/selectors';
-import { useSelector } from 'redux/useSelector';
+import { NoProps } from 'services/utils';
 
 interface RouteParams {
   gameId: string;
 }
 
-const GameReview: React.FunctionComponent = () => {
-  const { gameId } = useParams<keyof RouteParams>() as RouteParams;
-  const [{ loading }, doFetchGame] = useFetchGame();
-  const game = useSelector(selectGame);
+const InnerGameReview: React.FC<RouteParams> = ({ gameId }) => {
+  const [{ loading, value: game }, doFetchGame] = useFetchGame();
 
   useEffect(() => {
-    if (!gameId) return;
     doFetchGame(gameId, false, true);
   }, [doFetchGame, gameId]);
 
@@ -41,6 +37,12 @@ const GameReview: React.FunctionComponent = () => {
       </InnerGameContainer>
     </GameContainer>
   );
+};
+
+const GameReview: React.FC<NoProps> = () => {
+  const { gameId } = useParams<keyof RouteParams>() as RouteParams;
+
+  return <InnerGameReview key={gameId} gameId={gameId} />;
 };
 
 export default GameReview;

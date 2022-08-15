@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'redux/useSelector';
 import { selectPlayerId } from 'redux/Player/selectors';
 import { useSaveVote, useDeleteVote } from 'redux/Game/hooks';
-import { selectAvailableVoteCount, selectViewingAsPublic } from 'redux/Game/selectors';
+import { selectAvailableVoteCount } from 'redux/Game/selectors';
 import { PadStep } from 'redux/Game/types';
 import ReactionOverlay from 'pages/GameRecap/components/ReactionOverlay';
 import VotesOverlay from '../VotesOverlay';
@@ -16,15 +16,12 @@ interface Props {
 
 const SentenceRecap: React.FC<Props> = ({ step, publicMode, canVote }) => {
   const playerId = useSelector(selectPlayerId);
-  const viewingAsPublic = useSelector(selectViewingAsPublic);
   const availableVoteCount = useSelector(selectAvailableVoteCount);
 
   const doSaveVote = useSaveVote();
   const doDeleteVote = useDeleteVote();
 
   if (!publicMode && !playerId) return null;
-
-  if (publicMode !== viewingAsPublic) return null;
 
   const likeCount = step.votes.filter((vote) => playerId && vote.player_id === playerId).length;
 

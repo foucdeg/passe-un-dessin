@@ -4,7 +4,6 @@ import { findRemainingPlayers } from 'services/game.service';
 import { Game, Pad, GamePhase, PadStep } from './types';
 
 export type GameState = Readonly<{
-  viewingAsPublic: boolean;
   game: Game | null;
   gameStructure: Game | null;
   remainingPlayers: Player[];
@@ -15,7 +14,6 @@ export type GameState = Readonly<{
 }>;
 
 const initialState: GameState = {
-  viewingAsPublic: true,
   game: null,
   gameStructure: null,
   remainingPlayers: [],
@@ -29,10 +27,7 @@ const gameSlice = createSlice({
   name: 'Game',
   initialState,
   reducers: {
-    updateGame: (
-      state,
-      action: PayloadAction<{ game: Game; keepStructure: boolean; asPublic: boolean }>,
-    ) => {
+    updateGame: (state, action: PayloadAction<{ game: Game; keepStructure: boolean }>) => {
       state.game = action.payload.game;
       if (!action.payload.keepStructure) {
         state.gameStructure = action.payload.game;
@@ -50,7 +45,6 @@ const gameSlice = createSlice({
       state.recapViews[firstPadUUID] = [...state.game.players];
       state.selectedPadUuid = firstPadUUID;
       state.suggestions = [];
-      state.viewingAsPublic = action.payload.asPublic;
     },
     addVoteToPadStep: (state, action: PayloadAction<{ padStepId: string; playerId: string }>) => {
       if (!state.game) return;
@@ -123,7 +117,6 @@ const gameSlice = createSlice({
       state.winners = null;
     },
     removeGame: (state) => {
-      state.viewingAsPublic = true;
       state.game = null;
       state.gameStructure = null;
       state.remainingPlayers = [];

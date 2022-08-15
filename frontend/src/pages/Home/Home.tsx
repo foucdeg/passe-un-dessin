@@ -5,9 +5,6 @@ import Spacer from 'atoms/Spacer';
 import { Link } from 'react-router-dom';
 import { useBoolean } from 'services/utils';
 import client from 'services/networking/client';
-import { selectCurrentStreamsCount } from 'redux/Twitch/selectors';
-import { useFetchCurrentStreamsCount } from 'redux/Twitch/hooks';
-import { useSelector } from 'redux/useSelector';
 import { PadStep } from 'redux/Game/types';
 import { useAsyncFn } from 'react-use';
 import Loader from 'atoms/Loader';
@@ -15,6 +12,7 @@ import { useMatch } from 'react-router';
 import HomeLayout from 'layout/HomeLayout';
 import { PLAYER_PATHS, PUBLIC_PATHS } from 'routes';
 import RoomLobby from 'pages/RoomLobby';
+import { useCurrentStreamCount } from './components/TwitchModal/hooks';
 import {
   LeftSideTitle,
   Subtitle,
@@ -36,12 +34,11 @@ const Home: React.FunctionComponent = () => {
   const [isTwitchModalOpen, openTwitchModal, closeTwitchModal] = useBoolean(false);
   const match = useMatch(PLAYER_PATHS.ROOM_LOBBY);
 
-  const currentStreamsCount = useSelector(selectCurrentStreamsCount);
-  const doFetchCurrentStreamsCount = useFetchCurrentStreamsCount();
+  const [{ value: currentStreamsCount }, doFetchCurrentStreamCount] = useCurrentStreamCount();
 
   useEffect(() => {
-    doFetchCurrentStreamsCount();
-  }, [doFetchCurrentStreamsCount]);
+    doFetchCurrentStreamCount();
+  }, [doFetchCurrentStreamCount]);
 
   const [{ loading, value: hightlightedPadSteps }, doFetchHighlightedSteps] =
     useAsyncFn(async (): Promise<PadStep[]> => {

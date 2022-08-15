@@ -2,8 +2,8 @@ import client from 'services/networking/client';
 import { useDispatch } from 'react-redux';
 import { useCallback } from 'react';
 import { useAsyncFn } from 'react-use';
-import { updatePlayer, updateDisplayedPlayer } from './slice';
-import { Player } from './types';
+import { updatePlayer } from './slice';
+import { Player, PlayerWithParticipations } from './types';
 
 export const AUTH_ERROR_EMAIL_IN_USE = 'AUTH_ERROR_EMAIL_IN_USE';
 export const AUTH_ERROR_INVALID_USERNAME_PASSWORD = 'AUTH_ERROR_INVALID_USERNAME_PASSWORD';
@@ -32,16 +32,10 @@ export const useFetchMe = () => {
 };
 
 export const useFetchPlayer = () => {
-  const dispatch = useDispatch();
-
-  return useAsyncFn(
-    async (playerId: string, options?: Partial<FetchPlayerOptions>) => {
-      const url = options?.withRank ? `/player/${playerId}?withRank=true` : `/player/${playerId}`;
-      const player = await client.get(url);
-      dispatch(updateDisplayedPlayer(player));
-    },
-    [dispatch],
-  );
+  return useAsyncFn(async (playerId: string) => {
+    const player: PlayerWithParticipations = await client.get(`/player/${playerId}?withRank=true`);
+    return player;
+  }, []);
 };
 
 export const useCreatePlayer = () => {
