@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useState, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Spacer from 'atoms/Spacer';
 import { Player } from 'redux/Player/types';
 import { PUBLIC_PATHS } from 'routes';
@@ -23,7 +23,7 @@ interface Props {
   className?: string;
   showRankings?: boolean;
   filter?: string;
-  onScrollEnd?: (page: number, filter: string) => void;
+  onScrollEnd?: () => void;
 }
 const getRankDisplay = (ranking: number) => {
   switch (ranking) {
@@ -38,33 +38,35 @@ const getRankDisplay = (ranking: number) => {
   }
 };
 
-const Scoreboard: React.FC<Props> = ({ list, className, showRankings, onScrollEnd, filter }) => {
-  const [page, setPage] = useState(1);
-
-  useEffect(() => {
-    if (!scoreBoardRef || !scoreBoardRef.current) return;
-    scoreBoardRef.current.scrollTo(0, 0);
-    setPage(1);
-  }, [filter]);
-
-  const fetchNextPage = useCallback(() => {
-    if (!onScrollEnd) return;
-    if (Object.keys(list).length === page * 10) {
-      setPage(page + 1);
-      onScrollEnd(page + 1, filter || '');
-    }
-  }, [onScrollEnd, list, page, setPage, filter]);
-
+const Scoreboard: React.FC<Props> = ({ list, className, showRankings, onScrollEnd }) => {
   const scoreBoardRef = useRef<HTMLDivElement>(null);
   const onScroll = () => {
     if (!scoreBoardRef || !scoreBoardRef.current) return;
+    if (!onScrollEnd) return;
     if (
       scoreBoardRef.current.scrollTop + scoreBoardRef.current.offsetHeight >=
       scoreBoardRef.current.scrollHeight - 100
     ) {
-      fetchNextPage();
+      onScrollEnd();
     }
   };
+
+  // Fetch more pages until component is taller than avilable space
+  useEffect(() => {
+    if (!scoreBoardRef || !scoreBoardRef.current) return;
+    if (!onScrollEnd) return;
+
+    const childrenHeight = Array.from(scoreBoardRef.current.children).reduce(
+      (acc, child) => acc + child.clientHeight,
+      0,
+    );
+
+    if (childrenHeight <= scoreBoardRef.current.offsetHeight) {
+      console.log('would call onScrollEnd', childrenHeight, scoreBoardRef.current.offsetHeight);
+      onScrollEnd();
+    }
+  }, [onScrollEnd]);
+
   return (
     <InnerScoreboard
       ref={scoreBoardRef}

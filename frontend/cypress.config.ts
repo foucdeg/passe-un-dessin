@@ -5,7 +5,7 @@ export default defineConfig({
   viewportWidth: 1024,
   viewportHeight: 768,
   env: {
-    BACKEND_CONTAINER_NAME: 'passe-un-dessin_backend',
+    BACKEND_CONTAINER_NAME: 'passe-backend',
   },
   e2e: {
     baseUrl: 'https://localhost:3000',

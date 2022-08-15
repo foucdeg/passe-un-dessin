@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 import HomeLayout from 'layout/HomeLayout';
 import { NoProps } from 'services/utils';
-import { useUnauthenticatedGuard } from 'redux/General/hooks';
+import { useUnauthenticatedGuard } from './hooks';
 import { LeftSideTitle, StyledHeader } from './PasswordResetRequest.style';
 import PasswordResetRequestForm from './components/PasswordResetRequestForm';
 

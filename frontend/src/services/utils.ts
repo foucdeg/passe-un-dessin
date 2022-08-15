@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 export async function wait(ms: number): Promise<void> {
   return new Promise((resolve) => {
@@ -109,3 +109,38 @@ export const enumerate = (items: string[], conjunction: string): string => {
   const last = items.pop();
   return `${items.join(', ')} ${conjunction} ${last}`;
 };
+
+export function useDebouncedState<T>(
+  initialValue: T,
+  timeout = 200,
+): [T, T, React.Dispatch<React.SetStateAction<T>>] {
+  const [liveValue, setLiveValue] = useState<T>(initialValue);
+  const [debouncedValue, setDebouncedValue] = useState<T>(initialValue);
+
+  const timer = useRef<NodeJS.Timer>();
+
+  const debouncedSetValue = useCallback(
+    (val: T) => {
+      if (timer.current) {
+        clearTimeout(timer.current);
+      }
+      timer.current = setTimeout(() => setDebouncedValue(val), timeout);
+    },
+    [timeout, setDebouncedValue],
+  );
+
+  useEffect(() => {
+    debouncedSetValue(liveValue);
+  }, [liveValue, debouncedSetValue]);
+
+  return [liveValue, debouncedValue, setLiveValue];
+}
+
+export function useChangeNotifier<T>(varName: string, value: T) {
+  const ref = useRef<T>(value);
+
+  useEffect(() => {
+    console.log('%s changed: old = %O, new = %O', varName, ref.current, value);
+    ref.current = value;
+  }, [varName, value]);
+}

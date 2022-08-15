@@ -3,7 +3,7 @@ import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import App from './App';
 import configureStore from './redux/store';
@@ -37,16 +37,16 @@ const { store } = configureStore();
 const rootEl = document.getElementById('root');
 
 if (rootEl) {
-  ReactDOM.render(<App store={store} />, rootEl);
-}
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const root = createRoot(rootEl!);
+  root.render(<App store={store} />);
 
-if (module.hot) {
-  module.hot.accept('./App', () => {
-    const NextApp = require('./App').default;
-    if (rootEl) {
-      ReactDOM.render(<NextApp store={store} />, rootEl);
-    }
-  });
+  if (module.hot) {
+    module.hot.accept('./App', () => {
+      const NextApp = require('./App').default;
+      root.render(<NextApp store={store} />);
+    });
+  }
 }
 
 navigator.serviceWorker &&

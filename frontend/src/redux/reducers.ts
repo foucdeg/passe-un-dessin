@@ -5,7 +5,6 @@
 
 import { combineReducers } from 'redux';
 
-import { reducer as general } from './General';
 import { reducer as room } from './Room';
 import { reducer as game } from './Game';
 import { reducer as player } from './Player';
@@ -15,7 +14,6 @@ import { reducer as twitch } from './Twitch';
 import { RootState } from './types';
 
 const rootReducer = combineReducers<RootState>({
-  general,
   room,
   game,
   player,

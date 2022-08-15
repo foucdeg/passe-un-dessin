@@ -7,7 +7,7 @@ import { useLocation } from 'react-router';
 import Loader from 'atoms/Loader';
 import { PUBLIC_PATHS } from 'routes';
 import { Link } from 'react-router-dom';
-import { useUnauthenticatedGuard } from 'redux/General/hooks';
+import { useUnauthenticatedGuard } from '../PasswordResetRequest/hooks';
 import { LeftSideTitle, StyledHeader } from './PasswordReset.style';
 import { useCheckToken } from './hooks';
 import PasswordResetForm from './components/PasswordResetForm';
