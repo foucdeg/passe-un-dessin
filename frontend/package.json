@@ -64,7 +64,7 @@
     "@types/react-dom": "18.0.6",
     "@types/styled-components": "5.1.26",
     "@types/superagent": "4.1.15",
-    "@types/webpack-env": "1.17.0",
+    "@types/webpack-env": "1.18.0",
     "@welldone-software/why-did-you-render": "7.0.1",
     "babel-plugin-styled-components": "2.0.7",
     "bundlesize": "0.18.1",
