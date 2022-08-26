@@ -93,7 +93,7 @@
     "stylelint-config-styled-components": "0.1.1",
     "stylelint-declaration-strict-value": "1.9.0",
     "stylelint-processor-styled-components": "1.10.0",
-    "typescript": "4.7.4",
+    "typescript": "4.8.2",
     "webpack-bundle-analyzer": "4.6.1",
     "webpack-manifest-plugin": "5.0.0"
   }
