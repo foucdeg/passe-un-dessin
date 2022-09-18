@@ -9,7 +9,7 @@
     "@sentry/tracing": "7.11.1",
     "babel-polyfill": "6.26.0",
     "copy-to-clipboard": "3.3.2",
-    "core-js": "3.25.0",
+    "core-js": "3.25.1",
     "date-fns": "2.29.2",
     "env-cmd": "10.1.0",
     "formik": "2.2.9",
