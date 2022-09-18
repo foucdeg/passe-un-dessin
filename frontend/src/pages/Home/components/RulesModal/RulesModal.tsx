@@ -1,5 +1,5 @@
 import Modal from 'components/Modal';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
 import ruleBackgrounds from 'assets/rule-backgrounds';
 
@@ -34,7 +34,7 @@ const RulesModal: React.FC<Props> = ({ isOpen, onClose }) => (
           <RuleParagraph>
             <FormattedMessage
               id={`home.rules.${index}`}
-              values={{ strong: (...chunks: string[]) => <strong>{chunks}</strong> }}
+              values={{ strong: (chunks: ReactNode[]) => <strong>{chunks}</strong> }}
             />
           </RuleParagraph>
         </Rule>

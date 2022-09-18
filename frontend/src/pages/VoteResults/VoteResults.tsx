@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, ReactNode } from 'react';
 import { useSelector } from 'redux/useSelector';
 import { useGetVoteResults } from 'redux/Game/hooks';
 import { selectPlayerIsAdmin } from 'redux/Room/selectors';
@@ -66,7 +66,7 @@ const VoteResults: React.FunctionComponent<Props> = ({ room, game }) => {
           <FormattedMessage
             id="voteResults.donate"
             values={{
-              a: (...chunks: string[]) => (
+              a: (chunks: ReactNode[]) => (
                 <a href="https://utip.io/passeundessin" target="_blank" rel="noreferrer">
                   {chunks}
                 </a>

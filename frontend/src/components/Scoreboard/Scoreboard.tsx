@@ -62,7 +62,6 @@ const Scoreboard: React.FC<Props> = ({ list, className, showRankings, onScrollEn
     );
 
     if (childrenHeight <= scoreBoardRef.current.offsetHeight) {
-      console.log('would call onScrollEnd', childrenHeight, scoreBoardRef.current.offsetHeight);
       onScrollEnd();
     }
   }, [onScrollEnd]);

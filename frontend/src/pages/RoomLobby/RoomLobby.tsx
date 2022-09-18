@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, ReactNode } from 'react';
 import FieldLabel from 'atoms/FieldLabel';
 import Button from 'atoms/Button';
 import Modal from 'components/Modal';
@@ -131,7 +131,7 @@ const RoomLobby: React.FunctionComponent = () => {
           values={{
             min: MIN_PLAYERS,
             max: MAX_PLAYERS,
-            info: (...chunks: string[]) => <Info>{chunks}</Info>,
+            info: (chunks: ReactNode[]) => <Info>{chunks}</Info>,
           }}
         />
       </FieldLabel>

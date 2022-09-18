@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { DurationOption, RoundDurationPickerContainer } from './RoundDurationPicker.style';
 
@@ -24,7 +24,7 @@ const RoundDurationPicker: React.FC<Props> = ({ duration, onDurationChange }) =>
             {option}
           </DurationOption>
         )).reduce((prev: JSX.Element, current) => [prev, ' - ', current] as unknown as JSX.Element),
-        strong: (...chunks: string[]) => <strong>{chunks}</strong>,
+        strong: (chunks: ReactNode[]) => <strong>{chunks}</strong>,
       }}
     />
   </RoundDurationPickerContainer>
