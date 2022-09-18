@@ -10,7 +10,7 @@
     "babel-polyfill": "6.26.0",
     "copy-to-clipboard": "3.3.2",
     "core-js": "3.25.1",
-    "date-fns": "2.29.2",
+    "date-fns": "2.29.3",
     "env-cmd": "10.1.0",
     "formik": "2.2.9",
     "lz-string": "1.4.4",
