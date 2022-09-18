@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, ReactNode } from 'react';
 import Spacer from 'atoms/Spacer';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { PadStep } from 'redux/Game/types';
@@ -85,7 +85,7 @@ const InitStep: React.FC<Props> = ({ padStep, saveStep, loading, drawOwnWord }) 
         <p>
           <FormattedMessage
             id="padInit.youDraw"
-            values={{ strong: (...chunks: string[]) => <strong>{chunks}</strong> }}
+            values={{ strong: (chunks: ReactNode[]) => <strong>{chunks}</strong> }}
           />
         </p>
       )}
