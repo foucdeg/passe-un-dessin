@@ -1,4 +1,4 @@
-import { FacebookAuthStatusResponse, GoogleUser } from './window';
+import { FacebookAuthStatusResponse, GoogleIdConfig } from './window';
 
 declare global {
   interface Window {
@@ -12,13 +12,15 @@ declare global {
       logout: () => void;
     };
     /** Google login API - may be blocked or fail to load */
-    authInstance?: {
-      attachClickHandler: (
-        elt: HTMLElement,
-        config: Record<string, string>,
-        callback: (googleUser: GoogleUser) => void,
-      ) => void;
-      signOut: () => void;
+    google?: {
+      accounts: {
+        id: {
+          initialize: (config: GoogleIdConfig) => void;
+          prompt: () => void;
+          cancel: () => void;
+          revoke: () => void;
+        };
+      };
     };
     loginLock?: boolean;
     gtag?: (method: string, name: string, props: Record<string, string>) => void;

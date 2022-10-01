@@ -131,9 +131,9 @@ export const useLogout = () => {
       }
     });
 
-    const authInstance = window.authInstance;
-    if (authInstance) {
-      authInstance.signOut();
+    const google = window.google;
+    if (google) {
+      google.accounts.id.revoke();
     }
 
     await doFetchMe();
