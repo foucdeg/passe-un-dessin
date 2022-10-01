@@ -9,7 +9,7 @@ ENV POETRY_VIRTUALENVS_CREATE=false
 
 COPY ./pyproject.toml ./poetry.lock /app/
 WORKDIR /app
-RUN poetry install --no-dev
+RUN poetry install --only main
 
 COPY . /app
 
