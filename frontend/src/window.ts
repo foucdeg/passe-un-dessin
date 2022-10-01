@@ -25,5 +25,12 @@ export const isSuccessful = (
   response.status === FacebookAuthStatus.CONNECTED;
 
 export interface GoogleUser {
-  getAuthResponse: () => { id_token: string };
+  clientId: string;
+  credential: string;
+  select_by: 'user';
+}
+
+export interface GoogleIdConfig {
+  client_id: string;
+  callback: (user: GoogleUser) => void;
 }

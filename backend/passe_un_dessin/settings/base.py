@@ -93,9 +93,7 @@ GRIP_URL = "http://{}:5561".format(os.environ.get("PUSHPIN_HOST"))
 DATABASES = {"default": dj_database_url.config()}
 
 # Social auth
-AUTH_GOOGLE_CLIENT_ID = (
-    "805693370790-tf9clcvuu8tg5dibon9av5q3lu2o46qk.apps.googleusercontent.com"
-)
+AUTH_GOOGLE_CLIENT_ID = os.getenv("AUTH_GOOGLE_CLIENT_ID")
 AUTH_FACEBOOK_APP_ID = "2622893511372846"
 AUTH_FACEBOOK_APP_SECRET = os.environ.get("AUTH_FACEBOOK_APP_SECRET")
 
