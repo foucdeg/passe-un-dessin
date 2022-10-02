@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { fontSize, fontWeight, lineHeight } from 'stylesheet';
 import Avatar from 'components/Avatar';
 import BareLink from 'atoms/BareLink';
+import { colorPalette } from 'stylesheet';
 
 export const InnerScoreboard = styled.div`
   overflow-y: auto;
@@ -12,6 +13,19 @@ export const RankingRow = styled.div`
   line-height: 19px;
   align-items: center;
   margin-bottom: 8px;
+`;
+
+export const LinkedRankingRow = styled(BareLink)`
+  display: flex;
+  line-height: 19px;
+  align-items: center;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  transition: background-color 0.3s linear;
+
+  &:hover {
+    background-color: ${colorPalette.backgroundGrey};
+  }
 `;
 
 export const RankText = styled.span`
@@ -40,7 +54,7 @@ export const StyledAvatar = styled(Avatar)`
   flex-shrink: 0;
 `;
 
-export const StyledLink = styled(BareLink)`
+export const PlayerText = styled.span`
   min-width: 0; /* https://css-tricks.com/flexbox-truncated-text/ */
   overflow: hidden;
   text-overflow: ellipsis;

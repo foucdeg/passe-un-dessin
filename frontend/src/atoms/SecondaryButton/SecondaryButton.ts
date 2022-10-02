@@ -6,6 +6,8 @@ const SecondaryButton = styled(Button)`
   border: 2px solid ${colorPalette.orange};
   color: ${colorPalette.orange};
   background: ${colorPalette.white};
+  display: flex;
+  align-items: center;
 `;
 
 export default SecondaryButton;

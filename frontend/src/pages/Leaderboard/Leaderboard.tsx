@@ -49,6 +49,7 @@ const Leaderboard: React.FC<NoProps> = () => {
           list={formattedLeaderboard}
           showRankings
           filter={debouncedFilter}
+          links
         />
         <FilterInput
           type="text"

@@ -78,7 +78,5 @@ export const Row = styled.div`
 
 export const StyledSecondaryButton = styled(SecondaryButton)`
   min-width: 200px;
-  display: flex;
-  flex-direction: row;
   justify-content: center;
 `;

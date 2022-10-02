@@ -64,5 +64,12 @@
   "python.analysis.extraPaths": [
     "./backend"
   ],
-  "stylelint.stylelintPath": "frontend/node_modules/stylelint"
+  "stylelint.stylelintPath": "frontend/node_modules/stylelint",
+  "stylelint.validate": [
+    "css",
+    "less",
+    "postcss",
+    "typescript",
+    "typescript-react"
+  ]
 }
