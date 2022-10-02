@@ -76,7 +76,7 @@ const Home: React.FunctionComponent = () => {
             </StyledSecondaryButton>
           </Row>
           <Row>
-            <StyledSecondaryButton to={PUBLIC_PATHS.LEADERBOARD} target="_blank">
+            <StyledSecondaryButton to={PUBLIC_PATHS.LEADERBOARD}>
               <FormattedMessage id="home.leaderboard" />
             </StyledSecondaryButton>
             {!!currentStreamsCount && (
