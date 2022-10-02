@@ -21,7 +21,6 @@ export const LinkedRankingRow = styled(BareLink)`
   align-items: center;
   margin-bottom: 8px;
   border-radius: 8px;
-
   transition: background-color 0.3s linear;
 
   &:hover {
