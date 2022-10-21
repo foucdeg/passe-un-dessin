@@ -579,7 +579,7 @@ pyasn1 = ">=0.1.3"
 
 [[package]]
 name = "sentry-sdk"
-version = "1.10.0"
+version = "1.10.1"
 description = "Python client for Sentry (https://sentry.io)"
 category = "main"
 optional = false
@@ -692,7 +692,7 @@ watchdog = ["watchdog"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.10.6"
-content-hash = "dfe862616ad0515aca245c60a2613bf6d16345f3332b61dee86ac4bb742227a7"
+content-hash = "fd0c0c1c8c892b53399ce44467616da051f944ac73f0927a2736cd2aa1f232cc"
 
 [metadata.files]
 appdirs = [
@@ -1216,8 +1216,8 @@ rsa = [
     {file = "rsa-4.9.tar.gz", hash = "sha256:e38464a49c6c85d7f1351b0126661487a7e0a14a50f1675ec50eb34d4f20ef21"},
 ]
 sentry-sdk = [
-    {file = "sentry-sdk-1.10.0.tar.gz", hash = "sha256:1b965bcdbfe52321bb1307c7c93c74035afdbfceb5f585f01a963327c5befc4e"},
-    {file = "sentry_sdk-1.10.0-py2.py3-none-any.whl", hash = "sha256:8c648e96e0e2ec5e17ca75a28c442e2f523453fa7cf761ec093f4a656153490e"},
+    {file = "sentry-sdk-1.10.1.tar.gz", hash = "sha256:105faf7bd7b7fa25653404619ee261527266b14103fe1389e0ce077bd23a9691"},
+    {file = "sentry_sdk-1.10.1-py2.py3-none-any.whl", hash = "sha256:06c0fa9ccfdc80d7e3b5d2021978d6eb9351fa49db9b5847cf4d1f2a473414ad"},
 ]
 setuptools = [
     {file = "setuptools-65.3.0-py3-none-any.whl", hash = "sha256:2e24e0bec025f035a2e72cdd1961119f557d78ad331bb00ff82efb2ab8da8e82"},
