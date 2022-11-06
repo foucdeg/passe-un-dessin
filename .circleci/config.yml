@@ -6,7 +6,7 @@ jobs:
   lint-front:
     executor:
       name: node/default
-      tag: "16.14"
+      tag: "18.11"
     steps:
       - checkout
       - node/install-packages:
@@ -28,7 +28,7 @@ jobs:
   build-front:
     executor:
       name: node/default
-      tag: "16.14"
+      tag: "18.11"
     environment:
       REACT_APP_ENV: production
     steps:
@@ -46,7 +46,7 @@ jobs:
   build-deploy-front:
     executor:
       name: node/default
-      tag: "16.14"
+      tag: "18.11"
     environment:
       REACT_APP_ENV: production
       SENTRY_ORG: passe-un-dessin
