@@ -5,8 +5,8 @@
   "dependencies": {
     "@formatjs/intl-pluralrules": "5.1.8",
     "@reduxjs/toolkit": "1.9.1",
-    "@sentry/react": "7.23.0",
-    "@sentry/tracing": "7.23.0",
+    "@sentry/react": "7.24.2",
+    "@sentry/tracing": "7.24.2",
     "babel-polyfill": "6.26.0",
     "copy-to-clipboard": "3.3.3",
     "core-js": "3.26.1",
