@@ -12,7 +12,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install lsb-release && 
 RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
 RUN sh -c 'wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -'
 RUN apt-get update && apt-get -y --no-install-recommends install postgresql-client-13 gettext && apt-get clean && rm -rf /var/lib/apt/lists/*
-RUN pip install --no-cache-dir poetry==1.2.1 pywatchman==1.4.1
+RUN pip install --no-cache-dir poetry==1.3.1 pywatchman==1.4.1
 
 # Install Watchman
 ARG WATCHMAN_VERSION
