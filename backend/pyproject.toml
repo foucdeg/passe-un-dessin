@@ -29,7 +29,7 @@ factory-boy = "==3.2.1"
 coverage = "==6.5.0"
 django-debug-toolbar = "==3.8.1"
 django-extensions = "==3.2.1"
-isort = "==5.11.3"
+isort = "==5.11.4"
 black = "^19.10b0"
 django-cprofile-middleware = "1.0.5"
 
