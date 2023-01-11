@@ -400,14 +400,14 @@ bcrypt = ["bcrypt"]
 
 [[package]]
 name = "django-anymail"
-version = "8.6"
+version = "9.0"
 description = "Django email backends and webhooks for Amazon SES, Mailgun, Mailjet, Mandrill, Postal, Postmark, SendGrid, SendinBlue, and SparkPost"
 category = "main"
 optional = false
-python-versions = ">=3.5"
+python-versions = ">=3.6"
 files = [
-    {file = "django-anymail-8.6.tar.gz", hash = "sha256:783342d49dd07d68778b81dd12a94c86e1d217463a68a85450a0513fabe31345"},
-    {file = "django_anymail-8.6-py3-none-any.whl", hash = "sha256:49d83d7c16316ca86a624097496881d59b7d71b16bf1c5211cffa5b19ef98d0c"},
+    {file = "django-anymail-9.0.tar.gz", hash = "sha256:4239f7c61fb77b6eb8c8591a317a84a2a78f6bce1f8f42847921de74194b5d8a"},
+    {file = "django_anymail-9.0-py3-none-any.whl", hash = "sha256:c21d94ffdbada613a85c22a7bf32e37447d2811e1688cd001d3cad3c7f1ff289"},
 ]
 
 [package.dependencies]
@@ -1271,4 +1271,4 @@ watchdog = ["watchdog"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.1"
-content-hash = "2e513303d717c40f081416c000d1635b81a4b30986a19d3215d042c37de5a607"
+content-hash = "c1d7a3cb2d176e70449257d8d92ebd47a1437987014331a9bdc0d5ee59871cd7"
