@@ -463,13 +463,13 @@ sqlparse = ">=0.2"
 
 [[package]]
 name = "django-eventstream"
-version = "4.5.0"
+version = "4.5.1"
 description = "Server-Sent Events for Django"
 category = "main"
 optional = false
 python-versions = "*"
 files = [
-    {file = "django-eventstream-4.5.0.tar.gz", hash = "sha256:af5d4406088c2a093e340033fb84474882d93163d02c3c81ab9b8bed2faa1d15"},
+    {file = "django-eventstream-4.5.1.tar.gz", hash = "sha256:3527029e5ebe912c27cf42ada34f6c4ec83ff510e7f95a7f8f273debd0db7998"},
 ]
 
 [package.dependencies]
@@ -1272,4 +1272,4 @@ watchdog = ["watchdog"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.1"
-content-hash = "c881f19acce47a1da56851cd57ef1916619c77571281b47b32f9d68f9d392ad1"
+content-hash = "c59f7bdadb7c765c69dac80efbae331b9a760414372db390106fbd1a0c499880"
