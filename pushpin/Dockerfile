@@ -1,3 +1,3 @@
-FROM fanout/pushpin:1.35.0
+FROM fanout/pushpin:1.36.0
 
 COPY ./routes /etc/pushpin/routes
