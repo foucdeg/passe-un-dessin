@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@formatjs/intl-pluralrules": "5.1.8",
-    "@reduxjs/toolkit": "1.9.1",
+    "@reduxjs/toolkit": "1.9.2",
     "@sentry/react": "7.34.0",
     "@sentry/tracing": "7.34.0",
     "babel-polyfill": "6.26.0",
