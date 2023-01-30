@@ -1274,10 +1274,10 @@
   dependencies:
     tslib "^2.4.0"
 
-"@formatjs/icu-messageformat-parser@2.1.14":
-  version "2.1.14"
-  resolved "https://registry.yarnpkg.com/@formatjs/icu-messageformat-parser/-/icu-messageformat-parser-2.1.14.tgz#d7bc8c82bfce1eb8e3232e6d7e3d6ea92ba390cc"
-  integrity sha512-0KqeVOb72losEhUW+59vhZGGd14s1f35uThfEMVKZHKLEObvJdFTiI3ZQwvTMUCzLEMxnS6mtnYPmG4mTvwd3Q==
+"@formatjs/icu-messageformat-parser@2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@formatjs/icu-messageformat-parser/-/icu-messageformat-parser-2.2.0.tgz#9221f7f4dbaf634a84e459a49017a872e708dcfa"
+  integrity sha512-NT/jKI9nvqNIsosTm+Cxv3BHutB1RIDFa4rAa2b664Od4sBnXtK7afXvAqNa3XDFxljKTij9Cp+kRMJbXozUww==
   dependencies:
     "@formatjs/ecma402-abstract" "1.14.3"
     "@formatjs/icu-skeleton-parser" "1.3.18"
@@ -1325,17 +1325,17 @@
     "@formatjs/intl-localematcher" "0.2.32"
     tslib "^2.4.0"
 
-"@formatjs/intl@2.6.4":
-  version "2.6.4"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl/-/intl-2.6.4.tgz#3374aba0a269955966a99b2d84d931bbbb394418"
-  integrity sha512-xUuVxcJpyUxRjIaaaaFes3acTRS9T6vkL7onXBmfVT5+HTakVDGeRA7DYQD9u8ZUdzlqxe/4AuIuC+E9zBTngQ==
+"@formatjs/intl@2.6.5":
+  version "2.6.5"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl/-/intl-2.6.5.tgz#349dc624a06978b143135201dcf63d40ba3cd816"
+  integrity sha512-kNH221hsdbTAMdsF6JAxSFV4N/9p5azXZvCLQBxl10Q4D2caPODLtne98gRhinIJ8Hv3djBabPdJG32OQaHuMA==
   dependencies:
     "@formatjs/ecma402-abstract" "1.14.3"
     "@formatjs/fast-memoize" "1.2.8"
-    "@formatjs/icu-messageformat-parser" "2.1.14"
+    "@formatjs/icu-messageformat-parser" "2.2.0"
     "@formatjs/intl-displaynames" "6.2.4"
     "@formatjs/intl-listformat" "7.1.7"
-    intl-messageformat "10.2.6"
+    intl-messageformat "10.3.0"
     tslib "^2.4.0"
 
 "@humanwhocodes/config-array@^0.11.6":
@@ -5994,14 +5994,14 @@ internal-slot@^1.0.3:
     has "^1.0.3"
     side-channel "^1.0.4"
 
-intl-messageformat@10.2.6:
-  version "10.2.6"
-  resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-10.2.6.tgz#a51d924d891356eaab02fe308ec3c70c450f31bb"
-  integrity sha512-qaTfGjXhdgDup5h3O8406GlQjEj0ky3q0cWWu/lL+H6vJA+sY2/8e4l4XrRPbi9vp38Pop0gO5dsrMO0DdEEBw==
+intl-messageformat@10.3.0:
+  version "10.3.0"
+  resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-10.3.0.tgz#6a3a30882bf94dfa7014cc642c66abdafd942c0e"
+  integrity sha512-FKeBZKH9T2Ue4RUXCuwY/hEaRHU8cgICevlGKog0qSBuz/amtRKNBLetBLmRxiHeEkF7JBBckC+56GIwshlRwA==
   dependencies:
     "@formatjs/ecma402-abstract" "1.14.3"
     "@formatjs/fast-memoize" "1.2.8"
-    "@formatjs/icu-messageformat-parser" "2.1.14"
+    "@formatjs/icu-messageformat-parser" "2.2.0"
     tslib "^2.4.0"
 
 ipaddr.js@1.9.1:
@@ -8815,20 +8815,20 @@ react-fast-compare@^2.0.1:
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
   integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
 
-react-intl@6.2.6:
-  version "6.2.6"
-  resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-6.2.6.tgz#d7517e8bf0bdaed164bf58d5e6c14bd4f2d67281"
-  integrity sha512-GHvcFBvo7erL94qNpwNPZE2wkoKxAcXwXQCXOR6yP+tuNImd/PKJreBbAAu9K4zCWBi07SQBPnxv9jzLssx9yg==
+react-intl@6.2.7:
+  version "6.2.7"
+  resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-6.2.7.tgz#4e5efd3e3b6c85bb51a68ab7d12b853351dfb941"
+  integrity sha512-3xjK7FZcOcI/uw5c6NrbSXnVqT04Liua5L5K9eeIxIeYYQjcpKl9nF0jx3+sfZv9SqbxnmsFlh1DtKiCyiaZcg==
   dependencies:
     "@formatjs/ecma402-abstract" "1.14.3"
-    "@formatjs/icu-messageformat-parser" "2.1.14"
-    "@formatjs/intl" "2.6.4"
+    "@formatjs/icu-messageformat-parser" "2.2.0"
+    "@formatjs/intl" "2.6.5"
     "@formatjs/intl-displaynames" "6.2.4"
     "@formatjs/intl-listformat" "7.1.7"
     "@types/hoist-non-react-statics" "^3.3.1"
     "@types/react" "16 || 17 || 18"
     hoist-non-react-statics "^3.3.2"
-    intl-messageformat "10.2.6"
+    intl-messageformat "10.3.0"
     tslib "^2.4.0"
 
 react-is@18.2.0, react-is@^18.0.0:
