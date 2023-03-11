@@ -12,7 +12,7 @@ export function useServerSentEvent<EventDataType = BaseEvent>(
     if (!channel) return;
 
     const eventSource: EventSource = new EventSource(
-      `${process.env.REACT_APP_EVENTS_HOST}/?channel=${channel}`,
+      `${import.meta.env.VITE_EVENTS_HOST}/?channel=${channel}`,
     );
     eventSource.onmessage = (event: MessageEvent) => {
       const parsedEvent = JSON.parse(event.data);

@@ -24,11 +24,11 @@ const LoginWithGoogle: React.FC<Props> = ({ onDone }) => {
 
   useEffect(() => {
     if (!window.google) return;
-    if (!process.env.REACT_APP_GOOGLE_CLIENT_ID) return;
+    if (!import.meta.env.VITE_GOOGLE_CLIENT_ID) return;
 
     const google = window.google;
     window.google.accounts.id.initialize({
-      client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+      client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
       callback: onLoginSuccess,
     });
 

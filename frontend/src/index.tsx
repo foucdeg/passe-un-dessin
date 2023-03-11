@@ -22,13 +22,13 @@ declare global {
 if (window.config && window.config.sentry && window.config.sentry.dsn) {
   Sentry.init({
     dsn: window.config.sentry.dsn,
-    release: process.env.REACT_APP_SENTRY_RELEASE,
+    release: import.meta.env.VITE_SENTRY_RELEASE,
     environment: window.config.sentry.environment,
     integrations: [new Integrations.BrowserTracing()],
 
     // We recommend adjusting this value in production, or using tracesSampler
     // for finer control
-    tracesSampleRate: parseInt(process.env.REACT_APP_SENTRY_TRACING || '0'),
+    tracesSampleRate: parseInt(import.meta.env.VITE_SENTRY_TRACING || '0'),
   });
 }
 
@@ -40,13 +40,6 @@ if (rootEl) {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const root = createRoot(rootEl!);
   root.render(<App store={store} />);
-
-  if (module.hot) {
-    module.hot.accept('./App', () => {
-      const NextApp = require('./App').default;
-      root.render(<NextApp store={store} />);
-    });
-  }
 }
 
 navigator.serviceWorker &&
