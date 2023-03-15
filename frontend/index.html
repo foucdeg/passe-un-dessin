@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="theme-color" content="#000000" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.png" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="shortcut icon" href="favicon.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
     <meta property="og:title" content="Passe un Dessin" />
     <meta
       property="og:description"
@@ -21,7 +21,7 @@
       href="https://fonts.googleapis.com/css2?family=Raleway:wght@900&family=Roboto+Condensed:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" type="text/css" href="%PUBLIC_URL%/reset.css" />
+    <link rel="stylesheet" type="text/css" href="reset.css" />
     <title>Passe un Dessin</title>
   </head>
 
@@ -81,11 +81,13 @@
     </script>
     <script type="text/javascript">
       window.config = {
+        // TODO : fix sentry
         sentry: {
-          dsn: "<%= process.env.REACT_APP_SENTRY_DSN %>",
-          environment: "<%= process.env.REACT_APP_ENV %>",
+          dsn: "%VITE_SENTRY_DSN%",
+          environment: "%MODE%",
         }
       };
     </script>
+    <script type="module" src="/src/index.tsx"></script>
   </body>
 </html>

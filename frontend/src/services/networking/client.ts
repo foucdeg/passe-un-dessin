@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/react';
 
-const backendBaseUrl = (process.env.REACT_APP_BACKEND_HOST || '') + '/api';
+const backendBaseUrl = (import.meta.env.VITE_BACKEND_HOST || '') + '/api';
 
 type Method = 'get' | 'post' | 'put' | 'PATCH' | 'delete';
 
