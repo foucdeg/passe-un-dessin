@@ -68,7 +68,7 @@
     "bundlesize": "0.18.1",
     "customize-cra": "1.0.0",
     "cypress": "12.8.1",
-    "eslint-config-prettier": "8.7.0",
+    "eslint-config-prettier": "8.8.0",
     "eslint-config-react-app": "7.0.1",
     "eslint-plugin-cypress": "2.12.1",
     "eslint-plugin-mysticatea": "4.2.4",
