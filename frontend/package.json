@@ -93,7 +93,7 @@
     "vite": "4.2.1",
     "vite-plugin-mkcert": "1.14.0",
     "vite-plugin-svgr": "2.4.0",
-    "vite-tsconfig-paths": "4.1.0"
+    "vite-tsconfig-paths": "4.2.0"
   },
   "oldDependencies": {
     "//webpack-manifest-plugin": "5.0.0",
