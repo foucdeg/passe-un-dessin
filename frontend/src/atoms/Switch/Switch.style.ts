@@ -31,7 +31,7 @@ export const Circle = styled.div<{ selected: boolean }>`
   position: absolute;
   top: 0;
   right: 20px;
-  background-color: ${({ selected }) => (selected ? colorPalette.purple : colorPalette.black)};
+  background-color: ${(props) => (props.selected ? colorPalette.purple : colorPalette.black)};
   ${({ selected }) => selected && 'right: 0;'}
   transition: right 0.2s;
 `;
