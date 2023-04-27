@@ -1,12 +1,10 @@
 module.exports = {
-  plugins: ['stylelint-declaration-strict-value'],
-  processors: ['stylelint-processor-styled-components'],
   extends: [
-    'stylelint-config-standard-scss',
+    'stylelint-config-standard',
     'stylelint-config-styled-components',
     'stylelint-config-prettier',
   ],
-  customSyntax: 'postcss-scss',
+  customSyntax: 'postcss-styled-syntax',
   rules: {
     /*
      * These rules are here to prevent CSS bad practices.
@@ -23,23 +21,6 @@ module.exports = {
     'selector-max-class': 2,
     // https://github.com/theodo/theodo-code-principles/blob/master/css.md#no-html-tags-in-selectors
     'selector-max-type': 1,
-    // https://github.com/theodo/theodo-code-principles/blob/master/css.md#no-hardcoded-values
-    'scale-unlimited/declaration-strict-value': [
-      [
-        'font-size',
-        'color',
-        'background-color',
-        'border-color',
-        'border-top-color',
-        'border-right-color',
-        'border-bottom-color',
-        'border-left-color',
-        'fill',
-      ],
-      {
-        ignoreKeywords: ['transparent', 'inherit', 'initial', 'unset', 'none', 'currentColor'],
-      },
-    ],
     'selector-type-no-unknown': [
       true,
       {

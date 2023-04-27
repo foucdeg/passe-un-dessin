@@ -66,6 +66,7 @@ export const RefreshButton = styled.img.attrs({ src: refreshIcon })<{ isLoading:
           transform: rotate(-360deg);
         }
       }
+
       animation: spin 1s linear infinite;
     `}
 `;

@@ -25,10 +25,7 @@ export const StyledPic = styled.div`
     content: '';
     position: absolute;
     border-radius: 16px;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    inset: 0; /* top, right, bottom, left */
     width: 100%;
     height: 100%;
     box-shadow: 0 0 20px 0 rgba(0 0 0 / 50%) inset;
