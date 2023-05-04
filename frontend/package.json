@@ -91,7 +91,7 @@
     "typescript": "5.0.4",
     "vite": "4.3.4",
     "vite-plugin-mkcert": "1.15.0",
-    "vite-plugin-svgr": "2.4.0",
+    "vite-plugin-svgr": "3.2.0",
     "vite-tsconfig-paths": "4.2.0"
   },
   "oldDependencies": {
