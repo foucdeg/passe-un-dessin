@@ -89,7 +89,7 @@ jobs:
 
   lint-back:
     docker:
-      - image: cimg/python:3.11.1
+      - image: cimg/python:3.11.3
     steps:
       - checkout
       - python/install-packages:
