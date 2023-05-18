@@ -28,3 +28,5 @@ frontend/localhost-key.pem:
 	mkcert -cert-file frontend/localhost.pem -key-file frontend/localhost-key.pem localhost
 
 certs: frontend/localhost-key.pem
+	cp frontend/localhost.pem pushpin/localhost.pem
+	cp frontend/localhost-key.pem pushpin/localhost-key.pem

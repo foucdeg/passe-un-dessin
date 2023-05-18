@@ -15,9 +15,10 @@ const emailRegexp =
 
 export const isValidEmail = (input: string) => !!input.match(emailRegexp);
 
-const MAC_OS_PLATFORMS = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'];
+const MAC_OS_PLATFORMS = ['macOS', 'Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'];
 
-const isDeviceMacOs = () => MAC_OS_PLATFORMS.includes(window.navigator.platform);
+export const isDeviceMacOs = () =>
+  MAC_OS_PLATFORMS.includes(window.navigator.userAgentData?.platform || window.navigator.platform);
 
 const isCtrlOrCmdPressed = (event: KeyboardEvent) => {
   if (isDeviceMacOs()) {

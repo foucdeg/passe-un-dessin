@@ -49,6 +49,7 @@ services:
     build: ./pushpin
     ports:
       - "7999:7999"
+      - "7998:7998"
       - "5560-5563:5560-5563"
     links:
       - backend

@@ -3,6 +3,7 @@ import { fontSize, colorPalette, fontFamily } from 'stylesheet';
 
 export const StyledTextInput = styled.input`
   background: none;
+  border: none;
   padding: 0 24px;
   line-height: 19px;
   font-family: ${fontFamily.main};

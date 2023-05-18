@@ -1,3 +1,5 @@
+/// <reference types="user-agent-data-types" />
+
 import { FacebookAuthStatusResponse, GoogleIdConfig } from './window';
 
 declare global {

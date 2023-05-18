@@ -52,6 +52,7 @@ export const StyledRoomName = styled(Header4)`
 export const PlayerName = styled.div`
   font-size: ${fontSize.medium};
   text-align: center;
+  margin-top: 4px;
 `;
 
 export const PlayerList = styled.div`
