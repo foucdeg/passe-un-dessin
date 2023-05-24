@@ -72,14 +72,14 @@ tests = ["pytest"]
 
 [[package]]
 name = "asgiref"
-version = "3.7.0"
+version = "3.7.1"
 description = "ASGI specs, helper code, and adapters"
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "asgiref-3.7.0-py3-none-any.whl", hash = "sha256:14087924af5be5d8103d6f2edffe45a0bf7ab1b2a771b6f00a6db8c302f21f34"},
-    {file = "asgiref-3.7.0.tar.gz", hash = "sha256:5d6c4a8a1c99f58eaa3bc392ee04e3587b693f09e3af1f3f16a09094f334eb52"},
+    {file = "asgiref-3.7.1-py3-none-any.whl", hash = "sha256:33958cb2e4b3cd8b1b06ef295bd8605cde65b11df51d3beab39e2e149a610ab3"},
+    {file = "asgiref-3.7.1.tar.gz", hash = "sha256:8de379fcc383bcfe4507e229fc31209ea23d4831c850f74063b2c11639474dd2"},
 ]
 
 [package.extras]
@@ -1286,4 +1286,4 @@ watchdog = ["watchdog"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.3"
-content-hash = "80671c7ea868c0e02da2d830b7027419bcda71ef432c86b2bbc6bb0c2d8c95b3"
+content-hash = "7253bb18fb7c84055b24f6a1e17e9b29391aaed1f45f483225fa4baf9ad354a1"
