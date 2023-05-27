@@ -7,7 +7,7 @@ authors = ["Foucauld Degeorges <foucauld.degeorges@gmail.com>"]
 [tool.poetry.dependencies]
 python = "3.11.3"
 argon2-cffi = "==21.3.0"
-asgiref = "==3.7.1"
+asgiref = "==3.7.2"
 dj-database-url = "==2.0.0"
 django = "==4.2.1"
 django-memoize = "2.3.1"
