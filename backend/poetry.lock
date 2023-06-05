@@ -490,14 +490,14 @@ six = ">=1.10,<2"
 
 [[package]]
 name = "django-extensions"
-version = "3.2.1"
+version = "3.2.3"
 description = "Extensions for Django"
 category = "dev"
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "django-extensions-3.2.1.tar.gz", hash = "sha256:2a4f4d757be2563cd1ff7cfdf2e57468f5f931cc88b23cf82ca75717aae504a4"},
-    {file = "django_extensions-3.2.1-py3-none-any.whl", hash = "sha256:421464be390289513f86cb5e18eb43e5dc1de8b4c27ba9faa3b91261b0d67e09"},
+    {file = "django-extensions-3.2.3.tar.gz", hash = "sha256:44d27919d04e23b3f40231c4ab7af4e61ce832ef46d610cc650d53e68328410a"},
+    {file = "django_extensions-3.2.3-py3-none-any.whl", hash = "sha256:9600b7562f79a92cbf1fde6403c04fee314608fefbb595502e34383ae8203401"},
 ]
 
 [package.dependencies]
@@ -1295,4 +1295,4 @@ watchdog = ["watchdog"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.3"
-content-hash = "20e86bd5ca7c2008245115ac3b0fe066b58499a53177ea5b84befc055dd77b60"
+content-hash = "fc2f9ce918613c2f40b6d56ada0b1aa884f791974d02698ec50f52de8c7daf30"
