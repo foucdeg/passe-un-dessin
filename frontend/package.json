@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@formatjs/intl-pluralrules": "5.2.3",
+    "@formatjs/intl-pluralrules": "5.2.4",
     "@reduxjs/toolkit": "1.9.5",
     "@sentry/react": "7.55.2",
     "@sentry/tracing": "7.55.2",
@@ -17,7 +17,7 @@
     "postcss-scss": "4.0.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-intl": "6.4.3",
+    "react-intl": "6.4.4",
     "react-is": "18.2.0",
     "react-redux": "8.1.0",
     "react-router": "6.13.0",
