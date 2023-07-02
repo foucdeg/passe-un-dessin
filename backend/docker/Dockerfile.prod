@@ -15,5 +15,7 @@ COPY . /app
 
 ENV DJANGO_SETTINGS_MODULE=passe_un_dessin.settings.prod
 
+RUN mkdir -p /var/log/gunicorn
+
 RUN chmod +x /app/docker/entrypoint.sh
 ENTRYPOINT ["/app/docker/entrypoint.sh"]
