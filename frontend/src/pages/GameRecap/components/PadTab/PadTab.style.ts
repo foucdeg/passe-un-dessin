@@ -34,7 +34,7 @@ export const ViewersContainer = styled.div`
   cursor: default;
 `;
 
-ViewersContainer.displayName = ViewersContainer;
+ViewersContainer.displayName = 'ViewersContainer';
 
 export const ViewerEye = styled(EyeIcon)<{ color: string }>`
   margin-right: 4px;

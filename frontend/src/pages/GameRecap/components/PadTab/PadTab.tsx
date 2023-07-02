@@ -25,7 +25,7 @@ const PadTab: React.FC<Props> = ({ pad, isActive, onClick, publicMode, isDebrief
     <PadTabContainer isActive={isActive} onClick={onClick} data-test="pad-tab">
       {pad.steps[0].player.name}
       {!publicMode && isDebriefPhase && (
-        <ViewersContainer onClick={(e) => e.preventDefault()}>
+        <ViewersContainer onClick={(e: React.MouseEvent<HTMLDivElement>) => e.preventDefault()}>
           {padViewers
             .filter((viewer) => playerId && viewer.uuid !== playerId)
             .map((viewer) => (

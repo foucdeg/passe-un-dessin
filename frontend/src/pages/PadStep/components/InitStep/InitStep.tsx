@@ -68,7 +68,7 @@ const InitStep: React.FC<Props> = ({ padStep, saveStep, loading, drawOwnWord }) 
           placeholder={intl.formatMessage({ id: 'padInit.placeholder' })}
           maxLength={100}
           value={sentence}
-          onChange={(e) => setSentence(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSentence(e.target.value)}
           adornment={loading && <InputLoader />}
         />
         {isEditing ? (

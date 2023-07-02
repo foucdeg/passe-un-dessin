@@ -22,7 +22,7 @@ const Modal: React.FC<Props> = ({
       {isOpen && (
         <ModalContent
           className={className}
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
           data-test={dataTestAttr}
         >
           {children}
