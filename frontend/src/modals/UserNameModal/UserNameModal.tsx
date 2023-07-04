@@ -24,7 +24,7 @@ const UserNameModal: React.FC<NoProps> = () => {
       ) : (
         <>
           <UsernameForm
-            onSubmit={(e) => {
+            onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
               e.preventDefault();
               if (playerName !== '') {
                 doCreatePlayer(playerName.trim());
@@ -41,7 +41,7 @@ const UserNameModal: React.FC<NoProps> = () => {
               maxLength={30}
               value={playerName}
               placeholder={intl.formatMessage({ id: 'userNameModal.placeholder' })}
-              onChange={(e) => setPlayerName(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPlayerName(e.target.value)}
               adornment={
                 <VirtualButton type="submit">
                   <img src={arrowRight} alt="Submit" />

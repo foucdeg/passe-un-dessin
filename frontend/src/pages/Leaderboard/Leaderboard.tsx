@@ -55,7 +55,7 @@ const Leaderboard: React.FC<NoProps> = () => {
           type="text"
           placeholder={intl.formatMessage({ id: 'leaderboard.filterInput' })}
           value={liveFilter}
-          onChange={(e) => setFilter(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFilter(e.target.value)}
         />
       </ScoreboardWithFilter>
     </HomeLayout>
