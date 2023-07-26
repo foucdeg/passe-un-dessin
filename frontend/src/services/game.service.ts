@@ -72,15 +72,18 @@ export const findRemainingPlayers = (game: Game): Player[] => {
         .filter((padStep) => padStep.round_number === game.current_round && !padStep.sentence)
         .map((padStep) => padStep.player);
     case GamePhase.DEBRIEF:
-      const voteCountByPlayer = game.rounds.reduce((acc, padStep) => {
-        padStep.votes.forEach((vote) => {
-          if (!acc[vote.player_id]) {
-            acc[vote.player_id] = 0;
-          }
-          acc[vote.player_id] = acc[vote.player_id] + 1;
-        });
-        return acc;
-      }, {} as Record<string, number>);
+      const voteCountByPlayer = game.rounds.reduce(
+        (acc, padStep) => {
+          padStep.votes.forEach((vote) => {
+            if (!acc[vote.player_id]) {
+              acc[vote.player_id] = 0;
+            }
+            acc[vote.player_id] = acc[vote.player_id] + 1;
+          });
+          return acc;
+        },
+        {} as Record<string, number>,
+      );
 
       return game.players.filter(
         (player) =>
