@@ -9,7 +9,7 @@
     "@sentry/react": "7.60.1",
     "@sentry/tracing": "7.60.1",
     "copy-to-clipboard": "3.3.3",
-    "core-js": "3.31.1",
+    "core-js": "3.32.0",
     "date-fns": "2.30.0",
     "eslint": "8.45.0",
     "formik": "2.4.2",
