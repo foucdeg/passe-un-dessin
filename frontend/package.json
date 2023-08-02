@@ -88,7 +88,7 @@
     "stylelint-processor-styled-components": "1.10.0",
     "typescript": "5.1.6",
     "user-agent-data-types": "0.3.1",
-    "vite": "4.4.7",
+    "vite": "4.4.8",
     "vite-plugin-mkcert": "1.16.0",
     "vite-plugin-svgr": "3.2.0",
     "vite-tsconfig-paths": "4.2.0"
