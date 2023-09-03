@@ -89,7 +89,7 @@ jobs:
 
   lint-back:
     docker:
-      - image: cimg/python:3.11.3
+      - image: cimg/python:3.11.5
     steps:
       - checkout
       - python/install-packages:
@@ -106,7 +106,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 19.03.13
+          version: 20.10.23
       - run:
           name: Build backend app
           command: docker build -f ./docker/Dockerfile.prod . -t foucdeg/passe-un-dessin:$CIRCLE_SHA1
@@ -118,7 +118,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 19.03.13
+          version: 20.10.23
       - run:
           name: Build backend app
           command: docker build -f ./docker/Dockerfile.prod . -t foucdeg/passe-un-dessin:latest
@@ -136,7 +136,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 19.03.13
+          version: 20.10.23
       - run:
           name: Build drawing renderer
           command: docker build -f ./Dockerfile.prod . -t foucdeg/passe-un-dessin-drawing-renderer:$CIRCLE_SHA1
@@ -148,7 +148,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 19.03.13
+          version: 20.10.23
       - run:
           name: Build drawing renderer
           command: docker build -f ./Dockerfile.prod . -t foucdeg/passe-un-dessin-drawing-renderer:latest
@@ -166,7 +166,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 19.03.13
+          version: 20.10.23
       - run:
           name: Build pushpin
           command: docker build -f ./Dockerfile.prod . -t foucdeg/passe-un-dessin-pushpin:$CIRCLE_SHA1
@@ -178,7 +178,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 19.03.13
+          version: 20.10.23
       - run:
           name: Build pushpin
           command: docker build -f ./Dockerfile.prod . -t foucdeg/passe-un-dessin-pushpin:latest
