@@ -8500,10 +8500,10 @@ use-sync-external-store@^1.0.0:
   resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz#7dbefd6ef3fe4e767a0cf5d7287aacfb5846928a"
   integrity sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==
 
-user-agent-data-types@0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/user-agent-data-types/-/user-agent-data-types-0.4.1.tgz#5da11ad44cb2e771c7c680957f27061bdf016865"
-  integrity sha512-VDfXIE+VfnhfEz3XNse++rBgTLUzhrxe5zEJpMJvY0iQVan6XNpRHDS32d2EAQiRO6rLRNssVafRTxjKAhy+FA==
+user-agent-data-types@0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/user-agent-data-types/-/user-agent-data-types-0.4.2.tgz#3bbd3662022c3fb9d0c2f7449b6cdd412a3f9e0d"
+  integrity sha512-jXep3kO/dGNmDOkbDa8ccp4QArgxR4I76m3QVcJ1aOF0B9toc+YtSXtX5gLdDTZXyWlpQYQrABr6L1L2GZOghw==
 
 util-deprecate@^1.0.1, util-deprecate@^1.0.2, util-deprecate@~1.0.1:
   version "1.0.2"
