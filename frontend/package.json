@@ -61,7 +61,7 @@
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "@types/superagent": "4.1.18",
-    "@vitejs/plugin-react": "4.0.4",
+    "@vitejs/plugin-react": "4.1.0",
     "babel-plugin-styled-components": "2.1.4",
     "bundlesize": "0.18.1",
     "customize-cra": "1.0.0",
