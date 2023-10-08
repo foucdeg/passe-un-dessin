@@ -9,10 +9,10 @@ export const StyledIcon = styled.img`
   cursor: pointer;
 `;
 
-export const StyledTooltip = styled.span<{ isRight: boolean | undefined }>`
+export const StyledTooltip = styled.span<{ $isRight: boolean | undefined }>`
   visibility: hidden;
   position: absolute;
-  ${({ isRight }) => (isRight ? 'left: 160%' : 'right: 150%')};
+  ${({ $isRight }) => ($isRight ? 'left: 160%' : 'right: 150%')};
   top: 0;
   text-align: right;
   width: max-content;

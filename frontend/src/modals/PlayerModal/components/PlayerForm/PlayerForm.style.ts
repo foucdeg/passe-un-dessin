@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { ReactComponent as EditIcon } from 'assets/edit.svg';
-import { ReactComponent as CheckIcon } from 'assets/check.svg';
+import EditIcon from 'assets/edit.svg?react';
+import CheckIcon from 'assets/check.svg?react';
 import TextInput from 'atoms/TextInput';
 import { colorPalette } from 'stylesheet';
 import { Form } from 'formik';

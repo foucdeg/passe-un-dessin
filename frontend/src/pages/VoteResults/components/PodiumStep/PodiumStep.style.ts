@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { colorPalette, fontSize } from 'stylesheet';
-import { ReactComponent as FatArrowDown } from 'assets/fat-arrow-down.svg';
+import FatArrowDown from 'assets/fat-arrow-down.svg?react';
 import Drawing from 'components/Canvas/Drawing';
 
 export const Container = styled.div<{ width: number }>`

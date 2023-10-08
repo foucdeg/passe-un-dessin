@@ -84,7 +84,7 @@ const SideButtons: React.FC<EmptyObject> = () => {
       )}
       {game && (
         <IconAndTooltip tooltipText={intl.formatMessage({ id: 'menu.refresh' })}>
-          <RefreshButton alt="refresh" onClick={doRefreshGame} isLoading={loading} />
+          <RefreshButton alt="refresh" onClick={doRefreshGame} $isLoading={loading} />
         </IconAndTooltip>
       )}
       {room && (

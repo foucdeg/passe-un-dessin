@@ -54,12 +54,12 @@ export const RankingModalButton = styled.img.attrs({ src: rankingIcon })`
   margin-bottom: 24px;
 `;
 
-export const RefreshButton = styled.img.attrs({ src: refreshIcon })<{ isLoading: boolean }>`
+export const RefreshButton = styled.img.attrs({ src: refreshIcon })<{ $isLoading: boolean }>`
   cursor: pointer;
   width: 24px;
   margin-bottom: 24px;
   ${(props) =>
-    props.isLoading &&
+    props.$isLoading &&
     css`
       @keyframes spin {
         100% {

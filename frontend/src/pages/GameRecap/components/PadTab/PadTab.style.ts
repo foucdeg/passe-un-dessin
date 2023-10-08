@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { colorPalette } from 'stylesheet';
-import { ReactComponent as EyeIcon } from 'assets/eye.svg';
+import EyeIcon from 'assets/eye.svg?react';
 
 export const PadTabContainer = styled.div<{ isActive: boolean }>`
   position: relative;
