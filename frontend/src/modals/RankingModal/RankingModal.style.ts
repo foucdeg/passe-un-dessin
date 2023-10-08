@@ -9,7 +9,7 @@ export const StyledHeader = styled(Header2)`
   margin-bottom: 32px;
 `;
 
-export const PlayerScore = styled.div<{ backgroundColor: string }>`
+export const PlayerScore = styled.div<{ $backgroundColor: string }>`
   padding: 6px 15px;
   margin-bottom: 8px;
   color: ${colorPalette.white};
@@ -17,7 +17,7 @@ export const PlayerScore = styled.div<{ backgroundColor: string }>`
   display: flex;
   font-weight: ${fontWeight.bold};
   position: relative;
-  background-color: ${({ backgroundColor }) => backgroundColor};
+  background-color: ${({ $backgroundColor }) => $backgroundColor};
 `;
 
 export const StyledModal = styled(Modal)`

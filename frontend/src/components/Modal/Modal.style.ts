@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { colorPalette } from 'stylesheet';
 
 interface ModalContainerProps {
-  readonly isOpen: boolean;
+  readonly $isOpen: boolean;
 }
 
 export const ModalContainer = styled.div<ModalContainerProps>`
@@ -14,7 +14,7 @@ export const ModalContainer = styled.div<ModalContainerProps>`
   height: 100vh;
   overflow: auto;
   background: rgba(155 81 224 / 60%);
-  display: ${(props) => (props.isOpen ? 'block' : 'none')};
+  display: ${(props) => (props.$isOpen ? 'block' : 'none')};
 `;
 
 export const ModalContent = styled.div`

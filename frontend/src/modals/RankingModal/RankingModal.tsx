@@ -21,7 +21,7 @@ const RankingModal: React.FC<Props> = ({ isOpen, onClose }) => {
       </StyledHeader>
       {ranking.length > 0 ? (
         ranking.map((rank, index) => (
-          <PlayerScore key={rank.player.uuid} backgroundColor={rank.player.color}>
+          <PlayerScore key={rank.player.uuid} $backgroundColor={rank.player.color}>
             {index === 0 && rank.vote_count > 0 && <Trophy />}
             {rank.player.name}
             <VoteCount>{rank.vote_count}</VoteCount>

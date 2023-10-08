@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import BareAnchor from 'atoms/BareAnchor';
 import { colorPalette } from 'stylesheet';
-import { ReactComponent as EyeIcon } from 'assets/eye.svg';
+import EyeIcon from 'assets/eye.svg?react';
 
 export const IMAGE_HEIGHT = 180; // Should be multiple of 9
 export const IMAGE_WIDTH = (IMAGE_HEIGHT * 16) / 9;

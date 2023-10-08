@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import { ReactComponent as ThumbUpIcon } from 'assets/thumb-up.svg';
-import { ReactComponent as ThumbDownIcon } from 'assets/thumb-down.svg';
+import ThumbUpIcon from 'assets/thumb-up.svg?react';
+import ThumbDownIcon from 'assets/thumb-down.svg?react';
 import { colorPalette } from 'stylesheet';
 
 export const ThumbUpButton = styled(ThumbUpIcon)<{ primary?: boolean }>`

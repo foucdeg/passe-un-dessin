@@ -18,7 +18,7 @@ const Modal: React.FC<Props> = ({
   'data-test': dataTestAttr,
 }) => {
   return (
-    <ModalContainer isOpen={isOpen} onClick={onClose}>
+    <ModalContainer $isOpen={isOpen} onClick={onClose}>
       {isOpen && (
         <ModalContent
           className={className}

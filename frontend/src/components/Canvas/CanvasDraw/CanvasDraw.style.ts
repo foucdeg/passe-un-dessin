@@ -2,7 +2,7 @@ import timerIcon from 'assets/timer.svg';
 import Header2 from 'atoms/Header2';
 import styled from 'styled-components';
 import { colorPalette } from 'stylesheet';
-import { ReactComponent as CheckIcon } from 'assets/check.svg';
+import CheckIcon from 'assets/check.svg?react';
 
 export const PadStepDone = styled.div<{ height: number; width: number }>`
   position: absolute;

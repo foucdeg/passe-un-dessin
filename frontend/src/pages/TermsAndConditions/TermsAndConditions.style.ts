@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { ReactComponent as arrowLeft } from 'assets/arrow-left.svg';
+import arrowLeft from 'assets/arrow-left.svg?react';
 
 import { fontSize, fontFamily, colorPalette } from 'stylesheet';
 import Header4 from 'atoms/Header4';

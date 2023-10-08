@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Drawing from 'components/Canvas/Drawing';
-import { ReactComponent as EditIcon } from 'assets/edit.svg';
+import EditIcon from 'assets/edit.svg?react';
 
 const SQUARE_SIDE = 80;
 

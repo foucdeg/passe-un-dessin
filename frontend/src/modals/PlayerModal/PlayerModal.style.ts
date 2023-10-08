@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Header2 from 'atoms/Header2';
-import { ReactComponent as UndoIcon } from 'assets/undo.svg';
+import UndoIcon from 'assets/undo.svg?react';
 import { colorPalette } from 'stylesheet';
 import Modal from 'components/Modal';
 import HorizontalSeparator from 'atoms/HorizontalSeparator';
