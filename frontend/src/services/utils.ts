@@ -118,7 +118,7 @@ export function useDebouncedState<T>(
   const [liveValue, setLiveValue] = useState<T>(initialValue);
   const [debouncedValue, setDebouncedValue] = useState<T>(initialValue);
 
-  const timer = useRef<NodeJS.Timer>();
+  const timer = useRef<NodeJS.Timeout>();
 
   const debouncedSetValue = useCallback(
     (val: T) => {
