@@ -15,7 +15,7 @@ djangorestframework = "==3.14.0"
 djangorestframework_simplejwt = "==5.3.0"
 psycopg2-binary = "==2.9.9"
 requests = "==2.31.0"
-sentry-sdk = "==1.31.0"
+sentry-sdk = "==1.32.0"
 django-eventstream = "==4.5.1"
 google-auth = "==2.23.3"
 django-anymail = { extras = ["mailgun"], version = "==10.1" }
