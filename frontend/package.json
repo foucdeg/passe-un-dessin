@@ -89,7 +89,7 @@
     "typescript": "5.2.2",
     "user-agent-data-types": "0.4.2",
     "vite": "4.5.0",
-    "vite-plugin-mkcert": "1.16.0",
+    "vite-plugin-mkcert": "1.17.0",
     "vite-plugin-svgr": "4.2.0",
     "vite-tsconfig-paths": "4.2.1"
   },
