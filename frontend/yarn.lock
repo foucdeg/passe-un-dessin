@@ -7471,10 +7471,10 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-vite-plugin-mkcert@1.17.0:
-  version "1.17.0"
-  resolved "https://registry.yarnpkg.com/vite-plugin-mkcert/-/vite-plugin-mkcert-1.17.0.tgz#464b98ef5c911f2f135af08f5f5d4a9ff723bb45"
-  integrity sha512-b9xYDU/p8ddIwVRV/Nq4uHcclxJUzqkaxOCoypGEtuyCbUCE9gUhCc9Ea3xKIQdw6QwtXy9nkaJkjYR9PQE4nw==
+vite-plugin-mkcert@1.17.1:
+  version "1.17.1"
+  resolved "https://registry.yarnpkg.com/vite-plugin-mkcert/-/vite-plugin-mkcert-1.17.1.tgz#3fc6ae8674266565790bb2dbf02d3346bf9ab4d7"
+  integrity sha512-/OxFqPXF3yTuikjn5Lbgt0WWm6Yq0KBWkFj68MZTV/icv3tO+7Y/HS+8+4v9vyx0TDzkSTVyaC/4J7Qtnh/PIw==
   dependencies:
     "@octokit/rest" "^20.0.2"
     axios "^1.6.2"
