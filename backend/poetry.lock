@@ -606,13 +606,13 @@ pyflakes = ">=3.1.0,<3.2.0"
 
 [[package]]
 name = "google-auth"
-version = "2.24.0"
+version = "2.25.1"
 description = "Google Authentication Library"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "google-auth-2.24.0.tar.gz", hash = "sha256:2ec7b2a506989d7dbfdbe81cb8d0ead8876caaed14f86d29d34483cbe99c57af"},
-    {file = "google_auth-2.24.0-py2.py3-none-any.whl", hash = "sha256:9b82d5c8d3479a5391ea0a46d81cca698d328459da31d4a459d4e901a5d927e0"},
+    {file = "google-auth-2.25.1.tar.gz", hash = "sha256:d5d66b8f4f6e3273740d7bb73ddefa6c2d1ff691704bd407d51c6b5800e7c97b"},
+    {file = "google_auth-2.25.1-py2.py3-none-any.whl", hash = "sha256:dfd7b44935d498e106c08883b2dac0ad36d8aa10402a6412e9a1c9d74b4773f1"},
 ]
 
 [package.dependencies]
@@ -1243,4 +1243,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.5"
-content-hash = "5663ee1eca79484e671ac9056ece4b2727c3fbf49f7f5a0522370cc13b1e79d4"
+content-hash = "e9a918d538535eb532ca1d77b74ce8b70ec552f167c01dbf322246ebb3b789a9"
