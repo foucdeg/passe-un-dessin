@@ -1,7 +1,7 @@
 {
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.organizeImports": false
+    "source.organizeImports": "never"
   },
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
@@ -11,13 +11,16 @@
   "python.formatting.blackArgs": ["-l", "86"],
   "python.linting.enabled": true,
   "python.linting.flake8Enabled": true,
-  "python.linting.flake8Args": ["--ignore=E203,E501,W503", "--exclude=**/migrations/*"],
+  "python.linting.flake8Args": [
+    "--ignore=E203,E501,W503",
+    "--exclude=**/migrations/*"
+  ],
   "python.linting.pylintEnabled": false,
   "python.autoComplete.extraPaths": ["./backend"],
 
   "[json]": {
     "editor.tabSize": 2,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[javascript]": {
     "editor.tabSize": 2,
@@ -44,7 +47,7 @@
   ],
   "[python]": {
     "editor.codeActionsOnSave": {
-      "source.organizeImports": true
+      "source.organizeImports": "explicit"
     },
     "editor.tabSize": 4
   },
@@ -61,9 +64,7 @@
   ],
   "eslint.workingDirectories": ["./frontend"],
   "typescript.tsdk": "frontend/node_modules/typescript/lib",
-  "python.analysis.extraPaths": [
-    "./backend"
-  ],
+  "python.analysis.extraPaths": ["./backend"],
   "stylelint.stylelintPath": "frontend/node_modules/stylelint",
   "stylelint.validate": [
     "css",
