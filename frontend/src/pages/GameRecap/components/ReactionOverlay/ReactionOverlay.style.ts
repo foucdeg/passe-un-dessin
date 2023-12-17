@@ -49,11 +49,9 @@ export const LikeClickArea = styled.div`
   align-items: center;
   cursor: pointer;
 
-  /* stylelint-disable rule-empty-line-before */
   ${ThumbDownButton},${ThumbUpButton} {
     transition: transform 0.1s linear;
   }
-  /* stylelint-enable rule-empty-line-before */
 
   :hover ${/* sc-selector */ ThumbDownButton}, :hover ${ThumbUpButton} {
     transform: scale(1.2, 1.2);

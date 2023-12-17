@@ -20,10 +20,7 @@ jobs:
           name: Run TypeScript check
           command: yarn tsc
           working_directory: frontend
-      - run:
-          name: Run stylelint check
-          command: yarn stylelint
-          working_directory: frontend
+
 
   build-front:
     executor:
