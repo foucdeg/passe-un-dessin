@@ -1,1 +1,1 @@
-export { default } from './ChipButton';
+export { default, NextStepIcon } from './ChipButton';
