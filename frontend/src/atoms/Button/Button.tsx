@@ -1,7 +1,9 @@
 import React from 'react';
-import { BaseStyledButton, BaseStyledLink } from './Button.style';
+import { Link, LinkProps } from 'react-router-dom';
+import cn from 'classnames';
+import styles from './Button.module.scss';
 
-interface Props {
+export interface ButtonProps {
   children: React.ReactNode;
   to?: string;
   className?: string;
@@ -11,16 +13,48 @@ interface Props {
   target?: string;
 }
 
-const Button: React.FC<Props> = ({ to, children, ...otherProps }) => {
+const Button: React.FC<ButtonProps> = ({ to, children, ...otherProps }) => {
   if (to) {
     return (
-      <BaseStyledLink to={to} {...otherProps}>
+      <BaseLink to={to} {...otherProps}>
         {children}
-      </BaseStyledLink>
+      </BaseLink>
     );
   }
 
-  return <BaseStyledButton {...otherProps}>{children}</BaseStyledButton>;
+  return <BaseButton {...otherProps}>{children}</BaseButton>;
 };
 
 export default Button;
+
+function BaseLink({
+  children,
+  className,
+  disabled,
+  ...otherProps
+}: LinkProps & { disabled?: boolean }) {
+  return (
+    <Link
+      className={cn(styles['button'], className, { [styles.disabled]: disabled })}
+      {...otherProps}
+    >
+      {children}
+    </Link>
+  );
+}
+
+function BaseButton({
+  children,
+  className,
+  disabled,
+  ...otherProps
+}: React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>) {
+  return (
+    <button
+      className={cn(styles['button'], className, { [styles.disabled]: disabled })}
+      {...otherProps}
+    >
+      {children}
+    </button>
+  );
+}

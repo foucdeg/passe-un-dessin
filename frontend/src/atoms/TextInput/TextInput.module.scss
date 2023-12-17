@@ -1,0 +1,40 @@
+// import styled, { css } from 'styled-components';
+// import { fontSize, colorPalette, fontFamily } from 'stylesheet';
+
+@import '../../stylesheet';
+
+// export const StyledTextInput = styled.input`
+.text-input {
+  background: none;
+  border: 0;
+  padding: 0 24px;
+  line-height: 19px;
+  font-family: $font-family-main;
+  font-size: $font-size-medium;
+  width: 100%;
+
+  &[readonly] {
+    color: $color-palette-text-grey;
+  }
+}
+
+// export const AdornmentLocation = styled.div`
+.adornment-location {
+  margin-right: 16px;
+  height: 24px;
+}
+
+// export const InputAndAdornment = styled.div<{ hasError?: boolean }>`
+.input-and-adornment {
+  border: 2px solid $color-palette-purple;
+  border-radius: 16px;
+  height: 51px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: $color-palette-white;
+
+  &.has-error {
+    border-color: $color-palette-red;
+  }
+}

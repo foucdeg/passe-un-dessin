@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
-import { IconContainer, StyledTooltip } from './IconAndTooltip.style';
+import cn from 'classnames';
+import { iconContainer, tooltip } from './IconAndTooltip.module.scss';
 
 interface Props {
   tooltipText: string;
@@ -9,10 +10,10 @@ interface Props {
 }
 
 const IconAndTooltip: React.FC<Props> = ({ tooltipText, children, className, isRight }) => (
-  <IconContainer className={className}>
+  <span className={cn(iconContainer, className)}>
     {children}
-    <StyledTooltip $isRight={isRight}>{tooltipText}</StyledTooltip>
-  </IconContainer>
+    <span className={cn(tooltip, { right: isRight, left: !isRight })}>{tooltipText}</span>
+  </span>
 );
 
 export default IconAndTooltip;

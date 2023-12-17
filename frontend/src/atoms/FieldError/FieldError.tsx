@@ -1,14 +1,15 @@
 import { ErrorMessage, ErrorMessageProps } from 'formik';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { StyledErrorMessage } from './FieldError.style';
+import cn from 'classnames';
+import { errorMessage } from './FieldError.module.scss';
 
-const FieldError: React.FC<ErrorMessageProps> = (props) => (
+const FieldError: React.FC<ErrorMessageProps> = ({ className, ...props }) => (
   <ErrorMessage {...props}>
     {(msgId: string) => (
-      <StyledErrorMessage className={props.className}>
+      <p className={cn(errorMessage, className)}>
         <FormattedMessage id={msgId} />
-      </StyledErrorMessage>
+      </p>
     )}
   </ErrorMessage>
 );

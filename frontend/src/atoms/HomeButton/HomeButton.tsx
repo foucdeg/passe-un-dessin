@@ -1,7 +1,8 @@
 import React from 'react';
 import homeIcon from 'assets/home.svg';
-import { StyledLink } from './HomeButton.style';
-
+import { Link } from 'react-router-dom';
+import cn from 'classnames';
+import { homeButton } from './HomeButton.module.scss';
 interface Props {
   onClick?: () => void;
 }
@@ -9,11 +10,12 @@ interface Props {
 const HomeButton: React.FC<Props & React.AnchorHTMLAttributes<HTMLAnchorElement>> = ({
   onClick,
   children,
+  className,
   ...linkProps
 }) => (
-  <StyledLink onClick={onClick} to="/" {...linkProps}>
+  <Link className={cn(homeButton, className)} onClick={onClick} to="/" {...linkProps}>
     {children || <img src={homeIcon} alt="Back to Home" />}
-  </StyledLink>
+  </Link>
 );
 
 export default HomeButton;

@@ -1,0 +1,29 @@
+@import '../../stylesheet';
+
+$tooltip-background: rgba(0, 0, 0, .5);
+// export const IconContainer = styled.span`
+.icon-container {
+  position: relative;
+}
+
+.tooltip {
+  visibility: hidden;
+  position: absolute;
+  // left: 160%;
+  top: 0;
+  text-align: right;
+  width: max-content;
+  color: $color-palette-white;
+  z-index: 29;
+  background: $tooltip-background;
+  padding: 4px 12px;
+  border-radius: 12px;
+
+  &.left {
+    left: 160%;
+  }
+
+  &.right {
+    right: 150%;
+  }
+}

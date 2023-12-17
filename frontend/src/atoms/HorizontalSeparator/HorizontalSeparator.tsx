@@ -1,5 +1,7 @@
 import React from 'react';
-import { SeparatorRow, Line, SeparatorText } from './HorizontalSeparator.style';
+import cn from 'classnames';
+import Header4 from 'atoms/Header4';
+import { separatorRow, line, separatorText } from './HorizontalSeparator.module.scss';
 
 interface Props {
   children: React.ReactNode;
@@ -7,11 +9,11 @@ interface Props {
 }
 
 const HorizontalSeparator: React.FC<Props> = ({ children, className }) => (
-  <SeparatorRow className={className}>
-    <Line />
-    <SeparatorText>{children}</SeparatorText>
-    <Line />
-  </SeparatorRow>
+  <div className={cn(separatorRow, className)}>
+    <div className={line} />
+    <Header4 className={separatorText}>{children}</Header4>
+    <div className={line} />
+  </div>
 );
 
 export default HorizontalSeparator;

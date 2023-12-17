@@ -1,6 +1,12 @@
 import React from 'react';
 
-import { InputAndAdornment, StyledTextInput, AdornmentLocation } from './TextInput.style';
+import cn from 'classnames';
+import {
+  inputAndAdornment,
+  textInput,
+  adornmentLocation,
+  hasError as hasErrorClass,
+} from './TextInput.module.scss';
 
 type Props = React.InputHTMLAttributes<HTMLInputElement> & {
   adornment?: React.ReactNode;
@@ -9,10 +15,10 @@ type Props = React.InputHTMLAttributes<HTMLInputElement> & {
 
 const TextInput = React.forwardRef<HTMLInputElement, Props>(
   ({ adornment, className, hasError, ...inputProps }, ref) => (
-    <InputAndAdornment className={className} hasError={hasError}>
-      <StyledTextInput {...inputProps} ref={ref} />
-      {adornment && <AdornmentLocation>{adornment}</AdornmentLocation>}
-    </InputAndAdornment>
+    <div className={cn(inputAndAdornment, className, { [hasErrorClass]: hasError })}>
+      <input className={textInput} {...inputProps} ref={ref} />
+      {adornment && <div className={adornmentLocation}>{adornment}</div>}
+    </div>
   ),
 );
 

@@ -1,13 +1,14 @@
 import React from 'react';
-import { LoaderContainer, LoaderWrapper } from './Loader.style';
+import cn from 'classnames';
+import { loaderContainer, loaderWrapper } from './Loader.module.scss';
 
 // Loader from https://loading.io/css/
 interface Props {
   className?: string;
 }
 const Loader: React.FC<Props> = ({ className }) => (
-  <LoaderWrapper className={className}>
-    <LoaderContainer>
+  <div className={cn(loaderWrapper, className)}>
+    <div className={loaderContainer}>
       <div />
       <div />
       <div />
@@ -20,8 +21,8 @@ const Loader: React.FC<Props> = ({ className }) => (
       <div />
       <div />
       <div />
-    </LoaderContainer>
-  </LoaderWrapper>
+    </div>
+  </div>
 );
 
 export default Loader;

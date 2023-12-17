@@ -1,3 +1,4 @@
+import fs from 'fs';
 import { defineConfig, HttpProxy, ProxyOptions } from 'vite';
 import react from '@vitejs/plugin-react';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
@@ -30,7 +31,10 @@ export default defineConfig({
   plugins: [react(), viteTsconfigPaths(), svgrPlugin(), mkcert(), drawingsPlugin()],
   server: {
     port: 3000,
-    https: true,
+    https: {
+      key: fs.readFileSync('localhost-key.pem'),
+      cert: fs.readFileSync('localhost.pem'),
+    },
     proxy: {
       '/api': proxyToBackend,
       '/admin': proxyToBackend,
@@ -40,5 +44,10 @@ export default defineConfig({
   },
   build: {
     outDir: 'build',
+  },
+  css: {
+    modules: {
+      localsConvention: 'camelCaseOnly',
+    },
   },
 });

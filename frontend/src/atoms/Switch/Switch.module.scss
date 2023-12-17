@@ -1,0 +1,39 @@
+@import '../../stylesheet';
+
+.container {
+  min-width: 32px;
+  height: 18px;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  background-color: inherit;
+}
+
+.rod {
+  width: 100%;
+  height: 100%;
+  background-color: $color-palette-text-grey;
+  border-radius: 15px;
+
+  &.selected {
+    background-color: $color-palette-light-purple;
+  }
+}
+
+.circle {
+  border-radius: 50%;
+  height: 18px;
+  width: 20px;
+  position: absolute;
+  top: 0;
+  right: 20px;
+  background-color: $color-palette-black;
+  transition: right .2s;
+
+  &.selected {
+    right: 0;
+    background-color: $color-palette-purple;
+  }
+}

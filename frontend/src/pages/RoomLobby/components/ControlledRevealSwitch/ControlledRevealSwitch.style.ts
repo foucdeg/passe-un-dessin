@@ -6,10 +6,6 @@ export const Container = styled.div`
   margin-bottom: 16px;
   display: flex;
   align-items: center;
-
-  & > :not(:last-child) {
-    margin-right: 15px;
-  }
 `;
 
 export const Label = styled.strong`

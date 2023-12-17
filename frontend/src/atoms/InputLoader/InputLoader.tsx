@@ -1,15 +1,16 @@
 import React from 'react';
-import { OuterLoader, InnerLoader } from './InputLoader.style';
+import cn from 'classnames';
+import { outerLoader, innerLoader } from './InputLoader.module.scss';
 
-const InputLoader: React.FC<React.HTMLAttributes<HTMLDivElement>> = (attrs) => (
-  <OuterLoader {...attrs}>
-    <InnerLoader>
+const InputLoader: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className, ...props }) => (
+  <div className={cn(outerLoader, className)} {...props}>
+    <div className={innerLoader}>
       <div>
         <div></div>
         <div></div>
       </div>
-    </InnerLoader>
-  </OuterLoader>
+    </div>
+  </div>
 );
 
 export default InputLoader;
