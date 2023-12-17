@@ -1,7 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import { colorPalette } from 'stylesheet';
 
-/* stylelint-disable keyframes-name-pattern */
 const loaderAnimation = keyframes`
   0%, 20%, 80%, 100% {
     transform: scale(1);
@@ -21,7 +20,6 @@ export const LoaderWrapper = styled.div`
 `;
 
 // Loader from https://loading.io/css/
-/* stylelint-disable selector-max-type, selector-max-specificity */
 export const LoaderContainer = styled.div`
   display: inline-block;
   position: relative;

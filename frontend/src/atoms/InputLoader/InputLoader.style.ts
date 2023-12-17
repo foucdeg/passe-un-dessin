@@ -9,7 +9,6 @@ export const OuterLoader = styled.div`
 `;
 
 export const InnerLoader = styled.div`
-  /* stylelint-disable selector-max-type */
   @keyframes ldio-j6l2lofzo7 {
     0% {
       transform: rotate(0deg);
