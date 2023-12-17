@@ -5,7 +5,7 @@
   "type": "module",
   "dependencies": {
     "@formatjs/intl-pluralrules": "5.2.10",
-    "@reduxjs/toolkit": "1.9.7",
+    "@reduxjs/toolkit": "2.0.1",
     "@sentry/react": "7.86.0",
     "@sentry/tracing": "7.86.0",
     "copy-to-clipboard": "3.3.3",
@@ -23,7 +23,6 @@
     "react-router": "6.20.1",
     "react-router-dom": "6.20.1",
     "react-use": "17.4.2",
-    "redux": "4.2.1",
     "regenerator-runtime": "0.14.0",
     "styled-components": "6.1.1",
     "use-constant": "1.1.1"

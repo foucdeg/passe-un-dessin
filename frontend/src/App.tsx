@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Provider } from 'react-redux';
-import { Store } from 'redux';
+import { Store } from '@reduxjs/toolkit';
 
 import { BrowserRouter } from 'react-router-dom';
 import AppCrashFallback from './components/AppCrashFallback';
