@@ -3,20 +3,16 @@
  * If we were to do this in store.ts, reducers wouldn't be hot reloadable.
  */
 
-import { combineReducers } from 'redux';
-
 import { reducer as room } from './Room';
 import { reducer as game } from './Game';
 import { reducer as player } from './Player';
 import { reducer as step } from './Step';
 
-import { RootState } from './types';
-
-const rootReducer = combineReducers<RootState>({
+const rootReducer = {
   room,
   game,
   player,
   step,
-});
+};
 
 export default rootReducer;
