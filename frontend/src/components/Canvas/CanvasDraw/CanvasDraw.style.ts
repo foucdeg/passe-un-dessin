@@ -1,5 +1,5 @@
 import timerIcon from 'assets/timer.svg';
-import Header2 from 'atoms/Header2';
+import { Header2 } from 'atoms/Headers';
 import styled from 'styled-components';
 import { colorPalette } from 'stylesheet';
 import CheckIcon from 'assets/check.svg?react';

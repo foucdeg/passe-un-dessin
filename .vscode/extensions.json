@@ -4,7 +4,6 @@
     "ms-python.python",
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "styled-components.vscode-styled-components",
     "EditorConfig.EditorConfig"
   ]
 }

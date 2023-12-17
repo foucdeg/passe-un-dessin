@@ -1,0 +1,25 @@
+@import '../../stylesheet';
+
+.header-2 {
+  font-family: $font-family-titles;
+  font-size: $font-size-header-2;
+  text-transform: uppercase;
+  line-height: 28px;
+}
+
+
+
+.header-3 {
+  font-family: $font-family-main;
+  font-size: $font-size-header-3;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.header-4{
+  font-family: $font-family-main;
+  font-size: $font-size-header-4;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  font-variant: small-caps;
+}

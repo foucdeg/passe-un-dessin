@@ -1,0 +1,18 @@
+@import '../../stylesheet';
+
+.separator-row {
+  display: flex;
+  align-items: center;
+}
+
+.line {
+  border-top: 1px solid $color-palette-text-grey;
+  flex-grow: 1;
+  height: 1px;
+}
+
+.separator-text {
+  color: $color-palette-text-grey;
+  flex-grow: 0;
+  margin: 0 16px;
+}

@@ -1,0 +1,19 @@
+@import '../../stylesheet';
+
+.player-chip {
+  color: $color-palette-white;
+  height: 36px;
+  padding: 8px 16px;
+  border-radius: 18px;
+  background-color: $color-palette-orange;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  line-height: 19px;
+  display: flex;
+  align-items: flex-end;
+  white-space: nowrap;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}

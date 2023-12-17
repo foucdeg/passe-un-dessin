@@ -1,0 +1,36 @@
+@import '../../stylesheet';
+
+$background-from: #ff9314;
+$background-to: #ff0080;
+
+.button {
+  height: 51px;
+  padding: 16px 32px;
+  font-family: $font-family-main;
+  font-weight: bold;
+  letter-spacing: .05em;
+  background: linear-gradient(90deg, $background-from 0%, $background-to 100%);
+  font-size: $font-size-medium;
+  box-shadow: 4px 2px 10px 2px rgba(0 0 0 / 15%);
+  cursor: pointer;
+  border: 0;
+  border-radius: 28px;
+  color: $color-palette-white;
+  outline: none;
+  text-decoration: none;
+
+
+  &:active {
+    box-shadow: inset -4px -2px 10px 2px rgba(0 0 0 / 15%);
+  }
+
+  &.disabled {
+    cursor: default;
+    color: $color-palette-text-grey;
+    pointer-events: none;
+    background: $color-palette-background-grey;
+    border: 2px solid $color-palette-text-grey;
+    box-shadow: none;
+    padding: 14px 30px;
+  }
+}

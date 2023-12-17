@@ -1,4 +1,4 @@
-import Header2 from 'atoms/Header2';
+import { Header2 } from 'atoms/Headers';
 import styled from 'styled-components';
 
 import { fontSize, fontFamily, colorPalette } from 'stylesheet';

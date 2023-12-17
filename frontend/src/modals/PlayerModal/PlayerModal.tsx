@@ -3,7 +3,7 @@ import { useSelector } from 'redux/useSelector';
 import { FormattedMessage } from 'react-intl';
 import { selectPlayer, selectPlayerId } from 'redux/Player/selectors';
 import { useLogout, useFetchMe, useEditPlayer } from 'redux/Player/hooks';
-import Header4 from 'atoms/Header4';
+import { Header4 } from 'atoms/Headers';
 import SecondaryButton from 'atoms/SecondaryButton';
 import { colorPalette } from 'stylesheet';
 import { PUBLIC_PATHS } from 'routes';

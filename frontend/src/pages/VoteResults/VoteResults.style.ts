@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import SecondaryButton from 'atoms/SecondaryButton';
-import Header2 from 'atoms/Header2';
+import { Header2 } from 'atoms/Headers';
 import LaunchIcon from 'assets/launch.svg?react';
 import { colorPalette, fontSize } from 'stylesheet';
 import { PODIUM_WIDTH } from './components/Podium/Podium';

@@ -124,7 +124,7 @@ const RoomLobby: React.FunctionComponent = () => {
       <StyledHeader>
         <FormattedMessage id="roomLobby.title" />
       </StyledHeader>
-      <StyledRoomName>{room.friendly_name}</StyledRoomName>
+      <StyledRoomName>&ldquo;{room.friendly_name}&rdquo;</StyledRoomName>
       <FieldLabel>
         <FormattedMessage
           id="roomLobby.sendLink"

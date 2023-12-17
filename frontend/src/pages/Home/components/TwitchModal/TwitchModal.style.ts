@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Header3 from 'atoms/Header3';
+import { Header3 } from 'atoms/Headers';
 import { colorPalette } from 'stylesheet';
 import Modal from 'components/Modal';
 

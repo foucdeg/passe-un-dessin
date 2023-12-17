@@ -1,5 +1,6 @@
 import React, { HTMLAttributes } from 'react';
-import { Circle, Container, Rod } from './Switch.style';
+import cn from 'classnames';
+import { circle, container, rod, selected as selectedClass } from './Switch.module.scss';
 
 type Props = {
   setSelected: (selected: boolean) => void;
@@ -9,12 +10,17 @@ type Props = {
 const Switch: React.FC<Props & HTMLAttributes<HTMLButtonElement>> = ({
   setSelected,
   selected,
+  className,
   ...containerProps
 }) => (
-  <Container {...containerProps} onClick={() => setSelected(!selected)}>
-    <Rod selected={selected} />
-    <Circle selected={selected} />
-  </Container>
+  <button
+    className={cn(container, className)}
+    {...containerProps}
+    onClick={() => setSelected(!selected)}
+  >
+    <div className={cn(rod, { [selectedClass]: selected })} />
+    <div className={cn(circle, { [selectedClass]: selected })} />
+  </button>
 );
 
 export default Switch;

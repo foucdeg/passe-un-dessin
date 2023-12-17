@@ -1,0 +1,9 @@
+@import '../../stylesheet';
+
+.secondary-button {
+  border: 2px solid $color-palette-orange;
+  color: $color-palette-orange;
+  background: $color-palette-white;
+  display: flex;
+  align-items: center;
+}

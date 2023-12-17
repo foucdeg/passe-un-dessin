@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Modal from 'components/Modal';
-import Header2 from 'atoms/Header2';
+import { Header2 } from 'atoms/Headers';
 import { colorPalette } from 'stylesheet';
 
 export const WideModal = styled(Modal)`
