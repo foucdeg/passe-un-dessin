@@ -188,8 +188,8 @@ export const useDrawOwnWordSwitch = (initialValue?: boolean) => {
     initialValue !== undefined
       ? initialValue
       : useDrawOwnWordStr !== null
-      ? useDrawOwnWordStr === 'true'
-      : DEFAULT_DRAW_OWN_WORD_BOOL,
+        ? useDrawOwnWordStr === 'true'
+        : DEFAULT_DRAW_OWN_WORD_BOOL,
   );
 };
 
@@ -200,8 +200,8 @@ export const useControlledRevealSwitch = (initialValue?: boolean) => {
     initialValue !== undefined
       ? initialValue
       : useControlledRevealStr !== null
-      ? useControlledRevealStr === 'true'
-      : DEFAULT_CONTROLLED_REVEAL_BOOL,
+        ? useControlledRevealStr === 'true'
+        : DEFAULT_CONTROLLED_REVEAL_BOOL,
   );
 };
 
