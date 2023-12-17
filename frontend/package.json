@@ -80,7 +80,7 @@
     "prettier": "3.1.1",
     "serve-static": "1.15.0",
     "source-map-explorer": "2.5.3",
-    "stylelint": "15.11.0",
+    "stylelint": "16.0.2",
     "stylelint-config-prettier": "9.0.5",
     "stylelint-config-standard": "34.0.0",
     "stylelint-config-styled-components": "0.1.1",
