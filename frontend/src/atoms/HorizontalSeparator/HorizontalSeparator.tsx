@@ -1,6 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-import Header4 from 'atoms/Header4';
+import { Header4 } from 'atoms/Headers';
 import { separatorRow, line, separatorText } from './HorizontalSeparator.module.scss';
 
 interface Props {

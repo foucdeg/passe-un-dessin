@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { colorPalette } from 'stylesheet';
-import Header2 from 'atoms/Header2';
+import { Header2 } from 'atoms/Headers';
 
 export const StyledHeader = styled(Header2)`
   color: ${colorPalette.purple};

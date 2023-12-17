@@ -1,9 +1,5 @@
-// import styled, { css } from 'styled-components';
-// import { fontSize, colorPalette, fontFamily } from 'stylesheet';
-
 @import '../../stylesheet';
 
-// export const StyledTextInput = styled.input`
 .text-input {
   background: none;
   border: 0;
@@ -18,13 +14,11 @@
   }
 }
 
-// export const AdornmentLocation = styled.div`
 .adornment-location {
   margin-right: 16px;
   height: 24px;
 }
 
-// export const InputAndAdornment = styled.div<{ hasError?: boolean }>`
 .input-and-adornment {
   border: 2px solid $color-palette-purple;
   border-radius: 16px;

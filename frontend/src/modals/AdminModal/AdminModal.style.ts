@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Header2 from 'atoms/Header2';
+import { Header2 } from 'atoms/Headers';
 import PlayerChips from 'atoms/PlayerChips';
 import crossIcon from 'assets/cross.svg';
 import { colorPalette } from 'stylesheet';

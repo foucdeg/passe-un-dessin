@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Header2 from 'atoms/Header2';
+import { Header2 } from 'atoms/Headers';
 import { colorPalette, fontWeight } from 'stylesheet';
 import Modal from 'components/Modal';
 import trophy from 'assets/trophy.svg';

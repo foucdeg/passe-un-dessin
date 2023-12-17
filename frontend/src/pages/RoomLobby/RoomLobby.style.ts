@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { colorPalette, fontSize } from 'stylesheet';
 import TextInput from 'atoms/TextInput';
-import Header2 from 'atoms/Header2';
+import { Header2 } from 'atoms/Headers';
 
 import crossIcon from 'assets/big-cross.svg';
 import linkIcon from 'assets/link.svg';
-import Header4 from 'atoms/Header4';
+import { Header4 } from 'atoms/Headers';
 
 export const Info = styled.span`
   color: ${colorPalette.textGrey};

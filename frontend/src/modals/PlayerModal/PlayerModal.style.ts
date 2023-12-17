@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Header2 from 'atoms/Header2';
+import { Header2 } from 'atoms/Headers';
 import UndoIcon from 'assets/undo.svg?react';
 import { colorPalette } from 'stylesheet';
 import Modal from 'components/Modal';

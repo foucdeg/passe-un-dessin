@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import Header2 from 'atoms/Header2';
+import { Header2 } from 'atoms/Headers';
 import { colorPalette } from 'stylesheet';
-import Header3 from 'atoms/Header3';
+import { Header3 } from 'atoms/Headers';
 
 export const LeftAndRightSide = styled.div`
   width: 100%;

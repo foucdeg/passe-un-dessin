@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import arrowLeft from 'assets/arrow-left.svg?react';
 
 import { fontSize, fontFamily, colorPalette } from 'stylesheet';
-import Header4 from 'atoms/Header4';
-import Header3 from 'atoms/Header3';
+import { Header4 } from 'atoms/Headers';
+import { Header3 } from 'atoms/Headers';
 
 export const LeftSideTitle = styled.h1`
   font-family: ${fontFamily.titles};
