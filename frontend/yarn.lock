@@ -5754,10 +5754,10 @@ postcss-scss@4.0.9:
   resolved "https://registry.yarnpkg.com/postcss-scss/-/postcss-scss-4.0.9.tgz#a03c773cd4c9623cb04ce142a52afcec74806685"
   integrity sha512-AjKOeiwAitL/MXxQW2DliT28EKukvvbEWx3LBmJIRN8KfBGZbRTxNYW0kSqi1COiTZ57nZ9NW06S6ux//N1c9A==
 
-postcss-styled-syntax@0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/postcss-styled-syntax/-/postcss-styled-syntax-0.6.0.tgz#8d90593669c0c75fa4f65bc287bda525d3bd0e36"
-  integrity sha512-n0Q/sMVrCKTBmsNEn9EILHTrusA/PeanA/bzV+SEfdTPDBMg/d5GNQXTbvGTpKnFALaBLoWduONAOlHjfA1Vtw==
+postcss-styled-syntax@0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/postcss-styled-syntax/-/postcss-styled-syntax-0.6.1.tgz#60417fa15ebad264e282b447f757c99ce9da35b5"
+  integrity sha512-Yz0eW3p9HQvRRGLF+UV7a1QGI/D/wcBeC86UiIkQgw/CIgytczoLxC9CRsPSvWd+7dXNqiReAlNe1SfE5Yf1kg==
   dependencies:
     typescript "^5.3.3"
 
