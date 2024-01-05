@@ -81,7 +81,7 @@
     "source-map-explorer": "2.5.3",
     "typescript": "5.3.3",
     "user-agent-data-types": "0.4.2",
-    "vite": "5.0.10",
+    "vite": "5.0.11",
     "vite-plugin-mkcert": "1.17.1",
     "vite-plugin-svgr": "4.2.0",
     "vite-tsconfig-paths": "4.2.3"
