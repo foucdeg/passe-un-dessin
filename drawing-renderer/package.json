@@ -20,6 +20,6 @@
     "start": "node server.js"
   },
   "devDependencies": {
-    "prettier": "3.2.1"
+    "prettier": "3.2.2"
   }
 }
