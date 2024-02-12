@@ -5,7 +5,7 @@
   "type": "module",
   "dependencies": {
     "@formatjs/intl-pluralrules": "5.2.12",
-    "@reduxjs/toolkit": "2.1.0",
+    "@reduxjs/toolkit": "2.2.0",
     "@sentry/react": "7.100.1",
     "@sentry/tracing": "7.100.1",
     "copy-to-clipboard": "3.3.3",
