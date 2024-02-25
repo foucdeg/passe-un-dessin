@@ -37,5 +37,5 @@ django-cprofile-middleware = "1.0.5"
 exclude = 'migrations'
 
 [build-system]
-requires = ["poetry==1.7.1"]
+requires = ["poetry==1.8.0"]
 build-backend = "poetry.masonry.api"
