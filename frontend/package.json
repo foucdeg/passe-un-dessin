@@ -79,7 +79,7 @@
     "prettier": "3.2.5",
     "serve-static": "1.15.0",
     "source-map-explorer": "2.5.3",
-    "typescript": "5.3.3",
+    "typescript": "5.4.2",
     "user-agent-data-types": "0.4.2",
     "vite": "5.1.5",
     "vite-plugin-mkcert": "1.17.4",
