@@ -58,7 +58,7 @@
     "@types/node": "20.11.30",
     "@types/react": "18.2.67",
     "@types/react-dom": "18.2.22",
-    "@types/superagent": "4.1.24",
+    "@types/superagent": "8.1.6",
     "@vitejs/plugin-react": "4.2.1",
     "babel-plugin-styled-components": "2.1.4",
     "bundlesize": "0.18.2",
