@@ -452,15 +452,16 @@ sqlparse = ">=0.2"
 
 [[package]]
 name = "django-eventstream"
-version = "4.5.1"
+version = "5.1.0"
 description = "Server-Sent Events for Django"
 optional = false
 python-versions = "*"
 files = [
-    {file = "django-eventstream-4.5.1.tar.gz", hash = "sha256:3527029e5ebe912c27cf42ada34f6c4ec83ff510e7f95a7f8f273debd0db7998"},
+    {file = "django-eventstream-5.1.0.tar.gz", hash = "sha256:2fff6e9453a8fe22353ad77cc1bdefb62a14e3290756566ae75118a5703c08db"},
 ]
 
 [package.dependencies]
+Django = ">=5"
 django_grip = ">=3.0,<4"
 gripcontrol = ">=4.0,<5"
 PyJWT = ">=1.5,<3"
@@ -1234,4 +1235,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.5"
-content-hash = "0c713f1f2ce0eebd6eaec98e3c8f7fb0996d5e11c6aa03dce9b08a3af9d6b440"
+content-hash = "c4b53159a82a3d0bcc98ccffe71ed853da628fd5ec555782f8fff972146858a9"
