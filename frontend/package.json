@@ -57,7 +57,7 @@
     "@types/lz-string": "1.5.0",
     "@types/node": "20.12.3",
     "@types/react": "18.2.74",
-    "@types/react-dom": "18.2.23",
+    "@types/react-dom": "18.2.24",
     "@types/superagent": "4.1.24",
     "@vitejs/plugin-react": "4.2.1",
     "babel-plugin-styled-components": "2.1.4",
