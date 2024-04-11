@@ -56,8 +56,8 @@
   "devDependencies": {
     "@types/lz-string": "1.5.0",
     "@types/node": "20.12.7",
-    "@types/react": "18.2.75",
-    "@types/react-dom": "18.2.24",
+    "@types/react": "18.2.77",
+    "@types/react-dom": "18.2.25",
     "@types/superagent": "4.1.24",
     "@vitejs/plugin-react": "4.2.1",
     "babel-plugin-styled-components": "2.1.4",
