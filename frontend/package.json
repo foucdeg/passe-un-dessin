@@ -12,7 +12,7 @@
     "core-js": "3.37.0",
     "date-fns": "2.30.0",
     "eslint": "8.57.0",
-    "formik": "2.4.5",
+    "formik": "2.4.6",
     "lz-string": "1.5.0",
     "postcss-scss": "4.0.9",
     "react": "18.2.0",
