@@ -24,7 +24,7 @@ django-cors-headers = "==4.3.1"
 
 [tool.poetry.dev-dependencies]
 debugpy = "==1.8.1"
-flake8 = "==6.1.0"
+flake8 = "==7.1.0"
 factory-boy = "==3.3.0"
 coverage = "==7.4.4"
 django-debug-toolbar = "==4.3.0"
