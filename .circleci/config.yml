@@ -99,7 +99,7 @@ jobs:
 
   build-back:
     docker:
-      - image: cimg/base:2023.12
+      - image: cimg/base:2024.12
     steps:
       - checkout
       - setup_remote_docker:
@@ -111,7 +111,7 @@ jobs:
 
   build-deploy-back:
     docker:
-      - image: cimg/base:2023.12
+      - image: cimg/base:2024.12
     steps:
       - checkout
       - setup_remote_docker:
@@ -129,7 +129,7 @@ jobs:
 
   build-drawing-renderer:
     docker:
-      - image: cimg/base:2023.12
+      - image: cimg/base:2024.12
     steps:
       - checkout
       - setup_remote_docker:
@@ -141,7 +141,7 @@ jobs:
 
   build-deploy-drawing-renderer:
     docker:
-      - image: cimg/base:2023.12
+      - image: cimg/base:2024.12
     steps:
       - checkout
       - setup_remote_docker:
@@ -159,7 +159,7 @@ jobs:
 
   build-pushpin:
     docker:
-      - image: cimg/base:2023.12
+      - image: cimg/base:2024.12
     steps:
       - checkout
       - setup_remote_docker:
@@ -171,7 +171,7 @@ jobs:
 
   build-deploy-pushpin:
     docker:
-      - image: cimg/base:2023.12
+      - image: cimg/base:2024.12
     steps:
       - checkout
       - setup_remote_docker:
