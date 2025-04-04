@@ -7,7 +7,7 @@
 #
 
 # Pull the base image
-FROM ubuntu:22.04 AS pushpin
+FROM ubuntu:24.04 AS pushpin
 
 # Add private APT repository
 RUN \
