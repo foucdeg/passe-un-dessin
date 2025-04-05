@@ -74,7 +74,7 @@
     "vite": "6.2.5",
     "vite-plugin-mkcert": "1.17.8",
     "vite-plugin-svgr": "4.2.0",
-    "vite-tsconfig-paths": "4.3.2"
+    "vite-tsconfig-paths": "5.1.4"
   },
   "packageManager": "yarn@4.8.1",
   "volta": {
