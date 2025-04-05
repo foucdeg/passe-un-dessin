@@ -47,12 +47,6 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "bundlesize": [
-    {
-      "path": "./build/static/js/*.js",
-      "maxSize": "200 kB"
-    }
-  ],
   "devDependencies": {
     "@types/lz-string": "1.5.0",
     "@types/node": "20.14.9",
@@ -61,7 +55,6 @@
     "@types/superagent": "8.1.9",
     "@vitejs/plugin-react": "4.3.4",
     "babel-plugin-styled-components": "2.1.4",
-    "bundlesize": "0.18.2",
     "customize-cra": "1.0.0",
     "cypress": "13.12.0",
     "eslint-config-prettier": "9.1.0",
