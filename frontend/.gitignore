@@ -24,3 +24,8 @@ cypress/videos/*
 !cypress/videos/.gitkeep
 cypress/screenshots/*
 !cypress/screenshots/.gitkeep
+
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+.pnp.*

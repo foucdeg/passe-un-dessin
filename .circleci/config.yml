@@ -6,9 +6,12 @@ jobs:
   lint-front:
     executor:
       name: node/default
-      tag: "18.11"
+      tag:  "22.14.0"
     steps:
       - checkout
+      - run:
+          name: Explicit corepack install
+          command: npm install -g corepack
       - node/install-packages:
           pkg-manager: yarn
           app-dir: frontend
@@ -25,11 +28,14 @@ jobs:
   build-front:
     executor:
       name: node/default
-      tag: "18.11"
+      tag: "22.14.0"
     environment:
       REACT_APP_ENV: production
     steps:
       - checkout
+      - run:
+          name: Explicit corepack install
+          command: npm install -g corepack
       - node/install-packages:
           pkg-manager: yarn
           app-dir: frontend
@@ -43,7 +49,7 @@ jobs:
   build-deploy-front:
     executor:
       name: node/default
-      tag: "18.11"
+      tag: "22.14.0"
     environment:
       REACT_APP_ENV: production
       SENTRY_ORG: passe-un-dessin
@@ -51,6 +57,9 @@ jobs:
       SENTRY_NO_PROGRESS_BAR: 1
     steps:
       - checkout
+      - run:
+          name: Explicit corepack install
+          command: npm install -g corepack
       - node/install-packages:
           pkg-manager: yarn
           app-dir: frontend
