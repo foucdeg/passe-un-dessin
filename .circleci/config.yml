@@ -9,9 +9,9 @@ jobs:
       tag:  "22.14.0"
     steps:
       - checkout
-      - node/install:
-          install-yarn: true
-          yarn-version: 4.8.1
+      - run:
+          name: Explicit corepack install
+          command: npm install -g corepack
       - node/install-packages:
           pkg-manager: yarn
           app-dir: frontend
@@ -33,9 +33,9 @@ jobs:
       REACT_APP_ENV: production
     steps:
       - checkout
-      - node/install:
-          install-yarn: true
-          yarn-version: 4.8.1
+      - run:
+          name: Explicit corepack install
+          command: npm install -g corepack
       - node/install-packages:
           pkg-manager: yarn
           app-dir: frontend
@@ -57,9 +57,9 @@ jobs:
       SENTRY_NO_PROGRESS_BAR: 1
     steps:
       - checkout
-      - node/install:
-          install-yarn: true
-          yarn-version: 4.8.1
+      - run:
+          name: Explicit corepack install
+          command: npm install -g corepack
       - node/install-packages:
           pkg-manager: yarn
           app-dir: frontend
