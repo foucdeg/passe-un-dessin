@@ -10,7 +10,7 @@ jobs:
     steps:
       - checkout
       - node/install-packages:
-          pkg-manager: yarn
+          pkg-manager: yarn-berry
           app-dir: frontend
       - run:
           name: Run linter
@@ -31,7 +31,7 @@ jobs:
     steps:
       - checkout
       - node/install-packages:
-          pkg-manager: yarn
+          pkg-manager: yarn-berry
           app-dir: frontend
       - run:
           name: Build app
@@ -52,7 +52,7 @@ jobs:
     steps:
       - checkout
       - node/install-packages:
-          pkg-manager: yarn
+          pkg-manager: yarn-berry
           app-dir: frontend
       - run:
           name: Install sentry-cli
