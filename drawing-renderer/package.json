@@ -6,7 +6,6 @@
   "repository": "https://github.com/foucdeg/passe-un-dessin",
   "author": "Foucauld Degeorges",
   "license": "MIT",
-  "private": false,
   "dependencies": {
     "@sentry/node": "7.118.0",
     "express": "4.20.0",
@@ -21,5 +20,10 @@
   },
   "devDependencies": {
     "prettier": "3.3.2"
+  },
+  "packageManager": "yarn@4.8.1",
+  "volta": {
+    "node": "22.14.0",
+    "yarn": "4.8.1"
   }
 }
