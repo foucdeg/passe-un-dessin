@@ -4216,10 +4216,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:3.37.1":
-  version: 3.37.1
-  resolution: "core-js@npm:3.37.1"
-  checksum: 10c0/440eb51a7a39128a320225fe349f870a3641b96c9ecd26470227db730ef8c161ea298eaea621db66ec0ff622a85299efb4e23afebf889c0a1748616102307675
+"core-js@npm:3.41.0":
+  version: 3.41.0
+  resolution: "core-js@npm:3.41.0"
+  checksum: 10c0/a29ed0b7fe81acf49d04ce5c17a1947166b1c15197327a5d12f95bbe84b46d60c3c13de701d808f41da06fa316285f3f55ce5903abc8d5642afc1eac4457afc8
   languageName: node
   linkType: hard
 
@@ -7778,7 +7778,7 @@ __metadata:
     "@vitejs/plugin-react": "npm:4.3.4"
     babel-plugin-styled-components: "npm:2.1.4"
     copy-to-clipboard: "npm:3.3.3"
-    core-js: "npm:3.37.1"
+    core-js: "npm:3.41.0"
     customize-cra: "npm:1.0.0"
     cypress: "npm:13.12.0"
     date-fns: "npm:2.30.0"
