@@ -41,9 +41,9 @@ class GameRetrieveAPIView(RetrieveAPIView):
     queryset = Game.objects.prefetch_related(
         Prefetch(
             "participants",
-            queryset=PlayerGameParticipation.objects.select_related(
-                "player"
-            ).order_by("order"),
+            queryset=PlayerGameParticipation.objects.select_related("player").order_by(
+                "order"
+            ),
         ),
         "pads",
         Prefetch("pads__steps", queryset=PadStep.objects.select_related("player")),

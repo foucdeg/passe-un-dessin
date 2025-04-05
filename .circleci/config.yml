@@ -105,6 +105,10 @@ jobs:
           command: poetry run flake8 ./
           working_directory: backend
           name: Run linter
+      - run:
+          command: poetry run black core passe_un_dessin suggestions twitch --check
+          working_directory: backend
+          name: Run formatter check
 
   build-back:
     docker:

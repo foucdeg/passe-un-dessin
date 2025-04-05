@@ -11,9 +11,11 @@ def password_reset_token_created(
 ):
     context = {
         "current_user": reset_password_token.user,
-        "player": reset_password_token.user.player.name
-        if reset_password_token.user.player
-        else reset_password_token.user.username,
+        "player": (
+            reset_password_token.user.player.name
+            if reset_password_token.user.player
+            else reset_password_token.user.username
+        ),
         "email": reset_password_token.user.email,
         "reset_password_url": "{}/password-reset?token={}".format(
             settings.MAIN_FRONTEND, reset_password_token.key

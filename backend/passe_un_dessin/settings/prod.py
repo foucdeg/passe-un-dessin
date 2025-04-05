@@ -40,8 +40,14 @@ EVENTSTREAM_ALLOW_ORIGIN = "passeundessin.com"
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "handlers": {"console": {"class": "logging.StreamHandler",}},
-    "loggers": {"django": {"handlers": ["console"]},},
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        }
+    },
+    "loggers": {
+        "django": {"handlers": ["console"]},
+    },
 }
 
 

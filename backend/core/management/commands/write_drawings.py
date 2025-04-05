@@ -10,7 +10,10 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            "--game", type=str, default=None, help="A game ID to restrict execution.",
+            "--game",
+            type=str,
+            default=None,
+            help="A game ID to restrict execution.",
         )
 
     def handle(self, *args, **options):

@@ -35,9 +35,7 @@ def get_leaderboard(request):
 
     serialized_leaderboard = PlayerSerializer(players, many=True).data
 
-    return JsonResponse(
-        {"pageData": serialized_leaderboard, "pageNumber": page_number}
-    )
+    return JsonResponse({"pageData": serialized_leaderboard, "pageNumber": page_number})
 
 
 @require_GET
@@ -67,7 +65,10 @@ def send_email_for_desktop_access(request):
     email_body = render_to_string("general/desktop_access_body.txt", context)
 
     msg = EmailMultiAlternatives(
-        email_subject, email_body, settings.DEFAULT_FROM_EMAIL, [email],
+        email_subject,
+        email_body,
+        settings.DEFAULT_FROM_EMAIL,
+        [email],
     )
     msg.send()
 

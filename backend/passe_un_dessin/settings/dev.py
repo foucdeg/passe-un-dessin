@@ -33,8 +33,7 @@ CACHES = {
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "[::1]", "192.168.1.72"]
 
 DEBUG_TOOLBAR_CONFIG = {
-    "SHOW_TOOLBAR_CALLBACK": lambda request: request.META["SERVER_NAME"]
-    != "testserver"
+    "SHOW_TOOLBAR_CALLBACK": lambda request: request.META["SERVER_NAME"] != "testserver"
 }
 
 CSRF_TRUSTED_ORIGINS = ["https://localhost:3000"]
@@ -47,7 +46,11 @@ EVENTSTREAM_ALLOW_ORIGIN = "*"
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "handlers": {"console": {"class": "logging.StreamHandler",},},
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
     "loggers": {
         "django": {
             "handlers": ["console"],

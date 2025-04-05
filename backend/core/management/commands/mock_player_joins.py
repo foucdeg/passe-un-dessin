@@ -10,7 +10,9 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument("room-id", type=str, help="The room ID")
         parser.add_argument(
-            "player-name", type=str, help="The name of the player to create",
+            "player-name",
+            type=str,
+            help="The name of the player to create",
         )
 
     def handle(self, *args, **options):

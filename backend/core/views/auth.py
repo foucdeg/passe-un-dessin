@@ -198,7 +198,5 @@ class ResetPasswordTokenDetails(ResetPasswordValidateToken):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         print()
-        token = get_object_or_404(
-            ResetPasswordToken, key=serializer.data.get("token")
-        )
+        token = get_object_or_404(ResetPasswordToken, key=serializer.data.get("token"))
         return Response({"status": "OK", "email": token.user.email})

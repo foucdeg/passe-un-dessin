@@ -24,8 +24,7 @@ def fetch_and_handle_streams(polling):
 
     # Handle streams
     live_streams_in_db_by_id = {
-        stream.twitch_id: stream
-        for stream in Stream.objects.filter(type="live").all()
+        stream.twitch_id: stream for stream in Stream.objects.filter(type="live").all()
     }
     new_streams_count = 0
     for stream in live_streams:

@@ -107,7 +107,10 @@ def initialize_pad(game: Game, index: int, players: List[Player]):
         % (pad.uuid.hex[:8], 0, players[index], "INITIAL")
     )
     PadStep.objects.create(
-        pad=pad, player=players[index], round_number=0, step_type="INITIAL",
+        pad=pad,
+        player=players[index],
+        round_number=0,
+        step_type="INITIAL",
     )
 
     for round_number in range(1, step_count + 1):
@@ -304,10 +307,14 @@ def start_reveal(game: Game):
 
     game.save()
     send_event(
-        "game-%s" % game.uuid.hex, "message", message,
+        "game-%s" % game.uuid.hex,
+        "message",
+        message,
     )
     send_event(
-        "room-%s" % game.room.uuid.hex, "message", message,
+        "room-%s" % game.room.uuid.hex,
+        "message",
+        message,
     )
 
 
@@ -319,10 +326,14 @@ def start_debrief(game: Game):
 
     game.save()
     send_event(
-        "game-%s" % game.uuid.hex, "message", message,
+        "game-%s" % game.uuid.hex,
+        "message",
+        message,
     )
     send_event(
-        "room-%s" % game.room.uuid.hex, "message", message,
+        "room-%s" % game.room.uuid.hex,
+        "message",
+        message,
     )
 
 

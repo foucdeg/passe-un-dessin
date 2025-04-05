@@ -11,7 +11,9 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            "language", type=str, help="The language to import",
+            "language",
+            type=str,
+            help="The language to import",
         )
 
     def handle(self, *args, **options):

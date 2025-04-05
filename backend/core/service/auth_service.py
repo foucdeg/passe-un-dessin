@@ -141,9 +141,7 @@ def merge_players(from_player: Player, into_player: Player):
     from_player.delete()
 
     # Recompute total score
-    into_player.total_score = Vote.objects.filter(
-        pad_step__player=into_player
-    ).count()
+    into_player.total_score = Vote.objects.filter(pad_step__player=into_player).count()
 
     # apply latest avatar
     if from_avatar and (

@@ -114,7 +114,10 @@ class PlayerWithHistorySerializer(PlayerSerializer):
 
     class Meta:
         model = Player
-        fields = PlayerSerializer.Meta.fields + ("created_at", "participations",)
+        fields = PlayerSerializer.Meta.fields + (
+            "created_at",
+            "participations",
+        )
 
 
 class PadIdSerializer(BaseSerializer):
