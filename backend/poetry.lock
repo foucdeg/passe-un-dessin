@@ -650,14 +650,14 @@ pyflakes = ">=3.3.0,<3.4.0"
 
 [[package]]
 name = "google-auth"
-version = "2.30.0"
+version = "2.38.0"
 description = "Google Authentication Library"
 optional = false
 python-versions = ">=3.7"
 groups = ["main"]
 files = [
-    {file = "google-auth-2.30.0.tar.gz", hash = "sha256:ab630a1320f6720909ad76a7dbdb6841cdf5c66b328d690027e4867bdfb16688"},
-    {file = "google_auth-2.30.0-py2.py3-none-any.whl", hash = "sha256:8df7da660f62757388b8a7f249df13549b3373f24388cb5d2f1dd91cc18180b5"},
+    {file = "google_auth-2.38.0-py2.py3-none-any.whl", hash = "sha256:e7dae6694313f434a2727bf2906f27ad259bae090d7aa896590d86feec3d9d4a"},
+    {file = "google_auth-2.38.0.tar.gz", hash = "sha256:8285113607d3b80a3f1543b75962447ba8a09fe85783432a784fdeef6ac094c4"},
 ]
 
 [package.dependencies]
@@ -667,7 +667,8 @@ rsa = ">=3.1.4,<5"
 
 [package.extras]
 aiohttp = ["aiohttp (>=3.6.2,<4.0.0.dev0)", "requests (>=2.20.0,<3.0.0.dev0)"]
-enterprise-cert = ["cryptography (==36.0.2)", "pyopenssl (==22.0.0)"]
+enterprise-cert = ["cryptography", "pyopenssl"]
+pyjwt = ["cryptography (>=38.0.3)", "pyjwt (>=2.0)"]
 pyopenssl = ["cryptography (>=38.0.3)", "pyopenssl (>=20.0.0)"]
 reauth = ["pyu2f (>=0.1.5)"]
 requests = ["requests (>=2.20.0,<3.0.0.dev0)"]
@@ -1205,4 +1206,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "3.12.0"
-content-hash = "e284aa47704bb93b649d3581a55769de200f7281d04fbf0aec2f07a35d6ea0d2"
+content-hash = "2200e4a2fb2184f0b9537aea528afb521b38dc8594fca634676f0d924a813269"
