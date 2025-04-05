@@ -2734,7 +2734,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/react@npm:^9.11.0":
+"@sentry/react@npm:9.11.0":
   version: 9.11.0
   resolution: "@sentry/react@npm:9.11.0"
   dependencies:
@@ -7766,7 +7766,7 @@ __metadata:
   dependencies:
     "@formatjs/intl-pluralrules": "npm:5.2.14"
     "@reduxjs/toolkit": "npm:2.6.1"
-    "@sentry/react": "npm:^9.11.0"
+    "@sentry/react": "npm:9.11.0"
     "@sentry/tracing": "npm:7.114.0"
     "@types/node": "npm:20.14.9"
     "@types/react": "npm:19.1.0"
@@ -7796,11 +7796,11 @@ __metadata:
     react-dom: "npm:19.1.0"
     react-intl: "npm:6.6.8"
     react-is: "npm:18.3.1"
-    react-redux: "npm:^9.2.0"
+    react-redux: "npm:9.2.0"
     react-router: "npm:6.24.0"
     react-router-dom: "npm:6.24.0"
     react-use: "npm:17.5.0"
-    redux: "npm:^5.0.1"
+    redux: "npm:5.0.1"
     regenerator-runtime: "npm:0.14.1"
     serve-static: "npm:1.16.2"
     source-map-explorer: "npm:2.5.3"
@@ -8177,7 +8177,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-redux@npm:^9.2.0":
+"react-redux@npm:9.2.0":
   version: 9.2.0
   resolution: "react-redux@npm:9.2.0"
   dependencies:
@@ -8302,7 +8302,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redux@npm:^5.0.1":
+"redux@npm:5.0.1, redux@npm:^5.0.1":
   version: 5.0.1
   resolution: "redux@npm:5.0.1"
   checksum: 10c0/b10c28357194f38e7d53b760ed5e64faa317cc63de1fb95bc5d9e127fab956392344368c357b8e7a9bedb0c35b111e7efa522210cfdc3b3c75e5074718e9069c
