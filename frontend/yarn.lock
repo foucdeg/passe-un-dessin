@@ -5625,7 +5625,6 @@ __metadata:
     styled-components: "npm:6.1.17"
     typescript: "npm:5.8.3"
     typescript-eslint: "npm:8.29.0"
-    use-constant: "npm:1.1.1"
     user-agent-data-types: "npm:0.4.2"
     vite: "npm:6.2.5"
     vite-plugin-mkcert: "npm:1.17.8"
@@ -7493,15 +7492,6 @@ __metadata:
   dependencies:
     punycode: "npm:^2.1.0"
   checksum: 10c0/4ef57b45aa820d7ac6496e9208559986c665e49447cb072744c13b66925a362d96dd5a46c4530a6b8e203e5db5fe849369444440cb22ecfc26c679359e5dfa3c
-  languageName: node
-  linkType: hard
-
-"use-constant@npm:1.1.1":
-  version: 1.1.1
-  resolution: "use-constant@npm:1.1.1"
-  peerDependencies:
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 10c0/1da6951d19f6de6727794421b1a5888c4203702641e4be792fe1e979b63ee78130ee0f5e5527d9280ec4a1ce16d2a67f5f475558f779fa4a429403b7ecbdc75a
   languageName: node
   linkType: hard
 

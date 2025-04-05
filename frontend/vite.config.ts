@@ -6,7 +6,7 @@ import mkcert from 'vite-plugin-mkcert';
 import serveStatic from 'serve-static';
 
 function configure(proxy: HttpProxy.Server) {
-  proxy.on('proxyReq', (proxyReq, req, res) => {
+  proxy.on('proxyReq', (proxyReq) => {
     proxyReq.setHeader('x-request-id', Math.random().toString(36).substring(2, 9));
   });
 }
