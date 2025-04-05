@@ -2940,13 +2940,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/cookiejar@npm:^2.1.5":
-  version: 2.1.5
-  resolution: "@types/cookiejar@npm:2.1.5"
-  checksum: 10c0/af38c3d84aebb3ccc6e46fb6afeeaac80fb26e63a487dd4db5a8b87e6ad3d4b845ba1116b2ae90d6f886290a36200fa433d8b1f6fe19c47da6b81872ce9a2764
-  languageName: node
-  linkType: hard
-
 "@types/estree@npm:1.0.7":
   version: 1.0.7
   resolution: "@types/estree@npm:1.0.7"
@@ -2971,15 +2964,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/http-proxy@npm:^1.17.8":
-  version: 1.17.10
-  resolution: "@types/http-proxy@npm:1.17.10"
-  dependencies:
-    "@types/node": "npm:*"
-  checksum: 10c0/bac48476cf4d1f65f09f5cf11b3a76604bd2561c0324098fc6d4d74410e6f26e2eac92bcf613f54a2c742d0c015f25dbcff4409050d5773d9389c8e5b7d64473
-  languageName: node
-  linkType: hard
-
 "@types/js-cookie@npm:^2.2.6":
   version: 2.2.7
   resolution: "@types/js-cookie@npm:2.2.7"
@@ -2998,22 +2982,6 @@ __metadata:
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
   checksum: 10c0/6bf5337bc447b706bb5b4431d37686aa2ea6d07cfd6f79cc31de80170d6ff9b1c7384a9c0ccbc45b3f512bae9e9f75c2e12109806a15331dc94e8a8db6dbb4ac
-  languageName: node
-  linkType: hard
-
-"@types/lz-string@npm:1.5.0":
-  version: 1.5.0
-  resolution: "@types/lz-string@npm:1.5.0"
-  dependencies:
-    lz-string: "npm:*"
-  checksum: 10c0/201878368ba68fc270ada4710488054e0841427c888968dcc093134693645259be3a972801649b5b1e818ee2f24886ba08a651b5cb36c778b857f1a18ef14d7f
-  languageName: node
-  linkType: hard
-
-"@types/methods@npm:^1.1.4":
-  version: 1.1.4
-  resolution: "@types/methods@npm:1.1.4"
-  checksum: 10c0/a78534d79c300718298bfff92facd07bf38429c66191f640c1db4c9cff1e36f819304298a96f7536b6512bfc398e5c3e6b831405e138cd774b88ad7be78d682a
   languageName: node
   linkType: hard
 
@@ -3108,18 +3076,6 @@ __metadata:
   version: 4.2.5
   resolution: "@types/stylis@npm:4.2.5"
   checksum: 10c0/23f5b35a3a04f6bb31a29d404fa1bc8e0035fcaff2356b4047743a057e0c37b2eba7efe14d57dd2b95b398cea3bac294d9c6cd93ed307d8c0b7f5d282224b469
-  languageName: node
-  linkType: hard
-
-"@types/superagent@npm:8.1.9":
-  version: 8.1.9
-  resolution: "@types/superagent@npm:8.1.9"
-  dependencies:
-    "@types/cookiejar": "npm:^2.1.5"
-    "@types/methods": "npm:^1.1.4"
-    "@types/node": "npm:*"
-    form-data: "npm:^4.0.0"
-  checksum: 10c0/12631f1d8b3a62e1f435bc885f6d64d1a2d1ae82b80f0c6d63d4d6372c40b6f1fee6b3da59ac18bb86250b1eb73583bf2d4b1f7882048c32468791c560c69b7c
   languageName: node
   linkType: hard
 
@@ -5430,13 +5386,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eventemitter3@npm:^4.0.0":
-  version: 4.0.7
-  resolution: "eventemitter3@npm:4.0.7"
-  checksum: 10c0/5f6d97cbcbac47be798e6355e3a7639a84ee1f7d9b199a07017f1d2f1e2fe236004d14fa5dfaeba661f94ea57805385e326236a6debbc7145c8877fbc0297c6b
-  languageName: node
-  linkType: hard
-
 "execa@npm:4.1.0":
   version: 4.1.0
   resolution: "execa@npm:4.1.0"
@@ -5715,7 +5664,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.15.6":
+"follow-redirects@npm:^1.15.6":
   version: 1.15.6
   resolution: "follow-redirects@npm:1.15.6"
   peerDependenciesMeta:
@@ -6209,35 +6158,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"http-proxy-middleware@npm:2.0.7":
-  version: 2.0.7
-  resolution: "http-proxy-middleware@npm:2.0.7"
-  dependencies:
-    "@types/http-proxy": "npm:^1.17.8"
-    http-proxy: "npm:^1.18.1"
-    is-glob: "npm:^4.0.1"
-    is-plain-obj: "npm:^3.0.0"
-    micromatch: "npm:^4.0.2"
-  peerDependencies:
-    "@types/express": ^4.17.13
-  peerDependenciesMeta:
-    "@types/express":
-      optional: true
-  checksum: 10c0/8d00a61eb215b83826460b07489d8bb095368ec16e02a9d63e228dcf7524e7c20d61561e5476de1391aecd4ec32ea093279cdc972115b311f8e0a95a24c9e47e
-  languageName: node
-  linkType: hard
-
-"http-proxy@npm:^1.18.1":
-  version: 1.18.1
-  resolution: "http-proxy@npm:1.18.1"
-  dependencies:
-    eventemitter3: "npm:^4.0.0"
-    follow-redirects: "npm:^1.0.0"
-    requires-port: "npm:^1.0.0"
-  checksum: 10c0/148dfa700a03fb421e383aaaf88ac1d94521dfc34072f6c59770528c65250983c2e4ec996f2f03aa9f3fe46cd1270a593126068319311e3e8d9e610a37533e94
-  languageName: node
-  linkType: hard
-
 "http-signature@npm:~1.3.6":
   version: 1.3.6
   resolution: "http-signature@npm:1.3.6"
@@ -6608,13 +6528,6 @@ __metadata:
   version: 1.1.0
   resolution: "is-plain-obj@npm:1.1.0"
   checksum: 10c0/daaee1805add26f781b413fdf192fc91d52409583be30ace35c82607d440da63cc4cac0ac55136716688d6c0a2c6ef3edb2254fecbd1fe06056d6bd15975ee8c
-  languageName: node
-  linkType: hard
-
-"is-plain-obj@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "is-plain-obj@npm:3.0.0"
-  checksum: 10c0/8e6483bfb051d42ec9c704c0ede051a821c6b6f9a6c7a3e3b55aa855e00981b0580c8f3b1f5e2e62649b39179b1abfee35d6f8086d999bfaa32c1908d29b07bc
   languageName: node
   linkType: hard
 
@@ -7173,7 +7086,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lz-string@npm:*, lz-string@npm:1.5.0":
+"lz-string@npm:1.5.0":
   version: 1.5.0
   resolution: "lz-string@npm:1.5.0"
   bin:
@@ -7231,7 +7144,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"micromatch@npm:^4.0.2, micromatch@npm:^4.0.4":
+"micromatch@npm:^4.0.4":
   version: 4.0.5
   resolution: "micromatch@npm:4.0.5"
   dependencies:
@@ -7855,11 +7768,9 @@ __metadata:
     "@reduxjs/toolkit": "npm:2.6.1"
     "@sentry/react": "npm:^9.11.0"
     "@sentry/tracing": "npm:7.114.0"
-    "@types/lz-string": "npm:1.5.0"
     "@types/node": "npm:20.14.9"
     "@types/react": "npm:19.1.0"
     "@types/react-dom": "npm:19.1.1"
-    "@types/superagent": "npm:8.1.9"
     "@vitejs/plugin-react": "npm:4.3.4"
     babel-plugin-styled-components: "npm:2.1.4"
     copy-to-clipboard: "npm:3.3.3"
@@ -7876,10 +7787,8 @@ __metadata:
     eslint-plugin-prettier: "npm:5.1.3"
     eslint-plugin-risxss: "npm:2.1.0"
     formik: "npm:2.4.6"
-    http-proxy-middleware: "npm:2.0.7"
     lz-string: "npm:1.5.0"
     npm-audit-resolver: "npm:2.3.1"
-    postcss-scss: "npm:4.0.9"
     postcss-styled-syntax: "npm:0.6.4"
     postcss-syntax: "npm:0.36.2"
     prettier: "npm:3.3.2"
@@ -8018,15 +7927,6 @@ __metadata:
   version: 2.3.0
   resolution: "pify@npm:2.3.0"
   checksum: 10c0/551ff8ab830b1052633f59cb8adc9ae8407a436e06b4a9718bcb27dc5844b83d535c3a8512b388b6062af65a98c49bdc0dd523d8b2617b188f7c8fee457158dc
-  languageName: node
-  linkType: hard
-
-"postcss-scss@npm:4.0.9":
-  version: 4.0.9
-  resolution: "postcss-scss@npm:4.0.9"
-  peerDependencies:
-    postcss: ^8.4.29
-  checksum: 10c0/f917ecfd4b9113a6648e966a41f027ff7e14238393914978d44596e227a50f084667dc8818742348dc7d8b20130b30d4259aca1d4db86754a9c141202ae03714
   languageName: node
   linkType: hard
 

@@ -38,9 +38,7 @@ async function request(
     const response = await fetch(url, config);
 
     if (response.headers.has('X-Request-ID')) {
-      Sentry.configureScope((scope) => {
-        scope.setTag('request_id', response.headers.get('X-Request-ID'));
-      });
+      Sentry.setTag('request_id', response.headers.get('X-Request-ID'));
     }
 
     const responseText = await response.text();

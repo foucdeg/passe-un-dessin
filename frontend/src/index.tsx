@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import * as Sentry from '@sentry/react';
-import { Integrations } from '@sentry/tracing';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import { createRoot } from 'react-dom/client';
@@ -24,7 +23,7 @@ if (window.config && window.config.sentry && window.config.sentry.dsn) {
     dsn: window.config.sentry.dsn,
     release: import.meta.env.VITE_SENTRY_RELEASE,
     environment: window.config.sentry.environment,
-    integrations: [new Integrations.BrowserTracing()],
+    integrations: [Sentry.browserTracingIntegration()],
 
     // We recommend adjusting this value in production, or using tracesSampler
     // for finer control
