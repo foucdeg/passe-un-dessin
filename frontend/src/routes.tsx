@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router';
 import Loader from 'atoms/Loader';
 
 const Home = lazy(() => import('./pages/Home'));
+const RoomLobby = lazy(() => import('./pages/RoomLobby'));
 const Room = lazy(() => import('./pages/Room'));
 const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
@@ -14,8 +15,7 @@ const PlayerDetails = lazy(() => import('./pages/PlayerDetails'));
 const GameReview = lazy(() => import('./pages/GameReview'));
 
 export const PLAYER_PATHS = {
-  ROOM_LOBBY: '/room/:roomId',
-  ROOM: '/room/:roomId/*',
+  ROOM: '/room/:roomId/',
 };
 
 export const PUBLIC_PATHS = {
@@ -33,8 +33,18 @@ const routes = () => (
   <Suspense fallback={<Loader />}>
     <Routes>
       <Route path={PUBLIC_PATHS.HOME} element={<Home />} />
-      <Route path={PLAYER_PATHS.ROOM_LOBBY} element={<Home />} />
-      <Route path={PLAYER_PATHS.ROOM} element={<Room />} />
+      <Route path={PLAYER_PATHS.ROOM}>
+        <Route
+          index
+          element={
+            <>
+              <Home />
+              <RoomLobby />
+            </>
+          }
+        />
+        <Route path="*" element={<Room />} />
+      </Route>
       <Route path={PUBLIC_PATHS.TERMS_AND_CONDITIONS} element={<TermsAndConditions />} />
       <Route path={PUBLIC_PATHS.PRIVACY_POLICY} element={<PrivacyPolicy />} />
       <Route path={PUBLIC_PATHS.PASSWORD_RESET} element={<PasswordReset />} />

@@ -8,10 +8,8 @@ import client from 'services/networking/client';
 import { PadStep } from 'redux/Game/types';
 import { useAsyncFn } from 'react-use';
 import Loader from 'atoms/Loader';
-import { useMatch } from 'react-router';
 import HomeLayout from 'layout/HomeLayout';
-import { PLAYER_PATHS, PUBLIC_PATHS } from 'routes';
-import RoomLobby from 'pages/RoomLobby';
+import { PUBLIC_PATHS } from 'routes';
 import { useCurrentStreamCount } from './components/TwitchModal/hooks';
 import {
   LeftSideTitle,
@@ -32,7 +30,6 @@ import TwitchModal from './components/TwitchModal';
 const Home: React.FunctionComponent = () => {
   const [isRulesModalOpen, openRulesModal, closeRulesModal] = useBoolean(false);
   const [isTwitchModalOpen, openTwitchModal, closeTwitchModal] = useBoolean(false);
-  const match = useMatch(PLAYER_PATHS.ROOM_LOBBY);
 
   const [{ value: currentStreamsCount }, doFetchCurrentStreamCount] = useCurrentStreamCount();
 
@@ -106,8 +103,8 @@ const Home: React.FunctionComponent = () => {
         </LegalLinks>
       </HomeLayout>
       <RulesModal isOpen={isRulesModalOpen} onClose={closeRulesModal} />
+
       {isTwitchModalOpen && <TwitchModal isOpen={isTwitchModalOpen} onClose={closeTwitchModal} />}
-      {match && <RoomLobby />}
     </>
   );
 };
