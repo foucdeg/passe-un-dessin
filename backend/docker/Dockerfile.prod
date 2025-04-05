@@ -9,9 +9,9 @@ ENV POETRY_VIRTUALENVS_CREATE=false
 
 COPY ./pyproject.toml ./poetry.lock /app/
 WORKDIR /app
+COPY . /app
 RUN poetry install --only main
 
-COPY . /app
 
 ENV DJANGO_SETTINGS_MODULE=passe_un_dessin.settings.prod
 
