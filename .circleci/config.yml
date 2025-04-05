@@ -25,7 +25,7 @@ jobs:
   build-front:
     executor:
       name: node/default
-      tag: "18.11"
+      tag: "22.14.0"
     environment:
       REACT_APP_ENV: production
     steps:
@@ -43,7 +43,7 @@ jobs:
   build-deploy-front:
     executor:
       name: node/default
-      tag: "18.11"
+      tag: "22.14.0"
     environment:
       REACT_APP_ENV: production
       SENTRY_ORG: passe-un-dessin

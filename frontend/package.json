@@ -82,5 +82,9 @@
   "oldDependencies": {
     "//webpack-manifest-plugin": "5.0.0",
     "//sitemap-webpack-plugin": "1.1.1"
+  },
+  "volta": {
+    "node": "22.14.0",
+    "yarn": "4.8.1"
   }
 }
