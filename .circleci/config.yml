@@ -213,7 +213,7 @@ workflows:
       - build-pushpin
   master:
     when:
-      equal: ["disabled", << pipeline.git.branch >>]
+      equal: ["master", << pipeline.git.branch >>]
     jobs:
       - lint-front
       - lint-back
