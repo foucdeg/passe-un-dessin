@@ -22,7 +22,7 @@ django-anymail = { extras = ["mailgun"], version = "==10.3" }
 django-rest-passwordreset = "==1.4.1"
 django-cors-headers = "==4.4.0"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 debugpy = "==1.8.13"
 flake8 = "==7.2.0"
 factory-boy = "==3.3.3"
@@ -37,5 +37,5 @@ django-cprofile-middleware = "1.0.5"
 exclude = 'migrations'
 
 [build-system]
-requires = ["poetry==1.8.5"]
+requires = ["poetry==2.1.1"]
 build-backend = "poetry.masonry.api"
