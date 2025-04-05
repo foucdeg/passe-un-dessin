@@ -7952,8 +7952,8 @@ __metadata:
     postcss-styled-syntax: "npm:0.6.4"
     postcss-syntax: "npm:0.36.2"
     prettier: "npm:3.3.2"
-    react: "npm:^19.0.0"
-    react-dom: "npm:^19.0.0"
+    react: "npm:19.1.0"
+    react-dom: "npm:19.1.0"
     react-intl: "npm:6.6.8"
     react-is: "npm:18.3.1"
     react-redux: "npm:9.1.2"
@@ -8289,7 +8289,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^19.0.0":
+"react-dom@npm:19.1.0":
   version: 19.1.0
   resolution: "react-dom@npm:19.1.0"
   dependencies:
@@ -8430,7 +8430,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^19.0.0":
+"react@npm:19.1.0":
   version: 19.1.0
   resolution: "react@npm:19.1.0"
   checksum: 10c0/530fb9a62237d54137a13d2cfb67a7db6a2156faed43eecc423f4713d9b20c6f2728b026b45e28fcd72e8eadb9e9ed4b089e99f5e295d2f0ad3134251bdd3698
