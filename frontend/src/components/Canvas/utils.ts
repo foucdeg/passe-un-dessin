@@ -70,7 +70,7 @@ export const initializeCanvas = async (
     return;
   }
 
-  const imgLoadPromise = new Promise<void>((resolve, reject) => {
+  const imgLoadPromise = new Promise<void>((resolve) => {
     const img = new Image();
     img.onload = function () {
       context.drawImage(img, 0, 0);

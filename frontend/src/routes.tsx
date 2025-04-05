@@ -29,7 +29,7 @@ export const PUBLIC_PATHS = {
   GAME_REVIEW: '/game/:gameId',
 };
 
-const routes = () => (
+const AppRoutes: React.FunctionComponent = () => (
   <Suspense fallback={<Loader />}>
     <Routes>
       <Route path={PUBLIC_PATHS.HOME} element={<Home />} />
@@ -56,4 +56,4 @@ const routes = () => (
   </Suspense>
 );
 
-export default routes;
+export default AppRoutes;

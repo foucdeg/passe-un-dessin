@@ -144,7 +144,7 @@ const AdminModal: React.FC<Props> = ({ isOpen, onClose }) => {
             <FormattedMessage id="adminModal.restartGame" />
           </StyledHeader>
           <Subtitle>
-            {!!playersWaiting.length ? (
+            {playersWaiting.length ? (
               <FormattedMessage
                 id="adminModal.restartGameInstructions"
                 values={{

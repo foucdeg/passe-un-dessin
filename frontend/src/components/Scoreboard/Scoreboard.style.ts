@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import { fontSize, fontWeight, lineHeight } from 'stylesheet';
+import { fontSize, fontWeight, lineHeight, colorPalette } from 'stylesheet';
 import Avatar from 'components/Avatar';
 import BareLink from 'atoms/BareLink';
-import { colorPalette } from 'stylesheet';
 
 export const InnerScoreboard = styled.div`
   overflow-y: auto;

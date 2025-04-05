@@ -84,7 +84,11 @@ export const tabHandlerBuilder =
   (tabAction: () => void, unTabAction: () => void) => (event: KeyboardEvent) => {
     if (event.key === 'Tab') {
       event.preventDefault();
-      event.shiftKey ? unTabAction() : tabAction();
+      if (event.shiftKey) {
+        unTabAction();
+      } else {
+        tabAction();
+      }
     }
   };
 

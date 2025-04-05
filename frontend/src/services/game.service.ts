@@ -3,11 +3,12 @@ import { Player } from 'redux/Player/types';
 import { Room } from 'redux/Room/types';
 
 export const getRedirectPath = (room: Room, game: Game, playerId: string): string => {
+  const playerStep = game.rounds.find(
+    (step) => step.player.uuid === playerId && step.round_number === game.current_round,
+  );
+
   switch (game.phase) {
     case GamePhase.ROUNDS:
-      const playerStep = game.rounds.find(
-        (step) => step.player.uuid === playerId && step.round_number === game.current_round,
-      );
       if (!playerStep) {
         throw new Error(
           `Step for player ${playerId} and round ${game.current_round} not found in game ${game.uuid}`,
@@ -65,6 +66,19 @@ export const getNextPhaseAndRound = (game: Game): [GamePhase, number] => {
 };
 
 export const findRemainingPlayers = (game: Game): Player[] => {
+  const voteCountByPlayer = game.rounds.reduce(
+    (acc, padStep) => {
+      padStep.votes.forEach((vote) => {
+        if (!acc[vote.player_id]) {
+          acc[vote.player_id] = 0;
+        }
+        acc[vote.player_id] = acc[vote.player_id] + 1;
+      });
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
+
   switch (game.phase) {
     case GamePhase.ROUNDS:
       // TODO this does not apply to drawing steps
@@ -72,19 +86,6 @@ export const findRemainingPlayers = (game: Game): Player[] => {
         .filter((padStep) => padStep.round_number === game.current_round && !padStep.sentence)
         .map((padStep) => padStep.player);
     case GamePhase.DEBRIEF:
-      const voteCountByPlayer = game.rounds.reduce(
-        (acc, padStep) => {
-          padStep.votes.forEach((vote) => {
-            if (!acc[vote.player_id]) {
-              acc[vote.player_id] = 0;
-            }
-            acc[vote.player_id] = acc[vote.player_id] + 1;
-          });
-          return acc;
-        },
-        {} as Record<string, number>,
-      );
-
       return game.players.filter(
         (player) =>
           !voteCountByPlayer[player.uuid] ||

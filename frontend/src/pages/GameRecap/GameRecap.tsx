@@ -4,10 +4,9 @@ import React, { useEffect, useCallback } from 'react';
 import { useSelector } from 'redux/useSelector';
 import { Game, GamePhase, Pad } from 'redux/Game/types';
 import { selectPlayerIsAdmin } from 'redux/Room/selectors';
-import { selectSelectedPadUuid } from 'redux/Game/selectors';
+import { selectSelectedPadUuid, selectAvailableVoteCount } from 'redux/Game/selectors';
 import { FormattedMessage } from 'react-intl';
 import { useForceState, useReviewPad } from 'redux/Game/hooks';
-import { selectAvailableVoteCount } from 'redux/Game/selectors';
 
 import { tabHandlerBuilder } from 'services/utils';
 import { selectPlayerId } from 'redux/Player/selectors';
