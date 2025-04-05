@@ -6,7 +6,7 @@ jobs:
   lint-front:
     executor:
       name: node/default
-      tag: "18.11"
+      tag:  "22.14.0"
     steps:
       - checkout
       - node/install-packages:
