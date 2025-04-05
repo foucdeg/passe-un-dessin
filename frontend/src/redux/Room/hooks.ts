@@ -48,7 +48,7 @@ export const useCreateRoom = () => {
         event_category: 'engagement',
       });
     }
-    navigate(`/room/${room.uuid}`);
+    navigate(`/room/${room.uuid}/`);
   }, [navigate]);
 };
 
