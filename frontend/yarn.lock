@@ -5607,8 +5607,6 @@ __metadata:
     globals: "npm:16.0.0"
     lz-string: "npm:1.5.0"
     npm-audit-resolver: "npm:2.3.1"
-    postcss-styled-syntax: "npm:0.7.1"
-    postcss-syntax: "npm:0.36.2"
     prettier: "npm:3.5.3"
     react: "npm:19.1.0"
     react-dom: "npm:19.1.0"
@@ -5738,26 +5736,6 @@ __metadata:
   version: 1.1.0
   resolution: "possible-typed-array-names@npm:1.1.0"
   checksum: 10c0/c810983414142071da1d644662ce4caebce890203eb2bc7bf119f37f3fe5796226e117e6cca146b521921fa6531072674174a3325066ac66fce089a53e1e5196
-  languageName: node
-  linkType: hard
-
-"postcss-styled-syntax@npm:0.7.1":
-  version: 0.7.1
-  resolution: "postcss-styled-syntax@npm:0.7.1"
-  dependencies:
-    typescript: "npm:^5.7.3"
-  peerDependencies:
-    postcss: ^8.5.1
-  checksum: 10c0/85339ca0c511c88cb46bd3e2cdc1bc7ff695960946b653f411939f06cb47bd3e4f2d47e580cf949e56978153c49b462702c9e71d598f1e38619569783e431073
-  languageName: node
-  linkType: hard
-
-"postcss-syntax@npm:0.36.2":
-  version: 0.36.2
-  resolution: "postcss-syntax@npm:0.36.2"
-  peerDependencies:
-    postcss: ">=5.0.0"
-  checksum: 10c0/28efff15190403d7ef3dbaad7e6647e2e5bd8aea5bf70fec406a8f60dc858d86bb861947fe9cbfe448ac00aaa4028904264072405cf6c69f8336a6df00b93a97
   languageName: node
   linkType: hard
 
@@ -7401,7 +7379,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.8.3, typescript@npm:^5.7.3":
+"typescript@npm:5.8.3":
   version: 5.8.3
   resolution: "typescript@npm:5.8.3"
   bin:
@@ -7411,7 +7389,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A5.8.3#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.7.3#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A5.8.3#optional!builtin<compat/typescript>":
   version: 5.8.3
   resolution: "typescript@patch:typescript@npm%3A5.8.3#optional!builtin<compat/typescript>::version=5.8.3&hash=5786d5"
   bin:
