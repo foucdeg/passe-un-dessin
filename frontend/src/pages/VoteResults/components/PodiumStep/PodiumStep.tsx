@@ -14,8 +14,8 @@ import {
   ArrowSpacer,
   HighlightedArrowSpacer,
   LightBulb,
+  StyledDrawing,
 } from './PodiumStep.style';
-import { StyledDrawing } from './PodiumStep.style';
 
 interface Props {
   winner?: PadStep;

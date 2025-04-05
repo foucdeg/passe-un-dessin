@@ -10,7 +10,7 @@ export interface IFallbackProps {
   eventId: string;
 }
 
-const AppCrashFallback: React.FunctionComponent<IFallbackProps> = ({ eventId }) => {
+const AppCrashFallback: React.FunctionComponent<IFallbackProps> = () => {
   return (
     <main>
       {/* The <main> tag needs to wrap this component because with redux errors,

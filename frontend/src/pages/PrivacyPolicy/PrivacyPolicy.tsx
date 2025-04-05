@@ -49,11 +49,12 @@ const PrivacyPolicy: React.FC<NoProps> = () => (
     </LegalParagraph>
     <LegalParagraph>
       <strong>Information provided by social authentication providers:</strong> If you choose to
-      create an account on the website using either "Sign in with Facebook" or "Sign in with
-      Google", Facebook or Google provide us with your email address and basic profile information
-      (in the case of Facebook, this also includes your name and profile picture).{' '}
-      <strong>We only keep your email address</strong>, which is used as an unique identifier to
-      guarantee that only you can access your account. For that purpose, we may send you
+      create an account on the website using either &ldquo;Sign in with Facebook&rdquo; or
+      &ldquo;Sign in with Google&rdquo;, Facebook or Google provide us with your email address and
+      basic profile information (in the case of Facebook, this also includes your name and profile
+      picture). <strong>We only keep your email address</strong>, which is used as an unique
+      identifier to guarantee that only you can access your account. For that purpose, we may send
+      you
       <strong>occasional emails for security purposes</strong>, such as email address verification
       or password reset. We do <strong>not</strong> send marketing emails.
     </LegalParagraph>
