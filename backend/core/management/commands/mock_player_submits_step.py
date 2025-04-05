@@ -16,7 +16,9 @@ class Command(BaseCommand):
         parser.add_argument("game-id", type=str, help="The game ID")
         parser.add_argument("player-name", type=str, help="The name of the player")
         parser.add_argument(
-            "round-number", type=int, help="The round number of the step to submit",
+            "round-number",
+            type=int,
+            help="The round number of the step to submit",
         )
 
     def handle(self, *args, **options):

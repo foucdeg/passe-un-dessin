@@ -60,7 +60,9 @@ urlpatterns = [
         name="get_vote_results",
     ),
     path(
-        "room/<str:room_id>/ranking", room_management.get_ranking, name="get_ranking",
+        "room/<str:room_id>/ranking",
+        room_management.get_ranking,
+        name="get_ranking",
     ),
     path(
         "game/<str:game_id>/player-should-join",
@@ -68,9 +70,9 @@ urlpatterns = [
         name="player_should_join",
     ),
     path(
-        "game/<str:game_id>/force-state", game.force_state, name="force_game_state",
+        "game/<str:game_id>/force-state",
+        game.force_state,
+        name="force_game_state",
     ),
-    path(
-        "desktop-email", general.send_email_for_desktop_access, name="desktop_email"
-    ),
+    path("desktop-email", general.send_email_for_desktop_access, name="desktop_email"),
 ]

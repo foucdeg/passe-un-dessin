@@ -125,13 +125,19 @@ def start_game(request, room_id):
             game.save()
 
         game = initialize_game(
-            room, players_order, round_duration, draw_own_word, controlled_reveal,
+            room,
+            players_order,
+            round_duration,
+            draw_own_word,
+            controlled_reveal,
         )
         room.current_game = game
         room.save()
 
         send_event(
-            "room-%s" % room.uuid.hex, "message", GameStartsMessage(game).serialize(),
+            "room-%s" % room.uuid.hex,
+            "message",
+            GameStartsMessage(game).serialize(),
         )
 
         return JsonResponse({"game_id": game.uuid.hex})

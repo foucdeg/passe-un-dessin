@@ -24,7 +24,7 @@ def remove_articles(sentence, language):
             "einen ",
             "einem ",
             "einer ",
-            "eines "
+            "eines ",
         ]
 
     sanitized_sentence = sentence
@@ -39,9 +39,7 @@ def sanitize_sentence(sentence, language=Language.FR.value):
 
     sentence = "".join(e for e in sentence if e.isalpha())
     return str(
-        unicodedata.normalize("NFD", sentence)
-        .encode("ascii", "ignore")
-        .decode("utf-8")
+        unicodedata.normalize("NFD", sentence).encode("ascii", "ignore").decode("utf-8")
     )
 
 
