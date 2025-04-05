@@ -18,6 +18,7 @@ services:
       - "9000:9000"
     links:
       - db
+      - drawing-renderer
     env_file:
       - .env
     environment:

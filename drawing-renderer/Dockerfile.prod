@@ -2,11 +2,11 @@ FROM node:alpine
 
 COPY ./package.json /app/package.json
 COPY ./yarn.lock /app/yarn.lock
+COPY . /app
 WORKDIR /app
 
 RUN corepack enable
 RUN yarn install
 
-COPY . /app
 
 CMD ["yarn", "start"]
