@@ -24,7 +24,7 @@
     "react-use": "17.5.0",
     "redux": "^5.0.1",
     "regenerator-runtime": "0.14.1",
-    "styled-components": "6.1.11",
+    "styled-components": "6.1.17",
     "use-constant": "1.1.1"
   },
   "scripts": {
