@@ -34,8 +34,6 @@ const app = express();
 const logFormat = process.env.ENVIRONMENT === 'local' ? 'dev' : 'combined';
 app.use(morgan(logFormat));
 
-app.use(Sentry.Handlers.requestHandler());
-
 app.use((req, res, next) => {
   let requestId = req.headers['x-request-id'];
   if (requestId) {
