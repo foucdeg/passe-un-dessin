@@ -1,3 +1,5 @@
+require('./instrument');
+
 const express = require('express');
 const lzString = require('lz-string');
 const { Pool: PGPool } = require('pg');
@@ -8,14 +10,10 @@ const asyncHandler = require('express-async-handler');
 const morgan = require('morgan');
 const sh = require('shorthash');
 
-Sentry.init({
-  dsn: process.env.SENTRY_BACKEND_DSN,
-  environment: process.env.ENVIRONMENT,
-});
-
 const APP_PORT = 80;
 const DATABASE_URL = process.env.DATABASE_URL;
-const dbUrlRegexp = /^postgres:\/\/([^:@]+):?([^@]+)?@([^:\/]+):?(\d{2,5})?\/([a-zA-Z0-9_-]+)$/;
+const dbUrlRegexp =
+  /^postgres:\/\/([^:@]+):?([^@]+)?@([^:\/]+):?(\d{2,5})?\/([a-zA-Z0-9_-]+)$/;
 const dbParams = DATABASE_URL.match(dbUrlRegexp);
 
 const pool = new PGPool({
@@ -41,9 +39,7 @@ app.use(Sentry.Handlers.requestHandler());
 app.use((req, res, next) => {
   let requestId = req.headers['x-request-id'];
   if (requestId) {
-    Sentry.configureScope(function (scope) {
-      scope.setTag('request_id', requestId);
-    });
+    Sentry.setTag('request_id', requestId);
   }
   next();
 });
@@ -159,7 +155,7 @@ app.post(
   }),
 );
 
-app.use(Sentry.Handlers.errorHandler());
+Sentry.setupExpressErrorHandler(app);
 
 const server = app.listen(APP_PORT, () => {
   console.log(`Drawing renderer listening at http://localhost:${APP_PORT}`);
