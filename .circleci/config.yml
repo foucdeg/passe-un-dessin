@@ -9,8 +9,11 @@ jobs:
       tag:  "22.14.0"
     steps:
       - checkout
+      - node/install:
+          install-yarn: true
+          yarn-version: 4.8.1
       - node/install-packages:
-          pkg-manager: yarn-berry
+          pkg-manager: yarn
           app-dir: frontend
       - run:
           name: Run linter
@@ -30,8 +33,11 @@ jobs:
       REACT_APP_ENV: production
     steps:
       - checkout
+      - node/install:
+          install-yarn: true
+          yarn-version: 4.8.1
       - node/install-packages:
-          pkg-manager: yarn-berry
+          pkg-manager: yarn
           app-dir: frontend
       - run:
           name: Build app
@@ -51,8 +57,11 @@ jobs:
       SENTRY_NO_PROGRESS_BAR: 1
     steps:
       - checkout
+      - node/install:
+          install-yarn: true
+          yarn-version: 4.8.1
       - node/install-packages:
-          pkg-manager: yarn-berry
+          pkg-manager: yarn
           app-dir: frontend
       - run:
           name: Install sentry-cli
