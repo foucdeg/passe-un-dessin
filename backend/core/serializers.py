@@ -161,7 +161,7 @@ class GameIdSerializer(BaseSerializer):
 
 
 class MessageSerializer(serializers.Serializer):
-    message_type = serializers.CharField()
+    message_type = serializers.CharField(source="get_message_type")
 
 
 class PlayerConnectedMessageSerializer(MessageSerializer):

@@ -17,4 +17,4 @@ WORKDIR /code
 
 COPY pyproject.toml poetry.lock ./
 ENV POETRY_VIRTUALENVS_CREATE=false
-RUN poetry install
+RUN poetry install --no-root
