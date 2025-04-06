@@ -7,37 +7,12 @@
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
 
-  "python.formatting.provider": "black",
-  "python.formatting.blackArgs": ["-l", "86"],
-  "python.linting.enabled": true,
-  "python.linting.flake8Enabled": true,
-  "python.linting.flake8Args": [
-    "--ignore=E203,E501,W503",
-    "--exclude=**/migrations/*"
-  ],
-  "python.linting.pylintEnabled": false,
-  "python.autoComplete.extraPaths": ["./backend"],
-
-  "[json]": {
+  "[javascript][javascriptreact][typescript][typescriptreact][json]": {
     "editor.tabSize": 2,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[javascript]": {
-    "editor.tabSize": 2,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[javascriptreact]": {
-    "editor.tabSize": 2,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescript]": {
-    "editor.tabSize": 2,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescriptreact]": {
-    "editor.tabSize": 2,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+  "eslint.workingDirectories": ["./frontend"],
+  "typescript.tsdk": "frontend/node_modules/typescript/lib",
 
   "eslint.validate": [
     "javascript",
@@ -47,22 +22,12 @@
   ],
   "[python]": {
     "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
       "source.organizeImports": "explicit"
     },
-    "editor.tabSize": 4
+    "editor.tabSize": 4,
+    "editor.defaultFormatter": "ms-python.black-formatter"
   },
-  "sqltools.connections": [
-    {
-      "database": "postgres",
-      "driver": "PostgreSQL",
-      "name": "p1d",
-      "password": "postgres",
-      "port": 5432,
-      "server": "localhost",
-      "username": "postgres"
-    }
-  ],
-  "eslint.workingDirectories": ["./frontend"],
-  "typescript.tsdk": "frontend/node_modules/typescript/lib",
-  "python.analysis.extraPaths": ["./backend"]
+  "python.analysis.autoImportCompletions": true,
+  "python.defaultInterpreterPath": "${workspaceFolder}/backend/.venv/bin/python",
 }
