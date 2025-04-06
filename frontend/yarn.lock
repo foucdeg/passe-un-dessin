@@ -3083,7 +3083,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-cypress@npm:^4.2.0":
+"eslint-plugin-cypress@npm:4.2.0":
   version: 4.2.0
   resolution: "eslint-plugin-cypress@npm:4.2.0"
   dependencies:
@@ -5591,7 +5591,7 @@ __metadata:
     date-fns: "npm:4.1.0"
     eslint: "npm:9.24.0"
     eslint-config-prettier: "npm:10.1.1"
-    eslint-plugin-cypress: "npm:^4.2.0"
+    eslint-plugin-cypress: "npm:4.2.0"
     eslint-plugin-import: "npm:2.31.0"
     eslint-plugin-mysticatea: "npm:4.2.4"
     eslint-plugin-prefer-object-spread: "npm:1.2.1"
