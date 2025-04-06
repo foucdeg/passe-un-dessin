@@ -21,7 +21,7 @@ google-auth = "==2.38.0"
 django-anymail = { extras = ["mailgun"], version = "==13.0" }
 django-rest-passwordreset = "==1.5.0"
 django-cors-headers = "==4.7.0"
-inflection = "^0.5.1"
+inflection = "0.5.1"
 
 [tool.poetry.group.dev.dependencies]
 debugpy = "==1.8.13"
