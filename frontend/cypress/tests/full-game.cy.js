@@ -9,11 +9,11 @@ describe('Full game', function () {
     // Create a room
     cy.getBySel('start-room').click();
     cy.focused().type('Boss{enter}');
-    cy.location('pathname').should('match', /^\/room\/[0-9a-f]+$/);
+    cy.location('pathname').should('match', /^\/room\/[0-9a-f]+\/$/);
 
     cy.location('pathname')
       .then((pathname) => {
-        const matches = pathname.match(/^\/room\/([0-9a-f]+)$/);
+        const matches = pathname.match(/^\/room\/([0-9a-f]+)\/$/);
         return matches[1];
       })
       .as('roomId')

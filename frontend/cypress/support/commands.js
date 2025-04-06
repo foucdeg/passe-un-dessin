@@ -12,14 +12,14 @@ Cypress.Commands.add('getBySel', (selector, ...args) => {
   return cy.get(`[data-test=${selector}]`, ...args);
 });
 
-Cypress.Commands.add('runBackendCommand', (command) => {
+Cypress.Commands.add('runBackendCommand', (command, options = { timeout: 60000 }) => {
   cy.log(`Running command \`${command}\` against the backend`);
-  cy.exec(`docker ps -aqf "name=${Cypress.env('BACKEND_CONTAINER_NAME')}"`, { log: false }).then(
-    ({ stdout }) => {
-      const backendContainer = stdout.trim();
-      return cy.exec(`docker exec ${backendContainer} python manage.py ${command}`, { log: false });
-    },
-  );
+  cy.exec(`docker ps -aqf "name=${Cypress.env('BACKEND_CONTAINER_NAME')}"`, {
+    timeout: 60000,
+  }).then(({ stdout }) => {
+    const backendContainer = stdout.trim();
+    return cy.exec(`docker exec ${backendContainer} python manage.py ${command}`, options);
+  });
 });
 
 Cypress.Commands.add('playerJoins', (roomId, playerName) => {
@@ -56,14 +56,17 @@ Cypress.Commands.add('drawLine', { prevSubject: true }, (subject, coords) => {
     }),
   );
   coords.slice(1).forEach((coordSet, index) => {
-    setTimeout(() => {
-      elt.dispatchEvent(
-        new MouseEvent('mousemove', {
-          clientX: box.x + coordSet[0],
-          clientY: box.y + coordSet[1],
-        }),
-      );
-    }, (index + 1) * 50);
+    setTimeout(
+      () => {
+        elt.dispatchEvent(
+          new MouseEvent('mousemove', {
+            clientX: box.x + coordSet[0],
+            clientY: box.y + coordSet[1],
+          }),
+        );
+      },
+      (index + 1) * 50,
+    );
   });
 
   setTimeout(() => {
