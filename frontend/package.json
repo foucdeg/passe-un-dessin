@@ -48,7 +48,7 @@
     "@types/node": "22.14.1",
     "@types/react": "19.1.2",
     "@types/react-dom": "19.1.2",
-    "@vitejs/plugin-react": "4.4.0",
+    "@vitejs/plugin-react": "4.4.1",
     "babel-plugin-styled-components": "2.1.4",
     "customize-cra": "1.0.0",
     "cypress": "14.3.1",
