@@ -6,7 +6,7 @@
   "dependencies": {
     "@formatjs/intl-pluralrules": "5.4.4",
     "@reduxjs/toolkit": "2.7.0",
-    "@sentry/react": "9.15.0",
+    "@sentry/react": "9.16.1",
     "copy-to-clipboard": "3.3.3",
     "core-js": "3.42.0",
     "date-fns": "4.1.0",
