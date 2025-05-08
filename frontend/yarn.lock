@@ -5860,7 +5860,7 @@ __metadata:
     regenerator-runtime: "npm:0.14.1"
     serve-static: "npm:2.2.0"
     source-map-explorer: "npm:2.5.3"
-    styled-components: "npm:6.1.17"
+    styled-components: "npm:6.1.18"
     typescript: "npm:5.8.3"
     typescript-eslint: "npm:8.32.0"
     user-agent-data-types: "npm:0.4.2"
@@ -7283,9 +7283,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"styled-components@npm:6.1.17":
-  version: 6.1.17
-  resolution: "styled-components@npm:6.1.17"
+"styled-components@npm:6.1.18":
+  version: 6.1.18
+  resolution: "styled-components@npm:6.1.18"
   dependencies:
     "@emotion/is-prop-valid": "npm:1.2.2"
     "@emotion/unitless": "npm:0.8.1"
@@ -7299,7 +7299,7 @@ __metadata:
   peerDependencies:
     react: ">= 16.8.0"
     react-dom: ">= 16.8.0"
-  checksum: 10c0/87f35173c5fc2291ddba7ed8224d19fe6872d056a577f55fe130248f5ea23e5c48c012e881fa1ad93df60b56a12c1c2d553f628e204f090189221734927e50b0
+  checksum: 10c0/067778b8cf9aa24b23590d23210b0e7964c6469630e5ab821c68dac64af6e0c0270c972a836f60a8bbd9753770f0475f911fcd34eeba6bd003c233a79a391e6b
   languageName: node
   linkType: hard
 
