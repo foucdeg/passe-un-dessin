@@ -61,7 +61,7 @@
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "5.2.0",
     "eslint-plugin-risxss": "2.1.0",
-    "globals": "16.1.0",
+    "globals": "16.2.0",
     "npm-audit-resolver": "2.3.1",
     "prettier": "3.5.3",
     "serve-static": "2.2.0",
