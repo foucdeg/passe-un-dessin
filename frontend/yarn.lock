@@ -1342,12 +1342,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:22.15.26":
-  version: 22.15.26
-  resolution: "@types/node@npm:22.15.26"
+"@types/node@npm:22.15.27":
+  version: 22.15.27
+  resolution: "@types/node@npm:22.15.27"
   dependencies:
     undici-types: "npm:~6.21.0"
-  checksum: 10c0/f864c5002538df968d275789fb1f049664b037ba7d2343f2b44b019cbea1150bb030affa95c3428f81100532d01af82b8e0b058b5bdeebed63e04c55524d626e
+  checksum: 10c0/1057dfabd9dc1a9c0de35b057341f0b22e4b54082d432cca6c30209e16bd67668cdb41a794ea753deaaf15f6d6fdc1e1cb2551afe21a78952e0b82386697b133
   languageName: node
   linkType: hard
 
@@ -5657,7 +5657,7 @@ __metadata:
     "@formatjs/intl-pluralrules": "npm:5.4.4"
     "@reduxjs/toolkit": "npm:2.8.2"
     "@sentry/react": "npm:9.23.0"
-    "@types/node": "npm:22.15.26"
+    "@types/node": "npm:22.15.27"
     "@types/react": "npm:19.1.6"
     "@types/react-dom": "npm:19.1.5"
     "@vitejs/plugin-react": "npm:4.5.0"
