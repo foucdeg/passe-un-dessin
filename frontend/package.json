@@ -74,9 +74,9 @@
     "vite-plugin-svgr": "4.3.0",
     "vite-tsconfig-paths": "5.1.4"
   },
-  "packageManager": "yarn@4.9.1",
+  "packageManager": "yarn@4.9.2",
   "volta": {
     "node": "22.16.0",
-    "yarn": "4.9.1"
+    "yarn": "4.9.2"
   }
 }
