@@ -51,7 +51,7 @@
     "@vitejs/plugin-react": "4.5.1",
     "babel-plugin-styled-components": "2.1.4",
     "customize-cra": "1.0.0",
-    "cypress": "14.4.0",
+    "cypress": "14.4.1",
     "eslint-config-prettier": "10.1.5",
     "eslint-plugin-cypress": "4.3.0",
     "eslint-plugin-import": "2.31.0",
