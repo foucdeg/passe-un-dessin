@@ -47,7 +47,7 @@
     "@eslint/js": "9.28.0",
     "@types/node": "22.15.29",
     "@types/react": "19.1.6",
-    "@types/react-dom": "19.1.5",
+    "@types/react-dom": "19.1.6",
     "@vitejs/plugin-react": "4.5.1",
     "babel-plugin-styled-components": "2.1.4",
     "customize-cra": "1.0.0",
