@@ -23,7 +23,7 @@
     "react-use": "17.6.0",
     "redux": "5.0.1",
     "regenerator-runtime": "0.14.1",
-    "styled-components": "6.1.18"
+    "styled-components": "6.1.19"
   },
   "scripts": {
     "start": "vite",
