@@ -19,7 +19,7 @@
     "start": "node server.js"
   },
   "devDependencies": {
-    "prettier": "3.5.3"
+    "prettier": "3.6.0"
   },
   "packageManager": "yarn@4.9.2",
   "volta": {
