@@ -24,7 +24,7 @@ django-cors-headers = "==4.7.0"
 inflection = "0.5.1"
 
 [tool.poetry.group.dev.dependencies]
-debugpy = "==1.8.14"
+debugpy = "==1.8.15"
 flake8 = "==7.3.0"
 factory-boy = "==3.3.3"
 coverage = "==7.9.2"
