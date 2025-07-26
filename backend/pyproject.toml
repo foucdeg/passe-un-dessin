@@ -18,7 +18,7 @@ requests = "==2.32.4"
 sentry-sdk = "==2.33.2"
 django-eventstream = "==5.3.2"
 google-auth = "==2.40.3"
-django-anymail = { extras = ["mailgun"], version = "==13.0" }
+django-anymail = { extras = ["mailgun"], version = "==13.0.1" }
 django-rest-passwordreset = "==1.5.0"
 django-cors-headers = "==4.7.0"
 inflection = "0.5.1"
