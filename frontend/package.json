@@ -8,7 +8,7 @@
     "@reduxjs/toolkit": "2.8.2",
     "@sentry/react": "9.44.2",
     "copy-to-clipboard": "3.3.3",
-    "core-js": "3.44.0",
+    "core-js": "3.45.0",
     "date-fns": "4.1.0",
     "eslint": "9.32.0",
     "formik": "2.4.6",
