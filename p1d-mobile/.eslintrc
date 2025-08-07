@@ -1,0 +1,66 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "import",
+    "jsx-a11y",
+    "mysticatea",
+    "prefer-object-spread",
+    "prettier",
+    "react",
+    "@typescript-eslint"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "prettier/prettier": "error",
+    "import/extensions": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true,
+        "optionalDependencies": false,
+        "peerDependencies": false
+      }
+    ],
+    "import/order": ["error"],
+    "import/no-unresolved": "off",
+    "import/prefer-default-export": "off",
+    "mysticatea/no-useless-rest-spread": "error",
+    "prefer-object-spread/prefer-object-spread": "error",
+    "react/destructuring-assignment": "off",
+    "react/jsx-filename-extension": ["warn", { "extensions": [".ts", ".tsx"] }],
+    "react/jsx-props-no-spreading": "off",
+    "react/no-array-index-key": "error",
+    "react/jsx-key": "error",
+    "react/prefer-stateless-function": "off",
+    "react/prop-types": "off",
+    "react/require-default-props": "off",
+    "react/style-prop-object": ["error", { "allow": ["StatusBar"] }],
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-member-accessibility": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/camelcase": "off",
+    "@typescript-eslint/interface-name-prefix": "off",
+    "prefer-template": "off",
+    "complexity": "off",
+    "max-lines": ["error", 300],
+    "max-depth": ["error", 4],
+    "max-params": ["error", 10],
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": "error"
+  }
+}
