@@ -69,7 +69,7 @@
     "typescript": "5.9.2",
     "typescript-eslint": "8.39.0",
     "user-agent-data-types": "0.4.2",
-    "vite": "6.3.5",
+    "vite": "6.3.6",
     "vite-plugin-mkcert": "1.17.8",
     "vite-plugin-svgr": "4.3.0",
     "vite-tsconfig-paths": "5.1.4"
