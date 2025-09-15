@@ -10,7 +10,7 @@
     "copy-to-clipboard": "3.3.3",
     "core-js": "3.45.1",
     "date-fns": "4.1.0",
-    "eslint": "9.32.0",
+    "eslint": "9.35.0",
     "formik": "2.4.6",
     "lz-string": "1.5.0",
     "react": "19.1.1",
@@ -44,7 +44,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@eslint/js": "9.32.0",
+    "@eslint/js": "9.35.0",
     "@types/node": "22.18.3",
     "@types/react": "19.1.13",
     "@types/react-dom": "19.1.9",
