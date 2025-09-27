@@ -31,7 +31,7 @@ coverage = "==7.10.7"
 django-debug-toolbar = "==5.2.0"
 django-extensions = "==4.1"
 isort = "==6.0.1"
-black = "25.1.0"
+black = "25.9.0"
 django-cprofile-middleware = "1.0.5"
 
 [tool.black]
