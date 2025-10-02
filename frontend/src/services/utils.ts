@@ -103,7 +103,7 @@ export const useBoolean = (initialValue = false): [boolean, () => void, () => vo
     value,
     useCallback(() => setter(true), [setter]),
     useCallback(() => setter(false), [setter]),
-    useCallback(() => setter((value) => !value), [setter]),
+    useCallback(() => setter((val) => !val), [setter]),
   ];
 };
 
