@@ -423,19 +423,18 @@ files = [
 
 [[package]]
 name = "dj-database-url"
-version = "2.3.0"
+version = "3.0.1"
 description = "Use Database URLs in your Django Application."
 optional = false
 python-versions = "*"
 groups = ["main"]
 files = [
-    {file = "dj_database_url-2.3.0-py3-none-any.whl", hash = "sha256:bb0d414ba0ac5cd62773ec7f86f8cc378a9dbb00a80884c2fc08cc570452521e"},
-    {file = "dj_database_url-2.3.0.tar.gz", hash = "sha256:ae52e8e634186b57e5a45e445da5dc407a819c2ceed8a53d1fac004cc5288787"},
+    {file = "dj_database_url-3.0.1-py3-none-any.whl", hash = "sha256:43950018e1eeea486bf11136384aec0fe55b29fe6fd8a44553231b85661d9383"},
+    {file = "dj_database_url-3.0.1.tar.gz", hash = "sha256:8994961efb888fc6bf8c41550870c91f6f7691ca751888ebaa71442b7f84eff8"},
 ]
 
 [package.dependencies]
 Django = ">=4.2"
-typing_extensions = ">=3.10.0.0"
 
 [[package]]
 name = "django"
@@ -1221,18 +1220,6 @@ dev = ["build", "hatch"]
 doc = ["sphinx"]
 
 [[package]]
-name = "typing-extensions"
-version = "4.8.0"
-description = "Backported and Experimental Type Hints for Python 3.8+"
-optional = false
-python-versions = ">=3.8"
-groups = ["main"]
-files = [
-    {file = "typing_extensions-4.8.0-py3-none-any.whl", hash = "sha256:8f92fc8806f9a6b641eaa5318da32b44d401efaac0f6678c9bc448ba3605faa0"},
-    {file = "typing_extensions-4.8.0.tar.gz", hash = "sha256:df8e4339e9cb77357558cbdbceca33c303714cf861d1eef15e1070055ae8b7ef"},
-]
-
-[[package]]
 name = "tzdata"
 version = "2022.7"
 description = "Provider of IANA time zone data"
@@ -1284,4 +1271,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "3.12.0"
-content-hash = "989c875054ab78f7726b29d8aa24ee950ffbc346aba53ad90b68f9dfa7119d9e"
+content-hash = "32c9fe342918526730baf33c3e0b31753dafbb9cf741773261bc92b6b81ec6f1"
