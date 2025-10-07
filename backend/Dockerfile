@@ -1,5 +1,5 @@
 # Stage 2: Python
-FROM python:3.12.0
+FROM python:3.13.7
 ENV PYTHONPATH /code
 # This is to print directly to stdout instead of buffering output
 ENV PYTHONUNBUFFERED 1
