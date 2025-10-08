@@ -5,7 +5,7 @@ description = "Online drawing game"
 authors = ["Foucauld Degeorges <foucauld.degeorges@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "3.12.0"
+python = "3.14.0"
 argon2-cffi = "==23.1.0"
 asgiref = "==3.9.2"
 dj-database-url = "==2.3.0"
